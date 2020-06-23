@@ -1,3 +1,4 @@
+  
 # Dependencies
 node_modules
 /.pnp
@@ -28,3 +29,7 @@ logs
 /.idea
 /.nyc_output
 *.launch
+
+# next.js
+/.next/
+/out/
