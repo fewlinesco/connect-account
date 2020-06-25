@@ -1,56 +1,113 @@
-import gql from "graphql-tag";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
 
+import InputForm from "../src/components/InputForm";
+import { IdentityTypes } from "../src/graphql/@types/Identities";
 import { initializeApollo } from "../src/graphql/apolloClientConfig";
+import UserQuery from "../src/graphql/query/userQuery.graphql";
 
-interface IndexPage extends JSX.Element {
+interface Index extends JSX.Element {
   userEmail?: string;
   userPhone?: string;
 }
 
-const IndexPage: React.FC<IndexPage> = ({ userEmail, userPhone }) => {
+const Index: React.FC<Index> = ({ userEmail, userPhone }) => {
+  const [addEmail, setAddEmail] = React.useState<boolean>(false);
+  const [addPhone, setAddPhone] = React.useState<boolean>(false);
+
   return (
     <>
       <Head>
         <title>Connect Account</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <main>
-        <div>
-          <h1>Welcome to Connect Account</h1>
-          <p>Your email is {userEmail}</p>
-          <p>Your phone number is {userPhone}</p>
+      <main style={{ margin: "0 auto" }}>
+        <h1>Welcome to Connect Account</h1>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p style={{ marginRight: "50px" }}>
+            Your email is <strong>{userEmail}</strong>
+          </p>
+          <button
+            onClick={() => {
+              const requestData = {
+                userId: "5b5fe222-3070-4169-8f24-51b587b2dbc5",
+                type: IdentityTypes.EMAIL,
+                value: userEmail,
+              };
+
+              fetch("/api/identity", {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestData),
+              });
+            }}
+          >
+            Remove this email
+          </button>
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <button
+            onClick={() => {
+              setAddEmail(!addEmail);
+            }}
+            style={{ marginRight: "50px" }}
+          >
+            Add an email
+          </button>
+          {addEmail && (
+            <InputForm apiUrl="/api/identity" type={IdentityTypes.EMAIL} />
+          )}
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p style={{ marginRight: "50px" }}>
+            Your phone number is <strong>{userPhone}</strong>
+          </p>
+          <button
+            onClick={() => {
+              const requestData = {
+                userId: "5b5fe222-3070-4169-8f24-51b587b2dbc5",
+                type: IdentityTypes.PHONE,
+                value: userPhone,
+              };
+
+              fetch("/api/identity", {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestData),
+              });
+            }}
+          >
+            Remove this email
+          </button>
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <button
+            onClick={() => {
+              setAddPhone(!addEmail);
+            }}
+            style={{ marginRight: "50px" }}
+          >
+            Add an email
+          </button>
+          {addPhone && (
+            <InputForm apiUrl="/api/identity" type={IdentityTypes.PHONE} />
+          )}
         </div>
       </main>
     </>
   );
 };
 
-const USER_QUERY = gql`
-  query($userId: String!) {
-    provider {
-      id
-      name
-      user(filters: { userId: $userId }) {
-        id
-        identities {
-          type
-          value
-          primary
-          status
-        }
-      }
-    }
-  }
-`;
-
 export const getServerSideProps: GetServerSideProps = async () => {
   const apolloClient = initializeApollo();
 
   await apolloClient.query({
-    query: USER_QUERY,
+    query: UserQuery,
     variables: { userId: "5b5fe222-3070-4169-8f24-51b587b2dbc5" },
   });
 
@@ -65,4 +122,4 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-export default IndexPage;
+export default Index;

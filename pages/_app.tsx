@@ -4,7 +4,7 @@ import React from "react";
 
 import { useApollo } from "../src/graphql/apolloClientConfig";
 
-const App: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const apolloClient = useApollo(pageProps.initialApolloState);
 
   return (

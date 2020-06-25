@@ -1,4 +1,4 @@
-query($userId: String!) {
+query getUserQuery($userId: String!) {
   provider {
     id
     name
