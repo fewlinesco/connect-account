@@ -2,18 +2,16 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import { AppProps } from "next/app";
 import React from "react";
 
-import withData from "../src/apolloClientConfig";
+import { useApollo } from "../src/graphql/apolloClientConfig";
 
-const MyApp: React.FC<AppProps & { apollo: any }> = ({
-  Component,
-  pageProps,
-  apollo,
-}) => {
+const App: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
+  const apolloClient = useApollo(pageProps.initialApolloState);
+
   return (
-    <ApolloProvider client={apollo}>
+    <ApolloProvider client={apolloClient}>
       <Component {...pageProps} />
     </ApolloProvider>
   );
 };
 
-export default withData(MyApp);
+export default App;
