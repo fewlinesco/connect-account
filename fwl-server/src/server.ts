@@ -10,7 +10,7 @@ export function start(tracer: Tracer, logger: Logger): Application {
   const router = new Router(tracer, logger);
 
   router.get<{}>("/ping", pingHandler());
-  router.get<user.QueryParams>("user", user.userHandler());
+  router.get<user.QueryParams>("/user", user.userHandler());
 
   return createApp(router, [loggingMiddleware(tracer, logger)]);
 }

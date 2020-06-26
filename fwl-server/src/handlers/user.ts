@@ -4,12 +4,34 @@ import {
   HttpStatus,
   RejectFunction,
   ResolveFunction,
+  UnmanagedError,
 } from "@fewlines/fwl-web";
 import { Request } from "express";
+import gql from "graphql-tag";
+
+import { fetchManagement } from "./fetchManagement";
 
 export interface QueryParams {
   userId: string;
 }
+
+const GET_USER_QUERY = gql`
+  query getUserQuery($userId: String!) {
+    provider {
+      id
+      name
+      user(filters: { userId: $userId }) {
+        id
+        identities {
+          type
+          value
+          primary
+          status
+        }
+      }
+    }
+  }
+`;
 
 export function userHandler() {
   return (
@@ -17,38 +39,24 @@ export function userHandler() {
     resolve: ResolveFunction,
     reject: RejectFunction,
     params: { userId: string },
-    request: Request,
+    _request: Request,
   ): HandlerPromise => {
-    return tracer.span("user-handler", async () => {
-      return tracer.span("get-user-by-id", async (span) => {
+    return tracer.span("user-handler", async (span) => {
       span.setAttribute("user-id", params.userId);
 
-      return resolve(HttpStatus.OK, "");
+      const operation = {
+        query: GET_USER_QUERY,
+        variables: { userId: params.userId },
+      };
+
+      try {
+        const fetchedData = await fetchManagement(operation);
+
+        return resolve(HttpStatus.OK, fetchedData);
+      } catch (error) {
+        console.log(error);
+        return reject(UnmanagedError());
+      }
     });
-  });
+  };
 }
-
-
-// try {
-//   const {
-//     rows,
-//   } = await database.query("SELECT * FROM users WHERE id = $1", [
-//     params.id,
-//   ]);
-
-//   if (rows.length === 0) {
-//     return reject(UserNotFound());
-//   }
-
-//   const user = rows[0];
-
-//   return resolve(HttpStatus.OK, user);
-// } catch (error) {
-//   span.setAttribute("pg-error", error.message);
-
-//   if (error.code === "22P02") {
-//     return reject(BadUuid());
-//   }
-
-//   return reject(UnmanagedError());
-// }

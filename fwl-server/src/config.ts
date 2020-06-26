@@ -4,6 +4,7 @@ import * as appConfig from "../config.json";
 
 interface AccountConfig extends Config {
   connectManagement: {
+    apiKey: string;
     graphqlEndpoint: string;
   };
 }

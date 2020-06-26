@@ -8,9 +8,6 @@
     "incremental": true,
     "module": "commonjs",
     "outDir": "./dist",
-    "paths": {
-      "@src/*": ["src/*"]
-    },
     "removeComments": true,
     "resolveJsonModule": true,
     "sourceMap": true,
