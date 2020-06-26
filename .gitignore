@@ -11,6 +11,7 @@ node_modules
 /coverage
 /dist
 courses/
+config.json
 
 # debug
 npm-debug.log*
