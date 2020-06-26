@@ -31,5 +31,5 @@ logs
 *.launch
 
 # next.js
-/.next/
+*/.next/
 /out/

@@ -1,14 +1,14 @@
 export enum IdentityTypes {
-  EMAIL,
-  FACEBOOK,
-  GITHUB,
-  GOOGLE,
-  KAKAO_TALK,
-  LINE,
-  PHONE,
-  PROVIDER,
-  STRAVA,
-  VKONTAKTE,
+  EMAIL = "EMAIL",
+  FACEBOOK = "FACEBOOK",
+  GITHUB = "GITHUB",
+  GOOGLE = "GOOGLE",
+  KAKAO_TALK = "KAKAO_TALK",
+  LINE = "LINE",
+  PHONE = "PHONE",
+  PROVIDER = "PROVIDER",
+  STRAVA = "STRAVA",
+  VKONTAKTE = "VKONTAKTE",
 }
 
 export type Identity = {

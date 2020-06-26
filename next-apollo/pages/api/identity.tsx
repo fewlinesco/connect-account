@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 import { NextApiRequest } from "next";
 
 import { initializeApollo } from "../../src/graphql/apolloClientConfig";
+
 // import addIdentityToUser from "../../src/graphql/mutation/addIdentityFromUser.graphql";
 // import removeIdentityForUser from "../../src/graphql/mutation/removeIdentityFromUser.graphql";
 
