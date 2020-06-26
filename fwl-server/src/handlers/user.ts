@@ -38,7 +38,7 @@ export function userHandler() {
     tracer: Tracer,
     resolve: ResolveFunction,
     reject: RejectFunction,
-    params: { userId: string },
+    params: QueryParams,
     _request: Request,
   ): HandlerPromise => {
     return tracer.span("user-handler", async (span) => {
