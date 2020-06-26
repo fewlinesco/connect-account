@@ -4,16 +4,13 @@ import { createApp, loggingMiddleware, Router } from "@fewlines/fwl-web";
 import { Application } from "express";
 
 import { pingHandler } from "./handlers/ping";
-import { userHandler } from "./handlers/user";
+import * as user from "./handlers/user";
 
-export function start(
-  tracer: Tracer,
-  logger: Logger
-): Application {
+export function start(tracer: Tracer, logger: Logger): Application {
   const router = new Router(tracer, logger);
 
   router.get<{}>("/ping", pingHandler());
-  router.get<{}>("user", userHandler())
+  router.get<user.QueryParams>("user", user.userHandler());
 
   return createApp(router, [loggingMiddleware(tracer, logger)]);
 }
