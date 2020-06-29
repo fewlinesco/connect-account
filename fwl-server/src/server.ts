@@ -11,10 +11,14 @@ export function start(tracer: Tracer, logger: Logger): Application {
   const router = new Router(tracer, logger);
 
   router.get<{}>("/ping", pingHandler());
-  router.get<user.QueryParams>("/user/identities", user.userHandler());
+  router.post<any, user.QueryParams>("/user", user.userHandler());
   router.post<identities.QueryParams, any>(
     "/user/identities",
-    user.userHandler(),
+    identities.identityHandler(),
+  );
+  router.delete<identities.QueryParams, any>(
+    "/user/identities",
+    identities.identityHandler(),
   );
 
   return createApp(router, [loggingMiddleware(tracer, logger)]);

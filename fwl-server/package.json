@@ -1,9 +1,8 @@
 {
-  "name": "connect-account",
+  "name": "@connect-account/fwl-server",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "repository": "git@github.com:fewlinesco/connect-account.git",
   "scripts": {
     "start": "nodemon",
     "lint": "eslint \"src/**/*.{js,ts,tsx}\""
@@ -23,7 +22,7 @@
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
-    "@fewlines/eslint-config": "2.0.0",
+    "@fewlines/eslint-config": "2.0.1",
     "@types/express": "4.17.6",
     "@types/isomorphic-fetch": "^0.0.35",
     "@types/node": "^13.13.4",

@@ -38,15 +38,16 @@ export function userHandler() {
     tracer: Tracer,
     resolve: ResolveFunction,
     reject: RejectFunction,
-    params: QueryParams,
+    _params: QueryParams,
+    body: QueryParams,
     _request: Request,
   ): HandlerPromise => {
     return tracer.span("user-handler", async (span) => {
-      span.setAttribute("user-id", params.userId);
+      span.setAttribute("user-id", body.userId);
 
       const operation = {
         query: GET_USER_QUERY,
-        variables: { userId: params.userId },
+        variables: { userId: body.userId },
       };
 
       try {

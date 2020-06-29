@@ -23,10 +23,10 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@fewlines/eslint-config@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@fewlines/eslint-config/-/eslint-config-2.0.0.tgz#695ea1e907a1b34381fe82212f542c734b0dc442"
-  integrity sha512-Bg/J/wpRsbYlSAeeAf53RJQVZ/C9FmbZmox32/4pGbQ3oheI+L/kpBgJeJfsaDWVqD5QSrrzgksTBJCKJpjxTQ==
+"@fewlines/eslint-config@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@fewlines/eslint-config/-/eslint-config-2.0.1.tgz#09af49526d96d0f2993cf84436de4f20c4450b03"
+  integrity sha512-D26AuoCHA9MCjP630m1tHoSGtIMdwL8AXkDihBOZ+U38ygjLHMdYbODdfCnqaalQPQu+jmrGqknZ0dxzFrjbwQ==
 
 "@fewlines/fwl-config@1.0.0":
   version "1.0.0"
