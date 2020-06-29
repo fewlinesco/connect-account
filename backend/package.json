@@ -1,5 +1,5 @@
 {
-  "name": "@connect-account/fwl-server",
+  "name": "@connect-account/backend",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
