@@ -62,11 +62,12 @@ export function identityHandler() {
     tracer: Tracer,
     resolve: ResolveFunction,
     reject: RejectFunction,
-    params: QueryParams,
+    _params: QueryParams,
+    body: QueryParams,
     request: Request,
   ): HandlerPromise => {
     return tracer.span("identity-handler", async (span) => {
-      const { userId, type, value } = params;
+      const { userId, type, value } = body;
 
       span.setAttributes({
         "user-id": userId,

@@ -1,6 +1,7 @@
 import { Logger } from "@fewlines/fwl-logging";
 import { Tracer } from "@fewlines/fwl-tracing";
 import { createApp, loggingMiddleware, Router } from "@fewlines/fwl-web";
+import cors from "cors";
 import { Application } from "express";
 
 import * as identities from "./handlers/identities";
@@ -21,5 +22,5 @@ export function start(tracer: Tracer, logger: Logger): Application {
     identities.identityHandler(),
   );
 
-  return createApp(router, [loggingMiddleware(tracer, logger)]);
+  return createApp(router, [loggingMiddleware(tracer, logger), cors()]);
 }
