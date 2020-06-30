@@ -56,10 +56,10 @@
     "@opentelemetry/plugin-pg-pool" "^0.6.0"
     "@opentelemetry/tracing" "^0.5.2"
 
-"@fewlines/fwl-web@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@fewlines/fwl-web/-/fwl-web-2.0.0.tgz#2f16df3019077a6e337e7290c3b791d4c7ec5e58"
-  integrity sha512-Mdw6gXeOak3to++bARQw1/P1bXeRYlpeGoetdatVC+6+xRRmlZq50LXlQRLk4ywd6Ol0cETZNdXA10Eg3NEYFg==
+"@fewlines/fwl-web@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@fewlines/fwl-web/-/fwl-web-2.0.2.tgz#f3d13a872ac51be408d688190e681b8349435501"
+  integrity sha512-2U3sizZn/uN00slYjd4oFSBTHKEoioOtwAr4ZxDPnpt1AKemLNzW+o7k91ucT/O4zYy0FsTu/qKRhs5fRnLgxQ==
   dependencies:
     "@fewlines/fwl-logging" "1.0.0"
     "@fewlines/fwl-tracing" "1.0.0"
