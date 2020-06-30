@@ -4,9 +4,9 @@ import { ThemeProvider } from "styled-components";
 
 import { GlobalStyle } from "../src/design-system/globals/globalStyle";
 import { lightTheme } from "../src/design-system/theme/lightTheme";
-import Layout from "../src/components/Layout";
+import { Layout } from "../src/components/Layout";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <ThemeProvider theme={lightTheme}>
       <GlobalStyle />
@@ -15,4 +15,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </Layout>
     </ThemeProvider>
   );
-}
+};
+
+export default App;

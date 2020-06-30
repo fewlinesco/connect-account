@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 import { HttpVerbs } from "../src/@types/HttpVerbs";
 import { IdentityTypes, Identity } from "../src/@types/Identities";
-import { FetchButton } from "../src/components/FetchButton";
 import { FetchIconButton } from "../src/components/FetchIconButton";
 import { InputForm } from "../src/components/InputForm";
 import { useTheme } from "../src/design-system/theme/useTheme";
@@ -15,12 +14,12 @@ interface IndexProps extends JSX.Element {
   user: {
     identities: Identity[];
   };
+  identitiesEndpoint: string;
 }
 
-const Index: React.FC<IndexProps> = ({ user }) => {
+const Index: React.FC<IndexProps> = ({ user, identitiesEndpoint }) => {
   const [addEmail, setAddEmail] = React.useState<boolean>(false);
   const [addPhone, setAddPhone] = React.useState<boolean>(false);
-  const [isHovered, setIsHovered] = React.useState(false);
 
   const theme = useTheme();
 
@@ -41,8 +40,8 @@ const Index: React.FC<IndexProps> = ({ user }) => {
                   <FetchIconButton
                     type={IdentityTypes.EMAIL}
                     method={HttpVerbs.DELETE}
-                    value="value"
-                    endpoint=""
+                    value={value}
+                    endpoint={identitiesEndpoint}
                     color={theme.colors.red}
                   >
                     <Trash width="15" />
@@ -54,22 +53,17 @@ const Index: React.FC<IndexProps> = ({ user }) => {
             );
           })}
           <Flex>
-            <div
+            <Button
               onClick={() => setAddEmail(!addEmail)}
-              style={{ marginRight: "2rem" }}
+              color={theme.colors.green}
             >
-              <FetchButton
-                // onClick={() => setAddEmail(!addEmail)}
-                type={IdentityTypes.EMAIL}
-                method={HttpVerbs.DELETE}
-                value="value"
-                endpoint=""
-                color={theme.colors.green}
-                label="Add an email"
-              />
-            </div>
+              Add an email
+            </Button>
             {addEmail && (
-              <InputForm apiUrl="/api/identity" type={IdentityTypes.EMAIL} />
+              <InputForm
+                apiUrl={identitiesEndpoint}
+                type={IdentityTypes.EMAIL}
+              />
             )}
           </Flex>
         </IdentitySection>
@@ -81,10 +75,10 @@ const Index: React.FC<IndexProps> = ({ user }) => {
                 <Flex>
                   <Value>{value}</Value>
                   <FetchIconButton
-                    type={IdentityTypes.EMAIL}
+                    type={IdentityTypes.PHONE}
                     method={HttpVerbs.DELETE}
-                    value="value"
-                    endpoint=""
+                    value={value}
+                    endpoint={identitiesEndpoint}
                     color={theme.colors.red}
                   >
                     <Trash width="15" />
@@ -96,22 +90,18 @@ const Index: React.FC<IndexProps> = ({ user }) => {
             );
           })}
           <Flex>
-            <div
-              onClick={() => setAddPhone(!addPhone)}
-              style={{ marginRight: "2rem" }}
+            <Button
+              onClick={() => setAddPhone(!addEmail)}
+              color={theme.colors.green}
             >
-              <FetchButton
-                // onClick={() => setAddEmail(!addEmail)}
-                type={IdentityTypes.EMAIL}
-                method={HttpVerbs.DELETE}
-                value="value"
-                endpoint=""
-                color={theme.colors.green}
-                label="Add a phone number"
-              />
-            </div>
+              Add a phone number
+            </Button>
+
             {addPhone && (
-              <InputForm apiUrl="/api/identity" type={IdentityTypes.EMAIL} />
+              <InputForm
+                apiUrl={identitiesEndpoint}
+                type={IdentityTypes.PHONE}
+              />
             )}
           </Flex>
         </IdentitySection>
@@ -122,6 +112,7 @@ const Index: React.FC<IndexProps> = ({ user }) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const uri = `${process.env.CONNECT_ACCOUNT_BACKEND_URL}/user`;
+  const identitiesEndpoint = `${process.env.CONNECT_ACCOUNT_BACKEND_URL}/user/identities`;
 
   const fetchedData = await fetch(uri, {
     method: "POST",
@@ -136,6 +127,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       user,
+      identitiesEndpoint,
     },
   };
 };
@@ -165,6 +157,33 @@ const Flex = styled.div`
 
 const Value = styled.p`
   margin-right: 0.5rem;
+`;
+
+type ButtonProps = {
+  color: string;
+};
+
+const Button = styled.button<ButtonProps>`
+  padding: 0.5rem;
+  margin-right: 1rem;
+  border-radius: ${({ theme }) => theme.radii[0]};
+  background-color: transparent;
+  ${(props) => `color: ${props.color}`};
+  transition: ${({ theme }) => theme.transitions.quick};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+
+  &:hover {
+    cursor: pointer;
+    ${(props) => `background-color: ${props.color}`};
+    color: ${({ theme }) => theme.colors.contrastCopy};
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+    ${(props) => `background-color: ${props.color}`};
+    color: ${({ theme }) => theme.colors.contrastCopy};
+  }
 `;
 
 export default Index;

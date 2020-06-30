@@ -1,15 +1,15 @@
-import React from 'react'
+import React from "react";
 import styled from "styled-components";
-import Header from './Header';
+import { Header } from "./Header";
 
-const Layout: React.FC = ({children}) => {
+export const Layout: React.FC = ({ children }) => {
   return (
     <Main>
-      <Header/>
+      <Header />
       {children}
     </Main>
-  )
-}
+  );
+};
 
 const Main = styled.main`
   width: 100%;
@@ -17,5 +17,3 @@ const Main = styled.main`
   max-width: 88rem;
   margin: 0 auto;
 `;
-
-export default Layout;
