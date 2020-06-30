@@ -4,7 +4,8 @@ import { createApp, loggingMiddleware, Router } from "@fewlines/fwl-web";
 import cors from "cors";
 import { Application } from "express";
 
-import * as identities from "./handlers/identities";
+import * as addIdentity from "./handlers/addIdentityHandler";
+import * as deleteIdentity from "./handlers/deleteIdentityHandler";
 import { pingHandler } from "./handlers/ping";
 import * as user from "./handlers/user";
 
@@ -13,13 +14,13 @@ export function start(tracer: Tracer, logger: Logger): Application {
 
   router.get<{}>("/ping", pingHandler());
   router.post<any, user.QueryParams>("/user", user.userHandler());
-  router.post<identities.QueryParams, any>(
+  router.post<any, addIdentity.QueryParams>(
     "/user/identities",
-    identities.identityHandler(),
+    addIdentity.handler(),
   );
-  router.delete<identities.QueryParams, any>(
+  router.delete<any, deleteIdentity.QueryParams>(
     "/user/identities",
-    identities.identityHandler(),
+    deleteIdentity.handler(),
   );
 
   return createApp(router, [loggingMiddleware(tracer, logger), cors()]);
