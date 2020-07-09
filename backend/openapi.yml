@@ -1,0 +1,312 @@
+openapi: 3.0.0
+info:
+  description: The application stores user profile information, it is meant to be compliant to OpenID Connect specification
+  version: 1.0.0
+  title: Connect Profile
+tags:
+  - name: Connect Profile
+    description: An API for user OpenID Connect profile storage
+paths:
+  "/users":
+    post:
+      tags:
+        - Users Profile
+      summary: Register a user profile in the database.
+      operationId: createUser
+      security:
+        - api_key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sub:
+                  type: string
+                  description: Identifier for the End-User at the Issuer.
+                name:
+                  type: string
+                  description: End-User's full name in displayable form including all name parts, possibly including titles and suffixes, ordered according to the End-User's preferences.
+                family_name:
+                  type: string
+                  description: Surname(s) or last name(s) of the End-User. Note that in some cultures, people can have multiple family names or no family name; all can be present, with the names being separated by space characters.
+                given_name:
+                  type: string
+                  description: Given name(s) or first name(s) of the End-User. Note that in some cultures, people can have multiple given names; all can be present, with the names being separated by space characters.
+                middle_name:
+                  type: string
+                  description: Middle name(s) of the End-User. Note that in some cultures, people can have multiple middle names; all can be present, with the names being separated by space characters. Also note that in some cultures, middle names are not used.
+                nickname:
+                  type: string
+                  description: Casual name of the End-User that may or may not be the same as the given_name. For instance, a nickname value of Mike might be returned alongside a given_name value of Michael.
+                preferred_username:
+                  type: string
+                  description: Shorthand name by which the End-User wishes to be referred to by the Provider, such as janedoe or j.doe. This value MAY be any valid JSON string including special characters such as @, /, or whitespace. The Provider MUST NOT rely upon this value being unique.
+                profile:
+                  type: string
+                  description: URL of the End-User's profile page. The contents of this Web page SHOULD be about the End-User.
+                picture:
+                  type: string
+                  description: URL of the End-User's profile picture. This URL MUST refer to an image file (for example, a PNG, JPEG, or GIF image file), rather than to a Web page containing an image. Note that this URL SHOULD specifically reference a profile photo of the End-User suitable for displaying when describing the End-User, rather than an arbitrary photo taken by the End-User.
+                website:
+                  type: string
+                  description: URL of the End-User's Web page or blog. This Web page SHOULD contain information published by the End-User or an organization that the End-User is affiliated with.
+                gender:
+                  type: string
+                  description: End-User's gender. Values defined by this specification are female and male. Other values MAY be used when neither of the defined values are applicable.
+                birthdate:
+                  type: string
+                  description: End-User's birthday, represented as an ISO 8601:2004 [ISO8601‑2004] YYYY-MM-DD format. The year MAY be 0000, indicating that it is omitted. To represent only the year, YYYY format is allowed. Note that depending on the underlying platform's date related function, providing just year can result in varying month and day, so the implementers need to take this factor into account to correctly process the dates.
+                zoneinfo:
+                  type: string
+                  description: String from zoneinfo [zoneinfo] time zone database representing the End-User's time zone. For example, Europe/Paris or America/Los_Angeles.
+                locale:
+                  type: string
+                  description: End-User's locale.
+                address:
+                  type: object
+                  description: An object representing the User's address
+                  properties:
+                    formatted:
+                      type: string
+                      description: the formatted User's address
+      responses:
+        201:
+          description: A successful User creation response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+              examples:
+                superman:
+                  value:
+                    sub: a valid sub
+                    name: Clark Kent
+                    family_name: Kent
+                    given_name: Kal-El
+                    middle_name: Joseph
+                    nickname: Superman
+                    preferred_username: Clark
+                    profile: https://www.dccomics.com/characters/superman
+                    picture: https://www.dccomics.com/sites/default/files/styles/character_thumb_160x160/public/Char_Profile_Superman_20190116_5c3fc2758f6a12.2513240.jpg
+                    website: https://superman.com
+                    gender: male
+                    birthdate: 1938-04-01
+                    zoneinfo: America/Los_Angeles
+                    locale: EN-us
+                    updated_at: 1570550562
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    default: Without a valid API key you are not allowed to access this endpoint
+        422:
+          description: Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: an english message describing the error
+                    enum:
+                      - There is already a user with this sub in database
+                      - InvalidData
+                  errors:
+                    type: object
+                    description: an object representing invalid fields
+  "/users/{sub}":
+    get:
+      tags:
+        - Users Profile
+      summary: Retrieve a user based on the provided sub
+      operationId: getUserBySub
+      security:
+        - api_key: []
+      parameters:
+        - name: sub
+          in: path
+          description: the sub identifier of the requested User
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful Get User Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        401:
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    default: Without a valid API key you are not allowed to access this endpoint
+        404:
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    default: User not found
+
+    patch:
+      tags:
+        - Users Profile
+      summary: Update a user based on the provided sub
+      operationId: patchUser
+      security:
+        - api_key: []
+      parameters:
+        - name: sub
+          in: path
+          description: The sub identifier of the requested User
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful Patch User Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        401:
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    default: Without a valid API key you are not allowed to access this endpoint
+        404:
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    default: User not found
+
+  "/users/me":
+    get:
+      tags:
+        - Users Profile
+      summary: Retrieve a user based on the provided bearer token
+      operationId: getUser
+      security:
+        - bearer: []
+      responses:
+        200:
+          description: Successful Get User Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        401:
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    default: Without a valid bearer token you are not allowed to access this endpoint
+        404:
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    default: User not found
+
+servers:
+  - url: http://localhost:4008
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header
+    bearer:
+      type: http
+      bearerFormat: JWT
+      scheme: bearer
+  schemas:
+    UserResponse:
+      type: object
+      properties:
+        sub:
+          type: string
+          description: Identifier for the End-User at the Issuer.
+        name:
+          type: string
+          description: End-User's full name in displayable form including all name parts, possibly including titles and suffixes, ordered according to the End-User's preferences.
+        family_name:
+          type: string
+          description: Surname(s) or last name(s) of the End-User. Note that in some cultures, people can have multiple family names or no family name; all can be present, with the names being separated by space characters.
+        given_name:
+          type: string
+          description: Given name(s) or first name(s) of the End-User. Note that in some cultures, people can have multiple given names; all can be present, with the names being separated by space characters.
+        middle_name:
+          type: string
+          description: Middle name(s) of the End-User. Note that in some cultures, people can have multiple middle names; all can be present, with the names being separated by space characters. Also note that in some cultures, middle names are not used.
+        nickname:
+          type: string
+          description: Casual name of the End-User that may or may not be the same as the given_name. For instance, a nickname value of Mike might be returned alongside a given_name value of Michael.
+        preferred_username:
+          type: string
+          description: Shorthand name by which the End-User wishes to be referred to by the Provider, such as janedoe or j.doe. This value MAY be any valid JSON string including special characters such as @, /, or whitespace. The Provider MUST NOT rely upon this value being unique.
+        profile:
+          type: string
+          description: URL of the End-User's profile page. The contents of this Web page SHOULD be about the End-User.
+        picture:
+          type: string
+          description: URL of the End-User's profile picture. This URL MUST refer to an image file (for example, a PNG, JPEG, or GIF image file), rather than to a Web page containing an image. Note that this URL SHOULD specifically reference a profile photo of the End-User suitable for displaying when describing the End-User, rather than an arbitrary photo taken by the End-User.
+        website:
+          type: string
+          description: URL of the End-User's Web page or blog. This Web page SHOULD contain information published by the End-User or an organization that the End-User is affiliated with.
+        gender:
+          type: string
+          description: End-User's gender. Values defined by this specification are female and male. Other values MAY be used when neither of the defined values are applicable.
+        birthdate:
+          type: string
+          description: End-User's birthday, represented as an ISO 8601:2004 [ISO8601‑2004] YYYY-MM-DD format. The year MAY be 0000, indicating that it is omitted. To represent only the year, YYYY format is allowed. Note that depending on the underlying platform's date related function, providing just year can result in varying month and day, so the implementers need to take this factor into account to correctly process the dates.
+        zoneinfo:
+          type: string
+          description: String from zoneinfo [zoneinfo] time zone database representing the End-User's time zone. For example, Europe/Paris or America/Los_Angeles.
+        locale:
+          type: string
+          description: End-User's locale.
+        address:
+          type: object
+          description: An object representing the User's address
+          properties:
+            formatted:
+              type: string
+              description: the formatted User's address
+        updated_at:
+          type: integer
+          description: Time the End-User's information was last updated. Its value is a JSON number representing the number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time.
