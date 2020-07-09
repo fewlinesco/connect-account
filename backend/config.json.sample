@@ -9,5 +9,8 @@
   "connectManagement": {
     "apiKey": ***,
     "graphqlEndpoint": *** 
+  },
+  "connectProfile": {
+    "apiKey": ***
   }
 }
