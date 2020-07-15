@@ -1,0 +1,7 @@
+export * from './InlineObject'
+export * from './InlineResponse401'
+export * from './InlineResponse4011'
+export * from './InlineResponse404'
+export * from './InlineResponse422'
+export * from './UserResponse'
+export * from './UsersAddress'

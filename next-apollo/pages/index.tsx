@@ -31,7 +31,7 @@ const Index: React.FC<Index> = ({ userEmail, userPhone }) => {
           <button
             onClick={() => {
               const requestData = {
-                userId: "5b5fe222-3070-4169-8f24-51b587b2dbc5",
+                userId: "5fab3a52-b242-4377-9e30-ae06589bebe6",
                 type: IdentityTypes.EMAIL,
                 value: userEmail,
               };
@@ -68,7 +68,7 @@ const Index: React.FC<Index> = ({ userEmail, userPhone }) => {
           <button
             onClick={() => {
               const requestData = {
-                userId: "5b5fe222-3070-4169-8f24-51b587b2dbc5",
+                userId: "5fab3a52-b242-4377-9e30-ae06589bebe6",
                 type: IdentityTypes.PHONE,
                 value: userPhone,
               };
@@ -108,7 +108,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   await apolloClient.query({
     query: UserQuery,
-    variables: { userId: "5b5fe222-3070-4169-8f24-51b587b2dbc5" },
+    variables: { userId: "5fab3a52-b242-4377-9e30-ae06589bebe6" },
   });
 
   const initialApolloState = apolloClient.cache.extract();

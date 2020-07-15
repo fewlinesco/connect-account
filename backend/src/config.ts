@@ -7,6 +7,9 @@ interface AccountConfig extends Config {
     apiKey: string;
     graphqlEndpoint: string;
   };
+  connectProfile: {
+    apiKey: string;
+  }
 }
 
 const config: AccountConfig = { ...configDefaults, ...appConfig };

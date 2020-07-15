@@ -8,8 +8,7 @@
     "lint": "eslint \"src/**/*.{js,ts,tsx}\"",
     "pregenerate-connect-profile-client": "swagger-cli validate openapi.yml",
     "generate-connect-profile-client": "docker run --rm -v ${PWD}/:/local openapitools/openapi-generator-cli generate --input-spec /local/openapi.yml --generator-name typescript --additional-properties supportsES6=false --output /local/test/clients/connect-profile",
-    "pregenerate-connect-profile-client-node": "swagger-cli validate openapi.yml",
-    "generate-connect-profile-client-node": "docker run --rm -v ${PWD}/:/local openapitools/openapi-generator-cli generate --input-spec /local/openapi.yml --generator-name typescript-node --additional-properties supportsES6=true --output /local/test/clients/connect-profile-node",
+    "pregenerate-connect-profile-client-axios": "swagger-cli validate openapi.yml",
     "generate-connect-profile-client-axios": "docker run --rm -v ${PWD}/:/local openapitools/openapi-generator-cli generate --input-spec /local/openapi.yml --generator-name typescript-axios --additional-properties supportsES6=true --output /local/test/clients/connect-profile-axios"
   },
   "dependencies": {
