@@ -3,18 +3,20 @@ import Head from "next/head";
 import React from "react";
 
 import InputForm from "../src/components/InputForm";
-import { IdentityTypes } from "../src/graphql/@types/Identities";
-import { initializeApollo } from "../src/graphql/apolloClientConfig";
+import { IdentityTypes } from "../src/graphql/@types/Identity";
+import { ProviderUser } from "../src/graphql/@types/ProviderUser";
 import UserQuery from "../src/graphql/query/userQuery.graphql";
+import { fetchManagement } from "../src/graphql/fetchManagement";
 
 interface Index extends JSX.Element {
-  userEmail?: string;
-  userPhone?: string;
+  fetchedData: { data: { provider: ProviderUser } };
 }
 
-const Index: React.FC<Index> = ({ userEmail, userPhone }) => {
+const Index: React.FC<Index> = ({ fetchedData }) => {
   const [addEmail, setAddEmail] = React.useState<boolean>(false);
   const [addPhone, setAddPhone] = React.useState<boolean>(false);
+
+  const { user } = fetchedData.data.provider;
 
   return (
     <>
@@ -24,100 +26,25 @@ const Index: React.FC<Index> = ({ userEmail, userPhone }) => {
       </Head>
       <main style={{ margin: "0 auto" }}>
         <h1>Welcome to Connect Account</h1>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <p style={{ marginRight: "50px" }}>
-            Your email is <strong>{userEmail}</strong>
-          </p>
-          <button
-            onClick={() => {
-              const requestData = {
-                userId: "5fab3a52-b242-4377-9e30-ae06589bebe6",
-                type: IdentityTypes.EMAIL,
-                value: userEmail,
-              };
-
-              fetch("/api/identity", {
-                method: "DELETE",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(requestData),
-              });
-            }}
-          >
-            Remove this email
-          </button>
-        </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <button
-            onClick={() => {
-              setAddEmail(!addEmail);
-            }}
-            style={{ marginRight: "50px" }}
-          >
-            Add an email
-          </button>
-          {addEmail && (
-            <InputForm apiUrl="/api/identity" type={IdentityTypes.EMAIL} />
-          )}
-        </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <p style={{ marginRight: "50px" }}>
-            Your phone number is <strong>{userPhone}</strong>
-          </p>
-          <button
-            onClick={() => {
-              const requestData = {
-                userId: "5fab3a52-b242-4377-9e30-ae06589bebe6",
-                type: IdentityTypes.PHONE,
-                value: userPhone,
-              };
-
-              fetch("/api/identity", {
-                method: "DELETE",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(requestData),
-              });
-            }}
-          >
-            Remove this email
-          </button>
-        </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <button
-            onClick={() => {
-              setAddPhone(!addEmail);
-            }}
-            style={{ marginRight: "50px" }}
-          >
-            Add an email
-          </button>
-          {addPhone && (
-            <InputForm apiUrl="/api/identity" type={IdentityTypes.PHONE} />
-          )}
-        </div>
+        {user.identities.map(({ value, type }) => {
+          return type === IdentityTypes.EMAIL.toLowerCase() ? (<p>{value}</p>) : (<React.Fragment key={value} />)
+        })}
       </main>
     </>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const apolloClient = initializeApollo();
-
-  await apolloClient.query({
+  const operation = {
     query: UserQuery,
     variables: { userId: "5fab3a52-b242-4377-9e30-ae06589bebe6" },
-  });
+  };
 
-  const initialApolloState = apolloClient.cache.extract();
+  const fetchedData = await fetchManagement(operation);
 
   return {
     props: {
-      initialApolloState,
-      userEmail: initialApolloState.userEmail?.value,
-      userPhone: initialApolloState.userPhone?.value,
+      fetchedData,
     },
   };
 };

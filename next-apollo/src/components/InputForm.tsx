@@ -1,6 +1,6 @@
 import React from "react";
 
-import { IdentityTypes } from "../graphql/@types/Identities";
+import { IdentityTypes } from "../graphql/@types/Identity";
 
 type InputForm = {
   apiUrl: RequestInfo;
