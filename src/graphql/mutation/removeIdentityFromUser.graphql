@@ -1,0 +1,18 @@
+mutation removeIdentityFromUser(
+  $userId: String!
+  $type: IdentityTypes!
+  $value: String!
+) {
+  removeIdentityFromUser(
+    input: { userId: $userId, type: $type, value: $value }
+  ) {
+    id
+    identities {
+      id
+      primary
+      value
+      type
+      status
+    }
+  }
+}

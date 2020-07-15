@@ -1,0 +1,42 @@
+= Connect Account
+
+
+## Setup
+
+Before being able to start the project locally, you should have a way to run `Node.js` applications.
+
+We recommend you to install the latest version of `asdf` to do so.
+
+You will need `yarn`.
+These can be installed via the provided `Brewfile` using `brew bundle`.
+
+Get all the language tools:
+
+[source,shell]
+----
+asdf install
+----
+
+
+Get required environment variables by copying `.env.sample` and if necessary tuning it to values relevant to your dev environment:
+
+[source,shell]
+----
+cp .env_vars.sample .env_vars
+----
+
+Source the file to get variables defined your environnement:
+
+[source,shell]
+----
+source .env_vars
+----
+
+== Development Process
+
+[source,shell]
+----
+yarn start
+----
+
+== Source Code Organization
