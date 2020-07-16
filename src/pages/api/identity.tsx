@@ -57,14 +57,14 @@ export default async (
       .then(() => {
         response.statusCode = 200;
 
-        return response.json("GG");
+        return response.json("succeed");
       })
       .catch((error) => {
         console.log(error);
 
         response.statusCode = 400;
 
-        return response.json(":(");
+        return response.json("failed");
       });
   } else if (request.method === "DELETE") {
     const operation = {
@@ -76,14 +76,14 @@ export default async (
       .then(() => {
         response.statusCode = 200;
 
-        return response.json("GG");
+        return response.json("succeed");
       })
       .catch((error) => {
         console.log(error);
 
         response.statusCode = 400;
 
-        return response.json(":(");
+        return response.json("failed");
       });
   }
   response.statusCode = 400;
