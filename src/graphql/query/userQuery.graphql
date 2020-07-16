@@ -1,0 +1,15 @@
+query getUserQuery($userId: String!) {
+  provider {
+    id
+    name
+    user(filters: { userId: $userId }) {
+      id
+      identities {
+        type
+        value
+        primary
+        status
+      }
+    }
+  }
+}
