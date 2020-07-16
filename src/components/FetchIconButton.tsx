@@ -2,10 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 import { HttpVerbs } from "../@types/HttpVerbs";
-import { IdentityTypes } from "../@types/Identities";
+import { IdentityTypes } from "../@types/Identity";
 
 interface FetchIconButtonProps {
-  endpoint: string;
   type: IdentityTypes;
   method: HttpVerbs;
   value: string;
@@ -13,7 +12,6 @@ interface FetchIconButtonProps {
 }
 
 export const FetchIconButton: React.FC<FetchIconButtonProps> = ({
-  endpoint,
   type,
   method,
   value,
@@ -30,7 +28,7 @@ export const FetchIconButton: React.FC<FetchIconButtonProps> = ({
           value: value,
         };
 
-        fetch(endpoint, {
+        fetch("/api/identity", {
           method: method,
           headers: {
             "Content-Type": "application/json",

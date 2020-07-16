@@ -5,20 +5,19 @@ import React from "react";
 import { Trash } from "react-feather";
 import styled from "styled-components";
 
-import { HttpVerbs } from "../src/@types/HttpVerbs";
-import { IdentityTypes } from "../src/@types/Identity";
-import { ProviderUser } from "../src/@types/ProviderUser";
-import { FetchIconButton } from "../src/components/FetchIconButton";
-import { InputForm } from "../src/components/InputForm";
-import { useTheme } from "../src/design-system/theme/useTheme";
-import { fetchManagement } from "../src/utils/fetchManagement";
+import { HttpVerbs } from "../@types/HttpVerbs";
+import { IdentityTypes } from "../@types/Identity";
+import { ProviderUser } from "../@types/ProviderUser";
+import { FetchIconButton } from "../components/FetchIconButton";
+import { InputForm } from "../components/InputForm";
+import { useTheme } from "../design-system/theme/useTheme";
+import { fetchManagement } from "../utils/fetchManagement";
 
 interface IndexProps extends JSX.Element {
   fetchedData: { data: { provider: ProviderUser } };
-  managementEndpoint: string;
 }
 
-const Index: React.FC<IndexProps> = ({ fetchedData, managementEndpoint }) => {
+const Index: React.FC<IndexProps> = ({ fetchedData }) => {
   const [addEmail, setAddEmail] = React.useState<boolean>(false);
   const [addPhone, setAddPhone] = React.useState<boolean>(false);
 
@@ -40,15 +39,18 @@ const Index: React.FC<IndexProps> = ({ fetchedData, managementEndpoint }) => {
               <IdentityBox key={value}>
                 <Flex>
                   <Value>{value}</Value>
-                  <FetchIconButton
-                    type={IdentityTypes.EMAIL}
-                    method={HttpVerbs.DELETE}
-                    value={value}
-                    endpoint={managementEndpoint}
-                    color={theme.colors.red}
-                  >
-                    <Trash width="15" />
-                  </FetchIconButton>
+                  {user.identities.length > 1 ? (
+                    <FetchIconButton
+                      type={IdentityTypes.EMAIL}
+                      method={HttpVerbs.DELETE}
+                      value={value}
+                      color={theme.colors.red}
+                    >
+                      <Trash width="15" />
+                    </FetchIconButton>
+                  ) : (
+                    <React.Fragment key={value} />
+                  )}
                 </Flex>
               </IdentityBox>
             ) : (
@@ -62,12 +64,7 @@ const Index: React.FC<IndexProps> = ({ fetchedData, managementEndpoint }) => {
             >
               Add an email
             </Button>
-            {addEmail && (
-              <InputForm
-                apiUrl={managementEndpoint}
-                type={IdentityTypes.EMAIL}
-              />
-            )}
+            {addEmail && <InputForm type={IdentityTypes.EMAIL} />}
           </Flex>
         </IdentitySection>
         <IdentitySection>
@@ -81,7 +78,6 @@ const Index: React.FC<IndexProps> = ({ fetchedData, managementEndpoint }) => {
                     type={IdentityTypes.PHONE}
                     method={HttpVerbs.DELETE}
                     value={value}
-                    endpoint={managementEndpoint}
                     color={theme.colors.red}
                   >
                     <Trash width="15" />
@@ -99,13 +95,7 @@ const Index: React.FC<IndexProps> = ({ fetchedData, managementEndpoint }) => {
             >
               Add a phone number
             </Button>
-
-            {addPhone && (
-              <InputForm
-                apiUrl={managementEndpoint}
-                type={IdentityTypes.PHONE}
-              />
-            )}
+            {addPhone && <InputForm type={IdentityTypes.PHONE} />}
           </Flex>
         </IdentitySection>
       </IdentitiesBox>
@@ -144,7 +134,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       fetchedData,
-      managementEndpoint: process.env.CONNECT_MANAGEMENT_URL,
     },
   };
 };

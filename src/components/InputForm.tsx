@@ -1,13 +1,9 @@
 import React from "react";
-import { IdentityTypes } from "../@types/Identities";
 import styled from "styled-components";
 
-type InputForm = {
-  apiUrl: RequestInfo;
-  type: IdentityTypes;
-};
+import { IdentityTypes } from "../@types/Identity";
 
-export const InputForm: React.FC<InputForm> = ({ apiUrl, type }) => {
+export const InputForm: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   const [formValue, setFormValue] = React.useState("");
 
   return (
@@ -29,7 +25,7 @@ export const InputForm: React.FC<InputForm> = ({ apiUrl, type }) => {
             value: formValue,
           };
 
-          fetch(apiUrl, {
+          fetch("/api/identity", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
