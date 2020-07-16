@@ -21,7 +21,10 @@ export const FetchIconButton: React.FC<FetchIconButtonProps> = ({
   return (
     <Button
       color={color}
-      onClick={() => {
+      onClick={(event) => {
+        // event.preventDefault();
+
+        console.log("click");
         const requestData = {
           userId: "5b5fe222-3070-4169-8f24-51b587b2dbc5",
           type: type,
@@ -42,11 +45,7 @@ export const FetchIconButton: React.FC<FetchIconButtonProps> = ({
   );
 };
 
-type ButtonProps = {
-  color: string;
-};
-
-const Button = styled.button<ButtonProps>`
+const Button = styled.button<{ color: string }>`
   padding: 0.5rem 0.5rem;
   border-radius: ${({ theme }) => theme.radii[0]};
   background-color: transparent;

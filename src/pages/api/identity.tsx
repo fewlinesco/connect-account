@@ -53,20 +53,18 @@ export default async (
       variables: { userId, type, value },
     };
 
-    fetchManagement(operation)
+    return await fetchManagement(operation)
       .then(() => {
         response.statusCode = 200;
-        response.setHeader("Content-Type", "application/json");
 
-        return response.end("GG");
+        return response.json("GG");
       })
       .catch((error) => {
         console.log(error);
 
         response.statusCode = 400;
-        response.setHeader("Content-Type", "application/json");
 
-        return response.end(":(");
+        return response.json(":(");
       });
   } else if (request.method === "DELETE") {
     const operation = {
@@ -74,25 +72,21 @@ export default async (
       variables: { userId, type, value },
     };
 
-    fetchManagement(operation)
+    return await fetchManagement(operation)
       .then(() => {
         response.statusCode = 200;
-        response.setHeader("Content-Type", "application/json");
 
-        return response.end("GG");
+        return response.json("GG");
       })
       .catch((error) => {
         console.log(error);
 
         response.statusCode = 400;
-        response.setHeader("Content-Type", "application/json");
 
-        return response.end(":(");
+        return response.json(":(");
       });
   }
-
   response.statusCode = 400;
-  response.setHeader("Content-Type", "application/json");
 
-  return response.end(":(");
+  return response.json(":(");
 };
