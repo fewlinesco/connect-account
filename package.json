@@ -10,38 +10,36 @@
     "start": "next start -p $CONNECT_ACCOUNT_PORT"
   },
   "dependencies": {
-    "apollo-link-context": "^1.0.20",
-    "apollo-link-http": "^1.5.17",
-    "graphql": "^15.1.0",
-    "graphql-tag": "^2.10.3",
+    "apollo-link-context": "1.0.20",
+    "apollo-link-http": "1.5.17",
+    "graphql": "15.3.0",
+    "graphql-tag": "2.10.4",
     "next": "9.4.4",
     "react": "16.13.1",
     "react-dom": "16.13.1"
   },
   "devDependencies": {
-    "@fewlines/eslint-config": "^2.0.0",
-    "@types/node": "^14.0.13",
-    "@types/react": "^16.9.38",
-    "@types/react-dom": "^16.9.8",
-    "@typescript-eslint/eslint-plugin": "^3.4.0",
-    "@typescript-eslint/parser": "^3.4.0",
-    "eslint": "^7.3.1",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.21.2",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.0",
-    "prettier": "^2.0.5",
-    "ts-node": "^8.10.2",
-    "typescript": "^3.9.5"
+    "@fewlines/eslint-config": "2.1.1",
+    "@types/node": "14.0.23",
+    "@types/react": "16.9.43",
+    "@types/react-dom": "16.9.8",
+    "@typescript-eslint/eslint-plugin": "3.6.1",
+    "@typescript-eslint/parser": "3.6.1",
+    "eslint": "7.4.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-prettier": "3.1.4",
+    "eslint-plugin-react": "7.20.3",
+    "prettier": "2.0.5",
+    "ts-node": "8.10.2",
+    "typescript": "3.9.6"
   },
   "eslintConfig": {
     "extends": [
       "@fewlines/eslint-config/node",
       "@fewlines/eslint-config/react",
-      "@fewlines/eslint-config/typescript"
-    ],
-    "rules": {
-      "react/prop-types": 0
-    }
+      "@fewlines/eslint-config/typescript",
+      "@fewlines/eslint-config/react-typescript"
+    ]
   }
 }

@@ -12,14 +12,9 @@ export enum IdentityTypes {
 }
 
 export type Identity = {
-  // An identity UUID
   id: string;
-  // Wether the identity is the primary one
   primary: boolean;
-  // Identity status (i.e. validated, unvalidated)
-  status: string;
-  // Type of identity (e.g. email, phone)
+  status: "validated" | "unvalidated";
   type: IdentityTypes;
-  // Identity value (e.g. john@doe.com)
   value: string;
 };
