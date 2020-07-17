@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React from "react";
 import styled from "styled-components";
 
@@ -5,10 +6,15 @@ import { Header } from "./Header";
 
 export const Layout: React.FC = ({ children }) => {
   return (
-    <Main>
-      <Header />
-      {children}
-    </Main>
+    <>
+      <Head>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <Main>
+        <Header />
+        {children}
+      </Main>
+    </>
   );
 };
 
