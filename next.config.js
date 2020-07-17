@@ -3,7 +3,7 @@ module.exports = {
     const { isServer } = options;
 
     config.module.rules.push({
-      test: /\.(png|svg|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+      test: /\.(png|svg|jpg|gif|eot|ttf|woff|woff2)$/,
       use: {
         loader: "url-loader",
         options: {
