@@ -1,4 +1,3 @@
-import gql from "graphql-tag";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
@@ -11,7 +10,7 @@ import { ProviderUser } from "../@types/ProviderUser";
 import { FetchIconButton } from "../components/FetchIconButton";
 import { InputForm } from "../components/InputForm";
 import { useTheme } from "../design-system/theme/useTheme";
-import { fetchManagement } from "../utils/fetchManagement";
+import { getIdentities } from "../queries/getIdentities";
 
 interface IndexProps extends JSX.Element {
   fetchedData: { data: { provider: ProviderUser } };
@@ -100,31 +99,8 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
 
 export default Index;
 
-const USER_QUERY = gql`
-  query getUserQuery($userId: String!) {
-    provider {
-      id
-      name
-      user(filters: { userId: $userId }) {
-        id
-        identities {
-          type
-          value
-          primary
-          status
-        }
-      }
-    }
-  }
-`;
-
 export const getServerSideProps: GetServerSideProps = async () => {
-  const operation = {
-    query: USER_QUERY,
-    variables: { userId: "5fab3a52-b242-4377-9e30-ae06589bebe6" },
-  };
-
-  const fetchedData = await fetchManagement(operation);
+  const fetchedData = await getIdentities();
 
   return {
     props: {
