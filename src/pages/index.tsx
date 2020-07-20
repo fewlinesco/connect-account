@@ -26,7 +26,7 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
   const { user } = fetchedData.data.provider;
 
   return (
-    <>
+    <React.Fragment>
       <Head>
         <title>Connect Account</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -95,7 +95,7 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
           </Flex>
         </IdentitySection>
       </IdentitiesBox>
-    </>
+    </React.Fragment>
   );
 };
 
@@ -119,7 +119,9 @@ const USER_QUERY = gql`
   }
 `;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  console.log(context);
+
   const operation = {
     query: USER_QUERY,
     variables: { userId: "5fab3a52-b242-4377-9e30-ae06589bebe6" },

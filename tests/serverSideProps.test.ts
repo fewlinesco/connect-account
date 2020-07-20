@@ -14,7 +14,7 @@ describe("getServerSideProps", () => {
   const mockedContext = {
     req: new IncomingMessage(new Socket()),
     res: new ServerResponse(new IncomingMessage(new Socket())),
-    query: { foo: "bar" },
+    query: {},
   };
 
   it("should handle errors", async () => {
@@ -25,7 +25,7 @@ describe("getServerSideProps", () => {
     expect(response).toEqual(
       expect.objectContaining({
         props: {
-          initialDog: {
+          fetchedData: {
             status: "error",
           },
         },
@@ -41,7 +41,7 @@ describe("getServerSideProps", () => {
     expect(response).toEqual(
       expect.objectContaining({
         props: {
-          initialDog: {
+          fetchedData: {
             status: "success",
             data: "foo",
           },
