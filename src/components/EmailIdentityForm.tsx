@@ -3,7 +3,9 @@ import styled from "styled-components";
 
 import { IdentityTypes } from "../@types/Identity";
 
-export const InputForm: React.FC<{ type: IdentityTypes }> = ({ type }) => {
+export const EmailIdentityForm: React.FC<{ type: IdentityTypes }> = ({
+  type,
+}) => {
   const [formValue, setFormValue] = React.useState("");
 
   return (

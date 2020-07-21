@@ -11,34 +11,34 @@ export default async (
 
   if (request.method === "POST") {
     return await addIdentityToUser({ userId, type, value })
-      .then(() => {
+      .then((data) => {
         response.statusCode = 200;
 
-        return response.json("succeed");
+        return response.json({ data });
       })
       .catch((error) => {
         console.log(error);
 
         response.statusCode = 400;
 
-        return response.json("failed");
+        return response.json({ error: "Could not add identity" });
       });
   } else if (request.method === "DELETE") {
     return await removeIdentityFromUser({ userId, type, value })
-      .then(() => {
+      .then((data) => {
         response.statusCode = 200;
 
-        return response.json("succeed");
+        return response.json({ data });
       })
       .catch((error) => {
         console.log(error);
 
         response.statusCode = 400;
 
-        return response.json("failed");
+        return response.json({ error: "Could not remove identity" });
       });
   }
-  response.statusCode = 400;
+  response.statusCode = 405;
 
-  return response.json(":(");
+  return response.end();
 };

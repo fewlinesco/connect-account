@@ -16,7 +16,6 @@ const ADD_IDENTITY_TO_USER = gql`
       status
       type
       value
-      __typename
     }
   }
 `;
