@@ -1,0 +1,219 @@
+import { DefaultTheme } from "styled-components";
+
+// Based on Bootstrap breakpoints
+const breakpoints = {
+  xs: 576,
+  s: 768,
+  m: 992,
+  l: 1200,
+};
+
+export const deviceBreakpoints = {
+  xs: `(max-width: ${breakpoints.xs}px)`,
+  s: `(max-width: ${breakpoints.s}px)`,
+  m: `(max-width: ${breakpoints.m}px)`,
+  l: `(max-width: ${breakpoints.l}px)`,
+};
+
+/* We use 'font-size: 62.5%' globally.
+	This font size means that '1rem' is exactly equal to '10px'*/
+
+const borders = {
+  thin: "0.1rem solid",
+  normal: "0.2rem solid",
+  large: "0.4rem solid",
+};
+
+const colors = {
+  primary: "#1E10FF",
+  secondary: "#44F8D7",
+  background: "#FAFAFA",
+  backgroundContrast: "#FFFFFF",
+  black: "#202020",
+  contrastCopy: "#FFFFFF",
+  red: "#FF645B",
+  green: "#08D079",
+  yellow: "#FDC141",
+  turquoise: "#40E0D0",
+  blacks: [
+    "hsl(0, 0%, 90%)", // 0
+    "hsl(0, 0%, 75%)", // 1
+    "hsl(0, 0%, 60%)", // 2
+    "hsl(0, 0%, 40%)", // 3
+    "hsl(0, 0%, 20%)", // 4
+  ],
+};
+
+const fonts = {
+  sansSerif:
+    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
+};
+
+const fontWeights = {
+  hairline: 100,
+  thin: 200,
+  light: 300,
+  normal: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+  extrabold: 800,
+  black: 900,
+};
+
+const fontSizes = {
+  s: "1.4rem",
+  m: "1.8rem",
+  l: "2rem",
+  paragraph: "1.6rem",
+  h1: "2.2rem",
+  h2: "2rem",
+  h3: "1.8rem",
+};
+
+const letterSpacing = {
+  normal: "normal",
+  tracked: "0.1em",
+  tight: "0.05em",
+  mega: "0.25em",
+};
+
+const lineHeights = {
+  solid: 1,
+  copy: 1.25,
+  title: 1.5,
+};
+
+const radii = ["0.2rem", "0.5rem", "50%"];
+
+const shadows = {
+  xs: "0 0 0 1px rgba(0, 0, 0, 0.05)",
+  sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+  base: "0 1px 3px rgba(63,63,68,0.15), 0 20px 30px rgba(63,63,68,0.07)",
+  left: `5px 0 5px -5px ${colors.blacks[1]}`,
+};
+
+function spacer(n: number): string {
+  const baseSpacer = 4;
+  return `${n * baseSpacer}rem`;
+}
+
+const spaces = {
+  component: {
+    xxs: spacer(0.25),
+    xs: spacer(0.5),
+    s: spacer(1),
+    m: spacer(2),
+    l: spacer(4),
+    xl: spacer(6),
+    xxl: spacer(8),
+  },
+  layout: {
+    xxs: spacer(4),
+    xs: spacer(6),
+    s: spacer(8),
+    m: spacer(10),
+    l: spacer(12),
+    xl: spacer(16),
+    xxl: spacer(20),
+  },
+};
+
+const transitions = {
+  quick: "ease-in-out 0.15s",
+  classic: "ease-in-out 0.3s",
+};
+
+export const lightTheme: LightTheme = {
+  spaces,
+  fontSizes,
+  fontWeights,
+  lineHeights,
+  fonts,
+  shadows,
+  colors,
+  borders,
+  letterSpacing,
+  radii,
+  transitions,
+};
+
+export interface LightTheme extends DefaultTheme {
+  spaces: {
+    component: Spacing;
+    layout: Spacing;
+  };
+  fontSizes: {
+    s: string;
+    m: string;
+    l: string;
+    paragraph: string;
+    h1: string;
+    h2: string;
+    h3: string;
+  };
+  fontWeights: {
+    hairline: number;
+    thin: number;
+    light: number;
+    normal: number;
+    medium: number;
+    semibold: number;
+    bold: number;
+    extrabold: number;
+    black: number;
+  };
+  radii: (number | string)[];
+  borders: {
+    thin: string;
+    normal: string;
+    large: string;
+  };
+  lineHeights: {
+    solid: number;
+    title: number;
+    copy: number;
+  };
+  letterSpacing: {
+    normal: string;
+    tracked: string;
+    tight: string;
+    mega: string;
+  };
+  fonts: {
+    sansSerif: string;
+  };
+  shadows: {
+    xs: string;
+    sm: string;
+    base: string;
+    left: string;
+  };
+  colors: {
+    primary: string;
+    secondary: string;
+    background: string;
+    backgroundContrast: string;
+    black: string;
+    contrastCopy: string;
+    red: string;
+    green: string;
+    turquoise: string;
+    yellow: string;
+    blacks: string[];
+  };
+  transitions: {
+    quick: string;
+    classic: string;
+  };
+}
+
+type Spacing = {
+  xxs: string;
+  xs: string;
+  s: string;
+  m: string;
+  l: string;
+  xl: string;
+  xxl: string;
+};
