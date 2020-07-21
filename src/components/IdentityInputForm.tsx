@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 import { IdentityTypes } from "../@types/Identity";
 
-export const EmailIdentityForm: React.FC<{ type: IdentityTypes }> = ({
+export const IdentityInputForm: React.FC<{ type: IdentityTypes }> = ({
   type,
 }) => {
-  const [formValue, setFormValue] = React.useState("");
+  const [identity, setIdentity] = React.useState("");
 
   return (
     <Form>
@@ -14,8 +14,8 @@ export const EmailIdentityForm: React.FC<{ type: IdentityTypes }> = ({
         type="text"
         name="value"
         placeholder="Enter your email"
-        value={formValue}
-        onChange={(event) => setFormValue(event.target.value)}
+        value={identity}
+        onChange={(event) => setIdentity(event.target.value)}
       />
       <SendInput
         type="submit"
@@ -24,7 +24,7 @@ export const EmailIdentityForm: React.FC<{ type: IdentityTypes }> = ({
           const body = {
             userId: "5fab3a52-b242-4377-9e30-ae06589bebe6",
             type,
-            value: formValue,
+            value: identity,
           };
 
           fetch("/api/identity", {

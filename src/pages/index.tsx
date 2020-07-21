@@ -7,8 +7,8 @@ import styled from "styled-components";
 import { HttpVerbs } from "../@types/HttpVerbs";
 import { IdentityTypes } from "../@types/Identity";
 import { ProviderUser } from "../@types/ProviderUser";
-import { EmailIdentityForm } from "../components/EmailIdentityForm";
 import { FetchIconButton } from "../components/FetchIconButton";
+import { IdentityInputForm } from "../components/IdentityInputForm";
 import { useTheme } from "../design-system/theme/useTheme";
 import { getIdentities } from "../queries/getIdentities";
 
@@ -58,7 +58,7 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
             >
               Add an email
             </Button>
-            {addEmail && <EmailIdentityForm type={IdentityTypes.EMAIL} />}
+            {addEmail && <IdentityInputForm type={IdentityTypes.EMAIL} />}
           </Flex>
         </IdentitySection>
         <IdentitySection>
@@ -89,7 +89,7 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
             >
               Add a phone number
             </Button>
-            {addPhone && <EmailIdentityForm type={IdentityTypes.PHONE} />}
+            {addPhone && <IdentityInputForm type={IdentityTypes.PHONE} />}
           </Flex>
         </IdentitySection>
       </IdentitiesBox>
