@@ -8,7 +8,7 @@ import { HttpVerbs } from "../@types/HttpVerbs";
 import { IdentityTypes } from "../@types/Identity";
 import { ProviderUser } from "../@types/ProviderUser";
 import { FetchIconButton } from "../components/FetchIconButton";
-import { InputForm } from "../components/InputForm";
+import { IdentityInputForm } from "../components/IdentityInputForm";
 import { useTheme } from "../design-system/theme/useTheme";
 import { getIdentities } from "../queries/getIdentities";
 
@@ -25,7 +25,7 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
   const { user } = fetchedData.data.provider;
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>Connect Account</title>
       </Head>
@@ -58,7 +58,7 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
             >
               Add an email
             </Button>
-            {addEmail && <InputForm type={IdentityTypes.EMAIL} />}
+            {addEmail && <IdentityInputForm type={IdentityTypes.EMAIL} />}
           </Flex>
         </IdentitySection>
         <IdentitySection>
@@ -89,11 +89,11 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
             >
               Add a phone number
             </Button>
-            {addPhone && <InputForm type={IdentityTypes.PHONE} />}
+            {addPhone && <IdentityInputForm type={IdentityTypes.PHONE} />}
           </Flex>
         </IdentitySection>
       </IdentitiesBox>
-    </React.Fragment>
+    </>
   );
 };
 
