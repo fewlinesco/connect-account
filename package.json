@@ -41,7 +41,6 @@
     "file-loader": "6.0.0",
     "jest": "^26.1.0",
     "jest-fetch-mock": "^3.0.3",
-    "jest-watch-typeahead": "^0.6.0",
     "prettier": "2.0.5",
     "ts-jest": "^26.1.2",
     "ts-node": "8.10.2",
@@ -116,14 +115,6 @@
     ],
     "transform": {
       "^.+\\.(ts|tsx)$": "babel-jest"
-    },
-    "watchPlugins": [
-      "jest-watch-typeahead/filename",
-      "jest-watch-typeahead/testname"
-    ],
-    "moduleNameMapper": {
-      "\\.(css|less|sass|scss)$": "identity-obj-proxy",
-      "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/test/__mocks__/fileMock.js"
     }
   }
 }
