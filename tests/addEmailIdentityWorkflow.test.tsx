@@ -8,11 +8,11 @@ import { render, fireEvent } from "./config/test-utils";
 
 enableFetchMocks();
 
-describe("addEmailIdentityWorkflow", () => {
-  HTMLFormElement.prototype.submit = () => {
-    return;
-  };
+HTMLFormElement.prototype.submit = () => {
+  return;
+};
 
+describe("addEmailIdentityWorkflow", () => {
   type MockedFetchedData = {
     data: {
       provider: ProviderUser;
