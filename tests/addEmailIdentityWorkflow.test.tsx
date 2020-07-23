@@ -9,10 +9,6 @@ import { render, fireEvent } from "./config/test-utils";
 enableFetchMocks();
 
 describe("addEmailIdentityWorkflow", () => {
-  HTMLFormElement.prototype.submit = () => {
-    return;
-  };
-
   type MockedFetchedData = {
     data: {
       provider: ProviderUser;
@@ -48,6 +44,12 @@ describe("addEmailIdentityWorkflow", () => {
   };
 
   test("test test", () => {
+    window.HTMLFormElement.prototype.submit = () => {
+      return;
+    };
+
+    const onSubmit = jest.fn();
+
     const { getByText, getByRole } = render(
       <Index fetchedData={mockedFetchedData} />,
       {},

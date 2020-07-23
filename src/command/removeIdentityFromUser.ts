@@ -35,5 +35,7 @@ export async function removeIdentityFromUser({
     variables: { userId, type, value },
   };
 
+  console.log(operation);
+
   return await fetchManagement(operation);
 }
