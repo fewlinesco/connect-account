@@ -6,11 +6,41 @@ import { ProviderUser } from "../src/@types/ProviderUser";
 import Index from "../src/pages/index";
 import { render, fireEvent } from "./config/test-utils";
 
-enableFetchMocks();
+// Following code mocks window.console.error
+// to ignore the "Not implemented: HTMLFormElement.prototype.submit".
+//
+// Problem: We use "form.onsubmit" event listener in some tests,
+// but HTMLFormElement.prototype.submit is not implemented in JSDOM,
+// although the tests are passing and handler fires.
+//
+// More:
+// https://github.com/jsdom/jsdom/issues/1937
+// https://github.com/facebook/jest/issues/5223#issuecomment-489422244
 
-HTMLFormElement.prototype.submit = () => {
-  return;
-};
+let origErrorConsole: any;
+
+beforeEach(() => {
+  origErrorConsole = window.console.error;
+
+  window.console.error = (...args: any[]) => {
+    const firstArg = args.length > 0 && args[0];
+
+    const shouldBeIgnored =
+      firstArg &&
+      typeof firstArg === "string" &&
+      firstArg.includes("Not implemented: HTMLFormElement.prototype.submit");
+
+    if (!shouldBeIgnored) {
+      origErrorConsole(...args);
+    }
+  };
+});
+
+afterEach(() => {
+  window.console.error = origErrorConsole;
+});
+
+enableFetchMocks();
 
 describe("addEmailIdentityWorkflow", () => {
   type MockedFetchedData = {
@@ -47,7 +77,7 @@ describe("addEmailIdentityWorkflow", () => {
     },
   };
 
-  test("test test", () => {
+  test("Add email identity user flow", () => {
     const { getByText, getByRole } = render(
       <Index fetchedData={mockedFetchedData} />,
       {},
