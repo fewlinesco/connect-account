@@ -24,7 +24,7 @@ const USER_QUERY = gql`
 export async function getIdentities(): Promise<FetchResult | Error> {
   const operation = {
     query: USER_QUERY,
-    variables: { userId: "5fab3a52-b242-4377-9e30-ae06589bebe6" },
+    variables: { userId: process.env.DEV_USER_ID },
   };
 
   return await fetchManagement(operation);

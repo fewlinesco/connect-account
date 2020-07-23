@@ -22,7 +22,7 @@ export const IdentityInputForm: React.FC<{ type: IdentityTypes }> = ({
         value="Send"
         onClick={() => {
           const body = {
-            userId: "5fab3a52-b242-4377-9e30-ae06589bebe6",
+            userId: process.env.DEV_USER_ID,
             type,
             value: identity,
           };
