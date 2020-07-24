@@ -17,12 +17,12 @@ import { render, fireEvent } from "./config/test-utils";
 // https://github.com/jsdom/jsdom/issues/1937
 // https://github.com/facebook/jest/issues/5223#issuecomment-489422244
 
-let origErrorConsole: any;
+let origErrorConsole: Console["error"];
 
 beforeEach(() => {
   origErrorConsole = window.console.error;
 
-  window.console.error = (...args: any[]) => {
+  window.console.error = (...args: string[]) => {
     const firstArg = args.length > 0 && args[0];
 
     const shouldBeIgnored =
