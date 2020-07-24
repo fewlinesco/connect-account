@@ -43,8 +43,8 @@ describe("addEmailIdentityWorkflow", () => {
     },
   };
 
-  test("Add email identity user flow", () => {
-    const { getByText, getByRole } = render(
+  test("Add email identity user flow", async () => {
+    const { getByText, getByRole, getByTestId } = render(
       <Index fetchedData={mockedFetchedData} />,
       {},
     );
@@ -52,6 +52,14 @@ describe("addEmailIdentityWorkflow", () => {
     const addAnEmailButton = getByText("Add an email");
 
     fireEvent.click(addAnEmailButton);
+
+    const identityForm = getByTestId("identity-form");
+
+    let submitCheck = false;
+
+    identityForm.addEventListener("submit", () => {
+      submitCheck = true;
+    });
 
     const emailInput = getByRole("textbox");
 
@@ -61,6 +69,6 @@ describe("addEmailIdentityWorkflow", () => {
 
     fireEvent.click(sendEmailButton);
 
-    expect(1).toEqual(1);
+    expect(submitCheck).toBe(true);
   });
 });
