@@ -43,7 +43,7 @@ describe("addEmailIdentityWorkflow", () => {
     },
   };
 
-  test("Add email identity user flow", async () => {
+  test("Add email identity user flow with button click", async () => {
     const { getByText, getByRole, getByTestId } = render(
       <Index fetchedData={mockedFetchedData} />,
       {},
@@ -57,9 +57,12 @@ describe("addEmailIdentityWorkflow", () => {
 
     let submitCheck = false;
 
-    identityForm.addEventListener("submit", () => {
+    const eventListenerCallback = (event: Event): void => {
       submitCheck = true;
-    });
+      event.currentTarget?.removeEventListener("submit", eventListenerCallback);
+    };
+
+    identityForm.addEventListener("submit", eventListenerCallback);
 
     const emailInput = getByRole("textbox");
 
