@@ -12,9 +12,11 @@ describe("getServerSideProps", () => {
     fetch.resetMocks();
   });
 
+  const mockedRequest = new IncomingMessage(new Socket());
+
   const mockedContext = {
-    req: new IncomingMessage(new Socket()),
-    res: new ServerResponse(new IncomingMessage(new Socket())),
+    req: mockedRequest,
+    res: new ServerResponse(mockedRequest),
     query: {},
   };
 
