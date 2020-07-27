@@ -23,7 +23,7 @@ export const FetchIconButton: React.FC<FetchIconButtonProps> = ({
       color={color}
       onClick={() => {
         const requestData = {
-          userId: "5fab3a52-b242-4377-9e30-ae06589bebe6",
+          userId: "93ef65fc-9b54-4cf2-a9bf-75f85169c023",
           type: type,
           value: value,
         };

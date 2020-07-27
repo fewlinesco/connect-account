@@ -9,7 +9,24 @@ export const IdentityInputForm: React.FC<{ type: IdentityTypes }> = ({
   const [identity, setIdentity] = React.useState("");
 
   return (
-    <Form>
+    <Form
+      data-testid="identity-form"
+      onSubmit={() => {
+        const body = {
+          userId: "93ef65fc-9b54-4cf2-a9bf-75f85169c023",
+          type,
+          value: identity,
+        };
+
+        fetch("/api/identity", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        });
+      }}
+    >
       <Input
         type="text"
         name="value"
@@ -17,25 +34,7 @@ export const IdentityInputForm: React.FC<{ type: IdentityTypes }> = ({
         value={identity}
         onChange={(event) => setIdentity(event.target.value)}
       />
-      <SendInput
-        type="submit"
-        value="Send"
-        onClick={() => {
-          const body = {
-            userId: "5fab3a52-b242-4377-9e30-ae06589bebe6",
-            type,
-            value: identity,
-          };
-
-          fetch("/api/identity", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-          });
-        }}
-      />
+      <SendInput type="submit" value="Send" />
     </Form>
   );
 };

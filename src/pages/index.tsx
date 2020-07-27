@@ -12,9 +12,9 @@ import { IdentityInputForm } from "../components/IdentityInputForm";
 import { useTheme } from "../design-system/theme/useTheme";
 import { getIdentities } from "../queries/getIdentities";
 
-interface IndexProps extends JSX.Element {
+type IndexProps = {
   fetchedData: { data: { provider: ProviderUser } };
-}
+};
 
 const Index: React.FC<IndexProps> = ({ fetchedData }) => {
   const [addEmail, setAddEmail] = React.useState<boolean>(false);
