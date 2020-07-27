@@ -8,13 +8,19 @@ import { lightTheme } from "../design-system/theme/lightTheme";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
-    <ThemeProvider theme={lightTheme}>
-      <GlobalStyle />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ThemeProvider>
+    <AccountApp>
+      <Component {...pageProps} />
+    </AccountApp>
   );
 };
 
 export default App;
+
+export const AccountApp: React.FC = ({ children }) => {
+  return (
+    <ThemeProvider theme={lightTheme}>
+      <GlobalStyle />
+      <Layout>{children}</Layout>
+    </ThemeProvider>
+  );
+};
