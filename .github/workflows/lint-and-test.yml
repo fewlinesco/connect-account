@@ -23,11 +23,10 @@ jobs:
           ${{ runner.os }}-yarn-
 
     - name: dependencies
-      if: steps.cache-primes.outputs.cache-hit != 'true'
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn install
 
     - name: linter
-      if: steps.cache-primes.outputs.cache-hit != 'true'
       run: yarn lint
 
   test:
@@ -49,9 +48,8 @@ jobs:
           ${{ runner.os }}-yarn-
     
     - name: dependencies
-      if: steps.cache-primes.outputs.cache-hit != 'true'
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn install
 
-    - name: linter
-      if: steps.cache-primes.outputs.cache-hit != 'true'
+    - name: test
       run: yarn test
