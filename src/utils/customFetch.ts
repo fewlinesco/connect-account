@@ -1,13 +1,9 @@
 import { HttpVerbs } from "src/@types/HttpVerbs";
 
-type Body = {
-  [key: string]: string;
-};
-
 export function customFetch(
   endpoint: string,
   method: HttpVerbs,
-  body: Body,
+  body: Record<string, unknown>,
 ): Promise<Response> {
   return fetch(endpoint, {
     method,
