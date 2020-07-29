@@ -24,6 +24,7 @@
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "^7.10.4",
     "@fewlines/eslint-config": "2.1.1",
+    "@fewlines/fwl-logging": "^1.0.0",
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^10.4.7",
     "@types/jest": "^26.0.4",

@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
 import { Trash } from "react-feather";
+import { withSSRLogger } from "src/middleware/withSSRLogger";
 import styled from "styled-components";
 
 import { HttpVerbs } from "../@types/HttpVerbs";
@@ -99,15 +100,17 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
 
 export default Index;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const fetchedData = await getIdentities();
+export const getServerSideProps: GetServerSideProps = withSSRLogger(
+  async () => {
+    const fetchedData = await getIdentities();
 
-  return {
-    props: {
-      fetchedData,
-    },
-  };
-};
+    return {
+      props: {
+        fetchedData,
+      },
+    };
+  },
+);
 
 const IdentitiesBox = styled.div`
   width: 100rem;
