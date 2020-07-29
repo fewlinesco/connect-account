@@ -1,7 +1,9 @@
 import React from "react";
+import { HttpVerbs } from "src/@types/HttpVerbs";
 import styled from "styled-components";
 
 import { IdentityTypes } from "../@types/Identity";
+import { customFetch } from "../utils/customFetch";
 
 export const IdentityInputForm: React.FC<{ type: IdentityTypes }> = ({
   type,
@@ -19,13 +21,7 @@ export const IdentityInputForm: React.FC<{ type: IdentityTypes }> = ({
           value: identity,
         };
 
-        fetch("/api/identity", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        });
+        customFetch("/api/identity", HttpVerbs.POST, body);
       }}
     >
       <Input
