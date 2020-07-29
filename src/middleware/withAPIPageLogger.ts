@@ -1,14 +1,13 @@
 import { createLogger } from "@fewlines/fwl-logging";
-import { FetchResult } from "apollo-link";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Handler } from "src/pages/api/identity";
 
-type T = (
+type WithAPIPageLogger = (
   request: NextApiRequest,
   response: NextApiResponse,
 ) => Promise<JSON | void>;
 
-export function withAPIPageLogger(handler: Handler): T {
+export function withAPIPageLogger(handler: Handler): WithAPIPageLogger {
   const logger = createLogger("connect-account", "json").withMeta({
     process: "getServerSideProps",
   });
