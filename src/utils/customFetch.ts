@@ -3,7 +3,7 @@ import { HttpVerbs } from "src/@types/HttpVerbs";
 export function customFetch(
   endpoint: string,
   method: HttpVerbs,
-  body: Record<string, unknown>,
+  body: Record<string, string | number>,
 ): Promise<Response> {
   return fetch(endpoint, {
     method,
