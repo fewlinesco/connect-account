@@ -25,6 +25,17 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
 
   const { user } = fetchedData.data.provider;
 
+  let emailCount = 0;
+  let phoneCount = 0;
+
+  user.identities.map(({ type }) => {
+    if (type === IdentityTypes.EMAIL.toLowerCase()) {
+      emailCount++;
+    } else if (type === IdentityTypes.PHONE.toLowerCase()) {
+      phoneCount++;
+    }
+  });
+
   return (
     <>
       <Head>
@@ -38,7 +49,7 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
               <IdentityBox key={value}>
                 <Flex>
                   <Value>{value}</Value>
-                  {user.identities.length > 1 ? (
+                  {emailCount > 1 ? (
                     <FetchIconButton
                       type={IdentityTypes.EMAIL}
                       method={HttpVerbs.DELETE}
@@ -71,14 +82,16 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
               <IdentityBox key={value}>
                 <Flex>
                   <Value>{value}</Value>
-                  <FetchIconButton
-                    type={IdentityTypes.PHONE}
-                    method={HttpVerbs.DELETE}
-                    value={value}
-                    color={theme.colors.red}
-                  >
-                    <Trash width="15" />
-                  </FetchIconButton>
+                  {phoneCount > 1 ? (
+                    <FetchIconButton
+                      type={IdentityTypes.PHONE}
+                      method={HttpVerbs.DELETE}
+                      value={value}
+                      color={theme.colors.red}
+                    >
+                      <Trash width="15" />
+                    </FetchIconButton>
+                  ) : null}
                 </Flex>
               </IdentityBox>
             ) : (
