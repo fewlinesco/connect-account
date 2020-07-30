@@ -38,14 +38,16 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
               <IdentityBox key={value}>
                 <Flex>
                   <Value>{value}</Value>
-                  <FetchIconButton
-                    type={IdentityTypes.EMAIL}
-                    method={HttpVerbs.DELETE}
-                    value={value}
-                    color={theme.colors.red}
-                  >
-                    <Trash width="15" />
-                  </FetchIconButton>
+                  {user.identities.length > 1 ? (
+                    <FetchIconButton
+                      type={IdentityTypes.EMAIL}
+                      method={HttpVerbs.DELETE}
+                      value={value}
+                      color={theme.colors.red}
+                    >
+                      <Trash width="15" />
+                    </FetchIconButton>
+                  ) : null}
                 </Flex>
               </IdentityBox>
             ) : (
