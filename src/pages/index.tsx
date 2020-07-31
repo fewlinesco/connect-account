@@ -1,98 +1,48 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
-import { Trash } from "react-feather";
 import styled from "styled-components";
 
-import { HttpVerbs } from "../@types/HttpVerbs";
-import { IdentityTypes } from "../@types/Identity";
-import { ProviderUser } from "../@types/ProviderUser";
-import { FetchIconButton } from "../components/FetchIconButton";
-import { IdentityInputForm } from "../components/IdentityInputForm";
-import { useTheme } from "../design-system/theme/useTheme";
-import { getIdentities } from "../queries/getIdentities";
-
 type IndexProps = {
-  fetchedData: { data: { provider: ProviderUser } };
+  authParams: {
+    [key: string]: string;
+    providerURL: string;
+    clientID: string;
+    clientSecret: string;
+    redirectURI: string;
+    scope: string;
+  };
 };
 
-const Index: React.FC<IndexProps> = ({ fetchedData }) => {
-  const [addEmail, setAddEmail] = React.useState<boolean>(false);
-  const [addPhone, setAddPhone] = React.useState<boolean>(false);
+const Index: React.FC<IndexProps> = ({ authParams }) => {
+  const { providerURL, ...queryStringsParams } = authParams;
 
-  const theme = useTheme();
+  const searchParams = new URLSearchParams();
 
-  const { user } = fetchedData.data.provider;
+  Object.entries(queryStringsParams).forEach(([key, value]) =>
+    searchParams.append(key, value),
+  );
+
+  // console.log(`${providerURL}/oauth/authorize?${searchParams.toString()}`);
+
+  // const authURL = new URL(
+  //   `${authParams.providerURL}/oauth/authorize?client_id=${authParams.clientID}&redirect_uri=${authParams.redirectURI}&response_type=code&scope=${authParams.scope}`,
+  // );
 
   return (
     <>
       <Head>
         <title>Connect Account</title>
       </Head>
-      <IdentitiesBox>
-        <IdentitySection>
-          <h3>Email(s):</h3>
-          {user.identities.map(({ value, type }) => {
-            return type === IdentityTypes.EMAIL.toLowerCase() ? (
-              <IdentityBox key={value}>
-                <Flex>
-                  <Value>{value}</Value>
-                  <FetchIconButton
-                    type={IdentityTypes.EMAIL}
-                    method={HttpVerbs.DELETE}
-                    value={value}
-                    color={theme.colors.red}
-                  >
-                    <Trash width="15" />
-                  </FetchIconButton>
-                </Flex>
-              </IdentityBox>
-            ) : (
-              <React.Fragment key={value} />
-            );
-          })}
-          <Flex>
-            <Button
-              onClick={() => setAddEmail(!addEmail)}
-              color={theme.colors.green}
-            >
-              Add an email
-            </Button>
-            {addEmail && <IdentityInputForm type={IdentityTypes.EMAIL} />}
-          </Flex>
-        </IdentitySection>
-        <IdentitySection>
-          <h3>Phone number(s):</h3>
-          {user.identities.map(({ value, type }) => {
-            return type === IdentityTypes.PHONE.toLowerCase() ? (
-              <IdentityBox key={value}>
-                <Flex>
-                  <Value>{value}</Value>
-                  <FetchIconButton
-                    type={IdentityTypes.PHONE}
-                    method={HttpVerbs.DELETE}
-                    value={value}
-                    color={theme.colors.red}
-                  >
-                    <Trash width="15" />
-                  </FetchIconButton>
-                </Flex>
-              </IdentityBox>
-            ) : (
-              <React.Fragment key={value} />
-            );
-          })}
-          <Flex>
-            <Button
-              onClick={() => setAddPhone(!addEmail)}
-              color={theme.colors.green}
-            >
-              Add a phone number
-            </Button>
-            {addPhone && <IdentityInputForm type={IdentityTypes.PHONE} />}
-          </Flex>
-        </IdentitySection>
-      </IdentitiesBox>
+      <Main>
+        <LoginButton>
+          <a
+            href={`${providerURL}/oauth/authorize?${searchParams.toString()}&response_type=code`}
+          >
+            Login
+          </a>
+        </LoginButton>
+      </Main>
     </>
   );
 };
@@ -100,59 +50,48 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
 export default Index;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const fetchedData = await getIdentities();
+  const authParams = {
+    providerURL: process.env.PROVIDER_URL,
+    client_id: process.env.API_CLIENT_ID,
+    redirect_uri: process.env.API_REDIRECT_URI,
+    scope: process.env.API_SCOPES,
+  };
 
   return {
     props: {
-      fetchedData,
+      authParams,
     },
   };
 };
 
-const IdentitiesBox = styled.div`
-  width: 100rem;
-  padding-top: ${({ theme }) => theme.spaces.component.xxs};
-  border-radius: ${({ theme }) => theme.radii[1]};
-  background-color: ${({ theme }) => theme.colors.backgroundContrast};
-  box-shadow: ${({ theme }) => theme.shadows.base};
-`;
-
-const IdentitySection = styled.div`
-  padding: ${({ theme }) => theme.spaces.component.xs};
-  border-bottom: ${({ theme }) =>
-    `${theme.colors.blacks[0]} ${theme.borders.thin}`};
-`;
-
-const IdentityBox = styled.div`
-  padding: ${({ theme }) => theme.spaces.component.xs};
-`;
-
-const Flex = styled.div`
+const Main = styled.main`
+  width: 100%;
+  height: 50vh;
   display: flex;
+  justify-content: center;
   align-items: center;
 `;
 
-const Value = styled.p`
-  margin-right: 0.5rem;
-`;
-
-type ButtonProps = {
-  color: string;
-};
-
-const Button = styled.button<ButtonProps>`
-  padding: 0.5rem;
-  margin-right: 1rem;
+const LoginButton = styled.button`
+  padding: 0.5rem 2rem;
   border-radius: ${({ theme }) => theme.radii[0]};
   background-color: transparent;
-  ${(props) => `color: ${props.color}`};
+  border: ${({ theme }) => `${theme.colors.green} ${theme.borders.thin}`};
   transition: ${({ theme }) => theme.transitions.quick};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
 
+  a {
+    color: ${({ theme }) => theme.colors.green};
+    text-decoration: none;
+  }
+
   &:hover {
     cursor: pointer;
-    ${(props) => `background-color: ${props.color}`};
-    color: ${({ theme }) => theme.colors.contrastCopy};
+    background-color: ${({ theme }) => theme.colors.green};
+
+    a {
+      color: ${({ theme }) => theme.colors.contrastCopy};
+    }
   }
 
   &:active,
