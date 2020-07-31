@@ -13,9 +13,12 @@
   "dependencies": {
     "apollo-link-context": "1.0.20",
     "apollo-link-http": "1.5.17",
+    "form-data": "^3.0.0",
     "graphql": "15.3.0",
     "graphql-tag": "2.10.4",
+    "jsonwebtoken": "^8.5.1",
     "next": "9.4.4",
+    "next-iron-session": "^4.1.7",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-feather": "2.0.8",

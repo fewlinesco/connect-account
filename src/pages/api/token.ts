@@ -1,35 +1,56 @@
+import FormData from "form-data";
+import jwt from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async (
   request: NextApiRequest,
   response: NextApiResponse,
 ): Promise<void> => {
-  // console.log(request);
-
-  // console.log(request);
-  // console.log(
-  //   "================================================================================",
-  // );
-  // console.log(response);
-
   if (request.method === "GET") {
     const callback = {
       client_id: process.env.API_CLIENT_ID,
       client_secret: process.env.API_CLIENT_SECRET,
-      code: request.query.code,
+      code: request.query.code as string,
       grant_type: "authorization_code",
       redirect_uri: process.env.API_REDIRECT_URI,
     };
 
-    console.log(callback);
+    const formedPayload = new FormData();
 
-    fetch(`${process.env.PROVIDER_URL}/oauth/token`, {
+    Object.entries(callback).forEach(
+      ([key, value]) => value && formedPayload.append(key, value),
+    );
+
+    process.env["NODE_TLS_REJECT_UNAUTHORIZED"] =
+      process.env.NODE_ENV === "development" ? "0" : "1";
+
+    await fetch(`${process.env.PROVIDER_URL}/oauth/token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(callback),
-    }).then((response) => response.json());
+    })
+      .then(async (response) => {
+        const parsedResponse = await response.json();
+
+        console.log(parsedResponse);
+
+        jwt.verify(
+          parsedResponse.access_token,
+          callback.client_secret,
+          (error: Error, decodedJwt: Record<string, string>) => {
+            if (error) {
+              throw new Error(error.message);
+            }
+
+            console.log(decodedJwt);
+          },
+        );
+
+        return parsedResponse;
+      })
+      .catch((error) => console.log(error));
   }
 
   response.statusCode = 405;
