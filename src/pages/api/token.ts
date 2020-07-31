@@ -36,19 +36,23 @@ export default async (
 
         console.log(parsedResponse);
 
-        jwt.verify(
-          parsedResponse.access_token,
-          callback.client_secret,
-          (error: Error, decodedJwt: Record<string, string>) => {
-            if (error) {
-              throw new Error(error.message);
-            }
+        if (callback.client_secret) {
+          jwt.verify(
+            parsedResponse.access_token,
+            callback.client_secret,
+            (error: jwt.VerifyErrors | null, decodedJwt?: unknown) => {
+              if (error !== null) {
+                throw new Error(error.message);
+              }
 
-            console.log(decodedJwt);
-          },
-        );
+              console.log(decodedJwt);
+            },
+          );
 
-        return parsedResponse;
+          return parsedResponse;
+        }
+
+        throw new Error("Missing client_secret");
       })
       .catch((error) => console.log(error));
   }
