@@ -1,9 +1,15 @@
 import FormData from "form-data";
 import jwt from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
+import { Handler, Session } from "next-iron-session";
+import withSession from "src/middleware/withSession";
 
-export default async (
-  request: NextApiRequest,
+interface ExtendedRequest extends NextApiRequest {
+  session: Session;
+}
+
+const handler: Handler = async (
+  request: ExtendedRequest,
   response: NextApiResponse,
 ): Promise<void> => {
   if (request.method === "GET") {
@@ -34,18 +40,16 @@ export default async (
       .then(async (response) => {
         const parsedResponse = await response.json();
 
-        console.log(parsedResponse);
-
         if (callback.client_secret) {
           jwt.verify(
             parsedResponse.access_token,
             callback.client_secret,
-            (error: jwt.VerifyErrors | null, decodedJwt?: unknown) => {
+            (error: jwt.VerifyErrors | null) => {
               if (error !== null) {
                 throw new Error(error.message);
               }
 
-              console.log(decodedJwt);
+              request.session.set("user-jwt", parsedResponse.access_token);
             },
           );
 
@@ -61,3 +65,5 @@ export default async (
 
   return response.end();
 };
+
+export default withSession(handler);
