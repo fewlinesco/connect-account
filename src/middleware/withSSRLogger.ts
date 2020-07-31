@@ -15,7 +15,7 @@ export function withSSRLogger(
     return getServerSideProps(context)
       .then(
         (
-          response: GetServerSidePropsResult<{
+          serverSidePropsResult: GetServerSidePropsResult<{
             [key: string]: Record<string, unknown>;
           }>,
         ) => {
@@ -30,7 +30,7 @@ export function withSSRLogger(
               BigInt(1000)
             ).toString(),
           });
-          return response;
+          return serverSidePropsResult;
         },
       )
       .catch((error: Error) => {
