@@ -33,8 +33,6 @@ export function withAPIPageLogger(
       .catch((error: Error) => {
         const processTimeEnd = process.hrtime.bigint();
 
-        console.log(error);
-
         logger.log(error.message, {
           method: request.method,
           statusCode: request.statusCode,
