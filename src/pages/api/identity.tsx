@@ -1,8 +1,7 @@
-import { withAPIPageLogger } from "src/middleware/withAPIPageLogger";
-
 import { Handler } from "../../@types/ApiPageHandler";
 import { addIdentityToUser } from "../../command/addIdentityToUser";
 import { removeIdentityFromUser } from "../../command/removeIdentityFromUser";
+import { withAPIPageLogger } from "../../middleware/withAPIPageLogger";
 
 const handler: Handler = async (request) => {
   const { userId, type, value } = request.body;

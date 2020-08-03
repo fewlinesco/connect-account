@@ -2,7 +2,6 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
 import { Trash } from "react-feather";
-import { withSSRLogger } from "src/middleware/withSSRLogger";
 import styled from "styled-components";
 
 import { HttpVerbs } from "../@types/HttpVerbs";
@@ -11,6 +10,7 @@ import { ProviderUser } from "../@types/ProviderUser";
 import { FetchIconButton } from "../components/FetchIconButton";
 import { IdentityInputForm } from "../components/IdentityInputForm";
 import { useTheme } from "../design-system/theme/useTheme";
+import { withSSRLogger } from "../middleware/withSSRLogger";
 import { getIdentities } from "../queries/getIdentities";
 
 type IndexProps = {
