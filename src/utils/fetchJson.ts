@@ -1,10 +1,10 @@
 import { Method } from "src/@types/Method";
 
-type Method = Exclude<HttpVerbs, HttpVerbs.GET>;
+type Methods = Exclude<HttpVerbs, HttpVerbs.GET>;
 
 export function fetchJson(
   endpoint: string,
-  method: Method,
+  method: Methods,
   body: Record<string, string | number>,
 ): Promise<Response> {
   return fetch(endpoint, {
