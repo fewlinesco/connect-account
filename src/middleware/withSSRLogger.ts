@@ -25,10 +25,9 @@ export function withSSRLogger(
             method: context.req.method,
             statusCode: context.res.statusCode,
             path: context.req.url,
-            duration: (
-              (processTimeEnd - processTimeStart) /
-              BigInt(1000)
-            ).toString(),
+            duration: Number(
+              (processTimeEnd - processTimeStart) / BigInt(1000),
+            ),
           });
           return serverSidePropsResult;
         },

@@ -11,6 +11,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@fewlines/fwl-web": "^2.0.3",
     "apollo-link-context": "1.0.20",
     "apollo-link-http": "1.5.17",
     "graphql": "15.3.0",
