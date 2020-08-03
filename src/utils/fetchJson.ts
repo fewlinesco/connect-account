@@ -1,8 +1,10 @@
 import { HttpVerbs } from "src/@types/HttpVerbs";
 
+type Method = Exclude<HttpVerbs, "GET">;
+
 export function fetchJson(
   endpoint: string,
-  method: HttpVerbs,
+  method: Method,
   body: Record<string, string | number>,
 ): Promise<Response> {
   return fetch(endpoint, {
