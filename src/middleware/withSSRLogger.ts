@@ -29,6 +29,7 @@ export function withSSRLogger(
               (processTimeEnd - processTimeStart) / BigInt(1000),
             ),
           });
+
           return serverSidePropsResult;
         },
       )
@@ -44,6 +45,7 @@ export function withSSRLogger(
             BigInt(1000)
           ).toString(),
         });
+
         throw error;
       });
   };

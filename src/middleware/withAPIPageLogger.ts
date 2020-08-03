@@ -1,4 +1,5 @@
 import { createLogger } from "@fewlines/fwl-logging";
+import { HttpStatus } from "@fewlines/fwl-web";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "../@types/ApiPageHandler";
@@ -27,7 +28,7 @@ export function withAPIPageLogger(
           duration: Number((processTimeEnd - processTimeStart) / BigInt(1000)),
         });
 
-        response.statusCode = 200;
+        response.statusCode = HttpStatus.OK;
       })
       .catch((error: Error) => {
         const processTimeEnd = process.hrtime.bigint();
@@ -44,7 +45,7 @@ export function withAPIPageLogger(
           ).toString(),
         });
 
-        response.statusCode = 400;
+        response.statusCode = HttpStatus.BAD_REQUEST;
       });
   };
 }
