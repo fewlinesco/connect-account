@@ -53,7 +53,7 @@ const handler: Handler = async (
             },
           );
 
-          return parsedResponse;
+          response.redirected("", status: 200);
         }
 
         throw new Error("Missing client_secret");

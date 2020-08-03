@@ -5,7 +5,9 @@ export default function withSession(
   handler: Handler,
 ): (...args: any[]) => Promise<any> {
   return withIronSession(handler, {
-    password: "",
+    password: process.env.SECRET_COOKIE_PASSWORD
+      ? process.env.SECRET_COOKIE_PASSWORD
+      : "",
     cookieName: "oauth-jwt",
     cookieOptions: {
       // Allows the use of session in non-https environments like.
