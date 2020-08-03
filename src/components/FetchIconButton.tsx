@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { IdentityTypes } from "../@types/Identity";
 import { fetchJson } from "../utils/fetchJson";
+import { Methods } from "../utils/fetchJson";
 
 interface FetchIconButtonProps {
   type: IdentityTypes;
