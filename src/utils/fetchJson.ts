@@ -1,6 +1,6 @@
 import { HttpVerbs } from "src/@types/HttpVerbs";
 
-export function customFetch(
+export function fetchJson(
   endpoint: string,
   method: HttpVerbs,
   body: Record<string, string | number>,
