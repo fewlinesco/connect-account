@@ -1,9 +1,9 @@
 import React from "react";
+import { Method } from "src/@types/Method";
 import styled from "styled-components";
 
 import { IdentityTypes } from "../@types/Identity";
 import { fetchJson } from "../utils/fetchJson";
-import { Method } from "../utils/fetchJson";
 
 interface FetchIconButtonProps {
   type: IdentityTypes;
