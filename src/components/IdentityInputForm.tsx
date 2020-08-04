@@ -11,9 +11,10 @@ export const IdentityInputForm: React.FC<{ type: IdentityTypes }> = ({
   return (
     <Form
       data-testid="identity-form"
+      method="post"
       onSubmit={() => {
         const body = {
-          userId: "f950d3a9-51e0-4f4f-87ea-7407d08f0d8c",
+          userId: "4fa0974f-43cf-48d9-8649-18190146ffaa",
           type,
           value: identity,
         };
