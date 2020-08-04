@@ -10,6 +10,7 @@ import { ProviderUser } from "../@types/ProviderUser";
 import { FetchIconButton } from "../components/FetchIconButton";
 import { IdentityInputForm } from "../components/IdentityInputForm";
 import { useTheme } from "../design-system/theme/useTheme";
+import { withSSRLogger } from "../middleware/withSSRLogger";
 import { getIdentities } from "../queries/getIdentities";
 
 type IndexProps = {
@@ -99,15 +100,17 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
 
 export default Index;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const fetchedData = await getIdentities();
+export const getServerSideProps: GetServerSideProps = withSSRLogger(
+  async () => {
+    const fetchedData = await getIdentities();
 
-  return {
-    props: {
-      fetchedData,
-    },
-  };
-};
+    return {
+      props: {
+        fetchedData,
+      },
+    };
+  },
+);
 
 const IdentitiesBox = styled.div`
   width: 100rem;
