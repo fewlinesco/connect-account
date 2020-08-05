@@ -1,7 +1,7 @@
 import React from "react";
-import { HttpVerbs } from "src/@types/HttpVerbs";
 import styled from "styled-components";
 
+import { HttpVerbs } from "../@types/HttpVerbs";
 import { IdentityTypes } from "../@types/Identity";
 import { fetchJson } from "../utils/fetchJson";
 
