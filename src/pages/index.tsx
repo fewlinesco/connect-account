@@ -5,36 +5,24 @@ import { Trash } from "react-feather";
 import styled from "styled-components";
 
 import { HttpVerbs } from "../@types/HttpVerbs";
-import { IdentityTypes } from "../@types/Identity";
-import { ProviderUser } from "../@types/ProviderUser";
+import { IdentityTypes, Identity } from "../@types/Identity";
+import { SortedIdentities } from "../@types/SortedIdentities";
 import { FetchIconButton } from "../components/FetchIconButton";
 import { IdentityInputForm } from "../components/IdentityInputForm";
 import { useTheme } from "../design-system/theme/useTheme";
 import { withSSRLogger } from "../middleware/withSSRLogger";
 import { getIdentities } from "../queries/getIdentities";
+import { sortIdentities } from "../utils/sortIdentities";
 
 type IndexProps = {
-  fetchedData: { data: { provider: ProviderUser } };
+  sortedIdentities: SortedIdentities;
 };
 
-const Index: React.FC<IndexProps> = ({ fetchedData }) => {
+const Index: React.FC<IndexProps> = ({ sortedIdentities }) => {
   const [addEmail, setAddEmail] = React.useState<boolean>(false);
   const [addPhone, setAddPhone] = React.useState<boolean>(false);
 
   const theme = useTheme();
-
-  const { user } = fetchedData.data.provider;
-
-  let emailCount = 0;
-  let phoneCount = 0;
-
-  user.identities.map(({ type }) => {
-    if (type === IdentityTypes.EMAIL.toLowerCase()) {
-      emailCount++;
-    } else if (type === IdentityTypes.PHONE.toLowerCase()) {
-      phoneCount++;
-    }
-  });
 
   return (
     <>
@@ -44,16 +32,16 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
       <IdentitiesBox>
         <IdentitySection>
           <h3>Email(s):</h3>
-          {user.identities.map(({ value, type }) => {
-            return type === IdentityTypes.EMAIL.toLowerCase() ? (
-              <IdentityBox key={value}>
+          {sortedIdentities.emailIdentities.map((email: Identity) => {
+            return (
+              <IdentityBox key={email.value}>
                 <Flex>
-                  <Value>{value}</Value>
-                  {emailCount > 1 ? (
+                  <Value>{email.value}</Value>
+                  {sortedIdentities.emailIdentities.length > 1 ? (
                     <FetchIconButton
                       type={IdentityTypes.EMAIL}
                       method={HttpVerbs.DELETE}
-                      value={value}
+                      value={email.value}
                       color={theme.colors.red}
                     >
                       <Trash width="15" />
@@ -61,8 +49,6 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
                   ) : null}
                 </Flex>
               </IdentityBox>
-            ) : (
-              <React.Fragment key={value} />
             );
           })}
           <Flex>
@@ -77,16 +63,16 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
         </IdentitySection>
         <IdentitySection>
           <h3>Phone number(s):</h3>
-          {user.identities.map(({ value, type }) => {
-            return type === IdentityTypes.PHONE.toLowerCase() ? (
-              <IdentityBox key={value}>
+          {sortedIdentities.phoneIdentities.map((phone: Identity) => {
+            return (
+              <IdentityBox key={phone.value}>
                 <Flex>
-                  <Value>{value}</Value>
-                  {phoneCount > 1 ? (
+                  <Value>{phone.value}</Value>
+                  {sortedIdentities.phoneIdentities.length > 1 ? (
                     <FetchIconButton
                       type={IdentityTypes.PHONE}
                       method={HttpVerbs.DELETE}
-                      value={value}
+                      value={phone.value}
                       color={theme.colors.red}
                     >
                       <Trash width="15" />
@@ -94,8 +80,6 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
                   ) : null}
                 </Flex>
               </IdentityBox>
-            ) : (
-              <React.Fragment key={value} />
             );
           })}
           <Flex>
@@ -115,17 +99,24 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
 
 export default Index;
 
-export const getServerSideProps: GetServerSideProps = withSSRLogger(
-  async () => {
-    const fetchedData = await getIdentities();
+export const getServerSideProps: GetServerSideProps = async () => {
+  const sortedIdentities = await getIdentities().then((result) => {
+    if (result instanceof Error) {
+      throw new Error();
+    }
+    return sortIdentities(result);
+  });
 
-    return {
-      props: {
-        fetchedData,
-      },
-    };
-  },
-);
+  if (Object.values(sortedIdentities).length === 0) {
+    throw new Error("No identities found");
+  }
+
+  return {
+    props: {
+      sortedIdentities,
+    },
+  };
+};
 
 const IdentitiesBox = styled.div`
   width: 100rem;
