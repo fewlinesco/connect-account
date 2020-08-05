@@ -48,6 +48,26 @@ describe("getServerSideProps", () => {
     },
   };
 
+  const mockedSortedResponse = {
+    emailIdentities: [
+      {
+        id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+        primary: true,
+        status: "validated",
+        type: "email",
+        value: "test@test.test",
+      },
+    ],
+    phoneIdentities: [
+      {
+        id: "7f8d168a-3f65-4636-9acb-7720a212680e",
+        primary: true,
+        status: "validated",
+        type: "phone",
+        value: "0123456789",
+      },
+    ],
+  };
   it("should call api", async () => {
     fetch.once(JSON.stringify(mockedResponse));
 
@@ -56,7 +76,7 @@ describe("getServerSideProps", () => {
     expect(response).toEqual(
       expect.objectContaining({
         props: {
-          fetchedData: mockedResponse,
+          sortedIdentities: mockedSortedResponse,
         },
       }),
     );
