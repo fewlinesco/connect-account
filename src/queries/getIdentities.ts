@@ -21,10 +21,12 @@ const USER_QUERY = gql`
   }
 `;
 
-export async function getIdentities(): Promise<FetchResult | Error> {
+export async function getIdentities(
+  userId: string,
+): Promise<FetchResult | Error> {
   const operation = {
     query: USER_QUERY,
-    variables: { userId: process.env.DEV_USER_ID },
+    variables: { userId },
   };
 
   return await fetchManagement(operation);

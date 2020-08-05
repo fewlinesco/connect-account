@@ -2,23 +2,30 @@ import React from "react";
 import styled from "styled-components";
 
 import { IdentityTypes } from "../@types/Identity";
+import { useCookies } from "../hooks/useCookies";
 
 export const IdentityInputForm: React.FC<{ type: IdentityTypes }> = ({
   type,
 }) => {
   const [identity, setIdentity] = React.useState("");
 
+  const { data, error } = useCookies();
+
+  if (error) return <div>failed to load</div>;
+  if (!data) return <React.Fragment />;
+
   return (
     <Form
       data-testid="identity-form"
+      method="post"
       onSubmit={() => {
         const body = {
-          userId: "93ef65fc-9b54-4cf2-a9bf-75f85169c023",
+          userId: data.userId,
           type,
           value: identity,
         };
 
-        fetch("/api/identity", {
+        fetch("/api/account", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

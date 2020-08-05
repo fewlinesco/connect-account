@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { HttpVerbs } from "../@types/HttpVerbs";
 import { IdentityTypes } from "../@types/Identity";
+import { useCookies } from "../hooks/useCookies";
 
 interface FetchIconButtonProps {
   type: IdentityTypes;
@@ -18,17 +19,22 @@ export const FetchIconButton: React.FC<FetchIconButtonProps> = ({
   color,
   children,
 }) => {
+  const { data, error } = useCookies();
+
+  if (error) return <div>failed to load</div>;
+  if (!data) return <React.Fragment />;
+
   return (
     <Button
       color={color}
       onClick={() => {
         const requestData = {
-          userId: "93ef65fc-9b54-4cf2-a9bf-75f85169c023",
-          type: type,
-          value: value,
+          userId: data.userId,
+          type,
+          value,
         };
 
-        fetch("/api/identity", {
+        fetch("/api/account", {
           method: method,
           headers: {
             "Content-Type": "application/json",

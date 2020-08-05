@@ -10,6 +10,7 @@ import { ProviderUser } from "../@types/ProviderUser";
 import { FetchIconButton } from "../components/FetchIconButton";
 import { IdentityInputForm } from "../components/IdentityInputForm";
 import { useTheme } from "../design-system/theme/useTheme";
+import withSession from "../middleware/withSession";
 import { getIdentities } from "../queries/getIdentities";
 
 type AccountProps = {
@@ -99,15 +100,27 @@ const Account: React.FC<AccountProps> = ({ fetchedData }) => {
 
 export default Account;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const fetchedData = await getIdentities();
+export const getServerSideProps: GetServerSideProps = withSession(
+  async (context) => {
+    const userId = context.req.session.get("user-id");
 
-  return {
-    props: {
-      fetchedData,
-    },
-  };
-};
+    if (userId) {
+      const fetchedData = await getIdentities(userId);
+
+      return {
+        props: {
+          fetchedData,
+        },
+      };
+    }
+
+    context.res.setHeader("location", "/");
+    context.res.statusCode = 302;
+    context.res.end();
+
+    return { props: {} };
+  },
+);
 
 const IdentitiesBox = styled.div`
   width: 100rem;

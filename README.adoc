@@ -29,7 +29,14 @@ source .env_vars
 
 [source,shell]
 ----
-yarn start
+yarn dev
+----
+
+If you are working with a local Connect, you need to run:
+
+[source,shell]
+----
+NODE_TLS_REJECT_UNAUTHORIZED=0 yarn dev
 ----
 
 == Source Code Organization

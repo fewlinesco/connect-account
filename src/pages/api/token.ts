@@ -1,12 +1,8 @@
-import FormData from "form-data";
 import jwt from "jsonwebtoken";
-import { NextApiRequest, NextApiResponse } from "next";
-import { Handler, Session } from "next-iron-session";
+import { NextApiResponse } from "next";
+import { Handler } from "next-iron-session";
+import { ExtendedRequest } from "src/@types/ExtendedRequest";
 import withSession from "src/middleware/withSession";
-
-interface ExtendedRequest extends NextApiRequest {
-  session: Session;
-}
 
 const handler: Handler = async (
   request: ExtendedRequest,
@@ -21,15 +17,6 @@ const handler: Handler = async (
       redirect_uri: process.env.API_REDIRECT_URI,
     };
 
-    const formedPayload = new FormData();
-
-    Object.entries(callback).forEach(
-      ([key, value]) => value && formedPayload.append(key, value),
-    );
-
-    process.env["NODE_TLS_REJECT_UNAUTHORIZED"] =
-      process.env.NODE_ENV === "development" ? "0" : "1";
-
     await fetch(`${process.env.PROVIDER_URL}/oauth/token`, {
       method: "POST",
       headers: {
@@ -37,33 +24,40 @@ const handler: Handler = async (
       },
       body: JSON.stringify(callback),
     })
-      .then(async (response) => {
-        const parsedResponse = await response.json();
+      .then(async (fetchedResponse) => {
+        const parsedResponse = await fetchedResponse.json();
 
         if (callback.client_secret) {
+          // promissifier
           jwt.verify(
             parsedResponse.access_token,
             callback.client_secret,
-            (error: jwt.VerifyErrors | null) => {
+            async (error: jwt.VerifyErrors | null, decoded?: any) => {
               if (error !== null) {
                 throw new Error(error.message);
               }
 
-              request.session.set("user-jwt", parsedResponse.access_token);
+              request.session.set("user-id", decoded.sub);
+
+              await request.session.save().catch((error) => {
+                throw new Error(error);
+              });
+
+              response.writeHead(302, { Location: "/account" });
+
+              response.end();
             },
           );
-
-          response.redirected("", status: 200);
+        } else {
+          throw new Error("Missing client_secret");
         }
-
-        throw new Error("Missing client_secret");
       })
       .catch((error) => console.log(error));
+  } else {
+    response.statusCode = 405;
+
+    return response.end();
   }
-
-  response.statusCode = 405;
-
-  return response.end();
 };
 
 export default withSession(handler);

@@ -23,12 +23,6 @@ const Index: React.FC<IndexProps> = ({ authParams }) => {
     searchParams.append(key, value),
   );
 
-  // console.log(`${providerURL}/oauth/authorize?${searchParams.toString()}`);
-
-  // const authURL = new URL(
-  //   `${authParams.providerURL}/oauth/authorize?client_id=${authParams.clientID}&redirect_uri=${authParams.redirectURI}&response_type=code&scope=${authParams.scope}`,
-  // );
-
   return (
     <>
       <Head>
@@ -72,7 +66,7 @@ const Main = styled.main`
   align-items: center;
 `;
 
-const LoginButton = styled.button`
+const LoginButton = styled.div`
   padding: 0.5rem 2rem;
   border-radius: ${({ theme }) => theme.radii[0]};
   background-color: transparent;
