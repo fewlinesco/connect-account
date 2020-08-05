@@ -1,5 +1,6 @@
 import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
+import { ProviderUser } from "src/@types/ProviderUser";
 
 import { fetchManagement } from "../utils/fetchManagement";
 
@@ -21,11 +22,15 @@ const USER_QUERY = gql`
   }
 `;
 
-export async function getIdentities(): Promise<FetchResult | Error> {
+export async function getIdentities(): Promise<
+  FetchResult<{ provider: ProviderUser }> | Error
+> {
   const operation = {
     query: USER_QUERY,
     variables: { userId: process.env.DEV_USER_ID },
   };
 
-  return await fetchManagement(operation);
+  return (await fetchManagement(operation)) as
+    | FetchResult<{ provider: ProviderUser }>
+    | Error;
 }
