@@ -1,13 +1,14 @@
 import React from "react";
+import { Method } from "src/@types/Method";
 import styled from "styled-components";
 
-import { HttpVerbs } from "../@types/HttpVerbs";
 import { IdentityTypes } from "../@types/Identity";
 import { useCookies } from "../hooks/useCookies";
+import { fetchJson } from "../utils/fetchJson";
 
 interface FetchIconButtonProps {
   type: IdentityTypes;
-  method: HttpVerbs;
+  method: Method;
   value: string;
   color: string;
 }
@@ -30,17 +31,11 @@ export const FetchIconButton: React.FC<FetchIconButtonProps> = ({
       onClick={() => {
         const requestData = {
           userId: data.userId,
-          type,
-          value,
+          type: type,
+          value: value,
         };
 
-        fetch("/api/account", {
-          method: method,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
-        });
+        fetchJson("/api/account", method, requestData);
       }}
     >
       {children}

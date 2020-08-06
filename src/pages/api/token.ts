@@ -7,7 +7,10 @@ import withSession from "src/middleware/withSession";
 function promisifiedJWTVerify(oauthData: {
   clientSecret?: string;
   accessToken: string;
-}): Promise<any> {
+}): Promise<{
+  error: jwt.VerifyErrors | null;
+  decoded: Record<string, unknown>;
+}> {
   const { clientSecret, accessToken } = oauthData;
 
   return new Promise((resolve, reject) => {
@@ -15,7 +18,7 @@ function promisifiedJWTVerify(oauthData: {
       jwt.verify(
         accessToken,
         clientSecret,
-        (error: jwt.VerifyErrors | null, decoded?: any) => {
+        (error: jwt.VerifyErrors | null, decoded: any) => {
           resolve({ error, decoded });
         },
       );
@@ -61,7 +64,7 @@ const handler: Handler = async (
         throw new Error(decodedJWT.error.message);
       }
 
-      request.session.set("user-id", decodedJWT.sub);
+      request.session.set("user-id", decodedJWT.decoded.sub);
       await request.session.save().catch((error) => {
         throw new Error(error);
       });

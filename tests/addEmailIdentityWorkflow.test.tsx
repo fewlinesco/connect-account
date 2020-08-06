@@ -1,51 +1,38 @@
 import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 
-import { IdentityTypes } from "../src/@types/Identity";
-import { ProviderUser } from "../src/@types/ProviderUser";
+import { ReceivedIdentityTypes } from "../src/@types/Identity";
+import { SortedIdentities } from "../src/@types/SortedIdentities";
 import Account from "../src/pages/account";
 import { render, fireEvent } from "./config/test-utils";
 
 enableFetchMocks();
 
 describe("addEmailIdentityWorkflow", () => {
-  type MockedFetchedData = {
-    data: {
-      provider: ProviderUser;
-    };
-  };
-
-  const mockedFetchedData: MockedFetchedData = {
-    data: {
-      provider: {
-        id: "4a5f8589-0d91-4a69-924a-6f227a69666d",
-        name: "Mocked Provider",
-        user: {
-          id: "299d268e-3e19-4486-9be7-29c539d241ac",
-          identities: [
-            {
-              id: "7f8d168a-3f65-4636-9acb-7720a212680e",
-              primary: true,
-              status: "validated",
-              type: IdentityTypes.PHONE,
-              value: "0123456789",
-            },
-            {
-              id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-              primary: true,
-              status: "validated",
-              type: IdentityTypes.EMAIL,
-              value: "test@test.test",
-            },
-          ],
-        },
+  const mockedFetchedData: SortedIdentities = {
+    emailIdentities: [
+      {
+        id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+        primary: true,
+        status: "validated",
+        type: ReceivedIdentityTypes.EMAIL,
+        value: "test@test.test",
       },
-    },
+    ],
+    phoneIdentities: [
+      {
+        id: "7f8d168a-3f65-4636-9acb-7720a212680e",
+        primary: true,
+        status: "validated",
+        type: ReceivedIdentityTypes.PHONE,
+        value: "0123456789",
+      },
+    ],
   };
 
   test("Add email identity user flow with button click", async () => {
     const { getByText, getByRole, getByTestId } = render(
-      <Account fetchedData={mockedFetchedData} />,
+      <Account sortedIdentities={mockedFetchedData} />,
       {},
     );
 

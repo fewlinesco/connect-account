@@ -1,44 +1,34 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { HttpStatus } from "@fewlines/fwl-web";
 
+import { Handler } from "../../@types/ApiPageHandler";
 import { addIdentityToUser } from "../../command/addIdentityToUser";
 import { removeIdentityFromUser } from "../../command/removeIdentityFromUser";
+import { withAPIPageLogger } from "../../middleware/withAPIPageLogger";
 
-export default async (
-  request: NextApiRequest,
-  response: NextApiResponse,
-): Promise<void> => {
+const handler: Handler = async (request, response) => {
   const { userId, type, value } = request.body;
 
   if (request.method === "POST") {
-    return await addIdentityToUser({ userId, type, value })
-      .then((data) => {
-        response.statusCode = 200;
+    return addIdentityToUser({ userId, type, value }).then((data) => {
+      response.statusCode = HttpStatus.OK;
 
-        return response.json({ data });
-      })
-      .catch((error) => {
-        console.log(error);
+      response.setHeader("Content-Type", "application/json");
 
-        response.statusCode = 400;
-
-        return response.json({ error: "Could not add identity" });
-      });
+      response.json({ data });
+    });
   } else if (request.method === "DELETE") {
-    return await removeIdentityFromUser({ userId, type, value })
-      .then((data) => {
-        response.statusCode = 200;
+    return removeIdentityFromUser({ userId, type, value }).then((data) => {
+      response.statusCode = HttpStatus.ACCEPTED;
 
-        return response.json({ data });
-      })
-      .catch((error) => {
-        console.log(error);
+      response.setHeader("Content-Type", "application/json");
 
-        response.statusCode = 400;
-
-        return response.json({ error: "Could not remove identity" });
-      });
+      response.json({ data });
+    });
   }
-  response.statusCode = 405;
 
-  return response.end();
+  response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
+
+  return Promise.reject();
 };
+
+export default withAPIPageLogger(handler);

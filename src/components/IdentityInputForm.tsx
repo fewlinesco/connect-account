@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
+import { HttpVerbs } from "../@types/HttpVerbs";
 import { IdentityTypes } from "../@types/Identity";
 import { useCookies } from "../hooks/useCookies";
+import { fetchJson } from "../utils/fetchJson";
 
 export const IdentityInputForm: React.FC<{ type: IdentityTypes }> = ({
   type,
@@ -25,13 +27,7 @@ export const IdentityInputForm: React.FC<{ type: IdentityTypes }> = ({
           value: identity,
         };
 
-        fetch("/api/account", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        });
+        fetchJson("/api/account", HttpVerbs.POST, body);
       }}
     >
       <Input
