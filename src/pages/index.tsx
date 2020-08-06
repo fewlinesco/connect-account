@@ -10,6 +10,7 @@ import { SortedIdentities } from "../@types/SortedIdentities";
 import { FetchIconButton } from "../components/FetchIconButton";
 import { IdentityInputForm } from "../components/IdentityInputForm";
 import { useTheme } from "../design-system/theme/useTheme";
+import { withSSRLogger } from "../middleware/withSSRLogger";
 import { getIdentities } from "../queries/getIdentities";
 import { sortIdentities } from "../utils/sortIdentities";
 
@@ -106,20 +107,22 @@ const Index: React.FC<IndexProps> = ({ sortedIdentities }) => {
 
 export default Index;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const sortedIdentities = await getIdentities().then((result) => {
-    if (result instanceof Error) {
-      throw new Error();
-    }
-    return sortIdentities(result);
-  });
+export const getServerSideProps: GetServerSideProps = withSSRLogger(
+  async () => {
+    const sortedIdentities = await getIdentities().then((result) => {
+      if (result instanceof Error) {
+        throw new Error();
+      }
+      return sortIdentities(result);
+    });
 
-  return {
-    props: {
-      sortedIdentities,
-    },
-  };
-};
+    return {
+      props: {
+        sortedIdentities,
+      },
+    };
+  },
+);
 
 const IdentitiesBox = styled.div`
   width: 100rem;
