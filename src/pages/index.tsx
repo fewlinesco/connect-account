@@ -31,25 +31,29 @@ const Index: React.FC<IndexProps> = ({ sortedIdentities }) => {
       <IdentitiesBox>
         <IdentitySection>
           <h3>Email(s):</h3>
-          {sortedIdentities.emailIdentities.map((email: Identity) => {
-            return (
-              <IdentityBox key={email.value}>
-                <Flex>
-                  <Value>{email.value}</Value>
-                  {sortedIdentities.emailIdentities.length > 1 ? (
-                    <FetchIconButton
-                      type={IdentityTypes.EMAIL}
-                      method={HttpVerbs.DELETE}
-                      value={email.value}
-                      color={theme.colors.red}
-                    >
-                      <Trash width="15" />
-                    </FetchIconButton>
-                  ) : null}
-                </Flex>
-              </IdentityBox>
-            );
-          })}
+          {sortedIdentities.emailIdentities.length === 0 ? (
+            <Value>No emails</Value>
+          ) : (
+            sortedIdentities.emailIdentities.map((email: Identity) => {
+              return (
+                <IdentityBox key={email.value}>
+                  <Flex>
+                    <Value>{email.value}</Value>
+                    {sortedIdentities.emailIdentities.length > 1 ? (
+                      <FetchIconButton
+                        type={IdentityTypes.EMAIL}
+                        method={HttpVerbs.DELETE}
+                        value={email.value}
+                        color={theme.colors.red}
+                      >
+                        <Trash width="15" />
+                      </FetchIconButton>
+                    ) : null}
+                  </Flex>
+                </IdentityBox>
+              );
+            })
+          )}
           <Flex>
             <Button
               onClick={() => setAddEmail(!addEmail)}
@@ -62,25 +66,29 @@ const Index: React.FC<IndexProps> = ({ sortedIdentities }) => {
         </IdentitySection>
         <IdentitySection>
           <h3>Phone number(s):</h3>
-          {sortedIdentities.phoneIdentities.map((phone: Identity) => {
-            return (
-              <IdentityBox key={phone.value}>
-                <Flex>
-                  <Value>{phone.value}</Value>
-                  {sortedIdentities.phoneIdentities.length > 1 ? (
-                    <FetchIconButton
-                      type={IdentityTypes.PHONE}
-                      method={HttpVerbs.DELETE}
-                      value={phone.value}
-                      color={theme.colors.red}
-                    >
-                      <Trash width="15" />
-                    </FetchIconButton>
-                  ) : null}
-                </Flex>
-              </IdentityBox>
-            );
-          })}
+          {sortedIdentities.emailIdentities.length === 0 ? (
+            <Value>No phones</Value>
+          ) : (
+            sortedIdentities.phoneIdentities.map((phone: Identity) => {
+              return (
+                <IdentityBox key={phone.value}>
+                  <Flex>
+                    <Value>{phone.value}</Value>
+                    {sortedIdentities.phoneIdentities.length > 1 ? (
+                      <FetchIconButton
+                        type={IdentityTypes.PHONE}
+                        method={HttpVerbs.DELETE}
+                        value={phone.value}
+                        color={theme.colors.red}
+                      >
+                        <Trash width="15" />
+                      </FetchIconButton>
+                    ) : null}
+                  </Flex>
+                </IdentityBox>
+              );
+            })
+          )}
           <Flex>
             <Button
               onClick={() => setAddPhone(!addEmail)}
@@ -105,10 +113,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
     }
     return sortIdentities(result);
   });
-
-  if (Object.values(sortedIdentities).length === 0) {
-    throw new Error("No identities found");
-  }
 
   return {
     props: {

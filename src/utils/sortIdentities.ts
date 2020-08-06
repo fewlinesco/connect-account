@@ -5,7 +5,7 @@ import { SortedIdentities } from "../@types/SortedIdentities";
 
 export function sortIdentities(fetchedData: {
   data?: { provider: ProviderUser } | null;
-}): SortedIdentities | Record<string, unknown> {
+}): SortedIdentities {
   if (fetchedData.data) {
     const identities: Identity[] = fetchedData.data.provider.user.identities;
     const phoneIdentities: Identity[] = [];
@@ -22,5 +22,5 @@ export function sortIdentities(fetchedData: {
     return { phoneIdentities, emailIdentities };
   }
 
-  return {};
+  return { phoneIdentities: [], emailIdentities: [] };
 }
