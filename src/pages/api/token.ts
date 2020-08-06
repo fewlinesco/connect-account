@@ -4,11 +4,10 @@ import { Handler } from "next-iron-session";
 import { ExtendedRequest } from "src/@types/ExtendedRequest";
 import withSession from "src/middleware/withSession";
 
-function promisifiedJWTVerify(
-  oauthData: { clientSecret?: string; accessToken: string },
-  request: ExtendedRequest,
-  response: NextApiResponse,
-): Promise<any> {
+function promisifiedJWTVerify(oauthData: {
+  clientSecret?: string;
+  accessToken: string;
+}): Promise<any> {
   const { clientSecret, accessToken } = oauthData;
 
   return new Promise((resolve, reject) => {
@@ -17,18 +16,7 @@ function promisifiedJWTVerify(
         accessToken,
         clientSecret,
         async (error: jwt.VerifyErrors | null, decoded?: any) => {
-          if (error !== null) {
-            throw new Error(error.message);
-          }
-
-          request.session.set("user-id", decoded.sub);
-          await request.session.save().catch((error) => {
-            throw new Error(error);
-          });
-          response.writeHead(302, { Location: "/account" });
-          response.end();
-
-          resolve();
+          resolve({ error, decoded });
         },
       );
     } else {
@@ -64,14 +52,21 @@ const handler: Handler = async (
 
       const parsedResponse = await fetchedResponse.json();
 
-      await promisifiedJWTVerify(
-        {
-          clientSecret: callback.client_secret,
-          accessToken: parsedResponse.access_token,
-        },
-        request,
-        response,
-      );
+      await promisifiedJWTVerify({
+        clientSecret: callback.client_secret,
+        accessToken: parsedResponse.access_token,
+      }).then(async ({ error, decoded }) => {
+        if (error !== null) {
+          throw new Error(error.message);
+        }
+
+        request.session.set("user-id", decoded.sub);
+        await request.session.save().catch((error) => {
+          throw new Error(error);
+        });
+        response.writeHead(302, { Location: "/account" });
+        response.end();
+      });
     } catch (error) {
       throw new Error(error);
     }
