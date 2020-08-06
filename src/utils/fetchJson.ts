@@ -1,7 +1,5 @@
 import { Method } from "src/@types/Method";
 
-export type Method = Exclude<HttpVerbs, HttpVerbs.GET>;
-
 export function fetchJson(
   endpoint: string,
   method: Method,
