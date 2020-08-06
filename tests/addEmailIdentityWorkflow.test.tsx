@@ -3,7 +3,7 @@ import React from "react";
 
 import { IdentityTypes } from "../src/@types/Identity";
 import { ProviderUser } from "../src/@types/ProviderUser";
-import Index from "../src/pages/index";
+import Account from "../src/pages/account";
 import { render, fireEvent } from "./config/test-utils";
 
 enableFetchMocks();
@@ -45,7 +45,7 @@ describe("addEmailIdentityWorkflow", () => {
 
   test("Add email identity user flow with button click", async () => {
     const { getByText, getByRole, getByTestId } = render(
-      <Index fetchedData={mockedFetchedData} />,
+      <Account fetchedData={mockedFetchedData} />,
       {},
     );
 

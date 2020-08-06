@@ -3,7 +3,7 @@ import fetch from "jest-fetch-mock";
 import { enableFetchMocks } from "jest-fetch-mock";
 import { Socket } from "net";
 
-import { getServerSideProps } from "../src/pages/index";
+import { getServerSideProps } from "../src/pages/account";
 
 enableFetchMocks();
 
