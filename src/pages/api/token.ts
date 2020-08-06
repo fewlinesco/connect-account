@@ -15,7 +15,7 @@ function promisifiedJWTVerify(oauthData: {
       jwt.verify(
         accessToken,
         clientSecret,
-        async (error: jwt.VerifyErrors | null, decoded?: any) => {
+        (error: jwt.VerifyErrors | null, decoded?: any) => {
           resolve({ error, decoded });
         },
       );
@@ -52,21 +52,22 @@ const handler: Handler = async (
 
       const parsedResponse = await fetchedResponse.json();
 
-      await promisifiedJWTVerify({
+      const decodedJWT = await promisifiedJWTVerify({
         clientSecret: callback.client_secret,
         accessToken: parsedResponse.access_token,
-      }).then(async ({ error, decoded }) => {
-        if (error !== null) {
-          throw new Error(error.message);
-        }
-
-        request.session.set("user-id", decoded.sub);
-        await request.session.save().catch((error) => {
-          throw new Error(error);
-        });
-        response.writeHead(302, { Location: "/account" });
-        response.end();
       });
+
+      if (decodedJWT.error !== null) {
+        throw new Error(decodedJWT.error.message);
+      }
+
+      request.session.set("user-id", decodedJWT.sub);
+      await request.session.save().catch((error) => {
+        throw new Error(error);
+      });
+
+      response.writeHead(302, { Location: "/account" });
+      response.end();
     } catch (error) {
       throw new Error(error);
     }
