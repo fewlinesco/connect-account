@@ -1,7 +1,7 @@
 import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 
-import { IdentityTypes } from "../src/@types/Identity";
+import { ReceivedIdentityTypes } from "../src/@types/Identity";
 import { SortedIdentities } from "../src/@types/SortedIdentities";
 import Index from "../src/pages/index";
 import { render, fireEvent } from "./config/test-utils";
@@ -15,7 +15,7 @@ describe("addEmailIdentityWorkflow", () => {
         id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
         primary: true,
         status: "validated",
-        type: IdentityTypes.EMAIL,
+        type: ReceivedIdentityTypes.EMAIL,
         value: "test@test.test",
       },
     ],
@@ -24,7 +24,7 @@ describe("addEmailIdentityWorkflow", () => {
         id: "7f8d168a-3f65-4636-9acb-7720a212680e",
         primary: true,
         status: "validated",
-        type: IdentityTypes.PHONE,
+        type: ReceivedIdentityTypes.PHONE,
         value: "0123456789",
       },
     ],
