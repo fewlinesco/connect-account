@@ -1088,7 +1088,6 @@
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@fewlines/eslint-config/-/eslint-config-3.0.0.tgz#2d8c2be46b8bfec8222942b8ccc999d6d6d714f3"
   integrity sha512-5J9UukKUA4phA1zAgZJIcVLv8Ps5kpNGAD3jtPqe/Ee2HhLN6AZTlThmgUIqIvm/0ZpDI7d/mrBPNcnt0nOuYA==
-<<<<<<< HEAD
 
 "@fewlines/fwl-logging@1.0.0", "@fewlines/fwl-logging@^1.0.0":
   version "1.0.0"
@@ -1121,8 +1120,6 @@
     "@fewlines/fwl-logging" "1.0.0"
     "@fewlines/fwl-tracing" "1.0.0"
     express "4.17.1"
-=======
->>>>>>> config eslint
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
