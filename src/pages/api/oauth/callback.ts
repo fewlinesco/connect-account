@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 import { ExtendedRequest } from "src/@types/ExtendedRequest";
+import { withAPIPageLogger } from "src/middleware/withAPIPageLogger";
 import withSession from "src/middleware/withSession";
 
 function promisifiedJWTVerify(oauthData: {
@@ -81,4 +82,4 @@ const handler: Handler = async (
   }
 };
 
-export default withSession(handler);
+export default withAPIPageLogger(withSession(handler));

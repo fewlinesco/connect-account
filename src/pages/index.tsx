@@ -1,6 +1,7 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
+import { withSSRLogger } from "src/middleware/withSSRLogger";
 import styled from "styled-components";
 
 type IndexProps = {
@@ -43,20 +44,22 @@ const Index: React.FC<IndexProps> = ({ authParams }) => {
 
 export default Index;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const authParams = {
-    providerURL: process.env.PROVIDER_URL,
-    client_id: process.env.API_CLIENT_ID,
-    redirect_uri: process.env.API_REDIRECT_URI,
-    scope: process.env.API_SCOPES,
-  };
+export const getServerSideProps: GetServerSideProps = withSSRLogger(
+  async () => {
+    const authParams = {
+      providerURL: process.env.PROVIDER_URL,
+      client_id: process.env.API_CLIENT_ID,
+      redirect_uri: process.env.API_REDIRECT_URI,
+      scope: process.env.API_SCOPES,
+    };
 
-  return {
-    props: {
-      authParams,
-    },
-  };
-};
+    return {
+      props: {
+        authParams,
+      },
+    };
+  },
+);
 
 const Main = styled.main`
   width: 100%;

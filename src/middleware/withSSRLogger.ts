@@ -22,9 +22,9 @@ export function withSSRLogger(
           const processTimeEnd = process.hrtime.bigint();
 
           logger.log("Success", {
-            method: context.req.method,
+            method: context.req.method ? context.req.method : "",
             statusCode: context.res.statusCode,
-            path: context.req.url,
+            path: context.req.url ? context.req.url : "",
             duration: Number(
               (processTimeEnd - processTimeStart) / BigInt(1000),
             ),
@@ -37,9 +37,9 @@ export function withSSRLogger(
         const processTimeEnd = process.hrtime.bigint();
 
         logger.log(error.message, {
-          method: context.req.method,
+          method: context.req.method ? context.req.method : "",
           statusCode: context.res.statusCode,
-          path: context.req.url,
+          path: context.req.url ? context.req.url : "",
           duration: (
             (processTimeEnd - processTimeStart) /
             BigInt(1000)

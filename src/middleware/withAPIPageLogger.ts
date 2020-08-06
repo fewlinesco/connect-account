@@ -20,9 +20,9 @@ export function withAPIPageLogger(
       const processTimeEnd = process.hrtime.bigint();
 
       logger.log("Success", {
-        method: request.method,
-        statusCode: request.statusCode,
-        path: request.url,
+        method: request.method ? request.method : "",
+        statusCode: request.statusCode ? request.statusCode : 0,
+        path: request.url ? request.url : "",
         duration: (
           (processTimeEnd - processTimeStart) /
           BigInt(1000)
