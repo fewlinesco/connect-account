@@ -208,7 +208,7 @@ export interface LightTheme extends DefaultTheme {
   };
 }
 
-type Spacing = {
+export type Spacing = {
   xxs: string;
   xs: string;
   s: string;
