@@ -1,6 +1,6 @@
 import "styled-components";
 
-import { Spacing } from "./src/design-system/theme/lightTheme";
+import { Spacing } from "../design-system/theme/lightTheme";
 
 declare module "styled-components" {
   export interface DefaultTheme {
