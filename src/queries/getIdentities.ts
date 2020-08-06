@@ -1,6 +1,5 @@
 import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
-import { ProviderUser } from "src/@types/ProviderUser";
 
 import { ProviderUser } from "../@types/ProviderUser";
 import { fetchManagement } from "../utils/fetchManagement";
