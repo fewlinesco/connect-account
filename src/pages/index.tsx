@@ -111,7 +111,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
   async () => {
     const sortedIdentities = await getIdentities().then((result) => {
       if (result instanceof Error) {
-        throw new Error();
+        throw new Error(result.toString());
       }
       return sortIdentities(result);
     });
