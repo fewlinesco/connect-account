@@ -6,11 +6,10 @@ import { SortedIdentities } from "../@types/SortedIdentities";
 export function sortIdentities(fetchedData: {
   data?: { provider: ProviderUser } | null;
 }): SortedIdentities {
+  const phoneIdentities: Identity[] = [];
+  const emailIdentities: Identity[] = [];
   if (fetchedData.data) {
     const identities: Identity[] = fetchedData.data.provider.user.identities;
-    const phoneIdentities: Identity[] = [];
-    const emailIdentities: Identity[] = [];
-
     identities.forEach((identity) => {
       if (identity.type === IdentityTypes.EMAIL.toLowerCase()) {
         emailIdentities.push(identity);
@@ -18,9 +17,7 @@ export function sortIdentities(fetchedData: {
         phoneIdentities.push(identity);
       }
     });
-
-    return { phoneIdentities, emailIdentities };
   }
 
-  return { phoneIdentities: [], emailIdentities: [] };
+  return { phoneIdentities, emailIdentities };
 }
