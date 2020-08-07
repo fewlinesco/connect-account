@@ -15,6 +15,7 @@ function promisifiedJWTVerify(oauthData: {
   const { clientSecret, accessToken } = oauthData;
 
   return new Promise((resolve, reject) => {
+    console.log(accessToken);
     if (clientSecret) {
       jwt.verify(
         accessToken,
@@ -60,6 +61,8 @@ const handler: Handler = async (
         clientSecret: callback.client_secret,
         accessToken: parsedResponse.access_token,
       });
+
+      console.log(decodedJWT);
 
       if (decodedJWT.error !== null) {
         throw new Error(decodedJWT.error.message);
