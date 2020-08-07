@@ -98,7 +98,7 @@ describe("sortIdentities", () => {
               },
               {
                 id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-                primary: true,
+                primary: false,
                 status: "validated",
                 type: ReceivedIdentityTypes.GOOGLE,
                 value: "test@test.test",
@@ -136,7 +136,7 @@ describe("sortIdentities", () => {
               },
               {
                 id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-                primary: true,
+                primary: false,
                 status: "validated",
                 type: ReceivedIdentityTypes.EMAIL,
                 value: "test@test.test",
@@ -158,7 +158,7 @@ describe("sortIdentities", () => {
         },
         {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-          primary: true,
+          primary: false,
           status: "validated",
           type: ReceivedIdentityTypes.EMAIL,
           value: "test@test.test",
@@ -189,7 +189,7 @@ describe("sortIdentities", () => {
               },
               {
                 id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-                primary: true,
+                primary: false,
                 status: "validated",
                 type: ReceivedIdentityTypes.PHONE,
                 value: "0622116655",
@@ -212,7 +212,7 @@ describe("sortIdentities", () => {
         },
         {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-          primary: true,
+          primary: false,
           status: "validated",
           type: ReceivedIdentityTypes.PHONE,
           value: "0622116655",
