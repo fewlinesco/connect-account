@@ -132,7 +132,7 @@ describe("sortIdentities", () => {
                 primary: true,
                 status: "validated",
                 type: ReceivedIdentityTypes.EMAIL,
-                value: "test@fewlines.co",
+                value: "test@fewlines.local",
               },
               {
                 id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -154,7 +154,7 @@ describe("sortIdentities", () => {
           primary: true,
           status: "validated",
           type: ReceivedIdentityTypes.EMAIL,
-          value: "test@fewlines.co",
+          value: "test@fewlines.local",
         },
         {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
