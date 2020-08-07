@@ -117,6 +117,7 @@ describe("sortIdentities", () => {
     const call = sortIdentities(mockedResponse);
     expect(call).toStrictEqual(mockedSortedResponse);
   });
+
   it("should render properly if it receives only email", () => {
     const mockedResponse: { data: { provider: ProviderUser } } = {
       data: {
