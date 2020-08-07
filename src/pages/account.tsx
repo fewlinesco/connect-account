@@ -117,6 +117,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         if (result instanceof Error) {
           throw result;
         }
+
         return sortIdentities(result);
       });
 
@@ -127,8 +128,8 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
       };
     }
 
-    context.res.setHeader("location", "/");
     context.res.statusCode = 302;
+    context.res.setHeader("location", "/");
     context.res.end();
 
     return { props: {} };

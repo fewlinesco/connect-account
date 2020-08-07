@@ -24,7 +24,15 @@ describe("getServerSideProps", () => {
     query: {},
   };
 
-  it("should call api", async () => {
+  mockedContext.req.headers = {
+    cookie: process.env.MOCKED_JWT,
+  };
+
+  mockedContext.req.rawHeaders = process.env.MOCKED_JWT
+    ? ["Cookie", process.env.MOCKED_JWT]
+    : [];
+
+  it("should call get the userId from the session and call management", async () => {
     fetch.once(JSON.stringify(mockedResponse));
 
     const response = await getServerSideProps(mockedContext);
@@ -37,4 +45,16 @@ describe("getServerSideProps", () => {
       }),
     );
   });
+
+  // it("should redirect to the login flow if there are no session", async () => {
+  //   fetch.once(JSON.stringify(mockedResponse));
+
+  //   const response = await getServerSideProps(mockedContext);
+
+  //   expect(response).toEqual(
+  //     expect.objectContaining({
+  //       props: {},
+  //     }),
+  //   );
+  // });
 });
