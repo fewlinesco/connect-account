@@ -11,7 +11,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@fewlines/fwl-web": "^2.0.3",
+    "@fewlines/fwl-web": "2.0.3",
     "apollo-link-context": "1.0.20",
     "apollo-link-http": "1.5.17",
     "graphql": "15.3.0",
@@ -28,8 +28,8 @@
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "7.10.4",
     "@fewlines/eslint-config": "2.1.1",
-    "@fewlines/fwl-logging": "^1.0.0",
-    "@hapi/iron": "^6.0.0",
+    "@fewlines/fwl-logging": "1.0.0",
+    "@hapi/iron": "6.0.0",
     "@types/jest": "26.0.4",
     "@types/jsonwebtoken": "8.5.0",
     "@types/node": "14.0.23",

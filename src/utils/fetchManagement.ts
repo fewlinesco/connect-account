@@ -6,7 +6,7 @@ export function fetchManagement(
   operation: GraphQLRequest,
 ): Promise<FetchResult | Error> {
   const httpLink = new HttpLink({
-    uri: process.env.CONNECT_MANAGEMENT_URL,
+    uri: "",
     fetch,
   });
 

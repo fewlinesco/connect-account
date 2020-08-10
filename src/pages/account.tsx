@@ -135,12 +135,15 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         },
       };
     } catch (error) {
-      // if error type getIdentities else this
-      context.res.statusCode = 302;
-      context.res.setHeader("location", context.req.headers.referer || "/");
-      context.res.end();
+      if (error.name === "JsonWebTokenError") {
+        context.res.statusCode = 302;
+        context.res.setHeader("location", context.req.headers.referer || "/");
+        context.res.end();
 
-      return { props: {} };
+        return { props: {} };
+      }
+
+      throw error;
     }
   }),
 );
