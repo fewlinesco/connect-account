@@ -1,8 +1,9 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
-import { withSSRLogger } from "src/middleware/withSSRLogger";
 import styled from "styled-components";
+
+import { withSSRLogger } from "../middleware/withSSRLogger";
 
 type IndexProps = {
   authParams: {

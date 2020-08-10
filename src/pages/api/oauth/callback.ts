@@ -1,34 +1,10 @@
 import jwt from "jsonwebtoken";
 import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
-import { ExtendedRequest } from "src/@types/ExtendedRequest";
-import { withAPIPageLogger } from "src/middleware/withAPIPageLogger";
-import withSession from "src/middleware/withSession";
 
-function promisifiedJWTVerify(oauthData: {
-  clientSecret?: string;
-  accessToken: string;
-}): Promise<{
-  error: jwt.VerifyErrors | null;
-  decoded: Record<string, unknown>;
-}> {
-  const { clientSecret, accessToken } = oauthData;
-
-  return new Promise((resolve, reject) => {
-    console.log(accessToken);
-    if (clientSecret) {
-      jwt.verify(
-        accessToken,
-        clientSecret,
-        (error: jwt.VerifyErrors | null, decoded: any) => {
-          resolve({ error, decoded });
-        },
-      );
-    } else {
-      reject("Missing client_secret");
-    }
-  });
-}
+import { ExtendedRequest } from "../../../@types/ExtendedRequest";
+import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
+import withSession from "../../../middleware/withSession";
 
 const handler: Handler = async (
   request: ExtendedRequest,
@@ -57,18 +33,17 @@ const handler: Handler = async (
 
       const parsedResponse = await fetchedResponse.json();
 
-      const decodedJWT = await promisifiedJWTVerify({
-        clientSecret: callback.client_secret,
-        accessToken: parsedResponse.access_token,
-      });
+      if (callback.client_secret) {
+        jwt.verify(parsedResponse.access_token, callback.client_secret);
+      } else {
+        response.writeHead(302, { Location: "/account" });
+        response.end();
 
-      console.log(decodedJWT);
-
-      if (decodedJWT.error !== null) {
-        throw new Error(decodedJWT.error.message);
+        throw new Error("Missing client_secret");
       }
 
-      request.session.set("user-id", decodedJWT.decoded.sub);
+      request.session.set("user-jwt", parsedResponse.access_token);
+
       await request.session.save().catch((error) => {
         throw new Error(error);
       });

@@ -4,7 +4,7 @@
   "private": true,
   "repository": "git@github.com:fewlinesco/connect-account.git",
   "scripts": {
-    "dev": "next dev -p $CONNECT_ACCOUNT_PORT",
+    "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 next dev -p $CONNECT_ACCOUNT_PORT",
     "build": "next build",
     "lint": "eslint \"{src,pages}/**/*.{js,ts,jsx,tsx}\"",
     "start": "next start",

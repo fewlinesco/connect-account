@@ -1,8 +1,9 @@
 import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
-import { ExtendedRequest } from "src/@types/ExtendedRequest";
-import { withAPIPageLogger } from "src/middleware/withAPIPageLogger";
-import withSession from "src/middleware/withSession";
+
+import { ExtendedRequest } from "../../@types/ExtendedRequest";
+import { withAPIPageLogger } from "../../middleware/withAPIPageLogger";
+import withSession from "../../middleware/withSession";
 
 const handler: Handler = async (
   request: ExtendedRequest,

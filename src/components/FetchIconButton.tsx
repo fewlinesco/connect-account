@@ -1,8 +1,8 @@
 import React from "react";
-import { Method } from "src/@types/Method";
 import styled from "styled-components";
 
 import { IdentityTypes } from "../@types/Identity";
+import { Method } from "../@types/Method";
 import { useCookies } from "../hooks/useCookies";
 import { fetchJson } from "../utils/fetchJson";
 

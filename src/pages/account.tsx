@@ -13,6 +13,7 @@ import { useTheme } from "../design-system/theme/useTheme";
 import { withSSRLogger } from "../middleware/withSSRLogger";
 import withSession from "../middleware/withSession";
 import { getIdentities } from "../queries/getIdentities";
+import { promisifiedJWTVerify } from "../utils/promisifiedJWT";
 import { sortIdentities } from "../utils/sortIdentities";
 
 type AccountProps = {
@@ -110,16 +111,23 @@ export default Account;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
-    const userId = context.req.session.get("user-id");
+    const accessToken = context.req.session.get("user-jwt");
 
-    if (userId) {
-      const sortedIdentities = await getIdentities(userId).then((result) => {
-        if (result instanceof Error) {
-          throw result;
-        }
+    const { error, decoded } = await promisifiedJWTVerify<{ sub: string }>({
+      clientSecret: process.env.API_CLIENT_SECRET,
+      accessToken,
+    });
 
-        return sortIdentities(result);
-      });
+    if (decoded) {
+      const sortedIdentities = await getIdentities(decoded.sub).then(
+        (result) => {
+          if (result instanceof Error) {
+            throw result;
+          }
+
+          return sortIdentities(result);
+        },
+      );
 
       return {
         props: {
