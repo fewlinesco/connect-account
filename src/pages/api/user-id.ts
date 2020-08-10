@@ -21,7 +21,7 @@ const handler: Handler = async (
     if (decoded) {
       response.json({ userId: decoded.sub });
     } else {
-      response.writeHead(302, { Location: "/" });
+      response.writeHead(302, { Location: request.headers.referer || "/" });
     }
   } else {
     response.statusCode = 405;

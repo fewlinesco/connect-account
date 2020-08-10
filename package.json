@@ -4,7 +4,7 @@
   "private": true,
   "repository": "git@github.com:fewlinesco/connect-account.git",
   "scripts": {
-    "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 next dev -p $CONNECT_ACCOUNT_PORT",
+    "dev": "next dev -p $CONNECT_ACCOUNT_PORT",
     "build": "next build",
     "lint": "eslint \"{src,pages}/**/*.{js,ts,jsx,tsx}\"",
     "start": "next start",
@@ -29,6 +29,7 @@
     "@babel/plugin-transform-react-jsx": "7.10.4",
     "@fewlines/eslint-config": "2.1.1",
     "@fewlines/fwl-logging": "^1.0.0",
+    "@hapi/iron": "^6.0.0",
     "@types/jest": "26.0.4",
     "@types/jsonwebtoken": "8.5.0",
     "@types/node": "14.0.23",

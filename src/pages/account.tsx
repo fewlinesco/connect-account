@@ -111,20 +111,14 @@ export default Account;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
-    const accessToken = context.req.session.get("user-jwt");
+    try {
+      const accessToken = context.req.session.get("user-jwt");
 
-    const decoded = await promisifiedJWTVerify<{ sub: string }>({
-      clientSecret: process.env.API_CLIENT_SECRET,
-      accessToken,
-    }).catch(() => {
-      context.res.statusCode = 302;
-      context.res.setHeader("location", "/");
-      context.res.end();
+      const decoded = await promisifiedJWTVerify<{ sub: string }>({
+        clientSecret: process.env.API_CLIENT_SECRET,
+        accessToken,
+      });
 
-      throw new Error("JWT expired");
-    });
-
-    if (decoded) {
       const sortedIdentities = await getIdentities(decoded.sub).then(
         (result) => {
           if (result instanceof Error) {
@@ -140,13 +134,14 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
           sortedIdentities,
         },
       };
+    } catch (error) {
+      // if error type getIdentities else this
+      context.res.statusCode = 302;
+      context.res.setHeader("location", context.req.headers.referer || "/");
+      context.res.end();
+
+      return { props: {} };
     }
-
-    context.res.statusCode = 302;
-    context.res.setHeader("location", "/");
-    context.res.end();
-
-    return { props: {} };
   }),
 );
 

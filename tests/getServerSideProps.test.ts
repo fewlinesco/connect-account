@@ -1,3 +1,4 @@
+import { seal, defaults } from "@hapi/iron";
 import { IncomingMessage, ServerResponse } from "http";
 import fetch from "jest-fetch-mock";
 import { enableFetchMocks } from "jest-fetch-mock";
@@ -39,10 +40,6 @@ describe("getServerSideProps", () => {
     sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
   };
 
-  const mockedClientSecret = "foo";
-
-  const JWT = jwt.sign(mockedJWTPayload, mockedClientSecret);
-
   it("should redirect to the login flow if there are no session", async () => {
     fetch.once(JSON.stringify(mockedResponse));
 
@@ -62,11 +59,28 @@ describe("getServerSideProps", () => {
   });
 
   it("should get the user-id from the session and call management GraphQL endpoint", async () => {
+    const JWT = process.env.API_CLIENT_SECRET
+      ? jwt.sign(mockedJWTPayload, process.env.API_CLIENT_SECRET)
+      : "";
+
+    const sealedJWT = process.env.SECRET_COOKIE_PASSWORD
+      ? await seal(
+          {
+            persistent: {
+              "user-jwt": JWT,
+            },
+            flash: {},
+          },
+          process.env.SECRET_COOKIE_PASSWORD,
+          defaults,
+        )
+      : "";
+
     mockedContext.req.headers = {
-      cookie: JWT,
+      cookie: `oauth-jwt=${sealedJWT}`,
     };
 
-    mockedContext.req.rawHeaders = ["Cookie", JWT];
+    mockedContext.req.rawHeaders = ["Cookie", `oauth-jwt=${sealedJWT}`];
 
     fetch.once(JSON.stringify(mockedResponse));
 
