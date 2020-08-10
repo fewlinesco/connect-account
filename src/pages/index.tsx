@@ -5,25 +5,24 @@ import { Trash } from "react-feather";
 import styled from "styled-components";
 
 import { HttpVerbs } from "../@types/HttpVerbs";
-import { IdentityTypes } from "../@types/Identity";
-import { ProviderUser } from "../@types/ProviderUser";
+import { IdentityTypes, Identity } from "../@types/Identity";
+import { SortedIdentities } from "../@types/SortedIdentities";
 import { FetchIconButton } from "../components/FetchIconButton";
 import { IdentityInputForm } from "../components/IdentityInputForm";
 import { useTheme } from "../design-system/theme/useTheme";
 import { withSSRLogger } from "../middleware/withSSRLogger";
 import { getIdentities } from "../queries/getIdentities";
+import { sortIdentities } from "../utils/sortIdentities";
 
 type IndexProps = {
-  fetchedData: { data: { provider: ProviderUser } };
+  sortedIdentities: SortedIdentities;
 };
 
-const Index: React.FC<IndexProps> = ({ fetchedData }) => {
+const Index: React.FC<IndexProps> = ({ sortedIdentities }) => {
   const [addEmail, setAddEmail] = React.useState<boolean>(false);
   const [addPhone, setAddPhone] = React.useState<boolean>(false);
 
   const theme = useTheme();
-
-  const { user } = fetchedData.data.provider;
 
   return (
     <>
@@ -33,25 +32,29 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
       <IdentitiesBox>
         <IdentitySection>
           <h3>Email(s):</h3>
-          {user.identities.map(({ value, type }) => {
-            return type === IdentityTypes.EMAIL.toLowerCase() ? (
-              <IdentityBox key={value}>
-                <Flex>
-                  <Value>{value}</Value>
-                  <FetchIconButton
-                    type={IdentityTypes.EMAIL}
-                    method={HttpVerbs.DELETE}
-                    value={value}
-                    color={theme.colors.red}
-                  >
-                    <Trash width="15" />
-                  </FetchIconButton>
-                </Flex>
-              </IdentityBox>
-            ) : (
-              <React.Fragment key={value} />
-            );
-          })}
+          {sortedIdentities.emailIdentities.length === 0 ? (
+            <Value>No emails</Value>
+          ) : (
+            sortedIdentities.emailIdentities.map((email: Identity) => {
+              return (
+                <IdentityBox key={email.value}>
+                  <Flex>
+                    <Value>{email.value}</Value>
+                    {sortedIdentities.emailIdentities.length > 1 ? (
+                      <FetchIconButton
+                        type={IdentityTypes.EMAIL}
+                        method={HttpVerbs.DELETE}
+                        value={email.value}
+                        color={theme.colors.red}
+                      >
+                        <Trash width="15" />
+                      </FetchIconButton>
+                    ) : null}
+                  </Flex>
+                </IdentityBox>
+              );
+            })
+          )}
           <Flex>
             <Button
               onClick={() => setAddEmail(!addEmail)}
@@ -64,25 +67,29 @@ const Index: React.FC<IndexProps> = ({ fetchedData }) => {
         </IdentitySection>
         <IdentitySection>
           <h3>Phone number(s):</h3>
-          {user.identities.map(({ value, type }) => {
-            return type === IdentityTypes.PHONE.toLowerCase() ? (
-              <IdentityBox key={value}>
-                <Flex>
-                  <Value>{value}</Value>
-                  <FetchIconButton
-                    type={IdentityTypes.PHONE}
-                    method={HttpVerbs.DELETE}
-                    value={value}
-                    color={theme.colors.red}
-                  >
-                    <Trash width="15" />
-                  </FetchIconButton>
-                </Flex>
-              </IdentityBox>
-            ) : (
-              <React.Fragment key={value} />
-            );
-          })}
+          {sortedIdentities.emailIdentities.length === 0 ? (
+            <Value>No phones</Value>
+          ) : (
+            sortedIdentities.phoneIdentities.map((phone: Identity) => {
+              return (
+                <IdentityBox key={phone.value}>
+                  <Flex>
+                    <Value>{phone.value}</Value>
+                    {sortedIdentities.phoneIdentities.length > 1 ? (
+                      <FetchIconButton
+                        type={IdentityTypes.PHONE}
+                        method={HttpVerbs.DELETE}
+                        value={phone.value}
+                        color={theme.colors.red}
+                      >
+                        <Trash width="15" />
+                      </FetchIconButton>
+                    ) : null}
+                  </Flex>
+                </IdentityBox>
+              );
+            })
+          )}
           <Flex>
             <Button
               onClick={() => setAddPhone(!addEmail)}
@@ -102,11 +109,16 @@ export default Index;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   async () => {
-    const fetchedData = await getIdentities();
+    const sortedIdentities = await getIdentities().then((result) => {
+      if (result instanceof Error) {
+        throw result;
+      }
+      return sortIdentities(result);
+    });
 
     return {
       props: {
-        fetchedData,
+        sortedIdentities,
       },
     };
   },
