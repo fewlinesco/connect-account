@@ -1,8 +1,6 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, DefaultTheme } from "styled-components";
 
-import { LightTheme } from "../theme/lightTheme";
-
-export const GlobalStyle = createGlobalStyle<{ theme: LightTheme }>`
+export const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
 	html {
 		/* This font size means that '1rem' is exactly equal to '10px', this makes setting REM values very simple. */
 		font-size: 62.5%;
