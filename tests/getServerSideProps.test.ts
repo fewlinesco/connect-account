@@ -31,7 +31,7 @@ describe("getServerSideProps", () => {
     query: {},
   };
 
-  const JWTPayload = {
+  const mockedJWTPayload = {
     aud: ["yoga-community"],
     exp: Date.now(),
     iss: process.env.PROVIDER_ISS,
@@ -39,8 +39,9 @@ describe("getServerSideProps", () => {
     sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
   };
 
-  // @ts-ignore
-  const JWT = jwt.sign(JWTPayload, process.env.API_CLIENT_SECRET);
+  const mockedClientSecret = "foo";
+
+  const JWT = jwt.sign(mockedJWTPayload, mockedClientSecret);
 
   it("should redirect to the login flow if there are no session", async () => {
     fetch.once(JSON.stringify(mockedResponse));

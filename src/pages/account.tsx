@@ -13,7 +13,7 @@ import { useTheme } from "../design-system/theme/useTheme";
 import { withSSRLogger } from "../middleware/withSSRLogger";
 import withSession from "../middleware/withSession";
 import { getIdentities } from "../queries/getIdentities";
-import { promisifiedJWTVerify } from "../utils/promisifiedJWT";
+import { promisifiedJWTVerify } from "../utils/promisifiedJWTVerify";
 import { sortIdentities } from "../utils/sortIdentities";
 
 type AccountProps = {
