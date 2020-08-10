@@ -113,7 +113,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
     const accessToken = context.req.session.get("user-jwt");
 
-    const { error, decoded } = await promisifiedJWTVerify<{ sub: string }>({
+    const decoded = await promisifiedJWTVerify<{ sub: string }>({
       clientSecret: process.env.API_CLIENT_SECRET,
       accessToken,
     });

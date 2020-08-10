@@ -1,5 +1,6 @@
 import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
+import { promisifiedJWTVerify } from "src/utils/promisifiedJWTVerify";
 
 import { ExtendedRequest } from "../../@types/ExtendedRequest";
 import { withAPIPageLogger } from "../../middleware/withAPIPageLogger";
@@ -10,9 +11,15 @@ const handler: Handler = async (
   response: NextApiResponse,
 ): Promise<void> => {
   if (request.method === "GET") {
-    const userId = request.session.get("user-id");
-    if (userId) {
-      response.json({ userId });
+    const accessToken = request.session.get("user-jwt");
+
+    const decoded = await promisifiedJWTVerify<{ sub: string }>({
+      clientSecret: process.env.API_CLIENT_SECRET,
+      accessToken,
+    });
+
+    if (decoded) {
+      response.json({ userId: decoded.sub });
     } else {
       response.writeHead(302, { Location: "/" });
     }

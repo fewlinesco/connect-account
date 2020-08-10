@@ -3,10 +3,7 @@ import jwt from "jsonwebtoken";
 export function promisifiedJWTVerify<T>(oauthData: {
   clientSecret?: string;
   accessToken: string;
-}): Promise<{
-  error: jwt.VerifyErrors | null;
-  decoded: T;
-}> {
+}): Promise<T> {
   const { clientSecret, accessToken } = oauthData;
 
   return new Promise((resolve, reject) => {
@@ -15,7 +12,7 @@ export function promisifiedJWTVerify<T>(oauthData: {
         accessToken,
         clientSecret,
         (error: jwt.VerifyErrors | null, decoded: any) => {
-          resolve({ error, decoded });
+          return error ? reject(error) : resolve(decoded);
         },
       );
     } else {

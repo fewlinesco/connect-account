@@ -16,7 +16,7 @@ describe("promisifiedJWTVerify", () => {
   const JWT = jwt.sign(mockedJWTPayload, mockedClientSecret);
 
   test("it should verify the JWT, and return it decoded", async () => {
-    const { decoded } = await promisifiedJWTVerify<Record<string, unknown>>({
+    const decoded = await promisifiedJWTVerify<Record<string, unknown>>({
       clientSecret: mockedClientSecret,
       accessToken: JWT,
     });
