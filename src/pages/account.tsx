@@ -94,7 +94,7 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
           )}
           <Flex>
             <Button
-              onClick={() => setAddPhone(!addEmail)}
+              onClick={() => setAddPhone(!addPhone)}
               color={theme.colors.green}
             >
               Add a phone number
@@ -116,6 +116,12 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     const decoded = await promisifiedJWTVerify<{ sub: string }>({
       clientSecret: process.env.API_CLIENT_SECRET,
       accessToken,
+    }).catch(() => {
+      context.res.statusCode = 302;
+      context.res.setHeader("location", "/");
+      context.res.end();
+
+      throw new Error("JWT expired");
     });
 
     if (decoded) {
