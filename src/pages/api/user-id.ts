@@ -3,6 +3,7 @@ import { Handler } from "next-iron-session";
 import { promisifiedJWTVerify } from "src/utils/promisifiedJWTVerify";
 
 import { ExtendedRequest } from "../../@types/ExtendedRequest";
+import { config } from "../../config";
 import { withAPIPageLogger } from "../../middleware/withAPIPageLogger";
 import withSession from "../../middleware/withSession";
 
@@ -14,7 +15,7 @@ const handler: Handler = async (
     const accessToken = request.session.get("user-jwt");
 
     const decoded = await promisifiedJWTVerify<{ sub: string }>({
-      clientSecret: process.env.API_CLIENT_SECRET,
+      clientSecret: config.connectApplicationClientSecret,
       accessToken,
     });
 

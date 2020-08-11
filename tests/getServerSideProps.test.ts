@@ -5,6 +5,7 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import jwt from "jsonwebtoken";
 import { Socket } from "net";
 
+import { config } from "../src/config";
 import { getServerSideProps } from "../src/pages/account";
 import {
   mockedSortedResponse,
@@ -58,22 +59,21 @@ describe("getServerSideProps", () => {
   });
 
   it("should get the user-id from the session and call management GraphQL endpoint", async () => {
-    const JWT = process.env.API_CLIENT_SECRET
-      ? jwt.sign(mockedJWTPayload, process.env.API_CLIENT_SECRET)
-      : "";
+    const JWT = jwt.sign(
+      mockedJWTPayload,
+      config.connectApplicationClientSecret,
+    );
 
-    const sealedJWT = process.env.SECRET_COOKIE_PASSWORD
-      ? await seal(
-          {
-            persistent: {
-              "user-jwt": JWT,
-            },
-            flash: {},
-          },
-          process.env.SECRET_COOKIE_PASSWORD,
-          defaults,
-        )
-      : "";
+    const sealedJWT = await seal(
+      {
+        persistent: {
+          "user-jwt": JWT,
+        },
+        flash: {},
+      },
+      config.connectAccountSessionSalt,
+      defaults,
+    );
 
     mockedContext.req.headers = {
       cookie: `connect-account-session=${sealedJWT}`,

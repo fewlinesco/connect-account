@@ -3,6 +3,7 @@ import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
 import { ExtendedRequest } from "../../../@types/ExtendedRequest";
+import { config } from "../../../config";
 import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
 import withSession from "../../../middleware/withSession";
 
@@ -12,16 +13,16 @@ const handler: Handler = async (
 ): Promise<void> => {
   if (request.method === "GET") {
     const callback = {
-      client_id: process.env.API_CLIENT_ID,
-      client_secret: process.env.API_CLIENT_SECRET,
+      client_id: config.connectApplicationClientId,
+      client_secret: config.connectApplicationClientSecret,
       code: request.query.code as string,
       grant_type: "authorization_code",
-      redirect_uri: process.env.API_REDIRECT_URI,
+      redirect_uri: config.connectApplicationRedirectUri,
     };
 
     try {
       const fetchedResponse = await fetch(
-        `${process.env.PROVIDER_URL}/oauth/token`,
+        `${config.connectProviderUrl}/oauth/token`,
         {
           method: "POST",
           headers: {

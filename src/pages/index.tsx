@@ -3,6 +3,7 @@ import Head from "next/head";
 import React from "react";
 import styled from "styled-components";
 
+import { config } from "../config";
 import { withSSRLogger } from "../middleware/withSSRLogger";
 
 type IndexProps = {
@@ -10,7 +11,6 @@ type IndexProps = {
     [key: string]: string;
     providerURL: string;
     clientID: string;
-    clientSecret: string;
     redirectURI: string;
     scope: string;
   };
@@ -48,10 +48,10 @@ export default Index;
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   async () => {
     const authParams = {
-      providerURL: process.env.PROVIDER_URL,
-      client_id: process.env.API_CLIENT_ID,
-      redirect_uri: process.env.API_REDIRECT_URI,
-      scope: process.env.API_SCOPES,
+      providerURL: config.connectProviderUrl,
+      client_id: config.connectApplicationClientId,
+      redirect_uri: config.connectApplicationRedirectUri,
+      scope: config.connectApplicationScopes,
     };
 
     return {

@@ -1,3 +1,4 @@
+import { JsonWebTokenError } from "jsonwebtoken";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
@@ -9,6 +10,7 @@ import { IdentityTypes, Identity } from "../@types/Identity";
 import { SortedIdentities } from "../@types/SortedIdentities";
 import { FetchIconButton } from "../components/FetchIconButton";
 import { IdentityInputForm } from "../components/IdentityInputForm";
+import { config } from "../config";
 import { useTheme } from "../design-system/theme/useTheme";
 import { withSSRLogger } from "../middleware/withSSRLogger";
 import withSession from "../middleware/withSession";
@@ -115,7 +117,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
       const accessToken = context.req.session.get("user-jwt");
 
       const decoded = await promisifiedJWTVerify<{ sub: string }>({
-        clientSecret: process.env.API_CLIENT_SECRET,
+        clientSecret: config.connectApplicationClientSecret,
         accessToken,
       });
 
@@ -135,7 +137,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         },
       };
     } catch (error) {
-      if (error.name === "JsonWebTokenError") {
+      if (error instanceof JsonWebTokenError) {
         context.res.statusCode = 302;
         context.res.setHeader("location", context.req.headers.referer || "/");
         context.res.end();
