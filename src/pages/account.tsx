@@ -1,3 +1,4 @@
+import { HttpStatus } from "@fewlines/fwl-web";
 import { JsonWebTokenError } from "jsonwebtoken";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -138,7 +139,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
       };
     } catch (error) {
       if (error instanceof JsonWebTokenError) {
-        context.res.statusCode = 302;
+        context.res.statusCode = HttpStatus.MOVED_TEMPORARILY;
         context.res.setHeader("location", context.req.headers.referer || "/");
         context.res.end();
 

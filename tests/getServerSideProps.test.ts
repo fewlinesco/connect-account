@@ -1,3 +1,4 @@
+import { HttpStatus } from "@fewlines/fwl-web";
 import { seal, defaults } from "@hapi/iron";
 import { IncomingMessage, ServerResponse } from "http";
 import fetch from "jest-fetch-mock";
@@ -45,7 +46,7 @@ describe("getServerSideProps", () => {
 
     const response = await getServerSideProps(mockedContext);
 
-    expect(mockedContext.res.statusCode).toEqual(302);
+    expect(mockedContext.res.statusCode).toEqual(HttpStatus.MOVED_TEMPORARILY);
 
     const redirectLocation = mockedContext.res.getHeader("location");
 

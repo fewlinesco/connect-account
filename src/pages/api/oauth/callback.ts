@@ -1,11 +1,14 @@
+import { HttpStatus } from "@fewlines/fwl-web";
 import jwt from "jsonwebtoken";
 import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
 import { ExtendedRequest } from "../../../@types/ExtendedRequest";
+import { HttpVerbs } from "../../../@types/HttpVerbs";
 import { config } from "../../../config";
 import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
 import withSession from "../../../middleware/withSession";
+import { fetchJson } from "../../../utils/fetchJson";
 
 const handler: Handler = async (
   request: ExtendedRequest,
@@ -20,42 +23,27 @@ const handler: Handler = async (
       redirect_uri: config.connectApplicationRedirectUri,
     };
 
-    try {
-      const fetchedResponse = await fetch(
-        `${config.connectProviderUrl}/oauth/token`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(callback),
-        },
-      );
+    const fetchedResponse = await fetchJson(
+      `${config.connectProviderUrl}/oauth/token`,
+      HttpVerbs.POST,
+      callback,
+    );
 
-      const parsedResponse = await fetchedResponse.json();
+    const parsedResponse = await fetchedResponse.json();
 
-      if (callback.client_secret) {
-        jwt.verify(parsedResponse.access_token, callback.client_secret);
-      } else {
-        response.writeHead(302, { Location: "/account" });
-        response.end();
+    jwt.verify(parsedResponse.access_token, callback.client_secret);
 
-        throw new Error("Missing client_secret");
-      }
+    request.session.set("user-jwt", parsedResponse.access_token);
 
-      request.session.set("user-jwt", parsedResponse.access_token);
+    await request.session.save();
 
-      await request.session.save().catch((error) => {
-        throw new Error(error);
-      });
+    response.writeHead(HttpStatus.MOVED_TEMPORARILY, {
+      Location: "/account",
+    });
 
-      response.writeHead(302, { Location: "/account" });
-      response.end();
-    } catch (error) {
-      throw new Error(error);
-    }
+    response.end();
   } else {
-    response.statusCode = 405;
+    response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
 
     return response.end();
   }

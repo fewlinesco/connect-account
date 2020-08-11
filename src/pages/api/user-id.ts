@@ -1,3 +1,4 @@
+import { HttpStatus } from "@fewlines/fwl-web";
 import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 import { promisifiedJWTVerify } from "src/utils/promisifiedJWTVerify";
@@ -22,10 +23,12 @@ const handler: Handler = async (
     if (decoded) {
       response.json({ userId: decoded.sub });
     } else {
-      response.writeHead(302, { Location: request.headers.referer || "/" });
+      response.writeHead(HttpStatus.MOVED_TEMPORARILY, {
+        Location: request.headers.referer || "/",
+      });
     }
   } else {
-    response.statusCode = 405;
+    response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
 
     return response.end();
   }
