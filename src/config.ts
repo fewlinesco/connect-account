@@ -1,34 +1,24 @@
 type Config = {
-  connectAccountPort: string;
   connectManagementUrl: string;
   connectManagementApiKey: string;
   connectProviderUrl: string;
   connectApplicationClientId: string;
   connectApplicationClientSecret: string;
-  connectApplicationRedirectUri: string;
   connectApplicationScopes: string;
   connectAccountSessionSalt: string;
 };
 
 const config: Config = {
-  connectAccountPort: "",
   connectManagementUrl: "",
   connectManagementApiKey: "",
   connectProviderUrl: "",
   connectApplicationClientId: "",
   connectApplicationClientSecret: "",
-  connectApplicationRedirectUri: "",
   connectApplicationScopes: "",
   connectAccountSessionSalt: "",
 };
 
 function handleEnvVars(): void {
-  if (!process.env.CONNECT_ACCOUNT_PORT) {
-    console.log("Missing CONNECT_ACCOUNT_PORT");
-    process.exit(1);
-  }
-  config.connectAccountPort = process.env.CONNECT_ACCOUNT_PORT;
-
   if (!process.env.CONNECT_MANAGEMENT_URL) {
     console.log("Missing CONNECT_MANAGEMENT_URL");
     process.exit(1);
@@ -59,13 +49,6 @@ function handleEnvVars(): void {
   }
   config.connectApplicationClientSecret =
     process.env.CONNECT_APPLICATION_CLIENT_SECRET;
-
-  if (!process.env.CONNECT_APPLICATION_REDIRECT_URI) {
-    console.log("Missing CONNECT_APPLICATION_REDIRECT_URI");
-    process.exit(1);
-  }
-  config.connectApplicationRedirectUri =
-    process.env.CONNECT_APPLICATION_REDIRECT_URI;
 
   if (!process.env.CONNECT_APPLICATION_SCOPES) {
     console.log("Missing CONNECT_APPLICATION_SCOPES");

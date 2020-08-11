@@ -1,5 +1,9 @@
 import { HttpStatus } from "@fewlines/fwl-web";
-import { JsonWebTokenError } from "jsonwebtoken";
+import {
+  JsonWebTokenError,
+  NotBeforeError,
+  TokenExpiredError,
+} from "jsonwebtoken";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
@@ -117,10 +121,10 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     try {
       const accessToken = context.req.session.get("user-jwt");
 
-      const decoded = await promisifiedJWTVerify<{ sub: string }>({
-        clientSecret: config.connectApplicationClientSecret,
+      const decoded = await promisifiedJWTVerify<{ sub: string }>(
+        config.connectApplicationClientSecret,
         accessToken,
-      });
+      );
 
       const sortedIdentities = await getIdentities(decoded.sub).then(
         (result) => {
@@ -138,7 +142,11 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         },
       };
     } catch (error) {
-      if (error instanceof JsonWebTokenError) {
+      if (
+        error instanceof JsonWebTokenError ||
+        error instanceof NotBeforeError ||
+        error instanceof TokenExpiredError
+      ) {
         context.res.statusCode = HttpStatus.MOVED_TEMPORARILY;
         context.res.setHeader("location", context.req.headers.referer || "/");
         context.res.end();

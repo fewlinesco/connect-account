@@ -16,21 +16,21 @@ describe("promisifiedJWTVerify", () => {
   const JWT = jwt.sign(mockedJWTPayload, mockedClientSecret);
 
   test("it should verify the JWT, and return it decoded", async () => {
-    const decoded = await promisifiedJWTVerify<Record<string, unknown>>({
-      clientSecret: mockedClientSecret,
-      accessToken: JWT,
-    });
+    const decoded = await promisifiedJWTVerify<Record<string, unknown>>(
+      mockedClientSecret,
+      JWT,
+    );
 
     expect(decoded).not.toBe(undefined);
     expect(decoded).toEqual(expect.objectContaining(mockedJWTPayload));
   });
 
-  test("it should throw an error if client secret is falsy", async () => {
+  test("it should throw an error if using a badly formed JWT", async () => {
     expect.assertions(1);
 
-    await promisifiedJWTVerify<Record<string, unknown>>({
-      clientSecret: undefined,
-      accessToken: JWT,
-    }).catch((error) => expect(error).toBe("Missing client_secret"));
+    await promisifiedJWTVerify<Record<string, unknown>>(
+      mockedClientSecret,
+      "",
+    ).catch((error) => expect(error).toBeInstanceOf(jwt.JsonWebTokenError));
   });
 });

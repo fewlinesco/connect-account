@@ -46,11 +46,17 @@ const Index: React.FC<IndexProps> = ({ authParams }) => {
 export default Index;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
-  async () => {
+  async (context) => {
+    const protocol =
+      process.env.NODE_ENV === "production" ? "https://" : "http://";
+    const host = context.req.headers.host;
+    const route = "/api/oauth/callback";
+    const redirect_uri = protocol + host + route;
+
     const authParams = {
       providerURL: config.connectProviderUrl,
       client_id: config.connectApplicationClientId,
-      redirect_uri: config.connectApplicationRedirectUri,
+      redirect_uri,
       scope: config.connectApplicationScopes,
     };
 

@@ -15,12 +15,20 @@ const handler: Handler = async (
   response: NextApiResponse,
 ): Promise<void> => {
   if (request.method === "GET") {
+    const protocol =
+      process.env.NODE_ENV === "production" ? "https://" : "http://";
+    const host = request.headers.host;
+    const route = "/api/oauth/callback";
+    const redirect_uri = protocol + host + route;
+
+    console.log(redirect_uri);
+
     const callback = {
       client_id: config.connectApplicationClientId,
       client_secret: config.connectApplicationClientSecret,
       code: request.query.code as string,
       grant_type: "authorization_code",
-      redirect_uri: config.connectApplicationRedirectUri,
+      redirect_uri,
     };
 
     const fetchedResponse = await fetchJson(
