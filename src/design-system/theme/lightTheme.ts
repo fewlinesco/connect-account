@@ -124,7 +124,7 @@ const transitions = {
   classic: "ease-in-out 0.3s",
 };
 
-export const lightTheme: LightTheme = {
+export const lightTheme: DefaultTheme = {
   spaces,
   fontSizes,
   fontWeights,
@@ -136,84 +136,4 @@ export const lightTheme: LightTheme = {
   letterSpacing,
   radii,
   transitions,
-};
-
-export interface LightTheme extends DefaultTheme {
-  spaces: {
-    component: Spacing;
-    layout: Spacing;
-  };
-  fontSizes: {
-    s: string;
-    m: string;
-    l: string;
-    paragraph: string;
-    h1: string;
-    h2: string;
-    h3: string;
-  };
-  fontWeights: {
-    hairline: number;
-    thin: number;
-    light: number;
-    normal: number;
-    medium: number;
-    semibold: number;
-    bold: number;
-    extrabold: number;
-    black: number;
-  };
-  radii: (number | string)[];
-  borders: {
-    thin: string;
-    normal: string;
-    large: string;
-  };
-  lineHeights: {
-    solid: number;
-    title: number;
-    copy: number;
-  };
-  letterSpacing: {
-    normal: string;
-    tracked: string;
-    tight: string;
-    mega: string;
-  };
-  fonts: {
-    sansSerif: string;
-  };
-  shadows: {
-    xs: string;
-    sm: string;
-    base: string;
-    left: string;
-  };
-  colors: {
-    primary: string;
-    secondary: string;
-    background: string;
-    backgroundContrast: string;
-    black: string;
-    contrastCopy: string;
-    red: string;
-    green: string;
-    turquoise: string;
-    yellow: string;
-    blacks: string[];
-  };
-  transitions: {
-    quick: string;
-    classic: string;
-  };
-}
-
-type Spacing = {
-  xxs: string;
-  xs: string;
-  s: string;
-  m: string;
-  l: string;
-  xl: string;
-  xxl: string;
 };
