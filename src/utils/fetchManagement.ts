@@ -2,11 +2,13 @@ import { execute, makePromise, GraphQLRequest, FetchResult } from "apollo-link";
 import { setContext } from "apollo-link-context";
 import { HttpLink } from "apollo-link-http";
 
+import { config } from "../config";
+
 export function fetchManagement(
   operation: GraphQLRequest,
 ): Promise<FetchResult | Error> {
   const httpLink = new HttpLink({
-    uri: process.env.CONNECT_MANAGEMENT_URL,
+    uri: config.connectManagementUrl,
     fetch,
   });
 
@@ -14,7 +16,7 @@ export function fetchManagement(
     return {
       headers: {
         ...headers,
-        authorization: `API_KEY ${process.env.CONNECT_MANAGEMENT_API_KEY}`,
+        authorization: `API_KEY ${config.connectManagementApiKey}`,
       },
     };
   });

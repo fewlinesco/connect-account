@@ -1,8 +1,9 @@
 import React from "react";
-import { Method } from "src/@types/Method";
 import styled from "styled-components";
 
 import { IdentityTypes } from "../@types/Identity";
+import { Method } from "../@types/Method";
+import { useCookies } from "../hooks/useCookies";
 import { fetchJson } from "../utils/fetchJson";
 
 interface FetchIconButtonProps {
@@ -19,17 +20,27 @@ export const FetchIconButton: React.FC<FetchIconButtonProps> = ({
   color,
   children,
 }) => {
+  const { data, error } = useCookies();
+
+  if (error) {
+    return <div>Failed to load</div>;
+  }
+
+  if (!data) {
+    return null;
+  }
+
   return (
     <Button
       color={color}
       onClick={() => {
         const requestData = {
-          userId: "f950d3a9-51e0-4f4f-87ea-7407d08f0d8c",
+          userId: data.userId,
           type: type,
           value: value,
         };
 
-        fetchJson("/api/identity", method, requestData);
+        fetchJson("/api/account", method, requestData);
       }}
     >
       {children}

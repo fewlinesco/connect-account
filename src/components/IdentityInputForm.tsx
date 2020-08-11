@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { HttpVerbs } from "../@types/HttpVerbs";
 import { IdentityTypes } from "../@types/Identity";
+import { useCookies } from "../hooks/useCookies";
 import { fetchJson } from "../utils/fetchJson";
 
 export const IdentityInputForm: React.FC<{ type: IdentityTypes }> = ({
@@ -10,18 +11,28 @@ export const IdentityInputForm: React.FC<{ type: IdentityTypes }> = ({
 }) => {
   const [identity, setIdentity] = React.useState("");
 
+  const { data, error } = useCookies();
+
+  if (error) {
+    return <div>Failed to load</div>;
+  }
+
+  if (!data) {
+    return null;
+  }
+
   return (
     <Form
       data-testid="identity-form"
       method="post"
       onSubmit={() => {
         const body = {
-          userId: "f950d3a9-51e0-4f4f-87ea-7407d08f0d8c",
+          userId: data.userId,
           type,
           value: identity,
         };
 
-        fetchJson("/api/identity", HttpVerbs.POST, body);
+        fetchJson("/api/account", HttpVerbs.POST, body);
       }}
     >
       <Input

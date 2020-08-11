@@ -7,7 +7,7 @@ export function withAPIPageLogger(
   handler: Handler,
 ): (request: NextApiRequest, response: NextApiResponse) => void {
   const logger = createLogger("connect-account", "json").withMeta({
-    process: "getServerSideProps",
+    process: "apiPage",
   });
 
   const processTimeStart = process.hrtime.bigint();
