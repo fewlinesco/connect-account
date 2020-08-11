@@ -8,8 +8,8 @@ export function promisifiedJWTVerify<T>(
     jwt.verify(
       accessToken,
       clientSecret,
-      (error: jwt.VerifyErrors | null, decoded: any) => {
-        return error ? reject(error) : resolve(decoded);
+      (error: jwt.VerifyErrors | null, decoded: unknown) => {
+        return error ? reject(error) : resolve(decoded as T);
       },
     );
   });
