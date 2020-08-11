@@ -33,4 +33,13 @@ describe("promisifiedJWTVerify", () => {
       "",
     ).catch((error) => expect(error).toBeInstanceOf(jwt.JsonWebTokenError));
   });
+
+  test("it should throw an error if using the wrong client secret", async () => {
+    expect.assertions(1);
+
+    await promisifiedJWTVerify<Record<string, unknown>>(
+      "",
+      JWT,
+    ).catch((error) => expect(error).toBeInstanceOf(jwt.JsonWebTokenError));
+  });
 });

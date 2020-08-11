@@ -21,8 +21,6 @@ const handler: Handler = async (
     const route = "/api/oauth/callback";
     const redirect_uri = protocol + host + route;
 
-    console.log(redirect_uri);
-
     const callback = {
       client_id: config.connectApplicationClientId,
       client_secret: config.connectApplicationClientSecret,
