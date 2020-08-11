@@ -22,12 +22,12 @@ const USER_QUERY = gql`
   }
 `;
 
-export async function getIdentities(): Promise<
-  FetchResult<{ provider: ProviderUser }> | Error
-> {
+export async function getIdentities(
+  userId: string,
+): Promise<FetchResult<{ provider: ProviderUser }> | Error> {
   const operation = {
     query: USER_QUERY,
-    variables: { userId: process.env.DEV_USER_ID },
+    variables: { userId },
   };
 
   return (await fetchManagement(operation)) as

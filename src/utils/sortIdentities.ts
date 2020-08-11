@@ -9,6 +9,7 @@ export function sortIdentities(fetchedData: {
   const emailIdentities: Identity[] = [];
   if (fetchedData.data) {
     const identities: Identity[] = fetchedData.data.provider.user.identities;
+
     identities.forEach((identity) => {
       if (identity.type === ReceivedIdentityTypes.EMAIL) {
         emailIdentities.push(identity);
