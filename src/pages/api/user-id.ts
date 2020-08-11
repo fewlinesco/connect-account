@@ -15,10 +15,10 @@ const handler: Handler = async (
   if (request.method === "GET") {
     const accessToken = request.session.get("user-jwt");
 
-    const decoded = await promisifiedJWTVerify<{ sub: string }>({
-      clientSecret: config.connectApplicationClientSecret,
+    const decoded = await promisifiedJWTVerify<{ sub: string }>(
+      config.connectApplicationClientSecret,
       accessToken,
-    });
+    );
 
     if (decoded) {
       response.json({ userId: decoded.sub });

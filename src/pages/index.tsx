@@ -17,13 +17,13 @@ type IndexProps = {
 };
 
 const Index: React.FC<IndexProps> = ({ authParams }) => {
-  const { providerURL, ...queryStringsParams } = authParams;
+  const { providerURL, client_id, redirect_uri, scope } = authParams;
 
-  const searchParams = new URLSearchParams();
-
-  Object.entries(queryStringsParams).forEach(([key, value]) =>
-    searchParams.append(key, value),
-  );
+  const authorizeURL = new URL("/oauth/authorize", providerURL);
+  authorizeURL.searchParams.append("client_id", client_id);
+  authorizeURL.searchParams.append("response_type", "code");
+  authorizeURL.searchParams.append("redirect_uri", redirect_uri);
+  authorizeURL.searchParams.append("scope", scope);
 
   return (
     <>
@@ -32,11 +32,7 @@ const Index: React.FC<IndexProps> = ({ authParams }) => {
       </Head>
       <Main>
         <LoginButton>
-          <a
-            href={`${providerURL}/oauth/authorize?${searchParams.toString()}&response_type=code`}
-          >
-            Login
-          </a>
+          <a href={authorizeURL.toString()}>Login</a>
         </LoginButton>
       </Main>
     </>
