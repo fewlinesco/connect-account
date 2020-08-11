@@ -15,6 +15,15 @@ import {
 
 enableFetchMocks();
 
+jest.mock("../src/config", () => {
+  return {
+    config: {
+      connectApplicationClientSecret: "foo-bar",
+      connectAccountSessionSalt: "#*b+x3ZXE3-h[E+Q5YC5`jr~y%CA~R-[",
+    },
+  };
+});
+
 const mockedRequest = new IncomingMessage(new Socket());
 
 const mockedContext = {
