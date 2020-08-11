@@ -4,7 +4,7 @@ import { promisifiedJWTVerify } from "../src/utils/promisifiedJWTVerify";
 
 describe("promisifiedJWTVerify", () => {
   const mockedJWTPayload = {
-    aud: ["yoga-community"],
+    aud: ["connect-account"],
     exp: Date.now(),
     iss: "foo",
     scope: "phone email",
@@ -25,7 +25,7 @@ describe("promisifiedJWTVerify", () => {
     expect(decoded).toEqual(expect.objectContaining(mockedJWTPayload));
   });
 
-  test("it should throw an error is client secret us falsy", async () => {
+  test("it should throw an error if client secret is falsy", async () => {
     expect.assertions(1);
 
     await promisifiedJWTVerify<Record<string, unknown>>({

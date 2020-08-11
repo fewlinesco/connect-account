@@ -13,32 +13,31 @@ import {
 
 enableFetchMocks();
 
+const mockedRequest = new IncomingMessage(new Socket());
+
+const mockedContext = {
+  req: mockedRequest,
+  res: new ServerResponse(mockedRequest),
+  query: {},
+};
+
+const mockedJWTPayload = {
+  aud: ["connect-account"],
+  exp: Date.now(),
+  iss: "foo",
+  scope: "phone email",
+  sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
+};
+
 describe("getServerSideProps", () => {
   beforeEach(() => {
     fetch.resetMocks();
   });
 
-  afterEach(() => {
+  beforeEach(() => {
     mockedContext.req.headers = {};
-
     mockedContext.req.rawHeaders = [];
   });
-
-  const mockedRequest = new IncomingMessage(new Socket());
-
-  const mockedContext = {
-    req: mockedRequest,
-    res: new ServerResponse(mockedRequest),
-    query: {},
-  };
-
-  const mockedJWTPayload = {
-    aud: ["yoga-community"],
-    exp: Date.now(),
-    iss: "foo",
-    scope: "phone email",
-    sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
-  };
 
   it("should redirect to the login flow if there are no session", async () => {
     fetch.once(JSON.stringify(mockedResponse));
@@ -77,10 +76,13 @@ describe("getServerSideProps", () => {
       : "";
 
     mockedContext.req.headers = {
-      cookie: `oauth-jwt=${sealedJWT}`,
+      cookie: `connect-account-session=${sealedJWT}`,
     };
 
-    mockedContext.req.rawHeaders = ["Cookie", `oauth-jwt=${sealedJWT}`];
+    mockedContext.req.rawHeaders = [
+      "Cookie",
+      `connect-account-session=${sealedJWT}`,
+    ];
 
     fetch.once(JSON.stringify(mockedResponse));
 

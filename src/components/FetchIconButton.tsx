@@ -22,8 +22,13 @@ export const FetchIconButton: React.FC<FetchIconButtonProps> = ({
 }) => {
   const { data, error } = useCookies();
 
-  if (error) return <div>failed to load</div>;
-  if (!data) return <React.Fragment />;
+  if (error) {
+    return <div>Failed to load</div>;
+  }
+
+  if (!data) {
+    return null;
+  }
 
   return (
     <Button
