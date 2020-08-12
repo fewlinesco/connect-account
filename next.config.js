@@ -20,6 +20,8 @@ module.exports = {
       config.node = {
         fs: "empty",
       };
+
+      config.resolve.alias["@sentry/node"] = "@sentry/browser";
     }
     return config;
   },

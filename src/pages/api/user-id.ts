@@ -7,28 +7,40 @@ import { ExtendedRequest } from "../../@types/ExtendedRequest";
 import { config } from "../../config";
 import { withAPIPageLogger } from "../../middleware/withAPIPageLogger";
 import withSession from "../../middleware/withSession";
+import Sentry, { configureReq } from "../../utils/sentry";
 
 const handler: Handler = async (
   request: ExtendedRequest,
   response: NextApiResponse,
 ): Promise<void> => {
-  if (request.method === "GET") {
-    const accessToken = request.session.get("user-jwt");
+  configureReq(request);
 
-    const decoded = await promisifiedJWTVerify<{ sub: string }>(
-      config.connectApplicationClientSecret,
-      accessToken,
-    );
+  try {
+    if (request.method === "GET") {
+      const accessToken = request.session.get("user-jwt");
 
-    if (decoded) {
-      response.json({ userId: decoded.sub });
+      const decoded = await promisifiedJWTVerify<{ sub: string }>(
+        config.connectApplicationClientSecret,
+        accessToken,
+      );
+
+      if (decoded) {
+        response.json({ userId: decoded.sub });
+      } else {
+        response.writeHead(HttpStatus.MOVED_TEMPORARILY, {
+          Location: request.headers.referer || "/",
+        });
+      }
     } else {
-      response.writeHead(HttpStatus.MOVED_TEMPORARILY, {
-        Location: request.headers.referer || "/",
-      });
+      response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
+
+      return response.end();
     }
-  } else {
-    response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
+  } catch (error) {
+    Sentry.withScope((scope): void => {
+      scope.setTag("api/user-id", "api/user-id");
+      Sentry.captureException(error);
+    });
 
     return response.end();
   }

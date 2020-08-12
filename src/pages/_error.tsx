@@ -1,9 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-const Error: React.FC<{
-  statusCode: number | undefined;
-}> = () => {
+type ErrorPageProps = {
+  error: Error;
+  statusCode: number;
+  isReadyToRender: boolean;
+  children?: React.ReactElement;
+};
+
+const Error: React.FC<ErrorPageProps> = () => {
   return (
     <Wrapper>
       <h2>

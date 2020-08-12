@@ -6,6 +6,7 @@ type Config = {
   connectApplicationClientSecret: string;
   connectApplicationScopes: string;
   connectAccountSessionSalt: string;
+  connectAccountPublicSentryDSN: string;
 };
 
 const config: Config = {
@@ -16,6 +17,7 @@ const config: Config = {
   connectApplicationClientSecret: "",
   connectApplicationScopes: "",
   connectAccountSessionSalt: "",
+  connectAccountPublicSentryDSN: "",
 };
 
 function handleEnvVars(): void {
@@ -61,6 +63,13 @@ function handleEnvVars(): void {
     process.exit(1);
   }
   config.connectAccountSessionSalt = process.env.CONNECT_ACCOUNT_SESSION_SALT;
+
+  if (!process.env.CONNECT_ACCOUNT_PUBLIC_SENTRY_DSN) {
+    console.log("Missing CONNECT_ACCOUNT_PUBLIC_SENTRY_DSN");
+    process.exit(1);
+  }
+  config.connectAccountPublicSentryDSN =
+    process.env.CONNECT_ACCOUNT_PUBLIC_SENTRY_DSN;
 }
 
 handleEnvVars();
