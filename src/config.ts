@@ -64,12 +64,11 @@ function handleEnvVars(): void {
   }
   config.connectAccountSessionSalt = process.env.CONNECT_ACCOUNT_SESSION_SALT;
 
-  if (!process.env.CONNECT_ACCOUNT_PUBLIC_SENTRY_DSN) {
-    console.log("Missing CONNECT_ACCOUNT_PUBLIC_SENTRY_DSN");
+  if (!process.env.NEXT_PUBLIC_SENTRY_DSN) {
+    console.log("Missing NEXT_PUBLIC_SENTRY_DSN");
     process.exit(1);
   }
-  config.connectAccountPublicSentryDSN =
-    process.env.CONNECT_ACCOUNT_PUBLIC_SENTRY_DSN;
+  config.connectAccountPublicSentryDSN = process.env.NEXT_PUBLIC_SENTRY_DSN;
 }
 
 handleEnvVars();
