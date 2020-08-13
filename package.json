@@ -155,7 +155,6 @@
       "\\.(png|svg|jpg|gif|eot|ttf|woff|woff2)$": "<rootDir>/tests/__mocks__/fileMock.ts"
     },
     "setupFilesAfterEnv": [
-      "./tests/config/unimplementedSubmitWorkaround.ts",
       "./tests/config/enzyme-config.ts"
     ]
   },
