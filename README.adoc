@@ -13,28 +13,28 @@ These can be installed via the provided `.tool-versions` using `asdf install`.
 
 Get required environment variables by copying `.env.sample` and if necessary tuning it to values relevant to your dev environment:
 
-[source,shell]
+[source, shell]
 ----
 cp .env_vars.sample .env_vars
 ----
 
 Source the file to get variables defined your environnement:
 
-[source,shell]
+[source, shell]
 ----
 source .env_vars
 ----
 
 == Development Process
 
-[source,shell]
+[source, shell]
 ----
 NODE_TLS_REJECT_UNAUTHORIZED=0 yarn dev
 ----
 
 == Testing
 
-[source,shell]
+[source, shell]
 ----
 yarn test
 ----
@@ -103,3 +103,52 @@ We are using the NextJS folder architecture (i.e. `/pages`) to utilize the its r
 === config files
 - *package.json*: We use this file, as much as possible, as a centralized config file for various packages, like `ESLint`, `Jest` or `Husky`.
 
+== Theme
+
+You should prioritize theme values instead of arbitrary css values.
+
+The theme structure is defined inside the `src/@types/styled-component.d.ts` definition type file.
+
+The theme values are set inside `src/design-system/theme/lightTheme.ts` file. Each field are se individually, then assigned to the `lightTheme` variable.
+
+You can access the theme properties and values inside a `styled` component by calling the `theme` props:
+
+[source, typescript]
+----
+import styled from "styled-components";
+
+
+const StyledComponent = styled.div`
+  css-property: ${({ theme }) => theme.themeKey};
+`
+----
+
+You can access the theme properties and values from everywhere else with the custom `useTheme` hook:
+
+[source, typescript]
+----
+import { useTheme } from "relative/path/to/the/hook";
+
+const theme = useTheme();
+----
+
+To access our breakpoint definitions, you can import the `breakpointDevices` object from the theme file and apply the wanted breakpoint with the `@media` keyword:
+
+[source, typescript]
+----
+import styled from "styled-components";
+
+import { deviceBreakpoints } from "relative/path/to/the/theme";
+
+const StyledComponent = styled.div {
+  @media ${deviceBreakpoints.xs} {}
+
+  @media ${deviceBreakpoints.s} {}
+
+  @media ${deviceBreakpoints.m} {}
+
+  @media ${deviceBreakpoints.l} {}
+}
+----
+
+Our chosen viewport breakpoints are : `576px` | `768px` | `992` | `1200`.
