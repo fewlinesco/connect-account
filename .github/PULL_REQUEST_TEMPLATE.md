@@ -34,11 +34,11 @@
 <!--- What types of changes does your code introduce? Stroke -->
 <!-- (i.e. ~stroked text~) the ones that don't apply: -->
 
-- Chore (non-breaking change which refactors / improves the existing code base)
-- Bug fix (non-breaking change which fixes an issue)
-- New feature (non-breaking change which adds functionality)
+- Chore (non-breaking change which refactors / improves the existing code base).
+- Bug fix (non-breaking change which fixes an issue).
+- New feature (non-breaking change which adds functionality).
 - Breaking change (fix or feature that would cause existing functionality to
-  change)
+  change).
 
 ## Checklist:
 

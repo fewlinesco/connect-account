@@ -108,7 +108,9 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 - **.test.(ts|tsx)*: Unit test files.
 
 === config files
-- *package.json*: We use this file, as much as possible, as a centralized config file for various packages, like `ESLint`, `Jest` or `Husky`.
+- *package.json*: We use this file, as much as possible as a centralized config file for various packages, like `ESLint`, `Jest` or `Husky`.
+- *tsconfig.json*: TypeScript compiler options.
+- *next.config.js*: Extended webpack compiler used by NextJS.
 
 == Linting
 
@@ -141,6 +143,12 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 === Type declaration
 
 The rule we we follow is that, if a declared type is only used in one file, we locate it in said file. Otherwise, we move it in its own file, under `@types/`.
+The exceptions to this rule are:
+
+- *next-env.d.ts*: Adds NextJS types globally.
+- *assets.d.ts*: Allow the import of assets files in TypeScript files.
+
+as NextJS required them to be located at the root of the repository.
 
 == Style
 
