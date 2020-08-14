@@ -150,7 +150,31 @@ The exceptions to this rule are:
 
 as NextJS required them to be located at the root of the repository.
 
+=== Typing React components
+
+We chose to type React component like so:
+
+[source, typescript]
+----
+import React from "react";
+
+// Without props.
+export const Foo: React.FC = () => { return ;}
+
+// With props.
+type BarProps = { foo: "bar" }
+
+export const Bar: React.FC<BarProps> = ({ foo }) => { return <div>{ foo }</div>}
+----
+
+If you are not familiar with TypeScript generic types, please take a look at the https://www.typescriptlang.org/docs/handbook/generics.html[documentation].
+
 == Style
+
+=== Global style
+
+The `globalStyle` object, found in `/src/design-system/globals/globalStyle.tsx`, is used to remove undesired style and behavior found in HTML, and give use full controle on
+The `globalStyle` is scoped in the `_app` page component.
 
 === Theme
 
@@ -159,6 +183,8 @@ You should prioritize theme values instead of arbitrary css values.
 The theme structure is defined inside the `src/@types/styled-component.d.ts` definition type file.
 
 The theme values are set inside `src/design-system/theme/lightTheme.ts` file. Each field are se individually, then assigned to the `lightTheme` variable.
+
+The theme access is scoped in the `_app` page component.
 
 You can access the theme properties and values inside a `styled` component by calling the `theme` props:
 
