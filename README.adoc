@@ -39,4 +39,53 @@ If you are working with a local Connect, you need to run:
 NODE_TLS_REJECT_UNAUTHORIZED=0 yarn dev
 ----
 
+== Environment variables
+
+|===
+| Name | Description
+
+| `CONNECT_ACCOUNT_PORT`
+| Local port used to run the application.
+
+| `CONNECT_ACCOUNT_SESSION_SALT`
+| The password used to seal or access the cookie session. It needs to be at least 32 characters long. 
+
+| `CONNECT_MANAGEMENT_URL`
+| URL used to fetch identities from the management GraphQL endpoint.
+
+| `CONNECT_MANAGEMENT_API_KEY`
+| API key used to access the management GraphQL endpoint.
+
+| `CONNECT_PROVIDER_URL`
+| URL used to start the connect oauth flow.
+
+| `CONNECT_APPLICATION_CLIENT_ID`
+| Client ID of the online service (e.g. internet website, application) that uses the Provider Authentication and Authorization service for its User.
+
+| `CONNECT_APPLICATION_CLIENT_SECRET`
+| Paired with the client ID, used to authenticate the Application from which the User attempts to sign in.
+
+| `CONNECT_APPLICATION_SCOPES`
+| Represents the kind of user authorized information and actions that an Application is able to access on another Application.
+
+| `NEXT_PUBLIC_SENTRY_DSN`
+| Data Source Name representing the configuration required by the Sentry SDKs.
+|===
+
+
 == Source Code Organization
+
+We are using the NextJS folder architecture (i.e. `/pages`) to utilize the its router, out of the box. For more information, please refer to the https://nextjs.org/docs/basic-features/pages[documentation].
+
+In the `src` folder you will find:
+
+- @types: Type declaration used in multiple places.
+- assets: Folder containing assets.
+- commands: Write (e.g. `POST`) database actions.
+- components: React components.
+- design-system: Style or atomic component (e.g. icons) related code.
+- hooks: Reusable actions flows.
+- middleware: Reusable wrapper to add various features to server side actions.
+- pages: NextJS router.
+- queries: Read (i.e. `GET`) database actions.
+- utils: Small snippets/functions used multiple times throughout the application
