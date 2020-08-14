@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { config } from "../config";
 import { withSSRLogger } from "../middleware/withSSRLogger";
-import { configureReq } from "../utils/sentry";
+import { addRequestScopeToSentry } from "../utils/sentry";
 
 type IndexProps = {
   authParams: {
@@ -44,7 +44,7 @@ export default Index;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   async (context) => {
-    configureReq(context.req);
+    addRequestScopeToSentry(context.req);
 
     const protocol =
       process.env.NODE_ENV === "production" ? "https://" : "http://";

@@ -9,13 +9,13 @@ import { config } from "../../../config";
 import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
 import withSession from "../../../middleware/withSession";
 import { fetchJson } from "../../../utils/fetchJson";
-import Sentry, { configureReq } from "../../../utils/sentry";
+import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
 
 const handler: Handler = async (
   request: ExtendedRequest,
   response: NextApiResponse,
 ): Promise<void> => {
-  configureReq(request);
+  addRequestScopeToSentry(request);
 
   try {
     if (request.method === "GET") {

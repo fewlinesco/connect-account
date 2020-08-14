@@ -4,10 +4,10 @@ import { Handler } from "../../@types/ApiPageHandler";
 import { addIdentityToUser } from "../../command/addIdentityToUser";
 import { removeIdentityFromUser } from "../../command/removeIdentityFromUser";
 import { withAPIPageLogger } from "../../middleware/withAPIPageLogger";
-import Sentry, { configureReq } from "../../utils/sentry";
+import Sentry, { addRequestScopeToSentry } from "../../utils/sentry";
 
 const handler: Handler = async (request, response) => {
-  configureReq(request);
+  addRequestScopeToSentry(request);
 
   try {
     const { userId, type, value } = request.body;

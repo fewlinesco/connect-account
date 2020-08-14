@@ -68,7 +68,6 @@ function handleEnvVars(): void {
     console.log("Missing NEXT_PUBLIC_SENTRY_DSN");
     process.exit(1);
   }
-  config.connectAccountPublicSentryDSN = process.env.NEXT_PUBLIC_SENTRY_DSN;
 }
 
 handleEnvVars();
