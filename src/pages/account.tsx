@@ -14,7 +14,6 @@ import { HttpVerbs } from "../@types/HttpVerbs";
 import { IdentityTypes, Identity } from "../@types/Identity";
 import { SortedIdentities } from "../@types/SortedIdentities";
 import { FetchIconButton } from "../components/FetchIconButton";
-import { IdentityInputForm } from "../components/IdentityInputForm";
 import { config } from "../config";
 import { EditIcon } from "../design-system/icons/EditIcon";
 import { useTheme } from "../design-system/theme/useTheme";
@@ -50,7 +49,7 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
                 <IdentityBox key={email.value}>
                   <Flex>
                     <Value>{email.value}</Value>
-                    <EditIcon />
+
                     {sortedIdentities.emailIdentities.length > 1 ? (
                       <FetchIconButton
                         type={IdentityTypes.EMAIL}
@@ -86,6 +85,9 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
                 <IdentityBox key={phone.value}>
                   <Flex>
                     <Value>{phone.value}</Value>
+                    {phone.edit && (
+                      <IdentityInputForm type={IdentityTypes.PHONE} />
+                    )}
                     <EditIcon />
                     {sortedIdentities.phoneIdentities.length > 1 ? (
                       <FetchIconButton
