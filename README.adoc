@@ -29,14 +29,14 @@ source .env_vars
 
 [source,shell]
 ----
-yarn dev
+NODE_TLS_REJECT_UNAUTHORIZED=0 yarn dev
 ----
 
-If you are working with a local Connect, you need to run:
+== Testing
 
 [source,shell]
 ----
-NODE_TLS_REJECT_UNAUTHORIZED=0 yarn dev
+yarn test
 ----
 
 == Environment variables
@@ -63,7 +63,7 @@ NODE_TLS_REJECT_UNAUTHORIZED=0 yarn dev
 | Client ID of the online service (e.g. internet website, application) that uses the Provider Authentication and Authorization service for its User.
 
 | `CONNECT_APPLICATION_CLIENT_SECRET`
-| Paired with the client ID, used to authenticate the Application from which the User attempts to sign in.
+| Paired with the client ID, used to authenticate the Application from which the User intent to sign in.
 
 | `CONNECT_APPLICATION_SCOPES`
 | Represents the kind of user authorized information and actions that an Application is able to access on another Application.
@@ -77,15 +77,29 @@ NODE_TLS_REJECT_UNAUTHORIZED=0 yarn dev
 
 We are using the NextJS folder architecture (i.e. `/pages`) to utilize the its router, out of the box. For more information, please refer to the https://nextjs.org/docs/basic-features/pages[documentation].
 
-In the `src` folder you will find:
+=== /.github
 
-- @types: Type declaration used in multiple places.
-- assets: Folder containing assets.
-- commands: Write (e.g. `POST`) database actions.
-- components: React components.
-- design-system: Style or atomic component (e.g. icons) related code.
-- hooks: Reusable actions flows.
-- middleware: Reusable wrapper to add various features to server side actions.
-- pages: NextJS router.
-- queries: Read (i.e. `GET`) database actions.
-- utils: Small snippets/functions used multiple times throughout the application
+- */workflows*: GitHub Actions used to run tests during CI/CD process flow.
+- *PULL_REQUEST_TEMPLATE*: Template used when doing a pull request on GitHub.
+
+=== /src
+
+- *@types/*: Type declaration used in multiple places.
+- *assets/*: Folder containing assets.
+- *commands/*: Write (e.g. `POST`) database actions.
+- *components/*: React components.
+- *design-system/*: Style or atomic component (e.g. icons) related code.
+- *hooks/*: Reusable actions flows.
+- *middleware/*: Reusable wrapper to add various features to server side actions.
+- *pages/*: NextJS router.
+- *queries/*: Read (i.e. `GET`) database actions.
+- *utils/*: Small snippets/functions used multiple times throughout the application
+- *config.ts*: Entry point used to verify env vars sourcing, and prevent the app to run if forgotten.
+
+=== /tests
+- *__mocks__*: Centralized mocked data or function.
+- **.test.(ts|tsx)*: Unit test files.
+
+=== config files
+- *package.json*: We use this file, as much as possible, as a centralized config file for various packages, like `ESLint`, `Jest` or `Husky`.
+
