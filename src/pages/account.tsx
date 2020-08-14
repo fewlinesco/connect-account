@@ -16,6 +16,7 @@ import { SortedIdentities } from "../@types/SortedIdentities";
 import { FetchIconButton } from "../components/FetchIconButton";
 import { IdentityInputForm } from "../components/IdentityInputForm";
 import { config } from "../config";
+import { EditIcon } from "../design-system/icons/EditIcon";
 import { useTheme } from "../design-system/theme/useTheme";
 import { withSSRLogger } from "../middleware/withSSRLogger";
 import withSession from "../middleware/withSession";
@@ -49,6 +50,7 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
                 <IdentityBox key={email.value}>
                   <Flex>
                     <Value>{email.value}</Value>
+                    <EditIcon />
                     {sortedIdentities.emailIdentities.length > 1 ? (
                       <FetchIconButton
                         type={IdentityTypes.EMAIL}
@@ -84,6 +86,7 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
                 <IdentityBox key={phone.value}>
                   <Flex>
                     <Value>{phone.value}</Value>
+                    <EditIcon />
                     {sortedIdentities.phoneIdentities.length > 1 ? (
                       <FetchIconButton
                         type={IdentityTypes.PHONE}
