@@ -20,8 +20,9 @@ export const EditIcon: React.FC = () => {
   );
 };
 
-const Button = styled.button<{ color: string }>`
+const Button = styled.button`
   background-color: transparent;
+
   &:hover {
     cursor: pointer;
   }
