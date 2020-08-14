@@ -30,7 +30,7 @@ const handler: Handler = async (request, response) => {
       });
     }
   } catch (error) {
-    Sentry.withScope((scope): void => {
+    Sentry.withScope((scope) => {
       scope.setTag("api/account", "api/account");
       Sentry.captureException(error);
     });

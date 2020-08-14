@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@fewlines/fwl-web": "2.0.3",
-    "@sentry/browser": "5.21.0",
-    "@sentry/node": "5.21.0",
+    "@sentry/browser": "5.21.1",
+    "@sentry/node": "5.21.1",
     "apollo-link-context": "1.0.20",
     "apollo-link-http": "1.5.17",
     "graphql": "15.3.0",
