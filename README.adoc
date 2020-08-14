@@ -1,7 +1,7 @@
 = Connect Account
 
 
-## Setup
+== Setup
 
 Before being able to start the project locally, you should have a way to run `Node.js` applications.
 
@@ -73,9 +73,16 @@ yarn test
 |===
 
 
+== Connect login implementation
+
+To understand the flow of `connect-account`, you should read the `connect` https://developers.fewlines.co/guides/authorization_code_flow/overview/[documentation].
+
+
 == Source Code Organization
 
 We are using the NextJS folder architecture (i.e. `/pages`) to utilize the its router, out of the box. For more information, please refer to the https://nextjs.org/docs/basic-features/pages[documentation].
+
+We are also using the `Command Query Responsibility Segregation`(CQRS) pattern to separate queries from mutations. They are located in the `queries/` and `command/` folder.
 
 === /.github
 
@@ -103,7 +110,41 @@ We are using the NextJS folder architecture (i.e. `/pages`) to utilize the its r
 === config files
 - *package.json*: We use this file, as much as possible, as a centralized config file for various packages, like `ESLint`, `Jest` or `Husky`.
 
-== Theme
+== Linting
+
+We use a set of strict linting rules through `TypeScript` and `ESLint`. While `TypeScript` config is pretty standard, the `ESLint` one is mostly set with our own custom package, called https://www.npmjs.com/package/@fewlines/eslint-config[@fewlines/eslint-config]. You should read the documentation if you want the full power of the config while using `VSCode`.
+
+> Note that, contrary to `errors`, `warnings` do not break testing or building the app.
+
+You can manually lint, using:
+
+[source, shell]
+----
+yarn lint
+----
+
+or
+
+[source, shell]
+----
+yarn lint --fix
+----
+
+If you want to automatically fix linting issues.
+
+== Pre-push trigger
+
+We are using `Husky` to trigger the linting, testing and building of the app before pushing the code to GitHub to prevent unnecessary `Vercel` build.
+
+== TypeScript
+
+=== Type declaration
+
+The rule we we follow is that, if a declared type is only used in one file, we locate it in said file. Otherwise, we move it in its own file, under `@types/`.
+
+== Style
+
+=== Theme
 
 You should prioritize theme values instead of arbitrary css values.
 
@@ -117,7 +158,7 @@ You can access the theme properties and values inside a `styled` component by ca
 ----
 import styled from "styled-components";
 
-
+// Note that styled component are PascalCase.
 const StyledComponent = styled.div`
   css-property: ${({ theme }) => theme.themeKey};
 `
@@ -136,8 +177,6 @@ To access our breakpoint definitions, you can import the `breakpointDevices` obj
 
 [source, typescript]
 ----
-import styled from "styled-components";
-
 import { deviceBreakpoints } from "relative/path/to/the/theme";
 
 const StyledComponent = styled.div {
@@ -152,3 +191,31 @@ const StyledComponent = styled.div {
 ----
 
 Our chosen viewport breakpoints are : `576px` | `768px` | `992` | `1200`.
+
+Sometimes, you want to pass custom props to your styled component. To do so, do as follow:
+
+[source, typescript]
+----
+type StyledButtonProps = { isActive: boolean };
+
+const StyledComponent = styled.button<StyledButtonProps>`
+  ${({ isActive, theme }) => `color: ${isActive ? theme.green : theme.grey}`};
+`;
+----
+
+=== SVG
+
+If you want to use SVGs in your application, we recommend to render them as a React component, instead of importing the file:
+
+[source, jsx]
+----
+import React from 'react'
+
+export const SvgIcon: React.FC = () => {
+  return (
+    <svg>
+      ...
+    </svg>
+  )
+}
+----
