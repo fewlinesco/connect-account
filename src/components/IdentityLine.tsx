@@ -8,7 +8,7 @@ import { IdentityTypes, Identity } from "../@types/Identity";
 import { EditIcon } from "../design-system/icons/EditIcon";
 import { useTheme } from "../design-system/theme/useTheme";
 import { FetchIconButton } from "./FetchIconButton";
-import { IdentityInputForm } from "./IdentityInputForm";
+import { UpdateInput } from "./UpdateInput";
 
 type IdentityLineProps = {
   identity: Identity;
@@ -27,15 +27,7 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({
     <IdentityBox key={identity.value}>
       <Flex>
         {!editEmail && <Value>{identity.value}</Value>}
-        {editEmail && (
-          <IdentityInputForm
-            type={
-              identity.type === "email"
-                ? IdentityTypes.EMAIL
-                : IdentityTypes.PHONE
-            }
-          />
-        )}
+        {editEmail && <UpdateInput prop={identity} />}
         <Button
           onClick={() => setEditIdentity(!editEmail)}
           color={theme.colors.green}
