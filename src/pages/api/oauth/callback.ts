@@ -47,7 +47,7 @@ const handler: Handler = async (
 
       await request.session.save();
 
-      response.writeHead(HttpStatus.MOVED_TEMPORARILY, {
+      response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
         Location: "/account",
       });
 

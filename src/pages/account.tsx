@@ -155,7 +155,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
           Sentry.captureException(error);
         });
 
-        context.res.statusCode = HttpStatus.MOVED_TEMPORARILY;
+        context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
         context.res.setHeader("location", context.req.headers.referer || "/");
         context.res.end();
 

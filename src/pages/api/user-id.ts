@@ -27,7 +27,7 @@ const handler: Handler = async (
       if (decoded) {
         response.json({ userId: decoded.sub });
       } else {
-        response.writeHead(HttpStatus.MOVED_TEMPORARILY, {
+        response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
           Location: request.headers.referer || "/",
         });
       }
