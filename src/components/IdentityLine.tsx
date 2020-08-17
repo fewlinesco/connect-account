@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import { HttpVerbs } from "../@types/HttpVerbs";
 import { IdentityTypes, Identity } from "../@types/Identity";
+import { CancelButton } from "../design-system/icons/CancelButton";
 import { EditIcon } from "../design-system/icons/EditIcon";
 import { useTheme } from "../design-system/theme/useTheme";
 import { FetchIconButton } from "./FetchIconButton";
@@ -32,7 +33,7 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({
           onClick={() => setEditIdentity(!editEmail)}
           color={theme.colors.green}
         >
-          <EditIcon />
+          {editEmail ? <CancelButton /> : <EditIcon />}
         </Button>
         {sortedIdentities.emailIdentities.length > 1 ? (
           <FetchIconButton
