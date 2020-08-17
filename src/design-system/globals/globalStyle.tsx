@@ -2,7 +2,7 @@ import { createGlobalStyle, DefaultTheme } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
 	html {
-		/* This font size means that '1rem' is exactly equal to '10px', this makes setting REM values very simple. */
+		/* This font size means that '1rem' is exactly equal to '10px', which makes setting REM values very simple. */
 		font-size: 62.5%;
 	}
 
