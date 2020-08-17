@@ -7,6 +7,7 @@ import {
   IdentityTypes,
 } from "../../src/@types/Identity";
 import { SortedIdentities } from "../../src/@types/SortedIdentities";
+import { FetchIconButton } from "../../src/components/FetchIconButton";
 import { Layout } from "../../src/components/Layout";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
@@ -53,8 +54,12 @@ describe("the delete button should be displayed only when it's relevant (more th
       </ThemeProvider>,
     );
 
-    const emailTrash = component.find({ type: IdentityTypes.EMAIL });
-    const phoneTrash = component.find({ type: IdentityTypes.PHONE });
+    const emailTrash = component
+      .find(FetchIconButton)
+      .find({ type: IdentityTypes.EMAIL });
+    const phoneTrash = component
+      .find(FetchIconButton)
+      .find({ type: IdentityTypes.PHONE });
 
     expect(emailTrash).toHaveLength(0);
     expect(phoneTrash).toHaveLength(0);
@@ -98,8 +103,12 @@ describe("the delete button should be displayed only when it's relevant (more th
       </ThemeProvider>,
     );
 
-    const emailTrash = component.find({ type: IdentityTypes.EMAIL });
-    const phoneTrash = component.find({ type: IdentityTypes.PHONE });
+    const emailTrash = component
+      .find(FetchIconButton)
+      .find({ type: IdentityTypes.EMAIL });
+    const phoneTrash = component
+      .find(FetchIconButton)
+      .find({ type: IdentityTypes.PHONE });
 
     expect(emailTrash).toHaveLength(2);
     expect(phoneTrash).toHaveLength(0);
@@ -143,8 +152,12 @@ describe("the delete button should be displayed only when it's relevant (more th
       </ThemeProvider>,
     );
 
-    const emailTrash = component.find({ type: IdentityTypes.EMAIL });
-    const phoneTrash = component.find({ type: IdentityTypes.PHONE });
+    const emailTrash = component
+      .find(FetchIconButton)
+      .find({ type: IdentityTypes.EMAIL });
+    const phoneTrash = component
+      .find(FetchIconButton)
+      .find({ type: IdentityTypes.PHONE });
 
     expect(emailTrash).toHaveLength(0);
     expect(phoneTrash).toHaveLength(2);
@@ -194,8 +207,12 @@ describe("the delete button should be displayed only when it's relevant (more th
       </ThemeProvider>,
     );
 
-    const emailTrash = component.find({ type: IdentityTypes.EMAIL });
-    const phoneTrash = component.find({ type: IdentityTypes.PHONE });
+    const emailTrash = component
+      .find(FetchIconButton)
+      .find({ type: IdentityTypes.EMAIL });
+    const phoneTrash = component
+      .find(FetchIconButton)
+      .find({ type: IdentityTypes.PHONE });
 
     expect(emailTrash).toHaveLength(2);
     expect(phoneTrash).toHaveLength(2);
@@ -215,8 +232,12 @@ describe("the delete button should be displayed only when it's relevant (more th
       </ThemeProvider>,
     );
 
-    const emailTrash = component.find({ type: IdentityTypes.EMAIL });
-    const phoneTrash = component.find({ type: IdentityTypes.PHONE });
+    const emailTrash = component
+      .find(FetchIconButton)
+      .find({ type: IdentityTypes.EMAIL });
+    const phoneTrash = component
+      .find(FetchIconButton)
+      .find({ type: IdentityTypes.PHONE });
     const noPhone = component.find(".no-phone");
     const noEmail = component.find(".no-email");
 
