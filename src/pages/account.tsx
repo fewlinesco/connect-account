@@ -7,15 +7,13 @@ import {
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
-import { Trash } from "react-feather";
 import styled from "styled-components";
 
-import { HttpVerbs } from "../@types/HttpVerbs";
 import { IdentityTypes, Identity } from "../@types/Identity";
 import { SortedIdentities } from "../@types/SortedIdentities";
-import { FetchIconButton } from "../components/FetchIconButton";
+import { IdentityInputForm } from "../components/IdentityInputForm";
+import { IdentityLine } from "../components/IdentityLine";
 import { config } from "../config";
-import { EditIcon } from "../design-system/icons/EditIcon";
 import { useTheme } from "../design-system/theme/useTheme";
 import { withSSRLogger } from "../middleware/withSSRLogger";
 import withSession from "../middleware/withSession";
@@ -46,22 +44,11 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
           ) : (
             sortedIdentities.emailIdentities.map((email: Identity) => {
               return (
-                <IdentityBox key={email.value}>
-                  <Flex>
-                    <Value>{email.value}</Value>
-
-                    {sortedIdentities.emailIdentities.length > 1 ? (
-                      <FetchIconButton
-                        type={IdentityTypes.EMAIL}
-                        method={HttpVerbs.DELETE}
-                        value={email.value}
-                        color={theme.colors.red}
-                      >
-                        <Trash width="15" />
-                      </FetchIconButton>
-                    ) : null}
-                  </Flex>
-                </IdentityBox>
+                <IdentityLine
+                  identity={email}
+                  sortedIdentities={sortedIdentities}
+                  key={email.value}
+                />
               );
             })
           )}
@@ -82,25 +69,11 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
           ) : (
             sortedIdentities.phoneIdentities.map((phone: Identity) => {
               return (
-                <IdentityBox key={phone.value}>
-                  <Flex>
-                    <Value>{phone.value}</Value>
-                    {phone.edit && (
-                      <IdentityInputForm type={IdentityTypes.PHONE} />
-                    )}
-                    <EditIcon />
-                    {sortedIdentities.phoneIdentities.length > 1 ? (
-                      <FetchIconButton
-                        type={IdentityTypes.PHONE}
-                        method={HttpVerbs.DELETE}
-                        value={phone.value}
-                        color={theme.colors.red}
-                      >
-                        <Trash width="15" />
-                      </FetchIconButton>
-                    ) : null}
-                  </Flex>
-                </IdentityBox>
+                <IdentityLine
+                  identity={phone}
+                  sortedIdentities={sortedIdentities}
+                  key={phone.value}
+                />
               );
             })
           )}

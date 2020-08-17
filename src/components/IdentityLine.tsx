@@ -1,24 +1,41 @@
 import React from "react";
 import { Trash } from "react-feather";
+import { SortedIdentities } from "src/@types/SortedIdentities";
 import styled from "styled-components";
 
 import { HttpVerbs } from "../@types/HttpVerbs";
-import { IdentityTypes } from "../@types/Identity";
+import { IdentityTypes, Identity } from "../@types/Identity";
 import { EditIcon } from "../design-system/icons/EditIcon";
 import { useTheme } from "../design-system/theme/useTheme";
 import { FetchIconButton } from "./FetchIconButton";
 import { IdentityInputForm } from "./IdentityInputForm";
 
-export const IdentityLine: React.FC = ({ email, sortedIdentities }) => {
+type IdentityLineProps = {
+  identity: Identity;
+  sortedIdentities: SortedIdentities;
+};
+
+export const IdentityLine: React.FC<IdentityLineProps> = ({
+  identity,
+  sortedIdentities,
+}) => {
   const [editEmail, setEditIdentity] = React.useState<boolean>(false);
 
   const theme = useTheme();
 
   return (
-    <IdentityBox key={email.value}>
+    <IdentityBox key={identity.value}>
       <Flex>
-        {!editEmail && <Value>{email.value}</Value>}
-        {editEmail && <IdentityInputForm type={IdentityTypes.EMAIL} />}
+        {!editEmail && <Value>{identity.value}</Value>}
+        {editEmail && (
+          <IdentityInputForm
+            type={
+              identity.type === "email"
+                ? IdentityTypes.EMAIL
+                : IdentityTypes.PHONE
+            }
+          />
+        )}
         <Button
           onClick={() => setEditIdentity(!editEmail)}
           color={theme.colors.green}
@@ -27,9 +44,13 @@ export const IdentityLine: React.FC = ({ email, sortedIdentities }) => {
         </Button>
         {sortedIdentities.emailIdentities.length > 1 ? (
           <FetchIconButton
-            type={IdentityTypes.EMAIL}
+            type={
+              identity.type === "email"
+                ? IdentityTypes.EMAIL
+                : IdentityTypes.PHONE
+            }
             method={HttpVerbs.DELETE}
-            value={email.value}
+            value={identity.value}
             color={theme.colors.red}
           >
             <Trash width="15" />
