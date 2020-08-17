@@ -20,7 +20,7 @@ export const addRequestScopeToSentry = (
 ): void => {
   const headers = Object.entries(request.headers).reduce(
     (acc, [key, value]) =>
-      key.toLowerCase() !== "cookie" && key.toLowerCase() !== "authorization"
+      !["cookie", "authorization"].includes(key.toLowerCase())
         ? { ...acc, [key]: value }
         : acc,
     {},
