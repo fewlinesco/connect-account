@@ -38,7 +38,9 @@ export const IdentityInputForm: React.FC<{ type: IdentityTypes }> = ({
       <Input
         type="text"
         name="value"
-        placeholder="Enter your email"
+        placeholder={`Enter your ${
+          type === IdentityTypes.EMAIL ? "email" : "phone"
+        }`}
         value={identity}
         onChange={(event) => setIdentity(event.target.value)}
       />

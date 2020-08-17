@@ -151,9 +151,9 @@ const IdentitySection = styled.div`
     `${theme.colors.blacks[0]} ${theme.borders.thin}`};
 `;
 
-const IdentityBox = styled.div`
-  padding: ${({ theme }) => theme.spaces.component.xs};
-`;
+// const IdentityBox = styled.div`
+//   padding: ${({ theme }) => theme.spaces.component.xs};
+// `;
 
 const Flex = styled.div`
   display: flex;
