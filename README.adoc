@@ -32,6 +32,15 @@ source .env_vars
 NODE_TLS_REJECT_UNAUTHORIZED=0 yarn dev
 ----
 
+If you want to build and start the app, you should run the following:
+
+[source, shell]
+----
+yarn build && yarn start -p $CONNECT_ACCOUNT_PORT
+----
+
+The `yarn start` port is not set by default, as it is used by Vercel for building the app.
+
 == Testing
 
 [source, shell]
@@ -80,14 +89,14 @@ To understand the flow of `connect-account`, you should read the `connect` https
 
 == Source Code Organization
 
-We are using the NextJS folder architecture (i.e. `/pages`) to utilize the its router, out of the box. For more information, please refer to the https://nextjs.org/docs/basic-features/pages[documentation].
+We are using the NextJS folder architecture (i.e. `/pages`) to utilize its router, out of the box. For more information, please refer to the https://nextjs.org/docs/basic-features/pages[documentation].
 
 We are also using the `Command Query Responsibility Segregation`(CQRS) pattern to separate queries from mutations. They are located in the `queries/` and `command/` folder.
 
 === /.github
 
 - */workflows*: GitHub Actions used to run tests during CI/CD process flow.
-- *PULL_REQUEST_TEMPLATE*: Template used when doing a pull request on GitHub.
+- *PULL_REQUEST_TEMPLATE*: Template used when opening a pull request on GitHub.
 
 === /src
 
@@ -95,9 +104,9 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 - *assets/*: Folder containing assets.
 - *commands/*: Write (e.g. `POST`) database actions.
 - *components/*: React components.
-- *design-system/*: Style or atomic component (e.g. icons) related code.
+- *design-system/*: Style or atomic components (e.g. icons) related code.
 - *hooks/*: Reusable actions flows.
-- *middleware/*: Reusable wrapper to add various features to server side actions.
+- *middleware/*: Reusable wrappers to add various features to server side actions.
 - *pages/*: NextJS router.
 - *queries/*: Read (i.e. `GET`) database actions.
 - *utils/*: Small snippets/functions used multiple times throughout the application
@@ -110,13 +119,13 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 === config files
 - *package.json*: We use this file, as much as possible as a centralized config file for various packages, like `ESLint`, `Jest` or `Husky`.
 - *tsconfig.json*: TypeScript compiler options.
-- *next.config.js*: Extended webpack compiler used by NextJS.
+- *next.config.js*: Extended webpack compiler config used by NextJS.
 
 == Linting
 
 We use a set of strict linting rules through `TypeScript` and `ESLint`. While `TypeScript` config is pretty standard, the `ESLint` one is mostly set with our own custom package, called https://www.npmjs.com/package/@fewlines/eslint-config[@fewlines/eslint-config]. You should read the documentation if you want the full power of the config while using `VSCode`.
 
-> Note that, contrary to `errors`, `warnings` do not break testing or building the app.
+> Note that, contrary to `errors`, `warnings` do not break testing or app compilation.
 
 You can manually lint, using:
 
@@ -132,7 +141,7 @@ or
 yarn lint --fix
 ----
 
-If you want to automatically fix linting issues.
+if you want to automatically fix linting issues.
 
 == Pre-push trigger
 
@@ -142,7 +151,7 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 
 === Type declaration
 
-The rule we we follow is that, if a declared type is only used in one file, we locate it in said file. Otherwise, we move it in its own file, under `@types/`.
+The rule we follow is that, if a declared type is only used in one file, we locate it in said file. Otherwise, we move it in its own file, under `@types/`.
 The exceptions to this rule are:
 
 - *next-env.d.ts*: Adds NextJS types globally.
@@ -173,16 +182,19 @@ If you are not familiar with TypeScript generic types, please take a look at the
 
 === Global style
 
-The `globalStyle` object, found in `/src/design-system/globals/globalStyle.tsx`, is used to remove undesired style and behavior found in HTML, and give use full controle on
+The `globalStyle` object, found in `/src/design-system/globals/globalStyle.tsx`, is used to remove undesired style and behavior found in HTML. 
+
+> Note that we chose to set the global font size to *62.5%*. This font size means that '1rem' is exactly equal to '10px', which makes setting REM values very simple.
+
 The `globalStyle` is scoped in the `_app` page component.
 
 === Theme
 
-You should prioritize theme values instead of arbitrary css values.
+You should prioritize theme values over arbitrary CSS values.
 
 The theme structure is defined inside the `src/@types/styled-component.d.ts` definition type file.
 
-The theme values are set inside `src/design-system/theme/lightTheme.ts` file. Each field are se individually, then assigned to the `lightTheme` variable.
+The theme values are set inside `src/design-system/theme/lightTheme.ts` file. Each field are set individually, then assigned to the `lightTheme` variable.
 
 The theme access is scoped in the `_app` page component.
 
@@ -226,7 +238,7 @@ const StyledComponent = styled.div {
 
 Our chosen viewport breakpoints are : `576px` | `768px` | `992` | `1200`.
 
-Sometimes, you want to pass custom props to your styled component. To do so, do as follow:
+Sometimes, you want to pass custom props to your styled component. Here is the way to do it:
 
 [source, typescript]
 ----
