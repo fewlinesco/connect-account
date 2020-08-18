@@ -17,8 +17,9 @@
     "baseUrl": ".",
     "paths": {
       "test-utils": ["./tests/config/test-utils"]
-    }
+    },
+    "sourceMap": true
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", ".github", ".next"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }

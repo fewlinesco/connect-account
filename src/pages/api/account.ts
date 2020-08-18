@@ -4,25 +4,35 @@ import { Handler } from "../../@types/ApiPageHandler";
 import { addIdentityToUser } from "../../command/addIdentityToUser";
 import { removeIdentityFromUser } from "../../command/removeIdentityFromUser";
 import { withAPIPageLogger } from "../../middleware/withAPIPageLogger";
+import Sentry, { addRequestScopeToSentry } from "../../utils/sentry";
 
 const handler: Handler = async (request, response) => {
-  const { userId, type, value } = request.body;
+  addRequestScopeToSentry(request);
 
-  if (request.method === "POST") {
-    return addIdentityToUser({ userId, type, value }).then((data) => {
-      response.statusCode = HttpStatus.OK;
+  try {
+    const { userId, type, value } = request.body;
 
-      response.setHeader("Content-Type", "application/json");
+    if (request.method === "POST") {
+      return addIdentityToUser({ userId, type, value }).then((data) => {
+        response.statusCode = HttpStatus.OK;
 
-      response.json({ data });
-    });
-  } else if (request.method === "DELETE") {
-    return removeIdentityFromUser({ userId, type, value }).then((data) => {
-      response.statusCode = HttpStatus.ACCEPTED;
+        response.setHeader("Content-Type", "application/json");
 
-      response.setHeader("Content-Type", "application/json");
+        response.json({ data });
+      });
+    } else if (request.method === "DELETE") {
+      return removeIdentityFromUser({ userId, type, value }).then((data) => {
+        response.statusCode = HttpStatus.ACCEPTED;
 
-      response.json({ data });
+        response.setHeader("Content-Type", "application/json");
+
+        response.json({ data });
+      });
+    }
+  } catch (error) {
+    Sentry.withScope((scope) => {
+      scope.setTag("api/account", "api/account");
+      Sentry.captureException(error);
     });
   }
 

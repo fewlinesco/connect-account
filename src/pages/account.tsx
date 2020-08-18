@@ -21,6 +21,7 @@ import { withSSRLogger } from "../middleware/withSSRLogger";
 import withSession from "../middleware/withSession";
 import { getIdentities } from "../queries/getIdentities";
 import { promisifiedJWTVerify } from "../utils/promisifiedJWTVerify";
+import Sentry, { addRequestScopeToSentry } from "../utils/sentry";
 import { sortIdentities } from "../utils/sortIdentities";
 
 type AccountProps = {
@@ -118,6 +119,8 @@ export default Account;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
+    addRequestScopeToSentry(context.req);
+
     try {
       const accessToken = context.req.session.get("user-jwt");
 
@@ -147,7 +150,12 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         error instanceof NotBeforeError ||
         error instanceof TokenExpiredError
       ) {
-        context.res.statusCode = HttpStatus.MOVED_TEMPORARILY;
+        Sentry.withScope((scope) => {
+          scope.setTag("/pages/account SSR", "/pages/account SSR");
+          Sentry.captureException(error);
+        });
+
+        context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
         context.res.setHeader("location", context.req.headers.referer || "/");
         context.res.end();
 

@@ -55,7 +55,7 @@ describe("getServerSideProps", () => {
 
     const response = await getServerSideProps(mockedContext);
 
-    expect(mockedContext.res.statusCode).toEqual(HttpStatus.MOVED_TEMPORARILY);
+    expect(mockedContext.res.statusCode).toEqual(HttpStatus.TEMPORARY_REDIRECT);
 
     const redirectLocation = mockedContext.res.getHeader("location");
 
