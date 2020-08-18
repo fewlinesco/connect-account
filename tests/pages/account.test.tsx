@@ -91,6 +91,13 @@ describe("the delete button should be displayed only when it's relevant (more th
           type: ReceivedIdentityTypes.EMAIL,
           value: "test2@test.test",
         },
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf0",
+          primary: false,
+          status: "validated",
+          type: ReceivedIdentityTypes.EMAIL,
+          value: "test3@test.test",
+        },
       ],
     };
 
@@ -110,7 +117,7 @@ describe("the delete button should be displayed only when it's relevant (more th
       .find(FetchIconButton)
       .find({ type: IdentityTypes.PHONE });
 
-    expect(emailTrash).toHaveLength(2);
+    expect(emailTrash).toHaveLength(3);
     expect(phoneTrash).toHaveLength(0);
   });
 
@@ -234,16 +241,18 @@ describe("the delete button should be displayed only when it's relevant (more th
 
     const emailTrash = component
       .find(FetchIconButton)
-      .find({ type: IdentityTypes.EMAIL });
+      .find({ type: IdentityTypes.EMAIL })
+      .hostNodes();
     const phoneTrash = component
       .find(FetchIconButton)
-      .find({ type: IdentityTypes.PHONE });
-    const noPhone = component.find(".no-phone");
-    const noEmail = component.find(".no-email");
+      .find({ type: IdentityTypes.PHONE })
+      .hostNodes();
+    const noPhone = component.find(".no-phone").hostNodes();
+    const noEmail = component.find(".no-email").hostNodes();
 
     expect(emailTrash).toHaveLength(0);
     expect(phoneTrash).toHaveLength(0);
-    expect(noPhone).toHaveLength(2);
-    expect(noEmail).toHaveLength(2);
+    expect(noPhone).toHaveLength(1);
+    expect(noEmail).toHaveLength(1);
   });
 });
