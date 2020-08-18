@@ -11,8 +11,9 @@ import styled from "styled-components";
 
 import { IdentityTypes, Identity } from "../@types/Identity";
 import { SortedIdentities } from "../@types/SortedIdentities";
-import { IdentityInputForm } from "../components/IdentityInputForm";
+import { AddIdentity } from "../components/business/AddIdentity";
 import { DeleteIdentity } from "../components/business/DeleteIdentity";
+import { AddIdentityInputForm } from "../components/visualization/fewlines/AddIdentityInputForm";
 import { DeleteButton } from "../components/visualization/fewlines/DeleteButton";
 import { config } from "../config";
 import { useTheme } from "../design-system/theme/useTheme";
@@ -71,7 +72,13 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
             >
               Add an email
             </Button>
-            {addEmail && <IdentityInputForm type={IdentityTypes.EMAIL} />}
+            {addEmail && (
+              <AddIdentity type={IdentityTypes.EMAIL}>
+                {({ addIdentity }) => (
+                  <AddIdentityInputForm addIdentity={addIdentity} />
+                )}
+              </AddIdentity>
+            )}
           </Flex>
         </IdentitySection>
         <IdentitySection>
@@ -106,7 +113,13 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
             >
               Add a phone number
             </Button>
-            {addPhone && <IdentityInputForm type={IdentityTypes.PHONE} />}
+            {addPhone && (
+              <AddIdentity type={IdentityTypes.PHONE}>
+                {({ addIdentity }) => (
+                  <AddIdentityInputForm addIdentity={addIdentity} />
+                )}
+              </AddIdentity>
+            )}
           </Flex>
         </IdentitySection>
       </IdentitiesBox>
