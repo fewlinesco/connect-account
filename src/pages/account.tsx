@@ -7,14 +7,13 @@ import {
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
-import { Trash } from "react-feather";
 import styled from "styled-components";
 
-import { HttpVerbs } from "../@types/HttpVerbs";
 import { IdentityTypes, Identity } from "../@types/Identity";
 import { SortedIdentities } from "../@types/SortedIdentities";
-import { FetchIconButton } from "../components/FetchIconButton";
 import { IdentityInputForm } from "../components/IdentityInputForm";
+import { DeleteIdentity } from "../components/business/DeleteIdentity";
+import { DeleteButton } from "../components/visualization/fewlines/DeleteButton";
 import { config } from "../config";
 import { useTheme } from "../design-system/theme/useTheme";
 import { withSSRLogger } from "../middleware/withSSRLogger";
@@ -51,14 +50,14 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
                   <Flex>
                     <Value>{email.value}</Value>
                     {sortedIdentities.emailIdentities.length > 1 ? (
-                      <FetchIconButton
+                      <DeleteIdentity
                         type={IdentityTypes.EMAIL}
-                        method={HttpVerbs.DELETE}
                         value={email.value}
-                        color={theme.colors.red}
                       >
-                        <Trash width="15" />
-                      </FetchIconButton>
+                        {({ deleteIdentity }) => (
+                          <DeleteButton deleteIdentity={deleteIdentity} />
+                        )}
+                      </DeleteIdentity>
                     ) : null}
                   </Flex>
                 </IdentityBox>
@@ -86,14 +85,14 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
                   <Flex>
                     <Value>{phone.value}</Value>
                     {sortedIdentities.phoneIdentities.length > 1 ? (
-                      <FetchIconButton
+                      <DeleteIdentity
                         type={IdentityTypes.PHONE}
-                        method={HttpVerbs.DELETE}
                         value={phone.value}
-                        color={theme.colors.red}
                       >
-                        <Trash width="15" />
-                      </FetchIconButton>
+                        {({ deleteIdentity }) => (
+                          <DeleteButton deleteIdentity={deleteIdentity} />
+                        )}
+                      </DeleteIdentity>
                     ) : null}
                   </Flex>
                 </IdentityBox>
