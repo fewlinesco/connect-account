@@ -13,12 +13,15 @@ import { IdentityTypes, Identity } from "../@types/Identity";
 import { SortedIdentities } from "../@types/SortedIdentities";
 import { IdentityInputForm } from "../components/IdentityInputForm";
 import { IdentityLine } from "../components/IdentityLine";
+import { DeleteIdentity } from "../components/business/DeleteIdentity";
+import { DeleteButton } from "../components/visualization/fewlines/DeleteButton";
 import { config } from "../config";
 import { useTheme } from "../design-system/theme/useTheme";
 import { withSSRLogger } from "../middleware/withSSRLogger";
 import withSession from "../middleware/withSession";
 import { getIdentities } from "../queries/getIdentities";
 import { promisifiedJWTVerify } from "../utils/promisifiedJWTVerify";
+import Sentry, { addRequestScopeToSentry } from "../utils/sentry";
 import { sortIdentities } from "../utils/sortIdentities";
 
 type AccountProps = {
@@ -40,15 +43,32 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
         <IdentitySection>
           <h3>Email(s):</h3>
           {sortedIdentities.emailIdentities.length === 0 ? (
-            <Value>No emails</Value>
+            <Value className="no-email">No emails</Value>
           ) : (
             sortedIdentities.emailIdentities.map((email: Identity) => {
               return (
-                <IdentityLine
-                  identity={email}
-                  sortedIdentities={sortedIdentities}
-                  key={email.value}
-                />
+                <>
+                  <IdentityLine
+                    identity={email}
+                    sortedIdentities={sortedIdentities}
+                    key={email.value}
+                  />
+                  <IdentityBox key={email.value}>
+                    <Flex>
+                      <Value>{email.value}</Value>
+                      {sortedIdentities.emailIdentities.length > 1 ? (
+                        <DeleteIdentity
+                          type={IdentityTypes.EMAIL}
+                          value={email.value}
+                        >
+                          {({ deleteIdentity }) => (
+                            <DeleteButton deleteIdentity={deleteIdentity} />
+                          )}
+                        </DeleteIdentity>
+                      ) : null}
+                    </Flex>
+                  </IdentityBox>
+                </>
               );
             })
           )}
@@ -65,15 +85,32 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
         <IdentitySection>
           <h3>Phone number(s):</h3>
           {sortedIdentities.emailIdentities.length === 0 ? (
-            <Value>No phones</Value>
+            <Value className="no-phone">No phones</Value>
           ) : (
             sortedIdentities.phoneIdentities.map((phone: Identity) => {
               return (
-                <IdentityLine
-                  identity={phone}
-                  sortedIdentities={sortedIdentities}
-                  key={phone.value}
-                />
+                <>
+                  <IdentityLine
+                    identity={phone}
+                    sortedIdentities={sortedIdentities}
+                    key={phone.value}
+                  />
+                  <IdentityBox key={phone.value}>
+                    <Flex>
+                      <Value>{phone.value}</Value>
+                      {sortedIdentities.phoneIdentities.length > 1 ? (
+                        <DeleteIdentity
+                          type={IdentityTypes.PHONE}
+                          value={phone.value}
+                        >
+                          {({ deleteIdentity }) => (
+                            <DeleteButton deleteIdentity={deleteIdentity} />
+                          )}
+                        </DeleteIdentity>
+                      ) : null}
+                    </Flex>
+                  </IdentityBox>
+                </>
               );
             })
           )}
@@ -96,6 +133,8 @@ export default Account;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
+    addRequestScopeToSentry(context.req);
+
     try {
       const accessToken = context.req.session.get("user-jwt");
 
@@ -125,7 +164,12 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         error instanceof NotBeforeError ||
         error instanceof TokenExpiredError
       ) {
-        context.res.statusCode = HttpStatus.MOVED_TEMPORARILY;
+        Sentry.withScope((scope: Sentry.Scope) => {
+          scope.setTag("/pages/account SSR", "/pages/account SSR");
+          Sentry.captureException(error);
+        });
+
+        context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
         context.res.setHeader("location", context.req.headers.referer || "/");
         context.res.end();
 
@@ -151,9 +195,9 @@ const IdentitySection = styled.div`
     `${theme.colors.blacks[0]} ${theme.borders.thin}`};
 `;
 
-// const IdentityBox = styled.div`
-//   padding: ${({ theme }) => theme.spaces.component.xs};
-// `;
+const IdentityBox = styled.div`
+  padding: ${({ theme }) => theme.spaces.component.xs};
+`;
 
 const Flex = styled.div`
   display: flex;
