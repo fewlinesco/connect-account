@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import { config } from "../config";
 import { withSSRLogger } from "../middleware/withSSRLogger";
+import Sentry, { addRequestScopeToSentry } from "../utils/sentry";
 
 type IndexProps = {
   authParams: {
@@ -43,24 +44,35 @@ export default Index;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   async (context) => {
-    const protocol =
-      process.env.NODE_ENV === "production" ? "https://" : "http://";
-    const host = context.req.headers.host;
-    const route = "/api/oauth/callback";
-    const redirect_uri = protocol + host + route;
+    addRequestScopeToSentry(context.req);
 
-    const authParams = {
-      providerURL: config.connectProviderUrl,
-      client_id: config.connectApplicationClientId,
-      redirect_uri,
-      scope: config.connectApplicationScopes,
-    };
+    try {
+      const protocol =
+        process.env.NODE_ENV === "production" ? "https://" : "http://";
+      const host = context.req.headers.host;
+      const route = "/api/oauth/callback";
+      const redirect_uri = protocol + host + route;
 
-    return {
-      props: {
-        authParams,
-      },
-    };
+      const authParams = {
+        providerURL: config.connectProviderUrl,
+        client_id: config.connectApplicationClientId,
+        redirect_uri,
+        scope: config.connectApplicationScopes,
+      };
+
+      return {
+        props: {
+          authParams,
+        },
+      };
+    } catch (error) {
+      Sentry.withScope((scope) => {
+        scope.setTag("/pages/index SSR", "/pages/index SSR");
+        Sentry.captureException(error);
+      });
+    }
+
+    return { props: {} };
   },
 );
 
