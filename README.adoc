@@ -1,5 +1,21 @@
 = Connect Account
 
+Connect Account is an open source app, which aims at providing all the business logic to handle connect identities and profile data, and a default frontend for user to use it.
+
+You will most likely need to fork the repository to add your custom frontend component, to change the layout, or add your branding and design-system.
+
+‼️You'll need to manually update your **origin** master branch each time before making a new branch from your fork. To do so, run the following, from your **local** master:
+
+[source, shell]
+----
+git fetch --upstream
+git rebase --upstream
+git push origin master
+git checkout -b name-of-your-branch
+----
+
+== Forking
+
 
 == Setup
 
@@ -86,6 +102,15 @@ yarn test
 
 To understand the flow of `connect-account`, you should read the `connect` https://developers.fewlines.co/guides/authorization_code_flow/overview/[documentation].
 
+[source, jsx]
+----
+<BusinessComponent>
+  {({ businessLogic }) => (
+    <VisualizationComponent businessLogic={businessLogic} />
+  )}
+</BusinessComponent>
+----
+
 
 == Source Code Organization
 
@@ -103,7 +128,10 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 - *@types/*: Type declaration used in multiple places.
 - *assets/*: Folder containing assets.
 - *commands/*: Write (e.g. `POST`) database actions.
-- *components/*: React components.
+- *components/*:
+  - *business/*: React components that provide business logic through render props. You shouldn't touch them.
+  - *visualization/*: React component that  
+    - *fewlines/*: Our default visualization components. Used as a template.
 - *design-system/*: Style or atomic components (e.g. icons) related code.
 - *hooks/*: Reusable actions flows.
 - *middleware/*: Reusable wrappers to add various features to server side actions.
@@ -120,6 +148,12 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 - *package.json*: We use this file, as much as possible as a centralized config file for various packages, like `ESLint`, `Jest` or `Husky`.
 - *tsconfig.json*: TypeScript compiler options.
 - *next.config.js*: Extended webpack compiler config used by NextJS.
+
+=== Splitting logic from visualization components
+
+To help minimized conflict from upstream in your fork, we chose to split the business logic — which is handle by us — from visualization components. To do so, we are using https://reactjs.org/docs/render-props.html#gatsby-focus-wrapper[Render Props]:
+
+
 
 == Linting
 
