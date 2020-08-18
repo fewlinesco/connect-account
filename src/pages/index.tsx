@@ -1,30 +1,23 @@
-import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
 import styled from "styled-components";
+import useSWR from "swr";
 
-import { config } from "../config";
-import { withSSRLogger } from "../middleware/withSSRLogger";
-import Sentry, { addRequestScopeToSentry } from "../utils/sentry";
+import { SWRFetcher } from "../utils/SWRFetcher";
 
-type IndexProps = {
-  authParams: {
-    [key: string]: string;
-    providerURL: string;
-    clientID: string;
-    redirectURI: string;
-    scope: string;
-  };
-};
+const Index: React.FC = () => {
+  const { data, error } = useSWR<{ authorizeURL: string }, Error>(
+    "/api/oauth/params",
+    (url) => SWRFetcher<{ authorizeURL: string }>(url),
+  );
 
-const Index: React.FC<IndexProps> = ({ authParams }) => {
-  const { providerURL, client_id, redirect_uri, scope } = authParams;
+  if (error) {
+    return <div>Failed to load</div>;
+  }
 
-  const authorizeURL = new URL("/oauth/authorize", providerURL);
-  authorizeURL.searchParams.append("client_id", client_id);
-  authorizeURL.searchParams.append("response_type", "code");
-  authorizeURL.searchParams.append("redirect_uri", redirect_uri);
-  authorizeURL.searchParams.append("scope", scope);
+  if (!data) {
+    return null;
+  }
 
   return (
     <>
@@ -33,7 +26,7 @@ const Index: React.FC<IndexProps> = ({ authParams }) => {
       </Head>
       <Main>
         <LoginButton>
-          <a href={authorizeURL.toString()}>Login</a>
+          <a href={data.authorizeURL.toString()}>Login</a>
         </LoginButton>
       </Main>
     </>
@@ -41,40 +34,6 @@ const Index: React.FC<IndexProps> = ({ authParams }) => {
 };
 
 export default Index;
-
-export const getServerSideProps: GetServerSideProps = withSSRLogger(
-  async (context) => {
-    addRequestScopeToSentry(context.req);
-
-    try {
-      const protocol =
-        process.env.NODE_ENV === "production" ? "https://" : "http://";
-      const host = context.req.headers.host;
-      const route = "/api/oauth/callback";
-      const redirect_uri = protocol + host + route;
-
-      const authParams = {
-        providerURL: config.connectProviderUrl,
-        client_id: config.connectApplicationClientId,
-        redirect_uri,
-        scope: config.connectApplicationScopes,
-      };
-
-      return {
-        props: {
-          authParams,
-        },
-      };
-    } catch (error) {
-      Sentry.withScope((scope) => {
-        scope.setTag("/pages/index SSR", "/pages/index SSR");
-        Sentry.captureException(error);
-      });
-    }
-
-    return { props: {} };
-  },
-);
 
 const Main = styled.main`
   width: 100%;
