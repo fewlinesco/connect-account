@@ -31,6 +31,8 @@
     "@fewlines/eslint-config": "2.1.1",
     "@fewlines/fwl-logging": "1.0.0",
     "@hapi/iron": "6.0.0",
+    "@types/enzyme": "^3.10.5",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/jest": "26.0.4",
     "@types/jsonwebtoken": "8.5.0",
     "@types/node": "14.0.23",
@@ -41,6 +43,8 @@
     "@typescript-eslint/parser": "3.6.1",
     "babel-jest": "26.1.0",
     "babel-plugin-styled-components": "1.10.7",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.3",
     "eslint": "7.4.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-import": "2.22.0",
@@ -50,6 +54,7 @@
     "husky": "4.2.5",
     "jest": "26.1.0",
     "jest-fetch-mock": "3.0.3",
+    "jest-styled-components": "7.0.2",
     "prettier": "2.0.5",
     "ts-jest": "26.1.2",
     "ts-node": "8.10.2",
@@ -135,6 +140,10 @@
       "tsx",
       "json"
     ],
+    "unmockedModulePathPatterns": [
+      "node_modules/react/",
+      "node_modules/enzyme/"
+    ],
     "transform": {
       "^.+\\.(ts|tsx)$": "babel-jest"
     },
@@ -146,7 +155,7 @@
       "\\.(png|svg|jpg|gif|eot|ttf|woff|woff2)$": "<rootDir>/tests/__mocks__/fileMock.ts"
     },
     "setupFilesAfterEnv": [
-      "./tests/config/unimplementedSubmitWorkaround.ts"
+      "./tests/config/enzyme-config.ts"
     ]
   },
   "husky": {
