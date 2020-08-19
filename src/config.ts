@@ -1,4 +1,4 @@
-export type Config = {
+type Config = {
   connectManagementUrl: string;
   connectManagementApiKey: string;
   connectProviderUrl: string;
