@@ -49,11 +49,7 @@ export const UpdateInput: React.FC<{ prop: Identity }> = ({
       <Input
         type="text"
         name="value"
-        placeholder={`Enter your ${
-          currentIdentity.type === ReceivedIdentityTypes.EMAIL
-            ? "email"
-            : "phone"
-        }`}
+        placeholder={`Enter your ${currentIdentity.type.toLowerCase()}`}
         value={identity}
         onChange={(event) => setIdentity(event.target.value)}
       />

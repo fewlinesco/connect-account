@@ -27,27 +27,25 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({
 
   const theme = useTheme();
 
+  const { value, type } = identity;
+  const { EMAIL, PHONE } = ReceivedIdentityTypes;
+  const { emailIdentities, phoneIdentities } = sortedIdentities;
+
   return (
-    <IdentityBox key={identity.value}>
+    <IdentityBox key={value}>
       <Flex>
-        <Value>{identity.value}</Value>
+        <Value>{value}</Value>
         <Button
           onClick={() => setEditIdentity(!editEmail)}
           color={theme.colors.green}
         >
           {editEmail ? <CancelButton /> : <EditIcon />}
         </Button>
-        {(identity.type === ReceivedIdentityTypes.EMAIL &&
-          sortedIdentities.emailIdentities.length > 1) ||
-        (identity.type === ReceivedIdentityTypes.PHONE &&
-          sortedIdentities.phoneIdentities.length > 1) ? (
+        {(type === EMAIL && emailIdentities.length > 1) ||
+        (type === PHONE && phoneIdentities.length > 1) ? (
           <DeleteIdentity
-            type={
-              identity.type === ReceivedIdentityTypes.EMAIL
-                ? IdentityTypes.EMAIL
-                : IdentityTypes.PHONE
-            }
-            value={identity.value}
+            type={type === EMAIL ? IdentityTypes.EMAIL : IdentityTypes.PHONE}
+            value={value}
           >
             {({ deleteIdentity }) => (
               <DeleteButton deleteIdentity={deleteIdentity} />
