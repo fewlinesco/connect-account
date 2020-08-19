@@ -9,26 +9,26 @@ import Head from "next/head";
 import React from "react";
 import styled from "styled-components";
 
-import { IdentityTypes, Identity } from "../@types/Identity";
-import { SortedIdentities } from "../@types/SortedIdentities";
-import { AddIdentity } from "../components/business/AddIdentity";
-import { DeleteIdentity } from "../components/business/DeleteIdentity";
-import { AddIdentityInputForm } from "../components/visualization/fewlines/AddIdentityInputForm";
-import { DeleteButton } from "../components/visualization/fewlines/DeleteButton";
-import { config } from "../config";
-import { useTheme } from "../design-system/theme/useTheme";
-import { withSSRLogger } from "../middleware/withSSRLogger";
-import withSession from "../middleware/withSession";
-import { getIdentities } from "../queries/getIdentities";
-import { promisifiedJWTVerify } from "../utils/promisifiedJWTVerify";
-import Sentry, { addRequestScopeToSentry } from "../utils/sentry";
-import { sortIdentities } from "../utils/sortIdentities";
+import { IdentityTypes, Identity } from "../../../@types/Identity";
+import { SortedIdentities } from "../../../@types/SortedIdentities";
+import { AddIdentity } from "../../../components/business/AddIdentity";
+import { DeleteIdentity } from "../../../components/business/DeleteIdentity";
+import { AddIdentityInputForm } from "../../../components/visualization/fewlines/AddIdentityInputForm";
+import { DeleteButton } from "../../../components/visualization/fewlines/DeleteButton";
+import { config } from "../../../config";
+import { useTheme } from "../../../design-system/theme/useTheme";
+import { withSSRLogger } from "../../../middleware/withSSRLogger";
+import withSession from "../../../middleware/withSession";
+import { getIdentities } from "../../../queries/getIdentities";
+import { promisifiedJWTVerify } from "../../../utils/promisifiedJWTVerify";
+import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
+import { sortIdentities } from "../../../utils/sortIdentities";
 
-type AccountProps = {
+type LoginsProps = {
   sortedIdentities: SortedIdentities;
 };
 
-const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
+const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
   const [addEmail, setAddEmail] = React.useState<boolean>(false);
   const [addPhone, setAddPhone] = React.useState<boolean>(false);
 
@@ -37,7 +37,7 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
   return (
     <>
       <Head>
-        <title>Connect Account</title>
+        <title>Connect Logins</title>
       </Head>
       <IdentitiesBox>
         <IdentitySection>
@@ -127,7 +127,7 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
   );
 };
 
-export default Account;
+export default Logins;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
