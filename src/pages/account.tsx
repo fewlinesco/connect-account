@@ -43,7 +43,7 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
         <IdentitySection>
           <h3>Email(s):</h3>
           {sortedIdentities.emailIdentities.length === 0 ? (
-            <Value>No emails</Value>
+            <Value className="no-email">No emails</Value>
           ) : (
             sortedIdentities.emailIdentities.map((email: Identity) => {
               return (
@@ -84,7 +84,7 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
         <IdentitySection>
           <h3>Phone number(s):</h3>
           {sortedIdentities.emailIdentities.length === 0 ? (
-            <Value>No phones</Value>
+            <Value className="no-phone">No phones</Value>
           ) : (
             sortedIdentities.phoneIdentities.map((phone: Identity) => {
               return (
