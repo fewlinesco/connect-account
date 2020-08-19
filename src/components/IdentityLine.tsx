@@ -1,14 +1,17 @@
 import React from "react";
-import { Trash } from "react-feather";
 import { SortedIdentities } from "src/@types/SortedIdentities";
 import styled from "styled-components";
 
-import { HttpVerbs } from "../@types/HttpVerbs";
-import { IdentityTypes, Identity } from "../@types/Identity";
+import {
+  IdentityTypes,
+  Identity,
+  ReceivedIdentityTypes,
+} from "../@types/Identity";
+import { DeleteIdentity } from "../components/business/DeleteIdentity";
+import { DeleteButton } from "../components/visualization/fewlines/DeleteButton";
 import { CancelButton } from "../design-system/icons/CancelButton";
 import { EditIcon } from "../design-system/icons/EditIcon";
 import { useTheme } from "../design-system/theme/useTheme";
-import { FetchIconButton } from "./FetchIconButton";
 import { UpdateInput } from "./UpdateInput";
 
 type IdentityLineProps = {
@@ -27,29 +30,32 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({
   return (
     <IdentityBox key={identity.value}>
       <Flex>
-        {!editEmail && <Value>{identity.value}</Value>}
-        {editEmail && <UpdateInput prop={identity} />}
+        <Value>{identity.value}</Value>
         <Button
           onClick={() => setEditIdentity(!editEmail)}
           color={theme.colors.green}
         >
           {editEmail ? <CancelButton /> : <EditIcon />}
         </Button>
-        {sortedIdentities.emailIdentities.length > 1 ? (
-          <FetchIconButton
+        {(identity.type === ReceivedIdentityTypes.EMAIL &&
+          sortedIdentities.emailIdentities.length > 1) ||
+        (identity.type === ReceivedIdentityTypes.PHONE &&
+          sortedIdentities.phoneIdentities.length > 1) ? (
+          <DeleteIdentity
             type={
-              identity.type === "email"
+              identity.type === ReceivedIdentityTypes.EMAIL
                 ? IdentityTypes.EMAIL
                 : IdentityTypes.PHONE
             }
-            method={HttpVerbs.DELETE}
             value={identity.value}
-            color={theme.colors.red}
           >
-            <Trash width="15" />
-          </FetchIconButton>
+            {({ deleteIdentity }) => (
+              <DeleteButton deleteIdentity={deleteIdentity} />
+            )}
+          </DeleteIdentity>
         ) : null}
       </Flex>
+      {editEmail && <UpdateInput prop={identity} />}
     </IdentityBox>
   );
 };

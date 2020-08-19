@@ -13,8 +13,6 @@ import { IdentityTypes, Identity } from "../@types/Identity";
 import { SortedIdentities } from "../@types/SortedIdentities";
 import { IdentityInputForm } from "../components/IdentityInputForm";
 import { IdentityLine } from "../components/IdentityLine";
-import { DeleteIdentity } from "../components/business/DeleteIdentity";
-import { DeleteButton } from "../components/visualization/fewlines/DeleteButton";
 import { config } from "../config";
 import { useTheme } from "../design-system/theme/useTheme";
 import { withSSRLogger } from "../middleware/withSSRLogger";
@@ -47,28 +45,11 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
           ) : (
             sortedIdentities.emailIdentities.map((email: Identity) => {
               return (
-                <>
-                  <IdentityLine
-                    identity={email}
-                    sortedIdentities={sortedIdentities}
-                    key={email.value}
-                  />
-                  <IdentityBox key={email.value}>
-                    <Flex>
-                      <Value>{email.value}</Value>
-                      {sortedIdentities.emailIdentities.length > 1 ? (
-                        <DeleteIdentity
-                          type={IdentityTypes.EMAIL}
-                          value={email.value}
-                        >
-                          {({ deleteIdentity }) => (
-                            <DeleteButton deleteIdentity={deleteIdentity} />
-                          )}
-                        </DeleteIdentity>
-                      ) : null}
-                    </Flex>
-                  </IdentityBox>
-                </>
+                <IdentityLine
+                  identity={email}
+                  sortedIdentities={sortedIdentities}
+                  key={email.value}
+                />
               );
             })
           )}
@@ -84,33 +65,16 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
         </IdentitySection>
         <IdentitySection>
           <h3>Phone number(s):</h3>
-          {sortedIdentities.emailIdentities.length === 0 ? (
+          {sortedIdentities.phoneIdentities.length === 0 ? (
             <Value className="no-phone">No phones</Value>
           ) : (
             sortedIdentities.phoneIdentities.map((phone: Identity) => {
               return (
-                <>
-                  <IdentityLine
-                    identity={phone}
-                    sortedIdentities={sortedIdentities}
-                    key={phone.value}
-                  />
-                  <IdentityBox key={phone.value}>
-                    <Flex>
-                      <Value>{phone.value}</Value>
-                      {sortedIdentities.phoneIdentities.length > 1 ? (
-                        <DeleteIdentity
-                          type={IdentityTypes.PHONE}
-                          value={phone.value}
-                        >
-                          {({ deleteIdentity }) => (
-                            <DeleteButton deleteIdentity={deleteIdentity} />
-                          )}
-                        </DeleteIdentity>
-                      ) : null}
-                    </Flex>
-                  </IdentityBox>
-                </>
+                <IdentityLine
+                  identity={phone}
+                  sortedIdentities={sortedIdentities}
+                  key={phone.value}
+                />
               );
             })
           )}
@@ -193,10 +157,6 @@ const IdentitySection = styled.div`
   padding: ${({ theme }) => theme.spaces.component.xs};
   border-bottom: ${({ theme }) =>
     `${theme.colors.blacks[0]} ${theme.borders.thin}`};
-`;
-
-const IdentityBox = styled.div`
-  padding: ${({ theme }) => theme.spaces.component.xs};
 `;
 
 const Flex = styled.div`

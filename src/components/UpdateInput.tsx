@@ -9,7 +9,7 @@ import { fetchJson } from "../utils/fetchJson";
 export const UpdateInput: React.FC<{ prop: Identity }> = ({
   prop: currentIdentity,
 }) => {
-  const [identity, setIdentity] = React.useState(currentIdentity.value);
+  const [identity, setIdentity] = React.useState("");
 
   const { data, error } = useCookies();
   if (error) {
@@ -36,8 +36,6 @@ export const UpdateInput: React.FC<{ prop: Identity }> = ({
           type: currentIdentity.type.toUpperCase(),
           value: identity,
         };
-
-        console.log(updateBody);
 
         fetchJson("/api/account", HttpVerbs.DELETE, deleteBody).then(
           async (response) => {
