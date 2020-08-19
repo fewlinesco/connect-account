@@ -37,10 +37,10 @@ export const UpdateInput: React.FC<{ prop: Identity }> = ({
           value: identity,
         };
 
-        fetchJson("/api/account", HttpVerbs.DELETE, deleteBody).then(
+        fetchJson("/api/account", HttpVerbs.POST, updateBody).then(
           async (response) => {
             if (response.ok) {
-              await fetchJson("/api/account", HttpVerbs.POST, updateBody);
+              await fetchJson("/api/account", HttpVerbs.DELETE, deleteBody);
             }
           },
         );
