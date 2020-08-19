@@ -1,24 +1,15 @@
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
+import { handleOauthParamsURL } from "src/utils/handleOauthParamsURL";
 import styled from "styled-components";
-import useSWR from "swr";
 
-import { SWRFetcher } from "../utils/SWRFetcher";
+import { withSSRLogger } from "../middleware/withSSRLogger";
+import Sentry, { addRequestScopeToSentry } from "../utils/sentry";
 
-const Index: React.FC = () => {
-  const { data, error } = useSWR<{ authorizeURL: string }, Error>(
-    "/api/oauth/params",
-    (url) => SWRFetcher<{ authorizeURL: string }>(url),
-  );
+type IndexProps = { authorizeURL: string };
 
-  if (error) {
-    return <div>Failed to load</div>;
-  }
-
-  if (!data) {
-    return null;
-  }
-
+const Index: React.FC<IndexProps> = ({ authorizeURL }) => {
   return (
     <>
       <Head>
@@ -26,7 +17,7 @@ const Index: React.FC = () => {
       </Head>
       <Main>
         <LoginButton>
-          <a href={data.authorizeURL.toString()}>Login</a>
+          <a href={authorizeURL}>Login</a>
         </LoginButton>
       </Main>
     </>
@@ -34,6 +25,29 @@ const Index: React.FC = () => {
 };
 
 export default Index;
+
+export const getServerSideProps: GetServerSideProps = withSSRLogger(
+  async (context) => {
+    addRequestScopeToSentry(context.req);
+
+    try {
+      const authorizeURL = await handleOauthParamsURL(context);
+
+      return {
+        props: {
+          authorizeURL: authorizeURL.toString(),
+        },
+      };
+    } catch (error) {
+      Sentry.withScope((scope) => {
+        scope.setTag("/pages/index SSR", "/pages/index SSR");
+        Sentry.captureException(error);
+      });
+    }
+
+    return { props: {} };
+  },
+);
 
 const Main = styled.main`
   width: 100%;
