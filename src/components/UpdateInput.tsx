@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { HttpVerbs } from "../@types/HttpVerbs";
-import { Identity, ReceivedIdentityTypes } from "../@types/Identity";
+import { Identity } from "../@types/Identity";
 import { useCookies } from "../hooks/useCookies";
 import { fetchJson } from "../utils/fetchJson";
 
