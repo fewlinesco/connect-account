@@ -1,6 +1,6 @@
 = Connect Account
 
-Connect Account is an open source app, which aims at providing all the business logic to handle connect identities and profile data, and a default frontend for user to use it.
+Connect Account is an open source app, which aims at providing all the business logic to handle Connect identities and profile data, and a default frontend for User to use it.
 
 You will most likely need to fork the repository to add your custom frontend component, to change the layout, or add your branding and design-system.
 
@@ -13,9 +13,6 @@ git rebase --upstream
 git push origin master
 git checkout -b name-of-your-branch
 ----
-
-== Forking
-
 
 == Setup
 
@@ -45,6 +42,9 @@ source .env_vars
 
 [source, shell]
 ----
+yarn dev
+
+# or, if you're working with a local version of Connect
 NODE_TLS_REJECT_UNAUTHORIZED=0 yarn dev
 ----
 
@@ -102,16 +102,6 @@ yarn test
 
 To understand the flow of `connect-account`, you should read the `connect` https://developers.fewlines.co/guides/authorization_code_flow/overview/[documentation].
 
-[source, jsx]
-----
-<BusinessComponent>
-  {({ businessLogic }) => (
-    <VisualizationComponent businessLogic={businessLogic} />
-  )}
-</BusinessComponent>
-----
-
-
 == Source Code Organization
 
 We are using the NextJS folder architecture (i.e. `/pages`) to utilize its router, out of the box. For more information, please refer to the https://nextjs.org/docs/basic-features/pages[documentation].
@@ -129,8 +119,8 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 - *assets/*: Folder containing assets.
 - *commands/*: Write (e.g. `POST`) database actions.
 - *components/*:
-  - *business/*: React components that provide business logic through render props. You shouldn't touch them.
-  - *visualization/*: React component that  
+  - *business/*: React components that provide business logic through render props. You shouldn't have to touch them.
+  - *visualization/*: React component that only — for the most part — handle the visualization part. 
     - *fewlines/*: Our default visualization components. Used as a template.
 - *design-system/*: Style or atomic components (e.g. icons) related code.
 - *hooks/*: Reusable actions flows.
@@ -151,9 +141,16 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 
 === Splitting logic from visualization components
 
-To help minimized conflict from upstream in your fork, we chose to split the business logic — which is handle by us — from visualization components. To do so, we are using https://reactjs.org/docs/render-props.html#gatsby-focus-wrapper[Render Props]:
+To help minimized conflict from upstream in your fork, we chose to split the business logic — which is handled by us — from visualization components. To do so, we are using https://reactjs.org/docs/render-props.html[Render Props]:
 
-
+[source, jsx]
+----
+<BusinessComponent>
+  {({ businessLogic }) => (
+    <VisualizationComponent businessLogic={businessLogic} />
+  )}
+</BusinessComponent>
+----
 
 == Linting
 
@@ -248,7 +245,7 @@ You can access the theme properties and values from everywhere else with the cus
 
 [source, typescript]
 ----
-import { useTheme } from "relative/path/to/the/hook";
+import { useTheme } from "relative/path/to/the/design-system/theme/useTheme";
 
 const theme = useTheme();
 ----
