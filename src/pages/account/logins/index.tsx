@@ -6,6 +6,7 @@ import {
 } from "jsonwebtoken";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -13,8 +14,8 @@ import { IdentityTypes, Identity } from "../../../@types/Identity";
 import { SortedIdentities } from "../../../@types/SortedIdentities";
 import { AddIdentity } from "../../../components/business/AddIdentity";
 import { DeleteIdentity } from "../../../components/business/DeleteIdentity";
-import { AddIdentityInputForm } from "../../../components/visualization/fewlines/AddIdentityInputForm";
-import { DeleteButton } from "../../../components/visualization/fewlines/DeleteButton";
+import { AddIdentityInputForm } from "../../../components/display/fewlines/AddIdentityInputForm";
+import { DeleteButton } from "../../../components/display/fewlines/DeleteButton";
 import { config } from "../../../config";
 import { useTheme } from "../../../design-system/theme/useTheme";
 import { withSSRLogger } from "../../../middleware/withSSRLogger";
@@ -49,7 +50,11 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               return (
                 <IdentityBox key={email.value}>
                   <Flex>
-                    <Value>{email.value}</Value>
+                    <Value>
+                      <Link href={`/account/logins/${email.type}/${email.id}`}>
+                        <a>{email.value}</a>
+                      </Link>
+                    </Value>
                     {sortedIdentities.emailIdentities.length > 1 ? (
                       <DeleteIdentity
                         type={IdentityTypes.EMAIL}
@@ -163,7 +168,10 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         error instanceof TokenExpiredError
       ) {
         Sentry.withScope((scope) => {
-          scope.setTag("/pages/account SSR", "/pages/account SSR");
+          scope.setTag(
+            "/pages/account/logins SSR",
+            "/pages/account/logins SSR",
+          );
           Sentry.captureException(error);
         });
 
