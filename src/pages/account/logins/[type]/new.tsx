@@ -1,11 +1,11 @@
 import { GetServerSideProps } from "next";
 import React from "react";
 
-const IdentityAction: React.FC = () => {
+const NewIdentity: React.FC = () => {
   return <React.Fragment />;
 };
 
-export default IdentityAction;
+export default NewIdentity;
 
 export const getServerSideProps: GetServerSideProps = async (_context) => {
   return {
