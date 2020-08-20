@@ -10,6 +10,7 @@ process.on("unhandledRejection", (error: Error): void => {
 });
 
 export default class MyDocument extends Document {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
   static async getInitialProps(ctx: any): Promise<DocumentInitialProps> {
     Sentry.addBreadcrumb({
       category: "pages/_document",
