@@ -23,6 +23,7 @@ export const UpdateInput: React.FC<{ prop: Identity }> = ({
   return (
     <Form
       data-testid="update-identity-form"
+      className="upd-id-form"
       method="post"
       onSubmit={async () => {
         const deleteBody = {
@@ -49,6 +50,7 @@ export const UpdateInput: React.FC<{ prop: Identity }> = ({
       <Input
         type="text"
         name="value"
+        className="upd-inp"
         placeholder={`Enter your ${currentIdentity.type.toLowerCase()}`}
         value={identity}
         onChange={(event) => setIdentity(event.target.value)}
@@ -58,7 +60,7 @@ export const UpdateInput: React.FC<{ prop: Identity }> = ({
   );
 };
 
-const Form = styled.form`
+export const Form = styled.form`
   display: flex;
   align-items: center;
 `;

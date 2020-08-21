@@ -75,7 +75,7 @@ type ButtonProps = {
   color: string;
 };
 
-const Button = styled.button<ButtonProps>`
+export const Button = styled.button<ButtonProps>`
   padding: 0.5rem;
   margin-right: 1rem;
   border-radius: ${({ theme }) => theme.radii[0]};
