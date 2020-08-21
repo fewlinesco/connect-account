@@ -8,7 +8,11 @@ const Custom404: React.FC = () => {
       <h2>We can&apos;t find the page you are looking for.</h2>
       <p>
         It may have expired, or there could be a typo. Maybe you can find what
-        you need on our <Link href="/">homepage</Link>.
+        you need on our{" "}
+        <Link href="/">
+          <a>homepage</a>
+        </Link>
+        .
       </p>
     </Wrapper>
   );

@@ -6,29 +6,30 @@ import {
 } from "jsonwebtoken";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { IdentityTypes, Identity } from "../@types/Identity";
-import { SortedIdentities } from "../@types/SortedIdentities";
-import { AddIdentity } from "../components/business/AddIdentity";
-import { DeleteIdentity } from "../components/business/DeleteIdentity";
-import { AddIdentityInputForm } from "../components/visualization/fewlines/AddIdentityInputForm";
-import { DeleteButton } from "../components/visualization/fewlines/DeleteButton";
-import { config } from "../config";
-import { useTheme } from "../design-system/theme/useTheme";
-import { withSSRLogger } from "../middleware/withSSRLogger";
-import withSession from "../middleware/withSession";
-import { getIdentities } from "../queries/getIdentities";
-import { promisifiedJWTVerify } from "../utils/promisifiedJWTVerify";
-import Sentry, { addRequestScopeToSentry } from "../utils/sentry";
-import { sortIdentities } from "../utils/sortIdentities";
+import { IdentityTypes, Identity } from "../../../@types/Identity";
+import { SortedIdentities } from "../../../@types/SortedIdentities";
+import { AddIdentity } from "../../../components/business/AddIdentity";
+import { DeleteIdentity } from "../../../components/business/DeleteIdentity";
+import { AddIdentityInputForm } from "../../../components/display/fewlines/AddIdentityInputForm";
+import { DeleteButton } from "../../../components/display/fewlines/DeleteButton";
+import { config } from "../../../config";
+import { useTheme } from "../../../design-system/theme/useTheme";
+import { withSSRLogger } from "../../../middleware/withSSRLogger";
+import withSession from "../../../middleware/withSession";
+import { getIdentities } from "../../../queries/getIdentities";
+import { promisifiedJWTVerify } from "../../../utils/promisifiedJWTVerify";
+import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
+import { sortIdentities } from "../../../utils/sortIdentities";
 
-type AccountProps = {
+type LoginsProps = {
   sortedIdentities: SortedIdentities;
 };
 
-const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
+const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
   const [addEmail, setAddEmail] = React.useState<boolean>(false);
   const [addPhone, setAddPhone] = React.useState<boolean>(false);
 
@@ -37,7 +38,7 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
   return (
     <>
       <Head>
-        <title>Connect Account</title>
+        <title>Connect Logins</title>
       </Head>
       <IdentitiesBox>
         <IdentitySection>
@@ -49,7 +50,14 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
               return (
                 <IdentityBox key={email.value}>
                   <Flex>
-                    <Value>{email.value}</Value>
+                    <Value>
+                      <Link
+                        href="/account/logins/[type]/[id]"
+                        as={`/account/logins/${email.type}/${email.id}`}
+                      >
+                        <a>{email.value}</a>
+                      </Link>
+                    </Value>
                     {sortedIdentities.emailIdentities.length > 1 ? (
                       <DeleteIdentity
                         type={IdentityTypes.EMAIL}
@@ -90,7 +98,14 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
               return (
                 <IdentityBox key={phone.value}>
                   <Flex>
-                    <Value>{phone.value}</Value>
+                    <Value>
+                      <Link
+                        href="/account/logins/[type]/[id]"
+                        as={`/account/logins/${phone.type}/${phone.id}`}
+                      >
+                        <a>{phone.value}</a>
+                      </Link>
+                    </Value>
                     {sortedIdentities.phoneIdentities.length > 1 ? (
                       <DeleteIdentity
                         type={IdentityTypes.PHONE}
@@ -127,7 +142,7 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
   );
 };
 
-export default Account;
+export default Logins;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
@@ -163,7 +178,10 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         error instanceof TokenExpiredError
       ) {
         Sentry.withScope((scope) => {
-          scope.setTag("/pages/account SSR", "/pages/account SSR");
+          scope.setTag(
+            "/pages/account/logins SSR",
+            "/pages/account/logins SSR",
+          );
           Sentry.captureException(error);
         });
 

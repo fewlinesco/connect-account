@@ -11,7 +11,7 @@ import { Layout } from "../../src/components/Layout";
 import { DeleteIdentity } from "../../src/components/business/DeleteIdentity";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
-import Account from "../../src/pages/account";
+import Account from "../../src/pages/account/logins/index";
 
 jest.mock("../../src/config", () => {
   return {
