@@ -51,7 +51,10 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                 <IdentityBox key={email.value}>
                   <Flex>
                     <Value>
-                      <Link href={`/account/logins/${email.type}/${email.id}`}>
+                      <Link
+                        href="/account/logins/[type]/[id]"
+                        as={`/account/logins/${email.type}/${email.id}`}
+                      >
                         <a>{email.value}</a>
                       </Link>
                     </Value>
@@ -95,7 +98,14 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               return (
                 <IdentityBox key={phone.value}>
                   <Flex>
-                    <Value>{phone.value}</Value>
+                    <Value>
+                      <Link
+                        href="/account/logins/[type]/[id]"
+                        as={`/account/logins/${phone.type}/${phone.id}`}
+                      >
+                        <a>{phone.value}</a>
+                      </Link>
+                    </Value>
                     {sortedIdentities.phoneIdentities.length > 1 ? (
                       <DeleteIdentity
                         type={IdentityTypes.PHONE}
