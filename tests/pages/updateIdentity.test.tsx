@@ -17,6 +17,7 @@ import { EditIcon } from "../../src/design-system/icons/EditIcon";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";
 import Account from "../../src/pages/account";
+import * as updateIdentity from "../../src/utils/updateIdentity";
 
 enableFetchMocks();
 
@@ -97,11 +98,6 @@ describe("the update form should work properly", () => {
   });
 
   test("it should submit the form", () => {
-    let submitCheck = false;
-    const eventListenerCallback = {
-      preventDefault: () => (submitCheck = true),
-    };
-
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
@@ -120,8 +116,21 @@ describe("the update form should work properly", () => {
       target: { value: "test2@test.test" },
     });
 
+    const updateMethod = jest.spyOn(updateIdentity, "updateIdentity");
     const form = component.find(Form).find(".upd-id-form").hostNodes();
-    form.simulate("submit", eventListenerCallback);
-    expect(submitCheck).toBe(true);
+    form.simulate("submit");
+
+    expect(updateMethod).toHaveBeenCalledWith(
+      {
+        type: "EMAIL",
+        userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
+        value: "test2@test.test",
+      },
+      {
+        type: "EMAIL",
+        userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
+        value: "test@test.test",
+      },
+    );
   });
 });
