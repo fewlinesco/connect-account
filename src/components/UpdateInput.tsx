@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import { HttpVerbs } from "../@types/HttpVerbs";
 import { Identity } from "../@types/Identity";
 import { useCookies } from "../hooks/useCookies";
-import { fetchJson } from "../utils/fetchJson";
+import { updateIdentity } from "../utils/updateIdentity";
 
 export const UpdateInput: React.FC<{ prop: Identity }> = ({
   prop: currentIdentity,
@@ -38,13 +37,7 @@ export const UpdateInput: React.FC<{ prop: Identity }> = ({
           value: identity,
         };
 
-        fetchJson("/api/account", HttpVerbs.POST, updateBody).then(
-          async (response) => {
-            if (response.ok) {
-              await fetchJson("/api/account", HttpVerbs.DELETE, deleteBody);
-            }
-          },
-        );
+        updateIdentity(updateBody, deleteBody);
       }}
     >
       <Input
