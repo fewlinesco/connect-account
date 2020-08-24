@@ -1,5 +1,4 @@
 import React from "react";
-import { SortedIdentities } from "src/@types/SortedIdentities";
 import styled from "styled-components";
 
 import {
@@ -8,28 +7,22 @@ import {
   ReceivedIdentityTypes,
 } from "../@types/Identity";
 import { DeleteIdentity } from "../components/business/DeleteIdentity";
-import { DeleteButton } from "../components/visualization/fewlines/DeleteButton";
-import { CancelButton } from "../design-system/icons/CancelButton";
+import { DeleteButton } from "../components/display/fewlines/DeleteButton";
 import { EditIcon } from "../design-system/icons/EditIcon";
 import { useTheme } from "../design-system/theme/useTheme";
 import { UpdateInput } from "./UpdateInput";
 
 type IdentityLineProps = {
   identity: Identity;
-  sortedIdentities: SortedIdentities;
 };
 
-export const IdentityLine: React.FC<IdentityLineProps> = ({
-  identity,
-  sortedIdentities,
-}) => {
+export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
   const [editEmail, setEditIdentity] = React.useState<boolean>(false);
 
   const theme = useTheme();
 
-  const { value, type } = identity;
-  const { EMAIL, PHONE } = ReceivedIdentityTypes;
-  const { emailIdentities, phoneIdentities } = sortedIdentities;
+  const { value, type, primary } = identity;
+  const { EMAIL } = ReceivedIdentityTypes;
 
   return (
     <IdentityBox key={value}>
@@ -39,10 +32,9 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({
           onClick={() => setEditIdentity(!editEmail)}
           color={theme.colors.green}
         >
-          {editEmail ? <CancelButton /> : <EditIcon />}
+          <EditIcon />
         </Button>
-        {(type === EMAIL && emailIdentities.length > 1) ||
-        (type === PHONE && phoneIdentities.length > 1) ? (
+        {!primary && (
           <DeleteIdentity
             type={type === EMAIL ? IdentityTypes.EMAIL : IdentityTypes.PHONE}
             value={value}
@@ -51,7 +43,7 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({
               <DeleteButton deleteIdentity={deleteIdentity} />
             )}
           </DeleteIdentity>
-        ) : null}
+        )}
       </Flex>
       {editEmail && <UpdateInput prop={identity} />}
     </IdentityBox>
