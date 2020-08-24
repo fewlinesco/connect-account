@@ -1,39 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-import { HttpVerbs } from "../@types/HttpVerbs";
-import { IdentityTypes } from "../@types/Identity";
-import { useCookies } from "../hooks/useCookies";
-import { fetchJson } from "../utils/fetchJson";
+type AddIdentityInputFormProps = {
+  addIdentity: (value: string) => Promise<Response>;
+};
 
-export const IdentityInputForm: React.FC<{ type: IdentityTypes }> = ({
-  type,
+export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
+  addIdentity,
 }) => {
   const [identity, setIdentity] = React.useState("");
-
-  const { data, error } = useCookies();
-
-  if (error) {
-    return <div>Failed to load</div>;
-  }
-
-  if (!data) {
-    return null;
-  }
 
   return (
     <Form
       data-testid="identity-form"
       method="post"
-      onSubmit={() => {
-        const body = {
-          userId: data.userId,
-          type,
-          value: identity,
-        };
-
-        fetchJson("/api/account", HttpVerbs.POST, body);
-      }}
+      onSubmit={() => addIdentity(identity)}
     >
       <Input
         type="text"

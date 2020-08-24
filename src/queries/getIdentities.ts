@@ -12,6 +12,7 @@ const USER_QUERY = gql`
       user(filters: { userId: $userId }) {
         id
         identities {
+          id
           type
           value
           primary

@@ -6,27 +6,30 @@ import {
 } from "jsonwebtoken";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { IdentityTypes, Identity } from "../@types/Identity";
-import { SortedIdentities } from "../@types/SortedIdentities";
-import { IdentityInputForm } from "../components/IdentityInputForm";
-import { IdentityLine } from "../components/IdentityLine";
-import { config } from "../config";
-import { useTheme } from "../design-system/theme/useTheme";
-import { withSSRLogger } from "../middleware/withSSRLogger";
-import withSession from "../middleware/withSession";
-import { getIdentities } from "../queries/getIdentities";
-import { promisifiedJWTVerify } from "../utils/promisifiedJWTVerify";
-import Sentry, { addRequestScopeToSentry } from "../utils/sentry";
-import { sortIdentities } from "../utils/sortIdentities";
+import { IdentityTypes, Identity } from "../../../@types/Identity";
+import { SortedIdentities } from "../../../@types/SortedIdentities";
+import { AddIdentity } from "../../../components/business/AddIdentity";
+import { DeleteIdentity } from "../../../components/business/DeleteIdentity";
+import { AddIdentityInputForm } from "../../../components/display/fewlines/AddIdentityInputForm";
+import { DeleteButton } from "../../../components/display/fewlines/DeleteButton";
+import { config } from "../../../config";
+import { useTheme } from "../../../design-system/theme/useTheme";
+import { withSSRLogger } from "../../../middleware/withSSRLogger";
+import withSession from "../../../middleware/withSession";
+import { getIdentities } from "../../../queries/getIdentities";
+import { promisifiedJWTVerify } from "../../../utils/promisifiedJWTVerify";
+import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
+import { sortIdentities } from "../../../utils/sortIdentities";
 
-type AccountProps = {
+type LoginsProps = {
   sortedIdentities: SortedIdentities;
 };
 
-const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
+const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
   const [addEmail, setAddEmail] = React.useState<boolean>(false);
   const [addPhone, setAddPhone] = React.useState<boolean>(false);
 
@@ -35,7 +38,7 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
   return (
     <>
       <Head>
-        <title>Connect Account</title>
+        <title>Connect Logins</title>
       </Head>
       <IdentitiesBox>
         <IdentitySection>
@@ -45,11 +48,28 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
           ) : (
             sortedIdentities.emailIdentities.map((email: Identity) => {
               return (
-                <IdentityLine
-                  identity={email}
-                  sortedIdentities={sortedIdentities}
-                  key={email.value}
-                />
+                <IdentityBox key={email.value}>
+                  <Flex>
+                    <Value>
+                      <Link
+                        href="/account/logins/[type]/[id]"
+                        as={`/account/logins/${email.type}/${email.id}`}
+                      >
+                        <a>{email.value}</a>
+                      </Link>
+                    </Value>
+                    {sortedIdentities.emailIdentities.length > 1 ? (
+                      <DeleteIdentity
+                        type={IdentityTypes.EMAIL}
+                        value={email.value}
+                      >
+                        {({ deleteIdentity }) => (
+                          <DeleteButton deleteIdentity={deleteIdentity} />
+                        )}
+                      </DeleteIdentity>
+                    ) : null}
+                  </Flex>
+                </IdentityBox>
               );
             })
           )}
@@ -60,7 +80,13 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
             >
               Add an email
             </Button>
-            {addEmail && <IdentityInputForm type={IdentityTypes.EMAIL} />}
+            {addEmail && (
+              <AddIdentity type={IdentityTypes.EMAIL}>
+                {({ addIdentity }) => (
+                  <AddIdentityInputForm addIdentity={addIdentity} />
+                )}
+              </AddIdentity>
+            )}
           </Flex>
         </IdentitySection>
         <IdentitySection>
@@ -70,11 +96,28 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
           ) : (
             sortedIdentities.phoneIdentities.map((phone: Identity) => {
               return (
-                <IdentityLine
-                  identity={phone}
-                  sortedIdentities={sortedIdentities}
-                  key={phone.value}
-                />
+                <IdentityBox key={phone.value}>
+                  <Flex>
+                    <Value>
+                      <Link
+                        href="/account/logins/[type]/[id]"
+                        as={`/account/logins/${phone.type}/${phone.id}`}
+                      >
+                        <a>{phone.value}</a>
+                      </Link>
+                    </Value>
+                    {sortedIdentities.phoneIdentities.length > 1 ? (
+                      <DeleteIdentity
+                        type={IdentityTypes.PHONE}
+                        value={phone.value}
+                      >
+                        {({ deleteIdentity }) => (
+                          <DeleteButton deleteIdentity={deleteIdentity} />
+                        )}
+                      </DeleteIdentity>
+                    ) : null}
+                  </Flex>
+                </IdentityBox>
               );
             })
           )}
@@ -85,7 +128,13 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
             >
               Add a phone number
             </Button>
-            {addPhone && <IdentityInputForm type={IdentityTypes.PHONE} />}
+            {addPhone && (
+              <AddIdentity type={IdentityTypes.PHONE}>
+                {({ addIdentity }) => (
+                  <AddIdentityInputForm addIdentity={addIdentity} />
+                )}
+              </AddIdentity>
+            )}
           </Flex>
         </IdentitySection>
       </IdentitiesBox>
@@ -93,7 +142,7 @@ const Account: React.FC<AccountProps> = ({ sortedIdentities }) => {
   );
 };
 
-export default Account;
+export default Logins;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
@@ -128,8 +177,11 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         error instanceof NotBeforeError ||
         error instanceof TokenExpiredError
       ) {
-        Sentry.withScope((scope: Sentry.Scope) => {
-          scope.setTag("/pages/account SSR", "/pages/account SSR");
+        Sentry.withScope((scope) => {
+          scope.setTag(
+            "/pages/account/logins SSR",
+            "/pages/account/logins SSR",
+          );
           Sentry.captureException(error);
         });
 
@@ -162,6 +214,10 @@ const IdentitySection = styled.div`
 const Flex = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const IdentityBox = styled.div`
+  padding: ${({ theme }) => theme.spaces.component.xs};
 `;
 
 const Value = styled.p`
