@@ -13,9 +13,7 @@ import styled from "styled-components";
 import { IdentityTypes, Identity } from "../../../@types/Identity";
 import { SortedIdentities } from "../../../@types/SortedIdentities";
 import { AddIdentity } from "../../../components/business/AddIdentity";
-import { DeleteIdentity } from "../../../components/business/DeleteIdentity";
 import { AddIdentityInputForm } from "../../../components/display/fewlines/AddIdentityInputForm";
-import { DeleteButton } from "../../../components/display/fewlines/DeleteButton";
 import { config } from "../../../config";
 import { useTheme } from "../../../design-system/theme/useTheme";
 import { withSSRLogger } from "../../../middleware/withSSRLogger";
@@ -58,16 +56,6 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                         <a>{email.value}</a>
                       </Link>
                     </Value>
-                    {sortedIdentities.emailIdentities.length > 1 ? (
-                      <DeleteIdentity
-                        type={IdentityTypes.EMAIL}
-                        value={email.value}
-                      >
-                        {({ deleteIdentity }) => (
-                          <DeleteButton deleteIdentity={deleteIdentity} />
-                        )}
-                      </DeleteIdentity>
-                    ) : null}
                   </Flex>
                 </IdentityBox>
               );
@@ -106,16 +94,6 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                         <a>{phone.value}</a>
                       </Link>
                     </Value>
-                    {sortedIdentities.phoneIdentities.length > 1 ? (
-                      <DeleteIdentity
-                        type={IdentityTypes.PHONE}
-                        value={phone.value}
-                      >
-                        {({ deleteIdentity }) => (
-                          <DeleteButton deleteIdentity={deleteIdentity} />
-                        )}
-                      </DeleteIdentity>
-                    ) : null}
                   </Flex>
                 </IdentityBox>
               );
