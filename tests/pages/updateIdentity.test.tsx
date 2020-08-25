@@ -6,17 +6,13 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { ReceivedIdentityTypes } from "../../src/@types/Identity";
-import { SortedIdentities } from "../../src/@types/SortedIdentities";
-import { Button } from "../../src/components/IdentityLine";
+import { ReceivedIdentityTypes, Identity } from "../../src/@types/Identity";
 import { Layout } from "../../src/components/Layout";
 import { UpdateInput, Form } from "../../src/components/UpdateInput";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
-import { CancelButton } from "../../src/design-system/icons/CancelButton";
-import { EditIcon } from "../../src/design-system/icons/EditIcon";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";
-import Account from "../../src/pages/account";
+import UpdateIdentity from "../../src/pages/account/logins/[type]/update";
 import * as updateIdentity from "../../src/utils/updateIdentity";
 
 enableFetchMocks();
@@ -43,57 +39,25 @@ describe("the update form should work properly", () => {
     fetch.resetMocks();
   });
 
-  const mockedSortedResponse: SortedIdentities = {
-    phoneIdentities: [
-      {
-        id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-        primary: false,
-        status: "validated",
-        type: ReceivedIdentityTypes.PHONE,
-        value: "0622116655",
-      },
-    ],
-    emailIdentities: [
-      {
-        id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-        primary: false,
-        status: "validated",
-        type: ReceivedIdentityTypes.EMAIL,
-        value: "test@test.test",
-      },
-    ],
+  const nonPrimaryIdentity: Identity = {
+    id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+    primary: false,
+    status: "validated",
+    type: ReceivedIdentityTypes.EMAIL,
+    value: "test@test.test",
   };
 
-  test("it should display the update button for each identity", () => {
+  test("it should display an input", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <UpdateIdentity identity={nonPrimaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
 
-    const updateButton = component.find(EditIcon);
-    expect(updateButton).toHaveLength(2);
-  });
-
-  test("it should display an input and a cancel button when we click on the update button", () => {
-    const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
-    );
-
-    const firstUpdateButton = component.find(Button).first();
-
-    firstUpdateButton.simulate("click");
-    const cancelButton = component.find(CancelButton);
     const updateInput = component.find(UpdateInput);
-    expect(cancelButton).toHaveLength(1);
     expect(updateInput).toHaveLength(1);
   });
 
@@ -102,16 +66,12 @@ describe("the update form should work properly", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <UpdateIdentity identity={nonPrimaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
 
-    const firstUpdateButton = component.find(Button).first();
-    firstUpdateButton.simulate("click");
     const updateInput = component.find(Form).find(".upd-inp").hostNodes();
-
-    expect(updateInput).toHaveLength(1);
     updateInput.simulate("change", {
       target: { value: "test2@test.test" },
     });
