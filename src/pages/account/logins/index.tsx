@@ -200,7 +200,7 @@ const Flex = styled.div`
   align-items: center;
 `;
 
-const IdentityBox = styled.div`
+export const IdentityBox = styled.div`
   padding: ${({ theme }) => theme.spaces.component.xs};
 `;
 
