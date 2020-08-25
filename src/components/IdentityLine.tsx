@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -9,18 +10,12 @@ import {
 import { DeleteIdentity } from "../components/business/DeleteIdentity";
 import { DeleteButton } from "../components/display/fewlines/DeleteButton";
 import { EditIcon } from "../design-system/icons/EditIcon";
-import { useTheme } from "../design-system/theme/useTheme";
-import { UpdateInput } from "./UpdateInput";
 
 type IdentityLineProps = {
   identity: Identity;
 };
 
 export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
-  const [editEmail, setEditIdentity] = React.useState<boolean>(false);
-
-  const theme = useTheme();
-
   const { value, type, primary } = identity;
   const { EMAIL } = ReceivedIdentityTypes;
 
@@ -28,12 +23,11 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
     <IdentityBox key={value}>
       <Flex>
         <Value>{value}</Value>
-        <Button
-          onClick={() => setEditIdentity(!editEmail)}
-          color={theme.colors.green}
-        >
-          <EditIcon />
-        </Button>
+        <Link href={`/account/logins/${identity.type}/${identity.id}/update`}>
+          <a>
+            <EditIcon />
+          </a>
+        </Link>
         {!primary && (
           <DeleteIdentity
             type={type === EMAIL ? IdentityTypes.EMAIL : IdentityTypes.PHONE}
@@ -45,7 +39,6 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
           </DeleteIdentity>
         )}
       </Flex>
-      {editEmail && <UpdateInput prop={identity} />}
     </IdentityBox>
   );
 };
