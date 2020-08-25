@@ -71,7 +71,10 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
             {addEmail && (
               <AddIdentity type={IdentityTypes.EMAIL}>
                 {({ addIdentity }) => (
-                  <AddIdentityInputForm addIdentity={addIdentity} />
+                  <AddIdentityInputForm
+                    addIdentity={addIdentity}
+                    type={IdentityTypes.EMAIL}
+                  />
                 )}
               </AddIdentity>
             )}
@@ -109,7 +112,10 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
             {addPhone && (
               <AddIdentity type={IdentityTypes.PHONE}>
                 {({ addIdentity }) => (
-                  <AddIdentityInputForm addIdentity={addIdentity} />
+                  <AddIdentityInputForm
+                    addIdentity={addIdentity}
+                    type={IdentityTypes.PHONE}
+                  />
                 )}
               </AddIdentity>
             )}
