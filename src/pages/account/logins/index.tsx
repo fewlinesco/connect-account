@@ -55,9 +55,12 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       <Head>
         <title>Connect Logins</title>
       </Head>
+      <h2>Logins</h2>
+      <p>Your emails, phones and social logins</p>
+      <br />
       <IdentitiesBox>
         <IdentitySection>
-          <h3>Email(s):</h3>
+          <h3>Email addresses</h3>
           {sortedIdentities.emailIdentities.length === 0 ? (
             <Value>No emails</Value>
           ) : (
@@ -91,7 +94,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               onClick={() => setAddEmail(!addEmail)}
               color={theme.colors.green}
             >
-              Add an email
+              + Add new email address
             </Button>
             {addEmail && (
               <AddIdentity type={IdentityTypes.EMAIL}>
@@ -106,7 +109,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           </Flex>
         </IdentitySection>
         <IdentitySection>
-          <h3>Phone number(s):</h3>
+          <h3>Phone numbers:</h3>
           {sortedIdentities.phoneIdentities.length === 0 ? (
             <Value>No phones</Value>
           ) : (
@@ -140,7 +143,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               onClick={() => setAddPhone(!addPhone)}
               color={theme.colors.green}
             >
-              Add a phone number
+              + Add new phone number
             </Button>
             {addPhone && (
               <AddIdentity type={IdentityTypes.PHONE}>
@@ -153,6 +156,9 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               </AddIdentity>
             )}
           </Flex>
+        </IdentitySection>
+        <IdentitySection>
+          <h3>Social logins</h3>
         </IdentitySection>
       </IdentitiesBox>
     </>
