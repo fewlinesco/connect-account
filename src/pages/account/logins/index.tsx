@@ -42,7 +42,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
         <IdentitySection>
           <h3>Email(s):</h3>
           {sortedIdentities.emailIdentities.length === 0 ? (
-            <Value className="no-email">No emails</Value>
+            <Value>No emails</Value>
           ) : (
             sortedIdentities.emailIdentities.map((email: Identity) => {
               return (
@@ -83,7 +83,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
         <IdentitySection>
           <h3>Phone number(s):</h3>
           {sortedIdentities.phoneIdentities.length === 0 ? (
-            <Value className="no-phone">No phones</Value>
+            <Value>No phones</Value>
           ) : (
             sortedIdentities.phoneIdentities.map((phone: Identity) => {
               return (
@@ -204,7 +204,7 @@ export const IdentityBox = styled.div`
   padding: ${({ theme }) => theme.spaces.component.xs};
 `;
 
-const Value = styled.p`
+export const Value = styled.p`
   margin-right: 0.5rem;
 `;
 

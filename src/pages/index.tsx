@@ -66,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         },
       };
     } catch (error) {
-      Sentry.withScope((scope: Sentry.Scope) => {
+      Sentry.withScope((scope) => {
         scope.setTag("/pages/index SSR", "/pages/index SSR");
         Sentry.captureException(error);
       });

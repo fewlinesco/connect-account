@@ -5,12 +5,13 @@ import { Identity } from "../@types/Identity";
 import { useCookies } from "../hooks/useCookies";
 import { updateIdentity } from "../utils/updateIdentity";
 
-export const UpdateInput: React.FC<{ prop: Identity }> = ({
-  prop: currentIdentity,
-}) => {
+export const UpdateInput: React.FC<{
+  currentIdentity: Identity;
+}> = ({ currentIdentity }) => {
   const [identity, setIdentity] = React.useState("");
 
   const { data, error } = useCookies();
+
   if (error) {
     return <div>Failed to load</div>;
   }
@@ -21,8 +22,6 @@ export const UpdateInput: React.FC<{ prop: Identity }> = ({
 
   return (
     <Form
-      data-testid="update-identity-form"
-      className="upd-id-form"
       method="post"
       onSubmit={async () => {
         const deleteBody = {
@@ -43,8 +42,7 @@ export const UpdateInput: React.FC<{ prop: Identity }> = ({
       <Input
         type="text"
         name="value"
-        className="upd-inp"
-        placeholder={`Enter your ${currentIdentity.type.toLowerCase()}`}
+        placeholder={`Enter your ${currentIdentity.type}`}
         value={identity}
         onChange={(event) => setIdentity(event.target.value)}
       />
@@ -58,7 +56,7 @@ export const Form = styled.form`
   align-items: center;
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   border: ${({ theme }) => `${theme.colors.blacks[0]} ${theme.borders.thin}`};
   border-radius: ${({ theme }) => theme.radii[0]};
   padding: 0.5rem;

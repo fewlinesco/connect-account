@@ -26,7 +26,7 @@ const UpdateIdentity: React.FC<{ identity: Identity }> = ({ identity }) => {
           <Value>{value}</Value>
         </Flex>
       </IdentityBox>
-      <UpdateInput prop={identity} />
+      <UpdateInput currentIdentity={identity} />
     </>
   );
 };

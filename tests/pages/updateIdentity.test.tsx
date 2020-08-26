@@ -8,7 +8,7 @@ import { ThemeProvider } from "styled-components";
 
 import { ReceivedIdentityTypes, Identity } from "../../src/@types/Identity";
 import { Layout } from "../../src/components/Layout";
-import { UpdateInput, Form } from "../../src/components/UpdateInput";
+import { UpdateInput, Form, Input } from "../../src/components/UpdateInput";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";
@@ -71,13 +71,13 @@ describe("the update form should work properly", () => {
       </ThemeProvider>,
     );
 
-    const updateInput = component.find(Form).find(".upd-inp").hostNodes();
+    const updateInput = component.find(Form).find(Input);
     updateInput.simulate("change", {
       target: { value: "test2@test.test" },
     });
 
     const updateMethod = jest.spyOn(updateIdentity, "updateIdentity");
-    const form = component.find(Form).find(".upd-id-form").hostNodes();
+    const form = component.find(Form);
     form.simulate("submit");
 
     expect(updateMethod).toHaveBeenCalledWith(

@@ -7,7 +7,10 @@ import { SortedIdentities } from "../../src/@types/SortedIdentities";
 import { Layout } from "../../src/components/Layout";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
-import Account, { IdentityBox } from "../../src/pages/account/logins/index";
+import Account, {
+  IdentityBox,
+  Value,
+} from "../../src/pages/account/logins/index";
 
 jest.mock("../../src/config", () => {
   return {
@@ -121,8 +124,8 @@ describe("it should display identities properly", () => {
       </ThemeProvider>,
     );
     const identityBox = component.find(IdentityBox);
-    const noEmail = component.find(".no-email").hostNodes();
-    expect(noEmail).toHaveLength(1);
+    const noEmail = component.contains(<Value>No emails</Value>);
+    expect(noEmail).toEqual(true);
     expect(identityBox).toHaveLength(1);
   });
 
@@ -148,8 +151,9 @@ describe("it should display identities properly", () => {
       </ThemeProvider>,
     );
     const identityBox = component.find(IdentityBox);
-    const noPhone = component.find(".no-phone").hostNodes();
-    expect(noPhone).toHaveLength(1);
+    const noPhone = component.contains(<Value>No phones</Value>);
+
+    expect(noPhone).toEqual(true);
     expect(identityBox).toHaveLength(1);
   });
 
@@ -166,9 +170,9 @@ describe("it should display identities properly", () => {
         </Layout>
       </ThemeProvider>,
     );
-    const noPhone = component.find(".no-phone").hostNodes();
-    const noEmail = component.find(".no-email").hostNodes();
-    expect(noPhone).toHaveLength(1);
-    expect(noEmail).toHaveLength(1);
+    const noPhone = component.contains(<Value>No phones</Value>);
+    const noEmail = component.contains(<Value>No emails</Value>);
+    expect(noPhone).toEqual(true);
+    expect(noEmail).toEqual(true);
   });
 });
