@@ -30,6 +30,23 @@ type LoginsProps = {
 const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
   const [addEmail, setAddEmail] = React.useState<boolean>(false);
   const [addPhone, setAddPhone] = React.useState<boolean>(false);
+  const [hideSecondaryEmails, setHideSecondaryEmails] = React.useState<boolean>(
+    true,
+  );
+  const [hideSecondaryPhones, setHideSecondaryPhones] = React.useState<boolean>(
+    true,
+  );
+
+  let emailList;
+  let phoneList;
+
+  hideSecondaryEmails
+    ? (emailList = sortedIdentities.emailIdentities.filter((id) => id.primary))
+    : (emailList = sortedIdentities.emailIdentities);
+
+  hideSecondaryPhones
+    ? (phoneList = sortedIdentities.phoneIdentities.filter((id) => id.primary))
+    : (phoneList = sortedIdentities.phoneIdentities);
 
   const theme = useTheme();
 
@@ -44,7 +61,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           {sortedIdentities.emailIdentities.length === 0 ? (
             <Value>No emails</Value>
           ) : (
-            sortedIdentities.emailIdentities.map((email: Identity) => {
+            emailList.map((email: Identity) => {
               return (
                 <IdentityBox key={email.value}>
                   <Flex>
@@ -61,6 +78,14 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
+          <Button
+            onClick={() => setHideSecondaryEmails(!hideSecondaryEmails)}
+            color={theme.colors.green}
+          >
+            {hideSecondaryEmails
+              ? `Show ${sortedIdentities.emailIdentities.length - 1} more`
+              : `Hide ${sortedIdentities.emailIdentities.length - 1}`}
+          </Button>
           <Flex>
             <Button
               onClick={() => setAddEmail(!addEmail)}
@@ -85,7 +110,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           {sortedIdentities.phoneIdentities.length === 0 ? (
             <Value>No phones</Value>
           ) : (
-            sortedIdentities.phoneIdentities.map((phone: Identity) => {
+            phoneList.map((phone: Identity) => {
               return (
                 <IdentityBox key={phone.value}>
                   <Flex>
@@ -102,6 +127,14 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
+          <Button
+            onClick={() => setHideSecondaryPhones(!hideSecondaryPhones)}
+            color={theme.colors.green}
+          >
+            {hideSecondaryPhones
+              ? `Show ${sortedIdentities.phoneIdentities.length - 1} more`
+              : `Hide ${sortedIdentities.phoneIdentities.length - 1}`}
+          </Button>
           <Flex>
             <Button
               onClick={() => setAddPhone(!addPhone)}
