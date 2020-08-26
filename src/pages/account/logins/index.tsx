@@ -10,10 +10,7 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { IdentityTypes, Identity } from "../../../@types/Identity";
 import { SortedIdentities } from "../../../@types/SortedIdentities";
-import { AddIdentity } from "../../../components/business/AddIdentity";
-import { AddIdentityInputForm } from "../../../components/display/fewlines/AddIdentityInputForm";
 import { config } from "../../../config";
 import { useTheme } from "../../../design-system/theme/useTheme";
 import { withSSRLogger } from "../../../middleware/withSSRLogger";
@@ -28,8 +25,6 @@ type LoginsProps = {
 };
 
 const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
-  const [addEmail, setAddEmail] = React.useState<boolean>(false);
-  const [addPhone, setAddPhone] = React.useState<boolean>(false);
   const [hideSecondaryEmails, setHideSecondaryEmails] = React.useState<boolean>(
     true,
   );
@@ -90,22 +85,11 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               : `Hide ${sortedIdentities.emailIdentities.length - 1}`}
           </Button>
           <Flex>
-            <Button
-              onClick={() => setAddEmail(!addEmail)}
-              color={theme.colors.green}
-            >
-              + Add new email address
-            </Button>
-            {addEmail && (
-              <AddIdentity type={IdentityTypes.EMAIL}>
-                {({ addIdentity }) => (
-                  <AddIdentityInputForm
-                    addIdentity={addIdentity}
-                    type={IdentityTypes.EMAIL}
-                  />
-                )}
-              </AddIdentity>
-            )}
+            <Link href="/account/logins/email/new">
+              <Button color={theme.colors.green}>
+                + Add new email address
+              </Button>
+            </Link>
           </Flex>
         </IdentitySection>
         <IdentitySection>
@@ -139,22 +123,9 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               : `Hide ${sortedIdentities.phoneIdentities.length - 1}`}
           </Button>
           <Flex>
-            <Button
-              onClick={() => setAddPhone(!addPhone)}
-              color={theme.colors.green}
-            >
-              + Add new phone number
-            </Button>
-            {addPhone && (
-              <AddIdentity type={IdentityTypes.PHONE}>
-                {({ addIdentity }) => (
-                  <AddIdentityInputForm
-                    addIdentity={addIdentity}
-                    type={IdentityTypes.PHONE}
-                  />
-                )}
-              </AddIdentity>
-            )}
+            <Link href="/account/logins/phone/new">
+              <Button color={theme.colors.green}>+ Add new phone number</Button>
+            </Link>
           </Flex>
         </IdentitySection>
         <IdentitySection>
