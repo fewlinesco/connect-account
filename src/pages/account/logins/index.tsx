@@ -13,7 +13,6 @@ import styled from "styled-components";
 import { Identity } from "../../../@types/Identity";
 import { SortedIdentities } from "../../../@types/SortedIdentities";
 import { config } from "../../../config";
-import { useTheme } from "../../../design-system/theme/useTheme";
 import { withSSRLogger } from "../../../middleware/withSSRLogger";
 import withSession from "../../../middleware/withSession";
 import { getIdentities } from "../../../queries/getIdentities";
@@ -37,16 +36,18 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
   let phoneList;
 
   hideSecondaryEmails
-    ? (emailList = sortedIdentities.emailIdentities.filter((id) => id.primary))
+    ? (emailList = sortedIdentities.emailIdentities.filter(
+        (identity) => identity.primary,
+      ))
     : (emailList = sortedIdentities.emailIdentities);
 
   hideSecondaryPhones
-    ? (phoneList = sortedIdentities.phoneIdentities.filter((id) => id.primary))
+    ? (phoneList = sortedIdentities.phoneIdentities.filter(
+        (identity) => identity.primary,
+      ))
     : (phoneList = sortedIdentities.phoneIdentities);
 
   const { emailIdentities, phoneIdentities } = sortedIdentities;
-
-  const theme = useTheme();
 
   return (
     <>
@@ -82,7 +83,6 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           {emailIdentities.length > 1 && (
             <ShowMoreButton
               onClick={() => setHideSecondaryEmails(!hideSecondaryEmails)}
-              color={theme.colors.green}
             >
               {hideSecondaryEmails
                 ? `Show ${emailIdentities.length - 1} more`
@@ -91,9 +91,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           )}
           <Flex>
             <Link href="/account/logins/email/new">
-              <Button color={theme.colors.green}>
-                + Add new email address
-              </Button>
+              <Button>+ Add new email address</Button>
             </Link>
           </Flex>
         </IdentitySection>
@@ -122,7 +120,6 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           {phoneIdentities.length > 1 && (
             <ShowMoreButton
               onClick={() => setHideSecondaryPhones(!hideSecondaryPhones)}
-              color={theme.colors.green}
             >
               {hideSecondaryPhones
                 ? `Show ${phoneIdentities.length - 1} more`
@@ -131,7 +128,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           )}
           <Flex>
             <Link href="/account/logins/phone/new">
-              <Button color={theme.colors.green}>+ Add new phone number</Button>
+              <Button>+ Add new phone number</Button>
             </Link>
           </Flex>
         </IdentitySection>
@@ -225,16 +222,12 @@ export const Value = styled.p`
   margin-right: 0.5rem;
 `;
 
-type ButtonProps = {
-  color: string;
-};
-
-const Button = styled.button<ButtonProps>`
+const Button = styled.button`
   padding: 0.5rem;
   margin-right: 1rem;
   border-radius: ${({ theme }) => theme.radii[0]};
   background-color: transparent;
-  ${(props) => `color: ${props.color}`};
+  color: ${({ theme }) => theme.colors.green};
   transition: ${({ theme }) => theme.transitions.quick};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   &:hover {
@@ -250,12 +243,12 @@ const Button = styled.button<ButtonProps>`
   }
 `;
 
-export const ShowMoreButton = styled.button<ButtonProps>`
+export const ShowMoreButton = styled.button`
   padding: 0.5rem;
   margin-right: 1rem;
   border-radius: ${({ theme }) => theme.radii[0]};
   background-color: transparent;
-  ${(props) => `color: ${props.color}`};
+  color: ${({ theme }) => theme.colors.green};
   transition: ${({ theme }) => theme.transitions.quick};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   &:hover {
