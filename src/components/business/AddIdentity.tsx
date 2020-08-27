@@ -9,6 +9,7 @@ interface AddIdentityProps {
   type: IdentityTypes;
   children: (props: {
     addIdentity: (value: string) => Promise<Response>;
+    type: IdentityTypes;
   }) => JSX.Element;
 }
 
@@ -26,12 +27,12 @@ export const AddIdentity: React.FC<AddIdentityProps> = ({ type, children }) => {
   const addIdentity = (value: string): Promise<Response> => {
     const body = {
       userId: data.userId,
-      type,
+      type: type.toUpperCase(),
       value,
     };
 
     return fetchJson("/api/account", HttpVerbs.POST, body);
   };
 
-  return children({ addIdentity });
+  return children({ addIdentity, type });
 };

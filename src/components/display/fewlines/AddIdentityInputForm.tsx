@@ -1,4 +1,5 @@
 import React from "react";
+import { IdentityTypes } from "src/@types/Identity";
 import styled from "styled-components";
 
 import { IdentityTypes } from "../../../../src/@types/Identity";
@@ -23,9 +24,7 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
       <Input
         type="text"
         name="value"
-        placeholder={`Enter your ${
-          type === IdentityTypes.EMAIL ? "email" : "phone"
-        }`}
+        placeholder={`Enter your ${type}`}
         value={identity}
         onChange={(event) => setIdentity(event.target.value)}
       />
