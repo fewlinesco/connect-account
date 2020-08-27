@@ -232,13 +232,13 @@ const Button = styled.button`
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   &:hover {
     cursor: pointer;
-    ${(props) => `background-color: ${props.color}`};
+    background-color: ${({ theme }) => theme.colors.green};
     color: ${({ theme }) => theme.colors.contrastCopy};
   }
   &:active,
   &:focus {
     outline: none;
-    ${(props) => `background-color: ${props.color}`};
+    background-color: ${({ theme }) => theme.colors.green};
     color: ${({ theme }) => theme.colors.contrastCopy};
   }
 `;
@@ -253,13 +253,13 @@ export const ShowMoreButton = styled.button`
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   &:hover {
     cursor: pointer;
-    ${(props) => `background-color: ${props.color}`};
+    background-color: ${({ theme }) => theme.colors.green};
     color: ${({ theme }) => theme.colors.contrastCopy};
   }
   &:active,
   &:focus {
     outline: none;
-    ${(props) => `background-color: ${props.color}`};
+    background-color: ${({ theme }) => theme.colors.green};
     color: ${({ theme }) => theme.colors.contrastCopy};
   }
 `;
