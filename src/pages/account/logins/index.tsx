@@ -10,6 +10,7 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
+import { Identity } from "../../../@types/Identity";
 import { SortedIdentities } from "../../../@types/SortedIdentities";
 import { config } from "../../../config";
 import { useTheme } from "../../../design-system/theme/useTheme";
