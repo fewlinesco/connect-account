@@ -10,6 +10,7 @@ import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import Account, {
   IdentityBox,
   Value,
+  ShowMoreButton,
 } from "../../src/pages/account/logins/index";
 
 jest.mock("../../src/config", () => {
@@ -27,7 +28,7 @@ describe("it should display identities properly", () => {
       phoneIdentities: [
         {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-          primary: false,
+          primary: true,
           status: "validated",
           type: ReceivedIdentityTypes.PHONE,
           value: "0622116655",
@@ -36,7 +37,7 @@ describe("it should display identities properly", () => {
       emailIdentities: [
         {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-          primary: false,
+          primary: true,
           status: "validated",
           type: ReceivedIdentityTypes.EMAIL,
           value: "test@test.test",
@@ -55,12 +56,12 @@ describe("it should display identities properly", () => {
     expect(identityBox).toHaveLength(2);
   });
 
-  test("it should display emails and phones where there are many of each", () => {
+  test("it should display primary email and primary phone when there are many of each", () => {
     const mockedSortedResponse: SortedIdentities = {
       phoneIdentities: [
         {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-          primary: false,
+          primary: true,
           status: "validated",
           type: ReceivedIdentityTypes.PHONE,
           value: "0622116655",
@@ -76,7 +77,7 @@ describe("it should display identities properly", () => {
       emailIdentities: [
         {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-          primary: false,
+          primary: true,
           status: "validated",
           type: ReceivedIdentityTypes.EMAIL,
           value: "test@test.test",
@@ -99,7 +100,7 @@ describe("it should display identities properly", () => {
       </ThemeProvider>,
     );
     const identityBox = component.find(IdentityBox);
-    expect(identityBox).toHaveLength(4);
+    expect(identityBox).toHaveLength(2);
   });
 
   test("it should display no emails when there are not", () => {
@@ -107,7 +108,7 @@ describe("it should display identities properly", () => {
       phoneIdentities: [
         {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-          primary: false,
+          primary: true,
           status: "validated",
           type: ReceivedIdentityTypes.PHONE,
           value: "0622116655",
@@ -135,7 +136,7 @@ describe("it should display identities properly", () => {
       emailIdentities: [
         {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-          primary: false,
+          primary: true,
           status: "validated",
           type: ReceivedIdentityTypes.EMAIL,
           value: "test@test.test",
@@ -174,5 +175,177 @@ describe("it should display identities properly", () => {
     const noEmail = component.contains(<Value>No emails</Value>);
     expect(noPhone).toEqual(true);
     expect(noEmail).toEqual(true);
+  });
+});
+
+describe('the "show more" button should behave properly', () => {
+  test("the button's text should be relevant", () => {
+    const mockedSortedResponse: SortedIdentities = {
+      phoneIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: ReceivedIdentityTypes.PHONE,
+          value: "0622116655",
+        },
+        {
+          id: "7y6edcc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: ReceivedIdentityTypes.PHONE,
+          value: "0622116688",
+        },
+        {
+          id: "5r32scc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: ReceivedIdentityTypes.PHONE,
+          value: "0622116633",
+        },
+        {
+          id: "87uytcc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: ReceivedIdentityTypes.PHONE,
+          value: "0622116611",
+        },
+      ],
+      emailIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: ReceivedIdentityTypes.EMAIL,
+          value: "test@test.test",
+        },
+        {
+          id: "66tedcc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: ReceivedIdentityTypes.EMAIL,
+          value: "test2@test.test",
+        },
+        {
+          id: "ttr43cc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: ReceivedIdentityTypes.EMAIL,
+          value: "test3@test.test",
+        },
+      ],
+    };
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <Account sortedIdentities={mockedSortedResponse} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const showMoreButton1 = component.find(ShowMoreButton).at(0);
+    const showMoreButton2 = component.find(ShowMoreButton).at(1);
+    expect(showMoreButton1).toHaveLength(1);
+    expect(showMoreButton2).toHaveLength(1);
+    expect(showMoreButton1.text()).toEqual("Show 2 more");
+    expect(showMoreButton2.text()).toEqual("Show 3 more");
+
+    showMoreButton1.simulate("click");
+    showMoreButton2.simulate("click");
+    expect(showMoreButton1.text()).toEqual("Hide 2");
+    expect(showMoreButton2.text()).toEqual("Hide 3");
+  });
+
+  test("the button should show/hide identities", () => {
+    const mockedSortedResponse: SortedIdentities = {
+      phoneIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: ReceivedIdentityTypes.PHONE,
+          value: "0622116655",
+        },
+        {
+          id: "7y6edcc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: ReceivedIdentityTypes.PHONE,
+          value: "0622116688",
+        },
+      ],
+      emailIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: ReceivedIdentityTypes.EMAIL,
+          value: "test@test.test",
+        },
+        {
+          id: "66tedcc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: ReceivedIdentityTypes.EMAIL,
+          value: "test2@test.test",
+        },
+      ],
+    };
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <Account sortedIdentities={mockedSortedResponse} />
+        </Layout>
+      </ThemeProvider>,
+    );
+    const identityBox = component.find(IdentityBox);
+    const showMoreButton1 = component.find(ShowMoreButton).at(0);
+    const showMoreButton2 = component.find(ShowMoreButton).at(1);
+    expect(identityBox).toHaveLength(2);
+
+    showMoreButton1.simulate("click");
+    showMoreButton2.simulate("click");
+    const identityBox2 = component.find(IdentityBox);
+    expect(identityBox2).toHaveLength(4);
+
+    showMoreButton1.simulate("click");
+    showMoreButton2.simulate("click");
+    const identityBox3 = component.find(IdentityBox);
+    expect(identityBox3).toHaveLength(2);
+  });
+
+  test("the button should not appear if the corresponding identity list < 2", () => {
+    const mockedSortedResponse: SortedIdentities = {
+      phoneIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: ReceivedIdentityTypes.PHONE,
+          value: "0622116655",
+        },
+      ],
+      emailIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: ReceivedIdentityTypes.EMAIL,
+          value: "test@test.test",
+        },
+      ],
+    };
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <Account sortedIdentities={mockedSortedResponse} />
+        </Layout>
+      </ThemeProvider>,
+    );
+    const showMoreButton = component.find(ShowMoreButton);
+    expect(showMoreButton).toHaveLength(0);
   });
 });

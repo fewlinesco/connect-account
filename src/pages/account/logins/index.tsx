@@ -10,12 +10,9 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { IdentityTypes, Identity } from "../../../@types/Identity";
+import { Identity } from "../../../@types/Identity";
 import { SortedIdentities } from "../../../@types/SortedIdentities";
-import { AddIdentity } from "../../../components/business/AddIdentity";
-import { AddIdentityInputForm } from "../../../components/display/fewlines/AddIdentityInputForm";
 import { config } from "../../../config";
-import { useTheme } from "../../../design-system/theme/useTheme";
 import { withSSRLogger } from "../../../middleware/withSSRLogger";
 import withSession from "../../../middleware/withSession";
 import { getIdentities } from "../../../queries/getIdentities";
@@ -28,23 +25,45 @@ type LoginsProps = {
 };
 
 const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
-  const [addEmail, setAddEmail] = React.useState<boolean>(false);
-  const [addPhone, setAddPhone] = React.useState<boolean>(false);
+  const [hideSecondaryEmails, setHideSecondaryEmails] = React.useState<boolean>(
+    true,
+  );
+  const [hideSecondaryPhones, setHideSecondaryPhones] = React.useState<boolean>(
+    true,
+  );
 
-  const theme = useTheme();
+  let emailList;
+  let phoneList;
+
+  hideSecondaryEmails
+    ? (emailList = sortedIdentities.emailIdentities.filter(
+        (identity) => identity.primary,
+      ))
+    : (emailList = sortedIdentities.emailIdentities);
+
+  hideSecondaryPhones
+    ? (phoneList = sortedIdentities.phoneIdentities.filter(
+        (identity) => identity.primary,
+      ))
+    : (phoneList = sortedIdentities.phoneIdentities);
+
+  const { emailIdentities, phoneIdentities } = sortedIdentities;
 
   return (
     <>
       <Head>
         <title>Connect Logins</title>
       </Head>
+      <h2>Logins</h2>
+      <p>Your emails, phones and social logins</p>
+      <br />
       <IdentitiesBox>
         <IdentitySection>
-          <h3>Email(s):</h3>
-          {sortedIdentities.emailIdentities.length === 0 ? (
+          <h3>Email addresses</h3>
+          {emailIdentities.length === 0 ? (
             <Value>No emails</Value>
           ) : (
-            sortedIdentities.emailIdentities.map((email: Identity) => {
+            emailList.map((email: Identity) => {
               return (
                 <IdentityBox key={email.value}>
                   <Flex>
@@ -61,31 +80,27 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-          <Flex>
-            <Button
-              onClick={() => setAddEmail(!addEmail)}
-              color={theme.colors.green}
+          {emailIdentities.length > 1 && (
+            <ShowMoreButton
+              onClick={() => setHideSecondaryEmails(!hideSecondaryEmails)}
             >
-              Add an email
-            </Button>
-            {addEmail && (
-              <AddIdentity type={IdentityTypes.EMAIL}>
-                {({ addIdentity }) => (
-                  <AddIdentityInputForm
-                    addIdentity={addIdentity}
-                    type={IdentityTypes.EMAIL}
-                  />
-                )}
-              </AddIdentity>
-            )}
+              {hideSecondaryEmails
+                ? `Show ${emailIdentities.length - 1} more`
+                : `Hide ${emailIdentities.length - 1}`}
+            </ShowMoreButton>
+          )}
+          <Flex>
+            <Link href="/account/logins/email/new">
+              <Button>+ Add new email address</Button>
+            </Link>
           </Flex>
         </IdentitySection>
         <IdentitySection>
-          <h3>Phone number(s):</h3>
-          {sortedIdentities.phoneIdentities.length === 0 ? (
+          <h3>Phone numbers:</h3>
+          {phoneIdentities.length === 0 ? (
             <Value>No phones</Value>
           ) : (
-            sortedIdentities.phoneIdentities.map((phone: Identity) => {
+            phoneList.map((phone: Identity) => {
               return (
                 <IdentityBox key={phone.value}>
                   <Flex>
@@ -102,24 +117,23 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-          <Flex>
-            <Button
-              onClick={() => setAddPhone(!addPhone)}
-              color={theme.colors.green}
+          {phoneIdentities.length > 1 && (
+            <ShowMoreButton
+              onClick={() => setHideSecondaryPhones(!hideSecondaryPhones)}
             >
-              Add a phone number
-            </Button>
-            {addPhone && (
-              <AddIdentity type={IdentityTypes.PHONE}>
-                {({ addIdentity }) => (
-                  <AddIdentityInputForm
-                    addIdentity={addIdentity}
-                    type={IdentityTypes.PHONE}
-                  />
-                )}
-              </AddIdentity>
-            )}
+              {hideSecondaryPhones
+                ? `Show ${phoneIdentities.length - 1} more`
+                : `Hide ${phoneIdentities.length - 1}`}
+            </ShowMoreButton>
+          )}
+          <Flex>
+            <Link href="/account/logins/phone/new">
+              <Button>+ Add new phone number</Button>
+            </Link>
           </Flex>
+        </IdentitySection>
+        <IdentitySection>
+          <h3>Social logins</h3>
         </IdentitySection>
       </IdentitiesBox>
     </>
@@ -208,27 +222,44 @@ export const Value = styled.p`
   margin-right: 0.5rem;
 `;
 
-type ButtonProps = {
-  color: string;
-};
-
-const Button = styled.button<ButtonProps>`
+const Button = styled.button`
   padding: 0.5rem;
   margin-right: 1rem;
   border-radius: ${({ theme }) => theme.radii[0]};
   background-color: transparent;
-  ${(props) => `color: ${props.color}`};
+  color: ${({ theme }) => theme.colors.green};
   transition: ${({ theme }) => theme.transitions.quick};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   &:hover {
     cursor: pointer;
-    ${(props) => `background-color: ${props.color}`};
+    background-color: ${({ theme }) => theme.colors.green};
     color: ${({ theme }) => theme.colors.contrastCopy};
   }
   &:active,
   &:focus {
     outline: none;
-    ${(props) => `background-color: ${props.color}`};
+    background-color: ${({ theme }) => theme.colors.green};
+    color: ${({ theme }) => theme.colors.contrastCopy};
+  }
+`;
+
+export const ShowMoreButton = styled.button`
+  padding: 0.5rem;
+  margin-right: 1rem;
+  border-radius: ${({ theme }) => theme.radii[0]};
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.green};
+  transition: ${({ theme }) => theme.transitions.quick};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+  &:hover {
+    cursor: pointer;
+    background-color: ${({ theme }) => theme.colors.green};
+    color: ${({ theme }) => theme.colors.contrastCopy};
+  }
+  &:active,
+  &:focus {
+    outline: none;
+    background-color: ${({ theme }) => theme.colors.green};
     color: ${({ theme }) => theme.colors.contrastCopy};
   }
 `;
