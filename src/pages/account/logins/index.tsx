@@ -77,14 +77,16 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-          <Button
-            onClick={() => setHideSecondaryEmails(!hideSecondaryEmails)}
-            color={theme.colors.green}
-          >
-            {hideSecondaryEmails
-              ? `Show ${sortedIdentities.emailIdentities.length - 1} more`
-              : `Hide ${sortedIdentities.emailIdentities.length - 1}`}
-          </Button>
+          {sortedIdentities.emailIdentities.length > 1 && (
+            <ShowMoreButton
+              onClick={() => setHideSecondaryEmails(!hideSecondaryEmails)}
+              color={theme.colors.green}
+            >
+              {hideSecondaryEmails
+                ? `Show ${sortedIdentities.emailIdentities.length - 1} more`
+                : `Hide ${sortedIdentities.emailIdentities.length - 1}`}
+            </ShowMoreButton>
+          )}
           <Flex>
             <Link href="/account/logins/email/new">
               <Button color={theme.colors.green}>
@@ -115,14 +117,16 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-          <Button
-            onClick={() => setHideSecondaryPhones(!hideSecondaryPhones)}
-            color={theme.colors.green}
-          >
-            {hideSecondaryPhones
-              ? `Show ${sortedIdentities.phoneIdentities.length - 1} more`
-              : `Hide ${sortedIdentities.phoneIdentities.length - 1}`}
-          </Button>
+          {sortedIdentities.phoneIdentities.length > 1 && (
+            <ShowMoreButton
+              onClick={() => setHideSecondaryPhones(!hideSecondaryPhones)}
+              color={theme.colors.green}
+            >
+              {hideSecondaryPhones
+                ? `Show ${sortedIdentities.phoneIdentities.length - 1} more`
+                : `Hide ${sortedIdentities.phoneIdentities.length - 1}`}
+            </ShowMoreButton>
+          )}
           <Flex>
             <Link href="/account/logins/phone/new">
               <Button color={theme.colors.green}>+ Add new phone number</Button>
@@ -224,6 +228,27 @@ type ButtonProps = {
 };
 
 const Button = styled.button<ButtonProps>`
+  padding: 0.5rem;
+  margin-right: 1rem;
+  border-radius: ${({ theme }) => theme.radii[0]};
+  background-color: transparent;
+  ${(props) => `color: ${props.color}`};
+  transition: ${({ theme }) => theme.transitions.quick};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+  &:hover {
+    cursor: pointer;
+    ${(props) => `background-color: ${props.color}`};
+    color: ${({ theme }) => theme.colors.contrastCopy};
+  }
+  &:active,
+  &:focus {
+    outline: none;
+    ${(props) => `background-color: ${props.color}`};
+    color: ${({ theme }) => theme.colors.contrastCopy};
+  }
+`;
+
+export const ShowMoreButton = styled.button<ButtonProps>`
   padding: 0.5rem;
   margin-right: 1rem;
   border-radius: ${({ theme }) => theme.radii[0]};
