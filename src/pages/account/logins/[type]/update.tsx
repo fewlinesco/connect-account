@@ -6,9 +6,10 @@ import {
 } from "jsonwebtoken";
 import { GetServerSideProps } from "next";
 import React from "react";
+import styled from "styled-components";
 
 import { Identity } from "../../../../../src/@types/Identity";
-import { IdentityLine } from "../../../../../src/components/IdentityLine";
+import { UpdateInput } from "../../../../../src/components/UpdateInput";
 import { config } from "../../../../../src/config";
 import { withSSRLogger } from "../../../../../src/middleware/withSSRLogger";
 import withSession from "../../../../../src/middleware/withSession";
@@ -16,11 +17,21 @@ import { getIdentities } from "../../../../../src/queries/getIdentities";
 import { promisifiedJWTVerify } from "../../../../../src/utils/promisifiedJWTVerify";
 import Sentry from "../../../../../src/utils/sentry";
 
-const ShowIdentity: React.FC<{ identity: Identity }> = ({ identity }) => {
-  return <IdentityLine identity={identity} />;
+const UpdateIdentity: React.FC<{ identity: Identity }> = ({ identity }) => {
+  const { value } = identity;
+  return (
+    <>
+      <IdentityBox key={value}>
+        <Flex>
+          <Value>{value}</Value>
+        </Flex>
+      </IdentityBox>
+      <UpdateInput currentIdentity={identity} />
+    </>
+  );
 };
 
-export default ShowIdentity;
+export default UpdateIdentity;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
@@ -73,3 +84,16 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     }
   }),
 );
+
+const IdentityBox = styled.div`
+  padding: ${({ theme }) => theme.spaces.component.xs};
+`;
+
+const Value = styled.p`
+  margin-right: 0.5rem;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+`;

@@ -13,9 +13,7 @@ import styled from "styled-components";
 import { IdentityTypes, Identity } from "../../../@types/Identity";
 import { SortedIdentities } from "../../../@types/SortedIdentities";
 import { AddIdentity } from "../../../components/business/AddIdentity";
-import { DeleteIdentity } from "../../../components/business/DeleteIdentity";
 import { AddIdentityInputForm } from "../../../components/display/fewlines/AddIdentityInputForm";
-import { DeleteButton } from "../../../components/display/fewlines/DeleteButton";
 import { config } from "../../../config";
 import { useTheme } from "../../../design-system/theme/useTheme";
 import { withSSRLogger } from "../../../middleware/withSSRLogger";
@@ -44,7 +42,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
         <IdentitySection>
           <h3>Email(s):</h3>
           {sortedIdentities.emailIdentities.length === 0 ? (
-            <Value className="no-email">No emails</Value>
+            <Value>No emails</Value>
           ) : (
             sortedIdentities.emailIdentities.map((email: Identity) => {
               return (
@@ -58,16 +56,6 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                         <a>{email.value}</a>
                       </Link>
                     </Value>
-                    {sortedIdentities.emailIdentities.length > 1 ? (
-                      <DeleteIdentity
-                        type={IdentityTypes.EMAIL}
-                        value={email.value}
-                      >
-                        {({ deleteIdentity }) => (
-                          <DeleteButton deleteIdentity={deleteIdentity} />
-                        )}
-                      </DeleteIdentity>
-                    ) : null}
                   </Flex>
                 </IdentityBox>
               );
@@ -83,7 +71,10 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
             {addEmail && (
               <AddIdentity type={IdentityTypes.EMAIL}>
                 {({ addIdentity }) => (
-                  <AddIdentityInputForm addIdentity={addIdentity} />
+                  <AddIdentityInputForm
+                    addIdentity={addIdentity}
+                    type={IdentityTypes.EMAIL}
+                  />
                 )}
               </AddIdentity>
             )}
@@ -91,8 +82,8 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
         </IdentitySection>
         <IdentitySection>
           <h3>Phone number(s):</h3>
-          {sortedIdentities.emailIdentities.length === 0 ? (
-            <Value className="no-phone">No phones</Value>
+          {sortedIdentities.phoneIdentities.length === 0 ? (
+            <Value>No phones</Value>
           ) : (
             sortedIdentities.phoneIdentities.map((phone: Identity) => {
               return (
@@ -106,16 +97,6 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                         <a>{phone.value}</a>
                       </Link>
                     </Value>
-                    {sortedIdentities.phoneIdentities.length > 1 ? (
-                      <DeleteIdentity
-                        type={IdentityTypes.PHONE}
-                        value={phone.value}
-                      >
-                        {({ deleteIdentity }) => (
-                          <DeleteButton deleteIdentity={deleteIdentity} />
-                        )}
-                      </DeleteIdentity>
-                    ) : null}
                   </Flex>
                 </IdentityBox>
               );
@@ -131,7 +112,10 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
             {addPhone && (
               <AddIdentity type={IdentityTypes.PHONE}>
                 {({ addIdentity }) => (
-                  <AddIdentityInputForm addIdentity={addIdentity} />
+                  <AddIdentityInputForm
+                    addIdentity={addIdentity}
+                    type={IdentityTypes.PHONE}
+                  />
                 )}
               </AddIdentity>
             )}
@@ -211,16 +195,16 @@ const IdentitySection = styled.div`
     `${theme.colors.blacks[0]} ${theme.borders.thin}`};
 `;
 
-const IdentityBox = styled.div`
-  padding: ${({ theme }) => theme.spaces.component.xs};
-`;
-
 const Flex = styled.div`
   display: flex;
   align-items: center;
 `;
 
-const Value = styled.p`
+export const IdentityBox = styled.div`
+  padding: ${({ theme }) => theme.spaces.component.xs};
+`;
+
+export const Value = styled.p`
   margin-right: 0.5rem;
 `;
 
