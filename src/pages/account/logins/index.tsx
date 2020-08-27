@@ -44,6 +44,8 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
     ? (phoneList = sortedIdentities.phoneIdentities.filter((id) => id.primary))
     : (phoneList = sortedIdentities.phoneIdentities);
 
+  const { emailIdentities, phoneIdentities } = sortedIdentities;
+
   const theme = useTheme();
 
   return (
@@ -57,7 +59,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       <IdentitiesBox>
         <IdentitySection>
           <h3>Email addresses</h3>
-          {sortedIdentities.emailIdentities.length === 0 ? (
+          {emailIdentities.length === 0 ? (
             <Value>No emails</Value>
           ) : (
             emailList.map((email: Identity) => {
@@ -77,14 +79,14 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-          {sortedIdentities.emailIdentities.length > 1 && (
+          {emailIdentities.length > 1 && (
             <ShowMoreButton
               onClick={() => setHideSecondaryEmails(!hideSecondaryEmails)}
               color={theme.colors.green}
             >
               {hideSecondaryEmails
-                ? `Show ${sortedIdentities.emailIdentities.length - 1} more`
-                : `Hide ${sortedIdentities.emailIdentities.length - 1}`}
+                ? `Show ${emailIdentities.length - 1} more`
+                : `Hide ${emailIdentities.length - 1}`}
             </ShowMoreButton>
           )}
           <Flex>
@@ -97,7 +99,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
         </IdentitySection>
         <IdentitySection>
           <h3>Phone numbers:</h3>
-          {sortedIdentities.phoneIdentities.length === 0 ? (
+          {phoneIdentities.length === 0 ? (
             <Value>No phones</Value>
           ) : (
             phoneList.map((phone: Identity) => {
@@ -117,14 +119,14 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-          {sortedIdentities.phoneIdentities.length > 1 && (
+          {phoneIdentities.length > 1 && (
             <ShowMoreButton
               onClick={() => setHideSecondaryPhones(!hideSecondaryPhones)}
               color={theme.colors.green}
             >
               {hideSecondaryPhones
-                ? `Show ${sortedIdentities.phoneIdentities.length - 1} more`
-                : `Hide ${sortedIdentities.phoneIdentities.length - 1}`}
+                ? `Show ${phoneIdentities.length - 1} more`
+                : `Hide ${phoneIdentities.length - 1}`}
             </ShowMoreButton>
           )}
           <Flex>
