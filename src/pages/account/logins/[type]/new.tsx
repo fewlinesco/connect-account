@@ -6,13 +6,13 @@ import {
 } from "jsonwebtoken";
 import { GetServerSideProps } from "next";
 import React from "react";
-import { IdentityTypes } from "src/@types/Identity";
 import { withSSRLogger } from "src/middleware/withSSRLogger";
-import withSession from "src/middleware/withSession";
 
 import Sentry, { addRequestScopeToSentry } from "../../../..//utils/sentry";
+import { IdentityTypes } from "../../../../@types/Identity";
 import { AddIdentity } from "../../../../components/business/AddIdentity";
 import { AddIdentityInputForm } from "../../../../components/display/fewlines/AddIdentityInputForm";
+import withSession from "../../../../middleware/withSession";
 
 const NewIdentity: React.FC<{ type: IdentityTypes }> = (props) => {
   return (
