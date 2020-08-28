@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
 import React from "react";
-import { IdentityTypes } from "src/@types/Identity";
 import styled from "styled-components";
+
+import { IdentityTypes } from "../../../@types/Identity";
+import { Button } from "../../../pages/account/logins/index";
 
 type AddIdentityInputFormProps = {
   addIdentity: (value: string) => Promise<Response>;
@@ -16,25 +18,27 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
   const router = useRouter();
 
   return (
-    <Form
-      data-testid="identity-form"
-      method="post"
-      onSubmit={async (event) =>{ 
-        event.preventDefault();
-        return await addIdentity(identity).then(() => {
-          router.push(`/account/logins/${type}/validation`);
-        })}
-      }
-    >
-      <Input
-        type="text"
-        name="value"
-        placeholder={`Enter your ${type}`}
-        value={identity}
-        onChange={(event) => setIdentity(event.target.value)}
-      />
-      <SendInput type="submit" value="Send" />
-    </Form>
+    <>
+      <Form
+        method="post"
+        onSubmit={async (event) => {
+          event.preventDefault();
+          return await addIdentity(identity).then(() => {
+            router.push(`/account/logins/${type}/validation`);
+          });
+        }}
+      >
+        <Input
+          type="text"
+          name="value"
+          placeholder={`Enter your ${type}`}
+          value={identity}
+          onChange={(event) => setIdentity(event.target.value)}
+        />
+        <SendInput type="submit" value={`Add ${type}`} />
+      </Form>
+      <Button onClick={() => router.push("/account/logins/")}>Cancel</Button>
+    </>
   );
 };
 
