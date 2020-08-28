@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import { IdentityTypes } from "src/@types/Identity";
 import styled from "styled-components";
@@ -12,12 +13,18 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
   type,
 }) => {
   const [identity, setIdentity] = React.useState("");
+  const router = useRouter();
 
   return (
     <Form
       data-testid="identity-form"
       method="post"
-      onSubmit={() => addIdentity(identity)}
+      onSubmit={async (event) =>{ 
+        event.preventDefault();
+        return await addIdentity(identity).then(() => {
+          router.push(`/account/logins/${type}/validation`);
+        })}
+      }
     >
       <Input
         type="text"
