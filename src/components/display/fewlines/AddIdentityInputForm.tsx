@@ -2,8 +2,6 @@ import React from "react";
 import { IdentityTypes } from "src/@types/Identity";
 import styled from "styled-components";
 
-import { IdentityTypes } from "../../../../src/@types/Identity";
-
 type AddIdentityInputFormProps = {
   addIdentity: (value: string) => Promise<Response>;
   type: IdentityTypes;
