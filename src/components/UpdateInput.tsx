@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
@@ -9,6 +10,7 @@ export const UpdateInput: React.FC<{
   currentIdentity: Identity;
 }> = ({ currentIdentity }) => {
   const [identity, setIdentity] = React.useState("");
+  const router = useRouter();
 
   const { data, error } = useCookies();
 
@@ -23,7 +25,8 @@ export const UpdateInput: React.FC<{
   return (
     <Form
       method="post"
-      onSubmit={async () => {
+      onSubmit={async (event) => {
+        event.preventDefault();
         const deleteBody = {
           userId: data.userId,
           type: currentIdentity.type.toUpperCase(),
@@ -36,7 +39,9 @@ export const UpdateInput: React.FC<{
           value: identity,
         };
 
-        updateIdentity(updateBody, deleteBody);
+        return await updateIdentity(updateBody, deleteBody).then(() => {
+          router.push(`/account/logins/${currentIdentity.type}/validation`);
+        });
       }}
     >
       <Input

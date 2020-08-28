@@ -7,10 +7,10 @@ type UpdateBody = {
   value: string;
 };
 
-export function updateIdentity(
+export async function updateIdentity(
   updateBody: UpdateBody,
   deleteBody: UpdateBody,
-): void {
+): Promise<void> {
   fetchJson("/api/account", HttpVerbs.POST, updateBody).then(
     async (response) => {
       if (response.ok) {
