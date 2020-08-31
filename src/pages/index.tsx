@@ -1,31 +1,15 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
+import { handleOauthParamsURL } from "src/utils/handleOauthParamsURL";
 import styled from "styled-components";
 
-import { config } from "../config";
 import { withSSRLogger } from "../middleware/withSSRLogger";
 import Sentry, { addRequestScopeToSentry } from "../utils/sentry";
 
-type IndexProps = {
-  authParams: {
-    [key: string]: string;
-    providerURL: string;
-    clientID: string;
-    redirectURI: string;
-    scope: string;
-  };
-};
+type IndexProps = { authorizeURL: string };
 
-const Index: React.FC<IndexProps> = ({ authParams }) => {
-  const { providerURL, client_id, redirect_uri, scope } = authParams;
-
-  const authorizeURL = new URL("/oauth/authorize", providerURL);
-  authorizeURL.searchParams.append("client_id", client_id);
-  authorizeURL.searchParams.append("response_type", "code");
-  authorizeURL.searchParams.append("redirect_uri", redirect_uri);
-  authorizeURL.searchParams.append("scope", scope);
-
+const Index: React.FC<IndexProps> = ({ authorizeURL }) => {
   return (
     <>
       <Head>
@@ -33,7 +17,7 @@ const Index: React.FC<IndexProps> = ({ authParams }) => {
       </Head>
       <Main>
         <LoginButton>
-          <a href={authorizeURL.toString()}>Login</a>
+          <a href={authorizeURL}>Login</a>
         </LoginButton>
       </Main>
     </>
@@ -47,22 +31,11 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     addRequestScopeToSentry(context.req);
 
     try {
-      const protocol =
-        process.env.NODE_ENV === "production" ? "https://" : "http://";
-      const host = context.req.headers.host;
-      const route = "/api/oauth/callback";
-      const redirect_uri = protocol + host + route;
-
-      const authParams = {
-        providerURL: config.connectProviderUrl,
-        client_id: config.connectApplicationClientId,
-        redirect_uri,
-        scope: config.connectApplicationScopes,
-      };
+      const authorizeURL = await handleOauthParamsURL(context);
 
       return {
         props: {
-          authParams,
+          authorizeURL: authorizeURL.toString(),
         },
       };
     } catch (error) {
