@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 type DeleteButtonProps = {
-  deleteIdentity: () => Promise<Response>;
+  deleteIdentity: () => Promise<void>;
 };
 
 export const DeleteButton: React.FC<DeleteButtonProps> = ({
