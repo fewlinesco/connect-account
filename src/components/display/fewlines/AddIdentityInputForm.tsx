@@ -1,12 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 
+import { IdentityTypes } from "../../../../src/@types/Identity";
+
 type AddIdentityInputFormProps = {
   addIdentity: (value: string) => Promise<Response>;
+  type: IdentityTypes;
 };
 
 export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
   addIdentity,
+  type,
 }) => {
   const [identity, setIdentity] = React.useState("");
 
@@ -19,7 +23,9 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
       <Input
         type="text"
         name="value"
-        placeholder="Enter your email"
+        placeholder={`Enter your ${
+          type === IdentityTypes.EMAIL ? "email" : "phone"
+        }`}
         value={identity}
         onChange={(event) => setIdentity(event.target.value)}
       />
