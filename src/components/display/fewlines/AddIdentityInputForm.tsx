@@ -42,12 +42,12 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
   );
 };
 
-const Form = styled.form`
+export const Form = styled.form`
   display: flex;
   align-items: center;
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   border: ${({ theme }) => `${theme.colors.blacks[0]} ${theme.borders.thin}`};
   border-radius: ${({ theme }) => theme.radii[0]};
   padding: 0.5rem;
