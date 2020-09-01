@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { Identity } from "../@types/Identity";
 import { useCookies } from "../hooks/useCookies";
+import { Button } from "../pages/account/logins/index";
 import { updateIdentity } from "../utils/updateIdentity";
 
 export const UpdateInput: React.FC<{
@@ -23,36 +24,39 @@ export const UpdateInput: React.FC<{
   }
 
   return (
-    <Form
-      method="post"
-      onSubmit={async (event) => {
-        event.preventDefault();
-        const deleteBody = {
-          userId: data.userId,
-          type: currentIdentity.type.toUpperCase(),
-          value: currentIdentity.value,
-        };
+    <>
+      <Form
+        method="post"
+        onSubmit={async (event) => {
+          event.preventDefault();
+          const deleteBody = {
+            userId: data.userId,
+            type: currentIdentity.type.toUpperCase(),
+            value: currentIdentity.value,
+          };
 
-        const updateBody = {
-          userId: data.userId,
-          type: currentIdentity.type.toUpperCase(),
-          value: identity,
-        };
+          const updateBody = {
+            userId: data.userId,
+            type: currentIdentity.type.toUpperCase(),
+            value: identity,
+          };
 
-        return await updateIdentity(updateBody, deleteBody).then(() => {
-          router.push(`/account/logins/${currentIdentity.type}/validation`);
-        });
-      }}
-    >
-      <Input
-        type="text"
-        name="value"
-        placeholder={`Enter your ${currentIdentity.type}`}
-        value={identity}
-        onChange={(event) => setIdentity(event.target.value)}
-      />
-      <SendInput type="submit" value="Send" />
-    </Form>
+          return await updateIdentity(updateBody, deleteBody).then(() => {
+            router.push(`/account/logins/${currentIdentity.type}/validation`);
+          });
+        }}
+      >
+        <Input
+          type="text"
+          name="value"
+          placeholder={`Enter your ${currentIdentity.type}`}
+          value={identity}
+          onChange={(event) => setIdentity(event.target.value)}
+        />
+        <SendInput type="submit" value="Send" />
+      </Form>
+      <Button onClick={() => router.push("/account/logins/")}>Cancel</Button>
+    </>
   );
 };
 
