@@ -83,8 +83,6 @@ describe("identity should be displayed properly", () => {
     expect(updateButton).toHaveLength(1);
   });
 
-  //   test("update button should redirect to update page", () => {});
-
   test("it should display the delete button for a non primary identity", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
