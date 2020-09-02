@@ -12,7 +12,7 @@ import { UpdateInput, Form, Input } from "../../src/components/UpdateInput";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";
-import UpdateIdentity from "../../src/pages/account/logins/[type]/update";
+import UpdateIdentity from "../../src/pages/account/logins/[type]/[id]/update";
 import * as updateIdentity from "../../src/utils/updateIdentity";
 
 enableFetchMocks();

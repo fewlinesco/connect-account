@@ -6,24 +6,37 @@ import {
 } from "jsonwebtoken";
 import { GetServerSideProps } from "next";
 import React from "react";
+import styled from "styled-components";
 
-import { Identity } from "../../../../../../src/@types/Identity";
-import { config } from "../../../../../../src/config";
-import { withSSRLogger } from "../../../../../../src/middleware/withSSRLogger";
-import withSession from "../../../../../../src/middleware/withSession";
-import { getIdentities } from "../../../../../../src/queries/getIdentities";
-import { promisifiedJWTVerify } from "../../../../../../src/utils/promisifiedJWTVerify";
-import Sentry from "../../../../../../src/utils/sentry";
-import UpdateIdentity from "../update";
+import { Identity } from "../../../../../@types/Identity";
+import { UpdateInput } from "../../../../../components/UpdateInput";
+import { config } from "../../../../../config";
+import { withSSRLogger } from "../../../../../middleware/withSSRLogger";
+import withSession from "../../../../../middleware/withSession";
+import { getIdentities } from "../../../../../queries/getIdentities";
+import { promisifiedJWTVerify } from "../../../../../utils/promisifiedJWTVerify";
+import Sentry from "../../../../../utils/sentry";
 
-const IdentityAction: React.FC<{ identity: Identity }> = ({ identity }) => {
-  return <UpdateIdentity identity={identity} />;
+const UpdateIdentity: React.FC<{ identity: Identity }> = ({ identity }) => {
+  const { value } = identity;
+  return (
+    <>
+      <IdentityBox key={value}>
+        <Flex>
+          <Value>{value}</Value>
+        </Flex>
+      </IdentityBox>
+      <UpdateInput currentIdentity={identity} />
+    </>
+  );
 };
 
-export default IdentityAction;
+export default UpdateIdentity;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
+    console.log(context.query);
+
     try {
       const accessToken = context.req.session.get("user-jwt");
 
@@ -56,8 +69,8 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
       ) {
         Sentry.withScope((scope) => {
           scope.setTag(
-            `/pages/account/logins/${context.params.type}/${context.params.id}/${context.params.action} SSR`,
-            `/pages/account/logins/${context.params.type}/${context.params.id}/${context.params.action} SSR`,
+            "/pages/account/logins SSR",
+            "/pages/account/logins SSR",
           );
           Sentry.captureException(error);
         });
@@ -73,3 +86,16 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     }
   }),
 );
+
+const IdentityBox = styled.div`
+  padding: ${({ theme }) => theme.spaces.component.xs};
+`;
+
+const Value = styled.p`
+  margin-right: 0.5rem;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+`;

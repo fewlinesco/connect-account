@@ -11,10 +11,10 @@ import { withSSRLogger } from "src/middleware/withSSRLogger";
 import withSession from "src/middleware/withSession";
 import styled from "styled-components";
 
-import Sentry, { addRequestScopeToSentry } from "../../../..//utils/sentry";
 import { IdentityTypes } from "../../../../@types/Identity";
 import AlertBar from "../../../../components/display/fewlines/AlertBar";
-import { Button } from "../../../../pages/account/logins/index";
+import Sentry, { addRequestScopeToSentry } from "../../../../utils/sentry";
+import { Button } from "../index";
 
 const Validation: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   const [validationCode, setValidationCode] = React.useState("");
