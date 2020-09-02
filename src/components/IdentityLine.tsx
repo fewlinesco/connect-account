@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 
 import {
   IdentityTypes,
@@ -18,6 +18,8 @@ type IdentityLineProps = {
 export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
   const { value, type, primary } = identity;
   const { EMAIL } = ReceivedIdentityTypes;
+
+  const theme = useTheme();
 
   return (
     <IdentityBox key={value}>
@@ -39,6 +41,26 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
           </DeleteIdentity>
         )}
       </Flex>
+      {identity.status === "unvalidated" && (
+        <>
+          <p>awaiting validation</p>{" "}
+          <Button color={theme.colors.green}>proceed to validation</Button>
+        </>
+      )}
+      {identity.primary && identity.status === "validated" && <p>Primary</p>}
+      {identity.status === "validated" && (
+        <>
+          <br />
+          <small>Added on ...</small>
+          <br />
+          <small>Last used to login on ...</small>
+        </>
+      )}
+      {!identity.primary && identity.status === "validated" && (
+        <Button color={theme.colors.green}>
+          Make this my primary {identity.type}
+        </Button>
+      )}
     </IdentityBox>
   );
 };
