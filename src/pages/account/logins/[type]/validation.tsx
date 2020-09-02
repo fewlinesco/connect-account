@@ -61,8 +61,8 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
       ) {
         Sentry.withScope((scope) => {
           scope.setTag(
-            "/pages/account/logins SSR",
-            "/pages/account/logins SSR",
+            `/pages/account/logins/${context.params.type}/validation SSR`,
+            `/pages/account/logins/${context.params.type}/validation SSR`,
           );
           Sentry.captureException(error);
         });

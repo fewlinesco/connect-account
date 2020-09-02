@@ -25,6 +25,8 @@ export default IdentityAction;
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
     try {
+      console.log(context);
+
       const accessToken = context.req.session.get("user-jwt");
 
       const decoded = await promisifiedJWTVerify<{ sub: string }>(
@@ -56,8 +58,8 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
       ) {
         Sentry.withScope((scope) => {
           scope.setTag(
-            "/pages/account/logins SSR",
-            "/pages/account/logins SSR",
+            `/pages/account/logins/${context.params.type}/${context.params.id}/${context.params.action} SSR`,
+            `/pages/account/logins/${context.params.type}/${context.params.id}/${context.params.action} SSR`,
           );
           Sentry.captureException(error);
         });
