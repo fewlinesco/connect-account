@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 import { Identity } from "../@types/Identity";
 import { useCookies } from "../hooks/useCookies";
-import { Button } from "../pages/account/logins/index";
 import { updateIdentity } from "../utils/updateIdentity";
 
 export const UpdateInput: React.FC<{
@@ -73,6 +72,27 @@ export const Input = styled.input`
   &:active,
   &:focus {
     outline: none;
+  }
+`;
+
+const Button = styled.button`
+  padding: 0.5rem;
+  margin-right: 1rem;
+  border-radius: ${({ theme }) => theme.radii[0]};
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.green};
+  transition: ${({ theme }) => theme.transitions.quick};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+  &:hover {
+    cursor: pointer;
+    background-color: ${({ theme }) => theme.colors.green};
+    color: ${({ theme }) => theme.colors.contrastCopy};
+  }
+  &:active,
+  &:focus {
+    outline: none;
+    background-color: ${({ theme }) => theme.colors.green};
+    color: ${({ theme }) => theme.colors.contrastCopy};
   }
 `;
 
