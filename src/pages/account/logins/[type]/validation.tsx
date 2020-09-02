@@ -13,7 +13,7 @@ import styled from "styled-components";
 
 import Sentry, { addRequestScopeToSentry } from "../../../..//utils/sentry";
 import { IdentityTypes } from "../../../../@types/Identity";
-import SnackBar from "../../../../components/display/fewlines/SnackBar";
+import AlertBar from "../../../../components/display/fewlines/AlertBar";
 import { Button } from "../../../../pages/account/logins/index";
 
 const Validation: React.FC<{ type: IdentityTypes }> = (props) => {
@@ -38,7 +38,7 @@ const Validation: React.FC<{ type: IdentityTypes }> = (props) => {
       </Button>
       <p>Didn&apos;t receive code?</p>
       <Button>Resend confirmation code</Button>
-      <SnackBar type={type} />
+      <AlertBar type={type} />
     </>
   );
 };
