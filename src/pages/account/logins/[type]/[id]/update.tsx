@@ -35,8 +35,6 @@ export default UpdateIdentity;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
-    console.log(context.query);
-
     try {
       const accessToken = context.req.session.get("user-jwt");
 
