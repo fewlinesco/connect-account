@@ -25,8 +25,6 @@ export default IdentityAction;
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
     try {
-      console.log(context);
-
       const accessToken = context.req.session.get("user-jwt");
 
       const decoded = await promisifiedJWTVerify<{ sub: string }>(
