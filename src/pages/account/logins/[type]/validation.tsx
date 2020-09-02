@@ -16,9 +16,8 @@ import { IdentityTypes } from "../../../../@types/Identity";
 import AlertBar from "../../../../components/display/fewlines/AlertBar";
 import { Button } from "../../../../pages/account/logins/index";
 
-const Validation: React.FC<{ type: IdentityTypes }> = (props) => {
+const Validation: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   const [validationCode, setValidationCode] = React.useState("");
-  const type = props.type;
   const router = useRouter();
 
   return (
