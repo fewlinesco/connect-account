@@ -7,6 +7,7 @@ import React from "react";
 import { ThemeProvider } from "styled-components";
 
 import { ReceivedIdentityTypes, Identity } from "../../src/@types/Identity";
+import { Button } from "../../src/components/IdentityLine";
 import { Layout } from "../../src/components/Layout";
 import { DeleteButton } from "../../src/components/display/fewlines/DeleteButton";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
@@ -53,6 +54,14 @@ describe("identity should be displayed properly", () => {
     status: "validated",
     type: ReceivedIdentityTypes.EMAIL,
     value: "test4@test.test",
+  };
+
+  const nonValidatedIdentity: Identity = {
+    id: "77yt43c1-530b-4982-878d-33f0def6a7cf",
+    primary: true,
+    status: "unvalidated",
+    type: ReceivedIdentityTypes.EMAIL,
+    value: "test6@test.test",
   };
 
   test("it should display the update button for a non primary identity", () => {
@@ -109,5 +118,77 @@ describe("identity should be displayed properly", () => {
 
     const deleteButton = component.find(DeleteButton);
     expect(deleteButton).toHaveLength(0);
+  });
+
+  test("it should not display the primary tag if the identity is not primary", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <ShowIdentity identity={nonPrimaryIdentity} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const primaryTag = component.contains(<p>Primary</p>);
+    const makeThisPrimaryButton = component.contains(
+      <Button>Make this my primary email</Button>,
+    );
+    expect(primaryTag).toEqual(false);
+    expect(makeThisPrimaryButton).toEqual(true);
+  });
+
+  test("it should display the primary tag if the identity is primary", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <ShowIdentity identity={primaryIdentity} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const makeThisPrimaryButton = component.contains(
+      <Button>Make this my primary email</Button>,
+    );
+    const primaryTag = component.contains(<p>Primary</p>);
+    expect(primaryTag).toEqual(true);
+    expect(makeThisPrimaryButton).toEqual(false);
+  });
+
+  test("it should display the validation button and the awaiting validation tag if the identity is not validated", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <ShowIdentity identity={nonValidatedIdentity} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const awaitingValidationTag = component.contains(
+      <p>awaiting validation</p>,
+    );
+    const validationButton = component.contains(
+      <Button>proceed to validation</Button>,
+    );
+    expect(validationButton).toEqual(true);
+    expect(awaitingValidationTag).toEqual(true);
+  });
+
+  test("it should not display the make this identity primary if the identity is not validated", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <ShowIdentity identity={nonValidatedIdentity} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const makeThisPrimaryButton = component.contains(
+      <Button>Make this my primary email</Button>,
+    );
+    expect(makeThisPrimaryButton).toEqual(false);
   });
 });

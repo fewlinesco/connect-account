@@ -43,8 +43,7 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
       </Flex>
       {identity.status === "unvalidated" && (
         <>
-          <p>awaiting validation</p>{" "}
-          <Button color={theme.colors.green}>proceed to validation</Button>
+          <p>awaiting validation</p> <Button>proceed to validation</Button>
         </>
       )}
       {identity.primary && identity.status === "validated" && <p>Primary</p>}
@@ -57,9 +56,7 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
         </>
       )}
       {!identity.primary && identity.status === "validated" && (
-        <Button color={theme.colors.green}>
-          Make this my primary {identity.type}
-        </Button>
+        <Button>Make this my primary {identity.type}</Button>
       )}
     </IdentityBox>
   );
@@ -78,27 +75,23 @@ const Flex = styled.div`
   align-items: center;
 `;
 
-type ButtonProps = {
-  color: string;
-};
-
-export const Button = styled.button<ButtonProps>`
+export const Button = styled.button`
   padding: 0.5rem;
   margin-right: 1rem;
   border-radius: ${({ theme }) => theme.radii[0]};
   background-color: transparent;
-  ${(props) => `color: ${props.color}`};
+  color: ${({ theme }) => theme.colors.green};
   transition: ${({ theme }) => theme.transitions.quick};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   &:hover {
     cursor: pointer;
-    ${(props) => `background-color: ${props.color}`};
+    background-color: ${({ theme }) => theme.colors.green}};
     color: ${({ theme }) => theme.colors.contrastCopy};
   }
   &:active,
   &:focus {
     outline: none;
-    ${(props) => `background-color: ${props.color}`};
+    background-color: ${({ theme }) => theme.colors.green}};
     color: ${({ theme }) => theme.colors.contrastCopy};
   }
 `;
