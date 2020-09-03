@@ -9,7 +9,7 @@ import { ThemeProvider } from "styled-components";
 import { ReceivedIdentityTypes, Identity } from "../../src/@types/Identity";
 import { Layout } from "../../src/components/Layout";
 import {
-  UpdateInput,
+  UpdateIdentityForm,
   Form,
   Input,
 } from "../../src/components/display/fewlines/UpdateIdentityForm";
@@ -17,6 +17,7 @@ import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";
 import UpdateIdentity from "../../src/pages/account/logins/[type]/[id]/update";
+import * as fetchJson from "../../src/utils/fetchJson";
 
 enableFetchMocks();
 
@@ -60,8 +61,8 @@ describe("the update form should work properly", () => {
       </ThemeProvider>,
     );
 
-    const updateInput = component.find(UpdateInput);
-    expect(updateInput).toHaveLength(1);
+    const updateIdentityForm = component.find(UpdateIdentityForm);
+    expect(updateIdentityForm).toHaveLength(1);
   });
 
   test("it should submit the form", () => {
@@ -79,21 +80,14 @@ describe("the update form should work properly", () => {
       target: { value: "test2@test.test" },
     });
 
-    const updateMethod = jest.spyOn(updateIdentity, "updateIdentity");
+    const createMethod = jest.spyOn(fetchJson, "fetchJson");
     const form = component.find(Form);
     form.simulate("submit");
 
-    expect(updateMethod).toHaveBeenCalledWith(
-      {
-        type: "EMAIL",
-        userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
-        value: "test2@test.test",
-      },
-      {
-        type: "EMAIL",
-        userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
-        value: "test@test.test",
-      },
-    );
+    expect(createMethod).toHaveBeenCalledWith("/api/account", "POST", {
+      type: "EMAIL",
+      userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
+      value: "test2@test.test",
+    });
   });
 });

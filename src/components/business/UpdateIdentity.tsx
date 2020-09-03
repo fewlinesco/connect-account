@@ -36,9 +36,6 @@ export const UpdateIdentity: React.FC<UpdateIdentityProps> = ({
                   })
                   .then(() => {
                     router.push(`/account/logins/${type}/validation`);
-                  })
-                  .catch((error) => {
-                    console.warn(error);
                   });
               },
               type,
