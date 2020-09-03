@@ -4,11 +4,11 @@ import styled from "styled-components";
 
 import { Identity } from "../@types/Identity";
 import { useCookies } from "../hooks/useCookies";
-import { updateIdentity } from "../utils/updateIdentity";
 
 export const UpdateInput: React.FC<{
+  updateIdentity: (newValue: string) => Promise<void>;
   currentIdentity: Identity;
-}> = ({ currentIdentity }) => {
+}> = ({ currentIdentity, updateIdentity }) => {
   const [identity, setIdentity] = React.useState("");
   const router = useRouter();
 
@@ -28,21 +28,7 @@ export const UpdateInput: React.FC<{
         method="post"
         onSubmit={async (event) => {
           event.preventDefault();
-          const deleteBody = {
-            userId: data.userId,
-            type: currentIdentity.type.toUpperCase(),
-            value: currentIdentity.value,
-          };
-
-          const updateBody = {
-            userId: data.userId,
-            type: currentIdentity.type.toUpperCase(),
-            value: identity,
-          };
-
-          return await updateIdentity(updateBody, deleteBody).then(() => {
-            router.push(`/account/logins/${currentIdentity.type}/validation`);
-          });
+          return await updateIdentity(identity);
         }}
       >
         <Input

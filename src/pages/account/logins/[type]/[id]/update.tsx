@@ -10,6 +10,7 @@ import styled from "styled-components";
 
 import { Identity } from "../../../../../@types/Identity";
 import { UpdateInput } from "../../../../../components/UpdateInput";
+import { UpdateCurrentIdentity } from "../../../../../components/business/UpdateIdentity";
 import { config } from "../../../../../config";
 import { withSSRLogger } from "../../../../../middleware/withSSRLogger";
 import withSession from "../../../../../middleware/withSession";
@@ -26,7 +27,14 @@ const UpdateIdentity: React.FC<{ identity: Identity }> = ({ identity }) => {
           <Value>{value}</Value>
         </Flex>
       </IdentityBox>
-      <UpdateInput currentIdentity={identity} />
+      <UpdateCurrentIdentity identity={identity}>
+        {({ updateIdentity }) => (
+          <UpdateInput
+            updateIdentity={updateIdentity}
+            currentIdentity={identity}
+          />
+        )}
+      </UpdateCurrentIdentity>
     </>
   );
 };
