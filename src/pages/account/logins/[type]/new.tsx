@@ -14,7 +14,7 @@ import { AddIdentityInputForm } from "../../../../components/display/fewlines/Ad
 import { withSSRLogger } from "../../../../middleware/withSSRLogger";
 import withSession from "../../../../middleware/withSession";
 
-const NewIdentity: React.FC<{ type: IdentityTypes }> = (props) => {
+const AddNewIdentity: React.FC<{ type: IdentityTypes }> = (props) => {
   return (
     <AddIdentity type={props.type}>
       {({ addIdentity }) => (
@@ -24,7 +24,7 @@ const NewIdentity: React.FC<{ type: IdentityTypes }> = (props) => {
   );
 };
 
-export default NewIdentity;
+export default AddNewIdentity;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {

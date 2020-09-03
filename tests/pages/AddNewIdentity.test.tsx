@@ -15,7 +15,7 @@ import {
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";
-import NewIdentity from "../../src/pages/account/logins/[type]/new";
+import AddNewIdentity from "../../src/pages/account/logins/[type]/new";
 import * as fetchJson from "../../src/utils/fetchJson";
 
 enableFetchMocks();
@@ -37,18 +37,18 @@ jest.mock("../../src/config", () => {
   };
 });
 
-describe("the create form should work properly", () => {
+describe("AddNewIdentity", () => {
   test("it should display an input", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <NewIdentity type={IdentityTypes.EMAIL} />
+          <AddNewIdentity type={IdentityTypes.EMAIL} />
         </Layout>
       </ThemeProvider>,
     );
 
-    const addIdentityInput = component.find(NewIdentity).find(Form);
+    const addIdentityInput = component.find(AddNewIdentity).find(Form);
     expect(addIdentityInput).toHaveLength(1);
   });
 
@@ -57,7 +57,7 @@ describe("the create form should work properly", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <NewIdentity type={IdentityTypes.EMAIL} />
+          <AddNewIdentity type={IdentityTypes.EMAIL} />
         </Layout>
       </ThemeProvider>,
     );
