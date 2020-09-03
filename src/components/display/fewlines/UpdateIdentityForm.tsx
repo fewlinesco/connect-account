@@ -2,25 +2,14 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { Identity } from "../@types/Identity";
-import { useCookies } from "../hooks/useCookies";
+import { Identity } from "../../../@types/Identity";
 
-export const UpdateInput: React.FC<{
+export const UpdateIdentityForm: React.FC<{
   updateIdentity: (newValue: string) => Promise<void>;
   currentIdentity: Identity;
 }> = ({ currentIdentity, updateIdentity }) => {
   const [identity, setIdentity] = React.useState("");
   const router = useRouter();
-
-  const { data, error } = useCookies();
-
-  if (error) {
-    return <div>Failed to load</div>;
-  }
-
-  if (!data) {
-    return null;
-  }
 
   return (
     <>
@@ -28,7 +17,7 @@ export const UpdateInput: React.FC<{
         method="post"
         onSubmit={async (event) => {
           event.preventDefault();
-          return await updateIdentity(identity);
+          updateIdentity(identity);
         }}
       >
         <Input

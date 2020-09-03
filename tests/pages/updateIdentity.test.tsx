@@ -8,12 +8,15 @@ import { ThemeProvider } from "styled-components";
 
 import { ReceivedIdentityTypes, Identity } from "../../src/@types/Identity";
 import { Layout } from "../../src/components/Layout";
-import { UpdateInput, Form, Input } from "../../src/components/UpdateInput";
+import {
+  UpdateInput,
+  Form,
+  Input,
+} from "../../src/components/display/fewlines/UpdateIdentityForm";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";
 import UpdateIdentity from "../../src/pages/account/logins/[type]/[id]/update";
-import * as updateIdentity from "../../src/utils/updateIdentity";
 
 enableFetchMocks();
 
