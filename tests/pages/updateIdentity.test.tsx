@@ -16,7 +16,7 @@ import {
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";
-import UpdateIdentity from "../../src/pages/account/logins/[type]/[id]/update";
+import UpdateIdentityPage from "../../src/pages/account/logins/[type]/[id]/update";
 import * as fetchJson from "../../src/utils/fetchJson";
 
 enableFetchMocks();
@@ -38,7 +38,7 @@ jest.mock("../../src/config", () => {
   };
 });
 
-describe("the update form should work properly", () => {
+describe("UpdateIdentityPage", () => {
   beforeEach(() => {
     fetch.resetMocks();
   });
@@ -51,37 +51,37 @@ describe("the update form should work properly", () => {
     value: "test@test.test",
   };
 
-  test("it should display an input", () => {
+  test("it should display an update identity input", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <UpdateIdentity identity={nonPrimaryIdentity} />
+          <UpdateIdentityPage identity={nonPrimaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
 
-    const updateIdentityForm = component.find(UpdateIdentityForm);
-    expect(updateIdentityForm).toHaveLength(1);
+    const updateIdentityInput = component.find(UpdateIdentityForm).find(Input);
+    expect(updateIdentityInput).toHaveLength(1);
   });
 
-  test("it should submit the form", () => {
+  test("it should submit the update identity form", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <UpdateIdentity identity={nonPrimaryIdentity} />
+          <UpdateIdentityPage identity={nonPrimaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
 
-    const updateInput = component.find(Form).find(Input);
+    const updateInput = component.find(UpdateIdentityPage).find(Input);
     updateInput.simulate("change", {
       target: { value: "test2@test.test" },
     });
 
     const createMethod = jest.spyOn(fetchJson, "fetchJson");
-    const form = component.find(Form);
+    const form = component.find(UpdateIdentityForm).find(Form);
     form.simulate("submit");
 
     expect(createMethod).toHaveBeenCalledWith("/api/account", "POST", {
