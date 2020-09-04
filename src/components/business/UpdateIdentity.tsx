@@ -38,9 +38,7 @@ export const UpdateIdentity: React.FC<UpdateIdentityProps> = ({
             children({
               updateIdentity: async function (newValue): Promise<void> {
                 addIdentity(newValue)
-                  .then(() => {
-                    deleteIdentity();
-                  })
+                  .then(deleteIdentity)
                   .then(() => {
                     router.push(`/account/logins/${type}/validation`);
                   });
