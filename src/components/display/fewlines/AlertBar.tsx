@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { IdentityTypes } from "../../../@types/Identity";
 
 export const AlertBar: React.FC<{ type: IdentityTypes }> = ({ type }) => {
-  if (type.toUpperCase() === IdentityTypes.EMAIL) {
+  if (type === IdentityTypes.EMAIL) {
     return <Alert>Confirmation email has been sent</Alert>;
   }
-  if (type.toUpperCase() === IdentityTypes.PHONE) {
+  if (type === IdentityTypes.PHONE) {
     return <Alert>Confirmation SMS has been sent</Alert>;
   }
   return null;
