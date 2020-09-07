@@ -1,14 +1,11 @@
-import { HttpStatus } from "@fewlines/fwl-web";
-import jwt from "jsonwebtoken";
+import { HttpStatus } from "@fwl/web";
 import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
 import { ExtendedRequest } from "../../../@types/ExtendedRequest";
-import { HttpVerbs } from "../../../@types/HttpVerbs";
-import { config } from "../../../config";
+import { oauth2Client } from "../../../config";
 import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
 import withSession from "../../../middleware/withSession";
-import { fetchJson } from "../../../utils/fetchJson";
 import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
 
 const handler: Handler = async (
@@ -19,31 +16,13 @@ const handler: Handler = async (
 
   try {
     if (request.method === "GET") {
-      const protocol =
-        process.env.NODE_ENV === "production" ? "https://" : "http://";
-      const host = request.headers.host;
-      const route = "/api/oauth/callback";
-      const redirect_uri = protocol + host + route;
-
-      const callback = {
-        client_id: config.connectApplicationClientId,
-        client_secret: config.connectApplicationClientSecret,
-        code: request.query.code as string,
-        grant_type: "authorization_code",
-        redirect_uri,
-      };
-
-      const fetchedResponse = await fetchJson(
-        `${config.connectProviderUrl}/oauth/token`,
-        HttpVerbs.POST,
-        callback,
+      const tokens = await oauth2Client.getTokensFromAuthorizationCode(
+        request.query.code as string,
       );
 
-      const parsedResponse = await fetchedResponse.json();
+      await oauth2Client.verifyJWT(tokens.access_token, "HS256");
 
-      jwt.verify(parsedResponse.access_token, callback.client_secret);
-
-      request.session.set("user-jwt", parsedResponse.access_token);
+      request.session.set("user-jwt", tokens.access_token);
 
       await request.session.save();
 

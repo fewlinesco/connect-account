@@ -1,9 +1,4 @@
-import { HttpStatus } from "@fewlines/fwl-web";
-import {
-  JsonWebTokenError,
-  NotBeforeError,
-  TokenExpiredError,
-} from "jsonwebtoken";
+import { HttpStatus } from "@fwl/web";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -12,11 +7,11 @@ import styled from "styled-components";
 
 import { Identity } from "../../../@types/Identity";
 import { SortedIdentities } from "../../../@types/SortedIdentities";
-import { config } from "../../../config";
+import { config, oauth2Client } from "../../../config";
+import { OAuth2Error } from "../../../errors";
 import { withSSRLogger } from "../../../middleware/withSSRLogger";
 import withSession from "../../../middleware/withSession";
 import { getIdentities } from "../../../queries/getIdentities";
-import { promisifiedJWTVerify } from "../../../utils/promisifiedJWTVerify";
 import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
 import { sortIdentities } from "../../../utils/sortIdentities";
 
@@ -149,32 +144,39 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     try {
       const accessToken = context.req.session.get("user-jwt");
 
-      const decoded = await promisifiedJWTVerify<{ sub: string }>(
-        config.connectApplicationClientSecret,
-        accessToken,
-      );
+      if (accessToken) {
+        await oauth2Client.verifyJWT<{ sub: string }>(
+          accessToken,
+          config.connectJwtAlgo,
+        );
 
-      const sortedIdentities = await getIdentities(decoded.sub).then(
-        (result) => {
-          if (result instanceof Error) {
-            throw result;
-          }
+        const decodedJWT = await oauth2Client.verifyJWT<{ sub: string }>(
+          accessToken,
+          config.connectJwtAlgo,
+        );
 
-          return sortIdentities(result);
-        },
-      );
+        const sortedIdentities = await getIdentities(decodedJWT.sub).then(
+          (result) => {
+            if (result instanceof Error) {
+              throw result;
+            }
 
-      return {
-        props: {
-          sortedIdentities,
-        },
-      };
+            return sortIdentities(result);
+          },
+        );
+
+        return {
+          props: {
+            sortedIdentities,
+          },
+        };
+      } else {
+        context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+        context.res.setHeader("location", context.req.headers.referer || "/");
+        context.res.end();
+      }
     } catch (error) {
-      if (
-        error instanceof JsonWebTokenError ||
-        error instanceof NotBeforeError ||
-        error instanceof TokenExpiredError
-      ) {
+      if (error instanceof OAuth2Error) {
         Sentry.withScope((scope) => {
           scope.setTag(
             "/pages/account/logins SSR",

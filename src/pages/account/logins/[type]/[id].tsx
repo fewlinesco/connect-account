@@ -1,19 +1,14 @@
-import { HttpStatus } from "@fewlines/fwl-web";
-import {
-  JsonWebTokenError,
-  NotBeforeError,
-  TokenExpiredError,
-} from "jsonwebtoken";
+import { HttpStatus } from "@fwl/web";
 import { GetServerSideProps } from "next";
 import React from "react";
 
 import { Identity } from "../../../../../src/@types/Identity";
 import { IdentityLine } from "../../../../../src/components/IdentityLine";
-import { config } from "../../../../../src/config";
+import { config, oauth2Client } from "../../../../../src/config";
+import { OAuth2Error } from "../../../../../src/errors";
 import { withSSRLogger } from "../../../../../src/middleware/withSSRLogger";
 import withSession from "../../../../../src/middleware/withSession";
 import { getIdentities } from "../../../../../src/queries/getIdentities";
-import { promisifiedJWTVerify } from "../../../../../src/utils/promisifiedJWTVerify";
 import Sentry from "../../../../../src/utils/sentry";
 
 const ShowIdentity: React.FC<{ identity: Identity }> = ({ identity }) => {
@@ -27,9 +22,9 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     try {
       const accessToken = context.req.session.get("user-jwt");
 
-      const decoded = await promisifiedJWTVerify<{ sub: string }>(
-        config.connectApplicationClientSecret,
+      const decoded = await oauth2Client.verifyJWT<{ sub: string }>(
         accessToken,
+        config.connectJwtAlgo,
       );
 
       const identity = await getIdentities(decoded.sub).then((result) => {
@@ -49,11 +44,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         },
       };
     } catch (error) {
-      if (
-        error instanceof JsonWebTokenError ||
-        error instanceof NotBeforeError ||
-        error instanceof TokenExpiredError
-      ) {
+      if (error instanceof OAuth2Error) {
         Sentry.withScope((scope) => {
           scope.setTag(
             "/pages/account/logins SSR",

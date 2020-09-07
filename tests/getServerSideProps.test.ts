@@ -1,14 +1,16 @@
-import { HttpStatus } from "@fewlines/fwl-web";
+import { HttpStatus } from "@fwl/web";
 import { seal, defaults } from "@hapi/iron";
 import { IncomingMessage, ServerResponse } from "http";
 import fetch from "jest-fetch-mock";
 import { enableFetchMocks } from "jest-fetch-mock";
 import jwt from "jsonwebtoken";
 import { Socket } from "net";
+import { OAuth2Errors } from "src/@types/OAuth2Errors";
 
 import { ReceivedIdentityTypes } from "../src/@types/Identity";
 import { ProviderUser } from "../src/@types/ProviderUser";
-import { config } from "../src/config";
+import { config, oauth2Client } from "../src/config";
+import { OAuth2Error } from "../src/errors";
 import { getServerSideProps } from "../src/pages/account/logins/index";
 
 enableFetchMocks();
@@ -16,11 +18,40 @@ enableFetchMocks();
 jest.mock("../src/config", () => {
   return {
     config: {
-      connectApplicationClientSecret: "foo-bar",
       connectAccountSessionSalt: "#*b+x3ZXE3-h[E+Q5YC5`jr~y%CA~R-[",
+      connectOpenIdConfigurationUrl: "",
+      connectApplicationClientId: "",
+      connectApplicationClientSecret: "foo-bar",
+      connectRedirectUri: "",
+      connectAudience: "",
+      connectApplicationScopes: "",
+    },
+    oauth2Client: {
+      verifyJWT: jest.fn(),
     },
   };
 });
+
+// jest.mock("../src/config", () => {
+//   return {
+//     config: {
+//       connectAccountSessionSalt: "#*b+x3ZXE3-h[E+Q5YC5`jr~y%CA~R-[",
+//       connectOpenIdConfigurationUrl: "",
+//       connectApplicationClientId: "",
+//       connectApplicationClientSecret: "foo-bar",
+//       connectRedirectUri: "",
+//       connectAudience: "",
+//       connectApplicationScopes: "",
+//     },
+//     oauth2Client: {
+//       verifyJWT: async () => {
+//         return {
+//           sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
+//         };
+//       },
+//     },
+//   };
+// });
 
 const mockedRequest = new IncomingMessage(new Socket());
 

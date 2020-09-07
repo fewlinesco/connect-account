@@ -1,4 +1,4 @@
-import { HttpStatus } from "@fewlines/fwl-web";
+import { HttpStatus } from "@fwl/web";
 
 import { Handler } from "../../@types/ApiPageHandler";
 import { addIdentityToUser } from "../../command/addIdentityToUser";
