@@ -24,7 +24,7 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
         onSubmit={async (event) => {
           event.preventDefault();
           return await addIdentity(identity).then(() => {
-            router.push(`/account/logins/${type}/validation`);
+            router && router.push(`/account/logins/${type}/validation`);
           });
         }}
       >

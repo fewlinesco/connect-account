@@ -40,7 +40,7 @@ export const UpdateIdentity: React.FC<UpdateIdentityProps> = ({
                 addIdentity(newValue)
                   .then(deleteIdentity)
                   .then(() => {
-                    router.push(`/account/logins/${type}/validation`);
+                    router && router.push(`/account/logins/${type}/validation`);
                   });
               },
               castedIdentityType,
