@@ -226,7 +226,7 @@ export const Value = styled.p`
   margin-right: 0.5rem;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   padding: 0.5rem;
   margin-right: 1rem;
   border-radius: ${({ theme }) => theme.radii[0]};

@@ -8,12 +8,16 @@ import { ThemeProvider } from "styled-components";
 
 import { ReceivedIdentityTypes, Identity } from "../../src/@types/Identity";
 import { Layout } from "../../src/components/Layout";
-import { UpdateInput, Form, Input } from "../../src/components/UpdateInput";
+import {
+  UpdateIdentityForm,
+  Form,
+  Input,
+} from "../../src/components/display/fewlines/UpdateIdentityForm";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";
-import UpdateIdentity from "../../src/pages/account/logins/[type]/update";
-import * as updateIdentity from "../../src/utils/updateIdentity";
+import UpdateIdentityPage from "../../src/pages/account/logins/[type]/[id]/update";
+import * as fetchJson from "../../src/utils/fetchJson";
 
 enableFetchMocks();
 
@@ -34,7 +38,7 @@ jest.mock("../../src/config", () => {
   };
 });
 
-describe("the update form should work properly", () => {
+describe("UpdateIdentityPage", () => {
   beforeEach(() => {
     fetch.resetMocks();
   });
@@ -47,50 +51,92 @@ describe("the update form should work properly", () => {
     value: "test@test.test",
   };
 
-  test("it should display an input", () => {
+  test("it should display an update identity input", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <UpdateIdentity identity={nonPrimaryIdentity} />
+          <UpdateIdentityPage identity={nonPrimaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
 
-    const updateInput = component.find(UpdateInput);
-    expect(updateInput).toHaveLength(1);
+    const updateIdentityInput = component.find(UpdateIdentityForm).find(Input);
+    expect(updateIdentityInput).toHaveLength(1);
   });
 
-  test("it should submit the form", () => {
+  test("it should create the new identity if the form is submited", () => {
+    expect.assertions(1);
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <UpdateIdentity identity={nonPrimaryIdentity} />
+          <UpdateIdentityPage identity={nonPrimaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
 
-    const updateInput = component.find(Form).find(Input);
+    const fetchMethod = jest.spyOn(fetchJson, "fetchJson");
+
+    const updateInput = component.find(UpdateIdentityPage).find(Input);
     updateInput.simulate("change", {
       target: { value: "test2@test.test" },
     });
 
-    const updateMethod = jest.spyOn(updateIdentity, "updateIdentity");
-    const form = component.find(Form);
+    const form = component.find(UpdateIdentityForm).find(Form);
     form.simulate("submit");
 
-    expect(updateMethod).toHaveBeenCalledWith(
-      {
-        type: "EMAIL",
-        userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
-        value: "test2@test.test",
-      },
-      {
-        type: "EMAIL",
-        userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
-        value: "test@test.test",
-      },
+    expect(fetchMethod).toHaveBeenCalledWith("/api/account", "POST", {
+      type: "EMAIL",
+      userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
+      value: "test2@test.test",
+    });
+  });
+
+  test("it should delete the old identity if the form is submitted", async () => {
+    expect.assertions(1);
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <UpdateIdentityPage identity={nonPrimaryIdentity} />
+        </Layout>
+      </ThemeProvider>,
     );
+
+    const updateInput = component.find(UpdateIdentityPage).find(Input);
+    updateInput.simulate("change", {
+      target: { value: "test2@test.test" },
+    });
+
+    const form = component.find(UpdateIdentityForm).find(Form);
+    form.simulate("submit");
+
+    const fetchMethod = jest
+      .spyOn(fetchJson, "fetchJson")
+      .mockImplementationOnce(async () => {
+        return fetch("/api/account", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            type: "EMAIL",
+            userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
+            value: "test2@test.test",
+          }),
+        })
+          .then((response) => {
+            expect(fetchMethod).toHaveBeenCalledWith("/api/account", "DELETE", {
+              type: "EMAIL",
+              userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
+              value: "test@test.test",
+            });
+            return response;
+          })
+          .catch((error: Error) => {
+            fail("error: " + error.message);
+          });
+      });
   });
 });

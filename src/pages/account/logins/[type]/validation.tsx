@@ -1,26 +1,23 @@
 import { HttpStatus } from "@fwl/web";
+import {
+  JsonWebTokenError,
+  NotBeforeError,
+  TokenExpiredError,
+} from "jsonwebtoken";
 import { GetServerSideProps } from "next";
 import React from "react";
+import { withSSRLogger } from "src/middleware/withSSRLogger";
+import withSession from "src/middleware/withSession";
 
 import { IdentityTypes } from "../../../../@types/Identity";
-import { AddIdentity } from "../../../../components/business/AddIdentity";
-import { AddIdentityInputForm } from "../../../../components/display/fewlines/AddIdentityInputForm";
-import { OAuth2Error } from "../../../../errors";
-import { withSSRLogger } from "../../../../middleware/withSSRLogger";
-import withSession from "../../../../middleware/withSession";
+import IdentityValidationForm from "../../../../components/display/fewlines/IdentityValidationForm";
 import Sentry, { addRequestScopeToSentry } from "../../../../utils/sentry";
 
-const AddNewIdentity: React.FC<{ type: IdentityTypes }> = (props) => {
-  return (
-    <AddIdentity type={props.type}>
-      {({ addIdentity }) => (
-        <AddIdentityInputForm addIdentity={addIdentity} type={props.type} />
-      )}
-    </AddIdentity>
-  );
+const Validation: React.FC<{ type: IdentityTypes }> = ({ type }) => {
+  return <IdentityValidationForm type={type} />;
 };
 
-export default AddNewIdentity;
+export default Validation;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
@@ -32,11 +29,15 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         },
       };
     } catch (error) {
-      if (error instanceof OAuth2Error) {
+      if (
+        error instanceof JsonWebTokenError ||
+        error instanceof NotBeforeError ||
+        error instanceof TokenExpiredError
+      ) {
         Sentry.withScope((scope) => {
           scope.setTag(
-            `/pages/account/logins/${context.params.type}/new SSR`,
-            `/pages/account/logins/${context.params.type}/new SSR`,
+            `/pages/account/logins/${context.params.type}/validation SSR`,
+            `/pages/account/logins/${context.params.type}/validation SSR`,
           );
           Sentry.captureException(error);
         });
