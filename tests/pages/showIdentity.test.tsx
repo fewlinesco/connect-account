@@ -58,7 +58,7 @@ describe("ShowIdentity", () => {
 
   const nonValidatedIdentity: Identity = {
     id: "77yt43c1-530b-4982-878d-33f0def6a7cf",
-    primary: true,
+    primary: false,
     status: "unvalidated",
     type: ReceivedIdentityTypes.EMAIL,
     value: "test6@test.test",
