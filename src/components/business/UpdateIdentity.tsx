@@ -43,7 +43,7 @@ export const UpdateIdentity: React.FC<UpdateIdentityProps> = ({
                     router && router.push(`/account/logins/${type}/validation`);
                   })
                   .catch((error: Error) => {
-                    console.warn(error.message);
+                    throw error;
                   });
               },
               castedIdentityType,

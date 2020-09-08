@@ -40,7 +40,7 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
         router && router.push("/account/logins/");
       })
       .catch((error: Error) => {
-        console.warn(error.message);
+        throw error;
       });
   };
 
