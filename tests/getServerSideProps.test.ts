@@ -27,31 +27,14 @@ jest.mock("../src/config", () => {
       connectApplicationScopes: "",
     },
     oauth2Client: {
-      verifyJWT: jest.fn(),
+      verifyJWT: async () => {
+        return {
+          sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
+        };
+      },
     },
   };
 });
-
-// jest.mock("../src/config", () => {
-//   return {
-//     config: {
-//       connectAccountSessionSalt: "#*b+x3ZXE3-h[E+Q5YC5`jr~y%CA~R-[",
-//       connectOpenIdConfigurationUrl: "",
-//       connectApplicationClientId: "",
-//       connectApplicationClientSecret: "foo-bar",
-//       connectRedirectUri: "",
-//       connectAudience: "",
-//       connectApplicationScopes: "",
-//     },
-//     oauth2Client: {
-//       verifyJWT: async () => {
-//         return {
-//           sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
-//         };
-//       },
-//     },
-//   };
-// });
 
 const mockedRequest = new IncomingMessage(new Socket());
 

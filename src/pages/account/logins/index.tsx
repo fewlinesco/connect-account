@@ -174,6 +174,8 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
         context.res.setHeader("location", context.req.headers.referer || "/");
         context.res.end();
+
+        return { props: {} };
       }
     } catch (error) {
       if (error instanceof OAuth2Error) {
