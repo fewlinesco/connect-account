@@ -169,10 +169,9 @@ describe("identity should be displayed properly", () => {
     const awaitingValidationTag = component.contains(
       <p>awaiting validation</p>,
     );
-    const validationButton = component.contains(
-      <Button>proceed to validation</Button>,
-    );
-    expect(validationButton).toEqual(true);
+    const validationButton = component.find(Button);
+    expect(validationButton).toHaveLength(1);
+    expect(validationButton.at(0).text()).toEqual("proceed to validation");
     expect(awaitingValidationTag).toEqual(true);
   });
 
