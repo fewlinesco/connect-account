@@ -41,6 +41,9 @@ export const UpdateIdentity: React.FC<UpdateIdentityProps> = ({
                   .then(deleteIdentity)
                   .then(() => {
                     router && router.push(`/account/logins/${type}/validation`);
+                  })
+                  .catch((error: Error) => {
+                    console.warn(error.message);
                   });
               },
               castedIdentityType,

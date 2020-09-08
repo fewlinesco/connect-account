@@ -35,9 +35,13 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
   };
 
   const deleteIdentity = async (): Promise<void> => {
-    return fetchJson("/api/account", HttpVerbs.DELETE, requestData).then(() => {
-      router && router.push("/account/logins/");
-    });
+    return fetchJson("/api/account", HttpVerbs.DELETE, requestData)
+      .then(() => {
+        router && router.push("/account/logins/");
+      })
+      .catch((error: Error) => {
+        console.warn(error.message);
+      });
   };
 
   return children({ deleteIdentity });
