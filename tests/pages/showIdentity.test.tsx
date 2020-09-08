@@ -35,7 +35,7 @@ jest.mock("../../src/config", () => {
   };
 });
 
-describe("identity should be displayed properly", () => {
+describe("ShowIdentity", () => {
   beforeEach(() => {
     fetch.resetMocks();
   });
