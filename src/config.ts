@@ -11,7 +11,7 @@ type Config = {
   connectOpenIdConfigurationUrl: string;
   connectRedirectUri: string;
   connectAudience: string;
-  connectJwtAlgo: string;
+  connectJwtAlgorithm: string;
 };
 
 const config: Config = {
@@ -25,7 +25,7 @@ const config: Config = {
   connectOpenIdConfigurationUrl: "",
   connectRedirectUri: "",
   connectAudience: "",
-  connectJwtAlgo: "",
+  connectJwtAlgorithm: "",
 };
 
 function handleEnvVars(): void {
@@ -91,11 +91,11 @@ function handleEnvVars(): void {
   }
   config.connectAudience = process.env.CONNECT_AUDIENCE;
 
-  if (!process.env.CONNECT_JWT_ALGO) {
-    console.log("Missing CONNECT_JWT_ALGO");
+  if (!process.env.CONNECT_JWT_ALGORITHM) {
+    console.log("Missing CONNECT_JWT_ALGORITHM");
     process.exit(1);
   }
-  config.connectJwtAlgo = process.env.CONNECT_JWT_ALGO;
+  config.connectJwtAlgorithm = process.env.CONNECT_JWT_ALGORITHM;
 
   if (!process.env.NEXT_PUBLIC_SENTRY_DSN) {
     console.log("Missing NEXT_PUBLIC_SENTRY_DSN");

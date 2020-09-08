@@ -40,7 +40,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
       if (accessToken) {
         await oauth2Client.verifyJWT<{ sub: string }>(
           accessToken,
-          config.connectJwtAlgo,
+          config.connectJwtAlgorithm,
         );
       } else {
         context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;

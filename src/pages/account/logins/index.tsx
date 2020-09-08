@@ -147,12 +147,12 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
       if (accessToken) {
         await oauth2Client.verifyJWT<{ sub: string }>(
           accessToken,
-          config.connectJwtAlgo,
+          config.connectJwtAlgorithm,
         );
 
         const decodedJWT = await oauth2Client.verifyJWT<{ sub: string }>(
           accessToken,
-          config.connectJwtAlgo,
+          config.connectJwtAlgorithm,
         );
 
         const sortedIdentities = await getIdentities(decodedJWT.sub).then(

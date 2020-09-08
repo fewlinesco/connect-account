@@ -20,7 +20,7 @@ const handler: Handler = async (
 
       const decoded = await oauth2Client.verifyJWT<{ sub: string }>(
         accessToken,
-        config.connectJwtAlgo,
+        config.connectJwtAlgorithm,
       );
 
       if (decoded) {
