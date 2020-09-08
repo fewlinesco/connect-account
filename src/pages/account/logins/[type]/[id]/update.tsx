@@ -54,8 +54,8 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
 
       if (accessToken) {
         const decoded = await oauth2Client.verifyJWT<{ sub: string }>(
-          config.connectApplicationClientSecret,
           accessToken,
+          config.connectJwtAlgorithm,
         );
 
         const identity = await getIdentities(decoded.sub).then((result) => {

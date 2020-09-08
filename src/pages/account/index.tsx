@@ -38,6 +38,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
       const accessToken = context.req.session.get("user-jwt");
 
       if (accessToken) {
+        console.log(accessToken);
         await oauth2Client.verifyJWT<{ sub: string }>(
           accessToken,
           config.connectJwtAlgorithm,
