@@ -2,18 +2,12 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { IdentityTypes } from "../../../@types/Identity";
-import { Button } from "../../../pages/account/logins/index";
+import { Identity } from "../../../@types/Identity";
 
-type AddIdentityInputFormProps = {
-  addIdentity: (value: string) => Promise<Response>;
-  type: IdentityTypes;
-};
-
-export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
-  addIdentity,
-  type,
-}) => {
+export const UpdateIdentityForm: React.FC<{
+  updateIdentity: (newValue: string) => Promise<void>;
+  currentIdentity: Identity;
+}> = ({ currentIdentity, updateIdentity }) => {
   const [identity, setIdentity] = React.useState("");
   const router = useRouter();
 
@@ -23,23 +17,17 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
         method="post"
         onSubmit={async (event) => {
           event.preventDefault();
-          return await addIdentity(identity)
-            .then(() => {
-              router && router.push(`/account/logins/${type}/validation`);
-            })
-            .catch((error: Error) => {
-              throw error;
-            });
+          updateIdentity(identity);
         }}
       >
         <Input
           type="text"
           name="value"
-          placeholder={`Enter your ${type}`}
+          placeholder={`Enter your ${currentIdentity.type}`}
           value={identity}
           onChange={(event) => setIdentity(event.target.value)}
         />
-        <SendInput type="submit" value={`Add ${type}`} />
+        <SendInput type="submit" value="Send" />
       </Form>
       <Button onClick={() => router.push("/account/logins/")}>Cancel</Button>
     </>
@@ -59,6 +47,27 @@ export const Input = styled.input`
   &:active,
   &:focus {
     outline: none;
+  }
+`;
+
+const Button = styled.button`
+  padding: 0.5rem;
+  margin-right: 1rem;
+  border-radius: ${({ theme }) => theme.radii[0]};
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.green};
+  transition: ${({ theme }) => theme.transitions.quick};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+  &:hover {
+    cursor: pointer;
+    background-color: ${({ theme }) => theme.colors.green};
+    color: ${({ theme }) => theme.colors.contrastCopy};
+  }
+  &:active,
+  &:focus {
+    outline: none;
+    background-color: ${({ theme }) => theme.colors.green};
+    color: ${({ theme }) => theme.colors.contrastCopy};
   }
 `;
 

@@ -8,17 +8,29 @@ import { GetServerSideProps } from "next";
 import React from "react";
 import styled from "styled-components";
 
-import { Identity } from "../../../../../src/@types/Identity";
-import { UpdateInput } from "../../../../../src/components/UpdateInput";
-import { config } from "../../../../../src/config";
-import { withSSRLogger } from "../../../../../src/middleware/withSSRLogger";
-import withSession from "../../../../../src/middleware/withSession";
-import { getIdentities } from "../../../../../src/queries/getIdentities";
-import { promisifiedJWTVerify } from "../../../../../src/utils/promisifiedJWTVerify";
-import Sentry from "../../../../../src/utils/sentry";
+import { Identity } from "../../../../../@types/Identity";
+import { UpdateIdentity } from "../../../../../components/business/UpdateIdentity";
+import { UpdateIdentityForm } from "../../../../../components/display/fewlines/UpdateIdentityForm";
+import { config } from "../../../../../config";
+import { useCookies } from "../../../../../hooks/useCookies";
+import { withSSRLogger } from "../../../../../middleware/withSSRLogger";
+import withSession from "../../../../../middleware/withSession";
+import { getIdentities } from "../../../../../queries/getIdentities";
+import { promisifiedJWTVerify } from "../../../../../utils/promisifiedJWTVerify";
+import Sentry from "../../../../../utils/sentry";
 
-const UpdateIdentity: React.FC<{ identity: Identity }> = ({ identity }) => {
+const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   const { value } = identity;
+  const { data, error } = useCookies();
+
+  if (error) {
+    return <div>Failed to load</div>;
+  }
+
+  if (!data) {
+    return null;
+  }
+
   return (
     <>
       <IdentityBox key={value}>
@@ -26,12 +38,19 @@ const UpdateIdentity: React.FC<{ identity: Identity }> = ({ identity }) => {
           <Value>{value}</Value>
         </Flex>
       </IdentityBox>
-      <UpdateInput currentIdentity={identity} />
+      <UpdateIdentity identity={identity}>
+        {({ updateIdentity }) => (
+          <UpdateIdentityForm
+            updateIdentity={updateIdentity}
+            currentIdentity={identity}
+          />
+        )}
+      </UpdateIdentity>
     </>
   );
 };
 
-export default UpdateIdentity;
+export default UpdateIdentityPage;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
@@ -67,8 +86,8 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
       ) {
         Sentry.withScope((scope) => {
           scope.setTag(
-            "/pages/account/logins SSR",
-            "/pages/account/logins SSR",
+            `/pages/account/logins/${context.params.type}/update SSR`,
+            `/pages/account/logins/${context.params.type}/update SSR`,
           );
           Sentry.captureException(error);
         });
