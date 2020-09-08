@@ -1,18 +1,14 @@
-import { HttpStatus } from "@fewlines/fwl-web";
-import {
-  JsonWebTokenError,
-  NotBeforeError,
-  TokenExpiredError,
-} from "jsonwebtoken";
+import { HttpStatus } from "@fwl/web";
 import { GetServerSideProps } from "next";
 import React from "react";
 
-import Sentry, { addRequestScopeToSentry } from "../../../..//utils/sentry";
 import { IdentityTypes } from "../../../../@types/Identity";
 import { AddIdentity } from "../../../../components/business/AddIdentity";
 import { AddIdentityInputForm } from "../../../../components/display/fewlines/AddIdentityInputForm";
+import { OAuth2Error } from "../../../../errors";
 import { withSSRLogger } from "../../../../middleware/withSSRLogger";
 import withSession from "../../../../middleware/withSession";
+import Sentry, { addRequestScopeToSentry } from "../../../../utils/sentry";
 
 const AddNewIdentity: React.FC<{ type: IdentityTypes }> = (props) => {
   return (
@@ -36,11 +32,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         },
       };
     } catch (error) {
-      if (
-        error instanceof JsonWebTokenError ||
-        error instanceof NotBeforeError ||
-        error instanceof TokenExpiredError
-      ) {
+      if (error instanceof OAuth2Error) {
         Sentry.withScope((scope) => {
           scope.setTag(
             `/pages/account/logins/${context.params.type}/new SSR`,

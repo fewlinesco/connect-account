@@ -1,3 +1,5 @@
+import OAuth2Client, { OAuth2ClientConstructor } from "@fwl/oauth2";
+
 type Config = {
   connectManagementUrl: string;
   connectManagementApiKey: string;
@@ -6,7 +8,10 @@ type Config = {
   connectApplicationClientSecret: string;
   connectApplicationScopes: string;
   connectAccountSessionSalt: string;
-  connectAccountPublicSentryDSN: string;
+  connectOpenIdConfigurationUrl: string;
+  connectRedirectUri: string;
+  connectAudience: string;
+  connectJwtAlgorithm: string;
 };
 
 const config: Config = {
@@ -17,7 +22,10 @@ const config: Config = {
   connectApplicationClientSecret: "",
   connectApplicationScopes: "",
   connectAccountSessionSalt: "",
-  connectAccountPublicSentryDSN: "",
+  connectOpenIdConfigurationUrl: "",
+  connectRedirectUri: "",
+  connectAudience: "",
+  connectJwtAlgorithm: "",
 };
 
 function handleEnvVars(): void {
@@ -64,6 +72,31 @@ function handleEnvVars(): void {
   }
   config.connectAccountSessionSalt = process.env.CONNECT_ACCOUNT_SESSION_SALT;
 
+  if (!process.env.CONNECT_OPEN_ID_CONFIGURATION_URL) {
+    console.log("Missing CONNECT_OPEN_ID_CONFIGURATION_URL");
+    process.exit(1);
+  }
+  config.connectOpenIdConfigurationUrl =
+    process.env.CONNECT_OPEN_ID_CONFIGURATION_URL;
+
+  if (!process.env.CONNECT_REDIRECT_URI) {
+    console.log("Missing CONNECT_REDIRECT_URI");
+    process.exit(1);
+  }
+  config.connectRedirectUri = process.env.CONNECT_REDIRECT_URI;
+
+  if (!process.env.CONNECT_AUDIENCE) {
+    console.log("Missing CONNECT_AUDIENCE");
+    process.exit(1);
+  }
+  config.connectAudience = process.env.CONNECT_AUDIENCE;
+
+  if (!process.env.CONNECT_JWT_ALGORITHM) {
+    console.log("Missing CONNECT_JWT_ALGORITHM");
+    process.exit(1);
+  }
+  config.connectJwtAlgorithm = process.env.CONNECT_JWT_ALGORITHM;
+
   if (!process.env.NEXT_PUBLIC_SENTRY_DSN) {
     console.log("Missing NEXT_PUBLIC_SENTRY_DSN");
     process.exit(1);
@@ -72,4 +105,15 @@ function handleEnvVars(): void {
 
 handleEnvVars();
 
-export { config };
+const oauth2ClientConstructorProps: OAuth2ClientConstructor = {
+  openIDConfigurationURL: config.connectOpenIdConfigurationUrl,
+  clientID: config.connectApplicationClientId,
+  clientSecret: config.connectApplicationClientSecret,
+  redirectURI: config.connectRedirectUri,
+  audience: config.connectAudience,
+  scopes: config.connectApplicationScopes.split(" "),
+};
+
+const oauth2Client = new OAuth2Client(oauth2ClientConstructorProps);
+
+export { config, oauth2Client };

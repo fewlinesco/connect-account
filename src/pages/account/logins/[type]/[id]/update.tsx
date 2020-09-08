@@ -1,9 +1,4 @@
-import { HttpStatus } from "@fewlines/fwl-web";
-import {
-  JsonWebTokenError,
-  NotBeforeError,
-  TokenExpiredError,
-} from "jsonwebtoken";
+import { HttpStatus } from "@fwl/web";
 import { GetServerSideProps } from "next";
 import React from "react";
 import styled from "styled-components";
@@ -11,12 +6,12 @@ import styled from "styled-components";
 import { Identity } from "../../../../../@types/Identity";
 import { UpdateIdentity } from "../../../../../components/business/UpdateIdentity";
 import { UpdateIdentityForm } from "../../../../../components/display/fewlines/UpdateIdentityForm";
-import { config } from "../../../../../config";
+import { config, oauth2Client } from "../../../../../config";
+import { OAuth2Error } from "../../../../../errors";
 import { useCookies } from "../../../../../hooks/useCookies";
 import { withSSRLogger } from "../../../../../middleware/withSSRLogger";
 import withSession from "../../../../../middleware/withSession";
 import { getIdentities } from "../../../../../queries/getIdentities";
-import { promisifiedJWTVerify } from "../../../../../utils/promisifiedJWTVerify";
 import Sentry from "../../../../../utils/sentry";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
@@ -57,33 +52,37 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     try {
       const accessToken = context.req.session.get("user-jwt");
 
-      const decoded = await promisifiedJWTVerify<{ sub: string }>(
-        config.connectApplicationClientSecret,
-        accessToken,
-      );
+      if (accessToken) {
+        const decoded = await oauth2Client.verifyJWT<{ sub: string }>(
+          accessToken,
+          config.connectJwtAlgorithm,
+        );
 
-      const identity = await getIdentities(decoded.sub).then((result) => {
-        if (result instanceof Error) {
-          throw result;
-        }
-        const res = result.data?.provider.user.identities.filter(
-          (id) => id.id === context.params.id,
-        )[0];
+        const identity = await getIdentities(decoded.sub).then((result) => {
+          if (result instanceof Error) {
+            throw result;
+          }
+          const res = result.data?.provider.user.identities.filter(
+            (id) => id.id === context.params.id,
+          )[0];
 
-        return res;
-      });
+          return res;
+        });
 
-      return {
-        props: {
-          identity,
-        },
-      };
+        return {
+          props: {
+            identity,
+          },
+        };
+      } else {
+        context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+        context.res.setHeader("location", context.req.headers.referer || "/");
+        context.res.end();
+
+        return { props: {} };
+      }
     } catch (error) {
-      if (
-        error instanceof JsonWebTokenError ||
-        error instanceof NotBeforeError ||
-        error instanceof TokenExpiredError
-      ) {
+      if (error instanceof OAuth2Error) {
         Sentry.withScope((scope) => {
           scope.setTag(
             `/pages/account/logins/${context.params.type}/update SSR`,

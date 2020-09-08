@@ -1,10 +1,9 @@
-import { HttpStatus } from "@fewlines/fwl-web";
+import { HttpStatus } from "@fwl/web";
 import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
-import { promisifiedJWTVerify } from "src/utils/promisifiedJWTVerify";
 
 import { ExtendedRequest } from "../../@types/ExtendedRequest";
-import { config } from "../../config";
+import { config, oauth2Client } from "../../config";
 import { withAPIPageLogger } from "../../middleware/withAPIPageLogger";
 import withSession from "../../middleware/withSession";
 import Sentry, { addRequestScopeToSentry } from "../../utils/sentry";
@@ -19,9 +18,9 @@ const handler: Handler = async (
     if (request.method === "GET") {
       const accessToken = request.session.get("user-jwt");
 
-      const decoded = await promisifiedJWTVerify<{ sub: string }>(
-        config.connectApplicationClientSecret,
+      const decoded = await oauth2Client.verifyJWT<{ sub: string }>(
         accessToken,
+        config.connectJwtAlgorithm,
       );
 
       if (decoded) {
