@@ -93,6 +93,18 @@ yarn test
 | `CONNECT_APPLICATION_SCOPES`
 | Represents the kind of user authorized information and actions that an Application is able to access on another Application.
 
+| `CONNECT_OPEN_ID_CONFIGURATION_URL`
+| 
+
+| `CONNECT_REDIRECT_URI`
+| 
+
+| `CONNECT_AUDIENCE`
+| 
+
+| `CONNECT_JWT_ALGORITHM`
+| Represents the kind of user authorized information and actions that an Application is able to access on another Application.
+
 | `NEXT_PUBLIC_SENTRY_DSN`
 | Data Source Name representing the configuration required by the Sentry SDKs.
 |===
