@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
-import styled, { useTheme } from "styled-components";
+import styled from "styled-components";
 
 import {
   IdentityTypes,
@@ -18,8 +19,7 @@ type IdentityLineProps = {
 export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
   const { value, type, primary } = identity;
   const { EMAIL } = ReceivedIdentityTypes;
-
-  const theme = useTheme();
+  const router = useRouter();
 
   return (
     <IdentityBox key={value}>
@@ -43,7 +43,12 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
       </Flex>
       {identity.status === "unvalidated" && (
         <>
-          <p>awaiting validation</p> <Button>proceed to validation</Button>
+          <p>awaiting validation</p>
+          <Button
+            onClick={() => router.push(`/account/logins/${type}/validation`)}
+          >
+            proceed to validation
+          </Button>
         </>
       )}
       {identity.primary && identity.status === "validated" && <p>Primary</p>}
@@ -79,7 +84,7 @@ export const Button = styled.button`
   padding: 0.5rem;
   margin-right: 1rem;
   border-radius: ${({ theme }) => theme.radii[0]};
-  background-color: transparent;
+  background-color: ${({ theme }) => theme.colors.green};
   color: ${({ theme }) => theme.colors.green};
   transition: ${({ theme }) => theme.transitions.quick};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
