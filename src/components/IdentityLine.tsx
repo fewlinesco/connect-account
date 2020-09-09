@@ -71,8 +71,8 @@ const IdentityBox = styled.div`
 
 const IdentityInfo = styled.div`
   p {
-    font-size: 70%;
-    margin-bottom: 5px;
+    font-size: ${({ theme }) => theme.fontSizes.s};
+    margin-bottom: 0.5rem;
   }
 `;
 
