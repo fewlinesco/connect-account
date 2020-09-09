@@ -53,12 +53,10 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
       )}
       {identity.primary && identity.status === "validated" && <p>Primary</p>}
       {identity.status === "validated" && (
-        <>
-          <br />
-          <small>Added on ...</small>
-          <br />
-          <small>Last used to login on ...</small>
-        </>
+        <IdentityInfo>
+          <p>Added on ...</p>
+          <p>Last used to login on ...</p>
+        </IdentityInfo>
       )}
       {!identity.primary && identity.status === "validated" && (
         <Button>Make this my primary {identity.type}</Button>
@@ -69,6 +67,13 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
 
 const IdentityBox = styled.div`
   padding: ${({ theme }) => theme.spaces.component.xs};
+`;
+
+const IdentityInfo = styled.div`
+  p {
+    font-size: 70%;
+    margin-bottom: 5px;
+  }
 `;
 
 const Value = styled.p`
