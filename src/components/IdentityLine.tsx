@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
@@ -18,6 +19,7 @@ type IdentityLineProps = {
 export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
   const { value, type, primary } = identity;
   const { EMAIL } = ReceivedIdentityTypes;
+  const router = useRouter();
 
   return (
     <IdentityBox key={value}>
@@ -39,12 +41,39 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
           </DeleteIdentity>
         )}
       </Flex>
+      {identity.status === "unvalidated" && (
+        <>
+          <p>awaiting validation</p>
+          <Button
+            onClick={() => router.push(`/account/logins/${type}/validation`)}
+          >
+            proceed to validation
+          </Button>
+        </>
+      )}
+      {identity.primary && identity.status === "validated" && <p>Primary</p>}
+      {identity.status === "validated" && (
+        <IdentityInfo>
+          <p>Added on ...</p>
+          <p>Last used to login on ...</p>
+        </IdentityInfo>
+      )}
+      {!identity.primary && identity.status === "validated" && (
+        <Button>Make this my primary {identity.type}</Button>
+      )}
     </IdentityBox>
   );
 };
 
 const IdentityBox = styled.div`
   padding: ${({ theme }) => theme.spaces.component.xs};
+`;
+
+const IdentityInfo = styled.div`
+  p {
+    font-size: ${({ theme }) => theme.fontSizes.s};
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const Value = styled.p`
@@ -56,27 +85,23 @@ const Flex = styled.div`
   align-items: center;
 `;
 
-type ButtonProps = {
-  color: string;
-};
-
-export const Button = styled.button<ButtonProps>`
+export const Button = styled.button`
   padding: 0.5rem;
   margin-right: 1rem;
   border-radius: ${({ theme }) => theme.radii[0]};
-  background-color: transparent;
-  ${(props) => `color: ${props.color}`};
+  background-color: ${({ theme }) => theme.colors.green};
+  color: ${({ theme }) => theme.colors.green};
   transition: ${({ theme }) => theme.transitions.quick};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   &:hover {
     cursor: pointer;
-    ${(props) => `background-color: ${props.color}`};
+    background-color: ${({ theme }) => theme.colors.green}};
     color: ${({ theme }) => theme.colors.contrastCopy};
   }
   &:active,
   &:focus {
     outline: none;
-    ${(props) => `background-color: ${props.color}`};
+    background-color: ${({ theme }) => theme.colors.green}};
     color: ${({ theme }) => theme.colors.contrastCopy};
   }
 `;
