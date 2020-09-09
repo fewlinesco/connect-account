@@ -175,7 +175,7 @@ describe("ShowIdentity", () => {
     expect(awaitingValidationTag).toEqual(true);
   });
 
-  test("it should not display the make this identity primary if the identity is not validated", () => {
+  test("it should not display the make this identity primary button if the identity is not validated", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
