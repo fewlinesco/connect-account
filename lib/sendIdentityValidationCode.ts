@@ -2,22 +2,7 @@ import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
 import { fetchManagement } from "../src/utils/fetchManagement";
-
-export enum IdentityTypes {
-  APPLE = "APPLE",
-  EMAIL = "EMAIL",
-  FACEBOOK = "FACEBOOK",
-  GITHUB = "GITHUB",
-  GOOGLE = "GOOGLE",
-  KAKAO_TALK = "KAKAO_TALK",
-  LINE = "LINE",
-  NAVER = "NAVER",
-  PAYPAL = "PAYPAL",
-  PHONE = "PHONE",
-  PROVIDER = "PROVIDER",
-  STRAVA = "STRAVA",
-  VKONTAKTE = "VKONTAKTE",
-}
+import { IdentityTypes } from "./@types/Identity";
 
 export type IdentityInput = {
   userId: string;
@@ -39,21 +24,21 @@ export type SendIdentityValidationCodeResult = {
   nonce: string;
 };
 
+export type SendIdentityValidationCode = (
+  command: SendIdentityVerificationCodeInput,
+) => Promise<
+  | FetchResult<{
+      sendIdentityValidationCode: SendIdentityValidationCodeResult;
+    }>
+  | Error
+>;
+
 const SEND_IDENTITY_VALIDATION_CODE = gql`
   mutation sendIdentityValidationCode(
-    input: {
-      $callbackUrl: String!;
-      $identity: IdentityInput!;
-      $localeCodeOverride: String;
-      $userId: String!;
-    }
-  ){
+    $input: SendIdentityVerificationCodeInput
+  ) {
     sendIdentityValidationCode(
-      input: {
-        callbackUrl: $callbackUrl,
-        identity: $identity,
-        userId: $userId
-      }
+      input: { callbackUrl: $callbackUrl, identity: $identity, userId: $userId }
     ) {
       callbackUrl
       localeCode

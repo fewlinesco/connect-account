@@ -31,7 +31,7 @@ const handler: Handler = async (request, response) => {
     }
   } catch (error) {
     Sentry.withScope((scope) => {
-      scope.setTag("api/account", "api/account");
+      scope.setTag("api/identity", "api/identity");
       Sentry.captureException(error);
     });
   }

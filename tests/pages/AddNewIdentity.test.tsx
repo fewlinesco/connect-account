@@ -70,7 +70,7 @@ describe("AddNewIdentity", () => {
     const fetchJsonMethod = jest.spyOn(fetchJson, "fetchJson");
     form.simulate("submit");
 
-    expect(fetchJsonMethod).toHaveBeenCalledWith("/api/account", "POST", {
+    expect(fetchJsonMethod).toHaveBeenCalledWith("/api/identity", "POST", {
       type: "EMAIL",
       userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
       value: "test3@test.test ",

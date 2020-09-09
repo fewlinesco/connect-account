@@ -23,8 +23,17 @@ export type CheckVerificationCodeResult = {
   status: CheckVerificationCodeStatus;
 };
 
+export type CheckVerificationCode = (
+  command: CheckVerificationCodeInput,
+) => Promise<
+  | FetchResult<{
+      sendIdentityValidationCode: CheckVerificationCodeResult;
+    }>
+  | Error
+>;
+
 const CHECK_VERIFICATION_CODE = gql`
-  query checkVerificationCode(input: CheckVerificationCodeInput){
+  query checkVerificationCode($input: CheckVerificationCodeInput) {
     checkVerificationCode(input: $input) {
       identityType
       identityValue
