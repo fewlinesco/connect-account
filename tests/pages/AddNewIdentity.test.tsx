@@ -1,5 +1,3 @@
-jest.mock("../../src/hooks/useCookies");
-
 import { mount } from "enzyme";
 import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
@@ -14,7 +12,6 @@ import {
 } from "../../src/components/display/fewlines/AddIdentityInputForm";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
-import { useCookies } from "../../src/hooks/useCookies";
 import AddNewIdentity from "../../src/pages/account/logins/[type]/new";
 import * as fetchJson from "../../src/utils/fetchJson";
 
@@ -25,14 +22,6 @@ jest.mock("../../src/config", () => {
     config: {
       connectApplicationClientSecret: "foo-bar",
       connectAccountSessionSalt: ".*b+x3ZXE3-h[E+Q5YC5`jr~y%CA~R-[",
-    },
-  };
-});
-
-(useCookies as any).mockImplementation(() => {
-  return {
-    data: {
-      userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
     },
   };
 });
@@ -70,10 +59,14 @@ describe("AddNewIdentity", () => {
     const fetchJsonMethod = jest.spyOn(fetchJson, "fetchJson");
     form.simulate("submit");
 
-    expect(fetchJsonMethod).toHaveBeenCalledWith("/api/identity", "POST", {
-      type: "EMAIL",
-      userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
-      value: "test3@test.test ",
-    });
+    expect(fetchJsonMethod).toHaveBeenCalledWith(
+      "/api/send-identity-validation-code",
+      "POST",
+      {
+        callbackUrl: "/",
+        type: "EMAIL",
+        value: "test3@test.test ",
+      },
+    );
   });
 });

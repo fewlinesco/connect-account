@@ -2,7 +2,10 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
+import { HttpVerbs } from "../../../@types/HttpVerbs";
 import { IdentityTypes } from "../../../@types/Identity";
+import { useSessionStorage } from "../../../hooks/useSessionStorage";
+import { fetchJson } from "../../../utils/fetchJson";
 import AlertBar from "./AlertBar";
 
 const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
@@ -10,10 +13,29 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
 }) => {
   const [validationCode, setValidationCode] = React.useState("");
   const router = useRouter();
+  const [identity] = useSessionStorage<{
+    value: string;
+    type: IdentityTypes;
+    ttl: number;
+  }>("identity-value", {
+    value: "",
+    type,
+    ttl: Date.now(),
+  });
 
   return (
     <>
-      <Form method="post">
+      <Form
+        method="post"
+        onSubmit={async () => {
+          const body = {
+            identity,
+            validationCode,
+          };
+
+          fetchJson("/api/identity", HttpVerbs.POST, body);
+        }}
+      >
         <Input
           type="text"
           name="value"

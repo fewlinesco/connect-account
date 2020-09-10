@@ -2,19 +2,29 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
+import { HttpVerbs } from "../../../@types/HttpVerbs";
 import { IdentityTypes } from "../../../@types/Identity";
+import { useSessionStorage } from "../../../hooks/useSessionStorage";
 import { Button } from "../../../pages/account/logins/index";
+import { fetchJson } from "../../../utils/fetchJson";
 
 type AddIdentityInputFormProps = {
-  addIdentity: (value: string) => Promise<Response>;
   type: IdentityTypes;
 };
 
 export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
-  addIdentity,
   type,
 }) => {
-  const [identity, setIdentity] = React.useState("");
+  const [identity, setIdentity] = useSessionStorage<{
+    value: string;
+    type: IdentityTypes;
+    ttl: number;
+  }>("identity-value", {
+    value: "",
+    type,
+    ttl: Date.now(),
+  });
+
   const router = useRouter();
 
   return (
@@ -24,21 +34,29 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
         onSubmit={async (event) => {
           event.preventDefault();
 
-          return await addIdentity(identity)
-            .then(() => {
-              router && router.push(`/account/logins/${type}/validation`);
-            })
-            .catch((error: Error) => {
-              throw error;
-            });
+          const body = {
+            callbackUrl: "/",
+            type,
+            value: identity.value,
+          };
+
+          fetchJson("/api/send-identity-validation-code", HttpVerbs.POST, body);
+
+          router && router.push(`/account/logins/${type}/validation`);
         }}
       >
         <Input
           type="text"
           name="value"
           placeholder={`Enter your ${type}`}
-          value={identity}
-          onChange={(event) => setIdentity(event.target.value)}
+          value={identity.value}
+          onChange={(event) =>
+            setIdentity({
+              value: event.target.value,
+              type,
+              ttl: Date.now() + 300,
+            })
+          }
         />
         <SendInput type="submit" value={`Add ${type}`} />
       </Form>
