@@ -14,7 +14,7 @@ export const UpdateIdentityForm: React.FC<{
   const router = useRouter();
 
   return (
-    <>
+    <Wrapper>
       <Form
         method="post"
         onSubmit={async (event) => {
@@ -29,7 +29,11 @@ export const UpdateIdentityForm: React.FC<{
           value={identity}
           onChange={(event) => setIdentity(event.target.value)}
         />
-        <Button variant={ButtonVariant.PRIMARY} type="submit">
+        <Button
+          className="send-button"
+          variant={ButtonVariant.PRIMARY}
+          type="submit"
+        >
           Send
         </Button>
       </Form>
@@ -39,10 +43,22 @@ export const UpdateIdentityForm: React.FC<{
       >
         Cancel
       </Button>
-    </>
+    </Wrapper>
   );
 };
 
+const Wrapper = styled.div`
+  max-width: 95%;
+  margin: 0 auto;
+
+  .send-button {
+    margin: 1rem 0;
+  }
+
+  button {
+    width: 100%;
+  }
+`;
 export const Form = styled.form`
   display: column;
   align-items: center;

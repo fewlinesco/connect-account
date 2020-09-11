@@ -75,6 +75,11 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
 
 const IdentityBox = styled.div`
   padding: ${({ theme }) => theme.spaces.component.xs};
+
+  button {
+    margin-bottom: ${({ theme }) => theme.spaces.component.xs};
+    width: 100%;
+  }
 `;
 
 const IdentityInfo = styled.div`

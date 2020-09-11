@@ -7,10 +7,10 @@ interface ButtonProps {
 }
 
 export const Button = styled.button<ButtonProps>`
-  width: 46.4rem;
   height: 4rem;
   border-radius: 0.2rem;
   font-size: ${({ theme }) => theme.fontSizes.s};
+
   ${(props) =>
     props.variant === ButtonVariant.PRIMARY &&
     `
