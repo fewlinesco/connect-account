@@ -2,8 +2,10 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
+import { ButtonVariant } from "../../../@types/ButtonVariant";
 import { IdentityTypes } from "../../../@types/Identity";
 import AlertBar from "./AlertBar";
+import { Button } from "./Button";
 
 const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
   type,
@@ -21,13 +23,21 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
           value={validationCode}
           onChange={(event) => setValidationCode(event.target.value)}
         />
-        <SendInput type="submit" value={`Confirm ${type}`} />
+        <Button
+          variant={ButtonVariant.PRIMARY}
+          type="submit"
+        >{`Confirm ${type}`}</Button>
       </Form>
-      <Button onClick={() => router.push("/account/logins/")}>
+      <Button
+        variant={ButtonVariant.SECONDARY}
+        onClick={() => router.push("/account/logins/")}
+      >
         Discard all changes
       </Button>
       <p>Didn&apos;t receive code?</p>
-      <Button>Resend confirmation code</Button>
+      <Button variant={ButtonVariant.SECONDARY}>
+        Resend confirmation code
+      </Button>
       <AlertBar type={type} />
     </>
   );
@@ -35,29 +45,8 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
 
 export default IdentityValidationForm;
 
-export const Button = styled.button`
-  padding: 0.5rem;
-  margin-right: 1rem;
-  border-radius: ${({ theme }) => theme.radii[0]};
-  background-color: transparent;
-  color: ${({ theme }) => theme.colors.green};
-  transition: ${({ theme }) => theme.transitions.quick};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  &:hover {
-    cursor: pointer;
-    background-color: ${({ theme }) => theme.colors.green};
-    color: ${({ theme }) => theme.colors.contrastCopy};
-  }
-  &:active,
-  &:focus {
-    outline: none;
-    background-color: ${({ theme }) => theme.colors.green};
-    color: ${({ theme }) => theme.colors.contrastCopy};
-  }
-`;
-
 const Form = styled.form`
-  display: flex;
+  display: column;
   align-items: center;
 `;
 
@@ -70,9 +59,4 @@ const Input = styled.input`
   &:focus {
     outline: none;
   }
-`;
-
-const SendInput = styled.input`
-  color: ${({ theme }) => theme.colors.green};
-  padding: 0.25em 1em;
 `;
