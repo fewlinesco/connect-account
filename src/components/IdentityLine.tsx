@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
+import { ButtonVariant } from "../@types/ButtonVariant";
 import {
   IdentityTypes,
   Identity,
@@ -10,7 +11,7 @@ import {
 } from "../@types/Identity";
 import { DeleteIdentity } from "../components/business/DeleteIdentity";
 import { DeleteButton } from "../components/display/fewlines/DeleteButton";
-import { EditIcon } from "../design-system/icons/EditIcon";
+import { Button } from "./display/fewlines/Button";
 
 type IdentityLineProps = {
   identity: Identity;
@@ -25,11 +26,6 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
     <IdentityBox key={value}>
       <Flex>
         <Value>{value}</Value>
-        <Link href={`/account/logins/${identity.type}/${identity.id}/update`}>
-          <a>
-            <EditIcon />
-          </a>
-        </Link>
         {!primary && (
           <DeleteIdentity
             type={type === EMAIL ? IdentityTypes.EMAIL : IdentityTypes.PHONE}
@@ -45,6 +41,7 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
         <>
           <p>awaiting validation</p>
           <Button
+            variant={ButtonVariant.PRIMARY}
             onClick={() => router.push(`/account/logins/${type}/validation`)}
           >
             proceed to validation
@@ -59,7 +56,19 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
         </IdentityInfo>
       )}
       {!identity.primary && identity.status === "validated" && (
-        <Button>Make this my primary {identity.type}</Button>
+        <Button variant={ButtonVariant.SECONDARY}>
+          Make this my primary {identity.type}
+        </Button>
+      )}
+      {identity.status === "validated" && (
+        <Link href={`/account/logins/${identity.type}/${identity.id}/update`}>
+          <a>
+            <Button variant={ButtonVariant.PRIMARY}>
+              Edit this{" "}
+              {identity.type === "phone" ? "phone number" : "email address"}
+            </Button>
+          </a>
+        </Link>
       )}
     </IdentityBox>
   );
@@ -83,25 +92,4 @@ const Value = styled.p`
 const Flex = styled.div`
   display: flex;
   align-items: center;
-`;
-
-export const Button = styled.button`
-  padding: 0.5rem;
-  margin-right: 1rem;
-  border-radius: ${({ theme }) => theme.radii[0]};
-  background-color: ${({ theme }) => theme.colors.green};
-  color: ${({ theme }) => theme.colors.green};
-  transition: ${({ theme }) => theme.transitions.quick};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  &:hover {
-    cursor: pointer;
-    background-color: ${({ theme }) => theme.colors.green}};
-    color: ${({ theme }) => theme.colors.contrastCopy};
-  }
-  &:active,
-  &:focus {
-    outline: none;
-    background-color: ${({ theme }) => theme.colors.green}};
-    color: ${({ theme }) => theme.colors.contrastCopy};
-  }
 `;

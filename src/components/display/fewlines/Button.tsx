@@ -1,11 +1,6 @@
 import styled from "styled-components";
 
-export enum ButtonVariant {
-  PRIMARY = "PRIMARY",
-  SECONDARY = "SECONDARY",
-  DANGER = "DANGER",
-  GHOST = "GHOST",
-}
+import { ButtonVariant } from "../../../@types/ButtonVariant";
 
 interface ButtonProps {
   variant?: ButtonVariant;
