@@ -25,13 +25,13 @@ const borders = {
 };
 
 const colors = {
-  primary: "#1E10FF",
+  primary: "#1825aa",
   secondary: "#44F8D7",
   background: "#FAFAFA",
   backgroundContrast: "#FFFFFF",
   black: "#202020",
   contrastCopy: "#FFFFFF",
-  red: "#FF645B",
+  red: "#EB5757",
   green: "#08D079",
   yellow: "#FDC141",
   turquoise: "#40E0D0",
