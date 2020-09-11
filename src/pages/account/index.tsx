@@ -1,4 +1,5 @@
 import { HttpStatus } from "@fwl/web";
+import { ObjectId } from "mongodb";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -35,16 +36,16 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     addRequestScopeToSentry(context.req);
 
     try {
-      const sub = context.req.session.get("user-sub");
+      const _id = context.req.session.get("user-document-id");
 
       const connectedClient = await mongoClient.connect();
       const db = connectedClient.db("connect-account-dev");
       const collection = db.collection<MongoUser>("users");
 
-      const user = await collection.findOne({ sub });
+      const user = await collection.findOne({ _id: new ObjectId(_id) });
       connectedClient.close();
 
-      if (sub && user) {
+      if (_id && user) {
         await oauth2Client.verifyJWT(
           user.accessToken,
           config.connectJwtAlgorithm,

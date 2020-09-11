@@ -2,10 +2,10 @@ import { HttpStatus } from "@fwl/web";
 import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
-import { ExtendedRequest } from "../../@types/ExtendedRequest";
-import { withAPIPageLogger } from "../../middleware/withAPIPageLogger";
-import withSession from "../../middleware/withSession";
-import Sentry, { addRequestScopeToSentry } from "../../utils/sentry";
+import { ExtendedRequest } from "../../../@types/ExtendedRequest";
+import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
+import withSession from "../../../middleware/withSession";
+import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
 
 const handler: Handler = async (
   request: ExtendedRequest,
@@ -31,7 +31,10 @@ const handler: Handler = async (
     }
   } catch (error) {
     Sentry.withScope((scope) => {
-      scope.setTag("api/user-sub", "api/user-sub");
+      scope.setTag(
+        "api/auth-connect/user-document-id",
+        "api/auth-connect/user-document-id",
+      );
       Sentry.captureException(error);
     });
 

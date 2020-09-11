@@ -5,7 +5,7 @@ import { Handler } from "next-iron-session";
 import { ExtendedRequest } from "../../../@types/ExtendedRequest";
 import { HttpVerbs } from "../../../@types/HttpVerbs";
 import { AccessToken } from "../../../@types/oauth2/OAuth2Tokens";
-import { oauth2Client } from "../../../config";
+import { oauth2Client, config } from "../../../config";
 import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
 import withSession from "../../../middleware/withSession";
 import { fetchJson } from "../../../utils/fetchJson";
@@ -28,21 +28,18 @@ const handler: Handler = async (
         "HS256",
       );
 
-      request.session.set("user-sub", decodedAccessToken.sub);
-
-      await request.session.save();
-
-      const protocol =
-        process.env.NODE_ENV === "production" ? "https://" : "http://";
-      const host = request.headers.host;
       const route = "/api/auth-connect/db-user";
-      const absoluteURL = protocol + host + route;
+      const absoluteURL = config.connectDomain + route;
 
-      fetchJson(absoluteURL, HttpVerbs.POST, {
+      const jsonResponse = await fetchJson(absoluteURL, HttpVerbs.POST, {
         sub: decodedAccessToken.sub,
         accessToken: tokens.access_token,
         refreshToken: tokens.refresh_token,
-      });
+      }).then((response) => response.json());
+
+      request.session.set("user-document-id", jsonResponse.data.documentId);
+
+      await request.session.save();
 
       response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
         Location: "/account",

@@ -2,6 +2,7 @@ import OAuth2Client, { OAuth2ClientConstructor } from "@fwl/oauth2";
 import { MongoClient } from "mongodb";
 
 type Config = {
+  connectDomain: string;
   connectManagementUrl: string;
   connectMongoUrl: string;
   connectManagementApiKey: string;
@@ -17,6 +18,7 @@ type Config = {
 };
 
 const config: Config = {
+  connectDomain: "",
   connectManagementUrl: "",
   connectMongoUrl: "",
   connectManagementApiKey: "",
@@ -32,6 +34,12 @@ const config: Config = {
 };
 
 function handleEnvVars(): void {
+  if (!process.env.CONNECT_ACCOUNT_DOMAIN) {
+    console.log("Missing CONNECT_ACCOUNT_DOMAIN");
+    process.exit(1);
+  }
+  config.connectDomain = process.env.CONNECT_ACCOUNT_DOMAIN;
+
   if (!process.env.CONNECT_MANAGEMENT_URL) {
     console.log("Missing CONNECT_MANAGEMENT_URL");
     process.exit(1);

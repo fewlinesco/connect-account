@@ -17,7 +17,6 @@ const handler: Handler = async (request, response) => {
           response.statusCode = HttpStatus.OK;
 
           response.setHeader("Content-Type", "application/json");
-
           response.json({ data });
         },
       );

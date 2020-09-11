@@ -20,14 +20,19 @@ export async function findOrInsertUser(
     const insertResult = await collection.insertOne(oauthUserInfo);
 
     if (insertResult.insertedCount === 0) {
+      connectedClient.close();
+
       throw new Error("User insertion failed");
     }
 
     documentId = insertResult.ops[0]._id.toString();
   } else {
+    connectedClient.close();
+
     documentId = (user._id as ObjectId).toString();
   }
 
   connectedClient.close();
+
   return { documentId };
 }
