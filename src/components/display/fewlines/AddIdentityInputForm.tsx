@@ -2,8 +2,9 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
+import { ButtonVariant } from "../../../@types/ButtonVariant";
 import { IdentityTypes } from "../../../@types/Identity";
-import { Button } from "../../../pages/account/logins/index";
+import { Button } from "./Button";
 
 type AddIdentityInputFormProps = {
   addIdentity: (value: string) => Promise<Response>;
@@ -39,15 +40,23 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
           value={identity}
           onChange={(event) => setIdentity(event.target.value)}
         />
-        <SendInput type="submit" value={`Add ${type}`} />
+        <Button
+          variant={ButtonVariant.PRIMARY}
+          type="submit"
+        >{`Add ${type}`}</Button>
       </Form>
-      <Button onClick={() => router.push("/account/logins/")}>Cancel</Button>
+      <Button
+        variant={ButtonVariant.SECONDARY}
+        onClick={() => router.push("/account/logins/")}
+      >
+        Cancel
+      </Button>
     </>
   );
 };
 
 export const Form = styled.form`
-  display: flex;
+  display: column;
   align-items: center;
 `;
 
@@ -60,9 +69,4 @@ export const Input = styled.input`
   &:focus {
     outline: none;
   }
-`;
-
-const SendInput = styled.input`
-  color: ${({ theme }) => theme.colors.green};
-  padding: 0.25em 1em;
 `;
