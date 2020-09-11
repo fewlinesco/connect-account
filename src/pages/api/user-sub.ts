@@ -16,7 +16,7 @@ const handler: Handler = async (
 
   try {
     if (request.method === "GET") {
-      const accessToken = request.session.get("user-jwt");
+      const accessToken = request.session.get("user-sub");
 
       const decoded = await oauth2Client.verifyJWT<{ sub: string }>(
         accessToken,
@@ -24,7 +24,7 @@ const handler: Handler = async (
       );
 
       if (decoded) {
-        response.json({ userId: decoded.sub });
+        response.json({ userSub: decoded.sub });
       } else {
         response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
           Location: request.headers.referer || "/",
@@ -37,7 +37,7 @@ const handler: Handler = async (
     }
   } catch (error) {
     Sentry.withScope((scope) => {
-      scope.setTag("api/user-id", "api/user-id");
+      scope.setTag("api/user-sub", "api/user-sub");
       Sentry.captureException(error);
     });
 

@@ -5,8 +5,8 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { oauth2Client, config } from "../../config";
-import { OAuth2Error } from "../../errors";
+import { MongoUser } from "../../@types/mongo/User";
+import { oauth2Client, config, mongoClient } from "../../config";
 import { withSSRLogger } from "../../middleware/withSSRLogger";
 import withSession from "../../middleware/withSession";
 import Sentry, { addRequestScopeToSentry } from "../../utils/sentry";
@@ -35,11 +35,18 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     addRequestScopeToSentry(context.req);
 
     try {
-      const accessToken = context.req.session.get("user-jwt");
+      const sub = context.req.session.get("user-sub");
 
-      if (accessToken) {
-        await oauth2Client.verifyJWT<{ sub: string }>(
-          accessToken,
+      const connectedClient = await mongoClient.connect();
+      const db = connectedClient.db("connect-account-dev");
+      const collection = db.collection<MongoUser>("users");
+
+      const user = await collection.findOne({ sub });
+      connectedClient.close();
+
+      if (sub && user) {
+        await oauth2Client.verifyJWT(
+          user.accessToken,
           config.connectJwtAlgorithm,
         );
       } else {
@@ -52,23 +59,17 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         props: {},
       };
     } catch (error) {
-      if (error instanceof OAuth2Error) {
-        Sentry.withScope((scope) => {
-          scope.setTag(
-            "/pages/account/logins SSR",
-            "/pages/account/logins SSR",
-          );
-          Sentry.captureException(error);
-        });
+      console.log(error);
+      Sentry.withScope((scope) => {
+        scope.setTag("/pages/account/ SSR", error.name);
+        Sentry.captureException(error);
+      });
 
-        context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-        context.res.setHeader("location", context.req.headers.referer || "/");
-        context.res.end();
+      context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+      context.res.setHeader("location", context.req.headers.referer || "/");
+      context.res.end();
 
-        return { props: {} };
-      }
-
-      throw error;
+      return { props: {} };
     }
   }),
 );

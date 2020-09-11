@@ -3,10 +3,20 @@ import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
 import { ExtendedRequest } from "../../../@types/ExtendedRequest";
+import { HttpVerbs } from "../../../@types/HttpVerbs";
 import { oauth2Client } from "../../../config";
 import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
 import withSession from "../../../middleware/withSession";
+import { fetchJson } from "../../../utils/fetchJson";
 import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
+
+type AccessToken = {
+  aud: string[];
+  exp: number;
+  iss: string;
+  scope: string;
+  sub: string;
+};
 
 const handler: Handler = async (
   request: ExtendedRequest,
@@ -20,11 +30,26 @@ const handler: Handler = async (
         request.query.code as string,
       );
 
-      await oauth2Client.verifyJWT(tokens.access_token, "HS256");
+      const decodedAccessToken = await oauth2Client.verifyJWT<AccessToken>(
+        tokens.access_token,
+        "HS256",
+      );
 
-      request.session.set("user-jwt", tokens.access_token);
+      request.session.set("user-sub", decodedAccessToken.sub);
 
       await request.session.save();
+
+      const protocol =
+        process.env.NODE_ENV === "production" ? "https://" : "http://";
+      const host = request.headers.host;
+      const route = "/api/auth-connect/db-user";
+      const absoluteURL = protocol + host + route;
+
+      fetchJson(absoluteURL, HttpVerbs.POST, {
+        sub: decodedAccessToken.sub,
+        accessToken: tokens.access_token,
+        refreshToken: tokens.refresh_token,
+      });
 
       response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
         Location: "/account",

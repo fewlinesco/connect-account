@@ -108,7 +108,7 @@ describe("getServerSideProps", () => {
     );
   });
 
-  it("should get the user-id from the session and call management GraphQL endpoint", async () => {
+  it("should get the user-sub from the session and call management GraphQL endpoint", async () => {
     const mockedSortedResponse = {
       emailIdentities: [
         {
@@ -138,7 +138,7 @@ describe("getServerSideProps", () => {
     const sealedJWT = await seal(
       {
         persistent: {
-          "user-jwt": JWT,
+          "user-sub": JWT,
         },
         flash: {},
       },

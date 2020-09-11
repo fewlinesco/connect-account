@@ -8,7 +8,7 @@ type CookiesValue = {
 };
 
 export function useCookies(): CookiesValue {
-  const { data, error } = useSWR("/api/user-id", async (url) => {
+  const { data, error } = useSWR("/api/user-sub", async (url) => {
     return fetch(url).then((response) => {
       return response.json();
     });

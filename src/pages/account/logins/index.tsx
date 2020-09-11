@@ -142,7 +142,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     addRequestScopeToSentry(context.req);
 
     try {
-      const accessToken = context.req.session.get("user-jwt");
+      const accessToken = context.req.session.get("user-sub");
 
       if (accessToken) {
         await oauth2Client.verifyJWT<{ sub: string }>(

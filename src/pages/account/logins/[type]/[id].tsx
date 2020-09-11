@@ -20,7 +20,7 @@ export default ShowIdentity;
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
     try {
-      const accessToken = context.req.session.get("user-jwt");
+      const accessToken = context.req.session.get("user-sub");
 
       const decoded = await oauth2Client.verifyJWT<{ sub: string }>(
         accessToken,
