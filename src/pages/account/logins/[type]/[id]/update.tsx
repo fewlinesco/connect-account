@@ -4,6 +4,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Identity } from "../../../../../@types/Identity";
+import { AccessToken } from "../../../../../@types/oauth2/OAuth2Tokens";
 import { UpdateIdentity } from "../../../../../components/business/UpdateIdentity";
 import { UpdateIdentityForm } from "../../../../../components/display/fewlines/UpdateIdentityForm";
 import { config, oauth2Client } from "../../../../../config";
@@ -53,7 +54,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
       const accessToken = context.req.session.get("user-sub");
 
       if (accessToken) {
-        const decoded = await oauth2Client.verifyJWT<{ sub: string }>(
+        const decoded = await oauth2Client.verifyJWT<AccessToken>(
           accessToken,
           config.connectJwtAlgorithm,
         );

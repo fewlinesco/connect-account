@@ -7,6 +7,7 @@ import styled from "styled-components";
 
 import { Identity } from "../../../@types/Identity";
 import { SortedIdentities } from "../../../@types/SortedIdentities";
+import { AccessToken } from "../../../@types/oauth2/OAuth2Tokens";
 import { config, oauth2Client } from "../../../config";
 import { OAuth2Error } from "../../../errors";
 import { withSSRLogger } from "../../../middleware/withSSRLogger";
@@ -145,12 +146,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
       const accessToken = context.req.session.get("user-sub");
 
       if (accessToken) {
-        await oauth2Client.verifyJWT<{ sub: string }>(
-          accessToken,
-          config.connectJwtAlgorithm,
-        );
-
-        const decodedJWT = await oauth2Client.verifyJWT<{ sub: string }>(
+        const decodedJWT = await oauth2Client.verifyJWT<AccessToken>(
           accessToken,
           config.connectJwtAlgorithm,
         );

@@ -59,7 +59,6 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         props: {},
       };
     } catch (error) {
-      console.log(error);
       Sentry.withScope((scope) => {
         scope.setTag("/pages/account/ SSR", error.name);
         Sentry.captureException(error);
@@ -69,7 +68,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
       context.res.setHeader("location", context.req.headers.referer || "/");
       context.res.end();
 
-      return { props: {} };
+      throw error;
     }
   }),
 );

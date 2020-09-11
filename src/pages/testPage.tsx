@@ -3,6 +3,7 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { HttpVerbs } from "../@types/HttpVerbs";
+import { AccessToken } from "../@types/oauth2/OAuth2Tokens";
 import { oauth2Client, config } from "../config";
 import { OAuth2Error } from "../errors";
 import { useCookies } from "../hooks/useCookies";
@@ -47,7 +48,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
       const accessToken = context.req.session.get("user-sub");
 
       if (accessToken) {
-        await oauth2Client.verifyJWT<{ sub: string }>(
+        await oauth2Client.verifyJWT<AccessToken>(
           accessToken,
           config.connectJwtAlgorithm,
         );

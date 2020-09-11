@@ -4,19 +4,12 @@ import { Handler } from "next-iron-session";
 
 import { ExtendedRequest } from "../../../@types/ExtendedRequest";
 import { HttpVerbs } from "../../../@types/HttpVerbs";
+import { AccessToken } from "../../../@types/oauth2/OAuth2Tokens";
 import { oauth2Client } from "../../../config";
 import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
 import withSession from "../../../middleware/withSession";
 import { fetchJson } from "../../../utils/fetchJson";
 import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
-
-type AccessToken = {
-  aud: string[];
-  exp: number;
-  iss: string;
-  scope: string;
-  sub: string;
-};
 
 const handler: Handler = async (
   request: ExtendedRequest,

@@ -3,6 +3,7 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { Identity } from "../../../../../src/@types/Identity";
+import { AccessToken } from "../../../../../src/@types/oauth2/OAuth2Tokens";
 import { IdentityLine } from "../../../../../src/components/IdentityLine";
 import { config, oauth2Client } from "../../../../../src/config";
 import { OAuth2Error } from "../../../../../src/errors";
@@ -22,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     try {
       const accessToken = context.req.session.get("user-sub");
 
-      const decoded = await oauth2Client.verifyJWT<{ sub: string }>(
+      const decoded = await oauth2Client.verifyJWT<AccessToken>(
         accessToken,
         config.connectJwtAlgorithm,
       );

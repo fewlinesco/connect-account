@@ -3,6 +3,7 @@ import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
 import { ExtendedRequest } from "../../@types/ExtendedRequest";
+import { AccessToken } from "../../@types/oauth2/OAuth2Tokens";
 import { config, oauth2Client } from "../../config";
 import { withAPIPageLogger } from "../../middleware/withAPIPageLogger";
 import withSession from "../../middleware/withSession";
@@ -18,7 +19,7 @@ const handler: Handler = async (
     if (request.method === "GET") {
       const accessToken = request.session.get("user-sub");
 
-      const decoded = await oauth2Client.verifyJWT<{ sub: string }>(
+      const decoded = await oauth2Client.verifyJWT<AccessToken>(
         accessToken,
         config.connectJwtAlgorithm,
       );
