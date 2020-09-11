@@ -30,7 +30,7 @@ jest.mock("../../src/config", () => {
 (useCookies as any).mockImplementation(() => {
   return {
     data: {
-      userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
+      userSub: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
     },
   };
 });

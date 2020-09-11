@@ -7,7 +7,6 @@ import { Identity } from "../../../../../@types/Identity";
 import { UpdateIdentity } from "../../../../../components/business/UpdateIdentity";
 import { UpdateIdentityForm } from "../../../../../components/display/fewlines/UpdateIdentityForm";
 import { OAuth2Error } from "../../../../../errors";
-import { useCookies } from "../../../../../hooks/useCookies";
 import { withSSRLogger } from "../../../../../middleware/withSSRLogger";
 import withSession from "../../../../../middleware/withSession";
 import { getIdentities } from "../../../../../queries/getIdentities";
@@ -15,15 +14,6 @@ import Sentry from "../../../../../utils/sentry";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   const { value } = identity;
-  const { data, error } = useCookies();
-
-  if (error) {
-    return <div>Failed to load</div>;
-  }
-
-  if (!data) {
-    return null;
-  }
 
   return (
     <>
