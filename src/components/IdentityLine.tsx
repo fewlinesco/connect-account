@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
@@ -20,7 +19,6 @@ type IdentityLineProps = {
 export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
   const { value, type, primary } = identity;
   const { EMAIL } = ReceivedIdentityTypes;
-  const router = useRouter();
 
   return (
     <IdentityBox key={value}>
@@ -40,12 +38,13 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
       {identity.status === "unvalidated" && (
         <>
           <p>awaiting validation</p>
-          <Button
-            variant={ButtonVariant.PRIMARY}
-            onClick={() => router.push(`/account/logins/${type}/validation`)}
-          >
-            proceed to validation
-          </Button>
+          <Link href={`/account/logins/${type}/validation`}>
+            <a>
+              <Button variant={ButtonVariant.PRIMARY}>
+                proceed to validation
+              </Button>
+            </a>
+          </Link>
         </>
       )}
       {identity.primary && identity.status === "validated" && <p>Primary</p>}
