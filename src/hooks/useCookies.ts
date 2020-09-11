@@ -2,7 +2,7 @@ import useSWR from "swr";
 
 type CookiesValue = {
   data?: {
-    userId: string;
+    userSub: string;
   };
   error?: Error;
 };

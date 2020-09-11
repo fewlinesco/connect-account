@@ -27,7 +27,7 @@ const TestPage: React.FC = () => {
     <button
       onClick={async () => {
         return fetchJson("/api/auth-connect/db-user", HttpVerbs.POST, {
-          userId: data.userId,
+          userId: data.userSub,
         }).catch((error: Error) => {
           throw error;
         });

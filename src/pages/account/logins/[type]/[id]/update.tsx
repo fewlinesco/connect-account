@@ -4,10 +4,8 @@ import React from "react";
 import styled from "styled-components";
 
 import { Identity } from "../../../../../@types/Identity";
-import { AccessToken } from "../../../../../@types/oauth2/OAuth2Tokens";
 import { UpdateIdentity } from "../../../../../components/business/UpdateIdentity";
 import { UpdateIdentityForm } from "../../../../../components/display/fewlines/UpdateIdentityForm";
-import { config, oauth2Client } from "../../../../../config";
 import { OAuth2Error } from "../../../../../errors";
 import { useCookies } from "../../../../../hooks/useCookies";
 import { withSSRLogger } from "../../../../../middleware/withSSRLogger";
@@ -51,15 +49,10 @@ export default UpdateIdentityPage;
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
     try {
-      const accessToken = context.req.session.get("user-sub");
+      const userSub = context.req.session.get("user-sub");
 
-      if (accessToken) {
-        const decoded = await oauth2Client.verifyJWT<AccessToken>(
-          accessToken,
-          config.connectJwtAlgorithm,
-        );
-
-        const identity = await getIdentities(decoded.sub).then((result) => {
+      if (userSub) {
+        const identity = await getIdentities(userSub).then((result) => {
           if (result instanceof Error) {
             throw result;
           }

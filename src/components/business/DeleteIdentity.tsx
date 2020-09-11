@@ -29,7 +29,7 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
   }
 
   const requestData = {
-    userId: data.userId,
+    userId: data.userSub,
     type: type,
     value: value,
   };

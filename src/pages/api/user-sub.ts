@@ -3,8 +3,6 @@ import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
 import { ExtendedRequest } from "../../@types/ExtendedRequest";
-import { AccessToken } from "../../@types/oauth2/OAuth2Tokens";
-import { config, oauth2Client } from "../../config";
 import { withAPIPageLogger } from "../../middleware/withAPIPageLogger";
 import withSession from "../../middleware/withSession";
 import Sentry, { addRequestScopeToSentry } from "../../utils/sentry";
@@ -17,15 +15,10 @@ const handler: Handler = async (
 
   try {
     if (request.method === "GET") {
-      const accessToken = request.session.get("user-sub");
+      const userSub = request.session.get("user-sub");
 
-      const decoded = await oauth2Client.verifyJWT<AccessToken>(
-        accessToken,
-        config.connectJwtAlgorithm,
-      );
-
-      if (decoded) {
-        response.json({ userSub: decoded.sub });
+      if (userSub) {
+        response.json({ userSub });
       } else {
         response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
           Location: request.headers.referer || "/",
