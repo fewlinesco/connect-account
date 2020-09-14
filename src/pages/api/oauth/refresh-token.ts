@@ -27,8 +27,6 @@ const handler: Handler = async (
           userDocumentId,
         );
 
-        console.log(updateResult);
-
         if (updateResult.n === 0) {
           response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
             Location: request.headers.referer || "/",

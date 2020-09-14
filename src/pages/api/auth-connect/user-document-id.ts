@@ -17,8 +17,6 @@ const handler: Handler = async (
     if (request.method === "GET") {
       const userDocumentId = request.session.get("user-document-id");
 
-      console.log(userDocumentId);
-
       if (userDocumentId) {
         response.json({ userDocumentId });
       } else {
