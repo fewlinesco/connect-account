@@ -1,20 +1,16 @@
 import { HttpStatus } from "@fwl/web";
-import { ObjectId } from "mongodb";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
-import { withMongoDB } from "src/middleware/withMongoDB";
 import { fetchJson } from "src/utils/fetchJson";
 import styled from "styled-components";
 
 import { HttpVerbs } from "../../@types/HttpVerbs";
-import { MongoUser } from "../../@types/mongo/User";
 import { oauth2Client, config } from "../../config";
 import { withSSRLogger } from "../../middleware/withSSRLogger";
 import withSession from "../../middleware/withSession";
 import Sentry, { addRequestScopeToSentry } from "../../utils/sentry";
-import { ExtendedGetServerSidePropsContext } from "../../@types/ExtendedGetServerSideProps";
 
 const Account: React.FC = () => {
   return (
@@ -36,58 +32,67 @@ const Account: React.FC = () => {
 export default Account;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
-  withSession(
-    withMongoDB(async (context: ExtendedGetServerSidePropsContext) => {
-      addRequestScopeToSentry(context.req);
+  withSession(async (context) => {
+    addRequestScopeToSentry(context.req);
 
-      try {
-        const userDocumentId = context.req.session.get("user-document-id");
+    try {
+      const userDocumentId = context.req.session.get("user-document-id");
 
-        const user = await collection.findOne({
-          _id: new ObjectId(jsonResponse.data.documentId),
-        });
+      const route = "/api/auth-connect/get-mongo-user";
+      const absoluteURL = config.connectDomain + route;
 
-        if (user) {
-          await oauth2Client
-            .verifyJWT(user.accessToken, config.connectJwtAlgorithm)
-            .catch(async (error) => {
-              if (error.name === "TokenExpiredError") {
-                const body = {
-                  refreshToken: user.refreshToken,
-                  redirectUrl: context.req.url,
-                };
+      const { user } = await fetchJson(absoluteURL, HttpVerbs.POST, {
+        userDocumentId,
+      }).then((response) => response.json());
 
-                const route = "/api/oauth/refresh-token";
-                const absoluteURL = config.connectDomain + route;
+      if (user) {
+        await oauth2Client
+          .verifyJWT(user.accessToken, config.connectJwtAlgorithm)
+          .catch(async (error) => {
+            if (error.name === "TokenExpiredError") {
+              const body = {
+                userDocumentId,
+                refreshToken: user.refreshToken,
+                redirectUrl: context.req.url as string,
+              };
 
-                return await fetchJson(absoluteURL, HttpVerbs.POST, body);
-              } else {
-                throw error;
-              }
-            });
-        } else {
-          context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-          context.res.setHeader("location", context.req.headers.referer || "/");
-          context.res.end();
-        }
+              const route = "/api/oauth/refresh-token";
+              const absoluteURL = config.connectDomain + route;
 
-        return {
-          props: {},
-        };
-      } catch (error) {
-        Sentry.withScope((scope) => {
-          scope.setTag("/pages/account/ SSR", error.name);
-          Sentry.captureException(error);
-        });
+              await fetchJson(absoluteURL, HttpVerbs.POST, body);
 
+              context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+              context.res.setHeader(
+                "location",
+                context.req.headers.referer || "/",
+              );
+              context.res.end();
+            } else {
+              throw error;
+            }
+          });
+      } else {
         context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
         context.res.setHeader("location", context.req.headers.referer || "/");
         context.res.end();
-
-        throw error;
       }
-    }),,
-  ),
+
+      return {
+        props: {},
+      };
+    } catch (error) {
+      Sentry.withScope((scope) => {
+        scope.setTag("/pages/account/ SSR", error.name);
+        Sentry.captureException(error);
+      });
+
+      context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+      context.res.setHeader("location", context.req.headers.referer || "/");
+      context.res.end();
+
+      throw error;
+    }
+  }),
 );
 
 const AccountBox = styled.div`

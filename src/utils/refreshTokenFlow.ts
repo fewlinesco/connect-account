@@ -7,16 +7,12 @@ export async function refreshTokenFlow(refreshToken: string): Promise<void> {
     client_id: oauth2Client.clientID,
     client_secret: oauth2Client.clientSecret,
     refresh_token: refreshToken,
-    grant_type: "authorization_code",
-    scopes: oauth2Client.scopes.join(" "),
+    grant_type: "refresh_token",
+    scope: oauth2Client.scopes.join(" "),
   };
 
-  console.log("refreshTokenFlow payload", payload);
-
-  const route = "/oauth/token";
+  const route = "oauth/token";
   const absoluteURL = config.connectProviderUrl + route;
-
-  console.log("hello");
 
   const jsonResponse = await fetchJson(
     absoluteURL,
@@ -24,7 +20,7 @@ export async function refreshTokenFlow(refreshToken: string): Promise<void> {
     payload,
   ).then((response) => response.json());
 
-  return console.log("refreshTokenFlow response", jsonResponse);
+  console.log("refreshTokenFlow response", jsonResponse);
 
-  // collection.updateOne(_id, { refresh });
+  return jsonResponse;
 }

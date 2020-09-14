@@ -1,5 +1,7 @@
-import { MongoClient, Db } from "mongodb";
-import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
+import { IncomingMessage, ServerResponse } from "http";
+import { Db } from "mongodb";
+import { GetServerSidePropsResult } from "next";
+import { Session } from "next-iron-session";
 import { ParsedUrlQuery } from "querystring";
 
 export type ExtendedGetServerSideProps<
@@ -11,7 +13,11 @@ export type ExtendedGetServerSideProps<
 
 export type ExtendedGetServerSidePropsContext<
   Q extends ParsedUrlQuery = ParsedUrlQuery
-> = GetServerSidePropsContext<Q> & {
-  mongoDbClient?: MongoClient;
-  mongoDb?: Db;
+> = {
+  req: IncomingMessage & { session: Session; mongoDb: Db };
+  res: ServerResponse;
+  params?: Q;
+  query: ParsedUrlQuery;
+  preview?: boolean;
+  previewData?: any;
 };

@@ -28,7 +28,7 @@ const handler: Handler = async (
         "HS256",
       );
 
-      const route = "/api/auth-connect/db-user";
+      const route = "/api/auth-connect/find-or-insert-mongo-user";
       const absoluteURL = config.connectDomain + route;
 
       const jsonResponse = await fetchJson(absoluteURL, HttpVerbs.POST, {

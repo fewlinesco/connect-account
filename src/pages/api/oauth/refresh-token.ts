@@ -17,9 +17,7 @@ const handler: Handler = async (
 
   try {
     if (request.method === "POST") {
-      const { refreshToken, redirectUrl } = request.body;
-
-      const userDocumentId = request.session.get("user-document-id");
+      const { refreshToken, redirectUrl, userDocumentId } = request.body;
 
       if (userDocumentId && refreshToken) {
         await refreshTokenFlow(refreshToken);

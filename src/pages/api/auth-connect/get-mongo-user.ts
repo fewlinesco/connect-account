@@ -1,7 +1,8 @@
 import { HttpStatus } from "@fwl/web";
+import { ObjectId } from "mongodb";
 
 import { Handler } from "../../../@types/ApiPageHandler";
-import { findOrInsertUser } from "../../../command/mongo/findOrInsertUser";
+import { MongoUser } from "../../../@types/mongo/User";
 import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
 import { withMongoDB } from "../../../middleware/withMongoDB";
 import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
@@ -11,21 +12,25 @@ const handler: Handler = async (request, response) => {
 
   try {
     if (request.method === "POST") {
-      const { sub, accessToken, refreshToken } = request.body;
+      const { userDocumentId } = request.body;
 
-      return findOrInsertUser(
-        { sub, accessToken, refreshToken },
-        request.mongoDb,
-      ).then((data) => {
-        response.statusCode = HttpStatus.OK;
-
-        response.setHeader("Content-Type", "application/json");
-        response.json({ data });
-      });
+      return await request.mongoDb
+        .collection("users")
+        .findOne<MongoUser>({
+          _id: new ObjectId(userDocumentId),
+        })
+        .then((user) => {
+          response.statusCode = HttpStatus.OK;
+          response.setHeader("Content-Type", "application/json");
+          response.json({ user });
+        });
     }
   } catch (error) {
     Sentry.withScope((scope) => {
-      scope.setTag("api/auth-connect/db-user", "api/auth-connect/db-user");
+      scope.setTag(
+        "api/auth-connect/get-mongo-user",
+        "api/auth-connect/get-mongo-user",
+      );
       Sentry.captureException(error);
     });
   }
