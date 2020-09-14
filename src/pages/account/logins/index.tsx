@@ -95,7 +95,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           </Flex>
         </IdentitySection>
         <IdentitySection>
-          <h3>Phone numbers:</h3>
+          <h3>Phone numbers</h3>
           {phoneIdentities.length === 0 ? (
             <Value>No phones</Value>
           ) : (
