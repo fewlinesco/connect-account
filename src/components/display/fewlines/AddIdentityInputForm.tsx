@@ -19,7 +19,7 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
   const router = useRouter();
 
   return (
-    <>
+    <Wrapper>
       <Form
         method="post"
         onSubmit={async (event) => {
@@ -41,6 +41,7 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
           onChange={(event) => setIdentity(event.target.value)}
         />
         <Button
+          className="send-button"
           variant={ButtonVariant.PRIMARY}
           type="submit"
         >{`Add ${type}`}</Button>
@@ -51,9 +52,22 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
       >
         Cancel
       </Button>
-    </>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  max-width: 95%;
+  margin: 0 auto;
+
+  .send-button {
+    margin: 1rem 0;
+  }
+
+  button {
+    width: 100%;
+  }
+`;
 
 export const Form = styled.form`
   display: column;

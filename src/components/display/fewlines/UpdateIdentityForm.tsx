@@ -34,7 +34,7 @@ export const UpdateIdentityForm: React.FC<{
           variant={ButtonVariant.PRIMARY}
           type="submit"
         >
-          Send
+          Update {currentIdentity.type}
         </Button>
       </Form>
       <Button
