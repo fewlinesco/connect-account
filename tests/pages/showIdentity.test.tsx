@@ -75,7 +75,9 @@ describe("ShowIdentity", () => {
     );
 
     const updateButton = component.contains(
-      <Button variant={ButtonVariant.PRIMARY}>Edit this email address</Button>,
+      <Button variant={ButtonVariant.PRIMARY}>
+        Update this email address
+      </Button>,
     );
     expect(updateButton).toEqual(true);
   });
@@ -91,7 +93,9 @@ describe("ShowIdentity", () => {
     );
 
     const updateButton = component.contains(
-      <Button variant={ButtonVariant.PRIMARY}>Edit this email address</Button>,
+      <Button variant={ButtonVariant.PRIMARY}>
+        Update this email address
+      </Button>,
     );
     expect(updateButton).toEqual(true);
   });
