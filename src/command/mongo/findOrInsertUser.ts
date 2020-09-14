@@ -1,16 +1,14 @@
-import { ObjectId } from "mongodb";
+import { ObjectId, Db } from "mongodb";
 
 import { oAuth2UserInfo, MongoUser } from "../../@types/mongo/User";
-import { mongoClient } from "../../config";
 
 export async function findOrInsertUser(
   oauthUserInfo: oAuth2UserInfo,
+  mongoDb: Db,
 ): Promise<{ documentId: string }> {
   const { sub } = oauthUserInfo;
 
-  const connectedClient = await mongoClient.connect();
-  const db = connectedClient.db("connect-account-dev");
-  const collection = db.collection<MongoUser>("users");
+  const collection = mongoDb.collection<MongoUser>("users");
 
   const user = await collection.findOne({ sub });
 
@@ -20,19 +18,13 @@ export async function findOrInsertUser(
     const insertResult = await collection.insertOne(oauthUserInfo);
 
     if (insertResult.insertedCount === 0) {
-      connectedClient.close();
-
       throw new Error("User insertion failed");
     }
 
     documentId = insertResult.ops[0]._id.toString();
   } else {
-    connectedClient.close();
-
     documentId = (user._id as ObjectId).toString();
   }
-
-  connectedClient.close();
 
   return { documentId };
 }

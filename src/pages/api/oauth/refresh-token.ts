@@ -3,8 +3,10 @@ import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
 import { ExtendedRequest } from "../../../@types/ExtendedRequest";
+import { config } from "../../../config";
 import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
 import withSession from "../../../middleware/withSession";
+import { refreshTokenFlow } from "../../../utils/refreshTokenFlow";
 import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
 
 const handler: Handler = async (
@@ -14,11 +16,19 @@ const handler: Handler = async (
   addRequestScopeToSentry(request);
 
   try {
-    if (request.method === "GET") {
+    if (request.method === "POST") {
+      const { refreshToken, redirectUrl } = request.body;
+
       const userDocumentId = request.session.get("user-document-id");
 
-      if (userDocumentId) {
-        response.json({ userDocumentId });
+      if (userDocumentId && refreshToken) {
+        await refreshTokenFlow(refreshToken);
+
+        response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
+          Location: `${config.connectDomain}/${redirectUrl}`,
+        });
+
+        response.end();
       } else {
         response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
           Location: request.headers.referer || "/",
@@ -31,14 +41,9 @@ const handler: Handler = async (
     }
   } catch (error) {
     Sentry.withScope((scope) => {
-      scope.setTag(
-        "api/auth-connect/user-document-id",
-        "api/auth-connect/user-document-id",
-      );
+      scope.setTag("api/oauth/callback", "api/oauth/callback");
       Sentry.captureException(error);
     });
-
-    return response.end();
   }
 };
 

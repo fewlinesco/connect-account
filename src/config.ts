@@ -1,10 +1,10 @@
 import OAuth2Client, { OAuth2ClientConstructor } from "@fwl/oauth2";
-import { MongoClient } from "mongodb";
 
 type Config = {
   connectDomain: string;
   connectManagementUrl: string;
   connectMongoUrl: string;
+  connectMongoDbName: string;
   connectManagementApiKey: string;
   connectProviderUrl: string;
   connectApplicationClientId: string;
@@ -21,6 +21,7 @@ const config: Config = {
   connectDomain: "",
   connectManagementUrl: "",
   connectMongoUrl: "",
+  connectMongoDbName: "",
   connectManagementApiKey: "",
   connectProviderUrl: "",
   connectApplicationClientId: "",
@@ -51,6 +52,12 @@ function handleEnvVars(): void {
     process.exit(1);
   }
   config.connectMongoUrl = process.env.MONGO_URL;
+
+  if (!process.env.MONGO_DB_NAME) {
+    console.log("Missing MONGO_DB_NAME");
+    process.exit(1);
+  }
+  config.connectMongoDbName = process.env.MONGO_DB_NAME;
 
   if (!process.env.CONNECT_MANAGEMENT_API_KEY) {
     console.log("Missing CONNECT_MANAGEMENT_API_KEY");
@@ -133,9 +140,4 @@ const oauth2ClientConstructorProps: OAuth2ClientConstructor = {
 
 const oauth2Client = new OAuth2Client(oauth2ClientConstructorProps);
 
-const mongoClient = new MongoClient(config.connectMongoUrl, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-export { config, oauth2Client, mongoClient };
+export { config, oauth2Client };
