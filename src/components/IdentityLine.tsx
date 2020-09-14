@@ -54,20 +54,20 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
           <p>Last used to login on ...</p>
         </IdentityInfo>
       )}
-      {!identity.primary && identity.status === "validated" && (
-        <Button variant={ButtonVariant.SECONDARY}>
-          Make this my primary {identity.type}
-        </Button>
-      )}
       {identity.status === "validated" && (
         <Link href={`/account/logins/${identity.type}/${identity.id}/update`}>
           <a>
             <Button variant={ButtonVariant.PRIMARY}>
-              Edit this{" "}
+              Update this{" "}
               {identity.type === "phone" ? "phone number" : "email address"}
             </Button>
           </a>
         </Link>
+      )}
+      {!identity.primary && identity.status === "validated" && (
+        <Button variant={ButtonVariant.SECONDARY}>
+          Make this my primary {identity.type}
+        </Button>
       )}
     </IdentityBox>
   );

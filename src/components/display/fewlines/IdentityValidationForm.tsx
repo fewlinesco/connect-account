@@ -14,7 +14,7 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
   const router = useRouter();
 
   return (
-    <>
+    <Wrapper>
       <Form method="post">
         <Input
           type="text"
@@ -24,26 +24,49 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
           onChange={(event) => setValidationCode(event.target.value)}
         />
         <Button
+          className="send-button"
           variant={ButtonVariant.PRIMARY}
           type="submit"
         >{`Confirm ${type}`}</Button>
       </Form>
       <Button
+        className="discard-button"
         variant={ButtonVariant.SECONDARY}
         onClick={() => router.push("/account/logins/")}
       >
         Discard all changes
       </Button>
       <p>Didn&apos;t receive code?</p>
-      <Button variant={ButtonVariant.SECONDARY}>
+      <Button className="resend-button" variant={ButtonVariant.SECONDARY}>
         Resend confirmation code
       </Button>
       <AlertBar type={type} />
-    </>
+    </Wrapper>
   );
 };
 
 export default IdentityValidationForm;
+
+const Wrapper = styled.div`
+  max-width: 95%;
+  margin: 0 auto;
+
+  .send-button {
+    margin: 1rem 0;
+  }
+
+  .discard-button {
+    margin: 0 0 1rem 0;
+  }
+
+  .resend-button {
+    margin: 1rem 0;
+  }
+
+  button {
+    width: 100%;
+  }
+`;
 
 const Form = styled.form`
   display: column;
