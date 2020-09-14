@@ -46,7 +46,7 @@ export const AddIdentity: React.FC<AddIdentityProps> = ({ type, children }) => {
       value,
     };
 
-    return fetchJson("api/identities", HttpVerbs.POST, body);
+    return fetchJson("/api/identities", HttpVerbs.POST, body);
   };
 
   return children({ addIdentity, type });

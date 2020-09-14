@@ -5,6 +5,7 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
+import { HttpVerbs } from "../../../@types/HttpVerbs";
 import { Identity } from "../../../@types/Identity";
 import { SortedIdentities } from "../../../@types/SortedIdentities";
 import { AccessToken } from "../../../@types/oauth2/OAuth2Tokens";
@@ -13,6 +14,7 @@ import { OAuth2Error } from "../../../errors";
 import { withSSRLogger } from "../../../middleware/withSSRLogger";
 import withSession from "../../../middleware/withSession";
 import { getIdentities } from "../../../queries/getIdentities";
+import { fetchJson } from "../../../utils/fetchJson";
 import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
 import { sortIdentities } from "../../../utils/sortIdentities";
 
@@ -143,23 +145,51 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     addRequestScopeToSentry(context.req);
 
     try {
-      const accessToken = context.req.session.get("user-sub");
+      const userDocumentId = context.req.session.get("user-document-id");
 
-      if (accessToken) {
-        const decodedJWT = await oauth2Client.verifyJWT<AccessToken>(
-          accessToken,
-          config.connectJwtAlgorithm,
-        );
+      const route = "/api/auth-connect/get-mongo-user";
+      const absoluteURL = config.connectDomain + route;
 
-        const sortedIdentities = await getIdentities(decodedJWT.sub).then(
-          (result) => {
-            if (result instanceof Error) {
-              throw result;
+      const { user } = await fetchJson(absoluteURL, HttpVerbs.POST, {
+        userDocumentId,
+      }).then((response) => response.json());
+
+      if (user) {
+        const decodedJWT = await oauth2Client
+          .verifyJWT<AccessToken>(user.accessToken, config.connectJwtAlgorithm)
+          .catch(async (error) => {
+            if (error.name === "TokenExpiredError") {
+              const body = {
+                userDocumentId,
+                refreshToken: user.refreshToken,
+                redirectUrl: context.req.url as string,
+              };
+
+              const route = "/api/oauth/refresh-token";
+              const absoluteURL = config.connectDomain + route;
+
+              await fetchJson(absoluteURL, HttpVerbs.POST, body);
+
+              context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+              context.res.setHeader(
+                "location",
+                context.req.headers.referer || "/",
+              );
+              context.res.end();
+            } else {
+              throw error;
             }
+          });
 
-            return sortIdentities(result);
-          },
-        );
+        const sortedIdentities = await getIdentities(
+          (decodedJWT as AccessToken).sub,
+        ).then((result) => {
+          if (result instanceof Error) {
+            throw result;
+          }
+
+          return sortIdentities(result);
+        });
 
         return {
           props: {

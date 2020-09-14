@@ -11,6 +11,8 @@ import { withSSRLogger } from "../../../../../src/middleware/withSSRLogger";
 import withSession from "../../../../../src/middleware/withSession";
 import { getIdentities } from "../../../../../src/queries/getIdentities";
 import Sentry from "../../../../../src/utils/sentry";
+import { HttpVerbs } from "../../../../@types/HttpVerbs";
+import { fetchJson } from "../../../../utils/fetchJson";
 
 const ShowIdentity: React.FC<{ identity: Identity }> = ({ identity }) => {
   return <IdentityLine identity={identity} />;
@@ -21,29 +23,67 @@ export default ShowIdentity;
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
     try {
-      const accessToken = context.req.session.get("user-sub");
+      const userDocumentId = context.req.session.get("user-document-id");
 
-      const decoded = await oauth2Client.verifyJWT<AccessToken>(
-        accessToken,
-        config.connectJwtAlgorithm,
-      );
+      const route = "/api/auth-connect/get-mongo-user";
+      const absoluteURL = config.connectDomain + route;
 
-      const identity = await getIdentities(decoded.sub).then((result) => {
-        if (result instanceof Error) {
-          throw result;
-        }
-        const res = result.data?.provider.user.identities.filter(
-          (id) => id.id === context.params.id,
-        )[0];
+      const { user } = await fetchJson(absoluteURL, HttpVerbs.POST, {
+        userDocumentId,
+      }).then((response) => response.json());
 
-        return res;
-      });
+      if (user) {
+        const decodedJWT = await oauth2Client
+          .verifyJWT<AccessToken>(user.accessToken, config.connectJwtAlgorithm)
+          .catch(async (error) => {
+            if (error.name === "TokenExpiredError") {
+              const body = {
+                userDocumentId,
+                refreshToken: user.refreshToken,
+                redirectUrl: context.req.url as string,
+              };
 
-      return {
-        props: {
-          identity,
-        },
-      };
+              const route = "/api/oauth/refresh-token";
+              const absoluteURL = config.connectDomain + route;
+
+              await fetchJson(absoluteURL, HttpVerbs.POST, body);
+
+              context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+              context.res.setHeader(
+                "location",
+                context.req.headers.referer || "/",
+              );
+              context.res.end();
+            } else {
+              throw error;
+            }
+          });
+
+        const identity = await getIdentities(
+          (decodedJWT as AccessToken).sub,
+        ).then((result) => {
+          if (result instanceof Error) {
+            throw result;
+          }
+          const res = result.data?.provider.user.identities.filter(
+            (id) => id.id === context.params.id,
+          )[0];
+
+          return res;
+        });
+
+        return {
+          props: {
+            identity,
+          },
+        };
+      } else {
+        context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+        context.res.setHeader("location", context.req.headers.referer || "/");
+        context.res.end();
+
+        return { props: {} };
+      }
     } catch (error) {
       if (error instanceof OAuth2Error) {
         Sentry.withScope((scope) => {

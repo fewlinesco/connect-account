@@ -3,13 +3,17 @@ import { GetServerSideProps } from "next";
 import React from "react";
 import styled from "styled-components";
 
+import { HttpVerbs } from "../../../../../@types/HttpVerbs";
 import { Identity } from "../../../../../@types/Identity";
+import { AccessToken } from "../../../../../@types/oauth2/OAuth2Tokens";
 import { UpdateIdentity } from "../../../../../components/business/UpdateIdentity";
 import { UpdateIdentityForm } from "../../../../../components/display/fewlines/UpdateIdentityForm";
+import { config, oauth2Client } from "../../../../../config";
 import { OAuth2Error } from "../../../../../errors";
 import { withSSRLogger } from "../../../../../middleware/withSSRLogger";
 import withSession from "../../../../../middleware/withSession";
 import { getIdentities } from "../../../../../queries/getIdentities";
+import { fetchJson } from "../../../../../utils/fetchJson";
 import Sentry from "../../../../../utils/sentry";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
@@ -39,10 +43,45 @@ export default UpdateIdentityPage;
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
     try {
-      const userSub = context.req.session.get("user-sub");
+      const userDocumentId = context.req.session.get("user-document-id");
 
-      if (userSub) {
-        const identity = await getIdentities(userSub).then((result) => {
+      const route = "/api/auth-connect/get-mongo-user";
+      const absoluteURL = config.connectDomain + route;
+
+      const { user } = await fetchJson(absoluteURL, HttpVerbs.POST, {
+        userDocumentId,
+      }).then((response) => response.json());
+
+      if (user) {
+        const decodedJWT = await oauth2Client
+          .verifyJWT<AccessToken>(user.accessToken, config.connectJwtAlgorithm)
+          .catch(async (error) => {
+            if (error.name === "TokenExpiredError") {
+              const body = {
+                userDocumentId,
+                refreshToken: user.refreshToken,
+                redirectUrl: context.req.url as string,
+              };
+
+              const route = "/api/oauth/refresh-token";
+              const absoluteURL = config.connectDomain + route;
+
+              await fetchJson(absoluteURL, HttpVerbs.POST, body);
+
+              context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+              context.res.setHeader(
+                "location",
+                context.req.headers.referer || "/",
+              );
+              context.res.end();
+            } else {
+              throw error;
+            }
+          });
+
+        const identity = await getIdentities(
+          (decodedJWT as AccessToken).sub,
+        ).then((result) => {
           if (result instanceof Error) {
             throw result;
           }
