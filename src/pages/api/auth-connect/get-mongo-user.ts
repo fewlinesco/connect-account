@@ -25,6 +25,10 @@ const handler: Handler = async (request, response) => {
           response.json({ user });
         });
     }
+
+    response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
+
+    return response.end();
   } catch (error) {
     Sentry.withScope((scope) => {
       scope.setTag(

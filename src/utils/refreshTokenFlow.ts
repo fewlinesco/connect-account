@@ -1,8 +1,14 @@
+import { Db, ObjectId } from "mongodb";
+
 import { HttpVerbs } from "../@types/HttpVerbs";
 import { oauth2Client, config } from "../config";
 import { fetchJson } from "./fetchJson";
 
-export async function refreshTokenFlow(refreshToken: string): Promise<void> {
+export async function refreshTokenFlow(
+  refreshToken: string,
+  mongoDb: Db,
+  userDocumentId: string,
+): Promise<{ ok: number; n: number; nModified: number }> {
   const payload = {
     client_id: oauth2Client.clientID,
     client_secret: oauth2Client.clientSecret,
@@ -14,13 +20,18 @@ export async function refreshTokenFlow(refreshToken: string): Promise<void> {
   const route = "oauth/token";
   const absoluteURL = config.connectProviderUrl + route;
 
-  const jsonResponse = await fetchJson(
+  const { refresh_token, access_token } = await fetchJson(
     absoluteURL,
     HttpVerbs.POST,
     payload,
   ).then((response) => response.json());
 
-  console.log("refreshTokenFlow response", jsonResponse);
+  const updateResult = await mongoDb
+    .collection("users")
+    .updateOne(
+      { _id: new ObjectId(userDocumentId) },
+      { $set: { accessToken: access_token, refreshToken: refresh_token } },
+    );
 
-  return jsonResponse;
+  return updateResult.result;
 }

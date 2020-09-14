@@ -5,6 +5,7 @@ import { Handler } from "next-iron-session";
 import { ExtendedRequest } from "../../../@types/ExtendedRequest";
 import { config } from "../../../config";
 import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
+import { withMongoDB } from "../../../middleware/withMongoDB";
 import withSession from "../../../middleware/withSession";
 import { refreshTokenFlow } from "../../../utils/refreshTokenFlow";
 import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
@@ -20,7 +21,21 @@ const handler: Handler = async (
       const { refreshToken, redirectUrl, userDocumentId } = request.body;
 
       if (userDocumentId && refreshToken) {
-        await refreshTokenFlow(refreshToken);
+        const updateResult = await refreshTokenFlow(
+          refreshToken,
+          request.mongoDb,
+          userDocumentId,
+        );
+
+        console.log(updateResult);
+
+        if (updateResult.n === 0) {
+          response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
+            Location: request.headers.referer || "/",
+          });
+
+          response.end();
+        }
 
         response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
           Location: `${config.connectDomain}/${redirectUrl}`,
@@ -31,6 +46,8 @@ const handler: Handler = async (
         response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
           Location: request.headers.referer || "/",
         });
+
+        response.end();
       }
     } else {
       response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
@@ -45,4 +62,4 @@ const handler: Handler = async (
   }
 };
 
-export default withAPIPageLogger(withSession(handler));
+export default withAPIPageLogger(withSession(withMongoDB(handler)));
