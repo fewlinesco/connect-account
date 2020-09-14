@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { IdentityTypes } from "../../../@types/Identity";
-import { Button } from "../../../pages/account/logins/index";
+import { Button, ButtonVariant } from "./Button";
 
 type AddIdentityInputFormProps = {
   addIdentity: (value: string) => Promise<Response>;
@@ -18,7 +18,7 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
   const router = useRouter();
 
   return (
-    <>
+    <Wrapper>
       <Form
         method="post"
         onSubmit={async (event) => {
@@ -39,15 +39,37 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
           value={identity}
           onChange={(event) => setIdentity(event.target.value)}
         />
-        <SendInput type="submit" value={`Add ${type}`} />
+        <Button
+          className="send-button"
+          variant={ButtonVariant.PRIMARY}
+          type="submit"
+        >{`Add ${type}`}</Button>
       </Form>
-      <Button onClick={() => router.push("/account/logins/")}>Cancel</Button>
-    </>
+      <Button
+        variant={ButtonVariant.SECONDARY}
+        onClick={() => router.push("/account/logins/")}
+      >
+        Cancel
+      </Button>
+    </Wrapper>
   );
 };
 
+const Wrapper = styled.div`
+  max-width: 95%;
+  margin: 0 auto;
+
+  .send-button {
+    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
+  }
+
+  button {
+    width: 100%;
+  }
+`;
+
 export const Form = styled.form`
-  display: flex;
+  display: column;
   align-items: center;
 `;
 
@@ -60,9 +82,4 @@ export const Input = styled.input`
   &:focus {
     outline: none;
   }
-`;
-
-const SendInput = styled.input`
-  color: ${({ theme }) => theme.colors.green};
-  padding: 0.25em 1em;
 `;

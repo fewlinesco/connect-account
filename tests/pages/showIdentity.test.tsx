@@ -7,11 +7,12 @@ import React from "react";
 import { ThemeProvider } from "styled-components";
 
 import { ReceivedIdentityTypes, Identity } from "../../src/@types/Identity";
-import { Button } from "../../src/components/IdentityLine";
 import { Layout } from "../../src/components/Layout";
-import { DeleteButton } from "../../src/components/display/fewlines/DeleteButton";
+import {
+  Button,
+  ButtonVariant,
+} from "../../src/components/display/fewlines/Button";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
-import { EditIcon } from "../../src/design-system/icons/EditIcon";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";
 import ShowIdentity from "../../src/pages/account/logins/[type]/[id]";
@@ -74,8 +75,12 @@ describe("ShowIdentity", () => {
       </ThemeProvider>,
     );
 
-    const updateButton = component.find(EditIcon);
-    expect(updateButton).toHaveLength(1);
+    const updateButton = component.contains(
+      <Button variant={ButtonVariant.PRIMARY}>
+        Update this email address
+      </Button>,
+    );
+    expect(updateButton).toEqual(true);
   });
 
   test("it should display the update button for a primary identity", () => {
@@ -88,8 +93,12 @@ describe("ShowIdentity", () => {
       </ThemeProvider>,
     );
 
-    const updateButton = component.find(EditIcon);
-    expect(updateButton).toHaveLength(1);
+    const updateButton = component.contains(
+      <Button variant={ButtonVariant.PRIMARY}>
+        Update this email address
+      </Button>,
+    );
+    expect(updateButton).toEqual(true);
   });
 
   test("it should display the delete button for a non primary identity", () => {
@@ -102,8 +111,11 @@ describe("ShowIdentity", () => {
       </ThemeProvider>,
     );
 
-    const deleteButton = component.find(DeleteButton);
+    const deleteButton = component
+      .find(Button)
+      .find({ variant: ButtonVariant.GHOST });
     expect(deleteButton).toHaveLength(1);
+    expect(deleteButton.text()).toEqual("Delete this email address");
   });
 
   test("it should not display the delete button for a primary identity", () => {
@@ -116,7 +128,9 @@ describe("ShowIdentity", () => {
       </ThemeProvider>,
     );
 
-    const deleteButton = component.find(DeleteButton);
+    const deleteButton = component
+      .find(Button)
+      .find({ variant: ButtonVariant.GHOST });
     expect(deleteButton).toHaveLength(0);
   });
 
@@ -132,7 +146,9 @@ describe("ShowIdentity", () => {
 
     const primaryTag = component.contains(<p>Primary</p>);
     const makeThisPrimaryButton = component.contains(
-      <Button>Make this my primary email</Button>,
+      <Button variant={ButtonVariant.SECONDARY}>
+        Make this my primary email
+      </Button>,
     );
     expect(primaryTag).toEqual(false);
     expect(makeThisPrimaryButton).toEqual(true);
@@ -149,7 +165,9 @@ describe("ShowIdentity", () => {
     );
 
     const makeThisPrimaryButton = component.contains(
-      <Button>Make this my primary email</Button>,
+      <Button variant={ButtonVariant.SECONDARY}>
+        Make this my primary email
+      </Button>,
     );
     const primaryTag = component.contains(<p>Primary</p>);
     expect(primaryTag).toEqual(true);
@@ -169,9 +187,10 @@ describe("ShowIdentity", () => {
     const awaitingValidationTag = component.contains(
       <p>awaiting validation</p>,
     );
-    const validationButton = component.find(Button);
-    expect(validationButton).toHaveLength(1);
-    expect(validationButton.at(0).text()).toEqual("proceed to validation");
+    const validationButton = component.contains(
+      <Button variant={ButtonVariant.PRIMARY}>proceed to validation</Button>,
+    );
+    expect(validationButton).toEqual(true);
     expect(awaitingValidationTag).toEqual(true);
   });
 
@@ -186,7 +205,9 @@ describe("ShowIdentity", () => {
     );
 
     const makeThisPrimaryButton = component.contains(
-      <Button>Make this my primary email</Button>,
+      <Button variant={ButtonVariant.SECONDARY}>
+        Make this my primary email
+      </Button>,
     );
     expect(makeThisPrimaryButton).toEqual(false);
   });

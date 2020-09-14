@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
@@ -9,57 +8,65 @@ import {
   ReceivedIdentityTypes,
 } from "../@types/Identity";
 import { DeleteIdentity } from "../components/business/DeleteIdentity";
-import { DeleteButton } from "../components/display/fewlines/DeleteButton";
-import { EditIcon } from "../design-system/icons/EditIcon";
+import { Button, ButtonVariant } from "./display/fewlines/Button";
 
 type IdentityLineProps = {
   identity: Identity;
 };
 
 export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
-  const { value, type, primary } = identity;
+  const { id, primary, status, type, value } = identity;
   const { EMAIL } = ReceivedIdentityTypes;
-  const router = useRouter();
 
   return (
     <IdentityBox key={value}>
       <Flex>
         <Value>{value}</Value>
-        <Link href={`/account/logins/${identity.type}/${identity.id}/update`}>
-          <a>
-            <EditIcon />
-          </a>
-        </Link>
-        {!primary && (
-          <DeleteIdentity
-            type={type === EMAIL ? IdentityTypes.EMAIL : IdentityTypes.PHONE}
-            value={value}
-          >
-            {({ deleteIdentity }) => (
-              <DeleteButton deleteIdentity={deleteIdentity} />
-            )}
-          </DeleteIdentity>
-        )}
       </Flex>
-      {identity.status === "unvalidated" && (
+      {status === "unvalidated" && (
         <>
           <p>awaiting validation</p>
-          <Button
-            onClick={() => router.push(`/account/logins/${type}/validation`)}
-          >
-            proceed to validation
-          </Button>
+          <Link href={`/account/logins/${type}/validation`}>
+            <a>
+              <Button variant={ButtonVariant.PRIMARY}>
+                proceed to validation
+              </Button>
+            </a>
+          </Link>
         </>
       )}
-      {identity.primary && identity.status === "validated" && <p>Primary</p>}
-      {identity.status === "validated" && (
+      {primary && status === "validated" && <p>Primary</p>}
+      {status === "validated" && (
         <IdentityInfo>
           <p>Added on ...</p>
           <p>Last used to login on ...</p>
         </IdentityInfo>
       )}
-      {!identity.primary && identity.status === "validated" && (
-        <Button>Make this my primary {identity.type}</Button>
+      {status === "validated" && (
+        <Link href={`/account/logins/${type}/${id}/update`}>
+          <a>
+            <Button variant={ButtonVariant.PRIMARY}>
+              Update this {type === "phone" ? "phone number" : "email address"}
+            </Button>
+          </a>
+        </Link>
+      )}
+      {!primary && status === "validated" && (
+        <Button variant={ButtonVariant.SECONDARY}>
+          Make this my primary {type}
+        </Button>
+      )}
+      {!primary && (
+        <DeleteIdentity
+          type={type === EMAIL ? IdentityTypes.EMAIL : IdentityTypes.PHONE}
+          value={value}
+        >
+          {({ deleteIdentity }) => (
+            <Button variant={ButtonVariant.GHOST} onClick={deleteIdentity}>
+              Delete this {type === "phone" ? "phone number" : "email address"}
+            </Button>
+          )}
+        </DeleteIdentity>
       )}
     </IdentityBox>
   );
@@ -67,6 +74,11 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
 
 const IdentityBox = styled.div`
   padding: ${({ theme }) => theme.spaces.component.xs};
+
+  button {
+    margin-bottom: ${({ theme }) => theme.spaces.component.xxs};
+    width: 100%;
+  }
 `;
 
 const IdentityInfo = styled.div`
@@ -83,25 +95,4 @@ const Value = styled.p`
 const Flex = styled.div`
   display: flex;
   align-items: center;
-`;
-
-export const Button = styled.button`
-  padding: 0.5rem;
-  margin-right: 1rem;
-  border-radius: ${({ theme }) => theme.radii[0]};
-  background-color: ${({ theme }) => theme.colors.green};
-  color: ${({ theme }) => theme.colors.green};
-  transition: ${({ theme }) => theme.transitions.quick};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  &:hover {
-    cursor: pointer;
-    background-color: ${({ theme }) => theme.colors.green}};
-    color: ${({ theme }) => theme.colors.contrastCopy};
-  }
-  &:active,
-  &:focus {
-    outline: none;
-    background-color: ${({ theme }) => theme.colors.green}};
-    color: ${({ theme }) => theme.colors.contrastCopy};
-  }
 `;

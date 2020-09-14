@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { IdentityTypes } from "../../../@types/Identity";
 import AlertBar from "./AlertBar";
+import { Button, ButtonVariant } from "./Button";
 
 const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
   type,
@@ -12,7 +13,7 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
   const router = useRouter();
 
   return (
-    <>
+    <Wrapper>
       <Form method="post">
         <Input
           type="text"
@@ -21,43 +22,53 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
           value={validationCode}
           onChange={(event) => setValidationCode(event.target.value)}
         />
-        <SendInput type="submit" value={`Confirm ${type}`} />
+        <Button
+          className="send-button"
+          variant={ButtonVariant.PRIMARY}
+          type="submit"
+        >{`Confirm ${type}`}</Button>
       </Form>
-      <Button onClick={() => router.push("/account/logins/")}>
+      <Button
+        className="discard-button"
+        variant={ButtonVariant.SECONDARY}
+        onClick={() => router.push("/account/logins/")}
+      >
         Discard all changes
       </Button>
       <p>Didn&apos;t receive code?</p>
-      <Button>Resend confirmation code</Button>
+      <Button className="resend-button" variant={ButtonVariant.SECONDARY}>
+        Resend confirmation code
+      </Button>
       <AlertBar type={type} />
-    </>
+    </Wrapper>
   );
 };
 
 export default IdentityValidationForm;
 
-export const Button = styled.button`
-  padding: 0.5rem;
-  margin-right: 1rem;
-  border-radius: ${({ theme }) => theme.radii[0]};
-  background-color: transparent;
-  color: ${({ theme }) => theme.colors.green};
-  transition: ${({ theme }) => theme.transitions.quick};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  &:hover {
-    cursor: pointer;
-    background-color: ${({ theme }) => theme.colors.green};
-    color: ${({ theme }) => theme.colors.contrastCopy};
+const Wrapper = styled.div`
+  max-width: 95%;
+  margin: 0 auto;
+
+  button {
+    width: 100%;
   }
-  &:active,
-  &:focus {
-    outline: none;
-    background-color: ${({ theme }) => theme.colors.green};
-    color: ${({ theme }) => theme.colors.contrastCopy};
+
+  .send-button {
+    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
+  }
+
+  .discard-button {
+    margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
+  }
+
+  .resend-button {
+    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
   }
 `;
 
 const Form = styled.form`
-  display: flex;
+  display: column;
   align-items: center;
 `;
 
@@ -70,9 +81,4 @@ const Input = styled.input`
   &:focus {
     outline: none;
   }
-`;
-
-const SendInput = styled.input`
-  color: ${({ theme }) => theme.colors.green};
-  padding: 0.25em 1em;
 `;
