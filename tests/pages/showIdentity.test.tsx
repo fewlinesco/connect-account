@@ -110,8 +110,11 @@ describe("ShowIdentity", () => {
       </ThemeProvider>,
     );
 
-    const deleteButton = component.find(DeleteButton);
+    const deleteButton = component
+      .find(Button)
+      .find({ variant: ButtonVariant.GHOST });
     expect(deleteButton).toHaveLength(1);
+    expect(deleteButton.text()).toEqual("Delete this email address");
   });
 
   test("it should not display the delete button for a primary identity", () => {
@@ -124,7 +127,9 @@ describe("ShowIdentity", () => {
       </ThemeProvider>,
     );
 
-    const deleteButton = component.find(DeleteButton);
+    const deleteButton = component
+      .find(Button)
+      .find({ variant: ButtonVariant.GHOST });
     expect(deleteButton).toHaveLength(0);
   });
 

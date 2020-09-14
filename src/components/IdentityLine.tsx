@@ -9,7 +9,6 @@ import {
   ReceivedIdentityTypes,
 } from "../@types/Identity";
 import { DeleteIdentity } from "../components/business/DeleteIdentity";
-import { DeleteButton } from "../components/display/fewlines/DeleteButton";
 import { Button } from "./display/fewlines/Button";
 
 type IdentityLineProps = {
@@ -17,25 +16,15 @@ type IdentityLineProps = {
 };
 
 export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
-  const { value, type, primary } = identity;
+  const { id, primary, status, type, value } = identity;
   const { EMAIL } = ReceivedIdentityTypes;
 
   return (
     <IdentityBox key={value}>
       <Flex>
         <Value>{value}</Value>
-        {!primary && (
-          <DeleteIdentity
-            type={type === EMAIL ? IdentityTypes.EMAIL : IdentityTypes.PHONE}
-            value={value}
-          >
-            {({ deleteIdentity }) => (
-              <DeleteButton deleteIdentity={deleteIdentity} />
-            )}
-          </DeleteIdentity>
-        )}
       </Flex>
-      {identity.status === "unvalidated" && (
+      {status === "unvalidated" && (
         <>
           <p>awaiting validation</p>
           <Link href={`/account/logins/${type}/validation`}>
@@ -47,33 +36,38 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
           </Link>
         </>
       )}
-      {identity.primary && identity.status === "validated" && <p>Primary</p>}
-      {identity.status === "validated" && (
+      {primary && status === "validated" && <p>Primary</p>}
+      {status === "validated" && (
         <IdentityInfo>
           <p>Added on ...</p>
           <p>Last used to login on ...</p>
         </IdentityInfo>
       )}
-      {identity.status === "validated" && (
-        <Link href={`/account/logins/${identity.type}/${identity.id}/update`}>
+      {status === "validated" && (
+        <Link href={`/account/logins/${type}/${id}/update`}>
           <a>
             <Button variant={ButtonVariant.PRIMARY}>
-              Update this{" "}
-              {identity.type === "phone" ? "phone number" : "email address"}
+              Update this {type === "phone" ? "phone number" : "email address"}
             </Button>
           </a>
         </Link>
       )}
-      {!identity.primary && identity.status === "validated" && (
+      {!primary && status === "validated" && (
         <Button variant={ButtonVariant.SECONDARY}>
-          Make this my primary {identity.type}
+          Make this my primary {type}
         </Button>
       )}
-      {!identity.primary && (
-        <Button variant={ButtonVariant.GHOST}>
-          Delete this{" "}
-          {identity.type === "phone" ? "phone number" : "email address"}
-        </Button>
+      {!primary && (
+        <DeleteIdentity
+          type={type === EMAIL ? IdentityTypes.EMAIL : IdentityTypes.PHONE}
+          value={value}
+        >
+          {({ deleteIdentity }) => (
+            <Button variant={ButtonVariant.GHOST} onClick={deleteIdentity}>
+              Delete this {type === "phone" ? "phone number" : "email address"}
+            </Button>
+          )}
+        </DeleteIdentity>
       )}
     </IdentityBox>
   );
