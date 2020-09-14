@@ -61,7 +61,7 @@ const Wrapper = styled.div`
   margin: 0 auto;
 
   .send-button {
-    margin: 1rem 0;
+    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
   }
 
   button {
