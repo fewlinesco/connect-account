@@ -51,6 +51,10 @@ const Wrapper = styled.div`
   max-width: 95%;
   margin: 0 auto;
 
+  button {
+    width: 100%;
+  }
+
   .send-button {
     margin: ${({ theme }) => theme.spaces.component.xxs} 0;
   }
@@ -61,10 +65,6 @@ const Wrapper = styled.div`
 
   .resend-button {
     margin: ${({ theme }) => theme.spaces.component.xxs} 0;
-  }
-
-  button {
-    width: 100%;
   }
 `;
 

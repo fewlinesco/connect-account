@@ -8,7 +8,7 @@ interface ButtonProps {
 
 export const Button = styled.button<ButtonProps>`
   height: 4rem;
-  border-radius: 0.2rem;
+  border-radius: ${({ theme }) => theme.radii[0]};
   font-size: ${({ theme }) => theme.fontSizes.s};
 
   ${(props) =>
