@@ -30,7 +30,7 @@ export const AddIdentity: React.FC<AddIdentityProps> = ({ type, children }) => {
       userDocumentId,
     })
       .then((response) => response.json())
-      .then((x: string) => setUserSub(x));
+      .then((jsonResponse: string) => setUserSub(jsonResponse));
   }
 
   React.useEffect(() => {

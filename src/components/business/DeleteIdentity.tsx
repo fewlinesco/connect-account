@@ -34,7 +34,7 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
       userDocumentId,
     })
       .then((response) => response.json())
-      .then((x: string) => setUserSub(x));
+      .then((jsonResponse: string) => setUserSub(jsonResponse));
   }
 
   React.useEffect(() => {

@@ -154,10 +154,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         userDocumentId,
       }).then((response) => response.json());
 
-      console.log(user);
-
       if (user) {
-        console.log(user);
         const decodedJWT = await oauth2Client
           .verifyJWT<AccessToken>(user.accessToken, config.connectJwtAlgorithm)
           .catch(async (error) => {

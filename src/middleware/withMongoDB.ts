@@ -17,7 +17,9 @@ export function withMongoDB(
     request: ExtendedRequest,
     response: NextApiResponse,
   ): Promise<void> => {
-    if (!mongoClient.isConnected()) await mongoClient.connect();
+    if (!mongoClient.isConnected()) {
+      await mongoClient.connect();
+    }
 
     request.mongoDb = mongoClient.db(config.connectMongoDbName);
 
