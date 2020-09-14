@@ -69,6 +69,12 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
           Make this my primary {identity.type}
         </Button>
       )}
+      {!identity.primary && (
+        <Button variant={ButtonVariant.GHOST}>
+          Delete this{" "}
+          {identity.type === "phone" ? "phone number" : "email address"}
+        </Button>
+      )}
     </IdentityBox>
   );
 };
@@ -77,7 +83,7 @@ const IdentityBox = styled.div`
   padding: ${({ theme }) => theme.spaces.component.xs};
 
   button {
-    margin-bottom: ${({ theme }) => theme.spaces.component.xs};
+    margin-bottom: ${({ theme }) => theme.spaces.component.xxs};
     width: 100%;
   }
 `;
