@@ -2,10 +2,9 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { ButtonVariant } from "../../../@types/ButtonVariant";
 import { IdentityTypes } from "../../../@types/Identity";
 import AlertBar from "./AlertBar";
-import { Button } from "./Button";
+import { Button, ButtonVariant } from "./Button";
 
 const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
   type,

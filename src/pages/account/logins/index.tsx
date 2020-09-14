@@ -5,10 +5,12 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { ButtonVariant } from "../../../@types/ButtonVariant";
 import { Identity } from "../../../@types/Identity";
 import { SortedIdentities } from "../../../@types/SortedIdentities";
-import { Button } from "../../../components/display/fewlines/Button";
+import {
+  Button,
+  ButtonVariant,
+} from "../../../components/display/fewlines/Button";
 import { config, oauth2Client } from "../../../config";
 import { OAuth2Error } from "../../../errors";
 import { withSSRLogger } from "../../../middleware/withSSRLogger";

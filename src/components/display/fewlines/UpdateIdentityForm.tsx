@@ -2,9 +2,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { ButtonVariant } from "../../../@types/ButtonVariant";
 import { Identity } from "../../../@types/Identity";
-import { Button } from "./Button";
+import { Button, ButtonVariant } from "./Button";
 
 export const UpdateIdentityForm: React.FC<{
   updateIdentity: (newValue: string) => Promise<void>;

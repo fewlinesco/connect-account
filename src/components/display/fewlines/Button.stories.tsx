@@ -1,7 +1,6 @@
 import React from "react";
 
-import { ButtonVariant } from "../../../@types/ButtonVariant";
-import { Button } from "./Button";
+import { Button, ButtonVariant } from "./Button";
 
 export default { title: "Button", component: Button };
 

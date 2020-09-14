@@ -2,9 +2,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { ButtonVariant } from "../../../@types/ButtonVariant";
 import { IdentityTypes } from "../../../@types/Identity";
-import { Button } from "./Button";
+import { Button, ButtonVariant } from "./Button";
 
 type AddIdentityInputFormProps = {
   addIdentity: (value: string) => Promise<Response>;

@@ -6,10 +6,12 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { ButtonVariant } from "../../src/@types/ButtonVariant";
 import { ReceivedIdentityTypes, Identity } from "../../src/@types/Identity";
 import { Layout } from "../../src/components/Layout";
-import { Button } from "../../src/components/display/fewlines/Button";
+import {
+  Button,
+  ButtonVariant,
+} from "../../src/components/display/fewlines/Button";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";

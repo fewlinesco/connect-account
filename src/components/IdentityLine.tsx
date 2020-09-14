@@ -2,14 +2,13 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { ButtonVariant } from "../@types/ButtonVariant";
 import {
   IdentityTypes,
   Identity,
   ReceivedIdentityTypes,
 } from "../@types/Identity";
 import { DeleteIdentity } from "../components/business/DeleteIdentity";
-import { Button } from "./display/fewlines/Button";
+import { Button, ButtonVariant } from "./display/fewlines/Button";
 
 type IdentityLineProps = {
   identity: Identity;
