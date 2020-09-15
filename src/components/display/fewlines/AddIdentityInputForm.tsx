@@ -2,13 +2,13 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { IdentityTypes } from "../../../@types/Identity";
+import { ReceivedIdentityTypes } from "../../../@types/Identity";
 import { Button, ButtonVariant } from "./Button";
 import { Input } from "./Input";
 
 type AddIdentityInputFormProps = {
   addIdentity: (value: string) => Promise<Response>;
-  type: IdentityTypes;
+  type: ReceivedIdentityTypes;
 };
 
 export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
@@ -33,6 +33,7 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
             });
         }}
       >
+        <p>{type === "phone" ? "phone number" : "email address"} *</p>
         <Input
           type="text"
           name="value"
