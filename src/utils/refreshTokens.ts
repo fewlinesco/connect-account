@@ -1,6 +1,6 @@
-import { HttpVerbs } from "../@types/HttpVerbs";
-import { config } from "../config";
-import { fetchJson } from "./fetchJson";
+import { HttpVerbs } from "@src/@types/HttpVerbs";
+import { config } from "@src/config";
+import { fetchJson } from "@src/utils/fetchJson";
 
 export async function refreshTokens(
   body: Record<string, string | number>,

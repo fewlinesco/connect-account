@@ -1,8 +1,8 @@
 import { Db, ObjectId } from "mongodb";
 
-import { HttpVerbs } from "../src/@types/HttpVerbs";
-import { oauth2Client, config } from "../src/config";
-import { fetchJson } from "../src/utils/fetchJson";
+import { HttpVerbs } from "@src/@types/HttpVerbs";
+import { oauth2Client, config } from "@src/config";
+import { fetchJson } from "@src/utils/fetchJson";
 
 export async function refreshTokensFlow(
   refreshToken: string,

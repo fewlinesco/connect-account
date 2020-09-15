@@ -1,5 +1,4 @@
 import { HttpStatus } from "@fwl/web";
-import { refreshTokensFlow } from "@lib/refreshTokensFlow";
 import type { NextApiResponse } from "next";
 import type { Handler } from "next-iron-session";
 
@@ -9,6 +8,7 @@ import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
 import { withMongoDB } from "../../../middleware/withMongoDB";
 import withSession from "../../../middleware/withSession";
 import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
+import { refreshTokensFlow } from "@lib/refreshTokensFlow";
 
 const handler: Handler = async (
   request: ExtendedRequest,

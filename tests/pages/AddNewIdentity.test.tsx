@@ -5,18 +5,18 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { ReceivedIdentityTypes } from "../../src/@types/Identity";
-import { Layout } from "../../src/components/Layout";
+import { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { Layout } from "@src/components/Layout";
 import {
-  AddIdentityInputForm,
+  // AddIdentityInputForm,
   Form,
-} from "../../src/components/display/fewlines/AddIdentityInputForm";
-import { Input } from "../../src/components/display/fewlines/Input";
-import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
-import { lightTheme } from "../../src/design-system/theme/lightTheme";
-import { useCookies } from "../../src/hooks/useCookies";
-import AddNewIdentity from "../../src/pages/account/logins/[type]/new";
-import * as fetchJson from "../../src/utils/fetchJson";
+} from "@src/components/display/fewlines/AddIdentityInputForm";
+// import { Input } from "@src/components/display/fewlines/Input";
+import { GlobalStyle } from "@src/design-system/globals/globalStyle";
+import { lightTheme } from "@src/design-system/theme/lightTheme";
+import { useCookies } from "@src/hooks/useCookies";
+import AddNewIdentity from "@src/pages/account/logins/[type]/new";
+// import * as fetchJson from "@src/utils/fetchJson";
 
 enableFetchMocks();
 

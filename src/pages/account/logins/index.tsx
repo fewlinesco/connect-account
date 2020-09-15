@@ -5,9 +5,9 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
+import type { Identity } from "../../../@types/Identity";
 import type { SortedIdentities } from "../../../@types/SortedIdentities";
 import type { AccessToken } from "../../../@types/oauth2/OAuth2Tokens";
-import { Identity } from "../../../@types/Identity";
 import {
   Button,
   ButtonVariant,

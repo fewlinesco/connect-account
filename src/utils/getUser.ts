@@ -1,6 +1,6 @@
-import { HttpVerbs } from "../@types/HttpVerbs";
-import type { MongoUser } from "../@types/mongo/User";
-import { config } from "../config";
+import { HttpVerbs } from "@src/@types/HttpVerbs";
+import type { MongoUser } from "@src/@types/mongo/User";
+import { config } from "@src/config";
 
 export async function getUser(cookie: string): Promise<MongoUser> {
   const route = "/api/auth-connect/get-user";
