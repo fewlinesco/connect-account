@@ -97,64 +97,65 @@ describe("getServerSideProps", () => {
     );
   });
 
-  // it("should get the mongo document id from the session and call management GraphQL endpoint", async () => {
-  //   const mockedSortedResponse = {
-  //     emailIdentities: [
-  //       {
-  //         id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-  //         primary: true,
-  //         status: "validated",
-  //         type: ReceivedIdentityTypes.EMAIL,
-  //         value: "test@test.test",
-  //       },
-  //     ],
-  //     phoneIdentities: [
-  //       {
-  //         id: "7f8d168a-3f65-4636-9acb-7720a212680e",
-  //         primary: true,
-  //         status: "validated",
-  //         type: ReceivedIdentityTypes.PHONE,
-  //         value: "0123456789",
-  //       },
-  //     ],
-  //   };
+  it("should get the mongo document id from the session and call management GraphQL endpoint", async () => {
+    const mockedSortedResponse = {
+      emailIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: ReceivedIdentityTypes.EMAIL,
+          value: "test@test.test",
+        },
+      ],
+      phoneIdentities: [
+        {
+          id: "7f8d168a-3f65-4636-9acb-7720a212680e",
+          primary: true,
+          status: "validated",
+          type: ReceivedIdentityTypes.PHONE,
+          value: "0123456789",
+        },
+      ],
+    };
 
-  //   const sealedJWT = await seal(
-  //     {
-  //       persistent: {
-  //         "user-session-id": "42",
-  //       },
-  //       flash: {},
-  //     },
-  //     config.connectAccountSessionSalt,
-  //     defaults,
-  //   );
+    const sealedJWT = await seal(
+      {
+        persistent: {
+          "user-session-id": "42",
+          "user-sub": "4a5f8589-0d91-4a69-924a-6f227a69666d",
+        },
+        flash: {},
+      },
+      config.connectAccountSessionSalt,
+      defaults,
+    );
 
-  //   mockedContext.req.headers = {
-  //     cookie: `connect-account-session=${sealedJWT}`,
-  //   };
+    mockedContext.req.headers = {
+      cookie: `connect-account-session=${sealedJWT}`,
+    };
 
-  //   mockedContext.req.rawHeaders = [
-  //     "Cookie",
-  //     `connect-account-session=${sealedJWT}`,
-  //   ];
+    mockedContext.req.rawHeaders = [
+      "Cookie",
+      `connect-account-session=${sealedJWT}`,
+    ];
 
-  //   fetch
-  //     .once(
-  //       JSON.stringify({
-  //         data: { user: { sub: "299d268e-3e19-4486-9be7-29c539d241ac" } },
-  //       }),
-  //     )
-  //     .once(JSON.stringify(mockedResponse));
+    fetch
+      .once(
+        JSON.stringify({
+          user: { sub: "299d268e-3e19-4486-9be7-29c539d241ac" },
+        }),
+      )
+      .once(JSON.stringify(mockedResponse));
 
-  //   const response = await getServerSideProps(mockedContext);
+    const response = await getServerSideProps(mockedContext);
 
-  //   expect(response).toEqual(
-  //     expect.objectContaining({
-  //       props: {
-  //         sortedIdentities: mockedSortedResponse,
-  //       },
-  //     }),
-  //   );
-  // });
+    expect(response).toEqual(
+      expect.objectContaining({
+        props: {
+          sortedIdentities: mockedSortedResponse,
+        },
+      }),
+    );
+  });
 });
