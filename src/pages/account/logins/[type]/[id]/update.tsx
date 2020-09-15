@@ -43,14 +43,14 @@ export default UpdateIdentityPage;
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
     try {
-      const userDocumentId = context.req.session.get("user-document-id");
+      const userDocumentId = context.req.session.get("user-session-id");
 
-      const route = "/api/auth-connect/get-mongo-user";
+      const route = "/api/auth-connect/get-user";
       const absoluteURL = config.connectDomain + route;
 
-      const { user } = await fetchJson(absoluteURL, HttpVerbs.POST, {
-        userDocumentId,
-      }).then((response) => response.json());
+      const { user } = await fetch(absoluteURL).then((response) =>
+        response.json(),
+      );
 
       if (user) {
         const decodedJWT = await oauth2Client

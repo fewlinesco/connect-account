@@ -16,7 +16,7 @@
     "noImplicitReturns": true,
     "baseUrl": ".",
     "paths": {
-      "test-utils": ["./tests/config/test-utils"]
+      "@lib/*": ["lib/*"]
     },
     "sourceMap": true
   },

@@ -25,10 +25,10 @@ const handler: Handler = async (
 
       const decodedAccessToken = await oauth2Client.verifyJWT<AccessToken>(
         tokens.access_token,
-        "HS256",
+        config.connectJwtAlgorithm,
       );
 
-      const route = "/api/auth-connect/find-or-insert-mongo-user";
+      const route = "/api/auth-connect/find-or-insert-user";
       const absoluteURL = config.connectDomain + route;
 
       const jsonResponse = await fetchJson(absoluteURL, HttpVerbs.POST, {
@@ -37,7 +37,8 @@ const handler: Handler = async (
         refreshToken: tokens.refresh_token,
       }).then((response) => response.json());
 
-      request.session.set("user-document-id", jsonResponse.data.documentId);
+      request.session.set("user-session-id", jsonResponse.data.documentId);
+      request.session.set("user-sub", decodedAccessToken.sub);
 
       await request.session.save();
 

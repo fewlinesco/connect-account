@@ -19,7 +19,6 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
 }) => {
   const { data, error } = useCookies();
   const router = useRouter();
-  const [userSub, setUserSub] = React.useState("");
 
   if (error) {
     return <div>Failed to load</div>;
@@ -29,28 +28,14 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
     return null;
   }
 
-  async function getMongoUser(userDocumentId: string): Promise<void> {
-    await fetchJson("/api/get-mongo-user", HttpVerbs.POST, {
-      userDocumentId,
-    })
-      .then((response) => response.json())
-      .then((jsonResponse: string) => setUserSub(jsonResponse));
-  }
-
-  React.useEffect(() => {
-    if (data) {
-      getMongoUser(data.userDocumentId);
-    }
-  }, [userSub, data]);
-
   const requestData = {
-    userId: userSub,
+    userId: data.userSub,
     type: type,
     value: value,
   };
 
   const deleteIdentity = async (): Promise<void> => {
-    return fetchJson("/api/identities", HttpVerbs.DELETE, requestData)
+    return fetchJson("api/identities", HttpVerbs.DELETE, requestData)
       .then(() => {
         router && router.push("/account/logins/");
       })

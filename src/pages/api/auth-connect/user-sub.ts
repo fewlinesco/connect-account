@@ -1,12 +1,9 @@
 import { HttpStatus } from "@fwl/web";
-import { refreshTokenFlow } from "@lib/refreshTokenFlow";
 import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
 import { ExtendedRequest } from "../../../@types/ExtendedRequest";
-import { config } from "../../../config";
 import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
-import { withMongoDB } from "../../../middleware/withMongoDB";
 import withSession from "../../../middleware/withSession";
 import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
 
@@ -17,23 +14,15 @@ const handler: Handler = async (
   addRequestScopeToSentry(request);
 
   try {
-    if (request.method === "POST") {
-      const { refreshToken, redirectUrl, userDocumentId } = request.body;
+    if (request.method === "GET") {
+      const userSub = request.session.get("user-sub");
 
-      if (userDocumentId && refreshToken) {
-        await refreshTokenFlow(refreshToken, request.mongoDb, userDocumentId);
-
-        response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
-          Location: `${config.connectDomain}/${redirectUrl}`,
-        });
-
-        response.end();
+      if (userSub) {
+        response.json({ userSub });
       } else {
         response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
           Location: request.headers.referer || "/",
         });
-
-        response.end();
       }
     } else {
       response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
@@ -42,10 +31,12 @@ const handler: Handler = async (
     }
   } catch (error) {
     Sentry.withScope((scope) => {
-      scope.setTag("api/oauth/callback", "api/oauth/callback");
+      scope.setTag("api/user-sub", "api/user-sub");
       Sentry.captureException(error);
     });
+
+    return response.end();
   }
 };
 
-export default withAPIPageLogger(withSession(withMongoDB(handler)));
+export default withAPIPageLogger(withSession(handler));

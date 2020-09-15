@@ -1,8 +1,7 @@
 import { HttpStatus } from "@fwl/web";
-import { ObjectId } from "mongodb";
 
 import { Handler } from "../../../@types/ApiPageHandler";
-import { MongoUser } from "../../../@types/mongo/User";
+import { findOrInsertUser } from "../../../command/findOrInsertUser";
 import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
 import { withMongoDB } from "../../../middleware/withMongoDB";
 import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
@@ -12,28 +11,23 @@ const handler: Handler = async (request, response) => {
 
   try {
     if (request.method === "POST") {
-      const { userDocumentId } = request.body;
+      const { sub, accessToken, refreshToken } = request.body;
 
-      return await request.mongoDb
-        .collection("users")
-        .findOne<MongoUser>({
-          _id: new ObjectId(userDocumentId),
-        })
-        .then((user) => {
-          response.statusCode = HttpStatus.OK;
-          response.setHeader("Content-Type", "application/json");
-          response.json({ user });
-        });
+      return findOrInsertUser(
+        { sub, accessToken, refreshToken },
+        request.mongoDb,
+      ).then((data) => {
+        response.statusCode = HttpStatus.OK;
+
+        response.setHeader("Content-Type", "application/json");
+        response.json({ data });
+      });
     }
-
-    response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
-
-    return response.end();
   } catch (error) {
     Sentry.withScope((scope) => {
       scope.setTag(
-        "api/auth-connect/get-mongo-user",
-        "api/auth-connect/get-mongo-user",
+        "api/auth-connect/find-or-insert-user",
+        "api/auth-connect/find-or-insert-user",
       );
       Sentry.captureException(error);
     });

@@ -122,7 +122,7 @@ describe("getServerSideProps", () => {
   //   const sealedJWT = await seal(
   //     {
   //       persistent: {
-  //         "user-document-id": "42",
+  //         "user-session-id": "42",
   //       },
   //       flash: {},
   //     },
