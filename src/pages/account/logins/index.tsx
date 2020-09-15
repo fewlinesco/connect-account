@@ -8,6 +8,7 @@ import styled from "styled-components";
 import type { Identity } from "@src/@types/Identity";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import { BoxedLink } from "@src/components/display/fewlines/BoxedLink";
 import { Button, ButtonVariant } from "@src/components/display/fewlines/Button";
 import { config, oauth2Client } from "@src/config";
 import { OAuth2Error } from "@src/errors";
@@ -31,7 +32,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
     true,
   );
 
-  let emailList;
+  let emailList: Identity[];
   let phoneList;
 
   hideSecondaryEmails
@@ -64,18 +65,23 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           ) : (
             emailList.map((email: Identity) => {
               return (
-                <IdentityBox key={email.value}>
-                  <Flex>
-                    <Value>
-                      <Link
-                        href="/account/logins/[type]/[id]"
-                        as={`/account/logins/${email.type}/${email.id}`}
-                      >
-                        <a>{email.value}</a>
-                      </Link>
-                    </Value>
-                  </Flex>
-                </IdentityBox>
+                <div key={email.value}>
+                  <IdentityBox>
+                    <Link
+                      href="/account/logins/[type]/[id]"
+                      as={`/account/logins/${email.type}/${email.id}`}
+                    >
+                      <a>
+                        <BoxedLink className="boxed-link">
+                          {email.value}
+                        </BoxedLink>
+                      </a>
+                    </Link>
+                  </IdentityBox>
+                  {emailList.indexOf(email) < emailList.length - 1 && (
+                    <Separator />
+                  )}
+                </div>
               );
             })
           )}
@@ -224,11 +230,19 @@ const Wrapper = styled.div`
     width: 100%;
   }
 `;
+
+const Separator = styled.div`
+  border: 1px solid #f0f1f3;
+`;
 const IdentitiesBox = styled.div`
   padding-top: ${({ theme }) => theme.spaces.component.xxs};
   border-radius: ${({ theme }) => theme.radii[1]};
   background-color: ${({ theme }) => theme.colors.backgroundContrast};
   box-shadow: ${({ theme }) => theme.shadows.base};
+
+  .boxed-link {
+    width: 100%;
+  }
 `;
 
 const IdentitySection = styled.div`
