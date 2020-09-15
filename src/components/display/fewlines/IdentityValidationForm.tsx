@@ -16,6 +16,7 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
   return (
     <Wrapper>
       <Form method="post">
+        <p>Validation code *</p>
         <Input
           type="text"
           name="value"
