@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import type { Identity } from "../../../@types/Identity";
+import { Identity, ReceivedIdentityTypes } from "../../../@types/Identity";
 import { Button, ButtonVariant } from "./Button";
 import { Input } from "./Input";
 
@@ -24,7 +24,9 @@ export const UpdateIdentityForm: React.FC<{
       >
         <p>
           New{" "}
-          {currentIdentity.type === "phone" ? "phone number" : "email address"}{" "}
+          {currentIdentity.type === ReceivedIdentityTypes.PHONE
+            ? "phone number"
+            : "email address"}{" "}
           *
         </p>
         <Input
