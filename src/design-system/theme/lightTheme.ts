@@ -34,7 +34,7 @@ const colors = {
   red: "#EB5757",
   green: "#08D079",
   yellow: "#FDC141",
-  turquoise: "#40E0D0",
+  placeholder: "#8b90a0",
   blacks: [
     "hsl(0, 0%, 90%)", // 0
     "hsl(0, 0%, 75%)", // 1
