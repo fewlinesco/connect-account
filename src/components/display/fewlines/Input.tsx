@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const Input = styled.input`
-  background: #ffffff;
-  border: 1px solid #a1a4b1;
-  border-radius: 2px;
+  background: ${({ theme }) => theme.colors.backgroundContrast};
+  border: 0.1rem solid #a1a4b1;
+  border-radius: ${({ theme }) => theme.radii[0]};
   height: 4rem;
 
   ::placeholder {

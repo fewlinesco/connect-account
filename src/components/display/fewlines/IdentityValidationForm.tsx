@@ -53,6 +53,7 @@ const Wrapper = styled.div`
 
   input {
     width: 100%;
+    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
   }
 
   button {
