@@ -1,9 +1,9 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
-import { handleOauthParamsURL } from "src/utils/handleOauthParamsURL";
 import styled from "styled-components";
 
+import { oauth2Client } from "../config";
 import { withSSRLogger } from "../middleware/withSSRLogger";
 import Sentry, { addRequestScopeToSentry } from "../utils/sentry";
 
@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     addRequestScopeToSentry(context.req);
 
     try {
-      const authorizeURL = await handleOauthParamsURL(context);
+      const authorizeURL = await oauth2Client.getAuthorizationURL();
 
       return {
         props: {

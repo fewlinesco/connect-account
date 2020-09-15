@@ -5,7 +5,7 @@ import { oAuth2UserInfo, MongoUser } from "../@types/mongo/User";
 export async function findOrInsertUser(
   oauthUserInfo: oAuth2UserInfo,
   mongoDb: Db,
-): Promise<{ documentId: string }> {
+): Promise<string> {
   const { sub } = oauthUserInfo;
 
   const collection = mongoDb.collection<MongoUser>("users");
@@ -26,5 +26,5 @@ export async function findOrInsertUser(
     documentId = (user._id as ObjectId).toString();
   }
 
-  return { documentId };
+  return documentId;
 }

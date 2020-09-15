@@ -4,7 +4,7 @@ import { HttpVerbs } from "../src/@types/HttpVerbs";
 import { oauth2Client, config } from "../src/config";
 import { fetchJson } from "../src/utils/fetchJson";
 
-export async function refreshTokenFlow(
+export async function refreshTokensFlow(
   refreshToken: string,
   mongoDb: Db,
   userDocumentId: string,

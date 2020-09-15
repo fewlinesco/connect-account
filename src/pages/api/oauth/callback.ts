@@ -2,13 +2,13 @@ import { HttpStatus } from "@fwl/web";
 import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
-import { ExtendedRequest } from "../../../@types/ExtendedRequest";
-import { HttpVerbs } from "../../../@types/HttpVerbs";
-import { AccessToken } from "../../../@types/oauth2/OAuth2Tokens";
+import type { ExtendedRequest } from "../../../@types/ExtendedRequest";
+import type { AccessToken } from "../../../@types/oauth2/OAuth2Tokens";
+import { findOrInsertUser } from "../../../command/findOrInsertUser";
 import { oauth2Client, config } from "../../../config";
 import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
+import { withMongoDB } from "../../../middleware/withMongoDB";
 import withSession from "../../../middleware/withSession";
-import { fetchJson } from "../../../utils/fetchJson";
 import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
 
 const handler: Handler = async (
@@ -28,16 +28,15 @@ const handler: Handler = async (
         config.connectJwtAlgorithm,
       );
 
-      const route = "/api/auth-connect/find-or-insert-user";
-      const absoluteURL = config.connectDomain + route;
-
-      const jsonResponse = await fetchJson(absoluteURL, HttpVerbs.POST, {
+      const oauthUserInfo = {
         sub: decodedAccessToken.sub,
         accessToken: tokens.access_token,
         refreshToken: tokens.refresh_token,
-      }).then((response) => response.json());
+      };
 
-      request.session.set("user-session-id", jsonResponse.data.documentId);
+      const documentId = await findOrInsertUser(oauthUserInfo, request.mongoDb);
+
+      request.session.set("user-session-id", documentId);
       request.session.set("user-sub", decodedAccessToken.sub);
 
       await request.session.save();
@@ -60,4 +59,4 @@ const handler: Handler = async (
   }
 };
 
-export default withAPIPageLogger(withSession(handler));
+export default withAPIPageLogger(withSession(withMongoDB(handler)));

@@ -1,20 +1,20 @@
 import { HttpStatus } from "@fwl/web";
-import { GetServerSideProps } from "next";
+import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { HttpVerbs } from "../../../@types/HttpVerbs";
-import { Identity } from "../../../@types/Identity";
-import { SortedIdentities } from "../../../@types/SortedIdentities";
-import { AccessToken } from "../../../@types/oauth2/OAuth2Tokens";
+import type { Identity } from "../../../@types/Identity";
+import type { SortedIdentities } from "../../../@types/SortedIdentities";
+import type { AccessToken } from "../../../@types/oauth2/OAuth2Tokens";
 import { config, oauth2Client } from "../../../config";
 import { OAuth2Error } from "../../../errors";
 import { withSSRLogger } from "../../../middleware/withSSRLogger";
 import withSession from "../../../middleware/withSession";
 import { getIdentities } from "../../../queries/getIdentities";
-import { fetchJson } from "../../../utils/fetchJson";
+import { getUser } from "../../../utils/getUser";
+import { refreshTokens } from "../../../utils/refreshTokens";
 import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
 import { sortIdentities } from "../../../utils/sortIdentities";
 
@@ -147,12 +147,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     try {
       const userDocumentId = context.req.session.get("user-session-id");
 
-      const route = "/api/auth-connect/get-user";
-      const absoluteURL = config.connectDomain + route;
-
-      const { user } = await fetch(absoluteURL).then((response) =>
-        response.json(),
-      );
+      const user = await getUser(context.req.headers["cookie"]);
 
       if (user) {
         const decodedJWT = await oauth2Client
@@ -165,15 +160,12 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
                 redirectUrl: context.req.url as string,
               };
 
-              const route = "/api/oauth/refresh-token";
-              const absoluteURL = config.connectDomain + route;
-
-              await fetchJson(absoluteURL, HttpVerbs.POST, body);
+              await refreshTokens(body);
 
               context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
               context.res.setHeader(
                 "location",
-                context.req.headers.referer || "/",
+                `${config.connectDomain}/${body.redirectUrl}`,
               );
               context.res.end();
             } else {

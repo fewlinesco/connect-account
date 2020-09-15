@@ -1,9 +1,9 @@
 import { HttpStatus } from "@fwl/web";
-import { refreshTokenFlow } from "@lib/refreshTokenFlow";
-import { NextApiResponse } from "next";
-import { Handler } from "next-iron-session";
+import { refreshTokensFlow } from "@lib/refreshTokensFlow";
+import type { NextApiResponse } from "next";
+import type { Handler } from "next-iron-session";
 
-import { ExtendedRequest } from "../../../@types/ExtendedRequest";
+import type { ExtendedRequest } from "../../../@types/ExtendedRequest";
 import { config } from "../../../config";
 import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
 import { withMongoDB } from "../../../middleware/withMongoDB";
@@ -21,7 +21,7 @@ const handler: Handler = async (
       const { refreshToken, redirectUrl, userDocumentId } = request.body;
 
       if (userDocumentId && refreshToken) {
-        await refreshTokenFlow(refreshToken, request.mongoDb, userDocumentId);
+        await refreshTokensFlow(refreshToken, request.mongoDb, userDocumentId);
 
         response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
           Location: `${config.connectDomain}/${redirectUrl}`,

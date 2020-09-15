@@ -1,8 +1,8 @@
 import { HttpStatus } from "@fwl/web";
-import { NextApiResponse } from "next";
-import { Handler } from "next-iron-session";
+import type { NextApiResponse } from "next";
+import type { Handler } from "next-iron-session";
 
-import { ExtendedRequest } from "../../../@types/ExtendedRequest";
+import type { ExtendedRequest } from "../../../@types/ExtendedRequest";
 import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
 import withSession from "../../../middleware/withSession";
 import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
