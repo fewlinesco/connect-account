@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { IdentityTypes } from "../../../@types/Identity";
+import type { IdentityTypes } from "../../../@types/Identity";
 import AlertBar from "./AlertBar";
 import { Button, ButtonVariant } from "./Button";
 import { Input } from "./Input";

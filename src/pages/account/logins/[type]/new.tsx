@@ -2,7 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import { GetServerSideProps } from "next";
 import React from "react";
 
-import { ReceivedIdentityTypes } from "../../../../@types/Identity";
+import type { ReceivedIdentityTypes } from "../../../../@types/Identity";
 import { AddIdentity } from "../../../../components/business/AddIdentity";
 import { AddIdentityInputForm } from "../../../../components/display/fewlines/AddIdentityInputForm";
 import { OAuth2Error } from "../../../../errors";

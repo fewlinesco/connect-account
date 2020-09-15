@@ -1,7 +1,7 @@
 import React from "react";
 
 import { HttpVerbs } from "../../@types/HttpVerbs";
-import { ReceivedIdentityTypes } from "../../@types/Identity";
+import type { ReceivedIdentityTypes } from "../../@types/Identity";
 import { useCookies } from "../../hooks/useCookies";
 import { fetchJson } from "../../utils/fetchJson";
 

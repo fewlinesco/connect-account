@@ -5,7 +5,7 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { IdentityTypes } from "../../src/@types/Identity";
+import { ReceivedIdentityTypes } from "../../src/@types/Identity";
 import { Layout } from "../../src/components/Layout";
 import {
   AddIdentityInputForm,
@@ -43,7 +43,7 @@ describe("AddNewIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <AddNewIdentity type={IdentityTypes.EMAIL} />
+          <AddNewIdentity type={ReceivedIdentityTypes.EMAIL} />
         </Layout>
       </ThemeProvider>,
     );
@@ -57,7 +57,7 @@ describe("AddNewIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <AddNewIdentity type={IdentityTypes.EMAIL} />
+          <AddNewIdentity type={ReceivedIdentityTypes.EMAIL} />
         </Layout>
       </ThemeProvider>,
     );
