@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { IdentityTypes } from "../../../@types/Identity";
 import { Button, ButtonVariant } from "./Button";
+import { Input } from "./Input";
 
 type AddIdentityInputFormProps = {
   addIdentity: (value: string) => Promise<Response>;
@@ -66,20 +67,13 @@ const Wrapper = styled.div`
   button {
     width: 100%;
   }
+
+  input {
+    width: 100%;
+  }
 `;
 
 export const Form = styled.form`
   display: column;
   align-items: center;
-`;
-
-export const Input = styled.input`
-  border: ${({ theme }) => `${theme.colors.blacks[0]} ${theme.borders.thin}`};
-  border-radius: ${({ theme }) => theme.radii[0]};
-  padding: 0.5rem;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
 `;

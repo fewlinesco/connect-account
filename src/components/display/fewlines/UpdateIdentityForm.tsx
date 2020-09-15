@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { Identity } from "../../../@types/Identity";
 import { Button, ButtonVariant } from "./Button";
+import { Input } from "./Input";
 
 export const UpdateIdentityForm: React.FC<{
   updateIdentity: (newValue: string) => Promise<void>;
@@ -21,6 +22,11 @@ export const UpdateIdentityForm: React.FC<{
           updateIdentity(identity);
         }}
       >
+        <p>
+          New{" "}
+          {currentIdentity.type === "phone" ? "phone number" : "email address"}{" "}
+          *
+        </p>
         <Input
           type="text"
           name="value"
@@ -50,6 +56,11 @@ const Wrapper = styled.div`
   max-width: 95%;
   margin: 0 auto;
 
+  input {
+    width: 100%;
+    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
+  }
+
   button {
     width: 100%;
   }
@@ -61,15 +72,4 @@ const Wrapper = styled.div`
 export const Form = styled.form`
   display: column;
   align-items: center;
-`;
-
-export const Input = styled.input`
-  border: ${({ theme }) => `${theme.colors.blacks[0]} ${theme.borders.thin}`};
-  border-radius: ${({ theme }) => theme.radii[0]};
-  padding: 0.5rem;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
 `;
