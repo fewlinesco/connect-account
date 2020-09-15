@@ -33,7 +33,12 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
             });
         }}
       >
-        <p>{type === "phone" ? "phone number" : "email address"} *</p>
+        <p>
+          {type === ReceivedIdentityTypes.PHONE
+            ? "phone number"
+            : "email address"}{" "}
+          *
+        </p>
         <Input
           type="text"
           name="value"

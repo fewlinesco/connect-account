@@ -2,11 +2,7 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import {
-  IdentityTypes,
-  Identity,
-  ReceivedIdentityTypes,
-} from "../@types/Identity";
+import { Identity } from "../@types/Identity";
 import { DeleteIdentity } from "../components/business/DeleteIdentity";
 import { Button, ButtonVariant } from "./display/fewlines/Button";
 
@@ -16,7 +12,6 @@ type IdentityLineProps = {
 
 export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
   const { id, primary, status, type, value } = identity;
-  const { EMAIL } = ReceivedIdentityTypes;
 
   return (
     <IdentityBox key={value}>
@@ -57,10 +52,7 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
         </Button>
       )}
       {!primary && (
-        <DeleteIdentity
-          type={type === EMAIL ? IdentityTypes.EMAIL : IdentityTypes.PHONE}
-          value={value}
-        >
+        <DeleteIdentity type={type} value={value}>
           {({ deleteIdentity }) => (
             <Button variant={ButtonVariant.GHOST} onClick={deleteIdentity}>
               Delete this {type === "phone" ? "phone number" : "email address"}
