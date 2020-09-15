@@ -1,11 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 
-import {
-  IdentityTypes,
-  Identity,
-  ReceivedIdentityTypes,
-} from "../../@types/Identity";
+import type { Identity, ReceivedIdentityTypes } from "../../@types/Identity";
 import { AddIdentity } from "./AddIdentity";
 import { DeleteIdentity } from "./DeleteIdentity";
 
@@ -13,7 +9,7 @@ interface UpdateIdentityProps {
   identity: Identity;
   children: (props: {
     updateIdentity: (newValue: string) => Promise<void>;
-    castedIdentityType: IdentityTypes;
+    type: ReceivedIdentityTypes;
   }) => JSX.Element;
 }
 
@@ -25,15 +21,10 @@ export const UpdateIdentity: React.FC<UpdateIdentityProps> = ({
 
   const { value, type } = identity;
 
-  const castedIdentityType =
-    type === ReceivedIdentityTypes.PHONE
-      ? IdentityTypes.PHONE
-      : IdentityTypes.EMAIL;
-
   return (
-    <AddIdentity type={castedIdentityType}>
+    <AddIdentity type={type}>
       {({ addIdentity }) => (
-        <DeleteIdentity type={castedIdentityType} value={value}>
+        <DeleteIdentity type={type} value={value}>
           {({ deleteIdentity }) =>
             children({
               updateIdentity: async function (newValue): Promise<void> {
@@ -46,7 +37,7 @@ export const UpdateIdentity: React.FC<UpdateIdentityProps> = ({
                     throw error;
                   });
               },
-              castedIdentityType,
+              type,
             })
           }
         </DeleteIdentity>

@@ -71,8 +71,8 @@ declare module "styled-components" {
       contrastCopy: string;
       red: string;
       green: string;
-      turquoise: string;
       yellow: string;
+      placeholder: string;
       blacks: string[];
     };
     transitions: {

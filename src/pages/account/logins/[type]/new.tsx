@@ -2,7 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import { GetServerSideProps } from "next";
 import React from "react";
 
-import { IdentityTypes } from "../../../../@types/Identity";
+import type { ReceivedIdentityTypes } from "../../../../@types/Identity";
 import { AddIdentity } from "../../../../components/business/AddIdentity";
 import { AddIdentityInputForm } from "../../../../components/display/fewlines/AddIdentityInputForm";
 import { OAuth2Error } from "../../../../errors";
@@ -10,7 +10,7 @@ import { withSSRLogger } from "../../../../middleware/withSSRLogger";
 import withSession from "../../../../middleware/withSession";
 import Sentry, { addRequestScopeToSentry } from "../../../../utils/sentry";
 
-const AddNewIdentity: React.FC<{ type: IdentityTypes }> = (props) => {
+const AddNewIdentity: React.FC<{ type: ReceivedIdentityTypes }> = (props) => {
   return (
     <AddIdentity type={props.type}>
       {({ addIdentity }) => (

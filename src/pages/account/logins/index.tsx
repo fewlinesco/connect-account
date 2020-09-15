@@ -5,9 +5,13 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import type { Identity } from "../../../@types/Identity";
 import type { SortedIdentities } from "../../../@types/SortedIdentities";
 import type { AccessToken } from "../../../@types/oauth2/OAuth2Tokens";
+import { Identity } from "../../../@types/Identity";
+import {
+  Button,
+  ButtonVariant,
+} from "../../../components/display/fewlines/Button";
 import { config, oauth2Client } from "../../../config";
 import { OAuth2Error } from "../../../errors";
 import { withSSRLogger } from "../../../middleware/withSSRLogger";
@@ -48,7 +52,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
   const { emailIdentities, phoneIdentities } = sortedIdentities;
 
   return (
-    <>
+    <Wrapper>
       <Head>
         <title>Connect Logins</title>
       </Head>
@@ -89,12 +93,14 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           )}
           <Flex>
             <Link href="/account/logins/email/new">
-              <Button>+ Add new email address</Button>
+              <Button variant={ButtonVariant.SECONDARY}>
+                + Add new email address
+              </Button>
             </Link>
           </Flex>
         </IdentitySection>
         <IdentitySection>
-          <h3>Phone numbers:</h3>
+          <h3>Phone numbers</h3>
           {phoneIdentities.length === 0 ? (
             <Value>No phones</Value>
           ) : (
@@ -126,7 +132,9 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           )}
           <Flex>
             <Link href="/account/logins/phone/new">
-              <Button>+ Add new phone number</Button>
+              <Button variant={ButtonVariant.SECONDARY}>
+                + Add new phone number
+              </Button>
             </Link>
           </Flex>
         </IdentitySection>
@@ -134,7 +142,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           <h3>Social logins</h3>
         </IdentitySection>
       </IdentitiesBox>
-    </>
+    </Wrapper>
   );
 };
 
@@ -217,8 +225,15 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
   }),
 );
 
+const Wrapper = styled.div`
+  max-width: 95%;
+  margin: 0 auto;
+
+  button {
+    width: 100%;
+  }
+`;
 const IdentitiesBox = styled.div`
-  width: 100rem;
   padding-top: ${({ theme }) => theme.spaces.component.xxs};
   border-radius: ${({ theme }) => theme.radii[1]};
   background-color: ${({ theme }) => theme.colors.backgroundContrast};
@@ -242,27 +257,6 @@ export const IdentityBox = styled.div`
 
 export const Value = styled.p`
   margin-right: 0.5rem;
-`;
-
-export const Button = styled.button`
-  padding: 0.5rem;
-  margin-right: 1rem;
-  border-radius: ${({ theme }) => theme.radii[0]};
-  background-color: transparent;
-  color: ${({ theme }) => theme.colors.green};
-  transition: ${({ theme }) => theme.transitions.quick};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  &:hover {
-    cursor: pointer;
-    background-color: ${({ theme }) => theme.colors.green};
-    color: ${({ theme }) => theme.colors.contrastCopy};
-  }
-  &:active,
-  &:focus {
-    outline: none;
-    background-color: ${({ theme }) => theme.colors.green};
-    color: ${({ theme }) => theme.colors.contrastCopy};
-  }
 `;
 
 export const ShowMoreButton = styled.button`
