@@ -2,12 +2,12 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { HttpVerbs } from "../../@types/HttpVerbs";
-import { IdentityTypes } from "../../@types/Identity";
+import type { ReceivedIdentityTypes } from "../../@types/Identity";
 import { useCookies } from "../../hooks/useCookies";
 import { fetchJson } from "../../utils/fetchJson";
 
 interface DeleteIdentityProps {
-  type: IdentityTypes;
+  type: ReceivedIdentityTypes;
   value: string;
   children: (props: { deleteIdentity: () => Promise<void> }) => JSX.Element;
 }
@@ -30,7 +30,7 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
 
   const requestData = {
     userId: data.userId,
-    type: type,
+    type: type.toUpperCase(),
     value: value,
   };
 

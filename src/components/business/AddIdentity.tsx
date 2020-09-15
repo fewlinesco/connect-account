@@ -1,15 +1,15 @@
 import React from "react";
 
 import { HttpVerbs } from "../../@types/HttpVerbs";
-import { IdentityTypes } from "../../@types/Identity";
+import type { ReceivedIdentityTypes } from "../../@types/Identity";
 import { useCookies } from "../../hooks/useCookies";
 import { fetchJson } from "../../utils/fetchJson";
 
 interface AddIdentityProps {
-  type: IdentityTypes;
+  type: ReceivedIdentityTypes;
   children: (props: {
     addIdentity: (value: string) => Promise<Response>;
-    type: IdentityTypes;
+    type: ReceivedIdentityTypes;
   }) => JSX.Element;
 }
 

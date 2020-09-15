@@ -2,12 +2,13 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { IdentityTypes } from "../../../@types/Identity";
+import { ReceivedIdentityTypes } from "../../../@types/Identity";
 import { Button, ButtonVariant } from "./Button";
+import { Input } from "./Input";
 
 type AddIdentityInputFormProps = {
   addIdentity: (value: string) => Promise<Response>;
-  type: IdentityTypes;
+  type: ReceivedIdentityTypes;
 };
 
 export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
@@ -32,6 +33,12 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
             });
         }}
       >
+        <p>
+          {type === ReceivedIdentityTypes.PHONE
+            ? "phone number"
+            : "email address"}{" "}
+          *
+        </p>
         <Input
           type="text"
           name="value"
@@ -66,20 +73,14 @@ const Wrapper = styled.div`
   button {
     width: 100%;
   }
+
+  input {
+    width: 100%;
+    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
+  }
 `;
 
 export const Form = styled.form`
   display: column;
   align-items: center;
-`;
-
-export const Input = styled.input`
-  border: ${({ theme }) => `${theme.colors.blacks[0]} ${theme.borders.thin}`};
-  border-radius: ${({ theme }) => theme.radii[0]};
-  padding: 0.5rem;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
 `;

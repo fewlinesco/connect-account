@@ -2,9 +2,10 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { IdentityTypes } from "../../../@types/Identity";
+import type { IdentityTypes } from "../../../@types/Identity";
 import AlertBar from "./AlertBar";
 import { Button, ButtonVariant } from "./Button";
+import { Input } from "./Input";
 
 const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
   type,
@@ -15,6 +16,7 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
   return (
     <Wrapper>
       <Form method="post">
+        <p>Validation code *</p>
         <Input
           type="text"
           name="value"
@@ -50,6 +52,11 @@ const Wrapper = styled.div`
   max-width: 95%;
   margin: 0 auto;
 
+  input {
+    width: 100%;
+    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
+  }
+
   button {
     width: 100%;
   }
@@ -70,15 +77,4 @@ const Wrapper = styled.div`
 const Form = styled.form`
   display: column;
   align-items: center;
-`;
-
-const Input = styled.input`
-  border: ${({ theme }) => `${theme.colors.blacks[0]} ${theme.borders.thin}`};
-  border-radius: ${({ theme }) => theme.radii[0]};
-  padding: 0.5rem;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
 `;

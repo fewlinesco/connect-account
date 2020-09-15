@@ -8,10 +8,10 @@ import { ThemeProvider } from "styled-components";
 
 import { ReceivedIdentityTypes, Identity } from "../../src/@types/Identity";
 import { Layout } from "../../src/components/Layout";
+import { Input } from "../../src/components/display/fewlines/Input";
 import {
   UpdateIdentityForm,
   Form,
-  Input,
 } from "../../src/components/display/fewlines/UpdateIdentityForm";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
