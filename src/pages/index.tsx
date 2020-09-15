@@ -3,9 +3,9 @@ import Head from "next/head";
 import React from "react";
 import styled from "styled-components";
 
-import { oauth2Client } from "../config";
-import { withSSRLogger } from "../middleware/withSSRLogger";
-import Sentry, { addRequestScopeToSentry } from "../utils/sentry";
+import { oauth2Client } from "@src/config";
+import { withSSRLogger } from "@src/middleware/withSSRLogger";
+import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 type IndexProps = { authorizeURL: string };
 

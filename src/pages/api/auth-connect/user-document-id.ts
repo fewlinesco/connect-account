@@ -2,10 +2,10 @@ import { HttpStatus } from "@fwl/web";
 import type { NextApiResponse } from "next";
 import type { Handler } from "next-iron-session";
 
-import type { ExtendedRequest } from "../../../@types/ExtendedRequest";
-import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
-import withSession from "../../../middleware/withSession";
-import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
+import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
+import withSession from "@src/middleware/withSession";
+import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const handler: Handler = async (
   request: ExtendedRequest,

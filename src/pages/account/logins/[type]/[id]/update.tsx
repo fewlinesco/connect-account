@@ -3,18 +3,18 @@ import { GetServerSideProps } from "next";
 import React from "react";
 import styled from "styled-components";
 
-import { Identity } from "../../../../../@types/Identity";
-import { AccessToken } from "../../../../../@types/oauth2/OAuth2Tokens";
-import { UpdateIdentity } from "../../../../../components/business/UpdateIdentity";
-import { UpdateIdentityForm } from "../../../../../components/display/fewlines/UpdateIdentityForm";
-import { config, oauth2Client } from "../../../../../config";
-import { OAuth2Error } from "../../../../../errors";
-import { withSSRLogger } from "../../../../../middleware/withSSRLogger";
-import withSession from "../../../../../middleware/withSession";
-import { getIdentities } from "../../../../../queries/getIdentities";
-import { getUser } from "../../../../../utils/getUser";
-import { refreshTokens } from "../../../../../utils/refreshTokens";
-import Sentry from "../../../../../utils/sentry";
+import { Identity } from "@src/@types/Identity";
+import { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
+import { UpdateIdentityForm } from "@src/components/display/fewlines/UpdateIdentityForm";
+import { config, oauth2Client } from "@src/config";
+import { OAuth2Error } from "@src/errors";
+import { withSSRLogger } from "@src/middleware/withSSRLogger";
+import withSession from "@src/middleware/withSession";
+import { getIdentities } from "@src/queries/getIdentities";
+import { getUser } from "@src/utils/getUser";
+import { refreshTokens } from "@src/utils/refreshTokens";
+import Sentry from "@src/utils/sentry";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   const { value } = identity;

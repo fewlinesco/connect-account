@@ -2,13 +2,13 @@ import { HttpStatus } from "@fwl/web";
 import type { NextApiResponse } from "next";
 import type { Handler } from "next-iron-session";
 
-import type { ExtendedRequest } from "../../../@types/ExtendedRequest";
-import { config } from "../../../config";
-import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
-import { withMongoDB } from "../../../middleware/withMongoDB";
-import withSession from "../../../middleware/withSession";
-import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
 import { refreshTokensFlow } from "@lib/refreshTokensFlow";
+import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { config } from "@src/config";
+import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
+import { withMongoDB } from "@src/middleware/withMongoDB";
+import withSession from "@src/middleware/withSession";
+import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const handler: Handler = async (
   request: ExtendedRequest,

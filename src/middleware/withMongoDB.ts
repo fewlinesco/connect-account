@@ -1,9 +1,9 @@
 import { MongoClient } from "mongodb";
 import { NextApiResponse } from "next";
-import { ExtendedRequest } from "src/@types/ExtendedRequest";
 
-import { Handler } from "../@types/ApiPageHandler";
-import { config } from "../config";
+import { Handler } from "@src/@types/ApiPageHandler";
+import { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { config } from "@src/config";
 
 const mongoClient = new MongoClient(config.connectMongoUrl, {
   useNewUrlParser: true,

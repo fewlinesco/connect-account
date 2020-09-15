@@ -5,12 +5,12 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { oauth2Client, config } from "../../config";
-import { withSSRLogger } from "../../middleware/withSSRLogger";
-import withSession from "../../middleware/withSession";
-import { getUser } from "../../utils/getUser";
-import { refreshTokens } from "../../utils/refreshTokens";
-import Sentry, { addRequestScopeToSentry } from "../../utils/sentry";
+import { oauth2Client, config } from "@src/config";
+import { withSSRLogger } from "@src/middleware/withSSRLogger";
+import withSession from "@src/middleware/withSession";
+import { getUser } from "@src/utils/getUser";
+import { refreshTokens } from "@src/utils/refreshTokens";
+import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const Account: React.FC = () => {
   return (

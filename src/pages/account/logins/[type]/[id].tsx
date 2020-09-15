@@ -2,17 +2,17 @@ import { HttpStatus } from "@fwl/web";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
-import type { Identity } from "../../../../../src/@types/Identity";
-import type { AccessToken } from "../../../../../src/@types/oauth2/OAuth2Tokens";
-import { IdentityLine } from "../../../../../src/components/IdentityLine";
-import { config, oauth2Client } from "../../../../../src/config";
-import { OAuth2Error } from "../../../../../src/errors";
-import { withSSRLogger } from "../../../../../src/middleware/withSSRLogger";
-import withSession from "../../../../../src/middleware/withSession";
-import { getIdentities } from "../../../../../src/queries/getIdentities";
-import Sentry from "../../../../../src/utils/sentry";
-import { getUser } from "../../../../utils/getUser";
-import { refreshTokens } from "../../../../utils/refreshTokens";
+import type { Identity } from "@src/@types/Identity";
+import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import { IdentityLine } from "@src/components/IdentityLine";
+import { config, oauth2Client } from "@src/config";
+import { OAuth2Error } from "@src/errors";
+import { withSSRLogger } from "@src/middleware/withSSRLogger";
+import withSession from "@src/middleware/withSession";
+import { getIdentities } from "@src/queries/getIdentities";
+import { getUser } from "@src/utils/getUser";
+import { refreshTokens } from "@src/utils/refreshTokens";
+import Sentry from "@src/utils/sentry";
 
 const ShowIdentity: React.FC<{ identity: Identity }> = ({ identity }) => {
   return <IdentityLine identity={identity} />;

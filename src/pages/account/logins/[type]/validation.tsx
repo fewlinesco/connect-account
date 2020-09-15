@@ -1,12 +1,13 @@
 import { HttpStatus } from "@fwl/web";
 import { GetServerSideProps } from "next";
 import React from "react";
-import type { IdentityTypes } from "src/@types/Identity";
-import IdentityValidationForm from "src/components/display/fewlines/IdentityValidationForm";
-import { OAuth2Error } from "src/errors";
-import { withSSRLogger } from "src/middleware/withSSRLogger";
-import withSession from "src/middleware/withSession";
-import Sentry, { addRequestScopeToSentry } from "src/utils/sentry";
+
+import type { IdentityTypes } from "@src/@types/Identity";
+import IdentityValidationForm from "@src/components/display/fewlines/IdentityValidationForm";
+import { OAuth2Error } from "@src/errors";
+import { withSSRLogger } from "@src/middleware/withSSRLogger";
+import withSession from "@src/middleware/withSession";
+import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const Validation: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   return <IdentityValidationForm type={type} />;

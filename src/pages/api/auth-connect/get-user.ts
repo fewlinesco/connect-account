@@ -1,12 +1,12 @@
 import { HttpStatus } from "@fwl/web";
 import { ObjectId } from "mongodb";
 
-import type { Handler } from "../../../@types/ApiPageHandler";
-import type { MongoUser } from "../../../@types/mongo/User";
-import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
-import { withMongoDB } from "../../../middleware/withMongoDB";
-import withSession from "../../../middleware/withSession";
-import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
+import type { Handler } from "@src/@types/ApiPageHandler";
+import type { MongoUser } from "@src/@types/mongo/User";
+import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
+import { withMongoDB } from "@src/middleware/withMongoDB";
+import withSession from "@src/middleware/withSession";
+import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const handler: Handler = async (request, response) => {
   addRequestScopeToSentry(request);
