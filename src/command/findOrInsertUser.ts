@@ -8,6 +8,8 @@ export async function findOrInsertUser(
 ): Promise<string> {
   const { sub } = oauthUserInfo;
 
+  mongoDb.collection("users").createIndex({ sub: 1 });
+
   const collection = mongoDb.collection<MongoUser>("users");
 
   const user = await collection.findOne({ sub });
@@ -16,7 +18,6 @@ export async function findOrInsertUser(
 
   if (!user) {
     const insertResult = await collection.insertOne(oauthUserInfo);
-
     if (insertResult.insertedCount === 0) {
       throw new Error("User insertion failed");
     }
