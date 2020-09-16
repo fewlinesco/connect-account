@@ -33,7 +33,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
   );
 
   let emailList: Identity[];
-  let phoneList;
+  let phoneList: Identity[];
 
   hideSecondaryEmails
     ? (emailList = sortedIdentities.emailIdentities.filter(
@@ -104,26 +104,31 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
         </IdentitySection>
         <IdentitySection>
           <h3>Phone numbers</h3>
-          {phoneIdentities.length === 0 ? (
-            <Value>No phones</Value>
-          ) : (
-            phoneList.map((phone: Identity) => {
-              return (
-                <IdentityBox key={phone.value}>
-                  <Flex>
-                    <Value>
-                      <Link
-                        href="/account/logins/[type]/[id]"
-                        as={`/account/logins/${phone.type}/${phone.id}`}
-                      >
-                        <a>{phone.value}</a>
-                      </Link>
-                    </Value>
-                  </Flex>
-                </IdentityBox>
-              );
-            })
-          )}
+          <IdentityContainer className="identity-container">
+            {phoneIdentities.length === 0 ? (
+              <Value>No phones</Value>
+            ) : (
+              phoneList.map((phone: Identity) => {
+                return (
+                  <div key={phone.value}>
+                    <Link
+                      href="/account/logins/[type]/[id]"
+                      as={`/account/logins/${phone.type}/${phone.id}`}
+                    >
+                      <a>
+                        <BoxedLink className="boxed-link">
+                          {phone.value}
+                        </BoxedLink>
+                      </a>
+                    </Link>
+                    {phoneList.indexOf(phone) < phoneList.length - 1 && (
+                      <Separator />
+                    )}
+                  </div>
+                );
+              })
+            )}
+          </IdentityContainer>
           {phoneIdentities.length > 1 && (
             <ShowMoreButton
               onClick={() => setHideSecondaryPhones(!hideSecondaryPhones)}
