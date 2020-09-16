@@ -6,9 +6,9 @@ export async function refreshTokens(
   body: Record<string, string | number>,
 ): Promise<{ access_token: string }> {
   const route = "/api/oauth/refresh-tokens";
-  const absoluteURL = new URL(route, config.connectProviderUrl).toString();
+  const absoluteURL = new URL(route, config.connectDomain).toString();
 
-  return await fetchJson(absoluteURL, HttpVerbs.POST, body).then((response) =>
+  return fetchJson(absoluteURL, HttpVerbs.POST, body).then((response) =>
     response.json(),
   );
 }

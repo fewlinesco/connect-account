@@ -5,7 +5,7 @@ import type { Handler } from "next-iron-session";
 
 import { refreshTokensFlow } from "@lib/refreshTokensFlow";
 import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
-import { config } from "@src/config";
+import { MongoUpdateError } from "@src/errors";
 import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
 import { withMongoDB } from "@src/middleware/withMongoDB";
 import withSession from "@src/middleware/withSession";
@@ -19,7 +19,7 @@ const handler: Handler = async (
 
   try {
     if (request.method === "POST") {
-      const { refreshToken, redirectUrl, userDocumentId } = request.body;
+      const { refreshToken, userDocumentId } = request.body;
 
       if (userDocumentId && refreshToken) {
         const { refresh_token, access_token } = await refreshTokensFlow(
@@ -34,12 +34,8 @@ const handler: Handler = async (
         );
 
         if (result.n === 0) {
-          throw new Error("Mongo update failed");
+          throw new MongoUpdateError("Mongo update failed");
         }
-
-        response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
-          Location: `${config.connectDomain}/${redirectUrl}`,
-        });
 
         response.json({ access_token });
       } else {

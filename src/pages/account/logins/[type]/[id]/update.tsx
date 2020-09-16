@@ -55,12 +55,11 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
               const body = {
                 userDocumentId,
                 refreshToken: user.refreshToken,
-                redirectUrl: context.req.url as string,
               };
 
-              const refreshTokenResponse = await refreshTokens(body);
+              const { access_token } = await refreshTokens(body);
 
-              return refreshTokenResponse.access_token;
+              return access_token;
             } else {
               throw error;
             }

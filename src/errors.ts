@@ -15,3 +15,5 @@ export function OAuth2Error(error?: OAuth2Errors): WebError {
 }
 
 export class MongoUpdateError extends Error {}
+
+export class MongoInsertError extends Error {}

@@ -23,6 +23,7 @@ jest.mock("../src/config", () => {
       connectAudience: "",
       connectApplicationScopes: "",
       connectProviderUrl: "http://foo.test",
+      connectDomain: "http://foo.test",
     },
     oauth2Client: {
       verifyJWT: async () => {

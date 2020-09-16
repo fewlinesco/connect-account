@@ -1,6 +1,7 @@
 import { ObjectId, Db } from "mongodb";
 
 import { oAuth2UserInfo, MongoUser } from "@src/@types/mongo/User";
+import { MongoInsertError } from "@src/errors";
 
 export async function findOrInsertUser(
   oauthUserInfo: oAuth2UserInfo,
@@ -19,7 +20,7 @@ export async function findOrInsertUser(
   if (!user) {
     const insertResult = await collection.insertOne(oauthUserInfo);
     if (insertResult.insertedCount === 0) {
-      throw new Error("User insertion failed");
+      throw new MongoInsertError("User insertion failed");
     }
 
     documentId = insertResult.ops[0]._id.toString();

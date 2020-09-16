@@ -17,9 +17,7 @@ export async function refreshTokensFlow(
   const route = "oauth/token";
   const absoluteURL = new URL(route, config.connectProviderUrl).toString();
 
-  return await fetchJson(
-    absoluteURL,
-    HttpVerbs.POST,
-    payload,
-  ).then((response) => response.json());
+  return fetchJson(absoluteURL, HttpVerbs.POST, payload).then((response) =>
+    response.json(),
+  );
 }

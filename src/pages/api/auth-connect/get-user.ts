@@ -15,7 +15,7 @@ const handler: Handler = async (request, response) => {
     if (request.method === "GET") {
       const userDocumentId = request.session.get("user-session-id");
 
-      return await request.mongoDb
+      return request.mongoDb
         .collection("users")
         .findOne<MongoUser>({
           _id: new ObjectId(userDocumentId),
