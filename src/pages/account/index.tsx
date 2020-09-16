@@ -53,11 +53,6 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
 
               await refreshTokens(body);
 
-              context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-              context.res.setHeader(
-                "location",
-                `${config.connectDomain}/${body.redirectUrl}`,
-              );
               context.res.end();
             } else {
               throw error;

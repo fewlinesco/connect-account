@@ -38,14 +38,9 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
                 redirectUrl: context.req.url as string,
               };
 
-              await refreshTokens(body);
+              const refreshTokenResponse = await refreshTokens(body);
 
-              context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-              context.res.setHeader(
-                "location",
-                `${config.connectDomain}/${body.redirectUrl}`,
-              );
-              context.res.end();
+              return refreshTokenResponse.access_token;
             } else {
               throw error;
             }

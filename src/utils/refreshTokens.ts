@@ -4,9 +4,11 @@ import { fetchJson } from "@src/utils/fetchJson";
 
 export async function refreshTokens(
   body: Record<string, string | number>,
-): Promise<void> {
+): Promise<{ access_token: string }> {
   const route = "/api/oauth/refresh-tokens";
-  const absoluteURL = config.connectDomain + route;
+  const absoluteURL = new URL(route, config.connectProviderUrl).toString();
 
-  await fetchJson(absoluteURL, HttpVerbs.POST, body);
+  return await fetchJson(absoluteURL, HttpVerbs.POST, body).then((response) =>
+    response.json(),
+  );
 }

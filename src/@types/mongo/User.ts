@@ -17,6 +17,6 @@ export type MongoUser = {
   sub: string;
   accessToken: string;
   refreshToken: string;
-  local?: string;
+  locale?: string;
   temporaryIdentities?: TemporaryIdentity[];
 };

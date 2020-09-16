@@ -1,4 +1,5 @@
 import { HttpStatus } from "@fwl/web";
+import { ObjectId } from "mongodb";
 import type { NextApiResponse } from "next";
 import type { Handler } from "next-iron-session";
 
@@ -21,13 +22,26 @@ const handler: Handler = async (
       const { refreshToken, redirectUrl, userDocumentId } = request.body;
 
       if (userDocumentId && refreshToken) {
-        await refreshTokensFlow(refreshToken, request.mongoDb, userDocumentId);
+        const { refresh_token, access_token } = await refreshTokensFlow(
+          refreshToken,
+        );
+
+        const { result } = await request.mongoDb.collection("users").updateOne(
+          { _id: new ObjectId(userDocumentId) },
+          {
+            $set: { accessToken: access_token, refreshToken: refresh_token },
+          },
+        );
+
+        if (result.n === 0) {
+          throw new Error("Mongo update failed");
+        }
 
         response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
           Location: `${config.connectDomain}/${redirectUrl}`,
         });
 
-        response.end();
+        response.json({ access_token });
       } else {
         response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
           Location: request.headers.referer || "/",
