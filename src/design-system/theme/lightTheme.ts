@@ -35,6 +35,7 @@ const colors = {
   green: "#08D079",
   yellow: "#FDC141",
   placeholder: "#8b90a0",
+  separator: "#F0F1F3",
   blacks: [
     "hsl(0, 0%, 90%)", // 0
     "hsl(0, 0%, 75%)", // 1

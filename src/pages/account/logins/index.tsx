@@ -10,6 +10,8 @@ import type { SortedIdentities } from "@src/@types/SortedIdentities";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { BoxedLink } from "@src/components/display/fewlines/BoxedLink";
 import { Button, ButtonVariant } from "@src/components/display/fewlines/Button";
+import { IdentityContainer } from "@src/components/display/fewlines/IdentityContainer";
+import { Separator } from "@src/components/display/fewlines/Separator";
 import { config, oauth2Client } from "@src/config";
 import { OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
@@ -232,10 +234,6 @@ const Wrapper = styled.div`
   button {
     width: 100%;
   }
-`;
-
-const Separator = styled.div`
-  border: 1px solid ${({ theme }) => theme.colors.blacks[0]};
 `;
 
 const IdentitySection = styled.div`

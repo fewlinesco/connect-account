@@ -74,6 +74,7 @@ declare module "styled-components" {
       green: string;
       yellow: string;
       placeholder: string;
+      separator: string;
       blacks: string[];
     };
     transitions: {
