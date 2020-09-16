@@ -60,13 +60,13 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       <IdentitiesBox>
         <IdentitySection>
           <h3>Email addresses</h3>
-          {emailIdentities.length === 0 ? (
-            <Value>No emails</Value>
-          ) : (
-            emailList.map((email: Identity) => {
-              return (
-                <div key={email.value}>
-                  <IdentityBox>
+          <IdentityContainer className="identity-container">
+            {emailIdentities.length === 0 ? (
+              <Value>No emails</Value>
+            ) : (
+              emailList.map((email: Identity) => {
+                return (
+                  <div key={email.value}>
                     <Link
                       href="/account/logins/[type]/[id]"
                       as={`/account/logins/${email.type}/${email.id}`}
@@ -77,14 +77,14 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                         </BoxedLink>
                       </a>
                     </Link>
-                  </IdentityBox>
-                  {emailList.indexOf(email) < emailList.length - 1 && (
-                    <Separator />
-                  )}
-                </div>
-              );
-            })
-          )}
+                    {emailList.indexOf(email) < emailList.length - 1 && (
+                      <Separator />
+                    )}
+                  </div>
+                );
+              })
+            )}
+          </IdentityContainer>
           {emailIdentities.length > 1 && (
             <ShowMoreButton
               onClick={() => setHideSecondaryEmails(!hideSecondaryEmails)}
@@ -240,8 +240,14 @@ const IdentitiesBox = styled.div`
   background-color: ${({ theme }) => theme.colors.backgroundContrast};
   box-shadow: ${({ theme }) => theme.shadows.base};
 
+  .identity-container {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
   .boxed-link {
     width: 100%;
+    padding: ${({ theme }) => theme.spaces.component.xs};
   }
 `;
 

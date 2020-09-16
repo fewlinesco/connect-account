@@ -1,9 +1,7 @@
 import style from "styled-components";
 
-export const BoxedLink = style.div`
+export const IdentityContainer = style.div`
 background: ${({ theme }) => theme.colors.backgroundContrast};
-    height: 7.2rem;
     border-radius: ${({ theme }) => theme.radii[0]};
-    display: table-cell;
-    vertical-align: middle;
+    box-shadow: 0px 0px 16px rgba(24, 37, 170, 0.08);
 `;
