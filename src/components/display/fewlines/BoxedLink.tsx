@@ -1,9 +1,8 @@
 import style from "styled-components";
 
 export const BoxedLink = style.div`
-    background: ${({ theme }) => theme.colors.backgroundContrast};
     height: 7.2rem;
-    vertical-align: middle;
-    width: 90%;
-    margin: 0 auto;
+    margin: 0 ${({ theme }) => theme.spaces.component.xs};
+    display: flex;
+    align-items: center;
 `;

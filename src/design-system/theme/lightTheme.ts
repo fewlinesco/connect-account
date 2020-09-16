@@ -91,6 +91,7 @@ const shadows = {
   sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
   base: "0 1px 3px rgba(63,63,68,0.15), 0 20px 30px rgba(63,63,68,0.07)",
   left: `5px 0 5px -5px ${colors.blacks[1]}`,
+  box: `0px 0px 16px rgba(24, 37, 170, 0.08)`,
 };
 
 function spacer(n: number): string {
