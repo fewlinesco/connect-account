@@ -71,7 +71,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                     as={`/account/logins/${email.type}/${email.id}`}
                   >
                     <a>
-                      <BoxedLink>{email.value}</BoxedLink>
+                      <BoxedLink value={email.value} />
                     </a>
                   </Link>
                   {emailList.indexOf(email) < emailList.length - 1 && (
@@ -113,7 +113,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                     as={`/account/logins/${phone.type}/${phone.id}`}
                   >
                     <a>
-                      <BoxedLink>{phone.value}</BoxedLink>
+                      <BoxedLink value={phone.value} />
                     </a>
                   </Link>
                   {phoneList.indexOf(phone) < phoneList.length - 1 && (
@@ -235,7 +235,7 @@ const Wrapper = styled.div`
 `;
 
 const Separator = styled.div`
-  border: 1px solid #f0f1f3;
+  border: 1px solid ${({ theme }) => theme.colors.blacks[0]};
 `;
 
 const IdentitySection = styled.div`
