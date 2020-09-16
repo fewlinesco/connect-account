@@ -5,10 +5,10 @@ import { ThemeProvider } from "styled-components";
 import { ReceivedIdentityTypes } from "../../src/@types/Identity";
 import { SortedIdentities } from "../../src/@types/SortedIdentities";
 import { Layout } from "../../src/components/Layout";
+import { BoxedLink } from "../../src/components/display/fewlines/BoxedLink";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import Account, {
-  IdentityBox,
   Value,
   ShowMoreButton,
 } from "../../src/pages/account/logins/index";
@@ -52,8 +52,8 @@ describe("it should display identities properly", () => {
         </Layout>
       </ThemeProvider>,
     );
-    const identityBox = component.find(IdentityBox);
-    expect(identityBox).toHaveLength(2);
+    const boxedLink = component.find(BoxedLink);
+    expect(boxedLink).toHaveLength(2);
   });
 
   test("it should display primary email and primary phone when there are many of each", () => {
@@ -99,8 +99,8 @@ describe("it should display identities properly", () => {
         </Layout>
       </ThemeProvider>,
     );
-    const identityBox = component.find(IdentityBox);
-    expect(identityBox).toHaveLength(2);
+    const boxedLink = component.find(BoxedLink);
+    expect(boxedLink).toHaveLength(2);
   });
 
   test("it should display no emails when there are not", () => {
@@ -124,10 +124,10 @@ describe("it should display identities properly", () => {
         </Layout>
       </ThemeProvider>,
     );
-    const identityBox = component.find(IdentityBox);
+    const boxedLink = component.find(BoxedLink);
     const noEmail = component.contains(<Value>No emails</Value>);
     expect(noEmail).toEqual(true);
-    expect(identityBox).toHaveLength(1);
+    expect(boxedLink).toHaveLength(1);
   });
 
   test("it should display no phones when there are not", () => {
@@ -151,11 +151,11 @@ describe("it should display identities properly", () => {
         </Layout>
       </ThemeProvider>,
     );
-    const identityBox = component.find(IdentityBox);
+    const boxedLink = component.find(BoxedLink);
     const noPhone = component.contains(<Value>No phones</Value>);
 
     expect(noPhone).toEqual(true);
-    expect(identityBox).toHaveLength(1);
+    expect(boxedLink).toHaveLength(1);
   });
 
   test("it should display no emails and no phones where there is nothing", () => {
@@ -300,20 +300,20 @@ describe('the "show more" button should behave properly', () => {
         </Layout>
       </ThemeProvider>,
     );
-    const identityBox = component.find(IdentityBox);
+    const boxedLink = component.find(BoxedLink);
     const showMoreButton1 = component.find(ShowMoreButton).at(0);
     const showMoreButton2 = component.find(ShowMoreButton).at(1);
-    expect(identityBox).toHaveLength(2);
+    expect(boxedLink).toHaveLength(2);
 
     showMoreButton1.simulate("click");
     showMoreButton2.simulate("click");
-    const identityBox2 = component.find(IdentityBox);
-    expect(identityBox2).toHaveLength(4);
+    const boxedLink2 = component.find(BoxedLink);
+    expect(boxedLink2).toHaveLength(4);
 
     showMoreButton1.simulate("click");
     showMoreButton2.simulate("click");
-    const identityBox3 = component.find(IdentityBox);
-    expect(identityBox3).toHaveLength(2);
+    const boxedLink3 = component.find(BoxedLink);
+    expect(boxedLink3).toHaveLength(2);
   });
 
   test("the button should not appear if the corresponding identity list < 2", () => {
