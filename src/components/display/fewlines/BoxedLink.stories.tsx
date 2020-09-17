@@ -9,7 +9,7 @@ export const StandardBoxedLink = (): JSX.Element => {
     <BoxedLink
       value={"emailaddress@mail.test"}
       primary={true}
-      status={"validated"}
+      status="validated"
     />
   );
 };
