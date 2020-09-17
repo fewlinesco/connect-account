@@ -8,15 +8,11 @@ export const BoxedLink: React.FC<{
   primary: boolean;
   status: "validated" | "unvalidated";
 }> = ({ value, primary, status }) => {
-  let className;
+  let className = "lighter";
   if (primary) {
     className = "bold";
-  } else {
-    if (status === "validated") {
-      className = "normal";
-    } else {
-      className = "lighter";
-    }
+  } else if (status === "validated") {
+    className = "normal";
   }
   return (
     <Box>
