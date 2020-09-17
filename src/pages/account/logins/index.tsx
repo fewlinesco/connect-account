@@ -5,6 +5,7 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
+import { ShowMoreButton } from "../../../components/display/fewlines/ShowMoreButton";
 import type { Identity } from "@src/@types/Identity";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
@@ -89,20 +90,10 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           )}
           {emailIdentities.length > 1 && (
             <ShowMoreButton
-              onClick={() => setHideSecondaryEmails(!hideSecondaryEmails)}
-            >
-              {hideSecondaryEmails ? (
-                <div>
-                  Show {emailIdentities.length - 1} more{" "}
-                  <Triangle rotate={hideSecondaryEmails} />
-                </div>
-              ) : (
-                <div>
-                  Hide {emailIdentities.length - 1}{" "}
-                  <Triangle rotate={hideSecondaryEmails} />
-                </div>
-              )}
-            </ShowMoreButton>
+              hide={hideSecondaryEmails}
+              quantity={emailIdentities.length - 1}
+              setHideSecondary={setHideSecondaryEmails}
+            />
           )}
           <Flex>
             <Link href="/account/logins/email/new">
@@ -141,20 +132,10 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           )}
           {phoneIdentities.length > 1 && (
             <ShowMoreButton
-              onClick={() => setHideSecondaryPhones(!hideSecondaryPhones)}
-            >
-              {hideSecondaryPhones ? (
-                <div>
-                  Show {phoneIdentities.length - 1} more{" "}
-                  <Triangle rotate={hideSecondaryPhones} />
-                </div>
-              ) : (
-                <div>
-                  Hide {phoneIdentities.length - 1}{" "}
-                  <Triangle rotate={hideSecondaryPhones} />
-                </div>
-              )}
-            </ShowMoreButton>
+              hide={hideSecondaryPhones}
+              quantity={phoneIdentities.length - 1}
+              setHideSecondary={setHideSecondaryPhones}
+            />
           )}
           <Flex>
             <Link href="/account/logins/phone/new">
@@ -271,13 +252,4 @@ const Flex = styled.div`
 
 export const Value = styled.p`
   margin-right: 0.5rem;
-`;
-
-export const ShowMoreButton = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 3rem;
-  &:hover {
-    cursor: pointer;
-  }
 `;

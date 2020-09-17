@@ -6,12 +6,10 @@ import { ReceivedIdentityTypes } from "../../src/@types/Identity";
 import { SortedIdentities } from "../../src/@types/SortedIdentities";
 import { Layout } from "../../src/components/Layout";
 import { BoxedLink } from "../../src/components/display/fewlines/BoxedLink";
+import { ShowMoreButton } from "../../src/components/display/fewlines/ShowMoreButton";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
-import Account, {
-  Value,
-  ShowMoreButton,
-} from "../../src/pages/account/logins/index";
+import Account, { Value } from "../../src/pages/account/logins/index";
 
 jest.mock("../../src/config", () => {
   return {
