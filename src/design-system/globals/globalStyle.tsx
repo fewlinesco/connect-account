@@ -48,6 +48,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
 	}
 	h3 {
 		font-size: ${({ theme }) => theme.fontSizes.h3};
+		margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
 	}
 
 	p {
