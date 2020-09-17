@@ -248,13 +248,13 @@ describe('the "show more" button should behave properly', () => {
     const showMoreButton2 = component.find(ShowMoreButton).at(1);
     expect(showMoreButton1).toHaveLength(1);
     expect(showMoreButton2).toHaveLength(1);
-    expect(showMoreButton1.text()).toEqual("Show 2 more");
-    expect(showMoreButton2.text()).toEqual("Show 3 more");
+    expect(showMoreButton1.text()).toEqual("Show 2 more ");
+    expect(showMoreButton2.text()).toEqual("Show 3 more ");
 
     showMoreButton1.simulate("click");
     showMoreButton2.simulate("click");
-    expect(showMoreButton1.text()).toEqual("Hide 2");
-    expect(showMoreButton2.text()).toEqual("Hide 3");
+    expect(showMoreButton1.text()).toEqual("Hide 2 ");
+    expect(showMoreButton2.text()).toEqual("Hide 3 ");
   });
 
   test("the button should show/hide identities", () => {

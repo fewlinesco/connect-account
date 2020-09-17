@@ -87,27 +87,33 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-        </IdentityContainer>
-        {emailIdentities.length > 1 && (
-          <ShowMoreButton
-            onClick={() => setHideSecondaryEmails(!hideSecondaryEmails)}
-          >
-            {hideSecondaryEmails
-              ? `Show ${emailIdentities.length - 1} more`
-              : `Hide ${emailIdentities.length - 1}`}
-          </ShowMoreButton>
-        )}
-        <Flex>
-          <Link href="/account/logins/email/new">
-            <Button variant={ButtonVariant.SECONDARY}>
-              + Add new email address
-            </Button>
-          </Link>
-        </Flex>
-      </IdentitySection>
-      <IdentitySection>
-        <h3>Phone numbers</h3>
-        <IdentityContainer className="identity-container">
+          {emailIdentities.length > 1 && (
+            <ShowMoreButton
+              onClick={() => setHideSecondaryEmails(!hideSecondaryEmails)}
+            >
+              {hideSecondaryEmails ? (
+                <div>
+                  Show {emailIdentities.length - 1} more{" "}
+                  <Triangle rotate={hideSecondaryEmails} />
+                </div>
+              ) : (
+                <div>
+                  Hide {emailIdentities.length - 1}{" "}
+                  <Triangle rotate={hideSecondaryEmails} />
+                </div>
+              )}
+            </ShowMoreButton>
+          )}
+          <Flex>
+            <Link href="/account/logins/email/new">
+              <Button variant={ButtonVariant.SECONDARY}>
+                + Add new email address
+              </Button>
+            </Link>
+          </Flex>
+        </IdentitySection>
+        <IdentitySection>
+          <h3>Phone numbers</h3>
           {phoneIdentities.length === 0 ? (
             <Value>No phones</Value>
           ) : (
@@ -133,27 +139,35 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-        </IdentityContainer>
-        {phoneIdentities.length > 1 && (
-          <ShowMoreButton
-            onClick={() => setHideSecondaryPhones(!hideSecondaryPhones)}
-          >
-            {hideSecondaryPhones
-              ? `Show ${phoneIdentities.length - 1} more`
-              : `Hide ${phoneIdentities.length - 1}`}
-          </ShowMoreButton>
-        )}
-        <Flex>
-          <Link href="/account/logins/phone/new">
-            <Button variant={ButtonVariant.SECONDARY}>
-              + Add new phone number
-            </Button>
-          </Link>
-        </Flex>
-      </IdentitySection>
-      <IdentitySection>
-        <h3>Social logins</h3>
-      </IdentitySection>
+          {phoneIdentities.length > 1 && (
+            <ShowMoreButton
+              onClick={() => setHideSecondaryPhones(!hideSecondaryPhones)}
+            >
+              {hideSecondaryPhones ? (
+                <div>
+                  Show {phoneIdentities.length - 1} more{" "}
+                  <Triangle rotate={hideSecondaryPhones} />
+                </div>
+              ) : (
+                <div>
+                  Hide {phoneIdentities.length - 1}{" "}
+                  <Triangle rotate={hideSecondaryPhones} />
+                </div>
+              )}
+            </ShowMoreButton>
+          )}
+          <Flex>
+            <Link href="/account/logins/phone/new">
+              <Button variant={ButtonVariant.SECONDARY}>
+                + Add new phone number
+              </Button>
+            </Link>
+          </Flex>
+        </IdentitySection>
+        <IdentitySection>
+          <h3>Social logins</h3>
+        </IdentitySection>
+      </IdentitiesBox>
     </Wrapper>
   );
 };
@@ -259,23 +273,11 @@ export const Value = styled.p`
   margin-right: 0.5rem;
 `;
 
-export const ShowMoreButton = styled.button`
-  padding: 0.5rem;
-  margin-right: 1rem;
-  border-radius: ${({ theme }) => theme.radii[0]};
-  background-color: transparent;
-  color: ${({ theme }) => theme.colors.green};
-  transition: ${({ theme }) => theme.transitions.quick};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
+export const ShowMoreButton = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
   &:hover {
     cursor: pointer;
-    background-color: ${({ theme }) => theme.colors.green};
-    color: ${({ theme }) => theme.colors.contrastCopy};
-  }
-  &:active,
-  &:focus {
-    outline: none;
-    background-color: ${({ theme }) => theme.colors.green};
-    color: ${({ theme }) => theme.colors.contrastCopy};
   }
 `;
