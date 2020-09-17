@@ -3,10 +3,24 @@ import style from "styled-components";
 
 import { RightChevron } from "./RightChevron";
 
-export const BoxedLink: React.FC<{ value: string }> = ({ value }) => {
+export const BoxedLink: React.FC<{
+  value: string;
+  primary: boolean;
+  status: "validated" | "unvalidated";
+}> = ({ value, primary, status }) => {
+  let className;
+  if (primary) {
+    className = "bold";
+  } else {
+    if (status === "validated") {
+      className = "normal";
+    } else {
+      className = "lighter";
+    }
+  }
   return (
     <Box>
-      <p>{value}</p>
+      <p className={className}>{value}</p>
       <RightChevron />
     </Box>
   );
@@ -18,4 +32,16 @@ const Box = style.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .bold {
+      font-weight: bold;
+    }
+
+    .normal {
+      font-weight: normal;
+    }
+
+    .lighter {
+      font-weight: lighter;
+    }
 `;

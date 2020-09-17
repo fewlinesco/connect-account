@@ -62,6 +62,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       <br />
       <IdentitySection>
         <h3>Email addresses</h3>
+        <br />
         <IdentityContainer className="identity-container">
           {emailIdentities.length === 0 ? (
             <Value>No emails</Value>
@@ -74,7 +75,11 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                     as={`/account/logins/${email.type}/${email.id}`}
                   >
                     <NeutralLink>
-                      <BoxedLink value={email.value} />
+                      <BoxedLink
+                        value={email.value}
+                        primary={email.primary}
+                        status={email.status}
+                      />
                     </NeutralLink>
                   </Link>
                   {emailList.indexOf(email) < emailList.length - 1 && (
@@ -104,6 +109,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       </IdentitySection>
       <IdentitySection>
         <h3>Phone numbers</h3>
+        <br />
         <IdentityContainer className="identity-container">
           {phoneIdentities.length === 0 ? (
             <Value>No phones</Value>
@@ -116,7 +122,11 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                     as={`/account/logins/${phone.type}/${phone.id}`}
                   >
                     <NeutralLink>
-                      <BoxedLink value={phone.value} />
+                      <BoxedLink
+                        value={phone.value}
+                        primary={phone.primary}
+                        status={phone.status}
+                      />
                     </NeutralLink>
                   </Link>
                   {phoneList.indexOf(phone) < phoneList.length - 1 && (
@@ -146,6 +156,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       </IdentitySection>
       <IdentitySection>
         <h3>Social logins</h3>
+        <br />
       </IdentitySection>
     </Wrapper>
   );
