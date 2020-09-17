@@ -59,10 +59,8 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       </Head>
       <h2>Logins</h2>
       <p>Your emails, phones and social logins</p>
-      <br />
       <IdentitySection>
         <h3>Email addresses</h3>
-        <br />
         <IdentityContainer className="identity-container">
           {emailIdentities.length === 0 ? (
             <Value>No emails</Value>
@@ -109,7 +107,6 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       </IdentitySection>
       <IdentitySection>
         <h3>Phone numbers</h3>
-        <br />
         <IdentityContainer className="identity-container">
           {phoneIdentities.length === 0 ? (
             <Value>No phones</Value>
@@ -156,7 +153,6 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       </IdentitySection>
       <IdentitySection>
         <h3>Social logins</h3>
-        <br />
       </IdentitySection>
     </Wrapper>
   );
