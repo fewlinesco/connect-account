@@ -2,7 +2,9 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { Identity } from "../../../@types/Identity";
+import { Identity, ReceivedIdentityTypes } from "../../../@types/Identity";
+import { Button, ButtonVariant } from "./Button";
+import { Input } from "./Input";
 
 export const UpdateIdentityForm: React.FC<{
   updateIdentity: (newValue: string) => Promise<void>;
@@ -12,7 +14,7 @@ export const UpdateIdentityForm: React.FC<{
   const router = useRouter();
 
   return (
-    <>
+    <Wrapper>
       <Form
         method="post"
         onSubmit={async (event) => {
@@ -20,6 +22,13 @@ export const UpdateIdentityForm: React.FC<{
           updateIdentity(identity);
         }}
       >
+        <p>
+          New{" "}
+          {currentIdentity.type === ReceivedIdentityTypes.PHONE
+            ? "phone number"
+            : "email address"}{" "}
+          *
+        </p>
         <Input
           type="text"
           name="value"
@@ -27,51 +36,42 @@ export const UpdateIdentityForm: React.FC<{
           value={identity}
           onChange={(event) => setIdentity(event.target.value)}
         />
-        <SendInput type="submit" value="Send" />
+        <Button
+          className="send-button"
+          variant={ButtonVariant.PRIMARY}
+          type="submit"
+        >
+          Update {currentIdentity.type}
+        </Button>
       </Form>
-      <Button onClick={() => router.push("/account/logins/")}>Cancel</Button>
-    </>
+      <Button
+        variant={ButtonVariant.SECONDARY}
+        onClick={() => router.push("/account/logins/")}
+      >
+        Cancel
+      </Button>
+    </Wrapper>
   );
 };
 
+const Wrapper = styled.div`
+  max-width: 95%;
+  margin: 0 auto;
+
+  input {
+    width: 100%;
+    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  .send-button {
+    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
+  }
+`;
 export const Form = styled.form`
-  display: flex;
+  display: column;
   align-items: center;
-`;
-
-export const Input = styled.input`
-  border: ${({ theme }) => `${theme.colors.blacks[0]} ${theme.borders.thin}`};
-  border-radius: ${({ theme }) => theme.radii[0]};
-  padding: 0.5rem;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
-`;
-
-const Button = styled.button`
-  padding: 0.5rem;
-  margin-right: 1rem;
-  border-radius: ${({ theme }) => theme.radii[0]};
-  background-color: transparent;
-  color: ${({ theme }) => theme.colors.green};
-  transition: ${({ theme }) => theme.transitions.quick};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  &:hover {
-    cursor: pointer;
-    background-color: ${({ theme }) => theme.colors.green};
-    color: ${({ theme }) => theme.colors.contrastCopy};
-  }
-  &:active,
-  &:focus {
-    outline: none;
-    background-color: ${({ theme }) => theme.colors.green};
-    color: ${({ theme }) => theme.colors.contrastCopy};
-  }
-`;
-
-const SendInput = styled.input`
-  color: ${({ theme }) => theme.colors.green};
-  padding: 0.25em 1em;
 `;

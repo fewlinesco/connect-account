@@ -1,11 +1,11 @@
 import { HttpStatus } from "@fwl/web";
-import { sendIdentityValidationCode } from "@lib/sendIdentityValidationCode";
 import { Handler } from "next-iron-session";
 
-import { ExtendedRequest } from "../../../@types/ExtendedRequest";
-import { config, oauth2Client } from "../../../config";
-import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
-import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
+import { sendIdentityValidationCode } from "@lib/sendIdentityValidationCode";
+import { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { config, oauth2Client } from "@src/config";
+import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
+import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const handler: Handler = async (request: ExtendedRequest, response) => {
   addRequestScopeToSentry(request);

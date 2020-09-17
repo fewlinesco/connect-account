@@ -1,15 +1,15 @@
 import React from "react";
 
 import { HttpVerbs } from "../../@types/HttpVerbs";
-import { IdentityTypes } from "../../@types/Identity";
+import type { ReceivedIdentityTypes } from "../../@types/Identity";
 import { useCookies } from "../../hooks/useCookies";
 import { fetchJson } from "../../utils/fetchJson";
 
 interface AddIdentityProps {
-  type: IdentityTypes;
+  type: ReceivedIdentityTypes;
   children: (props: {
     addIdentity: (value: string) => Promise<Response>;
-    type: IdentityTypes;
+    type: ReceivedIdentityTypes;
   }) => JSX.Element;
 }
 
@@ -26,12 +26,12 @@ export const AddIdentity: React.FC<AddIdentityProps> = ({ type, children }) => {
 
   const addIdentity = (value: string): Promise<Response> => {
     const body = {
-      userId: data.userId,
+      userId: data.userSub,
       type: type.toUpperCase(),
       value,
     };
 
-    return fetchJson("/api/identity", HttpVerbs.POST, body);
+    return fetchJson("/api/identities", HttpVerbs.POST, body);
   };
 
   return children({

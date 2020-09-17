@@ -3,28 +3,21 @@ import { GetServerSideProps } from "next";
 import React from "react";
 import styled from "styled-components";
 
-import { Identity } from "../../../../../@types/Identity";
-import { UpdateIdentity } from "../../../../../components/business/UpdateIdentity";
-import { UpdateIdentityForm } from "../../../../../components/display/fewlines/UpdateIdentityForm";
-import { config, oauth2Client } from "../../../../../config";
-import { OAuth2Error } from "../../../../../errors";
-import { useCookies } from "../../../../../hooks/useCookies";
-import { withSSRLogger } from "../../../../../middleware/withSSRLogger";
-import withSession from "../../../../../middleware/withSession";
-import { getIdentities } from "../../../../../queries/getIdentities";
-import Sentry from "../../../../../utils/sentry";
+import { Identity } from "@src/@types/Identity";
+import { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
+import { UpdateIdentityForm } from "@src/components/display/fewlines/UpdateIdentityForm";
+import { config, oauth2Client } from "@src/config";
+import { OAuth2Error } from "@src/errors";
+import { withSSRLogger } from "@src/middleware/withSSRLogger";
+import withSession from "@src/middleware/withSession";
+import { getIdentities } from "@src/queries/getIdentities";
+import { getUser } from "@src/utils/getUser";
+import { refreshTokens } from "@src/utils/refreshTokens";
+import Sentry from "@src/utils/sentry";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   const { value } = identity;
-  const { data, error } = useCookies();
-
-  if (error) {
-    return <div>Failed to load</div>;
-  }
-
-  if (!data) {
-    return null;
-  }
 
   return (
     <>
@@ -50,15 +43,31 @@ export default UpdateIdentityPage;
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
     try {
-      const accessToken = context.req.session.get("user-jwt");
+      const userDocumentId = context.req.session.get("user-session-id");
 
-      if (accessToken) {
-        const decoded = await oauth2Client.verifyJWT<{ sub: string }>(
-          accessToken,
-          config.connectJwtAlgorithm,
-        );
+      const user = await getUser(context.req.headers["cookie"]);
 
-        const identity = await getIdentities(decoded.sub).then((result) => {
+      if (user) {
+        const decodedJWT = await oauth2Client
+          .verifyJWT<AccessToken>(user.accessToken, config.connectJwtAlgorithm)
+          .catch(async (error) => {
+            if (error.name === "TokenExpiredError") {
+              const body = {
+                userDocumentId,
+                refreshToken: user.refreshToken,
+              };
+
+              const { access_token } = await refreshTokens(body);
+
+              return access_token;
+            } else {
+              throw error;
+            }
+          });
+
+        const identity = await getIdentities(
+          (decodedJWT as AccessToken).sub,
+        ).then((result) => {
           if (result instanceof Error) {
             throw result;
           }

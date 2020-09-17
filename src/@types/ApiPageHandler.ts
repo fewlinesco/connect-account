@@ -1,6 +1,8 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiResponse } from "next";
+
+import { ExtendedRequest } from "./ExtendedRequest";
 
 export type Handler = (
-  request: NextApiRequest,
+  request: ExtendedRequest,
   response: NextApiResponse,
-) => Promise<void>;
+) => Promise<void> | void;

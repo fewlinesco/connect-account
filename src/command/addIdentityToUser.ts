@@ -30,5 +30,5 @@ export async function addIdentityToUser({
     variables: { userId, type, value },
   };
 
-  return await fetchManagement(operation);
+  return fetchManagement(operation);
 }

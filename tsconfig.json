@@ -16,7 +16,8 @@
     "noImplicitReturns": true,
     "baseUrl": ".",
     "paths": {
-      "@lib/*": ["lib/*"]
+      "@lib/*": ["lib/*"],
+      "@src/*": ["src/*"]
     },
     "sourceMap": true
   },

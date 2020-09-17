@@ -1,12 +1,12 @@
 import { GetServerSideProps } from "next";
 import React from "react";
 
-import { IdentityTypes } from "../../../../@types/Identity";
-import { AddIdentityInputForm } from "../../../../components/display/fewlines/AddIdentityInputForm";
-import { withSSRLogger } from "../../../../middleware/withSSRLogger";
-import withSession from "../../../../middleware/withSession";
+import type { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { AddIdentityInputForm } from "@src/components/display/fewlines/AddIdentityInputForm";
+import { withSSRLogger } from "@src/middleware/withSSRLogger";
+import withSession from "@src/middleware/withSession";
 
-const AddNewIdentity: React.FC<{ type: IdentityTypes }> = (props) => {
+const AddNewIdentity: React.FC<{ type: ReceivedIdentityTypes }> = (props) => {
   return <AddIdentityInputForm type={props.type} />;
 };
 

@@ -2,14 +2,15 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { HttpVerbs } from "../../../@types/HttpVerbs";
-import { IdentityTypes } from "../../../@types/Identity";
-import { useSessionStorage } from "../../../hooks/useSessionStorage";
-import { Button } from "../../../pages/account/logins/index";
-import { fetchJson } from "../../../utils/fetchJson";
+import { Button, ButtonVariant } from "./Button";
+import { Input } from "./Input";
+import { HttpVerbs } from "@src/@types/HttpVerbs";
+import { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { useSessionStorage } from "@src/hooks/useSessionStorage";
+import { fetchJson } from "@src/utils/fetchJson";
 
 type AddIdentityInputFormProps = {
-  type: IdentityTypes;
+  type: ReceivedIdentityTypes;
 };
 
 export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
@@ -17,7 +18,7 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
 }) => {
   const [identity, setIdentity] = useSessionStorage<{
     value: string;
-    type: IdentityTypes;
+    type: ReceivedIdentityTypes;
     ttl: number;
   }>("identity-value", {
     value: "",
@@ -28,7 +29,7 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
   const router = useRouter();
 
   return (
-    <>
+    <Wrapper>
       <Form
         method="post"
         onSubmit={async (event) => {
@@ -45,6 +46,12 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
           router && router.push(`/account/logins/${type}/validation`);
         }}
       >
+        <p>
+          {type === ReceivedIdentityTypes.PHONE
+            ? "phone number"
+            : "email address"}{" "}
+          *
+        </p>
         <Input
           type="text"
           name="value"
@@ -58,30 +65,41 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
             })
           }
         />
-        <SendInput type="submit" value={`Add ${type}`} />
+        <Button
+          className="send-button"
+          variant={ButtonVariant.PRIMARY}
+          type="submit"
+        >{`Add ${type}`}</Button>
       </Form>
-      <Button onClick={() => router.push("/account/logins/")}>Cancel</Button>
-    </>
+      <Button
+        variant={ButtonVariant.SECONDARY}
+        onClick={() => router.push("/account/logins/")}
+      >
+        Cancel
+      </Button>
+    </Wrapper>
   );
 };
 
-export const Form = styled.form`
-  display: flex;
-  align-items: center;
-`;
+const Wrapper = styled.div`
+  max-width: 95%;
+  margin: 0 auto;
 
-export const Input = styled.input`
-  border: ${({ theme }) => `${theme.colors.blacks[0]} ${theme.borders.thin}`};
-  border-radius: ${({ theme }) => theme.radii[0]};
-  padding: 0.5rem;
+  .send-button {
+    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
+  }
 
-  &:active,
-  &:focus {
-    outline: none;
+  button {
+    width: 100%;
+  }
+
+  input {
+    width: 100%;
+    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
   }
 `;
 
-const SendInput = styled.input`
-  color: ${({ theme }) => theme.colors.green};
-  padding: 0.25em 1em;
+export const Form = styled.form`
+  display: column;
+  align-items: center;
 `;
