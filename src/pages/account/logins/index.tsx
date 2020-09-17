@@ -11,6 +11,7 @@ import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { BoxedLink } from "@src/components/display/fewlines/BoxedLink";
 import { Button, ButtonVariant } from "@src/components/display/fewlines/Button";
 import { IdentityContainer } from "@src/components/display/fewlines/IdentityContainer";
+import { NeutralLink } from "@src/components/display/fewlines/NeutralLink";
 import { Separator } from "@src/components/display/fewlines/Separator";
 import { config, oauth2Client } from "@src/config";
 import { OAuth2Error } from "@src/errors";
@@ -72,9 +73,9 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                     href="/account/logins/[type]/[id]"
                     as={`/account/logins/${email.type}/${email.id}`}
                   >
-                    <a>
+                    <NeutralLink>
                       <BoxedLink value={email.value} />
-                    </a>
+                    </NeutralLink>
                   </Link>
                   {emailList.indexOf(email) < emailList.length - 1 && (
                     <Separator />
@@ -114,9 +115,9 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                     href="/account/logins/[type]/[id]"
                     as={`/account/logins/${phone.type}/${phone.id}`}
                   >
-                    <a>
+                    <NeutralLink>
                       <BoxedLink value={phone.value} />
-                    </a>
+                    </NeutralLink>
                   </Link>
                   {phoneList.indexOf(phone) < phoneList.length - 1 && (
                     <Separator />
