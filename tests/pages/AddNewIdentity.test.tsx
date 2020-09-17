@@ -5,18 +5,18 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { ReceivedIdentityTypes } from "../../src/@types/Identity";
-import { Layout } from "../../src/components/Layout";
+import { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { Layout } from "@src/components/Layout";
 import {
   AddIdentityInputForm,
   Form,
-} from "../../src/components/display/fewlines/AddIdentityInputForm";
-import { Input } from "../../src/components/display/fewlines/Input";
-import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
-import { lightTheme } from "../../src/design-system/theme/lightTheme";
-import { useCookies } from "../../src/hooks/useCookies";
-import AddNewIdentity from "../../src/pages/account/logins/[type]/new";
-import * as fetchJson from "../../src/utils/fetchJson";
+} from "@src/components/display/fewlines/AddIdentityInputForm";
+import { Input } from "@src/components/display/fewlines/Input";
+import { GlobalStyle } from "@src/design-system/globals/globalStyle";
+import { lightTheme } from "@src/design-system/theme/lightTheme";
+import { useCookies } from "@src/hooks/useCookies";
+import AddNewIdentity from "@src/pages/account/logins/[type]/new";
+import * as fetchJson from "@src/utils/fetchJson";
 
 enableFetchMocks();
 
@@ -32,7 +32,7 @@ jest.mock("../../src/config", () => {
 (useCookies as any).mockImplementation(() => {
   return {
     data: {
-      userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
+      userSub: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
     },
   };
 });
@@ -70,7 +70,7 @@ describe("AddNewIdentity", () => {
     const fetchJsonMethod = jest.spyOn(fetchJson, "fetchJson");
     form.simulate("submit");
 
-    expect(fetchJsonMethod).toHaveBeenCalledWith("/api/account", "POST", {
+    expect(fetchJsonMethod).toHaveBeenCalledWith("/api/identities", "POST", {
       type: "EMAIL",
       userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
       value: "test3@test.test ",

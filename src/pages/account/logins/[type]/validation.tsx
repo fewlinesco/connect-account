@@ -1,17 +1,13 @@
 import { HttpStatus } from "@fwl/web";
-import {
-  JsonWebTokenError,
-  NotBeforeError,
-  TokenExpiredError,
-} from "jsonwebtoken";
 import { GetServerSideProps } from "next";
 import React from "react";
-import { withSSRLogger } from "src/middleware/withSSRLogger";
-import withSession from "src/middleware/withSession";
 
-import { IdentityTypes } from "../../../../@types/Identity";
-import IdentityValidationForm from "../../../../components/display/fewlines/IdentityValidationForm";
-import Sentry, { addRequestScopeToSentry } from "../../../../utils/sentry";
+import type { IdentityTypes } from "@src/@types/Identity";
+import IdentityValidationForm from "@src/components/display/fewlines/IdentityValidationForm";
+import { OAuth2Error } from "@src/errors";
+import { withSSRLogger } from "@src/middleware/withSSRLogger";
+import withSession from "@src/middleware/withSession";
+import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const Validation: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   return <IdentityValidationForm type={type} />;
@@ -22,6 +18,7 @@ export default Validation;
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
     addRequestScopeToSentry(context.req);
+
     try {
       return {
         props: {
@@ -29,11 +26,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         },
       };
     } catch (error) {
-      if (
-        error instanceof JsonWebTokenError ||
-        error instanceof NotBeforeError ||
-        error instanceof TokenExpiredError
-      ) {
+      if (error instanceof OAuth2Error) {
         Sentry.withScope((scope) => {
           scope.setTag(
             `/pages/account/logins/${context.params.type}/validation SSR`,

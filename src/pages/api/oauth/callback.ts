@@ -2,11 +2,14 @@ import { HttpStatus } from "@fwl/web";
 import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
-import { ExtendedRequest } from "../../../@types/ExtendedRequest";
-import { oauth2Client } from "../../../config";
-import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
-import withSession from "../../../middleware/withSession";
-import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
+import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import { findOrInsertUser } from "@src/command/findOrInsertUser";
+import { oauth2Client, config } from "@src/config";
+import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
+import { withMongoDB } from "@src/middleware/withMongoDB";
+import withSession from "@src/middleware/withSession";
+import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const handler: Handler = async (
   request: ExtendedRequest,
@@ -20,9 +23,21 @@ const handler: Handler = async (
         request.query.code as string,
       );
 
-      await oauth2Client.verifyJWT(tokens.access_token, "HS256");
+      const decodedAccessToken = await oauth2Client.verifyJWT<AccessToken>(
+        tokens.access_token,
+        config.connectJwtAlgorithm,
+      );
 
-      request.session.set("user-jwt", tokens.access_token);
+      const oauthUserInfo = {
+        sub: decodedAccessToken.sub,
+        accessToken: tokens.access_token,
+        refreshToken: tokens.refresh_token,
+      };
+
+      const documentId = await findOrInsertUser(oauthUserInfo, request.mongoDb);
+
+      request.session.set("user-session-id", documentId);
+      request.session.set("user-sub", decodedAccessToken.sub);
 
       await request.session.save();
 
@@ -44,4 +59,4 @@ const handler: Handler = async (
   }
 };
 
-export default withAPIPageLogger(withSession(handler));
+export default withAPIPageLogger(withSession(withMongoDB(handler)));

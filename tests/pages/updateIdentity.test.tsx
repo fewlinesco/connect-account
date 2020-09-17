@@ -33,7 +33,7 @@ jest.mock("../../src/config", () => {
 (useCookies as any).mockImplementation(() => {
   return {
     data: {
-      userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
+      userSub: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
     },
   };
 });
@@ -65,7 +65,7 @@ describe("UpdateIdentityPage", () => {
     expect(updateIdentityInput).toHaveLength(1);
   });
 
-  test("it should create the new identity if the form is submited", () => {
+  test("it should create the new identity if the form is submitted", () => {
     expect.assertions(1);
     const component = mount(
       <ThemeProvider theme={lightTheme}>
@@ -86,7 +86,7 @@ describe("UpdateIdentityPage", () => {
     const form = component.find(UpdateIdentityForm).find(Form);
     form.simulate("submit");
 
-    expect(fetchMethod).toHaveBeenCalledWith("/api/account", "POST", {
+    expect(fetchMethod).toHaveBeenCalledWith("/api/identities", "POST", {
       type: "EMAIL",
       userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
       value: "test2@test.test",
@@ -115,7 +115,7 @@ describe("UpdateIdentityPage", () => {
     const fetchMethod = jest
       .spyOn(fetchJson, "fetchJson")
       .mockImplementationOnce(async () => {
-        return fetch("/api/account", {
+        return fetch("/api/identities", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -127,11 +127,15 @@ describe("UpdateIdentityPage", () => {
           }),
         })
           .then((response) => {
-            expect(fetchMethod).toHaveBeenCalledWith("/api/account", "DELETE", {
-              type: "EMAIL",
-              userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
-              value: "test@test.test",
-            });
+            expect(fetchMethod).toHaveBeenCalledWith(
+              "/api/identities",
+              "DELETE",
+              {
+                type: "EMAIL",
+                userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
+                value: "test@test.test",
+              },
+            );
             return response;
           })
           .catch((error: Error) => {

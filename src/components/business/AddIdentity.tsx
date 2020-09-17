@@ -26,12 +26,12 @@ export const AddIdentity: React.FC<AddIdentityProps> = ({ type, children }) => {
 
   const addIdentity = (value: string): Promise<Response> => {
     const body = {
-      userId: data.userId,
+      userId: data.userSub,
       type: type.toUpperCase(),
       value,
     };
 
-    return fetchJson("/api/account", HttpVerbs.POST, body);
+    return fetchJson("/api/identities", HttpVerbs.POST, body);
   };
 
   return children({ addIdentity, type });

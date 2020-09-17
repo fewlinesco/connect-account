@@ -13,3 +13,7 @@ export function OAuth2Error(error?: OAuth2Errors): WebError {
     parentError: error,
   });
 }
+
+export class MongoUpdateError extends Error {}
+
+export class MongoInsertError extends Error {}

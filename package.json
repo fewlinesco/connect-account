@@ -42,7 +42,6 @@
     "@types/enzyme": "3.10.5",
     "@types/enzyme-adapter-react-16": "1.0.6",
     "@types/jest": "26.0.4",
-    "@types/jsonwebtoken": "8.5.0",
     "@types/mongodb": "3.5.27",
     "@types/node": "14.0.23",
     "@types/react": "16.9.43",
@@ -65,7 +64,6 @@
     "jest": "26.1.0",
     "jest-fetch-mock": "3.0.3",
     "jest-styled-components": "7.0.2",
-    "jsonwebtoken": "8.5.1",
     "prettier": "2.1.1",
     "react-is": "16.13.1",
     "ts-jest": "26.1.2",
@@ -138,10 +136,46 @@
   },
   "eslintConfig": {
     "extends": [
+      "@fewlines/eslint-config/node",
       "@fewlines/eslint-config/react",
       "@fewlines/eslint-config/typescript",
       "@fewlines/eslint-config/react-typescript"
-    ]
+    ],
+    "rules": {
+      "import/order": [
+        "error",
+        {
+          "alphabetize": {
+            "order": "asc",
+            "caseInsensitive": false
+          },
+          "newlines-between": "always",
+          "groups": [
+            [
+              "builtin",
+              "external"
+            ],
+            [
+              "internal",
+              "parent",
+              "sibling",
+              "index"
+            ]
+          ],
+          "pathGroups": [
+            {
+              "pattern": "@src/**",
+              "group": "internal"
+            },
+            {
+              "pattern": "@lib/**",
+              "group": "internal"
+            }
+          ],
+          "pathGroupsExcludedImportTypes": ["builtin"]
+        }
+      ]
+    }
   },
   "jest": {
     "preset": "ts-jest",
@@ -163,7 +197,9 @@
       "config"
     ],
     "moduleNameMapper": {
-      "\\.(png|svg|jpg|gif|eot|ttf|woff|woff2)$": "<rootDir>/tests/__mocks__/fileMock.ts"
+      "\\.(png|svg|jpg|gif|eot|ttf|woff|woff2)$": "<rootDir>/tests/__mocks__/fileMock.ts",
+      "@src/(.*)": "<rootDir>/src/$1",
+      "@lib/(.*)": "<rootDir>/lib/$1"
     },
     "setupFilesAfterEnv": [
       "./tests/config/enzyme-config.ts"

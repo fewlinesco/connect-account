@@ -3,14 +3,11 @@ import { seal, defaults } from "@hapi/iron";
 import { IncomingMessage, ServerResponse } from "http";
 import fetch from "jest-fetch-mock";
 import { enableFetchMocks } from "jest-fetch-mock";
-import jwt from "jsonwebtoken";
 import { Socket } from "net";
-import { OAuth2Errors } from "src/@types/OAuth2Errors";
 
 import { ReceivedIdentityTypes } from "../src/@types/Identity";
 import { ProviderUser } from "../src/@types/ProviderUser";
-import { config, oauth2Client } from "../src/config";
-import { OAuth2Error } from "../src/errors";
+import { config } from "../src/config";
 import { getServerSideProps } from "../src/pages/account/logins/index";
 
 enableFetchMocks();
@@ -25,6 +22,8 @@ jest.mock("../src/config", () => {
       connectRedirectUri: "",
       connectAudience: "",
       connectApplicationScopes: "",
+      connectProviderUrl: "http://foo.test",
+      connectDomain: "http://foo.test",
     },
     oauth2Client: {
       verifyJWT: async () => {
@@ -42,14 +41,6 @@ const mockedContext = {
   req: mockedRequest,
   res: new ServerResponse(mockedRequest),
   query: {},
-};
-
-const mockedJWTPayload = {
-  aud: ["connect-account"],
-  exp: Date.now(),
-  iss: "foo",
-  scope: "phone email",
-  sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
 };
 
 describe("getServerSideProps", () => {
@@ -108,7 +99,7 @@ describe("getServerSideProps", () => {
     );
   });
 
-  it("should get the user-id from the session and call management GraphQL endpoint", async () => {
+  it("should get the mongo document id from the session and call management GraphQL endpoint", async () => {
     const mockedSortedResponse = {
       emailIdentities: [
         {
@@ -130,15 +121,11 @@ describe("getServerSideProps", () => {
       ],
     };
 
-    const JWT = jwt.sign(
-      mockedJWTPayload,
-      config.connectApplicationClientSecret,
-    );
-
     const sealedJWT = await seal(
       {
         persistent: {
-          "user-jwt": JWT,
+          "user-session-id": "42",
+          "user-sub": "4a5f8589-0d91-4a69-924a-6f227a69666d",
         },
         flash: {},
       },
@@ -155,7 +142,13 @@ describe("getServerSideProps", () => {
       `connect-account-session=${sealedJWT}`,
     ];
 
-    fetch.once(JSON.stringify(mockedResponse));
+    fetch
+      .once(
+        JSON.stringify({
+          user: { sub: "299d268e-3e19-4486-9be7-29c539d241ac" },
+        }),
+      )
+      .once(JSON.stringify(mockedResponse));
 
     const response = await getServerSideProps(mockedContext);
 

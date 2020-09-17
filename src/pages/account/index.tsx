@@ -1,15 +1,16 @@
 import { HttpStatus } from "@fwl/web";
-import { GetServerSideProps } from "next";
+import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { oauth2Client, config } from "../../config";
-import { OAuth2Error } from "../../errors";
-import { withSSRLogger } from "../../middleware/withSSRLogger";
-import withSession from "../../middleware/withSession";
-import Sentry, { addRequestScopeToSentry } from "../../utils/sentry";
+import { oauth2Client, config } from "@src/config";
+import { withSSRLogger } from "@src/middleware/withSSRLogger";
+import withSession from "@src/middleware/withSession";
+import { getUser } from "@src/utils/getUser";
+import { refreshTokens } from "@src/utils/refreshTokens";
+import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const Account: React.FC = () => {
   return (
@@ -35,13 +36,27 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     addRequestScopeToSentry(context.req);
 
     try {
-      const accessToken = context.req.session.get("user-jwt");
+      const userDocumentId = context.req.session.get("user-session-id");
 
-      if (accessToken) {
-        await oauth2Client.verifyJWT<{ sub: string }>(
-          accessToken,
-          config.connectJwtAlgorithm,
-        );
+      const user = await getUser(context.req.headers["cookie"]);
+
+      if (user) {
+        await oauth2Client
+          .verifyJWT(user.accessToken, config.connectJwtAlgorithm)
+          .catch(async (error) => {
+            if (error.name === "TokenExpiredError") {
+              const body = {
+                userDocumentId,
+                refreshToken: user.refreshToken,
+              };
+
+              await refreshTokens(body);
+
+              context.res.end();
+            } else {
+              throw error;
+            }
+          });
       } else {
         context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
         context.res.setHeader("location", context.req.headers.referer || "/");
@@ -52,21 +67,14 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         props: {},
       };
     } catch (error) {
-      if (error instanceof OAuth2Error) {
-        Sentry.withScope((scope) => {
-          scope.setTag(
-            "/pages/account/logins SSR",
-            "/pages/account/logins SSR",
-          );
-          Sentry.captureException(error);
-        });
+      Sentry.withScope((scope) => {
+        scope.setTag("/pages/account/ SSR", error.name);
+        Sentry.captureException(error);
+      });
 
-        context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-        context.res.setHeader("location", context.req.headers.referer || "/");
-        context.res.end();
-
-        return { props: {} };
-      }
+      context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+      context.res.setHeader("location", context.req.headers.referer || "/");
+      context.res.end();
 
       throw error;
     }
