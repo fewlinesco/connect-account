@@ -2,28 +2,29 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { HttpVerbs } from "../../../@types/HttpVerbs";
-import type { IdentityTypes } from "../../../@types/Identity";
-import { useSessionStorage } from "../../../hooks/useSessionStorage";
-import { fetchJson } from "../../../utils/fetchJson";
 import AlertBar from "./AlertBar";
 import { Button, ButtonVariant } from "./Button";
 import { Input } from "./Input";
+import { HttpVerbs } from "@src/@types/HttpVerbs";
+import { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { fetchJson } from "@src/utils/fetchJson";
 
-const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
+const IdentityValidationForm: React.FC<{ type: ReceivedIdentityTypes }> = ({
   type,
 }) => {
   const [validationCode, setValidationCode] = React.useState("");
-  const router = useRouter();
-  const [identity] = useSessionStorage<{
+
+  const [identity, setIdentity] = React.useState<{
     value: string;
-    type: IdentityTypes;
+    type: ReceivedIdentityTypes;
     ttl: number;
-  }>("identity-value", {
+  }>({
     value: "",
     type,
     ttl: Date.now(),
   });
+
+  const router = useRouter();
 
   return (
     <Wrapper>

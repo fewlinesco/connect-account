@@ -1,10 +1,14 @@
 import { HttpStatus } from "@fwl/web";
 import { Handler } from "next-iron-session";
 
-import { sendIdentityValidationCode } from "@lib/sendIdentityValidationCode";
+import {
+  IdentityStatus,
+  sendIdentityValidationCode,
+} from "@lib/sendIdentityValidationCode";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { config, oauth2Client } from "@src/config";
 import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
+import { withMongoDB } from "@src/middleware/withMongoDB";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const handler: Handler = async (request: ExtendedRequest, response) => {
@@ -22,14 +26,15 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
       );
 
       const identity = {
-        userId: decoded.sub,
-        type,
+        status: IdentityStatus.VALIDATED,
+        type: type.toUpperCase(),
         value,
       };
 
       return sendIdentityValidationCode({
         callbackUrl,
         identity,
+        localeCodeOverride: "en-EN",
         userId: decoded.sub,
       }).then((data) => {
         response.statusCode = HttpStatus.OK;
@@ -54,4 +59,4 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
   return Promise.reject();
 };
 
-export default withAPIPageLogger(handler);
+export default withAPIPageLogger(withMongoDB(handler));

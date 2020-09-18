@@ -71,7 +71,7 @@ describe("AddNewIdentity", () => {
   //   form.simulate("submit");
 
   //   expect(fetchJsonMethod).toHaveBeenCalledWith(
-  //     "/api/send-identity-validation-code",
+  //     "/api/auth-connect/send-identity-validation-code",
   //     "POST",
   //     {
   //       callbackUrl: "/",

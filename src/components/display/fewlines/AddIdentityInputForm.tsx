@@ -6,21 +6,16 @@ import { Button, ButtonVariant } from "./Button";
 import { Input } from "./Input";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
 import { ReceivedIdentityTypes } from "@src/@types/Identity";
-import { useSessionStorage } from "@src/hooks/useSessionStorage";
 import { fetchJson } from "@src/utils/fetchJson";
 
-type AddIdentityInputFormProps = {
+export const AddIdentityInputForm: React.FC<{
   type: ReceivedIdentityTypes;
-};
-
-export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
-  type,
-}) => {
-  const [identity, setIdentity] = useSessionStorage<{
+}> = ({ type }) => {
+  const [identity, setIdentity] = React.useState<{
     value: string;
     type: ReceivedIdentityTypes;
     ttl: number;
-  }>("identity-value", {
+  }>({
     value: "",
     type,
     ttl: Date.now(),
@@ -37,11 +32,14 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
 
           const body = {
             callbackUrl: "/",
-            type,
-            value: identity.value,
+            identityInput: identity,
           };
 
-          fetchJson("/api/send-identity-validation-code", HttpVerbs.POST, body);
+          fetchJson(
+            "/api/auth-connect/send-identity-validation-code",
+            HttpVerbs.POST,
+            body,
+          );
 
           router && router.push(`/account/logins/${type}/validation`);
         }}

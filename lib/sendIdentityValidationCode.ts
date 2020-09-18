@@ -4,8 +4,13 @@ import gql from "graphql-tag";
 import { fetchManagement } from "../src/utils/fetchManagement";
 import { IdentityTypes } from "./@types/Identity";
 
+export enum IdentityStatus {
+  UNVALIDATED = "UNVALIDATED",
+  VALIDATED = "VALIDATED",
+}
+
 export type IdentityInput = {
-  userId: string;
+  status: IdentityStatus;
   type: IdentityTypes;
   value: string;
 };
@@ -14,7 +19,7 @@ export type SendIdentityVerificationCodeInput = {
   callbackUrl: string;
   identity: IdentityInput;
   localeCodeOverride?: string;
-  userId: string;
+  userId?: string;
 };
 
 export type SendIdentityValidationCodeResult = {
@@ -35,16 +40,23 @@ export type SendIdentityValidationCode = (
 
 const SEND_IDENTITY_VALIDATION_CODE = gql`
   mutation sendIdentityValidationCode(
-    $input: SendIdentityVerificationCodeInput
+    $callbackUrl: String!
+    $identity: IdentityInput!
+    $localeCodeOverride: String
+    $userId: String
   ) {
     sendIdentityValidationCode(
-      input: { callbackUrl: $callbackUrl, identity: $identity, userId: $userId }
+      input: {
+        callbackUrl: $callbackUrl
+        identity: $identity
+        localeCodeOverride: $localeCodeOverride
+        userId: $userId
+      }
     ) {
       callbackUrl
       localeCode
       eventId
       nonce
-      __typename
     }
   }
 `;
@@ -61,6 +73,8 @@ export async function sendIdentityValidationCode(
     query: SEND_IDENTITY_VALIDATION_CODE,
     variables: command,
   };
+
+  console.log(command);
 
   return (await fetchManagement(operation)) as
     | FetchResult<{
