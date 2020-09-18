@@ -6,12 +6,10 @@ import { ReceivedIdentityTypes } from "../../src/@types/Identity";
 import { SortedIdentities } from "../../src/@types/SortedIdentities";
 import { Layout } from "../../src/components/Layout";
 import { BoxedLink } from "../../src/components/display/fewlines/BoxedLink";
+import { ShowMoreButton } from "../../src/components/display/fewlines/ShowMoreButton";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
-import Account, {
-  Value,
-  ShowMoreButton,
-} from "../../src/pages/account/logins/index";
+import Account, { Value } from "../../src/pages/account/logins/index";
 
 jest.mock("../../src/config", () => {
   return {
@@ -248,13 +246,13 @@ describe('the "show more" button should behave properly', () => {
     const showMoreButton2 = component.find(ShowMoreButton).at(1);
     expect(showMoreButton1).toHaveLength(1);
     expect(showMoreButton2).toHaveLength(1);
-    expect(showMoreButton1.text()).toEqual("Show 2 more");
-    expect(showMoreButton2.text()).toEqual("Show 3 more");
+    expect(showMoreButton1.text()).toEqual("Show 2 more ");
+    expect(showMoreButton2.text()).toEqual("Show 3 more ");
 
     showMoreButton1.simulate("click");
     showMoreButton2.simulate("click");
-    expect(showMoreButton1.text()).toEqual("Hide 2");
-    expect(showMoreButton2.text()).toEqual("Hide 3");
+    expect(showMoreButton1.text()).toEqual("Hide 2 ");
+    expect(showMoreButton2.text()).toEqual("Hide 3 ");
   });
 
   test("the button should show/hide identities", () => {
