@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import type { Identity } from "../@types/Identity";
 import { DeleteIdentity } from "../components/business/DeleteIdentity";
+import { Box } from "./display/fewlines/Box";
 import { Button, ButtonVariant } from "./display/fewlines/Button";
 
 type IdentityLineProps = {
@@ -15,9 +16,18 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
 
   return (
     <IdentityBox key={value}>
-      <Flex>
-        <Value>{value}</Value>
-      </Flex>
+      <Box>
+        <Flex>
+          <Value>{value}</Value>
+        </Flex>
+        {primary && status === "validated" && <p>Primary</p>}
+        {status === "validated" && (
+          <IdentityInfo>
+            <p>Added on ...</p>
+            <p>Last used to login on ...</p>
+          </IdentityInfo>
+        )}
+      </Box>
       {status === "unvalidated" && (
         <>
           <p>awaiting validation</p>
@@ -29,13 +39,6 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
             </a>
           </Link>
         </>
-      )}
-      {primary && status === "validated" && <p>Primary</p>}
-      {status === "validated" && (
-        <IdentityInfo>
-          <p>Added on ...</p>
-          <p>Last used to login on ...</p>
-        </IdentityInfo>
       )}
       {status === "validated" && (
         <Link href={`/account/logins/${type}/${id}/update`}>
@@ -81,7 +84,8 @@ const IdentityInfo = styled.div`
 `;
 
 const Value = styled.p`
-  margin-right: 0.5rem;
+  font-weight: bold;
+  margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
 `;
 
 const Flex = styled.div`
