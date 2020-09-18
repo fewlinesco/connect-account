@@ -83,7 +83,7 @@ const IdentityInfo = styled.div`
 `;
 
 const Value = styled.p`
-  font-weight: bold;
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
   margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
 `;
 
