@@ -27,7 +27,7 @@ const borders = {
 const colors = {
   primary: "#1825aa",
   secondary: "#44F8D7",
-  background: "#FAFAFA",
+  background: "#FFFFFF",
   backgroundContrast: "#FFFFFF",
   black: "#202020",
   contrastCopy: "#FFFFFF",
@@ -36,6 +36,7 @@ const colors = {
   yellow: "#FDC141",
   placeholder: "#8b90a0",
   separator: "#F0F1F3",
+  box: "#FAFAFC",
   blacks: [
     "hsl(0, 0%, 90%)", // 0
     "hsl(0, 0%, 75%)", // 1
