@@ -21,24 +21,23 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
           <Value>{value}</Value>
         </Flex>
         {primary && status === "validated" && <p>Primary</p>}
-        {status === "validated" && (
+        {status === "validated" ? (
           <IdentityInfo>
             <p>Added on ...</p>
             <p>Last used to login on ...</p>
           </IdentityInfo>
+        ) : (
+          <p>awaiting validation</p>
         )}
       </Box>
       {status === "unvalidated" && (
-        <>
-          <p>awaiting validation</p>
-          <Link href={`/account/logins/${type}/validation`}>
-            <a>
-              <Button variant={ButtonVariant.PRIMARY}>
-                proceed to validation
-              </Button>
-            </a>
-          </Link>
-        </>
+        <Link href={`/account/logins/${type}/validation`}>
+          <a>
+            <Button variant={ButtonVariant.PRIMARY}>
+              proceed to validation
+            </Button>
+          </a>
+        </Link>
       )}
       {status === "validated" && (
         <Link href={`/account/logins/${type}/${id}/update`}>
