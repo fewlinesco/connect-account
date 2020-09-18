@@ -27,7 +27,5 @@ export const Button = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 3rem;
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;

@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 export const Triangle: React.FC<{ rotate: boolean }> = ({ rotate }) => {
-  const className = rotate === true ? "rotate" : "normal";
+  const className = rotate ? "rotate" : "";
+
   return (
     <Rotate>
       <svg
@@ -23,12 +24,12 @@ export const Triangle: React.FC<{ rotate: boolean }> = ({ rotate }) => {
 };
 
 const Rotate = styled.span`
-  .rotate {
-    transform: rotate(180deg);
+  svg {
     margin-bottom: 0.3rem;
   }
 
-  .normal {
+  .rotate {
+    transform: rotate(180deg);
     margin-bottom: 0.3rem;
   }
 `;
