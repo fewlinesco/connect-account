@@ -58,9 +58,11 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       <Head>
         <title>Connect Logins</title>
       </Head>
-      <h2>Logins</h2>
-      <p>Your emails, phones and social logins</p>
       <IdentitySection>
+        <h2>Logins</h2>
+        <p className="section-description">
+          Your emails, phones and social logins
+        </p>
         <h3>Email addresses</h3>
         <IdentityContainer className="identity-container">
           {emailIdentities.length === 0 ? (
@@ -88,23 +90,23 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-          {emailIdentities.length > 1 && (
-            <ShowMoreButton
-              hide={hideSecondaryEmails}
-              quantity={emailIdentities.length - 1}
-              setHideSecondary={setHideSecondaryEmails}
-            />
-          )}
-          <Flex>
-            <Link href="/account/logins/email/new">
-              <Button variant={ButtonVariant.SECONDARY}>
-                + Add new email address
-              </Button>
-            </Link>
-          </Flex>
-        </IdentitySection>
-        <IdentitySection>
-          <h3>Phone numbers</h3>
+        </IdentityContainer>
+        {emailIdentities.length > 1 && (
+          <ShowMoreButton
+            hide={hideSecondaryEmails}
+            quantity={emailIdentities.length - 1}
+            setHideSecondary={setHideSecondaryEmails}
+          />
+        )}
+        <Flex>
+          <Link href="/account/logins/email/new">
+            <Button variant={ButtonVariant.SECONDARY}>
+              + Add new email address
+            </Button>
+          </Link>
+        </Flex>
+        <h3>Phone numbers</h3>
+        <IdentityContainer className="identity-container">
           {phoneIdentities.length === 0 ? (
             <Value>No phones</Value>
           ) : (
@@ -130,25 +132,23 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-          {phoneIdentities.length > 1 && (
-            <ShowMoreButton
-              hide={hideSecondaryPhones}
-              quantity={phoneIdentities.length - 1}
-              setHideSecondary={setHideSecondaryPhones}
-            />
-          )}
-          <Flex>
-            <Link href="/account/logins/phone/new">
-              <Button variant={ButtonVariant.SECONDARY}>
-                + Add new phone number
-              </Button>
-            </Link>
-          </Flex>
-        </IdentitySection>
-        <IdentitySection>
-          <h3>Social logins</h3>
-        </IdentitySection>
-      </IdentitiesBox>
+        </IdentityContainer>
+        {phoneIdentities.length > 1 && (
+          <ShowMoreButton
+            hide={hideSecondaryPhones}
+            quantity={phoneIdentities.length - 1}
+            setHideSecondary={setHideSecondaryPhones}
+          />
+        )}
+        <Flex>
+          <Link href="/account/logins/phone/new">
+            <Button variant={ButtonVariant.SECONDARY}>
+              + Add new phone number
+            </Button>
+          </Link>
+        </Flex>
+        <h3>Social logins</h3>
+      </IdentitySection>
     </Wrapper>
   );
 };
@@ -231,11 +231,13 @@ const Wrapper = styled.div`
   margin: 0 auto;
 
   .identity-container {
-    margin-bottom: 1rem;
+    margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
   }
 
   button {
     width: 100%;
+    margin: 0 0 ${({ theme }) => theme.spaces.component.s} 0;
+    background-color: ${({ theme }) => theme.colors.background};
   }
 `;
 
@@ -243,6 +245,10 @@ const IdentitySection = styled.div`
   padding: ${({ theme }) => theme.spaces.component.xs};
   border-bottom: ${({ theme }) =>
     `${theme.colors.blacks[0]} ${theme.borders.thin}`};
+
+  .section-description {
+    margin: 0 0 ${({ theme }) => theme.spaces.component.s} 0;
+  }
 `;
 
 const Flex = styled.div`
