@@ -9,8 +9,11 @@ import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
-const Validation: React.FC<{ type: IdentityTypes }> = ({ type }) => {
-  return <IdentityValidationForm type={type} />;
+const Validation: React.FC<{ type: IdentityTypes; eventId: string }> = ({
+  type,
+  eventId,
+}) => {
+  return <IdentityValidationForm type={type} eventId={eventId} />;
 };
 
 export default Validation;
@@ -23,6 +26,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
       return {
         props: {
           type: context.params.type,
+          eventId: context.params.eventId,
         },
       };
     } catch (error) {

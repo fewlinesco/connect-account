@@ -1,62 +1,34 @@
 import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
-import { fetchManagement } from "../src/utils/fetchManagement";
-import { IdentityTypes } from "./@types/Identity";
+import { CheckVerificationCodeResult } from "@lib/@types/VerificationCode";
+import { fetchManagement } from "@src/utils/fetchManagement";
 
-export type CheckVerificationCodeInput = {
-  code: string;
-  eventId: string;
-};
-
-enum CheckVerificationCodeStatus {
-  EXPIRED = "EXPIRED",
-  INVALID = "INVALID",
-  NOT_FOUND = "NOT_FOUND",
-  VALID = "VALID",
-}
-
-export type CheckVerificationCodeResult = {
-  identityType: IdentityTypes;
-  identityValue: string;
-  nonce: string;
-  status: CheckVerificationCodeStatus;
-};
-
-export type CheckVerificationCode = (
-  command: CheckVerificationCodeInput,
-) => Promise<
-  | FetchResult<{
-      sendIdentityValidationCode: CheckVerificationCodeResult;
-    }>
-  | Error
->;
-
-const CHECK_VERIFICATION_CODE = gql`
-  query checkVerificationCode($input: CheckVerificationCodeInput) {
-    checkVerificationCode(input: $input) {
-      identityType
-      identityValue
-      nonce
-      status
-      __typename
-    }
+const CHECK_VERIFICATION_CODE_QUERY = gql`
+  query checkVerificationCodeQuery(code: String!, eventId: String!) {
+    {
+      checkVerificationCode(input: {code: $code, eventId: $eventId}) {
+        identityType
+        identityValue
+        nonce
+        status
+      }
+    } 
   }
 `;
 
 export async function checkVerificationCode(
-  command: CheckVerificationCodeInput,
+  code: string,
+  eventId: string,
 ): Promise<
-  FetchResult<{
-    sendIdentityValidationCode: CheckVerificationCodeResult;
-  }>
+  FetchResult<{ checkVerificationCode: CheckVerificationCodeResult }>
 > {
   const operation = {
-    query: CHECK_VERIFICATION_CODE,
-    variables: command,
+    query: CHECK_VERIFICATION_CODE_QUERY,
+    variables: { code, eventId },
   };
 
   return (await fetchManagement(operation)) as FetchResult<{
-    sendIdentityValidationCode: CheckVerificationCodeResult;
+    checkVerificationCode: CheckVerificationCodeResult;
   }>;
 }

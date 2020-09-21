@@ -1,12 +1,10 @@
 import { HttpStatus } from "@fwl/web";
 import { Handler } from "next-iron-session";
 
-import {
-  IdentityStatus,
-  sendIdentityValidationCode,
-} from "@lib/sendIdentityValidationCode";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { insertTemporaryIdentity } from "@src/command/insertTemporaryIdentity";
 import { config, oauth2Client } from "@src/config";
+import { MongoUpdateError } from "@src/errors";
 import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
 import { withMongoDB } from "@src/middleware/withMongoDB";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
@@ -16,7 +14,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
 
   try {
     if (request.method === "POST") {
-      const { callbackUrl, type, value } = request.body;
+      const { type, value, ttl } = request.body;
 
       const accessToken = request.session.get("user-jwt");
 
@@ -25,31 +23,34 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
         config.connectJwtAlgorithm,
       );
 
-      const identity = {
-        status: IdentityStatus.VALIDATED,
-        type: type.toUpperCase(),
+      request.mongoDb.collection("users").createIndex({ sub: 1 });
+
+      const temporaryIdentity = {
+        eventId: "",
         value,
+        type: type.toUpperCase(),
+        ttl,
       };
 
-      return sendIdentityValidationCode({
-        callbackUrl,
-        identity,
-        localeCodeOverride: "en-EN",
-        userId: decoded.sub,
-      }).then((data) => {
-        response.statusCode = HttpStatus.OK;
+      const result = await insertTemporaryIdentity(
+        decoded.sub,
+        temporaryIdentity,
+        request.mongoDb,
+      );
 
-        response.setHeader("Content-Type", "application/json");
+      if (result.n === 0) {
+        throw new MongoUpdateError("Mongo update failed");
+      }
 
-        response.json({ data });
-      });
+      response.statusCode = HttpStatus.OK;
+
+      response.setHeader("Content-Type", "application/json");
+
+      response.end();
     }
   } catch (error) {
     Sentry.withScope((scope) => {
-      scope.setTag(
-        "send-identity-validation-code",
-        "send-identity-validation-code",
-      );
+      scope.setTag("insert-temporary-identity", "insert-temporary-identity");
       Sentry.captureException(error);
     });
   }

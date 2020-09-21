@@ -19,6 +19,8 @@ export class MongoUpdateError extends Error {}
 
 export class MongoInsertError extends Error {}
 
+export class MongoNoDataReturned extends Error {}
+
 export class GraphqlErrors extends Error {
   parentErrors: string;
 
@@ -27,3 +29,5 @@ export class GraphqlErrors extends Error {
     this.parentErrors = errors.map(({ message }) => message).join(" | ");
   }
 }
+
+export class TemporaryIdentityExpired extends Error {}

@@ -13,3 +13,14 @@ export enum IdentityTypes {
   STRAVA = "STRAVA",
   VKONTAKTE = "VKONTAKTE",
 }
+
+export enum IdentityStatus {
+  UNVALIDATED = "UNVALIDATED",
+  VALIDATED = "VALIDATED",
+}
+
+export type IdentityInput = {
+  status: IdentityStatus;
+  type: IdentityTypes;
+  value: string;
+};

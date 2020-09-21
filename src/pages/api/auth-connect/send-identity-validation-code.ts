@@ -1,14 +1,12 @@
 import { HttpStatus } from "@fwl/web";
 import { Handler } from "next-iron-session";
 
-import {
-  IdentityStatus,
-  sendIdentityValidationCode,
-} from "@lib/sendIdentityValidationCode";
+import { IdentityStatus } from "@lib/@types/Identity";
+import { sendIdentityValidationCode } from "@lib/sendIdentityValidationCode";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { insertTemporaryIdentity } from "@src/command/insertTemporaryIdentity";
 import { config, oauth2Client } from "@src/config";
-import { GraphqlErrors } from "@src/errors";
+import { GraphqlErrors, MongoNoDataReturned } from "@src/errors";
 import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
 import { withMongoDB } from "@src/middleware/withMongoDB";
 import withSession from "@src/middleware/withSession";
@@ -36,29 +34,23 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
           value: identityInput.value,
         };
 
-        const x = {
-          callbackUrl,
-          identity,
-          localeCodeOverride: "en-EN",
-          userId: decoded.sub,
-        };
-
-        return await sendIdentityValidationCode({
+        return sendIdentityValidationCode({
           callbackUrl,
           identity,
           localeCodeOverride: "en-EN",
           userId: decoded.sub,
         })
-          .then(async (queryResponse) => {
-            if (queryResponse.errors) {
-              throw new GraphqlErrors(queryResponse.errors);
+          .then(async ({ errors, data }) => {
+            if (errors) {
+              throw new GraphqlErrors(errors);
             }
 
-            if (queryResponse.data) {
+            if (data) {
               const temporaryIdentity = {
-                eventId: queryResponse.data.sendIdentityValidationCode.eventId,
+                eventId: data.sendIdentityValidationCode.eventId,
                 value: identityInput.value,
                 type: identityInput.type,
+                ttl: identityInput.ttl,
               };
 
               await insertTemporaryIdentity(
@@ -66,9 +58,10 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
                 temporaryIdentity,
                 request.mongoDb,
               );
-              return queryResponse;
+
+              return data.sendIdentityValidationCode.eventId;
             } else {
-              throw Error();
+              throw new MongoNoDataReturned();
             }
           })
           .then((data) => {
@@ -98,10 +91,3 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
 };
 
 export default withAPIPageLogger(withSession(withMongoDB(handler)));
-
-// locale
-// temporaryIdentities: [
-// eventId
-// value
-// type
-// ]

@@ -9,20 +9,11 @@ import { HttpVerbs } from "@src/@types/HttpVerbs";
 import { IdentityTypes } from "@src/@types/Identity";
 import { fetchJson } from "@src/utils/fetchJson";
 
-const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
-  type,
-}) => {
+const IdentityValidationForm: React.FC<{
+  type: IdentityTypes;
+  eventId: string;
+}> = ({ type, eventId }) => {
   const [validationCode, setValidationCode] = React.useState("");
-
-  const [identity] = React.useState<{
-    value: string;
-    type: IdentityTypes;
-    ttl: number;
-  }>({
-    value: "",
-    type,
-    ttl: Date.now(),
-  });
 
   const router = useRouter();
 
@@ -31,12 +22,11 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
       <Form
         method="post"
         onSubmit={async () => {
-          const body = {
-            identity,
-            validationCode,
-          };
-
-          fetchJson("/api/identity", HttpVerbs.POST, body);
+          fetchJson(
+            "/api/auth-connect/verify-validation-code",
+            HttpVerbs.POST,
+            { validationCode, eventId },
+          );
         }}
       >
         <p>Validation code *</p>

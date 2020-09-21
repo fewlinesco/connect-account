@@ -35,13 +35,14 @@ export const AddIdentityInputForm: React.FC<{
             identityInput: identity,
           };
 
-          fetchJson(
+          const eventId = await fetchJson(
             "/api/auth-connect/send-identity-validation-code",
             HttpVerbs.POST,
             body,
-          );
+          ).then((data) => data.json());
 
-          router && router.push(`/account/logins/${type}/validation`);
+          router &&
+            router.push(`/account/logins/${type}/validation/${eventId.data}`);
         }}
       >
         <p>

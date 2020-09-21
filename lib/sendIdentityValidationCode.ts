@@ -2,18 +2,7 @@ import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
 import { fetchManagement } from "../src/utils/fetchManagement";
-import { IdentityTypes } from "./@types/Identity";
-
-export enum IdentityStatus {
-  UNVALIDATED = "UNVALIDATED",
-  VALIDATED = "VALIDATED",
-}
-
-export type IdentityInput = {
-  status: IdentityStatus;
-  type: IdentityTypes;
-  value: string;
-};
+import { IdentityInput } from "./@types/Identity";
 
 export type SendIdentityVerificationCodeInput = {
   callbackUrl: string;
@@ -28,15 +17,6 @@ export type SendIdentityValidationCodeResult = {
   localeCode: string;
   nonce: string;
 };
-
-export type SendIdentityValidationCode = (
-  command: SendIdentityVerificationCodeInput,
-) => Promise<
-  | FetchResult<{
-      sendIdentityValidationCode: SendIdentityValidationCodeResult;
-    }>
-  | Error
->;
 
 const SEND_IDENTITY_VALIDATION_CODE = gql`
   mutation sendIdentityValidationCode(
