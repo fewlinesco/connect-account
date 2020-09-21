@@ -10,7 +10,9 @@ const ADD_IDENTITY_TO_USER = gql`
     $type: IdentityTypes!
     $value: String!
   ) {
-    addIdentityToUser(input: { userId: $userId, type: $type, value: $value }) {
+    addIdentityToUser(
+      input: { userId: $userId, type: $type, value: $value, validated: true }
+    ) {
       id
       primary
       status

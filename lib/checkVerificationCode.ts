@@ -5,15 +5,13 @@ import { CheckVerificationCodeResult } from "@lib/@types/VerificationCode";
 import { fetchManagement } from "@src/utils/fetchManagement";
 
 const CHECK_VERIFICATION_CODE_QUERY = gql`
-  query checkVerificationCodeQuery(code: String!, eventId: String!) {
-    {
-      checkVerificationCode(input: {code: $code, eventId: $eventId}) {
-        identityType
-        identityValue
-        nonce
-        status
-      }
-    } 
+  query checkVerificationCodeQuery($code: String!, $eventId: String!) {
+    checkVerificationCode(input: { code: $code, eventId: $eventId }) {
+      identityType
+      identityValue
+      nonce
+      status
+    }
   }
 `;
 
