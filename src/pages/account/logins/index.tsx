@@ -8,7 +8,12 @@ import styled from "styled-components";
 import type { Identity } from "@src/@types/Identity";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import { BoxedLink } from "@src/components/display/fewlines/BoxedLink";
 import { Button, ButtonVariant } from "@src/components/display/fewlines/Button";
+import { IdentityContainer } from "@src/components/display/fewlines/IdentityContainer";
+import { NeutralLink } from "@src/components/display/fewlines/NeutralLink";
+import { Separator } from "@src/components/display/fewlines/Separator";
+import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton";
 import { config, oauth2Client } from "@src/config";
 import { OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
@@ -31,8 +36,8 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
     true,
   );
 
-  let emailList;
-  let phoneList;
+  let emailList: Identity[];
+  let phoneList: Identity[];
 
   hideSecondaryEmails
     ? (emailList = sortedIdentities.emailIdentities.filter(
@@ -53,92 +58,97 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       <Head>
         <title>Connect Logins</title>
       </Head>
-      <h2>Logins</h2>
-      <p>Your emails, phones and social logins</p>
-      <br />
-      <IdentitiesBox>
-        <IdentitySection>
-          <h3>Email addresses</h3>
+      <IdentitySection>
+        <h2>Logins</h2>
+        <p className="section-description">
+          Your emails, phones and social logins
+        </p>
+        <h3>Email addresses</h3>
+        <IdentityContainer className="identity-container">
           {emailIdentities.length === 0 ? (
             <Value>No emails</Value>
           ) : (
             emailList.map((email: Identity) => {
               return (
-                <IdentityBox key={email.value}>
-                  <Flex>
-                    <Value>
-                      <Link
-                        href="/account/logins/[type]/[id]"
-                        as={`/account/logins/${email.type}/${email.id}`}
-                      >
-                        <a>{email.value}</a>
-                      </Link>
-                    </Value>
-                  </Flex>
-                </IdentityBox>
+                <div key={email.value}>
+                  <Link
+                    href="/account/logins/[type]/[id]"
+                    as={`/account/logins/${email.type}/${email.id}`}
+                  >
+                    <NeutralLink>
+                      <BoxedLink
+                        value={email.value}
+                        primary={email.primary}
+                        status={email.status}
+                      />
+                    </NeutralLink>
+                  </Link>
+                  {emailList.indexOf(email) < emailList.length - 1 && (
+                    <Separator />
+                  )}
+                </div>
               );
             })
           )}
-          {emailIdentities.length > 1 && (
-            <ShowMoreButton
-              onClick={() => setHideSecondaryEmails(!hideSecondaryEmails)}
-            >
-              {hideSecondaryEmails
-                ? `Show ${emailIdentities.length - 1} more`
-                : `Hide ${emailIdentities.length - 1}`}
-            </ShowMoreButton>
-          )}
-          <Flex>
-            <Link href="/account/logins/email/new">
-              <Button variant={ButtonVariant.SECONDARY}>
-                + Add new email address
-              </Button>
-            </Link>
-          </Flex>
-        </IdentitySection>
-        <IdentitySection>
-          <h3>Phone numbers</h3>
+        </IdentityContainer>
+        {emailIdentities.length > 1 && (
+          <ShowMoreButton
+            hide={hideSecondaryEmails}
+            quantity={emailIdentities.length - 1}
+            setHideSecondary={setHideSecondaryEmails}
+          />
+        )}
+        <Flex>
+          <Link href="/account/logins/email/new">
+            <Button variant={ButtonVariant.SECONDARY}>
+              + Add new email address
+            </Button>
+          </Link>
+        </Flex>
+        <h3>Phone numbers</h3>
+        <IdentityContainer className="identity-container">
           {phoneIdentities.length === 0 ? (
             <Value>No phones</Value>
           ) : (
             phoneList.map((phone: Identity) => {
               return (
-                <IdentityBox key={phone.value}>
-                  <Flex>
-                    <Value>
-                      <Link
-                        href="/account/logins/[type]/[id]"
-                        as={`/account/logins/${phone.type}/${phone.id}`}
-                      >
-                        <a>{phone.value}</a>
-                      </Link>
-                    </Value>
-                  </Flex>
-                </IdentityBox>
+                <div key={phone.value}>
+                  <Link
+                    href="/account/logins/[type]/[id]"
+                    as={`/account/logins/${phone.type}/${phone.id}`}
+                  >
+                    <NeutralLink>
+                      <BoxedLink
+                        value={phone.value}
+                        primary={phone.primary}
+                        status={phone.status}
+                      />
+                    </NeutralLink>
+                  </Link>
+                  {phoneList.indexOf(phone) < phoneList.length - 1 && (
+                    <Separator />
+                  )}
+                </div>
               );
             })
           )}
-          {phoneIdentities.length > 1 && (
-            <ShowMoreButton
-              onClick={() => setHideSecondaryPhones(!hideSecondaryPhones)}
-            >
-              {hideSecondaryPhones
-                ? `Show ${phoneIdentities.length - 1} more`
-                : `Hide ${phoneIdentities.length - 1}`}
-            </ShowMoreButton>
-          )}
-          <Flex>
-            <Link href="/account/logins/phone/new">
-              <Button variant={ButtonVariant.SECONDARY}>
-                + Add new phone number
-              </Button>
-            </Link>
-          </Flex>
-        </IdentitySection>
-        <IdentitySection>
-          <h3>Social logins</h3>
-        </IdentitySection>
-      </IdentitiesBox>
+        </IdentityContainer>
+        {phoneIdentities.length > 1 && (
+          <ShowMoreButton
+            hide={hideSecondaryPhones}
+            quantity={phoneIdentities.length - 1}
+            setHideSecondary={setHideSecondaryPhones}
+          />
+        )}
+        <Flex>
+          <Link href="/account/logins/phone/new">
+            <Button variant={ButtonVariant.SECONDARY}>
+              + Add new phone number
+            </Button>
+          </Link>
+        </Flex>
+        <h3>Social logins</h3>
+      </IdentitySection>
     </Wrapper>
   );
 };
@@ -220,21 +230,25 @@ const Wrapper = styled.div`
   max-width: 95%;
   margin: 0 auto;
 
+  .identity-container {
+    margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
+  }
+
   button {
     width: 100%;
+    margin: 0 0 ${({ theme }) => theme.spaces.component.s} 0;
+    background-color: ${({ theme }) => theme.colors.background};
   }
-`;
-const IdentitiesBox = styled.div`
-  padding-top: ${({ theme }) => theme.spaces.component.xxs};
-  border-radius: ${({ theme }) => theme.radii[1]};
-  background-color: ${({ theme }) => theme.colors.backgroundContrast};
-  box-shadow: ${({ theme }) => theme.shadows.base};
 `;
 
 const IdentitySection = styled.div`
   padding: ${({ theme }) => theme.spaces.component.xs};
   border-bottom: ${({ theme }) =>
     `${theme.colors.blacks[0]} ${theme.borders.thin}`};
+
+  .section-description {
+    margin: 0 0 ${({ theme }) => theme.spaces.component.s} 0;
+  }
 `;
 
 const Flex = styled.div`
@@ -242,31 +256,6 @@ const Flex = styled.div`
   align-items: center;
 `;
 
-export const IdentityBox = styled.div`
-  padding: ${({ theme }) => theme.spaces.component.xs};
-`;
-
 export const Value = styled.p`
   margin-right: 0.5rem;
-`;
-
-export const ShowMoreButton = styled.button`
-  padding: 0.5rem;
-  margin-right: 1rem;
-  border-radius: ${({ theme }) => theme.radii[0]};
-  background-color: transparent;
-  color: ${({ theme }) => theme.colors.green};
-  transition: ${({ theme }) => theme.transitions.quick};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  &:hover {
-    cursor: pointer;
-    background-color: ${({ theme }) => theme.colors.green};
-    color: ${({ theme }) => theme.colors.contrastCopy};
-  }
-  &:active,
-  &:focus {
-    outline: none;
-    background-color: ${({ theme }) => theme.colors.green};
-    color: ${({ theme }) => theme.colors.contrastCopy};
-  }
 `;

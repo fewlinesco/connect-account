@@ -59,9 +59,9 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
             //   }
             // }}
 
-            console.log("hello");
-            // @ts-ignore
-            console.log(data.sendIdentityValidationCode.eventId);
+            // console.log("hello");
+
+            // console.log(data.sendIdentityValidationCode.eventId);
 
             const temporaryIdentity = {
               eventId: "data.sendIdentityValidationCode.eventId",

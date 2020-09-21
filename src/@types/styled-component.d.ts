@@ -61,6 +61,7 @@ declare module "styled-components" {
       sm: string;
       base: string;
       left: string;
+      box: string;
     };
     colors: {
       primary: string;
@@ -73,6 +74,8 @@ declare module "styled-components" {
       green: string;
       yellow: string;
       placeholder: string;
+      separator: string;
+      box: string;
       blacks: string[];
     };
     transitions: {
