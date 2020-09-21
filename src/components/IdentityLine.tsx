@@ -4,8 +4,10 @@ import styled from "styled-components";
 
 import type { Identity } from "../@types/Identity";
 import { DeleteIdentity } from "../components/business/DeleteIdentity";
+import { AwaitingValidationBadge } from "./display/fewlines/AwaitingValidationBadge.tsx/AwaitingValidationBadge";
 import { Box } from "./display/fewlines/Box";
 import { Button, ButtonVariant } from "./display/fewlines/Button";
+import { PrimaryBadge } from "./display/fewlines/PrimaryBadge/PrimaryBadge";
 
 type IdentityLineProps = {
   identity: Identity;
@@ -20,14 +22,14 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
         <Flex>
           <Value>{value}</Value>
         </Flex>
-        {primary && status === "validated" && <p>Primary</p>}
+        {primary && status === "validated" && <PrimaryBadge />}
         {status === "validated" ? (
           <IdentityInfo>
             <p>Added on ...</p>
             <p>Last used to login on ...</p>
           </IdentityInfo>
         ) : (
-          <p>awaiting validation</p>
+          <AwaitingValidationBadge />
         )}
       </Box>
       {status === "unvalidated" && (
