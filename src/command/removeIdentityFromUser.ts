@@ -29,7 +29,7 @@ export async function removeIdentityFromUser({
   userId,
   type,
   value,
-}: IdentityCommandProps): Promise<FetchResult | Error> {
+}: IdentityCommandProps): Promise<FetchResult> {
   const operation = {
     query: REMOVE_IDENTITY_FROM_USER,
     variables: { userId, type, value },

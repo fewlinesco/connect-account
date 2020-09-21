@@ -10,12 +10,12 @@ export async function insertTemporaryIdentity(
 ): Promise<void> {
   mongoDb.collection("users").createIndex({ sub: 1 });
 
-  const updateResult = mongoDb.collection<MongoUser>("users").updateOne(
+  const updateResult = await mongoDb.collection<MongoUser>("users").updateOne(
     { sub },
     {
       $push: { temporaryIdentities: temporaryIdentity },
     },
   );
 
-  console.log(updateResult);
+  console.log({ updateResult });
 }

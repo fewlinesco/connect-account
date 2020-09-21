@@ -48,9 +48,10 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         const identity = await getIdentities(
           (decodedJWT as AccessToken).sub,
         ).then((result) => {
-          if (result instanceof Error) {
-            throw result;
+          if (result.errors) {
+            throw result.errors;
           }
+
           const res = result.data?.provider.user.identities.filter(
             (id) => id.id === context.params.id,
           )[0];

@@ -185,8 +185,8 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         const sortedIdentities = await getIdentities(
           (decodedJWT as AccessToken).sub,
         ).then((result) => {
-          if (result instanceof Error) {
-            throw result;
+          if (result.errors) {
+            throw result.errors;
           }
 
           return sortIdentities(result);

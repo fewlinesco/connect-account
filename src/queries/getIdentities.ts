@@ -25,13 +25,13 @@ const USER_QUERY = gql`
 
 export async function getIdentities(
   userId: string,
-): Promise<FetchResult<{ provider: ProviderUser }> | Error> {
+): Promise<FetchResult<{ provider: ProviderUser }>> {
   const operation = {
     query: USER_QUERY,
     variables: { userId },
   };
 
-  return (await fetchManagement(operation)) as
-    | FetchResult<{ provider: ProviderUser }>
-    | Error;
+  return (await fetchManagement(operation)) as FetchResult<{
+    provider: ProviderUser;
+  }>;
 }

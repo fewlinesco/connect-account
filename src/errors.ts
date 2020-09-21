@@ -1,4 +1,5 @@
 import { HttpStatus, WebError, WebErrorMessages } from "@fwl/web";
+import { GraphQLError } from "graphql";
 
 import { OAuth2Errors } from "./@types/OAuth2Errors";
 
@@ -17,3 +18,12 @@ export function OAuth2Error(error?: OAuth2Errors): WebError {
 export class MongoUpdateError extends Error {}
 
 export class MongoInsertError extends Error {}
+
+export class GraphqlErrors extends Error {
+  parentErrors: string;
+
+  constructor(errors: readonly GraphQLError[]) {
+    super();
+    this.parentErrors = errors.map(({ message }) => message).join(" | ");
+  }
+}

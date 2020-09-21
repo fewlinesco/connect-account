@@ -64,21 +64,16 @@ const SEND_IDENTITY_VALIDATION_CODE = gql`
 export async function sendIdentityValidationCode(
   command: SendIdentityVerificationCodeInput,
 ): Promise<
-  | FetchResult<{
-      sendIdentityValidationCode: SendIdentityValidationCodeResult;
-    }>
-  | Error
+  FetchResult<{
+    sendIdentityValidationCode: SendIdentityValidationCodeResult;
+  }>
 > {
   const operation = {
     query: SEND_IDENTITY_VALIDATION_CODE,
     variables: command,
   };
 
-  console.log(command);
-
-  return (await fetchManagement(operation)) as
-    | FetchResult<{
-        sendIdentityValidationCode: SendIdentityValidationCodeResult;
-      }>
-    | Error;
+  return (await fetchManagement(operation)) as FetchResult<{
+    sendIdentityValidationCode: SendIdentityValidationCodeResult;
+  }>;
 }

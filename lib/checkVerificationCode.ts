@@ -47,19 +47,16 @@ const CHECK_VERIFICATION_CODE = gql`
 export async function checkVerificationCode(
   command: CheckVerificationCodeInput,
 ): Promise<
-  | FetchResult<{
-      sendIdentityValidationCode: CheckVerificationCodeResult;
-    }>
-  | Error
+  FetchResult<{
+    sendIdentityValidationCode: CheckVerificationCodeResult;
+  }>
 > {
   const operation = {
     query: CHECK_VERIFICATION_CODE,
     variables: command,
   };
 
-  return (await fetchManagement(operation)) as
-    | FetchResult<{
-        sendIdentityValidationCode: CheckVerificationCodeResult;
-      }>
-    | Error;
+  return (await fetchManagement(operation)) as FetchResult<{
+    sendIdentityValidationCode: CheckVerificationCodeResult;
+  }>;
 }

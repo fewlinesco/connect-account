@@ -8,6 +8,7 @@ import {
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { insertTemporaryIdentity } from "@src/command/insertTemporaryIdentity";
 import { config, oauth2Client } from "@src/config";
+import { GraphqlErrors } from "@src/errors";
 import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
 import { withMongoDB } from "@src/middleware/withMongoDB";
 import withSession from "@src/middleware/withSession";
@@ -48,34 +49,27 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
           localeCodeOverride: "en-EN",
           userId: decoded.sub,
         })
-          .then(async (data) => {
-            // { data: {
-            //   sendIdentityValidationCode: {
-            //     __typename: 'SendIdentityValidationCodeResult',
-            //     callbackUrl: '/',
-            //     eventId: '6ea48f7d-de56-4511-b230-709960912566',
-            //     localeCode: 'en-EN',
-            //     nonce: 'JrCAW1dhYMEn8tgjZa3htA=='
-            //   }
-            // }}
+          .then(async (queryResponse) => {
+            if (queryResponse.errors) {
+              throw new GraphqlErrors(queryResponse.errors);
+            }
 
-            // console.log("hello");
+            if (queryResponse.data) {
+              const temporaryIdentity = {
+                eventId: queryResponse.data.sendIdentityValidationCode.eventId,
+                value: identityInput.value,
+                type: identityInput.type,
+              };
 
-            // console.log(data.sendIdentityValidationCode.eventId);
-
-            const temporaryIdentity = {
-              eventId: "data.sendIdentityValidationCode.eventId",
-              value: identityInput.value,
-              type: identityInput.type,
-            };
-
-            await insertTemporaryIdentity(
-              decoded.sub,
-              temporaryIdentity,
-              request.mongoDb,
-            );
-
-            return data;
+              await insertTemporaryIdentity(
+                decoded.sub,
+                temporaryIdentity,
+                request.mongoDb,
+              );
+              return queryResponse;
+            } else {
+              throw Error();
+            }
           })
           .then((data) => {
             response.statusCode = HttpStatus.OK;

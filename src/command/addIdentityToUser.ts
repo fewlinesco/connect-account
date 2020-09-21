@@ -24,7 +24,7 @@ export async function addIdentityToUser({
   userId,
   type,
   value,
-}: IdentityCommandProps): Promise<FetchResult | Error> {
+}: IdentityCommandProps): Promise<FetchResult> {
   const operation = {
     query: ADD_IDENTITY_TO_USER,
     variables: { userId, type, value },
