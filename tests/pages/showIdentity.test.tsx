@@ -16,6 +16,10 @@ import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";
 import ShowIdentity from "../../src/pages/account/logins/[type]/[id]";
+import { AwaitingValidationBadge } from "@src/components/display/fewlines/AwaitingValidationBadge.tsx/AwaitingValidationBadge";
+import { AwaitingValidationIcon } from "@src/components/display/fewlines/AwaitingValidationIcon/AwaitingValidationIcon";
+import { PrimaryBadge } from "@src/components/display/fewlines/PrimaryBadge/PrimaryBadge";
+import { PrimaryIcon } from "@src/components/display/fewlines/PrimaryIcon/PrimaryIcon";
 
 enableFetchMocks();
 
@@ -169,7 +173,12 @@ describe("ShowIdentity", () => {
         Make this my primary email
       </Button>,
     );
-    const primaryTag = component.contains(<p>Primary</p>);
+    const primaryTag = component.contains(
+      <PrimaryBadge>
+        <p>Primary</p>
+        <PrimaryIcon />
+      </PrimaryBadge>,
+    );
     expect(primaryTag).toEqual(true);
     expect(makeThisPrimaryButton).toEqual(false);
   });
@@ -185,7 +194,10 @@ describe("ShowIdentity", () => {
     );
 
     const awaitingValidationTag = component.contains(
-      <p>awaiting validation</p>,
+      <AwaitingValidationBadge>
+        <p>awaiting validation</p>
+        <AwaitingValidationIcon />
+      </AwaitingValidationBadge>,
     );
     const validationButton = component.contains(
       <Button variant={ButtonVariant.PRIMARY}>proceed to validation</Button>,
