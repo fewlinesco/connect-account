@@ -1,6 +1,18 @@
+import React from "react";
 import styled from "styled-components";
 
-export const PrimaryBadge = styled.div`
+import { PrimaryIcon } from "../PrimaryIcon/PrimaryIcon";
+
+export const PrimaryBadge: React.FC = () => {
+  return (
+    <Wrapper>
+      <p>Primary</p>
+      <PrimaryIcon />
+    </Wrapper>
+  );
+};
+
+const Wrapper = styled.div`
   background: ${({ theme }) => theme.colors.primaryBadge};
   border-radius: ${({ theme }) => theme.radii[2]};
   height: 2.4rem;

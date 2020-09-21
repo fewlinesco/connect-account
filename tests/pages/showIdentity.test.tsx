@@ -17,9 +17,7 @@ import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";
 import ShowIdentity from "../../src/pages/account/logins/[type]/[id]";
 import { AwaitingValidationBadge } from "@src/components/display/fewlines/AwaitingValidationBadge.tsx/AwaitingValidationBadge";
-import { AwaitingValidationIcon } from "@src/components/display/fewlines/AwaitingValidationIcon/AwaitingValidationIcon";
 import { PrimaryBadge } from "@src/components/display/fewlines/PrimaryBadge/PrimaryBadge";
-import { PrimaryIcon } from "@src/components/display/fewlines/PrimaryIcon/PrimaryIcon";
 
 enableFetchMocks();
 
@@ -148,18 +146,13 @@ describe("ShowIdentity", () => {
       </ThemeProvider>,
     );
 
-    const primaryTag = component.contains(
-      <PrimaryBadge>
-        <p>Primary</p>
-        <PrimaryIcon />
-      </PrimaryBadge>,
-    );
+    const primaryBadge = component.contains(<PrimaryBadge />);
     const makeThisPrimaryButton = component.contains(
       <Button variant={ButtonVariant.SECONDARY}>
         Make this my primary email
       </Button>,
     );
-    expect(primaryTag).toEqual(false);
+    expect(primaryBadge).toEqual(false);
     expect(makeThisPrimaryButton).toEqual(true);
   });
 
@@ -178,20 +171,12 @@ describe("ShowIdentity", () => {
         Make this my primary email
       </Button>,
     );
-    const primaryTag = component.contains(
-      <PrimaryBadge>
-        <p>Primary</p>
-        <PrimaryIcon />
-      </PrimaryBadge>,
+    const primaryBadge = component.contains(<PrimaryBadge />);
+    const awaitingValidationBadge = component.contains(
+      <AwaitingValidationBadge />,
     );
-    const awaitingValidationTag = component.contains(
-      <AwaitingValidationBadge>
-        <p>awaiting validation</p>
-        <AwaitingValidationIcon />
-      </AwaitingValidationBadge>,
-    );
-    expect(primaryTag).toEqual(true);
-    expect(awaitingValidationTag).toEqual(false);
+    expect(primaryBadge).toEqual(true);
+    expect(awaitingValidationBadge).toEqual(false);
     expect(makeThisPrimaryButton).toEqual(false);
   });
 
@@ -205,17 +190,14 @@ describe("ShowIdentity", () => {
       </ThemeProvider>,
     );
 
-    const awaitingValidationTag = component.contains(
-      <AwaitingValidationBadge>
-        <p>awaiting validation</p>
-        <AwaitingValidationIcon />
-      </AwaitingValidationBadge>,
+    const awaitingValidationBadge = component.contains(
+      <AwaitingValidationBadge />,
     );
     const validationButton = component.contains(
       <Button variant={ButtonVariant.PRIMARY}>proceed to validation</Button>,
     );
     expect(validationButton).toEqual(true);
-    expect(awaitingValidationTag).toEqual(true);
+    expect(awaitingValidationBadge).toEqual(true);
   });
 
   test("it should not display the make this identity primary button if the identity is not validated", () => {

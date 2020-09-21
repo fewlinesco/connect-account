@@ -1,6 +1,18 @@
+import React from "react";
 import styled from "styled-components";
 
-export const AwaitingValidationBadge = styled.div`
+import { AwaitingValidationIcon } from "../AwaitingValidationIcon/AwaitingValidationIcon";
+
+export const AwaitingValidationBadge: React.FC = () => {
+  return (
+    <Wrapper>
+      <p>Awaiting validation</p>
+      <AwaitingValidationIcon />
+    </Wrapper>
+  );
+};
+
+const Wrapper = styled.div`
   background: ${({ theme }) => theme.colors.red};
   border-radius: ${({ theme }) => theme.radii[2]};
   height: 2.4rem;
