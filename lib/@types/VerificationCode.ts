@@ -1,6 +1,4 @@
-import { FetchResult } from "apollo-link";
-
-import { IdentityTypes } from "./Identity";
+import { IdentityInput, IdentityTypes } from "./Identity";
 
 export type CheckVerificationCodeInput = {
   code: string;
@@ -21,11 +19,16 @@ export type CheckVerificationCodeResult = {
   status: CheckVerificationCodeStatus;
 };
 
-export type CheckVerificationCode = (
-  command: CheckVerificationCodeInput,
-) => Promise<
-  | FetchResult<{
-      sendIdentityValidationCode: CheckVerificationCodeResult;
-    }>
-  | Error
->;
+export type SendIdentityVerificationCodeInput = {
+  callbackUrl: string;
+  identity: IdentityInput;
+  localeCodeOverride?: string;
+  userId?: string;
+};
+
+export type SendIdentityValidationCodeResult = {
+  callbackUrl: string;
+  eventId: string;
+  localeCode: string;
+  nonce: string;
+};
