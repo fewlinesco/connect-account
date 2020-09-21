@@ -10,6 +10,7 @@ export const AwaitingValidationBadge = styled.div`
   justify-content: center;
   align-items: center;
   width: 158px;
+  margin-bottom: 15px;
   p {
     font-size: 12px;
     margin-right: 3px;
