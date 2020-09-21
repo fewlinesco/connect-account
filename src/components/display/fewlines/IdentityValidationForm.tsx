@@ -6,17 +6,17 @@ import AlertBar from "./AlertBar";
 import { Button, ButtonVariant } from "./Button";
 import { Input } from "./Input";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
-import { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { IdentityTypes } from "@src/@types/Identity";
 import { fetchJson } from "@src/utils/fetchJson";
 
-const IdentityValidationForm: React.FC<{ type: ReceivedIdentityTypes }> = ({
+const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
   type,
 }) => {
   const [validationCode, setValidationCode] = React.useState("");
 
-  const [identity, setIdentity] = React.useState<{
+  const [identity] = React.useState<{
     value: string;
-    type: ReceivedIdentityTypes;
+    type: IdentityTypes;
     ttl: number;
   }>({
     value: "",
