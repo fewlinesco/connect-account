@@ -11,12 +11,12 @@ import { Layout } from "../../src/components/Layout";
 import {
   Button,
   ButtonVariant,
-} from "../../src/components/display/fewlines/Button";
+} from "../../src/components/display/fewlines/Button/Button";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";
 import ShowIdentity from "../../src/pages/account/logins/[type]/[id]";
-import { AwaitingValidationBadge } from "@src/components/display/fewlines/AwaitingValidationBadge.tsx/AwaitingValidationBadge";
+import { AwaitingValidationBadge } from "@src/components/display/fewlines/AwaitingValidationBadge/AwaitingValidationBadge";
 import { PrimaryBadge } from "@src/components/display/fewlines/PrimaryBadge/PrimaryBadge";
 
 enableFetchMocks();

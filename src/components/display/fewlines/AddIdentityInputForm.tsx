@@ -3,8 +3,8 @@ import React from "react";
 import styled from "styled-components";
 
 import { ReceivedIdentityTypes } from "../../../@types/Identity";
-import { Button, ButtonVariant } from "./Button";
-import { Input } from "./Input";
+import { Button, ButtonVariant } from "./Button/Button";
+import { Input } from "./Input/Input";
 
 type AddIdentityInputFormProps = {
   addIdentity: (value: string) => Promise<Response>;

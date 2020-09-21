@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 import type { IdentityTypes } from "../../../@types/Identity";
 import AlertBar from "./AlertBar";
-import { Button, ButtonVariant } from "./Button";
-import { Input } from "./Input";
+import { Button, ButtonVariant } from "./Button/Button";
+import { Input } from "./Input/Input";
 
 const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
   type,

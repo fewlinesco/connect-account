@@ -3,8 +3,8 @@ import React from "react";
 import styled from "styled-components";
 
 import { Identity, ReceivedIdentityTypes } from "../../../@types/Identity";
-import { Button, ButtonVariant } from "./Button";
-import { Input } from "./Input";
+import { Button, ButtonVariant } from "./Button/Button";
+import { Input } from "./Input/Input";
 
 export const UpdateIdentityForm: React.FC<{
   updateIdentity: (newValue: string) => Promise<void>;

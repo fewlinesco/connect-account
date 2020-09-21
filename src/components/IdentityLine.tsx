@@ -4,9 +4,9 @@ import styled from "styled-components";
 
 import type { Identity } from "../@types/Identity";
 import { DeleteIdentity } from "../components/business/DeleteIdentity";
-import { AwaitingValidationBadge } from "./display/fewlines/AwaitingValidationBadge.tsx/AwaitingValidationBadge";
-import { Box } from "./display/fewlines/Box";
-import { Button, ButtonVariant } from "./display/fewlines/Button";
+import { AwaitingValidationBadge } from "./display/fewlines/AwaitingValidationBadge/AwaitingValidationBadge";
+import { Box } from "./display/fewlines/Box/Box";
+import { Button, ButtonVariant } from "./display/fewlines/Button/Button";
 import { PrimaryBadge } from "./display/fewlines/PrimaryBadge/PrimaryBadge";
 
 type IdentityLineProps = {
