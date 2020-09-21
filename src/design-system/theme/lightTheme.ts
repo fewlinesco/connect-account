@@ -26,6 +26,7 @@ const borders = {
 
 const colors = {
   primary: "#1825aa",
+  primaryBadge: "#030e80",
   secondary: "#44F8D7",
   background: "#FFFFFF",
   backgroundContrast: "#FFFFFF",
@@ -64,6 +65,7 @@ const fontWeights = {
 };
 
 const fontSizes = {
+  xs: "1.2rem",
   s: "1.4rem",
   m: "1.8rem",
   l: "2rem",
@@ -86,7 +88,7 @@ const lineHeights = {
   title: 1.5,
 };
 
-const radii = ["0.2rem", "0.5rem", "50%"];
+const radii = ["0.2rem", "0.5rem", "55.5rem", "50%"];
 
 const shadows = {
   xs: "0 0 0 1px rgba(0, 0, 0, 0.05)",

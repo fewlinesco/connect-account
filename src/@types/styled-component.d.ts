@@ -17,6 +17,7 @@ declare module "styled-components" {
       layout: Spacing;
     };
     fontSizes: {
+      xs: string;
       s: string;
       m: string;
       l: string;
@@ -65,6 +66,7 @@ declare module "styled-components" {
     };
     colors: {
       primary: string;
+      primaryBadge: string;
       secondary: string;
       background: string;
       backgroundContrast: string;

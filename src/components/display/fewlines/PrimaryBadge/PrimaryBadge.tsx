@@ -1,18 +1,18 @@
 import styled from "styled-components";
 
 export const PrimaryBadge = styled.div`
-  background: #030e80;
-  border-radius: 555px;
-  height: 24px;
-  color: white;
+  background: ${({ theme }) => theme.colors.primaryBadge};
+  border-radius: ${({ theme }) => theme.radii[2]};
+  height: 2.4rem;
+  color: ${({ theme }) => theme.colors.backgroundContrast};
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 94.33px;
-  margin-bottom: 15px;
+  width: 9.4rem;
+  margin-bottom: 1.5rem;
+
   p {
-    font-size: 12px;
-    margin-right: 3px;
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+    margin-right: 0.3rem;
   }
 `;

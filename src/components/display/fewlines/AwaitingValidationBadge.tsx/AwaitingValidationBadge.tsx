@@ -1,18 +1,19 @@
 import styled from "styled-components";
 
 export const AwaitingValidationBadge = styled.div`
-  background: #eb5757;
-  border-radius: 555px;
-  height: 24px;
-  color: white;
+  background: ${({ theme }) => theme.colors.red};
+  border-radius: ${({ theme }) => theme.radii[2]};
+  height: 2.4rem;
+  color: ${({ theme }) => theme.colors.backgroundContrast};
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 158px;
-  margin-bottom: 15px;
+  width: 15.8rem;
+  margin-bottom: 1rem;
+
   p {
-    font-size: 12px;
-    margin-right: 3px;
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+    margin-right: 0.3rem;
   }
 `;
