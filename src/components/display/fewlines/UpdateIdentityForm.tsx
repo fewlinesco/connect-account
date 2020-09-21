@@ -55,9 +55,6 @@ export const UpdateIdentityForm: React.FC<{
 };
 
 const Wrapper = styled.div`
-  max-width: 95%;
-  margin: 0 auto;
-
   input {
     width: 100%;
     margin: ${({ theme }) => theme.spaces.component.xxs} 0;

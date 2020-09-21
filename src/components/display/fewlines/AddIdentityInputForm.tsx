@@ -63,7 +63,7 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
 };
 
 const Wrapper = styled.div`
-  max-width: 95%;
+  max-width: 90%;
   margin: 0 auto;
 
   .send-button {
