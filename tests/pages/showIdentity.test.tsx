@@ -148,7 +148,12 @@ describe("ShowIdentity", () => {
       </ThemeProvider>,
     );
 
-    const primaryTag = component.contains(<p>Primary</p>);
+    const primaryTag = component.contains(
+      <PrimaryBadge>
+        <p>Primary</p>
+        <PrimaryIcon />
+      </PrimaryBadge>,
+    );
     const makeThisPrimaryButton = component.contains(
       <Button variant={ButtonVariant.SECONDARY}>
         Make this my primary email
@@ -179,7 +184,14 @@ describe("ShowIdentity", () => {
         <PrimaryIcon />
       </PrimaryBadge>,
     );
+    const awaitingValidationTag = component.contains(
+      <AwaitingValidationBadge>
+        <p>awaiting validation</p>
+        <AwaitingValidationIcon />
+      </AwaitingValidationBadge>,
+    );
     expect(primaryTag).toEqual(true);
+    expect(awaitingValidationTag).toEqual(false);
     expect(makeThisPrimaryButton).toEqual(false);
   });
 
