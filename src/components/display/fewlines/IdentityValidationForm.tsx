@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import type { IdentityTypes } from "../../../@types/Identity";
 import AlertBar from "./AlertBar";
+import { Box } from "./Box/Box";
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
 
@@ -17,7 +18,8 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
     <Wrapper>
       <AlertBar type={type} />
       <Form method="post">
-        <p>Validation code *</p>
+        <Box className="instructions">Enter the validation code below</Box>
+        <p>Validation code</p>
         <Input
           type="text"
           name="value"
@@ -38,7 +40,7 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
       >
         Discard all changes
       </Button>
-      <p>Didn&apos;t receive code?</p>
+      <p className="didnt-receive-code">Didn&apos;t receive code?</p>
       <Button className="resend-button" variant={ButtonVariant.SECONDARY}>
         Resend confirmation code
       </Button>
@@ -61,12 +63,21 @@ const Wrapper = styled.div`
     width: 100%;
   }
 
+  .instructions {
+    font-weight: ${({ theme }) => theme.fontWeights.light};
+    font-size: ${({ theme }) => theme.fontSizes.s};
+  }
+
+  .didnt-receive-code {
+    margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
+  }
+
   .send-button {
     margin: ${({ theme }) => theme.spaces.component.xxs} 0;
   }
 
   .discard-button {
-    margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
+    margin: 0 0 ${({ theme }) => theme.spaces.component.s} 0;
   }
 
   .resend-button {
