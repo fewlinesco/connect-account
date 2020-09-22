@@ -8,12 +8,15 @@ import styled from "styled-components";
 import type { Identity } from "@src/@types/Identity";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
-import { BoxedLink } from "@src/components/display/fewlines/BoxedLink";
-import { Button, ButtonVariant } from "@src/components/display/fewlines/Button";
-import { IdentityContainer } from "@src/components/display/fewlines/IdentityContainer";
-import { NeutralLink } from "@src/components/display/fewlines/NeutralLink";
-import { Separator } from "@src/components/display/fewlines/Separator";
-import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton";
+import { BoxedLink } from "@src/components/display/fewlines/BoxedLink/BoxedLink";
+import {
+  Button,
+  ButtonVariant,
+} from "@src/components/display/fewlines/Button/Button";
+import { IdentityContainer } from "@src/components/display/fewlines/IdentityContainer/IdentityContainer";
+import { NeutralLink } from "@src/components/display/fewlines/NeutralLink/NeutralLink";
+import { Separator } from "@src/components/display/fewlines/Separator/Separator";
+import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
 import { config, oauth2Client } from "@src/config";
 import { OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";

@@ -7,4 +7,8 @@ export const NeutralLink = style.a`
   &:visit {
     color: ${({ theme }) => theme.colors.black};
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

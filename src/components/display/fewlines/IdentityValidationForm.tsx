@@ -3,8 +3,8 @@ import React from "react";
 import styled from "styled-components";
 
 import AlertBar from "./AlertBar";
-import { Button, ButtonVariant } from "./Button";
-import { Input } from "./Input";
+import { Button, ButtonVariant } from "./Button/Button";
+import { Input } from "./Input/Input";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
 import { IdentityTypes } from "@src/@types/Identity";
 import { fetchJson } from "@src/utils/fetchJson";
@@ -62,7 +62,7 @@ const IdentityValidationForm: React.FC<{
 export default IdentityValidationForm;
 
 const Wrapper = styled.div`
-  max-width: 95%;
+  max-width: 90%;
   margin: 0 auto;
 
   input {

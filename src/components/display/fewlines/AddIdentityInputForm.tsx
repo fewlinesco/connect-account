@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { Button, ButtonVariant } from "./Button";
-import { Input } from "./Input";
+import { Button, ButtonVariant } from "./Button/Button";
+import { Input } from "./Input/Input";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
 import { ReceivedIdentityTypes } from "@src/@types/Identity";
 import { fetchJson } from "@src/utils/fetchJson";
@@ -81,7 +81,7 @@ export const AddIdentityInputForm: React.FC<{
 };
 
 const Wrapper = styled.div`
-  max-width: 95%;
+  max-width: 90%;
   margin: 0 auto;
 
   .send-button {

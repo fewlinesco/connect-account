@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Identity } from "@src/@types/Identity";
 import { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
+import { Box } from "@src/components/display/fewlines/Box/Box";
 import { UpdateIdentityForm } from "@src/components/display/fewlines/UpdateIdentityForm";
 import { config, oauth2Client } from "@src/config";
 import { OAuth2Error } from "@src/errors";
@@ -20,12 +21,12 @@ const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   const { value } = identity;
 
   return (
-    <>
-      <IdentityBox key={value}>
+    <Wrapper>
+      <Box key={value}>
         <Flex>
           <Value>{value}</Value>
         </Flex>
-      </IdentityBox>
+      </Box>
       <UpdateIdentity identity={identity}>
         {({ updateIdentity }) => (
           <UpdateIdentityForm
@@ -34,7 +35,7 @@ const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
           />
         )}
       </UpdateIdentity>
-    </>
+    </Wrapper>
   );
 };
 
@@ -113,12 +114,14 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
   }),
 );
 
-const IdentityBox = styled.div`
-  padding: ${({ theme }) => theme.spaces.component.xs};
+const Wrapper = styled.div`
+  max-width: 90%;
+  margin: 0 auto;
 `;
 
 const Value = styled.p`
   margin-right: 0.5rem;
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
 `;
 
 const Flex = styled.div`
