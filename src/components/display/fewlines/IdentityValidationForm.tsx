@@ -15,6 +15,7 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
 
   return (
     <Wrapper>
+      <AlertBar type={type} />
       <Form method="post">
         <p>Validation code *</p>
         <Input
@@ -41,7 +42,6 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
       <Button className="resend-button" variant={ButtonVariant.SECONDARY}>
         Resend confirmation code
       </Button>
-      <AlertBar type={type} />
     </Wrapper>
   );
 };
