@@ -3,8 +3,8 @@ import React from "react";
 import styled from "styled-components";
 
 import { ReceivedIdentityTypes } from "../../../@types/Identity";
-import { Button, ButtonVariant } from "./Button";
-import { Input } from "./Input";
+import { Button, ButtonVariant } from "./Button/Button";
+import { Input } from "./Input/Input";
 
 type AddIdentityInputFormProps = {
   addIdentity: (value: string) => Promise<Response>;
@@ -63,7 +63,7 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
 };
 
 const Wrapper = styled.div`
-  max-width: 95%;
+  max-width: 90%;
   margin: 0 auto;
 
   .send-button {

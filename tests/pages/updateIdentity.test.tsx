@@ -8,7 +8,7 @@ import { ThemeProvider } from "styled-components";
 
 import { ReceivedIdentityTypes, Identity } from "../../src/@types/Identity";
 import { Layout } from "../../src/components/Layout";
-import { Input } from "../../src/components/display/fewlines/Input";
+import { Input } from "../../src/components/display/fewlines/Input/Input";
 import {
   UpdateIdentityForm,
   Form,
