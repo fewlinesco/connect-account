@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { ReactElement } from "react";
 import styled from "styled-components";
 
-import type { IdentityTypes } from "../../../@types/Identity";
+import { IdentityTypes } from "../../../@types/Identity";
 import AlertBar from "./AlertBar";
 import { Box } from "./Box/Box";
 import { Button, ButtonVariant } from "./Button/Button";
@@ -14,13 +14,17 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
   const [validationCode, setValidationCode] = React.useState("");
   const router = useRouter();
 
-  const displayAlertBar = (): ReactElement => {
-    return <AlertBar type={type} />;
+  const displayAlertBar = (text: string): ReactElement => {
+    return <AlertBar text={text} />;
   };
 
   return (
     <Wrapper>
-      {displayAlertBar()}
+      {displayAlertBar(
+        type === IdentityTypes.EMAIL.toLowerCase()
+          ? "Confirmation email has been sent"
+          : "confirmation SMS has been sent",
+      )}
       <Form method="post">
         <Box className="instructions">Enter the validation code below</Box>
         <p>Validation code</p>

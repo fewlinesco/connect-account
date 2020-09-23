@@ -2,32 +2,21 @@ import React from "react";
 import styled from "styled-components";
 
 import { CrossIcon } from "./CrossIcon";
-import { IdentityTypes } from "@src/@types/Identity";
 
-export const AlertBar: React.FC<{ type: IdentityTypes }> = ({ type }) => {
+export const AlertBar: React.FC<{ text: string }> = ({ text }) => {
   const [showAlertBar, setShowAlertBar] = React.useState<boolean>(true);
-  if (type.toUpperCase() === IdentityTypes.EMAIL) {
-    return (
-      <Wrapper>
-        {showAlertBar && (
-          <Alert>
-            <p>Confirmation email has been sent</p>
-            <div className="cross" onClick={() => setShowAlertBar(false)}>
-              <CrossIcon />
-            </div>
-          </Alert>
-        )}
-      </Wrapper>
-    );
-  }
-  if (type.toUpperCase() === IdentityTypes.PHONE) {
-    return (
-      <Wrapper>
-        <Alert>Confirmation SMS has been sent</Alert>
-      </Wrapper>
-    );
-  }
-  return null;
+  return (
+    <Wrapper>
+      {showAlertBar && (
+        <Alert>
+          <p>{text}</p>
+          <div className="cross" onClick={() => setShowAlertBar(false)}>
+            <CrossIcon />
+          </div>
+        </Alert>
+      )}
+    </Wrapper>
+  );
 };
 
 export default AlertBar;
