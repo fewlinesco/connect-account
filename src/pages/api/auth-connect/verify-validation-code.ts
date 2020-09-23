@@ -1,7 +1,7 @@
 import { HttpStatus } from "@fwl/web";
 import { Handler } from "next-iron-session";
 
-import { checkVerificationCode } from "@lib/checkVerificationCode";
+import { checkVerificationCode } from "@lib/queries/checkVerificationCode";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
 import { config } from "@src/config";
@@ -27,7 +27,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
           (temporaryIdentity) => temporaryIdentity.eventId === eventId,
         );
 
-        if (temporaryIdentity && temporaryIdentity.ttl < Date.now()) {
+        if (temporaryIdentity && temporaryIdentity.expiresAt < Date.now()) {
           const { data } = await checkVerificationCode(validationCode, eventId);
 
           if (data && data.checkVerificationCode.status === "VALID") {

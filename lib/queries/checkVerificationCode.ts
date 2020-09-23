@@ -26,7 +26,7 @@ export async function checkVerificationCode(
     variables: { code, eventId },
   };
 
-  return (await fetchManagement(operation)) as FetchResult<{
+  return fetchManagement(operation) as FetchResult<{
     checkVerificationCode: CheckVerificationCodeResult;
   }>;
 }

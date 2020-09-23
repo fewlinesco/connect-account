@@ -14,11 +14,11 @@ export const AddIdentityInputForm: React.FC<{
   const [identity, setIdentity] = React.useState<{
     value: string;
     type: ReceivedIdentityTypes;
-    ttl: number;
+    expiresAt: number;
   }>({
     value: "",
     type,
-    ttl: Date.now(),
+    expiresAt: Date.now(),
   });
 
   const router = useRouter();
@@ -60,7 +60,7 @@ export const AddIdentityInputForm: React.FC<{
             setIdentity({
               value: event.target.value,
               type,
-              ttl: Date.now() + 300,
+              expiresAt: Date.now() + 300,
             })
           }
         />

@@ -2,7 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import { Handler } from "next-iron-session";
 
 import { IdentityStatus } from "@lib/@types/Identity";
-import { sendIdentityValidationCode } from "@lib/sendIdentityValidationCode";
+import { sendIdentityValidationCode } from "@lib/commands/sendIdentityValidationCode";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { insertTemporaryIdentity } from "@src/command/insertTemporaryIdentity";
 import { config, oauth2Client } from "@src/config";
@@ -50,7 +50,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
                 eventId: data.sendIdentityValidationCode.eventId,
                 value: identityInput.value,
                 type: identityInput.type,
-                ttl: identityInput.ttl,
+                expiresAt: identityInput.expiresAt,
               };
 
               await insertTemporaryIdentity(

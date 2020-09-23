@@ -6,7 +6,7 @@ import type { Identity } from "@src/@types/Identity";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { IdentityLine } from "@src/components/IdentityLine";
 import { config, oauth2Client } from "@src/config";
-import { OAuth2Error } from "@src/errors";
+import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
 import { getIdentities } from "@src/queries/getIdentities";
@@ -49,7 +49,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
           (decodedJWT as AccessToken).sub,
         ).then((result) => {
           if (result.errors) {
-            throw result.errors;
+            throw new GraphqlErrors(result.errors);
           }
 
           const res = result.data?.provider.user.identities.filter(

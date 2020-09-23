@@ -31,7 +31,7 @@ export async function getIdentities(
     variables: { userId },
   };
 
-  return (await fetchManagement(operation)) as FetchResult<{
+  return fetchManagement(operation) as FetchResult<{
     provider: ProviderUser;
   }>;
 }

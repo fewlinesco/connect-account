@@ -21,12 +21,18 @@ export class MongoInsertError extends Error {}
 
 export class MongoNoDataReturned extends Error {}
 
-export class GraphqlErrors extends Error {
-  parentErrors: string;
+export class GraphqlError extends Error {
+  parentError: GraphqlErrors;
 
+  constructor(message: string, error: GraphqlErrors) {
+    super(message);
+    this.parentError = error;
+  }
+}
+export class GraphqlErrors extends Error {
   constructor(errors: readonly GraphQLError[]) {
-    super();
-    this.parentErrors = errors.map(({ message }) => message).join(" | ");
+    const message = errors.map(({ message }) => message).join("\n");
+    super(message);
   }
 }
 
