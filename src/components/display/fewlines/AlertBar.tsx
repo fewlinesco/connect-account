@@ -12,7 +12,7 @@ export const AlertBar: React.FC<{ type: IdentityTypes }> = ({ type }) => {
         {showAlertBar && (
           <Alert>
             <p>Confirmation email has been sent</p>
-            <div onClick={() => setShowAlertBar(false)}>
+            <div className="cross" onClick={() => setShowAlertBar(false)}>
               <CrossIcon />
             </div>
           </Alert>
@@ -74,6 +74,10 @@ const Alert = styled.div`
   }
 
   p {
-    font-size: ${({ theme }) => theme.fontSizes.xs};
+    font-size: ${({ theme }) => theme.fontSizes.s};
+  }
+
+  .cross {
+    margin: 0 0 0 ${({ theme }) => theme.spaces.component.xxs};
   }
 `;
