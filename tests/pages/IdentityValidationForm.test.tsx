@@ -54,8 +54,6 @@ describe("IdentityValidationForm", () => {
   });
 
   test("it should call `send-identity-validation-code` API page on submit", () => {
-    Date.now = jest.fn(() => 1572393600000);
-
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
@@ -65,10 +63,14 @@ describe("IdentityValidationForm", () => {
       </ThemeProvider>,
     );
 
-    const newIdentityInput = component.find(IdentityValidationForm).find(Input);
+    const verifyIdentityInput = component
+      .find(IdentityValidationForm)
+      .find(Input);
 
-    newIdentityInput.simulate("change", {
-      target: { value: "test3@test.test " },
+    const validationCode = "42";
+
+    verifyIdentityInput.simulate("change", {
+      target: { value: validationCode },
     });
 
     const form = component.find(IdentityValidationForm).find(Form);
@@ -78,15 +80,11 @@ describe("IdentityValidationForm", () => {
     form.simulate("submit");
 
     expect(fetchJsonMethod).toHaveBeenCalledWith(
-      "/api/auth-connect/send-identity-validation-code",
+      "/api/auth-connect/verify-validation-code",
       "POST",
       {
-        callbackUrl: "/",
-        identityInput: {
-          expiresAt: 1572393600000 + 300,
-          type: "email",
-          value: "test3@test.test ",
-        },
+        validationCode,
+        eventId,
       },
     );
   });

@@ -5,7 +5,7 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { ReceivedIdentityTypes } from "@lib/@types/Identity";
+import { ReceivedIdentityTypes } from "@src/@types/Identity";
 import { Layout } from "@src/components/Layout";
 import {
   AddIdentityInputForm,
