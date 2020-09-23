@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { IdentityTypes } from "../../../@types/Identity";
+import { IdentityTypes } from "@lib/@types/Identity";
 
 export const AlertBar: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   if (type === IdentityTypes.EMAIL) {

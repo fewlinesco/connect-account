@@ -5,7 +5,7 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { ReceivedIdentityTypes } from "@lib/@types/Identity";
 import { Layout } from "@src/components/Layout";
 import {
   AddIdentityInputForm,
@@ -37,7 +37,7 @@ jest.mock("../../src/config", () => {
   };
 });
 
-describe("AddNewIdentity", () => {
+describe("AddIdentityInputForm", () => {
   test("it should display an input", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
@@ -52,7 +52,7 @@ describe("AddNewIdentity", () => {
     expect(addIdentityInput).toHaveLength(1);
   });
 
-  test("it should submit the form", () => {
+  test("it should call `send-identity-validation-code` API page on submit", () => {
     Date.now = jest.fn(() => 1572393600000);
 
     const component = mount(

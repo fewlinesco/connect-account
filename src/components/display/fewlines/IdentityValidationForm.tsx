@@ -5,8 +5,8 @@ import styled from "styled-components";
 import AlertBar from "./AlertBar";
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
+import { IdentityTypes } from "@lib/@types/Identity";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
-import { IdentityTypes } from "@src/@types/Identity";
 import { fetchJson } from "@src/utils/fetchJson";
 
 const IdentityValidationForm: React.FC<{
@@ -91,7 +91,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Form = styled.form`
+export const Form = styled.form`
   display: column;
   align-items: center;
 `;

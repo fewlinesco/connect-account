@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 
-import type { Identity, ReceivedIdentityTypes } from "../../@types/Identity";
+import type { Identity, ReceivedIdentityTypes } from "../@lib/@types/Identity";
 import { AddIdentity } from "./AddIdentity";
 import { DeleteIdentity } from "./DeleteIdentity";
 

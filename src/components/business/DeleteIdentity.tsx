@@ -2,9 +2,9 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { HttpVerbs } from "../../@types/HttpVerbs";
-import type { ReceivedIdentityTypes } from "../../@types/Identity";
 import { useCookies } from "../../hooks/useCookies";
 import { fetchJson } from "../../utils/fetchJson";
+import type { ReceivedIdentityTypes } from "../@lib/@types/Identity";
 
 interface DeleteIdentityProps {
   type: ReceivedIdentityTypes;

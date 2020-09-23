@@ -1,8 +1,8 @@
 import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
-import { IdentityCommandProps } from "../@types/IdentityCommandProps";
 import { fetchManagement } from "../utils/fetchManagement";
+import { IdentityCommandProps } from "@lib/@types/IdentityCommandProps";
 
 const REMOVE_IDENTITY_FROM_USER = gql`
   mutation removeIdentityFromUser(
