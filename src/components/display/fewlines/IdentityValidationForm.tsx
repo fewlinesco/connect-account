@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { ReactElement } from "react";
 import styled from "styled-components";
 
 import type { IdentityTypes } from "../../../@types/Identity";
@@ -14,9 +14,13 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
   const [validationCode, setValidationCode] = React.useState("");
   const router = useRouter();
 
+  const displayAlertBar = (): ReactElement => {
+    return <AlertBar type={type} />;
+  };
+
   return (
     <Wrapper>
-      <AlertBar type={type} />
+      {displayAlertBar()}
       <Form method="post">
         <Box className="instructions">Enter the validation code below</Box>
         <p>Validation code</p>
