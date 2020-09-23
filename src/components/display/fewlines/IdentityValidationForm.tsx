@@ -17,7 +17,7 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
   return (
     <Wrapper>
       {displayAlertBar(
-        type === IdentityTypes.EMAIL.toLowerCase()
+        type.toUpperCase() === IdentityTypes.EMAIL
           ? "Confirmation email has been sent"
           : "confirmation SMS has been sent",
       )}
@@ -35,7 +35,7 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
           className="send-button"
           variant={ButtonVariant.PRIMARY}
           type="submit"
-        >{`Confirm ${type}`}</Button>
+        >{`Confirm ${type.toLowerCase()}`}</Button>
       </Form>
       <Button
         className="discard-button"
