@@ -52,38 +52,41 @@ describe("AddNewIdentity", () => {
     expect(addIdentityInput).toHaveLength(1);
   });
 
-  // test("it should submit the form", () => {
-  //   const component = mount(
-  //     <ThemeProvider theme={lightTheme}>
-  //       <GlobalStyle />
-  //       <Layout>
-  //         <AddNewIdentity type={ReceivedIdentityTypes.EMAIL} />
-  //       </Layout>
-  //     </ThemeProvider>,
-  //   );
+  test("it should submit the form", () => {
+    Date.now = jest.fn(() => 1572393600000);
 
-  //   const newIdentityInput = component.find(AddIdentityInputForm).find(Input);
-  //   newIdentityInput.simulate("change", {
-  //     target: { value: "test3@test.test " },
-  //   });
-  //   const form = component.find(AddIdentityInputForm).find(Form);
-  //   const fetchJsonMethod = jest.spyOn(fetchJson, "fetchJson");
-  //   form.simulate("submit");
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <AddNewIdentity type={ReceivedIdentityTypes.EMAIL} />
+        </Layout>
+      </ThemeProvider>,
+    );
 
-  //   expect(fetchJsonMethod).toHaveBeenCalledWith(
-  //     "/api/auth-connect/send-identity-validation-code",
-  //     "POST",
-  //     {
-  //       callbackUrl: "/",
-  //       type: "email",
-  //       value: "test3@test.test ",
-  //     },
-  //   );
+    const newIdentityInput = component.find(AddIdentityInputForm).find(Input);
 
-  //   expect(fetchJsonMethod).toHaveBeenCalledWith("/api/identities", "POST", {
-  //     type: "email",
-  //     userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
-  //     value: "test3@test.test ",
-  //   });
-  // });
+    newIdentityInput.simulate("change", {
+      target: { value: "test3@test.test " },
+    });
+
+    const form = component.find(AddIdentityInputForm).find(Form);
+
+    const fetchJsonMethod = jest.spyOn(fetchJson, "fetchJson");
+
+    form.simulate("submit");
+
+    expect(fetchJsonMethod).toHaveBeenCalledWith(
+      "/api/auth-connect/send-identity-validation-code",
+      "POST",
+      {
+        callbackUrl: "/",
+        identityInput: {
+          expiresAt: 1572393600000 + 300,
+          type: "email",
+          value: "test3@test.test ",
+        },
+      },
+    );
+  });
 });
