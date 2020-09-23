@@ -21,12 +21,16 @@ const IdentityValidationForm: React.FC<{
     <Wrapper>
       <Form
         method="post"
-        onSubmit={async () => {
-          fetchJson(
+        onSubmit={async (event) => {
+          event.preventDefault();
+
+          await fetchJson(
             "/api/auth-connect/verify-validation-code",
             HttpVerbs.POST,
             { validationCode, eventId },
           );
+
+          router && router.push("/account/logins");
         }}
       >
         <p>Validation code *</p>

@@ -44,11 +44,11 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
 
             await fetchJson(absoluteURL, HttpVerbs.POST, body);
 
-            // Do not work.
             response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
               Location: "/account/logins",
             });
-            return response.end();
+
+            response.end();
           }
         } else {
           throw new TemporaryIdentityExpired();
