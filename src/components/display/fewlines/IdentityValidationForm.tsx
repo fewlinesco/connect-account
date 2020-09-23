@@ -1,22 +1,18 @@
 import { useRouter } from "next/router";
-import React, { ReactElement } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { IdentityTypes } from "../../../@types/Identity";
-import AlertBar from "./AlertBar";
 import { Box } from "./Box/Box";
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
+import { displayAlertBar } from "@src/utils/displayAlertBar";
 
 const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
   type,
 }) => {
   const [validationCode, setValidationCode] = React.useState("");
   const router = useRouter();
-
-  const displayAlertBar = (text: string): ReactElement => {
-    return <AlertBar text={text} />;
-  };
 
   return (
     <Wrapper>
