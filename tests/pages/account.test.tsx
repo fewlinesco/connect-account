@@ -9,7 +9,7 @@ import { BoxedLink } from "../../src/components/display/fewlines/BoxedLink/Boxed
 import { ShowMoreButton } from "../../src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
-import Account, { Value } from "../../src/pages/account/logins/index";
+import LoginsPage, { Value } from "@src/components/LoginsPage";
 
 jest.mock("../../src/config", () => {
   return {
@@ -46,7 +46,7 @@ describe("it should display identities properly", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <LoginsPage sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -93,7 +93,7 @@ describe("it should display identities properly", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <LoginsPage sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -118,7 +118,7 @@ describe("it should display identities properly", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <LoginsPage sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -145,7 +145,7 @@ describe("it should display identities properly", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <LoginsPage sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -165,7 +165,7 @@ describe("it should display identities properly", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <LoginsPage sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -237,7 +237,7 @@ describe('the "show more" button should behave properly', () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <LoginsPage sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -294,7 +294,7 @@ describe('the "show more" button should behave properly', () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <LoginsPage sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -339,7 +339,7 @@ describe('the "show more" button should behave properly', () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <LoginsPage sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );

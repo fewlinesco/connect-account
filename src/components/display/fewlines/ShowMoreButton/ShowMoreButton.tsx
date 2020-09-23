@@ -23,7 +23,7 @@ export const ShowMoreButton: React.FC<{
   );
 };
 
-export const Button = styled.div`
+const Button = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 3rem;
