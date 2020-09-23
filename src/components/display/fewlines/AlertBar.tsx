@@ -1,13 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 
-import { IdentityTypes } from "../../../@types/Identity";
+import { CrossIcon } from "./CrossIcon";
+import { IdentityTypes } from "@src/@types/Identity";
 
 export const AlertBar: React.FC<{ type: IdentityTypes }> = ({ type }) => {
+  const [showAlertBar, setShowAlertBar] = React.useState<boolean>(true);
   if (type.toUpperCase() === IdentityTypes.EMAIL) {
     return (
       <Wrapper>
-        <Alert> Confirmation email has been sent</Alert>
+        {showAlertBar && (
+          <Alert>
+            <p>Confirmation email has been sent</p>
+            <div onClick={() => setShowAlertBar(false)}>
+              <CrossIcon />
+            </div>
+          </Alert>
+        )}
       </Wrapper>
     );
   }
@@ -34,13 +43,15 @@ const Wrapper = styled.div`
 `;
 
 const Alert = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   position: fixed;
   min-width: 25rem;
   max-width: 90%;
   background-color: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.background};
   border-radius: 0.4rem;
-  text-align: center;
   padding: 1.6rem;
   z-index: 1;
   top: 2rem;
@@ -60,5 +71,9 @@ const Alert = styled.div`
       opacity: 1;
       visibility: visible;
     }
+  }
+
+  p {
+    font-size: ${({ theme }) => theme.fontSizes.xs};
   }
 `;
