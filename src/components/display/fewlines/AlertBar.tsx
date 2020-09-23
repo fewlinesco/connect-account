@@ -40,7 +40,7 @@ const Alert = styled.div`
   max-width: 34rem;
   background-color: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.background};
-  border-radius: 0.4rem;
+  border-radius: ${({ theme }) => theme.radii[0]};
   padding: 1.6rem;
   z-index: 1;
   top: 2rem;
