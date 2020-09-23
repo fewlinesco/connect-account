@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
 import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
+import { Box } from "@src/components/display/fewlines/Box/Box";
 
 export const UpdateIdentityForm: React.FC<{
   updateIdentity: (newValue: string) => Promise<void>;
@@ -12,9 +13,13 @@ export const UpdateIdentityForm: React.FC<{
 }> = ({ currentIdentity, updateIdentity }) => {
   const [identity, setIdentity] = React.useState("");
   const router = useRouter();
+  const { value } = currentIdentity;
 
   return (
     <Wrapper>
+      <Box key={value}>
+        <Value>{value}</Value>
+      </Box>
       <Form
         method="post"
         onSubmit={async (event) => {
@@ -55,6 +60,9 @@ export const UpdateIdentityForm: React.FC<{
 };
 
 const Wrapper = styled.div`
+  width: 90%;
+  margin: ${({ theme }) => theme.spaces.component.xxs} auto;
+
   input {
     width: 100%;
     margin: ${({ theme }) => theme.spaces.component.xxs} 0;
@@ -71,4 +79,9 @@ const Wrapper = styled.div`
 export const Form = styled.form`
   display: column;
   align-items: center;
+`;
+
+const Value = styled.p`
+  margin-right: 0.5rem;
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
 `;

@@ -1,12 +1,10 @@
 import { HttpStatus } from "@fwl/web";
 import { GetServerSideProps } from "next";
 import React from "react";
-import styled from "styled-components";
 
 import type { Identity } from "@src/@types/Identity";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
-import { Box } from "@src/components/display/fewlines/Box/Box";
 import { UpdateIdentityForm } from "@src/components/display/fewlines/UpdateIdentityForm";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
@@ -18,24 +16,15 @@ import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry from "@src/utils/sentry";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
-  const { value } = identity;
-
   return (
-    <Wrapper>
-      <Box key={value}>
-        <Flex>
-          <Value>{value}</Value>
-        </Flex>
-      </Box>
-      <UpdateIdentity identity={identity}>
-        {({ updateIdentity }) => (
-          <UpdateIdentityForm
-            updateIdentity={updateIdentity}
-            currentIdentity={identity}
-          />
-        )}
-      </UpdateIdentity>
-    </Wrapper>
+    <UpdateIdentity identity={identity}>
+      {({ updateIdentity }) => (
+        <UpdateIdentityForm
+          updateIdentity={updateIdentity}
+          currentIdentity={identity}
+        />
+      )}
+    </UpdateIdentity>
   );
 };
 
@@ -113,18 +102,3 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     }
   }),
 );
-
-const Wrapper = styled.div`
-  max-width: 90%;
-  margin: 0 auto;
-`;
-
-const Value = styled.p`
-  margin-right: 0.5rem;
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-`;
-
-const Flex = styled.div`
-  display: flex;
-  align-items: center;
-`;
