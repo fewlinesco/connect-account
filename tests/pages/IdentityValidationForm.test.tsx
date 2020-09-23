@@ -7,7 +7,7 @@ import { ThemeProvider } from "styled-components";
 
 import { IdentityTypes } from "@src/@types/Identity";
 import { Layout } from "@src/components/Layout";
-import AlertBar from "@src/components/display/fewlines/AlertBar";
+import AlertBar from "@src/components/display/fewlines/AlertBar/AlertBar";
 import { Button } from "@src/components/display/fewlines/Button/Button";
 import IdentityValidationForm from "@src/components/display/fewlines/IdentityValidationForm";
 import { Input } from "@src/components/display/fewlines/Input/Input";
