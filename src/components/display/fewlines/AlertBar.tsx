@@ -36,8 +36,8 @@ const Alert = styled.div`
   align-items: center;
   justify-content: space-between;
   position: fixed;
-  min-width: 25rem;
-  max-width: 90%;
+  width: 90%;
+  max-width: 34rem;
   background-color: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.background};
   border-radius: 0.4rem;
