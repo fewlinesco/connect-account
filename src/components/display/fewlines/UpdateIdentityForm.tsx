@@ -18,7 +18,7 @@ export const UpdateIdentityForm: React.FC<{
 
   return (
     <Wrapper>
-      <NavigationBreadcrumbs />
+      <NavigationBreadcrumbs title="Logins" />
       <Box key={value}>
         <Value>{value}</Value>
       </Box>

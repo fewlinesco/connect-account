@@ -26,7 +26,7 @@ export const AddIdentityInputForm: React.FC<{
 
   return (
     <Wrapper>
-      <NavigationBreadcrumbs />
+      <NavigationBreadcrumbs title="Logins" />
       <Form
         method="post"
         onSubmit={async (event) => {

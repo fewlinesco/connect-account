@@ -8,5 +8,5 @@ export default {
 };
 
 export const StandardNavigationBreadcrumbs = (): JSX.Element => {
-  return <NavigationBreadcrumbs />;
+  return <NavigationBreadcrumbs title="Logins" />;
 };
