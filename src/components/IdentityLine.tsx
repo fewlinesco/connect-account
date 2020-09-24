@@ -2,12 +2,12 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
+import { Identity, ReceivedIdentityTypes } from "../@types/Identity";
 import { AwaitingValidationBadge } from "./display/fewlines/AwaitingValidationBadge/AwaitingValidationBadge";
 import { Box } from "./display/fewlines/Box/Box";
 import { Button, ButtonVariant } from "./display/fewlines/Button/Button";
 import { NavigationBreadcrumbs } from "./display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "./display/fewlines/PrimaryBadge/PrimaryBadge";
-import type { Identity } from "@src/@types/Identity";
 import { DeleteIdentity } from "@src/components/business/DeleteIdentity";
 
 type IdentityLineProps = {
@@ -19,7 +19,14 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
 
   return (
     <Wrapper>
-      <NavigationBreadcrumbs title="Logins" breadcrumbs="Email address" />
+      <NavigationBreadcrumbs
+        title="Logins"
+        breadcrumbs={
+          type === ReceivedIdentityTypes.EMAIL
+            ? "Email address"
+            : "Phone number"
+        }
+      />
       <Box>
         <Flex>
           <Value>{value}</Value>
