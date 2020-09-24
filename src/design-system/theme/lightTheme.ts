@@ -88,7 +88,7 @@ const lineHeights = {
   title: 1.5,
 };
 
-const radii = ["0.2rem", "0.5rem", "55.5rem", "50%"];
+const radii = ["0.4rem", "0.5rem", "55.5rem", "50%"];
 
 const shadows = {
   xs: "0 0 0 1px rgba(0, 0, 0, 0.05)",

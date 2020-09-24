@@ -2,10 +2,11 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import type { IdentityTypes } from "../../../@types/Identity";
-import AlertBar from "./AlertBar";
+import { IdentityTypes } from "../../../@types/Identity";
+import { Box } from "./Box/Box";
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
+import { displayAlertBar } from "@src/utils/displayAlertBar";
 
 const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
   type,
@@ -15,8 +16,14 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
 
   return (
     <Wrapper>
+      {displayAlertBar(
+        type.toUpperCase() === IdentityTypes.EMAIL
+          ? "Confirmation email has been sent"
+          : "confirmation SMS has been sent",
+      )}
       <Form method="post">
-        <p>Validation code *</p>
+        <Box className="instructions">Enter the validation code below</Box>
+        <p>Validation code</p>
         <Input
           type="text"
           name="value"
@@ -28,7 +35,7 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
           className="send-button"
           variant={ButtonVariant.PRIMARY}
           type="submit"
-        >{`Confirm ${type}`}</Button>
+        >{`Confirm ${type.toLowerCase()}`}</Button>
       </Form>
       <Button
         className="discard-button"
@@ -37,11 +44,10 @@ const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
       >
         Discard all changes
       </Button>
-      <p>Didn&apos;t receive code?</p>
+      <p className="didnt-receive-code">Didn&apos;t receive code?</p>
       <Button className="resend-button" variant={ButtonVariant.SECONDARY}>
         Resend confirmation code
       </Button>
-      <AlertBar type={type} />
     </Wrapper>
   );
 };
@@ -61,12 +67,21 @@ const Wrapper = styled.div`
     width: 100%;
   }
 
+  .instructions {
+    font-weight: ${({ theme }) => theme.fontWeights.light};
+    font-size: ${({ theme }) => theme.fontSizes.s};
+  }
+
+  .didnt-receive-code {
+    margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
+  }
+
   .send-button {
     margin: ${({ theme }) => theme.spaces.component.xxs} 0;
   }
 
   .discard-button {
-    margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
+    margin: 0 0 ${({ theme }) => theme.spaces.component.s} 0;
   }
 
   .resend-button {
