@@ -11,6 +11,7 @@ import { Separator } from "./display/fewlines/Separator/Separator";
 import { ShowMoreButton } from "./display/fewlines/ShowMoreButton/ShowMoreButton";
 import { Identity } from "@src/@types/Identity";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
+import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 
 type LoginsProps = {
   sortedIdentities: SortedIdentities;
@@ -46,11 +47,8 @@ const LoginsPage: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       <Head>
         <title>Connect Logins</title>
       </Head>
+      <NavigationBreadcrumbs />
       <IdentitySection>
-        <h2>Logins</h2>
-        <p className="section-description">
-          Your emails, phones and social logins
-        </p>
         <h3>Email addresses</h3>
         <IdentityContainer className="identity-container">
           {emailIdentities.length === 0 ? (
