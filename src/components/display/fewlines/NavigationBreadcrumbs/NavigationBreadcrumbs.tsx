@@ -11,5 +11,9 @@ export const NavigationBreadcrumbs: React.FC = () => {
 };
 
 const Wrapper = styled.div`
-  padding: ${({ theme }) => theme.spaces.component.xs};
+  padding: 0 0 ${({ theme }) => theme.spaces.component.s} 0;
+
+  p {
+    font-weight: ${({ theme }) => theme.fontWeights.light};
+  }
 `;
