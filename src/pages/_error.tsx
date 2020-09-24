@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/node";
-import { NextPageContext } from "next";
+import type { NextPageContext } from "next";
 import NextError, { ErrorProps as NextErrorProps } from "next/error";
 import React from "react";
 import styled from "styled-components";

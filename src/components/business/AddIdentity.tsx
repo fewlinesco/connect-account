@@ -1,9 +1,9 @@
 import React from "react";
 
-import { HttpVerbs } from "../../@types/HttpVerbs";
-import { useCookies } from "../../hooks/useCookies";
-import { fetchJson } from "../../utils/fetchJson";
-import type { ReceivedIdentityTypes } from "../@lib/@types/Identity";
+import { HttpVerbs } from "@src/@types/HttpVerbs";
+import type { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { useCookies } from "@src/hooks/useCookies";
+import { fetchJson } from "@src/utils/fetchJson";
 
 interface AddIdentityProps {
   type: ReceivedIdentityTypes;

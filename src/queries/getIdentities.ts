@@ -1,8 +1,8 @@
 import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
-import { ProviderUser } from "../@types/ProviderUser";
-import { fetchManagement } from "../utils/fetchManagement";
+import type { ProviderUser } from "@src/@types/ProviderUser";
+import { fetchManagement } from "@src/utils/fetchManagement";
 
 const USER_QUERY = gql`
   query getUserIdentitiesQuery($userId: String!) {

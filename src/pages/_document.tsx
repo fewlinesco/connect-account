@@ -1,6 +1,9 @@
 import * as Sentry from "@sentry/node";
-import { AppProps } from "next/app";
-import { AppType, DocumentInitialProps } from "next/dist/next-server/lib/utils";
+import type { AppProps } from "next/app";
+import type {
+  AppType,
+  DocumentInitialProps,
+} from "next/dist/next-server/lib/utils";
 import Document from "next/document";
 import React from "react";
 import { ServerStyleSheet } from "styled-components";

@@ -1,6 +1,6 @@
 import { Db } from "mongodb";
 
-import { MongoUser } from "@src/@types/mongo/User";
+import type { MongoUser } from "@src/@types/mongo/User";
 
 export async function getTemporaryIdentities(
   eventId: string,

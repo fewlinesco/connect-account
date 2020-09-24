@@ -3,8 +3,8 @@ import { GetServerSideProps } from "next";
 import React from "react";
 import styled from "styled-components";
 
-import { Identity } from "@lib/@types/Identity";
-import { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import type { Identity } from "@src/@types/Identity";
+import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
 import { Box } from "@src/components/display/fewlines/Box/Box";
 import { UpdateIdentityForm } from "@src/components/display/fewlines/UpdateIdentityForm";
