@@ -12,6 +12,7 @@ import {
   Form,
 } from "@src/components/display/fewlines/AddIdentityInputForm";
 import { Input } from "@src/components/display/fewlines/Input/Input";
+import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { GlobalStyle } from "@src/design-system/globals/globalStyle";
 import { lightTheme } from "@src/design-system/theme/lightTheme";
 import { useCookies } from "@src/hooks/useCookies";
@@ -38,6 +39,42 @@ jest.mock("../../src/config", () => {
 });
 
 describe("AddIdentityInputForm", () => {
+  test("it shoud display navigation breadcrumbs properly for emails", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <AddNewIdentity type={ReceivedIdentityTypes.EMAIL} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
+    expect(navigationBreadCrumbs).toHaveLength(1);
+    expect(navigationBreadCrumbs.contains(<h1>Logins</h1>)).toEqual(true);
+    expect(navigationBreadCrumbs.contains(<p>Email address | new</p>)).toEqual(
+      true,
+    );
+  });
+
+  test("it shoud display navigation breadcrumbs properly for phones", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <AddNewIdentity type={ReceivedIdentityTypes.PHONE} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
+    expect(navigationBreadCrumbs).toHaveLength(1);
+    expect(navigationBreadCrumbs.contains(<h1>Logins</h1>)).toEqual(true);
+    expect(navigationBreadCrumbs.contains(<p>Phone number | new</p>)).toEqual(
+      true,
+    );
+  });
+
   test("it should display an input", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>

@@ -18,6 +18,7 @@ import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";
 import UpdateIdentityPage from "../../src/pages/account/logins/[type]/[id]/update";
 import * as fetchJson from "../../src/utils/fetchJson";
+import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 
 enableFetchMocks();
 
@@ -50,6 +51,50 @@ describe("UpdateIdentityPage", () => {
     type: ReceivedIdentityTypes.EMAIL,
     value: "test@test.test",
   };
+
+  const phoneIdentity: Identity = {
+    id: "htg6dcc1-530b-4982-878d-33f0def6a7cf",
+    primary: false,
+    status: "validated",
+    type: ReceivedIdentityTypes.PHONE,
+    value: "0788992255",
+  };
+
+  test("it shoud display navigation breadcrumbs properly for emails", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <UpdateIdentityPage identity={nonPrimaryIdentity} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
+    expect(navigationBreadCrumbs).toHaveLength(1);
+    expect(navigationBreadCrumbs.contains(<h1>Logins</h1>)).toEqual(true);
+    expect(navigationBreadCrumbs.contains(<p>Email address | edit</p>)).toEqual(
+      true,
+    );
+  });
+
+  test("it shoud display navigation breadcrumbs properly for phones", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <UpdateIdentityPage identity={phoneIdentity} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
+    expect(navigationBreadCrumbs).toHaveLength(1);
+    expect(navigationBreadCrumbs.contains(<h1>Logins</h1>)).toEqual(true);
+    expect(navigationBreadCrumbs.contains(<p>Phone number | edit</p>)).toEqual(
+      true,
+    );
+  });
 
   test("it should display an update identity input", () => {
     const component = mount(

@@ -10,6 +10,7 @@ import { ShowMoreButton } from "../../src/components/display/fewlines/ShowMoreBu
 import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
 import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import LoginsPage, { Value } from "@src/components/LoginsPage";
+import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 
 jest.mock("../../src/config", () => {
   return {
@@ -20,7 +21,7 @@ jest.mock("../../src/config", () => {
   };
 });
 
-describe("it should display identities properly", () => {
+describe("LoginsPage", () => {
   test("it should display email and phone when there are one of each", () => {
     const mockedSortedResponse: SortedIdentities = {
       phoneIdentities: [
@@ -173,6 +174,30 @@ describe("it should display identities properly", () => {
     const noEmail = component.contains(<Value>No emails</Value>);
     expect(noPhone).toEqual(true);
     expect(noEmail).toEqual(true);
+  });
+
+  test("it shoud display navigation breadcrumbs", () => {
+    const mockedSortedResponse: SortedIdentities = {
+      phoneIdentities: [],
+      emailIdentities: [],
+    };
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <LoginsPage sortedIdentities={mockedSortedResponse} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
+    expect(navigationBreadCrumbs).toHaveLength(1);
+    expect(navigationBreadCrumbs.contains(<h1>Logins</h1>)).toEqual(true);
+    expect(
+      navigationBreadCrumbs.contains(
+        <p>Your emails, phones and social logins</p>,
+      ),
+    ).toEqual(true);
   });
 });
 

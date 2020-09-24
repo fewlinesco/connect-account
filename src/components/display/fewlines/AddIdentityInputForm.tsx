@@ -31,9 +31,8 @@ export const AddIdentityInputForm: React.FC<{
         breadcrumbs={`${
           type === ReceivedIdentityTypes.EMAIL
             ? "Email address"
-            : "Phone number "
-        } | new
-      `}
+            : "Phone number"
+        } | new`}
       />
       <Form
         method="post"

@@ -28,8 +28,7 @@ export const UpdateIdentityForm: React.FC<{
           currentIdentity.type === IdentityTypes.EMAIL.toLowerCase()
             ? "Email address"
             : "Phone number"
-        } | edit
-      `}
+        } | edit`}
       />
       <Box key={value}>
         <Value>{value}</Value>

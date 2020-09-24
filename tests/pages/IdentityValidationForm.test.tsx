@@ -13,6 +13,7 @@ import IdentityValidationForm, {
   Form,
 } from "@src/components/display/fewlines/IdentityValidationForm";
 import { Input } from "@src/components/display/fewlines/Input/Input";
+import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { GlobalStyle } from "@src/design-system/globals/globalStyle";
 import { lightTheme } from "@src/design-system/theme/lightTheme";
 import { useCookies } from "@src/hooks/useCookies";
@@ -41,7 +42,43 @@ jest.mock("../../src/config", () => {
 describe("IdentityValidationForm", () => {
   const eventId = "foo";
 
-  test("it should display properly an input and 3 buttons for emails", () => {
+  test("it shoud display navigation breadcrumbs properly for emails", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <IdentityValidationForm type={IdentityTypes.EMAIL} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
+    expect(navigationBreadCrumbs).toHaveLength(1);
+    expect(navigationBreadCrumbs.contains(<h1>Logins</h1>)).toEqual(true);
+    expect(
+      navigationBreadCrumbs.contains(<p>Email address | validation</p>),
+    ).toEqual(true);
+  });
+
+  test("it shoud display navigation breadcrumbs properly for phones", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <IdentityValidationForm type={IdentityTypes.PHONE} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
+    expect(navigationBreadCrumbs).toHaveLength(1);
+    expect(navigationBreadCrumbs.contains(<h1>Logins</h1>)).toEqual(true);
+    expect(
+      navigationBreadCrumbs.contains(<p>Phone number | validation</p>),
+    ).toEqual(true);
+  });
+
+  test("it should display an input ans 3 buttons for emails", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />

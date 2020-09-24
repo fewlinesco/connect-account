@@ -17,6 +17,7 @@ import { lightTheme } from "../../src/design-system/theme/lightTheme";
 import { useCookies } from "../../src/hooks/useCookies";
 import ShowIdentity from "../../src/pages/account/logins/[type]/[id]";
 import { AwaitingValidationBadge } from "@src/components/display/fewlines/AwaitingValidationBadge/AwaitingValidationBadge";
+import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "@src/components/display/fewlines/PrimaryBadge/PrimaryBadge";
 
 enableFetchMocks();
@@ -66,6 +67,46 @@ describe("ShowIdentity", () => {
     type: ReceivedIdentityTypes.EMAIL,
     value: "test6@test.test",
   };
+
+  const phoneIdentity: Identity = {
+    id: "81z343c1-530b-4982-878d-33f0def6a7cf",
+    primary: false,
+    status: "unvalidated",
+    type: ReceivedIdentityTypes.PHONE,
+    value: "0722443311",
+  };
+
+  test("it shoud display navigation breadcrumbs properly for emails", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <ShowIdentity identity={nonPrimaryIdentity} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
+    expect(navigationBreadCrumbs).toHaveLength(1);
+    expect(navigationBreadCrumbs.contains(<h1>Logins</h1>)).toEqual(true);
+    expect(navigationBreadCrumbs.contains(<p>Email address</p>)).toEqual(true);
+  });
+
+  test("it shoud display navigation breadcrumbs properly for phones", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <ShowIdentity identity={phoneIdentity} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
+    expect(navigationBreadCrumbs).toHaveLength(1);
+    expect(navigationBreadCrumbs.contains(<h1>Logins</h1>)).toEqual(true);
+    expect(navigationBreadCrumbs.contains(<p>Phone number</p>)).toEqual(true);
+  });
 
   test("it should display the update button for a non primary identity", () => {
     const component = mount(
