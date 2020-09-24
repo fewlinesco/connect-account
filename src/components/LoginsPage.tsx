@@ -145,7 +145,7 @@ const LoginsPage: React.FC<LoginsProps> = ({ sortedIdentities }) => {
 export default LoginsPage;
 
 const Wrapper = styled.div`
-  max-width: 95%;
+  max-width: 90%;
   margin: 0 auto;
 
   .identity-container {
@@ -160,7 +160,6 @@ const Wrapper = styled.div`
 `;
 
 const IdentitySection = styled.div`
-  padding: ${({ theme }) => theme.spaces.component.xs};
   .section-description {
     margin: 0 0 ${({ theme }) => theme.spaces.component.s} 0;
   }
