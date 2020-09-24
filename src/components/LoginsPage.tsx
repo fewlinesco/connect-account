@@ -48,7 +48,10 @@ const LoginsPage: React.FC<LoginsProps> = ({ sortedIdentities }) => {
         <title>Connect Logins</title>
       </Head>
       <IdentitySection>
-        <NavigationBreadcrumbs title="Logins" />
+        <NavigationBreadcrumbs
+          title="Logins"
+          breadcrumbs="Your emails, phones and social logins"
+        />
         <h3>Email addresses</h3>
         <IdentityContainer className="identity-container">
           {emailIdentities.length === 0 ? (

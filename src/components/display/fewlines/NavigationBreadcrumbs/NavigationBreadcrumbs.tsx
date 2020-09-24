@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-export const NavigationBreadcrumbs: React.FC<{ title: string }> = ({
-  title,
-}) => {
+export const NavigationBreadcrumbs: React.FC<{
+  title: string;
+  breadcrumbs: string;
+}> = ({ title, breadcrumbs }) => {
   return (
     <Wrapper>
       <h2>{title}</h2>
-      <p>Your emails, phones and social logins</p>
+      <p>{breadcrumbs}</p>
     </Wrapper>
   );
 };

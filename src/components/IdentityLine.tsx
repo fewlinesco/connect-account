@@ -19,7 +19,7 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
 
   return (
     <Wrapper>
-      <NavigationBreadcrumbs title="Logins" />
+      <NavigationBreadcrumbs title="Logins" breadcrumbs="Email address" />
       <Box>
         <Flex>
           <Value>{value}</Value>

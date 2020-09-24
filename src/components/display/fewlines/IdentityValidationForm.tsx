@@ -19,7 +19,10 @@ const IdentityValidationForm: React.FC<{
 
   return (
     <Wrapper>
-      <NavigationBreadcrumbs title="Logins" />
+      <NavigationBreadcrumbs
+        title="Logins"
+        breadcrumbs="Email address | validation"
+      />
       <Form
         method="post"
         onSubmit={async (event) => {
