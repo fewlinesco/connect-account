@@ -1,8 +1,8 @@
 import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
-import { fetchManagement } from "../utils/fetchManagement";
-import { IdentityCommandProps } from "@lib/@types/IdentityCommandProps";
+import type { IdentityCommandProps } from "@lib/@types/IdentityCommandProps";
+import { fetchManagement } from "@src/utils/fetchManagement";
 
 const ADD_IDENTITY_TO_USER = gql`
   mutation addIdentityToUser(

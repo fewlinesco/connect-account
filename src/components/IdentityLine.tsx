@@ -2,12 +2,12 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { DeleteIdentity } from "../components/business/DeleteIdentity";
 import { AwaitingValidationBadge } from "./display/fewlines/AwaitingValidationBadge/AwaitingValidationBadge";
 import { Box } from "./display/fewlines/Box/Box";
 import { Button, ButtonVariant } from "./display/fewlines/Button/Button";
 import { PrimaryBadge } from "./display/fewlines/PrimaryBadge/PrimaryBadge";
 import type { Identity } from "@src/@types/Identity";
+import { DeleteIdentity } from "@src/components/business/DeleteIdentity";
 
 type IdentityLineProps = {
   identity: Identity;

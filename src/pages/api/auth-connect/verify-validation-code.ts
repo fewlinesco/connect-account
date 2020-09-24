@@ -2,7 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import { Handler } from "next-iron-session";
 
 import { checkVerificationCode } from "@lib/queries/checkVerificationCode";
-import { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
 import { config } from "@src/config";
 import { MongoNoDataReturned, TemporaryIdentityExpired } from "@src/errors";
