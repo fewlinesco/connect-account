@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
+import { NavigationBreadcrumbs } from "./NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
 import { Box } from "@src/components/display/fewlines/Box/Box";
 
@@ -17,6 +18,7 @@ export const UpdateIdentityForm: React.FC<{
 
   return (
     <Wrapper>
+      <NavigationBreadcrumbs />
       <Box key={value}>
         <Value>{value}</Value>
       </Box>
@@ -61,7 +63,7 @@ export const UpdateIdentityForm: React.FC<{
 
 const Wrapper = styled.div`
   width: 90%;
-  margin: ${({ theme }) => theme.spaces.component.xxs} auto;
+  margin: 0 auto;
 
   input {
     width: 100%;
