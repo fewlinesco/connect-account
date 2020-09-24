@@ -5,7 +5,11 @@ import styled from "styled-components";
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
 import { NavigationBreadcrumbs } from "./NavigationBreadcrumbs/NavigationBreadcrumbs";
-import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
+import {
+  Identity,
+  IdentityTypes,
+  ReceivedIdentityTypes,
+} from "@src/@types/Identity";
 import { Box } from "@src/components/display/fewlines/Box/Box";
 
 export const UpdateIdentityForm: React.FC<{
@@ -20,7 +24,12 @@ export const UpdateIdentityForm: React.FC<{
     <Wrapper>
       <NavigationBreadcrumbs
         title="Logins"
-        breadcrumbs="Email address | edit"
+        breadcrumbs={`${
+          currentIdentity.type === IdentityTypes.EMAIL.toLowerCase()
+            ? "Email address"
+            : "Phone number"
+        } | edit
+      `}
       />
       <Box key={value}>
         <Value>{value}</Value>

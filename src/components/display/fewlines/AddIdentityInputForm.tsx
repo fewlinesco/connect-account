@@ -26,7 +26,15 @@ export const AddIdentityInputForm: React.FC<{
 
   return (
     <Wrapper>
-      <NavigationBreadcrumbs title="Logins" breadcrumbs="Email address | new" />
+      <NavigationBreadcrumbs
+        title="Logins"
+        breadcrumbs={`${
+          type === ReceivedIdentityTypes.EMAIL
+            ? "Email address"
+            : "Phone number "
+        } | new
+      `}
+      />
       <Form
         method="post"
         onSubmit={async (event) => {

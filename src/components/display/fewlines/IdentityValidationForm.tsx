@@ -21,7 +21,12 @@ const IdentityValidationForm: React.FC<{
     <Wrapper>
       <NavigationBreadcrumbs
         title="Logins"
-        breadcrumbs="Email address | validation"
+        breadcrumbs={`${
+          type === IdentityTypes.EMAIL.toLowerCase()
+            ? "Email address"
+            : "Phone number"
+        } | validation
+      `}
       />
       <Form
         method="post"
