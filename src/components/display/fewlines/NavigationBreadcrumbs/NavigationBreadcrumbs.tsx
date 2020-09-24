@@ -15,5 +15,6 @@ const Wrapper = styled.div`
 
   p {
     font-weight: ${({ theme }) => theme.fontWeights.light};
+    font-size: ${({ theme }) => theme.fontSizes.s};
   }
 `;
