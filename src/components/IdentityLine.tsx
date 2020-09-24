@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { AwaitingValidationBadge } from "./display/fewlines/AwaitingValidationBadge/AwaitingValidationBadge";
 import { Box } from "./display/fewlines/Box/Box";
 import { Button, ButtonVariant } from "./display/fewlines/Button/Button";
+import { NavigationBreadcrumbs } from "./display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "./display/fewlines/PrimaryBadge/PrimaryBadge";
 import type { Identity } from "@src/@types/Identity";
 import { DeleteIdentity } from "@src/components/business/DeleteIdentity";
@@ -17,7 +18,8 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
   const { id, primary, status, type, value } = identity;
 
   return (
-    <IdentityBox key={value}>
+    <Wrapper>
+      <NavigationBreadcrumbs />
       <Box>
         <Flex>
           <Value>{value}</Value>
@@ -64,12 +66,13 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
           )}
         </DeleteIdentity>
       )}
-    </IdentityBox>
+    </Wrapper>
   );
 };
 
-const IdentityBox = styled.div`
-  padding: ${({ theme }) => theme.spaces.component.xs};
+const Wrapper = styled.div`
+  width: 90%;
+  margin: 0 auto;
 
   button {
     margin-bottom: ${({ theme }) => theme.spaces.component.xxs};
