@@ -3,6 +3,10 @@
 
 Connect Account is an open source app, which aims at providing all the business logic to handle Connect identities and profile data, and a default frontend for User to use it.
 
+== Flow
+
+image::./src/assets/account-flow-diagram.png[Sunset]
+
 == Working the the Account web application
 
 You will most likely need to *fork* the repository to add your custom frontend components, to change the layout, or add your branding and design-system.
@@ -352,6 +356,18 @@ export const SvgIcon: React.FC = () => {
 }
 ----
 
+== Database
+
+We chose to use https://www.mongodb.com/[MongoDB], deployed in the cloud through https://www.mongodb.com/cloud/atlas[MongoDB Atlas].
+
+> Note that in the future, we aim to provide the liberty of the database used. This will be achieve through a config file, and the `@fwl/account-sdk` package.
+
+== Session
+
+The session is kept in the cookies through https://github.com/vvo/next-iron-session[next-iron-session]. The value stored is the MongoDB user document id, which is used to authorization.
+
+> Note that in the future, we will store the session id present in the database.
+
 == Storybook
 
 We chose to document, and develope our components in isolation using https://storybook.js.org/[Storybook 6].
@@ -372,3 +388,23 @@ export const SubNameOfTheStory = (): JSX.Element => {
 ----
 
 > Note that the story needs to be at the same level as the component.
+
+== Testing
+
+=== Unit testing
+
+https://jestjs.io/[Jest]
+
+=== User interaction
+
+https://github.com/enzymejs/enzyme[Enzyme]
+
+=== User flow
+
+https://github.com/puppeteer/puppeteer[Puppeteer]
+
+== Monitoring
+
+We are using https://docs.sentry.io/[Sentry] to monitor production's exceptions raised.
+
+A custom utility function, called `addRequestScopeToSentry`, is provided to format the data used for the report. 
