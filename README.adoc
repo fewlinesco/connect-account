@@ -7,7 +7,7 @@ Connect Account is an open source app, which aims at providing all the business 
 
 image::./src/assets/account-flow-diagram.png[Sunset]
 
-== Working the the Account web application
+== Working with the Account web application
 
 You will most likely need to *fork* the repository to add your custom frontend components, to change the layout, or add your branding and design-system.
 
@@ -395,9 +395,9 @@ export const SubNameOfTheStory = (): JSX.Element => {
 
 https://jestjs.io/[Jest]
 
-=== User interaction
+=== User interaction with components
 
-https://github.com/enzymejs/enzyme[Enzyme]
+We are using https://github.com/enzymejs/enzyme[Enzyme] to test components behavior regarding user interactions.
 
 === User flow
 
