@@ -17,6 +17,7 @@ declare module "styled-components" {
       layout: Spacing;
     };
     fontSizes: {
+      xs: string;
       s: string;
       m: string;
       l: string;
@@ -61,9 +62,11 @@ declare module "styled-components" {
       sm: string;
       base: string;
       left: string;
+      box: string;
     };
     colors: {
       primary: string;
+      primaryBadge: string;
       secondary: string;
       background: string;
       backgroundContrast: string;
@@ -71,8 +74,10 @@ declare module "styled-components" {
       contrastCopy: string;
       red: string;
       green: string;
-      turquoise: string;
       yellow: string;
+      placeholder: string;
+      separator: string;
+      box: string;
       blacks: string[];
     };
     transitions: {

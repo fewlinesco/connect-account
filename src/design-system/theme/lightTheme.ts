@@ -25,16 +25,19 @@ const borders = {
 };
 
 const colors = {
-  primary: "#1E10FF",
+  primary: "#1825aa",
+  primaryBadge: "#030e80",
   secondary: "#44F8D7",
-  background: "#FAFAFA",
+  background: "#FFFFFF",
   backgroundContrast: "#FFFFFF",
   black: "#202020",
   contrastCopy: "#FFFFFF",
-  red: "#FF645B",
+  red: "#EB5757",
   green: "#08D079",
   yellow: "#FDC141",
-  turquoise: "#40E0D0",
+  placeholder: "#8b90a0",
+  separator: "#F0F1F3",
+  box: "#FAFAFC",
   blacks: [
     "hsl(0, 0%, 90%)", // 0
     "hsl(0, 0%, 75%)", // 1
@@ -62,6 +65,7 @@ const fontWeights = {
 };
 
 const fontSizes = {
+  xs: "1.2rem",
   s: "1.4rem",
   m: "1.8rem",
   l: "2rem",
@@ -84,13 +88,14 @@ const lineHeights = {
   title: 1.5,
 };
 
-const radii = ["0.2rem", "0.5rem", "50%"];
+const radii = ["0.4rem", "0.5rem", "55.5rem", "50%"];
 
 const shadows = {
   xs: "0 0 0 1px rgba(0, 0, 0, 0.05)",
   sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
   base: "0 1px 3px rgba(63,63,68,0.15), 0 20px 30px rgba(63,63,68,0.07)",
   left: `5px 0 5px -5px ${colors.blacks[1]}`,
+  box: `0px 0px 16px rgba(24, 37, 170, 0.08)`,
 };
 
 function spacer(n: number): string {

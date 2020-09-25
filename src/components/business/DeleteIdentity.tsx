@@ -1,14 +1,15 @@
+import { useRouter } from "next/router";
 import React from "react";
 
 import { HttpVerbs } from "../../@types/HttpVerbs";
-import { IdentityTypes } from "../../@types/Identity";
+import type { ReceivedIdentityTypes } from "../../@types/Identity";
 import { useCookies } from "../../hooks/useCookies";
 import { fetchJson } from "../../utils/fetchJson";
 
 interface DeleteIdentityProps {
-  type: IdentityTypes;
+  type: ReceivedIdentityTypes;
   value: string;
-  children: (props: { deleteIdentity: () => Promise<Response> }) => JSX.Element;
+  children: (props: { deleteIdentity: () => Promise<void> }) => JSX.Element;
 }
 
 export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
@@ -17,6 +18,7 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
   children,
 }) => {
   const { data, error } = useCookies();
+  const router = useRouter();
 
   if (error) {
     return <div>Failed to load</div>;
@@ -27,13 +29,19 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
   }
 
   const requestData = {
-    userId: data.userId,
-    type: type,
+    userId: data.userSub,
+    type: type.toUpperCase(),
     value: value,
   };
 
-  const deleteIdentity = (): Promise<Response> => {
-    return fetchJson("/api/account", HttpVerbs.DELETE, requestData);
+  const deleteIdentity = async (): Promise<void> => {
+    return fetchJson("/api/identities", HttpVerbs.DELETE, requestData)
+      .then(() => {
+        router && router.push("/account/logins");
+      })
+      .catch((error: Error) => {
+        throw error;
+      });
   };
 
   return children({ deleteIdentity });

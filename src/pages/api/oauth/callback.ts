@@ -1,15 +1,15 @@
-import { HttpStatus } from "@fewlines/fwl-web";
-import jwt from "jsonwebtoken";
+import { HttpStatus } from "@fwl/web";
 import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
-import { ExtendedRequest } from "../../../@types/ExtendedRequest";
-import { HttpVerbs } from "../../../@types/HttpVerbs";
-import { config } from "../../../config";
-import { withAPIPageLogger } from "../../../middleware/withAPIPageLogger";
-import withSession from "../../../middleware/withSession";
-import { fetchJson } from "../../../utils/fetchJson";
-import Sentry, { addRequestScopeToSentry } from "../../../utils/sentry";
+import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import { findOrInsertUser } from "@src/command/findOrInsertUser";
+import { oauth2Client, config } from "@src/config";
+import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
+import { withMongoDB } from "@src/middleware/withMongoDB";
+import withSession from "@src/middleware/withSession";
+import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const handler: Handler = async (
   request: ExtendedRequest,
@@ -19,31 +19,25 @@ const handler: Handler = async (
 
   try {
     if (request.method === "GET") {
-      const protocol =
-        process.env.NODE_ENV === "production" ? "https://" : "http://";
-      const host = request.headers.host;
-      const route = "/api/oauth/callback";
-      const redirect_uri = protocol + host + route;
-
-      const callback = {
-        client_id: config.connectApplicationClientId,
-        client_secret: config.connectApplicationClientSecret,
-        code: request.query.code as string,
-        grant_type: "authorization_code",
-        redirect_uri,
-      };
-
-      const fetchedResponse = await fetchJson(
-        `${config.connectProviderUrl}/oauth/token`,
-        HttpVerbs.POST,
-        callback,
+      const tokens = await oauth2Client.getTokensFromAuthorizationCode(
+        request.query.code as string,
       );
 
-      const parsedResponse = await fetchedResponse.json();
+      const decodedAccessToken = await oauth2Client.verifyJWT<AccessToken>(
+        tokens.access_token,
+        config.connectJwtAlgorithm,
+      );
 
-      jwt.verify(parsedResponse.access_token, callback.client_secret);
+      const oauthUserInfo = {
+        sub: decodedAccessToken.sub,
+        accessToken: tokens.access_token,
+        refreshToken: tokens.refresh_token,
+      };
 
-      request.session.set("user-jwt", parsedResponse.access_token);
+      const documentId = await findOrInsertUser(oauthUserInfo, request.mongoDb);
+
+      request.session.set("user-session-id", documentId);
+      request.session.set("user-sub", decodedAccessToken.sub);
 
       await request.session.save();
 
@@ -65,4 +59,4 @@ const handler: Handler = async (
   }
 };
 
-export default withAPIPageLogger(withSession(handler));
+export default withAPIPageLogger(withSession(withMongoDB(handler)));

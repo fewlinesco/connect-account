@@ -1,4 +1,4 @@
-import { HttpStatus } from "@fewlines/fwl-web";
+import { HttpStatus } from "@fwl/web";
 
 import { Handler } from "../../@types/ApiPageHandler";
 import { addIdentityToUser } from "../../command/addIdentityToUser";
@@ -31,7 +31,7 @@ const handler: Handler = async (request, response) => {
     }
   } catch (error) {
     Sentry.withScope((scope) => {
-      scope.setTag("api/account", "api/account");
+      scope.setTag("api/identities", "api/identities");
       Sentry.captureException(error);
     });
   }

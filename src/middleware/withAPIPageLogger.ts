@@ -1,11 +1,12 @@
 import { createLogger } from "@fewlines/fwl-logging";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiResponse } from "next";
 
 import { Handler } from "../@types/ApiPageHandler";
+import { ExtendedRequest } from "../@types/ExtendedRequest";
 
 export function withAPIPageLogger(
   handler: Handler,
-): (request: NextApiRequest, response: NextApiResponse) => void {
+): (request: ExtendedRequest, response: NextApiResponse) => void {
   const logger = createLogger("connect-account", "json").withMeta({
     process: "apiPage",
   });
@@ -13,7 +14,7 @@ export function withAPIPageLogger(
   const processTimeStart = process.hrtime.bigint();
 
   return async (
-    request: NextApiRequest,
+    request: ExtendedRequest,
     response: NextApiResponse,
   ): Promise<void> => {
     response.once("finish", () => {
