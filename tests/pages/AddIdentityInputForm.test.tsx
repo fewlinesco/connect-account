@@ -1,4 +1,4 @@
-jest.mock("../../src/hooks/useCookies");
+jest.mock("@src/hooks/useCookies");
 
 import { mount } from "enzyme";
 import { enableFetchMocks } from "jest-fetch-mock";

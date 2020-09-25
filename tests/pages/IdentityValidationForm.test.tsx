@@ -1,4 +1,4 @@
-jest.mock("../../src/hooks/useCookies");
+jest.mock("@src/hooks/useCookies");
 
 import { mount } from "enzyme";
 import { enableFetchMocks } from "jest-fetch-mock";
@@ -22,7 +22,7 @@ import * as fetchJson from "@src/utils/fetchJson";
 
 enableFetchMocks();
 
-jest.mock("../../src/config", () => {
+jest.mock("@src/config", () => {
   return {
     config: {
       connectApplicationClientSecret: "foo-bar",

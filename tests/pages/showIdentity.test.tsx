@@ -1,4 +1,4 @@
-jest.mock("../../src/hooks/useCookies");
+jest.mock("@src/hooks/useCookies");
 
 import { mount } from "enzyme";
 import fetch from "jest-fetch-mock";
@@ -6,23 +6,23 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { ReceivedIdentityTypes, Identity } from "../../src/@types/Identity";
-import { Layout } from "../../src/components/Layout";
+import { ReceivedIdentityTypes, Identity } from "@src/@types/Identity";
+import { Layout } from "@src/components/Layout";
+import { AwaitingValidationBadge } from "@src/components/display/fewlines/AwaitingValidationBadge/AwaitingValidationBadge";
 import {
   Button,
   ButtonVariant,
-} from "../../src/components/display/fewlines/Button/Button";
-import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
-import { lightTheme } from "../../src/design-system/theme/lightTheme";
-import { useCookies } from "../../src/hooks/useCookies";
-import ShowIdentity from "../../src/pages/account/logins/[type]/[id]";
-import { AwaitingValidationBadge } from "@src/components/display/fewlines/AwaitingValidationBadge/AwaitingValidationBadge";
+} from "@src/components/display/fewlines/Button/Button";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "@src/components/display/fewlines/PrimaryBadge/PrimaryBadge";
+import { GlobalStyle } from "@src/design-system/globals/globalStyle";
+import { lightTheme } from "@src/design-system/theme/lightTheme";
+import { useCookies } from "@src/hooks/useCookies";
+import ShowIdentity from "@src/pages/account/logins/[type]/[id]";
 
 enableFetchMocks();
 
-jest.mock("../../src/config", () => {
+jest.mock("@src/config", () => {
   return {
     config: {
       connectApplicationClientSecret: "foo-bar",

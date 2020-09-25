@@ -2,17 +2,17 @@ import { mount } from "enzyme";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { ReceivedIdentityTypes } from "../../src/@types/Identity";
-import { SortedIdentities } from "../../src/@types/SortedIdentities";
-import { Layout } from "../../src/components/Layout";
-import { BoxedLink } from "../../src/components/display/fewlines/BoxedLink/BoxedLink";
-import { ShowMoreButton } from "../../src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
-import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
-import { lightTheme } from "../../src/design-system/theme/lightTheme";
+import { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { SortedIdentities } from "@src/@types/SortedIdentities";
+import { Layout } from "@src/components/Layout";
 import LoginsPage, { Value } from "@src/components/LoginsPage";
+import { BoxedLink } from "@src/components/display/fewlines/BoxedLink/BoxedLink";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
+import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
+import { GlobalStyle } from "@src/design-system/globals/globalStyle";
+import { lightTheme } from "@src/design-system/theme/lightTheme";
 
-jest.mock("../../src/config", () => {
+jest.mock("@src/config", () => {
   return {
     config: {
       connectApplicationClientSecret: "foo-bar",
