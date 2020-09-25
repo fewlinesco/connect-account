@@ -3,9 +3,9 @@
 
 Connect Account is an open source app, which aims at providing all the business logic to handle Connect identities and profile data, and a default frontend for User to use it.
 
-== Forking
+== Working the the Account web application
 
-You will most likely need to fork the repository to add your custom frontend component, to change the layout, or add your branding and design-system.
+You will most likely need to *fork* the repository to add your custom frontend components, to change the layout, or add your branding and design-system.
 
 ‼️ You'll need to manually update your **origin** master branch each time before making a new branch from your fork. To do so, run the following, from your **local** master:
 
@@ -16,6 +16,8 @@ git rebase --upstream
 git push origin master
 git checkout -b name-of-your-branch
 ----
+
+> In the future (i.e. when the `@fwl/account-sdk` will be done), the use of the web application will be done through *cloning*, instead of *forking*.
 
 == NPM scripts
 
@@ -176,12 +178,17 @@ We are using the NextJS folder architecture (i.e. `/pages`) to utilize its route
 
 We are also using the `Command Query Responsibility Segregation`(CQRS) pattern to separate queries from mutations. They are located in the `queries/` and `command/` folder.
 
-=== /.github
+=== .github/
 
 - */workflows*: GitHub Actions used to run tests during CI/CD process flow.
 - *PULL_REQUEST_TEMPLATE*: Template used when opening a pull request on GitHub.
 
-=== /src
+=== .storybook/
+
+- */main.js*: Config file for Storybook.
+- */preview.js*: File used to inject, through decorators, the design-system theme and global style.
+
+=== src/
 
 - *@types/*: Type declaration used in multiple places.
 - *assets/*: Folder containing assets.
@@ -198,7 +205,7 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 - *utils/*: Small snippets/functions used multiple times throughout the application
 - *config.ts*: Entry point used to verify env vars sourcing, and prevent the app to run if forgotten.
 
-=== /tests
+=== tests/
 - *__mocks__*: Centralized mocked data or function.
 - **.test.(ts|tsx)*: Unit test files.
 
@@ -206,8 +213,12 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 - *package.json*: We use this file, as much as possible as a centralized config file for various packages, like `ESLint`, `Jest` or `Husky`.
 - *tsconfig.json*: TypeScript compiler options.
 - *next.config.js*: Extended webpack compiler config used by NextJS.
+- *vercel.json*: Vercel deployment file.
+- *.tool-version*: Asdf config file.
+- *.env_vars.sample*: Environment variables template file. You will need to copy this file, remove the `.sample` part, and add the correct values.
+- *.gitignore*: GitHub config file used to prevent the pushing of certain files.
 
-=== Splitting logic from visualization components
+== Splitting logic from visualization components
 
 To help minimized conflict from upstream in your fork, we chose to split the business logic — which is handled by us — from visualization components. To do so, we are using https://reactjs.org/docs/render-props.html[Render Props]:
 
@@ -219,6 +230,8 @@ To help minimized conflict from upstream in your fork, we chose to split the bus
   )}
 </BusinessComponent>
 ----
+
+> As said previously, we'll transition from a fork strategy to a clone one. This won't prevent us to use the Render Props API.
 
 == TypeScript
 
@@ -338,3 +351,24 @@ export const SvgIcon: React.FC = () => {
   )
 }
 ----
+
+== Storybook
+
+We chose to document, and develope our components in isolation using https://storybook.js.org/[Storybook 6].
+
+To create a story, all you have to do is create a file named as the component, add the `.stories` part and follow this template:
+
+[source, jsx]
+----
+import React from "react";
+
+import { Component } from "./Component";
+
+export default { title: "Title you want to display, usually the name of the component", component: Component };
+
+export const SubNameOfTheStory = (): JSX.Element => {
+  return <Component />;
+};
+----
+
+> Note that the story needs to be at the same level as the component.
