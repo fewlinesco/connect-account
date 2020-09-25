@@ -1,6 +1,9 @@
 = Connect Account
+:toc: preamble
 
 Connect Account is an open source app, which aims at providing all the business logic to handle Connect identities and profile data, and a default frontend for User to use it.
+
+== Forking
 
 You will most likely need to fork the repository to add your custom frontend component, to change the layout, or add your branding and design-system.
 
@@ -14,7 +17,9 @@ git push origin master
 git checkout -b name-of-your-branch
 ----
 
-== Setup
+== NPM scripts
+
+=== Setup
 
 Before being able to start the project locally, you should have a way to run `Node.js` applications.
 
@@ -37,7 +42,7 @@ Source the file to get variables defined your environnement:
 source .env_vars
 ----
 
-== Development Process
+=== Development Process
 
 [source, shell]
 ----
@@ -56,14 +61,14 @@ yarn build && yarn start -p $CONNECT_ACCOUNT_PORT
 
 The `yarn start` port is not manually set, as it is used by Vercel for building the app.
 
-== Testing
+=== Testing
 
 [source, shell]
 ----
 yarn test
 ----
 
-== Storybook
+=== Storybook
 
 If you wish to run the Storybook server, you can run the following: 
 
@@ -79,6 +84,32 @@ If you wish to build it, you can run the following:
 ----
 yarn build-storybook
 ----
+
+=== Linting
+
+We use a set of strict linting rules through `TypeScript` and `ESLint`. While `TypeScript` config is pretty standard, the `ESLint` one is mostly set with our own custom package, called https://www.npmjs.com/package/@fewlines/eslint-config[@fewlines/eslint-config]. You should read the documentation if you want the full power of the config while using `VSCode`.
+
+> Note that, contrary to `errors`, `warnings` do not break testing or app compilation.
+
+You can manually lint, using:
+
+[source, shell]
+----
+yarn lint
+----
+
+or
+
+[source, shell]
+----
+yarn lint --fix
+----
+
+if you want to automatically fix linting issues.
+
+=== Pre-push trigger
+
+We are using `Husky` to trigger the linting, testing and building of the app before pushing the code to GitHub to prevent unnecessary `Vercel` build.
 
 == Environment variables
 
@@ -188,32 +219,6 @@ To help minimized conflict from upstream in your fork, we chose to split the bus
   )}
 </BusinessComponent>
 ----
-
-== Linting
-
-We use a set of strict linting rules through `TypeScript` and `ESLint`. While `TypeScript` config is pretty standard, the `ESLint` one is mostly set with our own custom package, called https://www.npmjs.com/package/@fewlines/eslint-config[@fewlines/eslint-config]. You should read the documentation if you want the full power of the config while using `VSCode`.
-
-> Note that, contrary to `errors`, `warnings` do not break testing or app compilation.
-
-You can manually lint, using:
-
-[source, shell]
-----
-yarn lint
-----
-
-or
-
-[source, shell]
-----
-yarn lint --fix
-----
-
-if you want to automatically fix linting issues.
-
-== Pre-push trigger
-
-We are using `Husky` to trigger the linting, testing and building of the app before pushing the code to GitHub to prevent unnecessary `Vercel` build.
 
 == TypeScript
 
