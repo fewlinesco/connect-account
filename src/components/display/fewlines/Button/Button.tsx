@@ -16,7 +16,6 @@ export const Button = styled.button<ButtonProps>`
   border-radius: ${({ theme }) => theme.radii[0]};
   font-size: ${({ theme }) => theme.fontSizes.s};
   cursor: pointer;
-  width: 100%;
 
   ${(props) =>
     props.variant === ButtonVariant.PRIMARY &&
