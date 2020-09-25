@@ -4,7 +4,7 @@ Connect Account is an open source app, which aims at providing all the business 
 
 You will most likely need to fork the repository to add your custom frontend component, to change the layout, or add your branding and design-system.
 
-‼️You'll need to manually update your **origin** master branch each time before making a new branch from your fork. To do so, run the following, from your **local** master:
+‼️ You'll need to manually update your **origin** master branch each time before making a new branch from your fork. To do so, run the following, from your **local** master:
 
 [source, shell]
 ----
@@ -22,7 +22,6 @@ We recommend you to install the latest version of `asdf` to do so.
 
 You will need `nodejs` and `yarn`.
 These can be installed via the provided `.tool-versions` using `asdf install`.
-
 
 Get required environment variables by copying `.env.sample` and if necessary tuning it to values relevant to your dev environment:
 
@@ -55,13 +54,30 @@ If you want to build and start the app, you should run the following:
 yarn build && yarn start -p $CONNECT_ACCOUNT_PORT
 ----
 
-The `yarn start` port is not set by default, as it is used by Vercel for building the app.
+The `yarn start` port is not manually set, as it is used by Vercel for building the app.
 
 == Testing
 
 [source, shell]
 ----
 yarn test
+----
+
+== Storybook
+
+If you wish to run the Storybook server, you can run the following: 
+
+[source, shell]
+----
+yarn storybook
+----
+
+Note that it can take some time for Storybook to run, even when the compilation is done.
+If you wish to build it, you can run the following:
+
+[source, shell]
+----
+yarn build-storybook
 ----
 
 == Environment variables
@@ -73,7 +89,16 @@ yarn test
 | Local port used to run the application.
 
 | `CONNECT_ACCOUNT_SESSION_SALT`
-| The password used to seal or access the cookie session. It needs to be at least 32 characters long. 
+| The password used to seal or access the cookie session. It needs to be at least 32 characters long.
+
+| `CONNECT_ACCOUNT_DOMAIN`
+| URL of the account web application.
+
+| `MONGO_URL`
+| URL of the MongoDB cluster.
+
+| `MONGO_DB_NAME`
+| Name of the MongoDB database.
 
 | `CONNECT_MANAGEMENT_URL`
 | URL used to fetch identities from the management GraphQL endpoint.
@@ -94,13 +119,13 @@ yarn test
 | Represents the kind of user authorized information and actions that an Application is able to access on another Application.
 
 | `CONNECT_OPEN_ID_CONFIGURATION_URL`
-| 
+| URL used for the `@fwl/oauth2` package to fetch the OpenID configuration.
 
 | `CONNECT_REDIRECT_URI`
-| 
+| URL used by Connect to redirect to you app during the OAuth2 authentification flow.
 
 | `CONNECT_AUDIENCE`
-| 
+| Name of the Application that identifies the recipients that the JWT is intended for.
 
 | `CONNECT_JWT_ALGORITHM`
 | Represents the kind of user authorized information and actions that an Application is able to access on another Application.
