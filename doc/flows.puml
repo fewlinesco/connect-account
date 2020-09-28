@@ -1,0 +1,185 @@
+' ###############################################################################
+' ########### HERE IS THE LIST OF DIAGRAMS USED FOR THE DOCUMENTATION ###########
+' ###############################################################################
+
+
+' ===========================================================
+' ======================= OAuth2 flow =======================
+' ===========================================================
+
+@startuml
+
+skinparam NoteBackgroundColor #fff
+skinparam NoteBorderColor #000
+
+skinparam sequence {
+	ArrowColor #000
+	ActorBorderColor #000
+
+	LifeLineBorderColor #000
+	LifeLineBackgroundColor #000
+
+	ParticipantBorderColor #000
+	ParticipantBackgroundColor #fff
+	ParticipantFontColor #000
+
+	ActorBackgroundColor #000
+	ActorFontColor #000
+
+        NoteBorderColor #000
+}
+
+skinparam roundcorner 5
+
+actor User                         as user
+participant "Account Web Client"   as account
+database MongoDB                   as mongo
+participant "Connect"              as connect
+participant "Profile API"          as profile
+
+user -> account : Wants to login
+
+== OAuth2 client initialization ==
+
+account -> connect : Fetch OpenID configuration
+note left
+The **@fwl/oauth2** package mainly provides
+an abstraction for the OAuth2 flow, and a
+secure way to verify JWT for **HS256** and
+**RS256** algorithms
+end note
+connect -> account : Send back OpenID configuration and stores it in-memory
+
+== Connect authentification flow ==
+
+account -> connect : Redirect to **authorize_url**
+note left
+The **authorize_url** is built with
+the **client_id**, **response_type**,
+**redirect_uri** and **scope**
+end note
+connect -> connect : User logs in and accepts scopes
+connect -> account : Send back the **authorization_code** using the **redirect_uri**
+account -> connect : Send the payload
+note left
+**payload**
+- client_id
+- client_secret
+- grant_type
+- redirect_uri
+- authorization_code
+end note
+connect -> account : Send back **access_token** + **refresh_token** + **id_token**
+account -> mongo : Insert user in DB
+
+== access_token verification ==
+
+account -> connect : Fetch **JWKS**
+note left
+This is the flow for the RS256 flow, which
+most providers uses.In the case of HS256,
+all it takes is the **client_secret**.
+end note
+connect -> account : Send back **JWKS** which are stored in memory
+account -> account : verify new **access_token**
+
+== Refreshing the access_token ==
+
+account -> connect : Send **refresh_token**
+note left
+The **access_token** has a validity periode of one hour. To smooth 
+the user experience, we are using a **refresh_token**, a one time
+use without expiration date. To refresh the user authorization.
+end note
+connect -> account : Send back a new **refresh_token** and **access_token**
+account -> mongo : Update User tokens
+
+@enduml
+
+
+' =============================================================================
+' ======================= Identity commands and queries =======================
+' =============================================================================
+
+@startuml
+
+skinparam NoteBackgroundColor #fff
+skinparam NoteBorderColor #000
+
+skinparam sequence {
+	ArrowColor #000
+	ActorBorderColor #000
+
+	LifeLineBorderColor #000
+	LifeLineBackgroundColor #000
+
+	ParticipantBorderColor #000
+	ParticipantBackgroundColor #fff
+	ParticipantFontColor #000
+
+	ActorBackgroundColor #000
+	ActorFontColor #000
+
+        NoteBorderColor #000
+}
+
+skinparam roundcorner 5
+
+== Add new identity ==
+
+user -> account : Input identity value
+activate account
+account -> mongo : Insert temporary identity
+account -> connect : Trigger send verification code query
+user -> account : Input verification code
+account -> connect : Trigger verification code mutation
+account -> mongo : Query back temporary identity and verify expiration date
+account -> connect : Add validated identity
+account -> mongo : Delete temporary identity
+deactivate account
+
+== Delete identity ==
+
+== Update identity ==
+
+@enduml
+
+
+' ==============================================================================
+' ============================= Fetching User data =============================
+' ==============================================================================
+
+@startuml
+skinparam NoteBackgroundColor #fff
+skinparam NoteBorderColor #000
+
+skinparam sequence {
+	ArrowColor #000
+	ActorBorderColor #000
+
+	LifeLineBorderColor #000
+	LifeLineBackgroundColor #000
+
+	ParticipantBorderColor #000
+	ParticipantBackgroundColor #fff
+	ParticipantFontColor #000
+
+	ActorBackgroundColor #000
+	ActorFontColor #000
+
+        NoteBorderColor #000
+}
+
+skinparam roundcorner 5
+
+== Fetching User data ==
+
+account -> connect : Fetch User identities
+connect -> account : Send back User identities
+
+opt
+
+account -> profile : Fetch User profile infos
+profile -> account : Send back User profile infos
+
+@enduml
