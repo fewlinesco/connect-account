@@ -1,7 +1,39 @@
 = Connect Account
+:toc: preamble
 
+Connect Account is an open source app, which aims at providing all the business logic to handle Connect identities and profile data, and a default frontend for User to use it.
 
-## Setup
+== Flows
+
+=== Connect authentication flow
+
+image::./doc/oauth2-flow-diagram.svg[OAuth2 flow diagram]
+
+For more information, check the Authorization code flow https://developers.fewlines.co/guides/authorization_code_flow/overview/[documentation].
+
+=== Identity commands and queries
+
+image::./doc/identity-action-flow.svg[Identity action flow]
+
+== Working with the Account web application
+
+You will most likely need to *fork* the repository to add your custom frontend components, to change the layout, or add your branding and design-system.
+
+‼️ You'll need to manually update your **origin** master branch each time before making a new branch from your fork. To do so, run the following, from your **local** master:
+
+[source, shell]
+----
+git fetch --upstream
+git rebase --upstream
+git push origin master
+git checkout -b name-of-your-branch
+----
+
+> In the future (i.e. when the `@fwl/account-sdk` will be done), the use of the web application will be done through *cloning*, instead of *forking*.
+
+== NPM scripts
+
+=== Setup
 
 Before being able to start the project locally, you should have a way to run `Node.js` applications.
 
@@ -10,33 +42,397 @@ We recommend you to install the latest version of `asdf` to do so.
 You will need `nodejs` and `yarn`.
 These can be installed via the provided `.tool-versions` using `asdf install`.
 
-
 Get required environment variables by copying `.env.sample` and if necessary tuning it to values relevant to your dev environment:
 
-[source,shell]
+[source, shell]
 ----
 cp .env_vars.sample .env_vars
 ----
 
 Source the file to get variables defined your environnement:
 
-[source,shell]
+[source, shell]
 ----
 source .env_vars
 ----
 
-== Development Process
+=== Development Process
 
-[source,shell]
+[source, shell]
 ----
 yarn dev
-----
 
-If you are working with a local Connect, you need to run:
-
-[source,shell]
-----
+# or, if you're working with a local version of Connect
 NODE_TLS_REJECT_UNAUTHORIZED=0 yarn dev
 ----
 
+If you want to build and start the app, you should run the following:
+
+[source, shell]
+----
+yarn build && yarn start -p $CONNECT_ACCOUNT_PORT
+----
+
+The `yarn start` port is not manually set, as it is used by Vercel for building the app.
+
+=== Testing
+
+[source, shell]
+----
+yarn test
+----
+
+=== Storybook
+
+If you wish to run the Storybook server, you can run the following: 
+
+[source, shell]
+----
+yarn storybook
+----
+
+Note that it can take some time for Storybook to run, even when the compilation is done.
+If you wish to build it, you can run the following:
+
+[source, shell]
+----
+yarn build-storybook
+----
+
+=== Linting
+
+We use a set of strict linting rules through `TypeScript` and `ESLint`. While `TypeScript` config is pretty standard, the `ESLint` one is mostly set with our own custom package, called https://www.npmjs.com/package/@fewlines/eslint-config[@fewlines/eslint-config]. You should read the documentation if you want the full power of the config while using `VSCode`.
+
+> Note that, contrary to `errors`, `warnings` do not break testing or app compilation.
+
+You can manually lint, using:
+
+[source, shell]
+----
+yarn lint
+----
+
+or
+
+[source, shell]
+----
+yarn lint --fix
+----
+
+if you want to automatically fix linting issues.
+
+=== Pre-push trigger
+
+We are using `Husky` to trigger the linting, testing and building of the app before pushing the code to GitHub to prevent unnecessary `Vercel` build.
+
+== Environment variables
+
+|===
+| Name | Description
+
+| `CONNECT_ACCOUNT_PORT`
+| Local port used to run the application.
+
+| `CONNECT_ACCOUNT_SESSION_SALT`
+| The password used to seal or access the cookie session. It needs to be at least 32 characters long.
+
+| `CONNECT_ACCOUNT_DOMAIN`
+| URL of the account web application.
+
+| `MONGO_URL`
+| URL of the MongoDB cluster.
+
+| `MONGO_DB_NAME`
+| Name of the MongoDB database.
+
+| `CONNECT_MANAGEMENT_URL`
+| URL used to fetch identities from the management GraphQL endpoint.
+
+| `CONNECT_MANAGEMENT_API_KEY`
+| API key used to access the management GraphQL endpoint.
+
+| `CONNECT_PROVIDER_URL`
+| URL used to start the connect oauth flow.
+
+| `CONNECT_APPLICATION_CLIENT_ID`
+| Client ID of the online service (e.g. internet website, application) that uses the Provider Authentication and Authorization service for its User.
+
+| `CONNECT_APPLICATION_CLIENT_SECRET`
+| Paired with the client ID, used to authenticate the Application from which the User intent to sign in.
+
+| `CONNECT_APPLICATION_SCOPES`
+| Represents the kind of user authorized information and actions that an Application is able to access on another Application.
+
+| `CONNECT_OPEN_ID_CONFIGURATION_URL`
+| URL used for the `@fwl/oauth2` package to fetch the OpenID configuration.
+
+| `CONNECT_REDIRECT_URI`
+| URL used by Connect to redirect to you app during the OAuth2 authentification flow.
+
+| `CONNECT_AUDIENCE`
+| Name of the Application that identifies the recipients that the JWT is intended for.
+
+| `CONNECT_JWT_ALGORITHM`
+| Represents the kind of user authorized information and actions that an Application is able to access on another Application.
+
+| `NEXT_PUBLIC_SENTRY_DSN`
+| Data Source Name representing the configuration required by the Sentry SDKs.
+|===
+
+
+== Connect login implementation
+
+To understand the flow of `connect-account`, you should read the `connect` https://developers.fewlines.co/guides/authorization_code_flow/overview/[documentation].
+
+== @fwl/oauth2
+
+To understand the abstraction added by the `@fwl/oauth2`, please read the https://github.com/fewlinesco/node-web-libraries/tree/master/packages/oauth2[documentation]
+
 == Source Code Organization
+
+We are using the NextJS folder architecture (i.e. `/pages`) to utilize its router, out of the box. For more information, please refer to the https://nextjs.org/docs/basic-features/pages[documentation].
+
+We are also using the `Command Query Responsibility Segregation`(CQRS) pattern to separate queries from mutations. They are located in the `queries/` and `command/` folder.
+
+=== .github/
+
+- */workflows*: GitHub Actions used to run tests during CI/CD process flow.
+- *PULL_REQUEST_TEMPLATE*: Template used when opening a pull request on GitHub.
+
+=== .storybook/
+
+- */main.js*: Config file for Storybook.
+- */preview.js*: File used to inject, through decorators, the design-system theme and global style.
+
+=== src/
+
+- *@types/*: Type declaration used in multiple places.
+- *assets/*: Folder containing assets.
+- *commands/*: Write (e.g. `POST`) database actions.
+- *components/*:
+  - *business/*: React components that provide business logic through render props. You shouldn't have to touch them.
+  - *visualization/*: React component that only — for the most part — handle the visualization part. 
+    - *fewlines/*: Our default visualization components. Used as a template.
+- *design-system/*: Style or atomic components (e.g. icons) related code.
+- *hooks/*: Reusable actions flows.
+- *middleware/*: Reusable wrappers to add various features to server side actions.
+- *pages/*: NextJS router.
+- *queries/*: Read (i.e. `GET`) database actions.
+- *utils/*: Small snippets/functions used multiple times throughout the application
+- *config.ts*: Entry point used to verify env vars sourcing, and prevent the app to run if forgotten.
+
+=== tests/
+- *__mocks__*: Centralized mocked data or function.
+- **.test.(ts|tsx)*: Unit test files.
+
+=== config files
+- *package.json*: We use this file, as much as possible as a centralized config file for various packages, like `ESLint`, `Jest` or `Husky`.
+- *tsconfig.json*: TypeScript compiler options.
+- *next.config.js*: Extended webpack compiler config used by NextJS.
+- *vercel.json*: Vercel deployment file.
+- *.tool-version*: Asdf config file.
+- *.env_vars.sample*: Environment variables template file. You will need to copy this file, remove the `.sample` part, and add the correct values.
+- *.gitignore*: GitHub config file used to prevent the pushing of certain files.
+
+== Splitting logic from visualization components
+
+To help minimized conflict from upstream in your fork, we chose to split the business logic — which is handled by us — from visualization components. To do so, we are using https://reactjs.org/docs/render-props.html[Render Props]:
+
+[source, jsx]
+----
+<BusinessComponent>
+  {({ businessLogic }) => (
+    <VisualizationComponent businessLogic={businessLogic} />
+  )}
+</BusinessComponent>
+----
+
+> As said previously, we'll transition from a fork strategy to a clone one. This won't prevent us to use the Render Props API.
+
+== TypeScript
+
+=== Type declaration
+
+The rule we follow is that, if a declared type is only used in one file, we locate it in said file. Otherwise, we move it in its own file, under `@types/`.
+The exceptions to this rule are:
+
+- *next-env.d.ts*: Adds NextJS types globally.
+- *assets.d.ts*: Allow the import of assets files in TypeScript files.
+
+as NextJS required them to be located at the root of the repository.
+
+=== Typing React components
+
+We chose to type React component like so:
+
+[source, typescript]
+----
+import React from "react";
+
+// Without props.
+export const Foo: React.FC = () => { return ;}
+
+// With props.
+type BarProps = { foo: "bar" }
+
+export const Bar: React.FC<BarProps> = ({ foo }) => { return <div>{ foo }</div>}
+----
+
+If you are not familiar with TypeScript generic types, please take a look at the https://www.typescriptlang.org/docs/handbook/generics.html[documentation].
+
+== Style
+
+=== Global style
+
+The `globalStyle` object, found in `/src/design-system/globals/globalStyle.tsx`, is used to remove undesired style and behavior found in HTML. 
+
+> Note that we chose to set the global font size to *62.5%*. This font size means that '1rem' is exactly equal to '10px', which makes setting REM values very simple.
+
+The `globalStyle` is scoped in the `_app` page component.
+
+=== Theme
+
+You should prioritize theme values over arbitrary CSS values.
+
+The theme structure is defined inside the `src/@types/styled-component.d.ts` definition type file.
+
+The theme values are set inside `src/design-system/theme/lightTheme.ts` file. Each field are set individually, then assigned to the `lightTheme` variable.
+
+The theme access is scoped in the `_app` page component.
+
+You can access the theme properties and values inside a `styled` component by calling the `theme` props:
+
+[source, typescript]
+----
+import styled from "styled-components";
+
+// Note that styled component are PascalCase.
+const StyledComponent = styled.div`
+  css-property: ${({ theme }) => theme.themeKey};
+`
+----
+
+You can access the theme properties and values from everywhere else with the custom `useTheme` hook:
+
+[source, typescript]
+----
+import { useTheme } from "relative/path/to/the/design-system/theme/useTheme";
+
+const theme = useTheme();
+----
+
+To access our breakpoint definitions, you can import the `breakpointDevices` object from the theme file and apply the wanted breakpoint with the `@media` keyword:
+
+[source, typescript]
+----
+import { deviceBreakpoints } from "relative/path/to/the/theme";
+
+const StyledComponent = styled.div {
+  @media ${deviceBreakpoints.xs} {}
+
+  @media ${deviceBreakpoints.s} {}
+
+  @media ${deviceBreakpoints.m} {}
+
+  @media ${deviceBreakpoints.l} {}
+}
+----
+
+Our chosen viewport breakpoints are : `576px` | `768px` | `992` | `1200`.
+
+Sometimes, you want to pass custom props to your styled component. Here is the way to do it:
+
+[source, typescript]
+----
+type StyledButtonProps = { isActive: boolean };
+
+const StyledComponent = styled.button<StyledButtonProps>`
+  ${({ isActive, theme }) => `color: ${isActive ? theme.green : theme.grey}`};
+`;
+----
+
+=== SVG
+
+If you want to use SVGs in your application, we recommend to render them as a React component, instead of importing the file:
+
+[source, jsx]
+----
+import React from 'react'
+
+export const SvgIcon: React.FC = () => {
+  return (
+    <svg>
+      ...
+    </svg>
+  )
+}
+----
+
+== Database
+
+We chose to use https://www.mongodb.com/[MongoDB], deployed in the cloud through https://www.mongodb.com/cloud/atlas[MongoDB Atlas].
+
+> Note that in the future, we aim to provide the liberty of the database used. This will be achieve through a config file, and the `@fwl/account-sdk` package.
+
+```
+users:
+_id
+sub
+accessToken
+refreshToken
+locale
+temporaryIdentities: {
+  [
+    eventId
+    value
+    type
+  ]
+}
+```
+
+== Session
+
+The session is kept in the cookies through https://github.com/vvo/next-iron-session[next-iron-session]. The value stored is the MongoDB user document id, which is used to authorization.
+
+> Note that in the future, we will store the session id present in the database.
+
+== Storybook
+
+We chose to document, and develope our components in isolation using https://storybook.js.org/[Storybook 6].
+
+To create a story, all you have to do is create a file named as the component, add the `.stories` part and follow this template:
+
+[source, jsx]
+----
+import React from "react";
+
+import { Component } from "./Component";
+
+export default { title: "Title you want to display, usually the name of the component", component: Component };
+
+export const SubNameOfTheStory = (): JSX.Element => {
+  return <Component />;
+};
+----
+
+> Note that the story needs to be at the same level as the component.
+
+== Testing
+
+=== Unit testing
+
+For unit testing, we are using https://jestjs.io/[Jest].
+
+=== User interaction with components
+
+We are using https://github.com/enzymejs/enzyme[Enzyme] to test components behavior regarding user interactions.
+
+=== User flow
+
+https://github.com/puppeteer/puppeteer[Puppeteer]
+
+== Monitoring
+
+We are using https://docs.sentry.io/[Sentry] to monitor production's exceptions raised.
+
+A custom utility function, called `addRequestScopeToSentry`, is provided to format the data used for the report. 
