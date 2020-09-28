@@ -48,10 +48,10 @@ const LoginsPage: React.FC<LoginsProps> = ({ sortedIdentities }) => {
         <title>Connect Logins</title>
       </Head>
       <IdentitySection>
-        <NavigationBreadcrumbs
-          title="Logins"
-          breadcrumbs="Your emails, phones and social logins"
-        />
+        <SmallHeader>
+          <h1>Logins</h1>
+          <p>Your emails, phones and social logins</p>
+        </SmallHeader>
         <h3>Email addresses</h3>
         <IdentityContainer className="identity-container">
           {emailIdentities.length === 0 ? (
@@ -172,4 +172,18 @@ const Flex = styled.div`
 
 export const Value = styled.p`
   margin-right: 0.5rem;
+`;
+
+export const SmallHeader = styled.div`
+  padding: ${({ theme }) => theme.spaces.component.xs} 0
+    ${({ theme }) => theme.spaces.component.s};
+
+  h1 {
+    margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
+  }
+
+  p {
+    font-weight: ${({ theme }) => theme.fontWeights.light};
+    font-size: ${({ theme }) => theme.fontSizes.s};
+  }
 `;

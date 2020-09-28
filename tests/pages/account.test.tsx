@@ -6,8 +6,8 @@ import { ReceivedIdentityTypes } from "@src/@types/Identity";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 import { Layout } from "@src/components/Layout";
 import LoginsPage, { Value } from "@src/components/LoginsPage";
+import { SmallHeader } from "@src/components/LoginsPage";
 import { BoxedLink } from "@src/components/display/fewlines/BoxedLink/BoxedLink";
-import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
 import { GlobalStyle } from "@src/design-system/globals/globalStyle";
 import { lightTheme } from "@src/design-system/theme/lightTheme";
@@ -190,13 +190,11 @@ describe("LoginsPage", () => {
       </ThemeProvider>,
     );
 
-    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
-    expect(navigationBreadCrumbs).toHaveLength(1);
-    expect(navigationBreadCrumbs.contains(<h1>Logins</h1>)).toEqual(true);
+    const smallHeader = component.find(SmallHeader);
+    expect(smallHeader).toHaveLength(1);
+    expect(smallHeader.contains(<h1>Logins</h1>)).toEqual(true);
     expect(
-      navigationBreadCrumbs.contains(
-        <p>Your emails, phones and social logins</p>,
-      ),
+      smallHeader.contains(<p>Your emails, phones and social logins</p>),
     ).toEqual(true);
   });
 });
