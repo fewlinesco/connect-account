@@ -6,9 +6,13 @@ Connect Account is an open source app, which aims at providing all the business 
 == Flows
 
 === Connect authentification flow
+
 image::./doc/oauth2-flow-diagram.svg[OAuth2 flow diagram]
 
+For more information, check the Authorization code flow https://developers.fewlines.co/guides/authorization_code_flow/overview/[documention].
+
 === Identity commands and queries
+
 image::./doc/identity-action-flow.svg[Identity action flow]
 
 == Working with the Account web application
@@ -365,6 +369,22 @@ export const SvgIcon: React.FC = () => {
 We chose to use https://www.mongodb.com/[MongoDB], deployed in the cloud through https://www.mongodb.com/cloud/atlas[MongoDB Atlas].
 
 > Note that in the future, we aim to provide the liberty of the database used. This will be achieve through a config file, and the `@fwl/account-sdk` package.
+
+```
+users:
+_id
+sub
+accessToken
+refreshToken
+locale
+temporaryIdentities: {
+  [
+    eventId
+    value
+    type
+  ]
+}
+```
 
 == Session
 
