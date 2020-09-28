@@ -142,6 +142,12 @@
       "@fewlines/eslint-config/react-typescript"
     ],
     "rules": {
+      "@typescript-eslint/camelcase": "off",
+      "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+      "@typescript-eslint/explicit-function-return-type": [
+        "error",
+        { "allowExpressions": true }
+      ],
       "import/order": [
         "error",
         {
