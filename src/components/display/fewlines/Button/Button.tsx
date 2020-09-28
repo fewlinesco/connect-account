@@ -21,13 +21,13 @@ export const Button = styled.button<ButtonProps>`
     props.variant === ButtonVariant.PRIMARY &&
     `
       background: ${props.theme.colors.primary};
-      color: ${props.theme.colors.backgroundContrast};
+      color: ${props.theme.colors.background};
     `};
 
   ${(props) =>
     props.variant === ButtonVariant.SECONDARY &&
     `
-      background: ${props.theme.colors.backgroundContrast};
+      background: ${props.theme.colors.background};
       border: 0.1rem solid ${props.theme.colors.primary};
       color: ${props.theme.colors.primary};
 
@@ -37,14 +37,14 @@ export const Button = styled.button<ButtonProps>`
     props.variant === ButtonVariant.DANGER &&
     `
       background: ${props.theme.colors.red};
-      color: ${props.theme.colors.backgroundContrast};
+      color: ${props.theme.colors.background};
       
     `};
 
   ${(props) =>
     props.variant === ButtonVariant.GHOST &&
     `
-      background: ${props.theme.colors.backgroundContrast};
+      background: ${props.theme.colors.background};
       color: ${props.theme.colors.red};
 
     `};
