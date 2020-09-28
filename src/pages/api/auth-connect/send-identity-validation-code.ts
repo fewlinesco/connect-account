@@ -1,7 +1,6 @@
 import { HttpStatus } from "@fwl/web";
 import { Handler } from "next-iron-session";
 
-import { IdentityStatus } from "@lib/@types/Identity";
 import { sendIdentityValidationCode } from "@lib/commands/sendIdentityValidationCode";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { insertTemporaryIdentity } from "@src/command/insertTemporaryIdentity";

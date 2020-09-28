@@ -30,9 +30,9 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
         if (temporaryIdentity && temporaryIdentity.expiresAt < Date.now()) {
           const { data } = await checkVerificationCode(validationCode, eventId);
 
-          if (data && data.checkVerificationCode.status === "VALID") {
-            const { value, type } = temporaryIdentity;
+          const { value, type } = temporaryIdentity;
 
+          if (data && data.checkVerificationCode.status === "VALID") {
             const body = {
               userId: user[0].sub,
               type: type.toUpperCase(),
@@ -49,6 +49,10 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
             });
 
             response.end();
+          } else {
+            response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
+              Location: `/account/logins/${type}/validation/${eventId}`,
+            });
           }
         } else {
           throw new TemporaryIdentityExpired();

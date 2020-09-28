@@ -25,13 +25,15 @@ const IdentityValidationForm: React.FC<{
         onSubmit={async (event) => {
           event.preventDefault();
 
-          await fetchJson(
+          const response = await fetchJson(
             "/api/auth-connect/verify-validation-code",
             HttpVerbs.POST,
             { validationCode, eventId },
           );
 
-          router && router.push("/account/logins");
+          const path = new URL(response.url).pathname;
+
+          router && router.push(path);
         }}
       >
         {displayAlertBar(
