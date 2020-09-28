@@ -29,7 +29,6 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
         );
 
         const identity = {
-          status: IdentityStatus.VALIDATED,
           type: identityInput.type.toUpperCase(),
           value: identityInput.value,
         };

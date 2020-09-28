@@ -53,7 +53,7 @@ describe("AddIdentityInputForm", () => {
   });
 
   test("it should call `send-identity-validation-code` API page on submit", () => {
-    Date.now = jest.fn(() => 1572393600000);
+    const spyDate = jest.spyOn(Date, "now").mockReturnValue(1572393600000);
 
     const component = mount(
       <ThemeProvider theme={lightTheme}>
@@ -88,5 +88,7 @@ describe("AddIdentityInputForm", () => {
         },
       },
     );
+
+    spyDate.mockRestore();
   });
 });

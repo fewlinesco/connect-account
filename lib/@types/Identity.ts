@@ -20,7 +20,7 @@ export enum IdentityStatus {
 }
 
 export type IdentityInput = {
-  status: IdentityStatus;
+  status?: IdentityStatus;
   type: IdentityTypes;
   value: string;
 };
