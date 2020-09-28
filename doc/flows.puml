@@ -35,7 +35,6 @@ actor User                         as user
 participant "Account Web Client"   as account
 database MongoDB                   as mongo
 participant "Connect"              as connect
-participant "Profile API"          as profile
 
 user -> account : Wants to login
 
@@ -129,7 +128,6 @@ actor User                         as user
 participant "Account Web Client"   as account
 database MongoDB                   as mongo
 participant "Connect"              as connect
-participant "Profile API"          as profile
 
 == Add new identity ==
 
