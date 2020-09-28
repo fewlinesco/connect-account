@@ -84,7 +84,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: ${({ theme }) => theme.radii[1]};
-  background-color: ${({ theme }) => theme.colors.backgroundContrast};
+  background-color: ${({ theme }) => theme.colors.background};
   box-shadow: ${({ theme }) => theme.shadows.base};
 
   p {

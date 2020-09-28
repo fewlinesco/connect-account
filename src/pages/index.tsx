@@ -75,7 +75,7 @@ const LoginButton = styled.div`
     background-color: ${({ theme }) => theme.colors.green};
 
     a {
-      color: ${({ theme }) => theme.colors.contrastCopy};
+      color: ${({ theme }) => theme.colors.background};
     }
   }
 
@@ -83,6 +83,6 @@ const LoginButton = styled.div`
   &:focus {
     outline: none;
     ${(props) => `background-color: ${props.color}`};
-    color: ${({ theme }) => theme.colors.contrastCopy};
+    color: ${({ theme }) => theme.colors.background};
   }
 `;

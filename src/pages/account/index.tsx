@@ -85,7 +85,7 @@ const AccountBox = styled.div`
   width: 100rem;
   padding-top: ${({ theme }) => theme.spaces.component.xxs};
   border-radius: ${({ theme }) => theme.radii[1]};
-  background-color: ${({ theme }) => theme.colors.backgroundContrast};
+  background-color: ${({ theme }) => theme.colors.background};
   box-shadow: ${({ theme }) => theme.shadows.base};
 `;
 

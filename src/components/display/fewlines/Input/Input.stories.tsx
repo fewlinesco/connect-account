@@ -1,9 +1,23 @@
 import React from "react";
+import styled from "styled-components";
 
 import { Input } from "./Input";
 
 export default { title: "Input", component: Input };
 
 export const StandardInput = (): JSX.Element => {
-  return <Input placeholder="input placeholder" />;
+  return (
+    <Container>
+      <Input placeholder="input placeholder" />
+    </Container>
+  );
 };
+
+const Container = styled.div`
+  width: 90%;
+  margin: 0 auto;
+
+  input {
+    width: 100%;
+  }
+`;
