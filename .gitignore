@@ -12,6 +12,7 @@ node_modules
 /dist
 courses/
 config.json
+storybook-static
 
 # debug
 npm-debug.log*
