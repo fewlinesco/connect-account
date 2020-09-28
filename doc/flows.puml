@@ -125,22 +125,54 @@ skinparam sequence {
 
 skinparam roundcorner 5
 
+actor User                         as user
+participant "Account Web Client"   as account
+database MongoDB                   as mongo
+participant "Connect"              as connect
+participant "Profile API"          as profile
+
 == Add new identity ==
 
 user -> account : Input identity value
 activate account
-account -> mongo : Insert temporary identity
-account -> connect : Trigger send verification code query
+account -> mongo : Insert temporary identity with the **insertTemporaryIdentity** command
+note left
+The command is called with the **user sub**,
+the **temporary identity** and a **DB client**.
+end note
+account -> connect : Trigger the sendIdentityValidationCode query
+note left
+The query takes a **callbackUrl**, the **identity**
+the **localeOverride** and the **userId**.
+end note
 user -> account : Input verification code
-account -> connect : Trigger verification code mutation
+account -> connect : Trigger the checkVerificationCode query
+note left
+The query is called with the **verification code**
+ and the **event id**
+end note
 account -> mongo : Query back temporary identity and verify expiration date
-account -> connect : Add validated identity
+account -> connect : Trigger the **addIdentityToUser** mutation
+note left
+The mutation is called with the **user_id**,
+identity **value** and **type**.
+end note
 account -> mongo : Delete temporary identity
 deactivate account
 
 == Delete identity ==
 
+account -> connect : Run **removeIdentityFromUser** mutation.
+note left
+The mutation is called with the **user_id**,
+identity **value** and **type**.
+end note
+
 == Update identity ==
+
+note over user, connect
+The update identity flow is a mix between the two above, starting with the add identity, and delete is the first sequence succeed.
+end note
 
 @enduml
 
@@ -150,6 +182,7 @@ deactivate account
 ' ==============================================================================
 
 @startuml
+
 skinparam NoteBackgroundColor #fff
 skinparam NoteBorderColor #000
 
@@ -171,6 +204,12 @@ skinparam sequence {
 }
 
 skinparam roundcorner 5
+
+actor User                         as user
+participant "Account Web Client"   as account
+database MongoDB                   as mongo
+participant "Connect"              as connect
+participant "Profile API"          as profile
 
 == Fetching User data ==
 
