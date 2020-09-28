@@ -184,7 +184,7 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 
 To understand the flow of `connect-account`, you should read the `connect` https://developers.fewlines.co/guides/authorization_code_flow/overview/[documentation].
 
-== `@fwl/oauth2`
+== @fwl/oauth2
 
 To understand the abstraction added by the `@fwl/oauth2`, please read the https://github.com/fewlinesco/node-web-libraries/tree/master/packages/oauth2[documentation]
 

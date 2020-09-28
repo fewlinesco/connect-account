@@ -49,7 +49,7 @@ secure way to verify JWT for **HS256** and
 end note
 connect -> account : Send back OpenID configuration and stores it in-memory
 
-== Connect authentification flow ==
+== Connect authentication flow ==
 
 account -> connect : Redirect to **authorize_url**
 note left
@@ -86,7 +86,7 @@ account -> account : verify new **access_token**
 
 account -> connect : Send **refresh_token**
 note left
-The **access_token** has a validity periode of one hour. To smooth 
+The **access_token** has a validity period of one hour. To smooth 
 the user experience, we are using a **refresh_token**, a one time
 use without expiration date. To refresh the user authorization.
 end note
