@@ -5,7 +5,7 @@ Connect Account is an open source app, which aims at providing all the business 
 
 == Flows
 
-=== Connect authentification flow
+=== Connect authentication flow
 
 image::./doc/oauth2-flow-diagram.svg[OAuth2 flow diagram]
 
