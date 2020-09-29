@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 import type { NextApiResponse } from "next";
 import type { Handler } from "next-iron-session";
 
-import { refreshTokensFlow } from "@lib/refreshTokensFlow";
+import { refreshTokensFlow } from "@lib/commands/refreshTokensFlow";
 import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { MongoUpdateError } from "@src/errors";
 import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";

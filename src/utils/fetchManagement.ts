@@ -6,7 +6,7 @@ import { config } from "../config";
 
 export function fetchManagement(
   operation: GraphQLRequest,
-): Promise<FetchResult | Error> {
+): Promise<FetchResult> {
   const httpLink = new HttpLink({
     uri: config.connectManagementUrl,
     fetch,

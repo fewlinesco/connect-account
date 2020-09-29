@@ -1,9 +1,9 @@
 import React from "react";
 
-import { HttpVerbs } from "../../@types/HttpVerbs";
-import type { ReceivedIdentityTypes } from "../../@types/Identity";
-import { useCookies } from "../../hooks/useCookies";
-import { fetchJson } from "../../utils/fetchJson";
+import { HttpVerbs } from "@src/@types/HttpVerbs";
+import type { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { useCookies } from "@src/hooks/useCookies";
+import { fetchJson } from "@src/utils/fetchJson";
 
 interface AddIdentityProps {
   type: ReceivedIdentityTypes;
@@ -34,5 +34,8 @@ export const AddIdentity: React.FC<AddIdentityProps> = ({ type, children }) => {
     return fetchJson("/api/identities", HttpVerbs.POST, body);
   };
 
-  return children({ addIdentity, type });
+  return children({
+    addIdentity,
+    type,
+  });
 };

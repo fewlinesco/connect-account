@@ -3,13 +3,13 @@ import { GetServerSideProps } from "next";
 import React from "react";
 import styled from "styled-components";
 
-import { Identity } from "@src/@types/Identity";
-import { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import type { Identity } from "@src/@types/Identity";
+import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
 import { Box } from "@src/components/display/fewlines/Box/Box";
 import { UpdateIdentityForm } from "@src/components/display/fewlines/UpdateIdentityForm";
 import { config, oauth2Client } from "@src/config";
-import { OAuth2Error } from "@src/errors";
+import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
 import { getIdentities } from "@src/queries/getIdentities";
@@ -69,9 +69,10 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
         const identity = await getIdentities(
           (decodedJWT as AccessToken).sub,
         ).then((result) => {
-          if (result instanceof Error) {
-            throw result;
+          if (result.errors) {
+            throw new GraphqlErrors(result.errors);
           }
+
           const res = result.data?.provider.user.identities.filter(
             (id) => id.id === context.params.id,
           )[0];

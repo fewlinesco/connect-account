@@ -2,26 +2,46 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { IdentityTypes } from "../../../@types/Identity";
 import { Box } from "./Box/Box";
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
+import { IdentityTypes } from "@lib/@types/Identity";
+import { HttpVerbs } from "@src/@types/HttpVerbs";
 import { displayAlertBar } from "@src/utils/displayAlertBar";
+import { fetchJson } from "@src/utils/fetchJson";
 
-const IdentityValidationForm: React.FC<{ type: IdentityTypes }> = ({
-  type,
-}) => {
+const IdentityValidationForm: React.FC<{
+  type: IdentityTypes;
+  eventId: string;
+}> = ({ type, eventId }) => {
   const [validationCode, setValidationCode] = React.useState("");
+
   const router = useRouter();
 
   return (
     <Wrapper>
-      {displayAlertBar(
-        type.toUpperCase() === IdentityTypes.EMAIL
-          ? "Confirmation email has been sent"
-          : "confirmation SMS has been sent",
-      )}
-      <Form method="post">
+      <Form
+        method="post"
+        onSubmit={async (event) => {
+          event.preventDefault();
+
+          const response = await fetchJson(
+            "/api/auth-connect/verify-validation-code",
+            HttpVerbs.POST,
+            { validationCode, eventId },
+          );
+
+          const path = new URL(response.url).pathname;
+
+          router && router.push(path);
+        }}
+      >
+        {displayAlertBar(
+          type.toUpperCase() === IdentityTypes.EMAIL
+            ? "Confirmation email has been sent"
+            : "confirmation SMS has been sent",
+        )}
+
         <Box className="instructions">Enter the validation code below</Box>
         <p>Validation code</p>
         <Input
@@ -89,7 +109,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Form = styled.form`
+export const Form = styled.form`
   display: column;
   align-items: center;
 `;

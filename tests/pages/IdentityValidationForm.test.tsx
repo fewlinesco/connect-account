@@ -5,15 +5,19 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { IdentityTypes } from "@src/@types/Identity";
+import { IdentityTypes } from "@lib/@types/Identity";
 import { Layout } from "@src/components/Layout";
 import AlertBar from "@src/components/display/fewlines/AlertBar/AlertBar";
 import { Button } from "@src/components/display/fewlines/Button/Button";
-import IdentityValidationForm from "@src/components/display/fewlines/IdentityValidationForm";
+import IdentityValidationForm, {
+  Form,
+} from "@src/components/display/fewlines/IdentityValidationForm";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import { GlobalStyle } from "@src/design-system/globals/globalStyle";
 import { lightTheme } from "@src/design-system/theme/lightTheme";
 import { useCookies } from "@src/hooks/useCookies";
+import IdentityValidation from "@src/pages/account/logins/[type]/validation/[eventId]";
+import * as fetchJson from "@src/utils/fetchJson";
 
 enableFetchMocks();
 
@@ -35,12 +39,17 @@ jest.mock("../../src/config", () => {
 });
 
 describe("IdentityValidationForm", () => {
-  test("it should display an input ans 3 buttons properly for emails", () => {
+  const eventId = "foo";
+
+  test("it should display properly an input and 3 buttons for emails", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm type={IdentityTypes.EMAIL} />
+          <IdentityValidationForm
+            type={IdentityTypes.EMAIL}
+            eventId={eventId}
+          />
         </Layout>
       </ThemeProvider>,
     );
@@ -49,7 +58,9 @@ describe("IdentityValidationForm", () => {
       .find(Input)
       .find({ placeholder: "012345" })
       .hostNodes();
+
     const buttons = component.find(Button);
+
     expect(validationCodeInput).toHaveLength(1);
     expect(buttons).toHaveLength(3);
     expect(buttons.at(0).text()).toEqual("Confirm email");
@@ -57,12 +68,15 @@ describe("IdentityValidationForm", () => {
     expect(buttons.at(2).text()).toEqual("Resend confirmation code");
   });
 
-  test("it should display an input ans 3 buttons properly for phones", () => {
+  test("it should display properly an input and 3 buttons for phones", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm type={IdentityTypes.PHONE} />
+          <IdentityValidationForm
+            type={IdentityTypes.PHONE}
+            eventId={eventId}
+          />
         </Layout>
       </ThemeProvider>,
     );
@@ -71,7 +85,9 @@ describe("IdentityValidationForm", () => {
       .find(Input)
       .find({ placeholder: "012345" })
       .hostNodes();
+
     const buttons = component.find(Button);
+
     expect(validationCodeInput).toHaveLength(1);
     expect(buttons).toHaveLength(3);
     expect(buttons.at(0).text()).toEqual("Confirm phone");
@@ -84,7 +100,10 @@ describe("IdentityValidationForm", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm type={IdentityTypes.PHONE} />
+          <IdentityValidationForm
+            type={IdentityTypes.PHONE}
+            eventId={eventId}
+          />
         </Layout>
       </ThemeProvider>,
     );
@@ -100,7 +119,10 @@ describe("IdentityValidationForm", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm type={IdentityTypes.EMAIL} />
+          <IdentityValidationForm
+            type={IdentityTypes.EMAIL}
+            eventId={eventId}
+          />
         </Layout>
       </ThemeProvider>,
     );
@@ -109,5 +131,41 @@ describe("IdentityValidationForm", () => {
 
     expect(alertBar).toHaveLength(1);
     expect(alertBar.text()).toEqual("Confirmation email has been sent");
+  });
+
+  test("it should call `send-identity-validation-code` API page on submit", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <IdentityValidation type={IdentityTypes.EMAIL} eventId={eventId} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const verifyIdentityInput = component
+      .find(IdentityValidationForm)
+      .find(Input);
+
+    const validationCode = "42";
+
+    verifyIdentityInput.simulate("change", {
+      target: { value: validationCode },
+    });
+
+    const form = component.find(IdentityValidationForm).find(Form);
+
+    const fetchJsonMethod = jest.spyOn(fetchJson, "fetchJson");
+
+    form.simulate("submit");
+
+    expect(fetchJsonMethod).toHaveBeenCalledWith(
+      "/api/auth-connect/verify-validation-code",
+      "POST",
+      {
+        validationCode,
+        eventId,
+      },
+    );
   });
 });

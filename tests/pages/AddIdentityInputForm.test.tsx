@@ -37,7 +37,7 @@ jest.mock("../../src/config", () => {
   };
 });
 
-describe("AddNewIdentity", () => {
+describe("AddIdentityInputForm", () => {
   test("it should display an input", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
@@ -52,7 +52,9 @@ describe("AddNewIdentity", () => {
     expect(addIdentityInput).toHaveLength(1);
   });
 
-  test("it should submit the form", () => {
+  test("it should call `send-identity-validation-code` API page on submit", () => {
+    const spyDate = jest.spyOn(Date, "now").mockReturnValue(1572393600000);
+
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
@@ -63,17 +65,30 @@ describe("AddNewIdentity", () => {
     );
 
     const newIdentityInput = component.find(AddIdentityInputForm).find(Input);
+
     newIdentityInput.simulate("change", {
       target: { value: "test3@test.test " },
     });
+
     const form = component.find(AddIdentityInputForm).find(Form);
+
     const fetchJsonMethod = jest.spyOn(fetchJson, "fetchJson");
+
     form.simulate("submit");
 
-    expect(fetchJsonMethod).toHaveBeenCalledWith("/api/identities", "POST", {
-      type: "EMAIL",
-      userId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
-      value: "test3@test.test ",
-    });
+    expect(fetchJsonMethod).toHaveBeenCalledWith(
+      "/api/auth-connect/send-identity-validation-code",
+      "POST",
+      {
+        callbackUrl: "/",
+        identityInput: {
+          expiresAt: 1572393600000 + 300,
+          type: "email",
+          value: "test3@test.test ",
+        },
+      },
+    );
+
+    spyDate.mockRestore();
   });
 });

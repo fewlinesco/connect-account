@@ -2,20 +2,25 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { ReceivedIdentityTypes } from "../../../@types/Identity";
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
+import { HttpVerbs } from "@src/@types/HttpVerbs";
+import { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { fetchJson } from "@src/utils/fetchJson";
 
-type AddIdentityInputFormProps = {
-  addIdentity: (value: string) => Promise<Response>;
+export const AddIdentityInputForm: React.FC<{
   type: ReceivedIdentityTypes;
-};
+}> = ({ type }) => {
+  const [identity, setIdentity] = React.useState<{
+    value: string;
+    type: ReceivedIdentityTypes;
+    expiresAt: number;
+  }>({
+    value: "",
+    type,
+    expiresAt: Date.now(),
+  });
 
-export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
-  addIdentity,
-  type,
-}) => {
-  const [identity, setIdentity] = React.useState("");
   const router = useRouter();
 
   return (
@@ -24,13 +29,20 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
         method="post"
         onSubmit={async (event) => {
           event.preventDefault();
-          return addIdentity(identity)
-            .then(() => {
-              router && router.push(`/account/logins/${type}/validation`);
-            })
-            .catch((error: Error) => {
-              throw error;
-            });
+
+          const body = {
+            callbackUrl: "/",
+            identityInput: identity,
+          };
+
+          const eventId = await fetchJson(
+            "/api/auth-connect/send-identity-validation-code",
+            HttpVerbs.POST,
+            body,
+          ).then((data) => data.json());
+
+          router &&
+            router.push(`/account/logins/${type}/validation/${eventId.data}`);
         }}
       >
         <p>
@@ -43,8 +55,14 @@ export const AddIdentityInputForm: React.FC<AddIdentityInputFormProps> = ({
           type="text"
           name="value"
           placeholder={`Enter your ${type}`}
-          value={identity}
-          onChange={(event) => setIdentity(event.target.value)}
+          value={identity.value}
+          onChange={(event) =>
+            setIdentity({
+              value: event.target.value,
+              type,
+              expiresAt: Date.now() + 300,
+            })
+          }
         />
         <Button
           className="send-button"

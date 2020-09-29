@@ -1,8 +1,8 @@
 import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
-import { IdentityCommandProps } from "../@types/IdentityCommandProps";
-import { fetchManagement } from "../utils/fetchManagement";
+import type { IdentityCommandProps } from "@lib/@types/IdentityCommandProps";
+import { fetchManagement } from "@src/utils/fetchManagement";
 
 const ADD_IDENTITY_TO_USER = gql`
   mutation addIdentityToUser(
@@ -10,7 +10,9 @@ const ADD_IDENTITY_TO_USER = gql`
     $type: IdentityTypes!
     $value: String!
   ) {
-    addIdentityToUser(input: { userId: $userId, type: $type, value: $value }) {
+    addIdentityToUser(
+      input: { userId: $userId, type: $type, value: $value, validated: true }
+    ) {
       id
       primary
       status
@@ -24,7 +26,7 @@ export async function addIdentityToUser({
   userId,
   type,
   value,
-}: IdentityCommandProps): Promise<FetchResult | Error> {
+}: IdentityCommandProps): Promise<FetchResult> {
   const operation = {
     query: ADD_IDENTITY_TO_USER,
     variables: { userId, type, value },

@@ -2,9 +2,9 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { Identity, ReceivedIdentityTypes } from "../../../@types/Identity";
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
+import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
 
 export const UpdateIdentityForm: React.FC<{
   updateIdentity: (newValue: string) => Promise<void>;

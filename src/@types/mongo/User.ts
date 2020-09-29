@@ -10,6 +10,7 @@ export type TemporaryIdentity = {
   eventId: string;
   value: string;
   type: string;
+  expiresAt: number;
 };
 
 export type MongoUser = {

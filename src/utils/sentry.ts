@@ -1,6 +1,6 @@
 import * as Sentry from "@sentry/node";
 import { IncomingMessage } from "http";
-import { NextApiRequest } from "next";
+import type { NextApiRequest } from "next";
 
 // Helper to avoid duplicating the `init` call in every `/pages/api` file.
 // Also used in `pages/_app` for the client side, which automatically applies it for all frontend pages.

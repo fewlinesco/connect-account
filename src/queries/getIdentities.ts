@@ -1,8 +1,8 @@
 import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
-import { ProviderUser } from "../@types/ProviderUser";
-import { fetchManagement } from "../utils/fetchManagement";
+import type { ProviderUser } from "@src/@types/ProviderUser";
+import { fetchManagement } from "@src/utils/fetchManagement";
 
 const USER_QUERY = gql`
   query getUserIdentitiesQuery($userId: String!) {
@@ -25,13 +25,13 @@ const USER_QUERY = gql`
 
 export async function getIdentities(
   userId: string,
-): Promise<FetchResult<{ provider: ProviderUser }> | Error> {
+): Promise<FetchResult<{ provider: ProviderUser }>> {
   const operation = {
     query: USER_QUERY,
     variables: { userId },
   };
 
-  return (await fetchManagement(operation)) as
-    | FetchResult<{ provider: ProviderUser }>
-    | Error;
+  return fetchManagement(operation) as FetchResult<{
+    provider: ProviderUser;
+  }>;
 }

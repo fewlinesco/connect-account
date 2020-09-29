@@ -1,9 +1,9 @@
-import { Method } from "../@types/Method";
+import type { Method } from "@src/@types/Method";
 
 export function fetchJson(
   endpoint: string,
   method: Method,
-  body: Record<string, string | number>,
+  body: Record<string, unknown>,
 ): Promise<Response> {
   return fetch(endpoint, {
     method,
