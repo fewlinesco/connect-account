@@ -6,14 +6,12 @@ import { Box } from "./Box/Box";
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
 import { IdentityTypes } from "@lib/@types/Identity";
-import { HttpVerbs } from "@src/@types/HttpVerbs";
 import { displayAlertBar } from "@src/utils/displayAlertBar";
-import { fetchJson } from "@src/utils/fetchJson";
 
 const IdentityValidationForm: React.FC<{
   type: IdentityTypes;
-  eventId: string;
-}> = ({ type, eventId }) => {
+  verifyIdentity: (validationCode: string) => Promise<void>;
+}> = ({ type, verifyIdentity }) => {
   const [validationCode, setValidationCode] = React.useState("");
 
   const router = useRouter();
@@ -25,15 +23,7 @@ const IdentityValidationForm: React.FC<{
         onSubmit={async (event) => {
           event.preventDefault();
 
-          const response = await fetchJson(
-            "/api/auth-connect/verify-validation-code",
-            HttpVerbs.POST,
-            { validationCode, eventId },
-          );
-
-          const path = new URL(response.url).pathname;
-
-          router && router.push(path);
+          await verifyIdentity(validationCode);
         }}
       >
         {displayAlertBar(

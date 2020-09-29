@@ -3,6 +3,7 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import type { IdentityTypes } from "@lib/@types/Identity";
+import { VerifyIdentity } from "@src/components/business/VerifyIdentity";
 import IdentityValidationForm from "@src/components/display/fewlines/IdentityValidationForm";
 import { OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
@@ -13,7 +14,13 @@ const IdentityValidation: React.FC<{
   type: IdentityTypes;
   eventId: string;
 }> = ({ type, eventId }) => {
-  return <IdentityValidationForm type={type} eventId={eventId} />;
+  return (
+    <VerifyIdentity eventId={eventId}>
+      {({ verifyIdentity }) => (
+        <IdentityValidationForm type={type} verifyIdentity={verifyIdentity} />
+      )}
+    </VerifyIdentity>
+  );
 };
 
 export default IdentityValidation;

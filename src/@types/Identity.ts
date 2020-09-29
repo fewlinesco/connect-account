@@ -18,3 +18,9 @@ export type Identity = {
   type: ReceivedIdentityTypes;
   value: string;
 };
+
+export type InMemoryTemporaryIdentity = {
+  value: string;
+  type: ReceivedIdentityTypes;
+  expiresAt: number;
+};

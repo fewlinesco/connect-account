@@ -1,41 +1,41 @@
+import { useRouter } from "next/router";
 import React from "react";
 
 import { HttpVerbs } from "@src/@types/HttpVerbs";
-import type { ReceivedIdentityTypes } from "@src/@types/Identity";
-import { useCookies } from "@src/hooks/useCookies";
+import type {
+  InMemoryTemporaryIdentity,
+  ReceivedIdentityTypes,
+} from "@src/@types/Identity";
 import { fetchJson } from "@src/utils/fetchJson";
 
 interface AddIdentityProps {
   type: ReceivedIdentityTypes;
   children: (props: {
-    addIdentity: (value: string) => Promise<Response>;
-    type: ReceivedIdentityTypes;
+    addIdentity: (identity: InMemoryTemporaryIdentity) => Promise<void>;
   }) => JSX.Element;
 }
 
 export const AddIdentity: React.FC<AddIdentityProps> = ({ type, children }) => {
-  const { data, error } = useCookies();
+  const router = useRouter();
 
-  if (error) {
-    return <div>Failed to load</div>;
-  }
-
-  if (!data) {
-    return null;
-  }
-
-  const addIdentity = (value: string): Promise<Response> => {
+  async function addIdentity(
+    identity: InMemoryTemporaryIdentity,
+  ): Promise<void> {
     const body = {
-      userId: data.userSub,
-      type: type.toUpperCase(),
-      value,
+      callbackUrl: "/",
+      identityInput: identity,
     };
 
-    return fetchJson("/api/identities", HttpVerbs.POST, body);
-  };
+    const eventId = await fetchJson(
+      "/api/auth-connect/send-identity-validation-code",
+      HttpVerbs.POST,
+      body,
+    ).then((data) => data.json());
+
+    router && router.push(`/account/logins/${type}/validation/${eventId.data}`);
+  }
 
   return children({
     addIdentity,
-    type,
   });
 };
