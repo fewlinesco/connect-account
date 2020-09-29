@@ -20,7 +20,7 @@ type LoginsProps = {
 };
 
 const LoginsPage: React.FC<LoginsProps> = ({ sortedIdentities }) => {
-  return <LoginsPage sortedIdentities={sortedIdentities} />;
+  return <Logins sortedIdentities={sortedIdentities} />;
 };
 
 export default LoginsPage;
