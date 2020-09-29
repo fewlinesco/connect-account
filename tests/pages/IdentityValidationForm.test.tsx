@@ -57,7 +57,6 @@ describe("IdentityValidationForm", () => {
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
     expect(navigationBreadCrumbs).toHaveLength(1);
-    expect(navigationBreadCrumbs.contains(<h1>Logins</h1>)).toEqual(true);
     expect(
       navigationBreadCrumbs.contains(<p>Email address | validation</p>),
     ).toEqual(true);
@@ -78,7 +77,6 @@ describe("IdentityValidationForm", () => {
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
     expect(navigationBreadCrumbs).toHaveLength(1);
-    expect(navigationBreadCrumbs.contains(<h1>Logins</h1>)).toEqual(true);
     expect(
       navigationBreadCrumbs.contains(<p>Phone number | validation</p>),
     ).toEqual(true);

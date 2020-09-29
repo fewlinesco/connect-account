@@ -72,7 +72,6 @@ describe("UpdateIdentityPage", () => {
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
     expect(navigationBreadCrumbs).toHaveLength(1);
-    expect(navigationBreadCrumbs.contains(<h1>Logins</h1>)).toEqual(true);
     expect(navigationBreadCrumbs.contains(<p>Email address | edit</p>)).toEqual(
       true,
     );
@@ -90,7 +89,6 @@ describe("UpdateIdentityPage", () => {
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
     expect(navigationBreadCrumbs).toHaveLength(1);
-    expect(navigationBreadCrumbs.contains(<h1>Logins</h1>)).toEqual(true);
     expect(navigationBreadCrumbs.contains(<p>Phone number | edit</p>)).toEqual(
       true,
     );

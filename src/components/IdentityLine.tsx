@@ -19,8 +19,8 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
 
   return (
     <Wrapper>
+      <h1>Logins</h1>
       <NavigationBreadcrumbs
-        title="Logins"
         breadcrumbs={
           type === ReceivedIdentityTypes.EMAIL
             ? "Email address"
@@ -80,6 +80,11 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
 const Wrapper = styled.div`
   width: 90%;
   margin: 0 auto;
+
+  h1 {
+    margin: ${({ theme }) => theme.spaces.component.s} 0
+      ${({ theme }) => theme.spaces.component.xxs};
+  }
 
   button {
     margin-bottom: ${({ theme }) => theme.spaces.component.xxs};

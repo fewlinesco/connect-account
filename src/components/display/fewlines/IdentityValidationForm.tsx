@@ -19,8 +19,8 @@ const IdentityValidationForm: React.FC<{
 
   return (
     <Wrapper>
+      <h1>Logins</h1>
       <NavigationBreadcrumbs
-        title="Logins"
         breadcrumbs={`${
           type.toUpperCase() === IdentityTypes.EMAIL
             ? "Email address"
@@ -76,6 +76,11 @@ export default IdentityValidationForm;
 const Wrapper = styled.div`
   max-width: 90%;
   margin: 0 auto;
+
+  h1 {
+    margin: ${({ theme }) => theme.spaces.component.s} 0
+      ${({ theme }) => theme.spaces.component.xxs};
+  }
 
   input {
     width: 100%;

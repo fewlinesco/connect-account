@@ -19,8 +19,8 @@ export const UpdateIdentityForm: React.FC<{
 
   return (
     <Wrapper>
+      <h1>Logins</h1>
       <NavigationBreadcrumbs
-        title="Logins"
         breadcrumbs={`${
           currentIdentity.type === IdentityTypes.EMAIL.toLowerCase()
             ? "Email address"
@@ -73,6 +73,11 @@ const Wrapper = styled.div`
   width: 90%;
   margin: 0 auto;
 
+  h1 {
+    margin: ${({ theme }) => theme.spaces.component.s} 0
+      ${({ theme }) => theme.spaces.component.xxs};
+  }
+
   input {
     width: 100%;
     margin: ${({ theme }) => theme.spaces.component.xxs} 0;
@@ -86,6 +91,7 @@ const Wrapper = styled.div`
     margin: ${({ theme }) => theme.spaces.component.xxs} 0;
   }
 `;
+
 export const Form = styled.form`
   display: column;
   align-items: center;
