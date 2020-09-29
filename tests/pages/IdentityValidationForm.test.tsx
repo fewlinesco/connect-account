@@ -47,7 +47,10 @@ describe("IdentityValidationForm", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm type={IdentityTypes.EMAIL} />
+          <IdentityValidationForm
+            type={IdentityTypes.EMAIL}
+            eventId={eventId}
+          />
         </Layout>
       </ThemeProvider>,
     );
@@ -65,7 +68,10 @@ describe("IdentityValidationForm", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm type={IdentityTypes.PHONE} />
+          <IdentityValidationForm
+            type={IdentityTypes.PHONE}
+            eventId={eventId}
+          />
         </Layout>
       </ThemeProvider>,
     );

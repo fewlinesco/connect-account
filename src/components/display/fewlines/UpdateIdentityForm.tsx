@@ -5,11 +5,8 @@ import styled from "styled-components";
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
 import { NavigationBreadcrumbs } from "./NavigationBreadcrumbs/NavigationBreadcrumbs";
-import {
-  Identity,
-  IdentityTypes,
-  ReceivedIdentityTypes,
-} from "@src/@types/Identity";
+import { IdentityTypes } from "@lib/@types/Identity";
+import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
 import { Box } from "@src/components/display/fewlines/Box/Box";
 
 export const UpdateIdentityForm: React.FC<{
