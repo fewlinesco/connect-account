@@ -21,11 +21,11 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
     <Wrapper>
       <h1>Logins</h1>
       <NavigationBreadcrumbs
-        breadcrumbs={
+        breadcrumbs={[
           type === ReceivedIdentityTypes.EMAIL
             ? "Email address"
-            : "Phone number"
-        }
+            : "Phone number",
+        ]}
       />
       <Box>
         <Flex>

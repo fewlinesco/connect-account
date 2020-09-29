@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 export const NavigationBreadcrumbs: React.FC<{
-  breadcrumbs: string;
+  breadcrumbs: string[];
 }> = ({ breadcrumbs }) => {
   return (
     <Wrapper>
-      <p>{breadcrumbs}</p>
+      <p>{breadcrumbs.join(" | ")}</p>
     </Wrapper>
   );
 };

@@ -28,11 +28,12 @@ export const AddIdentityInputForm: React.FC<{
     <Wrapper>
       <h1>Logins</h1>
       <NavigationBreadcrumbs
-        breadcrumbs={`${
+        breadcrumbs={[
           type === ReceivedIdentityTypes.EMAIL
             ? "Email address"
-            : "Phone number"
-        } | new`}
+            : "Phone number",
+          "new",
+        ]}
       />
       <Form
         method="post"

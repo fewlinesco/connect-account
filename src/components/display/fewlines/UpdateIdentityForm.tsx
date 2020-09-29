@@ -21,11 +21,12 @@ export const UpdateIdentityForm: React.FC<{
     <Wrapper>
       <h1>Logins</h1>
       <NavigationBreadcrumbs
-        breadcrumbs={`${
+        breadcrumbs={[
           currentIdentity.type === IdentityTypes.EMAIL.toLowerCase()
             ? "Email address"
-            : "Phone number"
-        } | edit`}
+            : "Phone number",
+          "edit",
+        ]}
       />
       <Box key={value}>
         <Value>{value}</Value>

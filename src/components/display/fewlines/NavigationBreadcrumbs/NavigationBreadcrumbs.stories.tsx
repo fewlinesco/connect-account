@@ -8,7 +8,5 @@ export default {
 };
 
 export const StandardNavigationBreadcrumbs = (): JSX.Element => {
-  return (
-    <NavigationBreadcrumbs breadcrumbs="Your emails, phones and social logins" />
-  );
+  return <NavigationBreadcrumbs breadcrumbs={["Phone number", "validation"]} />;
 };
