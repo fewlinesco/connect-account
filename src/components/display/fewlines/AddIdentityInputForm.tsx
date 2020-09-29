@@ -4,18 +4,16 @@ import styled from "styled-components";
 
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
-import { HttpVerbs } from "@src/@types/HttpVerbs";
-import { ReceivedIdentityTypes } from "@src/@types/Identity";
-import { fetchJson } from "@src/utils/fetchJson";
+import {
+  InMemoryTemporaryIdentity,
+  ReceivedIdentityTypes,
+} from "@src/@types/Identity";
 
 export const AddIdentityInputForm: React.FC<{
   type: ReceivedIdentityTypes;
-}> = ({ type }) => {
-  const [identity, setIdentity] = React.useState<{
-    value: string;
-    type: ReceivedIdentityTypes;
-    expiresAt: number;
-  }>({
+  addIdentity: (identity: InMemoryTemporaryIdentity) => Promise<void>;
+}> = ({ type, addIdentity }) => {
+  const [identity, setIdentity] = React.useState<InMemoryTemporaryIdentity>({
     value: "",
     type,
     expiresAt: Date.now(),
@@ -30,19 +28,7 @@ export const AddIdentityInputForm: React.FC<{
         onSubmit={async (event) => {
           event.preventDefault();
 
-          const body = {
-            callbackUrl: "/",
-            identityInput: identity,
-          };
-
-          const eventId = await fetchJson(
-            "/api/auth-connect/send-identity-validation-code",
-            HttpVerbs.POST,
-            body,
-          ).then((data) => data.json());
-
-          router &&
-            router.push(`/account/logins/${type}/validation/${eventId.data}`);
+          await addIdentity(identity);
         }}
       >
         <p>
