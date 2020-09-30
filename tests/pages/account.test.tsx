@@ -176,7 +176,7 @@ describe("Logins", () => {
     expect(noEmail).toEqual(true);
   });
 
-  test("it shoud display navigation breadcrumbs", () => {
+  test("it should display navigation breadcrumbs", () => {
     const mockedSortedResponse: SortedIdentities = {
       phoneIdentities: [],
       emailIdentities: [],

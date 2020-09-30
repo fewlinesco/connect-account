@@ -79,7 +79,7 @@ describe("ShowIdentityPage", () => {
     value: "0722443311",
   };
 
-  test("it shoud display navigation breadcrumbs properly for emails", () => {
+  test("it should display navigation breadcrumbs properly for emails", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
@@ -97,7 +97,7 @@ describe("ShowIdentityPage", () => {
     ).toEqual(true);
   });
 
-  test("it shoud display navigation breadcrumbs properly for phones", () => {
+  test("it should display navigation breadcrumbs properly for phones", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />

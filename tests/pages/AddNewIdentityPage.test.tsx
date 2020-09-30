@@ -42,7 +42,7 @@ jest.mock("../../src/config", () => {
 });
 
 describe("AddNewIdentityPage", () => {
-  test("it shoud display navigation breadcrumbs properly for emails", () => {
+  test("it should display navigation breadcrumbs properly for emails", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
@@ -61,7 +61,7 @@ describe("AddNewIdentityPage", () => {
     ).toEqual(true);
   });
 
-  test("it shoud display navigation breadcrumbs properly for phones", () => {
+  test("it should display navigation breadcrumbs properly for phones", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
