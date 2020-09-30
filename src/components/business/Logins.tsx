@@ -12,6 +12,8 @@ interface AddIdentityProps {
     phoneList: Identity[];
     emailIdentities: Identity[];
     phoneIdentities: Identity[];
+    hideSecondaryEmails: boolean;
+    hideSecondaryPhones: boolean;
   }) => JSX.Element;
 }
 
@@ -50,5 +52,7 @@ export const Logins: React.FC<AddIdentityProps> = ({
     phoneList,
     emailIdentities,
     phoneIdentities,
+    hideSecondaryEmails,
+    hideSecondaryPhones,
   });
 };
