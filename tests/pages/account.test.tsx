@@ -5,8 +5,8 @@ import { ThemeProvider } from "styled-components";
 import { ReceivedIdentityTypes } from "@src/@types/Identity";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 import { Layout } from "@src/components/Layout";
-import Logins, { Value } from "@src/components/Logins";
-import { SmallHeader } from "@src/components/Logins";
+import LoginsDisplay, { Value } from "@src/components/LoginsDisplay";
+import { SmallHeader } from "@src/components/LoginsDisplay";
 import { BoxedLink } from "@src/components/display/fewlines/BoxedLink/BoxedLink";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
 import { GlobalStyle } from "@src/design-system/globals/globalStyle";
@@ -47,7 +47,7 @@ describe("Logins", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Logins sortedIdentities={mockedSortedResponse} />
+          <LoginsDisplay sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -94,7 +94,7 @@ describe("Logins", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Logins sortedIdentities={mockedSortedResponse} />
+          <LoginsDisplay sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -119,7 +119,7 @@ describe("Logins", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Logins sortedIdentities={mockedSortedResponse} />
+          <LoginsDisplay sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -146,7 +146,7 @@ describe("Logins", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Logins sortedIdentities={mockedSortedResponse} />
+          <LoginsDisplay sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -166,7 +166,7 @@ describe("Logins", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Logins sortedIdentities={mockedSortedResponse} />
+          <LoginsDisplay sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -185,7 +185,7 @@ describe("Logins", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Logins sortedIdentities={mockedSortedResponse} />
+          <LoginsDisplay sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -260,7 +260,7 @@ describe('the "show more" button should behave properly', () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Logins sortedIdentities={mockedSortedResponse} />
+          <LoginsDisplay sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -317,7 +317,7 @@ describe('the "show more" button should behave properly', () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Logins sortedIdentities={mockedSortedResponse} />
+          <LoginsDisplay sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -362,7 +362,7 @@ describe('the "show more" button should behave properly', () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Logins sortedIdentities={mockedSortedResponse} />
+          <LoginsDisplay sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );

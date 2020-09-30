@@ -4,7 +4,7 @@ import React from "react";
 
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
-import Logins from "@src/components/Logins";
+import LoginsDisplay from "@src/components/LoginsDisplay";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
@@ -20,7 +20,7 @@ type LoginsProps = {
 };
 
 const LoginsPage: React.FC<LoginsProps> = ({ sortedIdentities }) => {
-  return <Logins sortedIdentities={sortedIdentities} />;
+  return <LoginsDisplay sortedIdentities={sortedIdentities} />;
 };
 
 export default LoginsPage;
