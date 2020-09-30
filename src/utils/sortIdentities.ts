@@ -7,6 +7,7 @@ export function sortIdentities(fetchedData: {
 }): SortedIdentities {
   const phoneIdentities: Identity[] = [];
   const emailIdentities: Identity[] = [];
+
   if (fetchedData.data) {
     const identities: Identity[] = fetchedData.data.provider.user.identities;
 
