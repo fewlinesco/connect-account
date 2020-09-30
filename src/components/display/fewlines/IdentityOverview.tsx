@@ -2,12 +2,12 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { Identity, ReceivedIdentityTypes } from "../@types/Identity";
-import { AwaitingValidationBadge } from "./display/fewlines/AwaitingValidationBadge/AwaitingValidationBadge";
-import { Box } from "./display/fewlines/Box/Box";
-import { Button, ButtonVariant } from "./display/fewlines/Button/Button";
-import { NavigationBreadcrumbs } from "./display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
-import { PrimaryBadge } from "./display/fewlines/PrimaryBadge/PrimaryBadge";
+import { Identity, ReceivedIdentityTypes } from "../../../@types/Identity";
+import { AwaitingValidationBadge } from "./AwaitingValidationBadge/AwaitingValidationBadge";
+import { Box } from "./Box/Box";
+import { Button, ButtonVariant } from "./Button/Button";
+import { NavigationBreadcrumbs } from "./NavigationBreadcrumbs/NavigationBreadcrumbs";
+import { PrimaryBadge } from "./PrimaryBadge/PrimaryBadge";
 import { DeleteIdentity } from "@src/components/business/DeleteIdentity";
 
 type IdentityOverviewProps = {

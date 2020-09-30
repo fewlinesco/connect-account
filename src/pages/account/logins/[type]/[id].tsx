@@ -4,7 +4,7 @@ import React from "react";
 
 import type { Identity } from "@src/@types/Identity";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
-import { IdentityOverview } from "@src/components/IdentityOverview";
+import { IdentityOverview } from "@src/components/display/fewlines/IdentityOverview";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
