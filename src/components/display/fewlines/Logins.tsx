@@ -1,60 +1,45 @@
 import Head from "next/head";
 import Link from "next/link";
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import styled from "styled-components";
 
-import { BoxedLink } from "./display/fewlines/BoxedLink/BoxedLink";
-import { Button, ButtonVariant } from "./display/fewlines/Button/Button";
-import { IdentityContainer } from "./display/fewlines/IdentityContainer/IdentityContainer";
-import { NeutralLink } from "./display/fewlines/NeutralLink/NeutralLink";
-import { Separator } from "./display/fewlines/Separator/Separator";
-import { ShowMoreButton } from "./display/fewlines/ShowMoreButton/ShowMoreButton";
+import { BoxedLink } from "./BoxedLink/BoxedLink";
+import { Button, ButtonVariant } from "./Button/Button";
+import { IdentityContainer } from "./IdentityContainer/IdentityContainer";
+import { NeutralLink } from "./NeutralLink/NeutralLink";
+import { Separator } from "./Separator/Separator";
+import { ShowMoreButton } from "./ShowMoreButton/ShowMoreButton";
 import { Identity } from "@src/@types/Identity";
+import { SortedIdentities } from "@src/@types/SortedIdentities";
 
-type LoginsDisplayProps = {
-  setHideSecondaryEmails: Dispatch<SetStateAction<boolean>>;
-  setHideSecondaryPhones: Dispatch<SetStateAction<boolean>>;
-  emailList: Identity[];
-  phoneList: Identity[];
-  emailIdentities: Identity[];
-  phoneIdentities: Identity[];
-  hideSecondaryEmails: boolean;
-  hideSecondaryPhones: boolean;
+type LoginsProps = {
+  sortedIdentities: SortedIdentities;
 };
 
-const LoginsDisplay: React.FC<LoginsDisplayProps> = ({
-  setHideSecondaryEmails,
-  setHideSecondaryPhones,
-  emailList,
-  phoneList,
-  emailIdentities,
-  phoneIdentities,
-  hideSecondaryEmails,
-  hideSecondaryPhones,
-}) => {
-  // const [hideSecondaryEmails, setHideSecondaryEmails] = React.useState<boolean>(
-  //   true,
-  // );
-  // const [hideSecondaryPhones, setHideSecondaryPhones] = React.useState<boolean>(
-  //   true,
-  // );
+const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
+  const [hideSecondaryEmails, setHideSecondaryEmails] = React.useState<boolean>(
+    true,
+  );
+  const [hideSecondaryPhones, setHideSecondaryPhones] = React.useState<boolean>(
+    true,
+  );
 
-  // let emailList: Identity[];
-  // let phoneList: Identity[];
+  let emailList: Identity[];
+  let phoneList: Identity[];
 
-  // hideSecondaryEmails
-  //   ? (emailList = sortedIdentities.emailIdentities.filter(
-  //       (identity) => identity.primary,
-  //     ))
-  //   : (emailList = sortedIdentities.emailIdentities);
+  hideSecondaryEmails
+    ? (emailList = sortedIdentities.emailIdentities.filter(
+        (identity) => identity.primary,
+      ))
+    : (emailList = sortedIdentities.emailIdentities);
 
-  // hideSecondaryPhones
-  //   ? (phoneList = sortedIdentities.phoneIdentities.filter(
-  //       (identity) => identity.primary,
-  //     ))
-  //   : (phoneList = sortedIdentities.phoneIdentities);
+  hideSecondaryPhones
+    ? (phoneList = sortedIdentities.phoneIdentities.filter(
+        (identity) => identity.primary,
+      ))
+    : (phoneList = sortedIdentities.phoneIdentities);
 
-  // const { emailIdentities, phoneIdentities } = sortedIdentities;
+  const { emailIdentities, phoneIdentities } = sortedIdentities;
 
   return (
     <Wrapper>
@@ -156,7 +141,7 @@ const LoginsDisplay: React.FC<LoginsDisplayProps> = ({
   );
 };
 
-export default LoginsDisplay;
+export default Logins;
 
 const Wrapper = styled.div`
   max-width: 90%;
