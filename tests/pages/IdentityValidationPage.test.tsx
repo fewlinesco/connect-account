@@ -21,6 +21,7 @@ import { GlobalStyle } from "@src/design-system/globals/globalStyle";
 import { lightTheme } from "@src/design-system/theme/lightTheme";
 import { useCookies } from "@src/hooks/useCookies";
 import IdentityValidation from "@src/pages/account/logins/[type]/validation/[eventId]";
+import IdentityValidationPage from "@src/pages/account/logins/[type]/validation/[eventId]";
 import * as fetchJson from "@src/utils/fetchJson";
 
 enableFetchMocks();
@@ -42,7 +43,7 @@ jest.mock("@src/config", () => {
   };
 });
 
-describe("IdentityValidationForm", () => {
+describe("IdentityValidationPage", () => {
   const eventId = "foo";
 
   test("it shoud display navigation breadcrumbs properly for emails", () => {
@@ -50,7 +51,7 @@ describe("IdentityValidationForm", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm
+          <IdentityValidationPage
             type={IdentityTypes.EMAIL}
             eventId={eventId}
           />
@@ -72,7 +73,7 @@ describe("IdentityValidationForm", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm
+          <IdentityValidationPage
             type={IdentityTypes.PHONE}
             eventId={eventId}
           />
@@ -94,7 +95,7 @@ describe("IdentityValidationForm", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm
+          <IdentityValidationPage
             type={IdentityTypes.EMAIL}
             eventId={eventId}
           />
@@ -121,7 +122,7 @@ describe("IdentityValidationForm", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm
+          <IdentityValidationPage
             type={IdentityTypes.PHONE}
             eventId={eventId}
           />
@@ -148,7 +149,7 @@ describe("IdentityValidationForm", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm
+          <IdentityValidationPage
             type={IdentityTypes.PHONE}
             eventId={eventId}
           />
@@ -167,7 +168,7 @@ describe("IdentityValidationForm", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm
+          <IdentityValidationPage
             type={IdentityTypes.EMAIL}
             eventId={eventId}
           />
