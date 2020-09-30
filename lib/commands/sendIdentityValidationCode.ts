@@ -7,7 +7,7 @@ import {
   SendIdentityVerificationCodeInput,
 } from "../@types/VerificationCode";
 
-const SEND_IDENTITY_VALIDATION_CODE = gql`
+const SEND_IDENTITY_VALIDATION_CODE_MUTATION = gql`
   mutation sendIdentityValidationCode(
     $callbackUrl: String!
     $identity: IdentityInput!
@@ -38,7 +38,7 @@ export async function sendIdentityValidationCode(
   }>
 > {
   const operation = {
-    query: SEND_IDENTITY_VALIDATION_CODE,
+    query: SEND_IDENTITY_VALIDATION_CODE_MUTATION,
     variables: command,
   };
 

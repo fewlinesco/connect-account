@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 
-import { AddIdentity } from "./AddIdentity";
+import { AddIdentity_Deprecated } from "./AddIdentity.deprecated";
 import { DeleteIdentity } from "./DeleteIdentity";
 import type { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
 
@@ -22,7 +22,7 @@ export const UpdateIdentity: React.FC<UpdateIdentityProps> = ({
   const { value, type } = identity;
 
   return (
-    <AddIdentity type={type}>
+    <AddIdentity_Deprecated type={type}>
       {({ addIdentity }) => (
         <DeleteIdentity type={type} value={value}>
           {({ deleteIdentity }) =>
@@ -42,6 +42,6 @@ export const UpdateIdentity: React.FC<UpdateIdentityProps> = ({
           }
         </DeleteIdentity>
       )}
-    </AddIdentity>
+    </AddIdentity_Deprecated>
   );
 };
