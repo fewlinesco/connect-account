@@ -5,12 +5,10 @@ import styled from "styled-components";
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
 import { NavigationBreadcrumbs } from "./NavigationBreadcrumbs/NavigationBreadcrumbs";
-import { HttpVerbs } from "@src/@types/HttpVerbs";
 import {
   InMemoryTemporaryIdentity,
   ReceivedIdentityTypes,
 } from "@src/@types/Identity";
-import { fetchJson } from "@src/utils/fetchJson";
 
 export const AddIdentityInputForm: React.FC<{
   type: ReceivedIdentityTypes;
