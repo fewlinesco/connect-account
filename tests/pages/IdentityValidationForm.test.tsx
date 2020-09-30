@@ -13,7 +13,10 @@ import IdentityValidationForm, {
   Form,
 } from "@src/components/display/fewlines/IdentityValidationForm";
 import { Input } from "@src/components/display/fewlines/Input/Input";
-import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
+import {
+  NavigationBreadcrumbs,
+  Breadcrumbs,
+} from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { GlobalStyle } from "@src/design-system/globals/globalStyle";
 import { lightTheme } from "@src/design-system/theme/lightTheme";
 import { useCookies } from "@src/hooks/useCookies";
@@ -58,7 +61,9 @@ describe("IdentityValidationForm", () => {
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
     expect(navigationBreadCrumbs).toHaveLength(1);
     expect(
-      navigationBreadCrumbs.contains(<p>Email address | validation</p>),
+      navigationBreadCrumbs.contains(
+        <Breadcrumbs>Email address | validation</Breadcrumbs>,
+      ),
     ).toEqual(true);
   });
 
@@ -78,7 +83,9 @@ describe("IdentityValidationForm", () => {
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
     expect(navigationBreadCrumbs).toHaveLength(1);
     expect(
-      navigationBreadCrumbs.contains(<p>Phone number | validation</p>),
+      navigationBreadCrumbs.contains(
+        <Breadcrumbs>Phone number | validation</Breadcrumbs>,
+      ),
     ).toEqual(true);
   });
 

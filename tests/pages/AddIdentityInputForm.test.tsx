@@ -12,7 +12,10 @@ import {
   Form,
 } from "@src/components/display/fewlines/AddIdentityInputForm";
 import { Input } from "@src/components/display/fewlines/Input/Input";
-import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
+import {
+  NavigationBreadcrumbs,
+  Breadcrumbs,
+} from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { GlobalStyle } from "@src/design-system/globals/globalStyle";
 import { lightTheme } from "@src/design-system/theme/lightTheme";
 import { useCookies } from "@src/hooks/useCookies";
@@ -51,9 +54,11 @@ describe("AddIdentityInputForm", () => {
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
     expect(navigationBreadCrumbs).toHaveLength(1);
-    expect(navigationBreadCrumbs.contains(<p>Email address | new</p>)).toEqual(
-      true,
-    );
+    expect(
+      navigationBreadCrumbs.contains(
+        <Breadcrumbs>Email address | new</Breadcrumbs>,
+      ),
+    ).toEqual(true);
   });
 
   test("it shoud display navigation breadcrumbs properly for phones", () => {
@@ -68,9 +73,11 @@ describe("AddIdentityInputForm", () => {
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
     expect(navigationBreadCrumbs).toHaveLength(1);
-    expect(navigationBreadCrumbs.contains(<p>Phone number | new</p>)).toEqual(
-      true,
-    );
+    expect(
+      navigationBreadCrumbs.contains(
+        <Breadcrumbs>Phone number | new</Breadcrumbs>,
+      ),
+    ).toEqual(true);
   });
 
   test("it should display an input", () => {

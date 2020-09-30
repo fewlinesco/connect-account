@@ -9,7 +9,10 @@ import { ThemeProvider } from "styled-components";
 import { ReceivedIdentityTypes, Identity } from "@src/@types/Identity";
 import { Layout } from "@src/components/Layout";
 import { Input } from "@src/components/display/fewlines/Input/Input";
-import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
+import {
+  NavigationBreadcrumbs,
+  Breadcrumbs,
+} from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import {
   UpdateIdentityForm,
   Form,
@@ -72,9 +75,11 @@ describe("UpdateIdentityPage", () => {
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
     expect(navigationBreadCrumbs).toHaveLength(1);
-    expect(navigationBreadCrumbs.contains(<p>Email address | edit</p>)).toEqual(
-      true,
-    );
+    expect(
+      navigationBreadCrumbs.contains(
+        <Breadcrumbs>Email address | edit</Breadcrumbs>,
+      ),
+    ).toEqual(true);
   });
 
   test("it shoud display navigation breadcrumbs properly for phones", () => {
@@ -89,9 +94,11 @@ describe("UpdateIdentityPage", () => {
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
     expect(navigationBreadCrumbs).toHaveLength(1);
-    expect(navigationBreadCrumbs.contains(<p>Phone number | edit</p>)).toEqual(
-      true,
-    );
+    expect(
+      navigationBreadCrumbs.contains(
+        <Breadcrumbs>Phone number | edit</Breadcrumbs>,
+      ),
+    ).toEqual(true);
   });
 
   test("it should display an update identity input", () => {

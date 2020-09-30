@@ -13,7 +13,10 @@ import {
   Button,
   ButtonVariant,
 } from "@src/components/display/fewlines/Button/Button";
-import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
+import {
+  NavigationBreadcrumbs,
+  Breadcrumbs,
+} from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "@src/components/display/fewlines/PrimaryBadge/PrimaryBadge";
 import { GlobalStyle } from "@src/design-system/globals/globalStyle";
 import { lightTheme } from "@src/design-system/theme/lightTheme";
@@ -89,7 +92,9 @@ describe("ShowIdentityPage", () => {
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
     expect(navigationBreadCrumbs).toHaveLength(1);
 
-    expect(navigationBreadCrumbs.contains(<p>Email address</p>)).toEqual(true);
+    expect(
+      navigationBreadCrumbs.contains(<Breadcrumbs>Email address</Breadcrumbs>),
+    ).toEqual(true);
   });
 
   test("it shoud display navigation breadcrumbs properly for phones", () => {
@@ -104,7 +109,9 @@ describe("ShowIdentityPage", () => {
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
     expect(navigationBreadCrumbs).toHaveLength(1);
-    expect(navigationBreadCrumbs.contains(<p>Phone number</p>)).toEqual(true);
+    expect(
+      navigationBreadCrumbs.contains(<Breadcrumbs>Phone number</Breadcrumbs>),
+    ).toEqual(true);
   });
 
   test("it should display the update button for a non primary identity", () => {
