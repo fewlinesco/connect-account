@@ -10,11 +10,13 @@ import { NavigationBreadcrumbs } from "./display/fewlines/NavigationBreadcrumbs/
 import { PrimaryBadge } from "./display/fewlines/PrimaryBadge/PrimaryBadge";
 import { DeleteIdentity } from "@src/components/business/DeleteIdentity";
 
-type IdentityLineProps = {
+type IdentityOverviewProps = {
   identity: Identity;
 };
 
-export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
+export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
+  identity,
+}) => {
   const { id, primary, status, type, value } = identity;
 
   return (

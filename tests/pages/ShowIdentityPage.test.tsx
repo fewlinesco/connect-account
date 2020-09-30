@@ -18,7 +18,7 @@ import { PrimaryBadge } from "@src/components/display/fewlines/PrimaryBadge/Prim
 import { GlobalStyle } from "@src/design-system/globals/globalStyle";
 import { lightTheme } from "@src/design-system/theme/lightTheme";
 import { useCookies } from "@src/hooks/useCookies";
-import ShowIdentity from "@src/pages/account/logins/[type]/[id]";
+import ShowIdentityPage from "@src/pages/account/logins/[type]/[id]";
 
 enableFetchMocks();
 
@@ -39,7 +39,7 @@ jest.mock("@src/config", () => {
   };
 });
 
-describe("ShowIdentity", () => {
+describe("ShowIdentityPage", () => {
   beforeEach(() => {
     fetch.resetMocks();
   });
@@ -81,13 +81,14 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={nonPrimaryIdentity} />
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
     expect(navigationBreadCrumbs).toHaveLength(1);
+
     expect(navigationBreadCrumbs.contains(<p>Email address</p>)).toEqual(true);
   });
 
@@ -96,7 +97,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={phoneIdentity} />
+          <ShowIdentityPage identity={phoneIdentity} />
         </Layout>
       </ThemeProvider>,
     );
@@ -111,7 +112,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={nonPrimaryIdentity} />
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
@@ -129,7 +130,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={primaryIdentity} />
+          <ShowIdentityPage identity={primaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
@@ -147,7 +148,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={nonPrimaryIdentity} />
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
@@ -164,7 +165,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={primaryIdentity} />
+          <ShowIdentityPage identity={primaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
@@ -180,7 +181,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={nonPrimaryIdentity} />
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
@@ -200,7 +201,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={primaryIdentity} />
+          <ShowIdentityPage identity={primaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
@@ -224,7 +225,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={nonValidatedIdentity} />
+          <ShowIdentityPage identity={nonValidatedIdentity} />
         </Layout>
       </ThemeProvider>,
     );
@@ -244,7 +245,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={nonValidatedIdentity} />
+          <ShowIdentityPage identity={nonValidatedIdentity} />
         </Layout>
       </ThemeProvider>,
     );
