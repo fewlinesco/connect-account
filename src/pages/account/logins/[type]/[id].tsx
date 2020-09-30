@@ -4,7 +4,7 @@ import React from "react";
 
 import type { Identity } from "@src/@types/Identity";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
-import { IdentityLine } from "@src/components/IdentityLine";
+import { IdentityOverview } from "@src/components/display/fewlines/IdentityOverview";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
@@ -14,11 +14,11 @@ import { getUser } from "@src/utils/getUser";
 import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry from "@src/utils/sentry";
 
-const ShowIdentity: React.FC<{ identity: Identity }> = ({ identity }) => {
-  return <IdentityLine identity={identity} />;
+const ShowIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
+  return <IdentityOverview identity={identity} />;
 };
 
-export default ShowIdentity;
+export default ShowIdentityPage;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {

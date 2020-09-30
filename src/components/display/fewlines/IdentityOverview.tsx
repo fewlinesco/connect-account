@@ -2,22 +2,33 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { AwaitingValidationBadge } from "./display/fewlines/AwaitingValidationBadge/AwaitingValidationBadge";
-import { Box } from "./display/fewlines/Box/Box";
-import { Button, ButtonVariant } from "./display/fewlines/Button/Button";
-import { PrimaryBadge } from "./display/fewlines/PrimaryBadge/PrimaryBadge";
-import type { Identity } from "@src/@types/Identity";
+import { AwaitingValidationBadge } from "./AwaitingValidationBadge/AwaitingValidationBadge";
+import { Box } from "./Box/Box";
+import { Button, ButtonVariant } from "./Button/Button";
+import { NavigationBreadcrumbs } from "./NavigationBreadcrumbs/NavigationBreadcrumbs";
+import { PrimaryBadge } from "./PrimaryBadge/PrimaryBadge";
+import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
 import { DeleteIdentity } from "@src/components/business/DeleteIdentity";
 
-type IdentityLineProps = {
+type IdentityOverviewProps = {
   identity: Identity;
 };
 
-export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
+export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
+  identity,
+}) => {
   const { id, primary, status, type, value } = identity;
 
   return (
-    <IdentityBox key={value}>
+    <Wrapper>
+      <h1>Logins</h1>
+      <NavigationBreadcrumbs
+        breadcrumbs={[
+          type === ReceivedIdentityTypes.EMAIL
+            ? "Email address"
+            : "Phone number",
+        ]}
+      />
       <Box>
         <Flex>
           <Value>{value}</Value>
@@ -64,12 +75,18 @@ export const IdentityLine: React.FC<IdentityLineProps> = ({ identity }) => {
           )}
         </DeleteIdentity>
       )}
-    </IdentityBox>
+    </Wrapper>
   );
 };
 
-const IdentityBox = styled.div`
-  padding: ${({ theme }) => theme.spaces.component.xs};
+const Wrapper = styled.div`
+  width: 90%;
+  margin: 0 auto;
+
+  h1 {
+    margin: ${({ theme }) => theme.spaces.component.s} 0
+      ${({ theme }) => theme.spaces.component.xxs};
+  }
 
   button {
     margin-bottom: ${({ theme }) => theme.spaces.component.xxs};

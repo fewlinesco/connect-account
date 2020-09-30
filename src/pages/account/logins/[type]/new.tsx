@@ -7,7 +7,7 @@ import { AddIdentityInputForm } from "@src/components/display/fewlines/AddIdenti
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
 
-const NewIdentityPage: React.FC<{ type: ReceivedIdentityTypes }> = ({
+const AddNewIdentityPage: React.FC<{ type: ReceivedIdentityTypes }> = ({
   type,
 }) => {
   return (
@@ -19,7 +19,7 @@ const NewIdentityPage: React.FC<{ type: ReceivedIdentityTypes }> = ({
   );
 };
 
-export default NewIdentityPage;
+export default AddNewIdentityPage;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {

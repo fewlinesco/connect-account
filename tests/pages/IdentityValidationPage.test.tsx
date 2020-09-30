@@ -1,4 +1,4 @@
-jest.mock("../../src/hooks/useCookies");
+jest.mock("@src/hooks/useCookies");
 
 import { mount } from "enzyme";
 import { enableFetchMocks } from "jest-fetch-mock";
@@ -13,15 +13,20 @@ import IdentityValidationForm, {
   Form,
 } from "@src/components/display/fewlines/IdentityValidationForm";
 import { Input } from "@src/components/display/fewlines/Input/Input";
+import {
+  NavigationBreadcrumbs,
+  Breadcrumbs,
+} from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { GlobalStyle } from "@src/design-system/globals/globalStyle";
 import { lightTheme } from "@src/design-system/theme/lightTheme";
 import { useCookies } from "@src/hooks/useCookies";
 import IdentityValidation from "@src/pages/account/logins/[type]/validation/[eventId]";
+import IdentityValidationPage from "@src/pages/account/logins/[type]/validation/[eventId]";
 import * as fetchJson from "@src/utils/fetchJson";
 
 enableFetchMocks();
 
-jest.mock("../../src/config", () => {
+jest.mock("@src/config", () => {
   return {
     config: {
       connectApplicationClientSecret: "foo-bar",
@@ -38,15 +43,59 @@ jest.mock("../../src/config", () => {
   };
 });
 
-describe("IdentityValidationForm", () => {
+describe("IdentityValidationPage", () => {
   const eventId = "foo";
 
-  test("it should display properly an input and 3 buttons for emails", () => {
+  test("it should display navigation breadcrumbs properly for emails", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm
+          <IdentityValidationPage
+            type={IdentityTypes.EMAIL}
+            eventId={eventId}
+          />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
+    expect(navigationBreadCrumbs).toHaveLength(1);
+    expect(
+      navigationBreadCrumbs.contains(
+        <Breadcrumbs>Email address | validation</Breadcrumbs>,
+      ),
+    ).toEqual(true);
+  });
+
+  test("it should display navigation breadcrumbs properly for phones", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <IdentityValidationPage
+            type={IdentityTypes.PHONE}
+            eventId={eventId}
+          />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
+    expect(navigationBreadCrumbs).toHaveLength(1);
+    expect(
+      navigationBreadCrumbs.contains(
+        <Breadcrumbs>Phone number | validation</Breadcrumbs>,
+      ),
+    ).toEqual(true);
+  });
+
+  test("it should display an input ans 3 buttons for emails", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <IdentityValidationPage
             type={IdentityTypes.EMAIL}
             eventId={eventId}
           />
@@ -73,7 +122,7 @@ describe("IdentityValidationForm", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm
+          <IdentityValidationPage
             type={IdentityTypes.PHONE}
             eventId={eventId}
           />
@@ -100,7 +149,7 @@ describe("IdentityValidationForm", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm
+          <IdentityValidationPage
             type={IdentityTypes.PHONE}
             eventId={eventId}
           />
@@ -119,7 +168,7 @@ describe("IdentityValidationForm", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <IdentityValidationForm
+          <IdentityValidationPage
             type={IdentityTypes.EMAIL}
             eventId={eventId}
           />

@@ -1,4 +1,4 @@
-jest.mock("../../src/hooks/useCookies");
+jest.mock("@src/hooks/useCookies");
 
 import { mount } from "enzyme";
 import fetch from "jest-fetch-mock";
@@ -6,22 +6,26 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { ReceivedIdentityTypes, Identity } from "../../src/@types/Identity";
-import { Layout } from "../../src/components/Layout";
+import { ReceivedIdentityTypes, Identity } from "@src/@types/Identity";
+import { Layout } from "@src/components/Layout";
+import { AwaitingValidationBadge } from "@src/components/display/fewlines/AwaitingValidationBadge/AwaitingValidationBadge";
 import {
   Button,
   ButtonVariant,
-} from "../../src/components/display/fewlines/Button/Button";
-import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
-import { lightTheme } from "../../src/design-system/theme/lightTheme";
-import { useCookies } from "../../src/hooks/useCookies";
-import ShowIdentity from "../../src/pages/account/logins/[type]/[id]";
-import { AwaitingValidationBadge } from "@src/components/display/fewlines/AwaitingValidationBadge/AwaitingValidationBadge";
+} from "@src/components/display/fewlines/Button/Button";
+import {
+  NavigationBreadcrumbs,
+  Breadcrumbs,
+} from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "@src/components/display/fewlines/PrimaryBadge/PrimaryBadge";
+import { GlobalStyle } from "@src/design-system/globals/globalStyle";
+import { lightTheme } from "@src/design-system/theme/lightTheme";
+import { useCookies } from "@src/hooks/useCookies";
+import ShowIdentityPage from "@src/pages/account/logins/[type]/[id]";
 
 enableFetchMocks();
 
-jest.mock("../../src/config", () => {
+jest.mock("@src/config", () => {
   return {
     config: {
       connectApplicationClientSecret: "foo-bar",
@@ -38,7 +42,7 @@ jest.mock("../../src/config", () => {
   };
 });
 
-describe("ShowIdentity", () => {
+describe("ShowIdentityPage", () => {
   beforeEach(() => {
     fetch.resetMocks();
   });
@@ -67,12 +71,55 @@ describe("ShowIdentity", () => {
     value: "test6@test.test",
   };
 
+  const phoneIdentity: Identity = {
+    id: "81z343c1-530b-4982-878d-33f0def6a7cf",
+    primary: false,
+    status: "unvalidated",
+    type: ReceivedIdentityTypes.PHONE,
+    value: "0722443311",
+  };
+
+  test("it should display navigation breadcrumbs properly for emails", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
+    expect(navigationBreadCrumbs).toHaveLength(1);
+
+    expect(
+      navigationBreadCrumbs.contains(<Breadcrumbs>Email address</Breadcrumbs>),
+    ).toEqual(true);
+  });
+
+  test("it should display navigation breadcrumbs properly for phones", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <ShowIdentityPage identity={phoneIdentity} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
+    expect(navigationBreadCrumbs).toHaveLength(1);
+    expect(
+      navigationBreadCrumbs.contains(<Breadcrumbs>Phone number</Breadcrumbs>),
+    ).toEqual(true);
+  });
+
   test("it should display the update button for a non primary identity", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={nonPrimaryIdentity} />
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
@@ -90,7 +137,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={primaryIdentity} />
+          <ShowIdentityPage identity={primaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
@@ -108,7 +155,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={nonPrimaryIdentity} />
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
@@ -125,7 +172,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={primaryIdentity} />
+          <ShowIdentityPage identity={primaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
@@ -141,7 +188,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={nonPrimaryIdentity} />
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
@@ -161,7 +208,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={primaryIdentity} />
+          <ShowIdentityPage identity={primaryIdentity} />
         </Layout>
       </ThemeProvider>,
     );
@@ -185,7 +232,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={nonValidatedIdentity} />
+          <ShowIdentityPage identity={nonValidatedIdentity} />
         </Layout>
       </ThemeProvider>,
     );
@@ -205,7 +252,7 @@ describe("ShowIdentity", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <ShowIdentity identity={nonValidatedIdentity} />
+          <ShowIdentityPage identity={nonValidatedIdentity} />
         </Layout>
       </ThemeProvider>,
     );

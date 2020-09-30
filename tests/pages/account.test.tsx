@@ -2,16 +2,17 @@ import { mount } from "enzyme";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { ReceivedIdentityTypes } from "../../src/@types/Identity";
-import { SortedIdentities } from "../../src/@types/SortedIdentities";
-import { Layout } from "../../src/components/Layout";
-import { BoxedLink } from "../../src/components/display/fewlines/BoxedLink/BoxedLink";
-import { ShowMoreButton } from "../../src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
-import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
-import { lightTheme } from "../../src/design-system/theme/lightTheme";
-import Account, { Value } from "../../src/pages/account/logins/index";
+import { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { SortedIdentities } from "@src/@types/SortedIdentities";
+import { Layout } from "@src/components/Layout";
+import { BoxedLink } from "@src/components/display/fewlines/BoxedLink/BoxedLink";
+import Logins, { Value } from "@src/components/display/fewlines/Logins";
+import { SmallHeader } from "@src/components/display/fewlines/Logins";
+import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
+import { GlobalStyle } from "@src/design-system/globals/globalStyle";
+import { lightTheme } from "@src/design-system/theme/lightTheme";
 
-jest.mock("../../src/config", () => {
+jest.mock("@src/config", () => {
   return {
     config: {
       connectApplicationClientSecret: "foo-bar",
@@ -20,7 +21,7 @@ jest.mock("../../src/config", () => {
   };
 });
 
-describe("it should display identities properly", () => {
+describe("Logins", () => {
   test("it should display email and phone when there are one of each", () => {
     const mockedSortedResponse: SortedIdentities = {
       phoneIdentities: [
@@ -46,7 +47,7 @@ describe("it should display identities properly", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <Logins sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -93,7 +94,7 @@ describe("it should display identities properly", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <Logins sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -118,7 +119,7 @@ describe("it should display identities properly", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <Logins sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -145,7 +146,7 @@ describe("it should display identities properly", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <Logins sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -165,7 +166,7 @@ describe("it should display identities properly", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <Logins sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -173,6 +174,28 @@ describe("it should display identities properly", () => {
     const noEmail = component.contains(<Value>No emails</Value>);
     expect(noPhone).toEqual(true);
     expect(noEmail).toEqual(true);
+  });
+
+  test("it should display navigation breadcrumbs", () => {
+    const mockedSortedResponse: SortedIdentities = {
+      phoneIdentities: [],
+      emailIdentities: [],
+    };
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <Logins sortedIdentities={mockedSortedResponse} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const smallHeader = component.find(SmallHeader);
+    expect(smallHeader).toHaveLength(1);
+    expect(smallHeader.contains(<h1>Logins</h1>)).toEqual(true);
+    expect(
+      smallHeader.contains(<p>Your emails, phones and social logins</p>),
+    ).toEqual(true);
   });
 });
 
@@ -237,7 +260,7 @@ describe('the "show more" button should behave properly', () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <Logins sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -294,7 +317,7 @@ describe('the "show more" button should behave properly', () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <Logins sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );
@@ -339,7 +362,7 @@ describe('the "show more" button should behave properly', () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <Account sortedIdentities={mockedSortedResponse} />
+          <Logins sortedIdentities={mockedSortedResponse} />
         </Layout>
       </ThemeProvider>,
     );

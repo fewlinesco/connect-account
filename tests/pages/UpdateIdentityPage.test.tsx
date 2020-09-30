@@ -1,4 +1,4 @@
-jest.mock("../../src/hooks/useCookies");
+jest.mock("@src/hooks/useCookies");
 
 import { mount } from "enzyme";
 import fetch from "jest-fetch-mock";
@@ -6,22 +6,26 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { ReceivedIdentityTypes, Identity } from "../../src/@types/Identity";
-import { Layout } from "../../src/components/Layout";
-import { Input } from "../../src/components/display/fewlines/Input/Input";
+import { ReceivedIdentityTypes, Identity } from "@src/@types/Identity";
+import { Layout } from "@src/components/Layout";
+import { Input } from "@src/components/display/fewlines/Input/Input";
+import {
+  NavigationBreadcrumbs,
+  Breadcrumbs,
+} from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import {
   UpdateIdentityForm,
   Form,
-} from "../../src/components/display/fewlines/UpdateIdentityForm";
-import { GlobalStyle } from "../../src/design-system/globals/globalStyle";
-import { lightTheme } from "../../src/design-system/theme/lightTheme";
-import { useCookies } from "../../src/hooks/useCookies";
-import UpdateIdentityPage from "../../src/pages/account/logins/[type]/[id]/update";
-import * as fetchJson from "../../src/utils/fetchJson";
+} from "@src/components/display/fewlines/UpdateIdentityForm";
+import { GlobalStyle } from "@src/design-system/globals/globalStyle";
+import { lightTheme } from "@src/design-system/theme/lightTheme";
+import { useCookies } from "@src/hooks/useCookies";
+import UpdateIdentityPage from "@src/pages/account/logins/[type]/[id]/update";
+import * as fetchJson from "@src/utils/fetchJson";
 
 enableFetchMocks();
 
-jest.mock("../../src/config", () => {
+jest.mock("@src/config", () => {
   return {
     config: {
       connectApplicationClientSecret: "foo-bar",
@@ -50,6 +54,52 @@ describe("UpdateIdentityPage", () => {
     type: ReceivedIdentityTypes.EMAIL,
     value: "test@test.test",
   };
+
+  const phoneIdentity: Identity = {
+    id: "htg6dcc1-530b-4982-878d-33f0def6a7cf",
+    primary: false,
+    status: "validated",
+    type: ReceivedIdentityTypes.PHONE,
+    value: "0788992255",
+  };
+
+  test("it should display navigation breadcrumbs properly for emails", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <UpdateIdentityPage identity={nonPrimaryIdentity} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
+    expect(navigationBreadCrumbs).toHaveLength(1);
+    expect(
+      navigationBreadCrumbs.contains(
+        <Breadcrumbs>Email address | edit</Breadcrumbs>,
+      ),
+    ).toEqual(true);
+  });
+
+  test("it should display navigation breadcrumbs properly for phones", () => {
+    const component = mount(
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyle />
+        <Layout>
+          <UpdateIdentityPage identity={phoneIdentity} />
+        </Layout>
+      </ThemeProvider>,
+    );
+
+    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
+    expect(navigationBreadCrumbs).toHaveLength(1);
+    expect(
+      navigationBreadCrumbs.contains(
+        <Breadcrumbs>Phone number | edit</Breadcrumbs>,
+      ),
+    ).toEqual(true);
+  });
 
   test("it should display an update identity input", () => {
     const component = mount(

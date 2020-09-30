@@ -4,7 +4,10 @@ import styled from "styled-components";
 
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
+import { NavigationBreadcrumbs } from "./NavigationBreadcrumbs/NavigationBreadcrumbs";
+import { IdentityTypes } from "@lib/@types/Identity";
 import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
+import { Box } from "@src/components/display/fewlines/Box/Box";
 
 export const UpdateIdentityForm: React.FC<{
   updateIdentity: (newValue: string) => Promise<void>;
@@ -12,9 +15,22 @@ export const UpdateIdentityForm: React.FC<{
 }> = ({ currentIdentity, updateIdentity }) => {
   const [identity, setIdentity] = React.useState("");
   const router = useRouter();
+  const { value } = currentIdentity;
 
   return (
     <Wrapper>
+      <h1>Logins</h1>
+      <NavigationBreadcrumbs
+        breadcrumbs={[
+          currentIdentity.type === IdentityTypes.EMAIL.toLowerCase()
+            ? "Email address"
+            : "Phone number",
+          "edit",
+        ]}
+      />
+      <Box key={value}>
+        <Value>{value}</Value>
+      </Box>
       <Form
         method="post"
         onSubmit={async (event) => {
@@ -55,6 +71,14 @@ export const UpdateIdentityForm: React.FC<{
 };
 
 const Wrapper = styled.div`
+  width: 90%;
+  margin: 0 auto;
+
+  h1 {
+    margin: ${({ theme }) => theme.spaces.component.s} 0
+      ${({ theme }) => theme.spaces.component.xxs};
+  }
+
   input {
     width: 100%;
     margin: ${({ theme }) => theme.spaces.component.xxs} 0;
@@ -68,7 +92,13 @@ const Wrapper = styled.div`
     margin: ${({ theme }) => theme.spaces.component.xxs} 0;
   }
 `;
+
 export const Form = styled.form`
   display: column;
   align-items: center;
+`;
+
+const Value = styled.p`
+  margin-right: 0.5rem;
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
 `;

@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
+import { NavigationBreadcrumbs } from "./NavigationBreadcrumbs/NavigationBreadcrumbs";
 import {
   InMemoryTemporaryIdentity,
   ReceivedIdentityTypes,
@@ -23,6 +24,15 @@ export const AddIdentityInputForm: React.FC<{
 
   return (
     <Wrapper>
+      <h1>Logins</h1>
+      <NavigationBreadcrumbs
+        breadcrumbs={[
+          type === ReceivedIdentityTypes.EMAIL
+            ? "Email address"
+            : "Phone number",
+          "new",
+        ]}
+      />
       <Form
         method="post"
         onSubmit={async (event) => {
@@ -69,6 +79,11 @@ export const AddIdentityInputForm: React.FC<{
 const Wrapper = styled.div`
   max-width: 90%;
   margin: 0 auto;
+
+  h1 {
+    margin: ${({ theme }) => theme.spaces.component.s} 0
+      ${({ theme }) => theme.spaces.component.xxs};
+  }
 
   .send-button {
     margin: ${({ theme }) => theme.spaces.component.xxs} 0;

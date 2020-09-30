@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Box } from "./Box/Box";
 import { Button, ButtonVariant } from "./Button/Button";
 import { Input } from "./Input/Input";
+import { NavigationBreadcrumbs } from "./NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { IdentityTypes } from "@lib/@types/Identity";
 import { displayAlertBar } from "@src/utils/displayAlertBar";
 
@@ -18,6 +19,15 @@ const IdentityValidationForm: React.FC<{
 
   return (
     <Wrapper>
+      <h1>Logins</h1>
+      <NavigationBreadcrumbs
+        breadcrumbs={[
+          type.toUpperCase() === IdentityTypes.EMAIL
+            ? "Email address"
+            : "Phone number",
+          "validation",
+        ]}
+      />
       <Form
         method="post"
         onSubmit={async (event) => {
@@ -67,6 +77,11 @@ export default IdentityValidationForm;
 const Wrapper = styled.div`
   max-width: 90%;
   margin: 0 auto;
+
+  h1 {
+    margin: ${({ theme }) => theme.spaces.component.s} 0
+      ${({ theme }) => theme.spaces.component.xxs};
+  }
 
   input {
     width: 100%;
