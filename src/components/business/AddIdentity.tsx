@@ -30,7 +30,13 @@ export const AddIdentity: React.FC<AddIdentityProps> = ({ type, children }) => {
       "/api/auth-connect/send-identity-validation-code",
       HttpVerbs.POST,
       body,
-    ).then((data) => data.json());
+    ).then((response) => {
+      if (response.status >= 400) {
+        return router && router.push("/account/logins/email/new");
+      }
+
+      return response.json();
+    });
 
     router && router.push(`/account/logins/${type}/validation/${eventId.data}`);
   }

@@ -12,7 +12,7 @@ import { getUser } from "@src/utils/getUser";
 import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
-const Account: React.FC = () => {
+const AccountIndexPage: React.FC = () => {
   return (
     <>
       <Head>
@@ -29,7 +29,7 @@ const Account: React.FC = () => {
   );
 };
 
-export default Account;
+export default AccountIndexPage;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {

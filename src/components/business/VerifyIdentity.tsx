@@ -24,9 +24,13 @@ export const VerifyIdentity: React.FC<VerifyIdentity> = ({
       { validationCode, eventId },
     );
 
-    const path = new URL(response.url).pathname;
+    if (response.status >= 400) {
+      router && router.push("/account/logins/email/new");
+    } else {
+      const path = new URL(response.url).pathname;
 
-    router && router.push(path);
+      router && router.push(path);
+    }
   }
 
   return children({
