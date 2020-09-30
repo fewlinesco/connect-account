@@ -4,18 +4,11 @@ import styled from "styled-components";
 export const NavigationBreadcrumbs: React.FC<{
   breadcrumbs: string[];
 }> = ({ breadcrumbs }) => {
-  return (
-    <Wrapper>
-      <p>{breadcrumbs.join(" | ")}</p>
-    </Wrapper>
-  );
+  return <Breadcrumbs>{breadcrumbs.join(" | ")}</Breadcrumbs>;
 };
 
-const Wrapper = styled.div`
+const Breadcrumbs = styled.div`
   padding: 0 0 ${({ theme }) => theme.spaces.component.s};
-
-  p {
-    font-weight: ${({ theme }) => theme.fontWeights.light};
-    font-size: ${({ theme }) => theme.fontSizes.s};
-  }
+  font-weight: ${({ theme }) => theme.fontWeights.light};
+  font-size: ${({ theme }) => theme.fontSizes.s};
 `;
