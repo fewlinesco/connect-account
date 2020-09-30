@@ -1,11 +1,14 @@
-import { createLogger } from "@fewlines/fwl-logging";
+import { createLogger, EncoderTypeEnum } from "@fwl/logging";
 import { GetServerSideProps } from "next";
 import { GetServerSidePropsResult } from "next";
 
 export function withSSRLogger(
   getServerSideProps: GetServerSideProps,
 ): GetServerSideProps {
-  const logger = createLogger("connect-account", "json").withMeta({
+  const logger = createLogger({
+    service: "connect-account",
+    encoder: EncoderTypeEnum.JSON,
+  }).withMeta({
     process: "getServerSideProps",
   });
 
@@ -22,9 +25,9 @@ export function withSSRLogger(
           const processTimeEnd = process.hrtime.bigint();
 
           logger.log("Success", {
-            method: context.req.method,
-            statusCode: context.res.statusCode,
-            path: context.req.url,
+            method: context.req.method ? context.req.method : "No method",
+            statusCode: context.res.statusCode ? context.res.statusCode : 0,
+            path: context.req.url ? context.req.url : "No path",
             duration: Number(
               (processTimeEnd - processTimeStart) / BigInt(1000),
             ),
@@ -37,9 +40,9 @@ export function withSSRLogger(
         const processTimeEnd = process.hrtime.bigint();
 
         logger.log(error.message, {
-          method: context.req.method,
+          method: context.req.method ? context.req.method : "No method",
           statusCode: context.res.statusCode,
-          path: context.req.url,
+          path: context.req.url ? context.req.url : "No path",
           duration: (
             (processTimeEnd - processTimeStart) /
             BigInt(1000)
