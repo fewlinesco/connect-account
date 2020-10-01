@@ -5,7 +5,7 @@ import React from "react";
 import type { Identity } from "@src/@types/Identity";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
-import { UpdateIdentityForm } from "@src/components/display/fewlines/UpdateIdentityForm";
+import { UpdateIdentityForm } from "@src/components/display/fewlines/UpdateIdentityForm/UpdateIdentityForm";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
