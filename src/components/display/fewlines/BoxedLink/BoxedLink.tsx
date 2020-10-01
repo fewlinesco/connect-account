@@ -1,7 +1,7 @@
 import React from "react";
 import style from "styled-components";
 
-import { RightChevron } from "../RightChevron";
+import { RightChevron } from "../RightChevron/RightChevron";
 
 export const BoxedLink: React.FC<{
   value: string;
