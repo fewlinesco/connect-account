@@ -3,7 +3,10 @@ import styled from "styled-components";
 
 import { IdentityContainer } from "./IdentityContainer";
 
-export default { title: "IdentityContainer", component: IdentityContainer };
+export default {
+  title: "components/IdentityContainer",
+  component: IdentityContainer,
+};
 
 export const StandardIdentityContainer = (): JSX.Element => {
   return (

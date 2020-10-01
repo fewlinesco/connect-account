@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { Button, ButtonVariant } from "./Button";
 
-export default { title: "Button", component: Button };
+export default { title: "components/Button", component: Button };
 
 export const PrimaryButton = (): JSX.Element => {
   return (

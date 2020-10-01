@@ -3,7 +3,7 @@ import React from "react";
 import { AwaitingValidationIcon } from "./AwaitingValidationIcon";
 
 export default {
-  title: "AwaitingValidationIcon",
+  title: "icons/AwaitingValidationIcon",
   component: AwaitingValidationIcon,
 };
 
