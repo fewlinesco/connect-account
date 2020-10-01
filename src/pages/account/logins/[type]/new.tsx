@@ -3,7 +3,7 @@ import React from "react";
 
 import type { ReceivedIdentityTypes } from "@src/@types/Identity";
 import { AddIdentity } from "@src/components/business/AddIdentity";
-import { AddIdentityInputForm } from "@src/components/display/fewlines/AddIdentityInputForm";
+import { AddIdentityInputForm } from "@src/components/display/fewlines/AddIdentityInputForm/AddIdentityInputForm";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
 

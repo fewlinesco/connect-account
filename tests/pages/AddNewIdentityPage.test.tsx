@@ -10,7 +10,7 @@ import { Layout } from "@src/components/Layout";
 import {
   AddIdentityInputForm,
   Form,
-} from "@src/components/display/fewlines/AddIdentityInputForm";
+} from "@src/components/display/fewlines/AddIdentityInputForm/AddIdentityInputForm";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
   NavigationBreadcrumbs,
