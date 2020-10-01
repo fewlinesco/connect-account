@@ -9,12 +9,25 @@ export default {
   component: AddIdentityInputForm,
 };
 
-export const StandardAddIdentityInputForm = (): JSX.Element => {
+export const AddEmailInputForm = (): JSX.Element => {
   return (
     <AddIdentity type={ReceivedIdentityTypes.EMAIL}>
       {({ addIdentity }) => (
         <AddIdentityInputForm
           type={ReceivedIdentityTypes.EMAIL}
+          addIdentity={addIdentity}
+        />
+      )}
+    </AddIdentity>
+  );
+};
+
+export const AddIPhoneInputForm = (): JSX.Element => {
+  return (
+    <AddIdentity type={ReceivedIdentityTypes.PHONE}>
+      {({ addIdentity }) => (
+        <AddIdentityInputForm
+          type={ReceivedIdentityTypes.PHONE}
           addIdentity={addIdentity}
         />
       )}

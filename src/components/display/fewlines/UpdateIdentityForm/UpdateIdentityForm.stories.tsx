@@ -9,13 +9,34 @@ export default {
   component: UpdateIdentityForm,
 };
 
-export const StandardUpdateIdentityForm = (): JSX.Element => {
+export const UpdateEmailForm = (): JSX.Element => {
   const mockedResponse: Identity = {
     id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
     primary: true,
     status: "validated",
     type: ReceivedIdentityTypes.EMAIL,
     value: "test@test.test",
+  };
+
+  return (
+    <UpdateIdentity identity={mockedResponse}>
+      {({ updateIdentity }) => (
+        <UpdateIdentityForm
+          updateIdentity={updateIdentity}
+          currentIdentity={mockedResponse}
+        />
+      )}
+    </UpdateIdentity>
+  );
+};
+
+export const UpdatePhoneForm = (): JSX.Element => {
+  const mockedResponse: Identity = {
+    id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+    primary: true,
+    status: "validated",
+    type: ReceivedIdentityTypes.PHONE,
+    value: "0677112244",
   };
 
   return (

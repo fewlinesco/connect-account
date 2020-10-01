@@ -9,12 +9,25 @@ export default {
   component: IdentityValidationForm,
 };
 
-export const StandardIdentityValidationForm = (): JSX.Element => {
+export const EmailValidationForm = (): JSX.Element => {
   return (
     <VerifyIdentity eventId={"1234"}>
       {({ verifyIdentity }) => (
         <IdentityValidationForm
           type={IdentityTypes.EMAIL}
+          verifyIdentity={verifyIdentity}
+        />
+      )}
+    </VerifyIdentity>
+  );
+};
+
+export const PhoneValidationForm = (): JSX.Element => {
+  return (
+    <VerifyIdentity eventId={"1234"}>
+      {({ verifyIdentity }) => (
+        <IdentityValidationForm
+          type={IdentityTypes.PHONE}
           verifyIdentity={verifyIdentity}
         />
       )}
