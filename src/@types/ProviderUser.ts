@@ -8,3 +8,12 @@ export type ProviderUser = {
     identities: Identity[];
   };
 };
+
+export type SingleIdentityProviderUser = {
+  id: string;
+  name: string;
+  user: {
+    id: string;
+    identity: Identity | null;
+  };
+};
