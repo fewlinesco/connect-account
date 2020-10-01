@@ -19,4 +19,5 @@ export const StandardCrossIcon = (): JSX.Element => {
 const Container = styled.div`
   width: 90%;
   margin: 0 auto;
+  background-color: ${({ theme }) => theme.colors.blacks[4]};
 `;
