@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "./Button/Button";
+import { Form } from "./Form/Form";
 import { Input } from "./Input/Input";
 import { NavigationBreadcrumbs } from "./NavigationBreadcrumbs/NavigationBreadcrumbs";
 import {
@@ -20,6 +21,8 @@ export const AddIdentityInputForm: React.FC<{
     expiresAt: Date.now(),
   });
 
+  console.log(identity);
+
   const router = useRouter();
 
   return (
@@ -34,10 +37,7 @@ export const AddIdentityInputForm: React.FC<{
         ]}
       />
       <Form
-        method="post"
-        onSubmit={async (event) => {
-          event.preventDefault();
-
+        onSubmit={async () => {
           await addIdentity(identity);
         }}
       >
@@ -97,9 +97,4 @@ const Wrapper = styled.div`
     width: 100%;
     margin: ${({ theme }) => theme.spaces.component.xxs} 0;
   }
-`;
-
-export const Form = styled.form`
-  display: column;
-  align-items: center;
 `;
