@@ -6,6 +6,14 @@ export type ProviderUser = {
   user: {
     id: string;
     identities: Identity[];
-    identity: Identity;
+  };
+};
+
+export type SingleIdentityProviderUser = {
+  id: string;
+  name: string;
+  user: {
+    id: string;
+    identity: Identity | null;
   };
 };
