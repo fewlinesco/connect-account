@@ -2,6 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
+import { getIdentity } from "@lib/queries/getIdentity";
 import type { Identity } from "@src/@types/Identity";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { IdentityOverview } from "@src/components/display/fewlines/IdentityOverview";
@@ -9,7 +10,6 @@ import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
-import { getIdentities } from "@src/queries/getIdentities";
 import { getUser } from "@src/utils/getUser";
 import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry from "@src/utils/sentry";
@@ -45,16 +45,15 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
             }
           });
 
-        const identity = await getIdentities(
+        const identity = await getIdentity(
           (decodedJWT as AccessToken).sub,
+          context.params.id,
         ).then((result) => {
           if (result.errors) {
             throw new GraphqlErrors(result.errors);
           }
 
-          const res = result.data?.provider.user.identities.filter(
-            (id) => id.id === context.params.id,
-          )[0];
+          const res = result.data?.provider.user.identity;
 
           return res;
         });

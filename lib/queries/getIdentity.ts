@@ -1,0 +1,38 @@
+import { FetchResult } from "apollo-link";
+import gql from "graphql-tag";
+
+import type { ProviderUser } from "@src/@types/ProviderUser";
+import { fetchManagement } from "@src/utils/fetchManagement";
+
+const USER_QUERY = gql`
+  query getUserIdentityQuery($userId: String!, $id: String!) {
+    provider {
+      id
+      name
+      user(filters: { userId: $userId }) {
+        id
+        identity(filters: { id: $id }) {
+          id
+          primary
+          status
+          type
+          value
+        }
+      }
+    }
+  }
+`;
+
+export async function getIdentity(
+  userId: string,
+  id: string,
+): Promise<FetchResult<{ provider: ProviderUser }>> {
+  const operation = {
+    query: USER_QUERY,
+    variables: { userId, id },
+  };
+
+  return fetchManagement(operation) as FetchResult<{
+    provider: ProviderUser;
+  }>;
+}
