@@ -3,12 +3,12 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { BoxedLink } from "./BoxedLink/BoxedLink";
-import { Button, ButtonVariant } from "./Button/Button";
-import { IdentityContainer } from "./IdentityContainer/IdentityContainer";
-import { NeutralLink } from "./NeutralLink/NeutralLink";
-import { Separator } from "./Separator/Separator";
-import { ShowMoreButton } from "./ShowMoreButton/ShowMoreButton";
+import { BoxedLink } from "../BoxedLink/BoxedLink";
+import { Button, ButtonVariant } from "../Button/Button";
+import { IdentityContainer } from "../IdentityContainer/IdentityContainer";
+import { NeutralLink } from "../NeutralLink/NeutralLink";
+import { Separator } from "../Separator/Separator";
+import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
 import { Identity } from "@src/@types/Identity";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 
