@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import type { ProviderUser } from "@src/@types/ProviderUser";
 import { fetchManagement } from "@src/utils/fetchManagement";
 
-const USER_QUERY = gql`
+const GET_USER_IDENTITY_QUERY = gql`
   query getUserIdentityQuery($userId: String!, $id: String!) {
     provider {
       id
@@ -28,7 +28,7 @@ export async function getIdentity(
   id: string,
 ): Promise<FetchResult<{ provider: ProviderUser }>> {
   const operation = {
-    query: USER_QUERY,
+    query: GET_USER_IDENTITY_QUERY,
     variables: { userId, id },
   };
 
