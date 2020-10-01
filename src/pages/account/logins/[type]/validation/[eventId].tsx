@@ -4,7 +4,7 @@ import React from "react";
 
 import type { IdentityTypes } from "@lib/@types/Identity";
 import { VerifyIdentity } from "@src/components/business/VerifyIdentity";
-import IdentityValidationForm from "@src/components/display/fewlines/IdentityValidationForm";
+import IdentityValidationForm from "@src/components/display/fewlines/IdentityValidationForm/IdentityValidationForm";
 import { OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
