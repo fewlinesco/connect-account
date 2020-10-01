@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "./Button/Button";
+import { Form } from "./Form/Form";
 import { Input } from "./Input/Input";
 import { NavigationBreadcrumbs } from "./NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { IdentityTypes } from "@lib/@types/Identity";
@@ -32,9 +33,7 @@ export const UpdateIdentityForm: React.FC<{
         <Value>{value}</Value>
       </Box>
       <Form
-        method="post"
-        onSubmit={async (event) => {
-          event.preventDefault();
+        onSubmit={async () => {
           updateIdentity(identity);
         }}
       >
@@ -91,11 +90,6 @@ const Wrapper = styled.div`
   .send-button {
     margin: ${({ theme }) => theme.spaces.component.xxs} 0;
   }
-`;
-
-export const Form = styled.form`
-  display: column;
-  align-items: center;
 `;
 
 const Value = styled.p`

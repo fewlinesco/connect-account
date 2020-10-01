@@ -8,15 +8,13 @@ import { ThemeProvider } from "styled-components";
 
 import { ReceivedIdentityTypes, Identity } from "@src/@types/Identity";
 import { Layout } from "@src/components/Layout";
+import { Form } from "@src/components/display/fewlines/Form/Form";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
   NavigationBreadcrumbs,
   Breadcrumbs,
 } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
-import {
-  UpdateIdentityForm,
-  Form,
-} from "@src/components/display/fewlines/UpdateIdentityForm";
+import { UpdateIdentityForm } from "@src/components/display/fewlines/UpdateIdentityForm";
 import { GlobalStyle } from "@src/design-system/globals/globalStyle";
 import { lightTheme } from "@src/design-system/theme/lightTheme";
 import { useCookies } from "@src/hooks/useCookies";

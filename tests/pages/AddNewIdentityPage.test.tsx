@@ -7,10 +7,8 @@ import { ThemeProvider } from "styled-components";
 
 import { ReceivedIdentityTypes } from "@src/@types/Identity";
 import { Layout } from "@src/components/Layout";
-import {
-  AddIdentityInputForm,
-  Form,
-} from "@src/components/display/fewlines/AddIdentityInputForm";
+import { AddIdentityInputForm } from "@src/components/display/fewlines/AddIdentityInputForm";
+import { Form } from "@src/components/display/fewlines/Form/Form";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
   NavigationBreadcrumbs,

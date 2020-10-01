@@ -21,8 +21,6 @@ export const AddIdentityInputForm: React.FC<{
     expiresAt: Date.now(),
   });
 
-  console.log(identity);
-
   const router = useRouter();
 
   return (
