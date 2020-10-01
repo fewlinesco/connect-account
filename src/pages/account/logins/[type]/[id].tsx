@@ -6,7 +6,7 @@ import { getIdentity } from "@lib/queries/getIdentity";
 import type { Identity } from "@src/@types/Identity";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { NoIdentityFound } from "@src/clientErrors";
-import { IdentityOverview } from "@src/components/display/fewlines/IdentityOverview";
+import { IdentityOverview } from "@src/components/display/fewlines/IdentityOverview/IdentityOverview";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
