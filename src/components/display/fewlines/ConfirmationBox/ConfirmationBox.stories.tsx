@@ -4,7 +4,7 @@ import { ButtonVariant } from "../Button/Button";
 import { ConfirmationBox } from "./ConfirmationBox";
 
 export default {
-  title: "ConfirmationBox",
+  title: "components/ConfirmationBox",
   component: ConfirmationBox,
 };
 
