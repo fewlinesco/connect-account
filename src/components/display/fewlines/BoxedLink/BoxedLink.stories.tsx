@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { BoxedLink } from "./BoxedLink";
 
-export default { title: "BoxedLink", component: BoxedLink };
+export default { title: "components/BoxedLink", component: BoxedLink };
 
 export const StandardBoxedLink = (): JSX.Element => {
   return (

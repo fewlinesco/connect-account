@@ -11,7 +11,7 @@ import AlertBar from "@src/components/display/fewlines/AlertBar/AlertBar";
 import { Button } from "@src/components/display/fewlines/Button/Button";
 import IdentityValidationForm, {
   Form,
-} from "@src/components/display/fewlines/IdentityValidationForm";
+} from "@src/components/display/fewlines/IdentityValidationForm/IdentityValidationForm";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
   NavigationBreadcrumbs,

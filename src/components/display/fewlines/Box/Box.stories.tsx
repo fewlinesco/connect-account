@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { Box } from "./Box";
 
-export default { title: "Box", component: Box };
+export default { title: "components/Box", component: Box };
 
 export const StandardBox = (): JSX.Element => {
   return (

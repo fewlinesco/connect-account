@@ -2,9 +2,9 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { Button, ButtonVariant } from "./Button/Button";
-import { Input } from "./Input/Input";
-import { NavigationBreadcrumbs } from "./NavigationBreadcrumbs/NavigationBreadcrumbs";
+import { Button, ButtonVariant } from "../Button/Button";
+import { Input } from "../Input/Input";
+import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import {
   InMemoryTemporaryIdentity,
   ReceivedIdentityTypes,

@@ -16,7 +16,7 @@ import {
 import {
   UpdateIdentityForm,
   Form,
-} from "@src/components/display/fewlines/UpdateIdentityForm";
+} from "@src/components/display/fewlines/UpdateIdentityForm/UpdateIdentityForm";
 import { GlobalStyle } from "@src/design-system/globals/globalStyle";
 import { lightTheme } from "@src/design-system/theme/lightTheme";
 import { useCookies } from "@src/hooks/useCookies";

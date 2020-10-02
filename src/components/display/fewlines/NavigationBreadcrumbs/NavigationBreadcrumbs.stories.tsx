@@ -3,10 +3,14 @@ import React from "react";
 import { NavigationBreadcrumbs } from "./NavigationBreadcrumbs";
 
 export default {
-  title: "NavigationBreadcrumbs",
+  title: "components/NavigationBreadcrumbs",
   component: NavigationBreadcrumbs,
 };
 
-export const StandardNavigationBreadcrumbs = (): JSX.Element => {
+export const OneLevelNavigationBreadcrumbs = (): JSX.Element => {
+  return <NavigationBreadcrumbs breadcrumbs={["Phone number"]} />;
+};
+
+export const TwoLevelsNavigationBreadcrumbs = (): JSX.Element => {
   return <NavigationBreadcrumbs breadcrumbs={["Phone number", "validation"]} />;
 };

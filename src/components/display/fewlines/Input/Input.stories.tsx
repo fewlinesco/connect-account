@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { Input } from "./Input";
 
-export default { title: "Input", component: Input };
+export default { title: "components/Input", component: Input };
 
 export const StandardInput = (): JSX.Element => {
   return (

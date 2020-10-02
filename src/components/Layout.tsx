@@ -2,7 +2,7 @@ import Head from "next/head";
 import React from "react";
 import styled from "styled-components";
 
-import { Header } from "./Header";
+import { Header } from "./display/fewlines/Header/Header";
 
 export const Layout: React.FC = ({ children }) => {
   return (
