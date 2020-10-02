@@ -7,10 +7,7 @@ import { ThemeProvider } from "styled-components";
 
 import { ReceivedIdentityTypes } from "@src/@types/Identity";
 import { Layout } from "@src/components/Layout";
-import {
-  AddIdentityInputForm,
-  Form,
-} from "@src/components/display/fewlines/AddIdentityInputForm/AddIdentityInputForm";
+import { Form } from "@src/components/display/fewlines/AddIdentityForm/AddIdentityForm";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
   NavigationBreadcrumbs,
@@ -106,13 +103,13 @@ describe("AddIdentityPage", () => {
       </ThemeProvider>,
     );
 
-    const newIdentityInput = component.find(AddIdentityInputForm).find(Input);
+    const newIdentityInput = component.find(Input);
 
     newIdentityInput.simulate("change", {
       target: { value: "test3@test.test " },
     });
 
-    const form = component.find(AddIdentityInputForm).find(Form);
+    const form = component.find(Form);
 
     const fetchJsonMethod = jest.spyOn(fetchJson, "fetchJson");
 

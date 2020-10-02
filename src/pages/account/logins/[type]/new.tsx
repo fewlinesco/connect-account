@@ -3,7 +3,7 @@ import React from "react";
 
 import type { ReceivedIdentityTypes } from "@src/@types/Identity";
 import { AddIdentity } from "@src/components/business/AddIdentity";
-import { AddIdentityInputForm } from "@src/components/display/fewlines/AddIdentityInputForm/AddIdentityInputForm";
+import { AddIdentityForm } from "@src/components/display/fewlines/AddIdentityForm/AddIdentityForm";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
 
@@ -13,7 +13,7 @@ const AddIdentityPage: React.FC<{ type: ReceivedIdentityTypes }> = ({
   return (
     <AddIdentity type={type}>
       {({ addIdentity }) => (
-        <AddIdentityInputForm type={type} addIdentity={addIdentity} />
+        <AddIdentityForm type={type} addIdentity={addIdentity} />
       )}
     </AddIdentity>
   );
