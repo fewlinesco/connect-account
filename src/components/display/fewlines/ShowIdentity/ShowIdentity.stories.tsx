@@ -3,7 +3,7 @@ import React from "react";
 import { ShowIdentity } from "./ShowIdentity";
 import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
 
-export default { title: "pages/ShowShowIdentity", component: ShowIdentity };
+export default { title: "pages/ShowIdentity", component: ShowIdentity };
 
 export const ShowPrimaryIdentity = (): JSX.Element => {
   const mockedResponse: Identity = {
