@@ -99,7 +99,7 @@ const Container = styled.div`
 
   @keyframes appearFromBottom {
     from {
-      bottom: -200px;
+      bottom: -250px;
       box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0);
     }
     to {
@@ -115,8 +115,9 @@ const Container = styled.div`
       box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
     }
     to {
-      bottom: -200px;
+      bottom: -250px;
       visibility: hidden;
+      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0);
     }
   }
 `;
