@@ -19,7 +19,7 @@ import {
 import { GlobalStyle } from "@src/design-system/globals/globalStyle";
 import { lightTheme } from "@src/design-system/theme/lightTheme";
 import { useCookies } from "@src/hooks/useCookies";
-import AddNewIdentityPage from "@src/pages/account/logins/[type]/new";
+import AddIdentityPage from "@src/pages/account/logins/[type]/new";
 import * as fetchJson from "@src/utils/fetchJson";
 
 enableFetchMocks();
@@ -41,13 +41,13 @@ jest.mock("../../src/config", () => {
   };
 });
 
-describe("AddNewIdentityPage", () => {
+describe("AddIdentityPage", () => {
   test("it should display navigation breadcrumbs properly for emails", () => {
     const component = mount(
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <AddNewIdentityPage type={ReceivedIdentityTypes.EMAIL} />
+          <AddIdentityPage type={ReceivedIdentityTypes.EMAIL} />
         </Layout>
       </ThemeProvider>,
     );
@@ -66,7 +66,7 @@ describe("AddNewIdentityPage", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <AddNewIdentityPage type={ReceivedIdentityTypes.PHONE} />
+          <AddIdentityPage type={ReceivedIdentityTypes.PHONE} />
         </Layout>
       </ThemeProvider>,
     );
@@ -85,12 +85,12 @@ describe("AddNewIdentityPage", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <AddNewIdentityPage type={ReceivedIdentityTypes.EMAIL} />
+          <AddIdentityPage type={ReceivedIdentityTypes.EMAIL} />
         </Layout>
       </ThemeProvider>,
     );
 
-    const addIdentityInput = component.find(AddNewIdentityPage).find(Form);
+    const addIdentityInput = component.find(Form);
     expect(addIdentityInput).toHaveLength(1);
   });
 
@@ -101,7 +101,7 @@ describe("AddNewIdentityPage", () => {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
         <Layout>
-          <AddNewIdentityPage type={ReceivedIdentityTypes.EMAIL} />
+          <AddIdentityPage type={ReceivedIdentityTypes.EMAIL} />
         </Layout>
       </ThemeProvider>,
     );
