@@ -10,13 +10,11 @@ import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
 import { DeleteIdentity } from "@src/components/business/DeleteIdentity";
 
-type IdentityOverviewProps = {
+type ShowIdentityProps = {
   identity: Identity;
 };
 
-export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
-  identity,
-}) => {
+export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
   const { id, primary, status, type, value } = identity;
 
   return (
