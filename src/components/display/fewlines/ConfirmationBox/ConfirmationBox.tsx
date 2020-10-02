@@ -12,54 +12,27 @@ type ConfirmationBoxProps = {
   secondButton: {
     label: string;
     variant: ButtonVariant;
+    onClick: void;
   };
 };
 export const ConfirmationBox: React.FC<ConfirmationBoxProps> = (structure) => {
-  const [hidden, setHidden] = React.useState<boolean>(false);
   return (
     <Wrapper>
-      <div className={hidden ? "hidden" : "visible"}>
-        <p>{structure.text}</p>
-        <Button variant={structure.firstButton.variant}>
-          {structure.firstButton.label}
-        </Button>
-        <Button
-          onClick={() => setHidden(true)}
-          variant={structure.secondButton.variant}
-        >
-          {structure.secondButton.label}
-        </Button>
-      </div>
+      <p>{structure.text}</p>
+      <Button variant={structure.firstButton.variant}>
+        {structure.firstButton.label}
+      </Button>
+      <Button
+        onClick={() => structure.secondButton.onClick}
+        variant={structure.secondButton.variant}
+      >
+        {structure.secondButton.label}
+      </Button>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  .visible {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4rem 2rem 3rem;
-    position: absolute;
-    width: 100%;
-    left: 0;
-    animation: appearFromBottom 0.1s;
-    bottom: 0;
-    visibility: visible;
-  }
-
-  .hidden {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4rem 2rem 3rem;
-    position: absolute;
-    width: 100%;
-    left: 0;
-    animation: disappearFromBottom 0.1s;
-    visibility: hidden;
-  }
-
   p {
     margin: 0 0 ${({ theme }) => theme.spaces.component.xs};
   }
