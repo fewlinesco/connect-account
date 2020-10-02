@@ -13,7 +13,7 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
     <ConfirmationBox
       text="You are about to replace mail@mail.com as your main address"
       firstButton={{
-        label: "set mail2@mail.com as my main",
+        label: "Set mail2@mail.com as my main",
         variant: ButtonVariant.PRIMARY,
       }}
       secondButton={{
