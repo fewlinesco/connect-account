@@ -9,7 +9,8 @@ export const ConfirmationBox = styled.div<ConfirmationBoxProps>`
   flex-direction: column;
   align-items: center;
   padding: 4rem 2rem 3rem;
-  position: absolute;
+  position: fixed;
+  background-color: ${({ theme }) => theme.colors.background};
   width: 100%;
   left: 0;
   ${(props) =>
