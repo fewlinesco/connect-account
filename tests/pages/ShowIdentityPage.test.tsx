@@ -11,6 +11,8 @@ import {
   Button,
   ButtonVariant,
 } from "@src/components/display/fewlines/Button/Button";
+import { ClickAwayListener } from "@src/components/display/fewlines/ConfirmationBox/ClickAwayListener";
+import { ConfirmationBox } from "@src/components/display/fewlines/ConfirmationBox/ConfirmationBox";
 import {
   NavigationBreadcrumbs,
   Breadcrumbs,
@@ -230,5 +232,188 @@ describe("ShowIdentityPage", () => {
       </Button>,
     );
     expect(makeThisPrimaryButton).toEqual(false);
+  });
+
+  describe("ConfirmationBox", () => {
+    test("no confirmation box should be displayed at the page's render", () => {
+      const component = mount(
+        <AccountApp>
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
+        </AccountApp>,
+      );
+
+      const confirmationBox = component
+        .find(ConfirmationBox)
+        .find({ open: true });
+      expect(confirmationBox).toHaveLength(0);
+    });
+
+    test("the primary confirmation box shoud appear on click on 'make this my primary { type }' button", () => {
+      const component = mount(
+        <AccountApp>
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
+        </AccountApp>,
+      );
+
+      const makePrimaryButton = component
+        .find(Button)
+        .find({ variant: ButtonVariant.SECONDARY })
+        .at(0);
+      makePrimaryButton.simulate("click");
+
+      const confirmationBox = component
+        .find(ConfirmationBox)
+        .find({ open: true })
+        .hostNodes();
+
+      const confirmationText = confirmationBox.contains(
+        <p className="confirmation-text">
+          You are about to replace mail@mail.com as your main address
+        </p>,
+      );
+
+      expect(confirmationBox).toHaveLength(1);
+      expect(confirmationText).toEqual(true);
+    });
+
+    test("we should be able to close the confirmation box by clicking on 'keep { value } as my primary { type }' button", () => {
+      const component = mount(
+        <AccountApp>
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
+        </AccountApp>,
+      );
+
+      const makePrimaryButton = component
+        .find(Button)
+        .find({ variant: ButtonVariant.SECONDARY })
+        .at(0);
+      makePrimaryButton.simulate("click");
+
+      const keepEmailPrimaryButton = component
+        .find(ConfirmationBox)
+        .find({ open: true })
+        .find(Button)
+        .find({ variant: ButtonVariant.SECONDARY });
+
+      expect(keepEmailPrimaryButton.text()).toEqual(
+        "Keep mail@mail.co as my primary email",
+      );
+      keepEmailPrimaryButton.simulate("click");
+
+      const confirmationBox = component
+        .find(ConfirmationBox)
+        .find({ open: true })
+        .hostNodes();
+
+      expect(confirmationBox).toHaveLength(0);
+    });
+
+    test("we should be able to close the confirmation box by clicking on the ClickAwayListener", () => {
+      const component = mount(
+        <AccountApp>
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
+        </AccountApp>,
+      );
+
+      const makePrimaryButton = component
+        .find(Button)
+        .find({ variant: ButtonVariant.SECONDARY })
+        .at(0);
+      makePrimaryButton.simulate("click");
+
+      const clickAwayListener = component.find(ClickAwayListener);
+      expect(clickAwayListener).toHaveLength(1);
+      clickAwayListener.simulate("click");
+
+      const confirmationBox = component
+        .find(ConfirmationBox)
+        .find({ open: true })
+        .hostNodes();
+
+      expect(confirmationBox).toHaveLength(0);
+    });
+
+    test("the delete confirmation box shoud appear on click on 'delete this { type }' button", () => {
+      const component = mount(
+        <AccountApp>
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
+        </AccountApp>,
+      );
+
+      const deleteButton = component
+        .find(Button)
+        .find({ variant: ButtonVariant.GHOST })
+        .at(0);
+      deleteButton.simulate("click");
+
+      const confirmationBox = component
+        .find(ConfirmationBox)
+        .find({ open: true })
+        .hostNodes();
+
+      const confirmationText = confirmationBox.contains(
+        <p className="confirmation-text">
+          You are about to delete test@test.test
+        </p>,
+      );
+
+      expect(confirmationBox).toHaveLength(1);
+      expect(confirmationText).toEqual(true);
+    });
+
+    test("we should be able to close the confirmation box by clicking on 'keep { type }' button", () => {
+      const component = mount(
+        <AccountApp>
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
+        </AccountApp>,
+      );
+
+      const deleteButton = component
+        .find(Button)
+        .find({ variant: ButtonVariant.GHOST })
+        .at(0);
+      deleteButton.simulate("click");
+
+      const keepEmailButton = component
+        .find(ConfirmationBox)
+        .find({ open: true })
+        .find(Button)
+        .find({ variant: ButtonVariant.SECONDARY });
+
+      expect(keepEmailButton.text()).toEqual("Keep email address");
+      keepEmailButton.simulate("click");
+
+      const confirmationBox = component
+        .find(ConfirmationBox)
+        .find({ open: true })
+        .hostNodes();
+
+      expect(confirmationBox).toHaveLength(0);
+    });
+
+    test("we should be able to close the confirmation box by clicking on the ClickAwayListener", () => {
+      const component = mount(
+        <AccountApp>
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
+        </AccountApp>,
+      );
+
+      const deleteButton = component
+        .find(Button)
+        .find({ variant: ButtonVariant.GHOST })
+        .at(0);
+      deleteButton.simulate("click");
+
+      const clickAwayListener = component.find(ClickAwayListener);
+      expect(clickAwayListener).toHaveLength(1);
+      clickAwayListener.simulate("click");
+
+      const confirmationBox = component
+        .find(ConfirmationBox)
+        .find({ open: true })
+        .hostNodes();
+
+      expect(confirmationBox).toHaveLength(0);
+    });
   });
 });

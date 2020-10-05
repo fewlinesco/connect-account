@@ -24,7 +24,7 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
   const [
     primaryConfirmationBoxOpen,
     setPrimaryConfirmationBoxOpen,
-  ] = React.useState<boolean>(true);
+  ] = React.useState<boolean>(false);
   const { id, primary, status, type, value } = identity;
 
   return (
