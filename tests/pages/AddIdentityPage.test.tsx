@@ -3,19 +3,16 @@ jest.mock("@src/hooks/useCookies");
 import { mount } from "enzyme";
 import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
-import { ThemeProvider } from "styled-components";
 
 import { ReceivedIdentityTypes } from "@src/@types/Identity";
-import { Layout } from "@src/components/Layout";
 import { Form } from "@src/components/display/fewlines/AddIdentityForm/AddIdentityForm";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
   NavigationBreadcrumbs,
   Breadcrumbs,
 } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
-import { GlobalStyle } from "@src/design-system/globals/globalStyle";
-import { lightTheme } from "@src/design-system/theme/lightTheme";
 import { useCookies } from "@src/hooks/useCookies";
+import { AccountApp } from "@src/pages/_app";
 import AddIdentityPage from "@src/pages/account/logins/[type]/new";
 import * as fetchJson from "@src/utils/fetchJson";
 
@@ -41,12 +38,9 @@ jest.mock("../../src/config", () => {
 describe("AddIdentityPage", () => {
   test("it should display navigation breadcrumbs properly for emails", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <AddIdentityPage type={ReceivedIdentityTypes.EMAIL} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <AddIdentityPage type={ReceivedIdentityTypes.EMAIL} />
+      </AccountApp>,
     );
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
@@ -60,12 +54,9 @@ describe("AddIdentityPage", () => {
 
   test("it should display navigation breadcrumbs properly for phones", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <AddIdentityPage type={ReceivedIdentityTypes.PHONE} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <AddIdentityPage type={ReceivedIdentityTypes.PHONE} />
+      </AccountApp>,
     );
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
@@ -79,12 +70,9 @@ describe("AddIdentityPage", () => {
 
   test("it should display an input", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <AddIdentityPage type={ReceivedIdentityTypes.EMAIL} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <AddIdentityPage type={ReceivedIdentityTypes.EMAIL} />
+      </AccountApp>,
     );
 
     const addIdentityInput = component.find(Form);
@@ -95,12 +83,9 @@ describe("AddIdentityPage", () => {
     const spyDate = jest.spyOn(Date, "now").mockReturnValue(1572393600000);
 
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <AddIdentityPage type={ReceivedIdentityTypes.EMAIL} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <AddIdentityPage type={ReceivedIdentityTypes.EMAIL} />
+      </AccountApp>,
     );
 
     const newIdentityInput = component.find(Input);

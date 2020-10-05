@@ -4,10 +4,8 @@ import { mount } from "enzyme";
 import fetch from "jest-fetch-mock";
 import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
-import { ThemeProvider } from "styled-components";
 
 import { ReceivedIdentityTypes, Identity } from "@src/@types/Identity";
-import { Layout } from "@src/components/Layout";
 import { AwaitingValidationBadge } from "@src/components/display/fewlines/AwaitingValidationBadge/AwaitingValidationBadge";
 import {
   Button,
@@ -18,9 +16,8 @@ import {
   Breadcrumbs,
 } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "@src/components/display/fewlines/PrimaryBadge/PrimaryBadge";
-import { GlobalStyle } from "@src/design-system/globals/globalStyle";
-import { lightTheme } from "@src/design-system/theme/lightTheme";
 import { useCookies } from "@src/hooks/useCookies";
+import { AccountApp } from "@src/pages/_app";
 import ShowIdentityPage from "@src/pages/account/logins/[type]/[id]";
 
 enableFetchMocks();
@@ -81,12 +78,9 @@ describe("ShowIdentityPage", () => {
 
   test("it should display navigation breadcrumbs properly for emails", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <ShowIdentityPage identity={nonPrimaryIdentity} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <ShowIdentityPage identity={nonPrimaryIdentity} />
+      </AccountApp>,
     );
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
@@ -99,12 +93,9 @@ describe("ShowIdentityPage", () => {
 
   test("it should display navigation breadcrumbs properly for phones", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <ShowIdentityPage identity={phoneIdentity} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <ShowIdentityPage identity={phoneIdentity} />
+      </AccountApp>,
     );
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
@@ -116,12 +107,9 @@ describe("ShowIdentityPage", () => {
 
   test("it should display the update button for a non primary identity", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <ShowIdentityPage identity={nonPrimaryIdentity} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <ShowIdentityPage identity={nonPrimaryIdentity} />
+      </AccountApp>,
     );
 
     const updateButton = component.contains(
@@ -134,12 +122,9 @@ describe("ShowIdentityPage", () => {
 
   test("it should display the update button for a primary identity", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <ShowIdentityPage identity={primaryIdentity} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <ShowIdentityPage identity={primaryIdentity} />
+      </AccountApp>,
     );
 
     const updateButton = component.contains(
@@ -152,12 +137,9 @@ describe("ShowIdentityPage", () => {
 
   test("it should display the delete button for a non primary identity", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <ShowIdentityPage identity={nonPrimaryIdentity} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <ShowIdentityPage identity={nonPrimaryIdentity} />
+      </AccountApp>,
     );
 
     const deleteButton = component
@@ -169,12 +151,9 @@ describe("ShowIdentityPage", () => {
 
   test("it should not display the delete button for a primary identity", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <ShowIdentityPage identity={primaryIdentity} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <ShowIdentityPage identity={primaryIdentity} />
+      </AccountApp>,
     );
 
     const deleteButton = component
@@ -185,12 +164,9 @@ describe("ShowIdentityPage", () => {
 
   test("it should not display the primary tag if the identity is not primary", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <ShowIdentityPage identity={nonPrimaryIdentity} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <ShowIdentityPage identity={nonPrimaryIdentity} />
+      </AccountApp>,
     );
 
     const primaryBadge = component.contains(<PrimaryBadge />);
@@ -205,12 +181,9 @@ describe("ShowIdentityPage", () => {
 
   test("it should display the primary tag if the identity is primary", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <ShowIdentityPage identity={primaryIdentity} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <ShowIdentityPage identity={primaryIdentity} />
+      </AccountApp>,
     );
 
     const makeThisPrimaryButton = component.contains(
@@ -229,12 +202,9 @@ describe("ShowIdentityPage", () => {
 
   test("it should display the validation button and the awaiting validation tag if the identity is not validated", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <ShowIdentityPage identity={nonValidatedIdentity} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <ShowIdentityPage identity={nonValidatedIdentity} />
+      </AccountApp>,
     );
 
     const awaitingValidationBadge = component.contains(
@@ -249,12 +219,9 @@ describe("ShowIdentityPage", () => {
 
   test("it should not display the make this identity primary button if the identity is not validated", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <ShowIdentityPage identity={nonValidatedIdentity} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <ShowIdentityPage identity={nonValidatedIdentity} />
+      </AccountApp>,
     );
 
     const makeThisPrimaryButton = component.contains(
