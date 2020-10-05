@@ -194,13 +194,13 @@ describe("ShowIdentityPage", () => {
     );
 
     const primaryBadge = component.contains(<PrimaryBadge />);
-    const makeThisPrimaryButton = component.contains(
-      <Button variant={ButtonVariant.SECONDARY}>
-        Make this my primary email
-      </Button>,
-    );
+    const makeThisPrimaryButton = component
+      .find(Button)
+      .find({ variant: ButtonVariant.SECONDARY })
+      .at(0)
+      .text();
     expect(primaryBadge).toEqual(false);
-    expect(makeThisPrimaryButton).toEqual(true);
+    expect(makeThisPrimaryButton).toEqual("Make this my primary email");
   });
 
   test("it should display the primary tag if the identity is primary", () => {
