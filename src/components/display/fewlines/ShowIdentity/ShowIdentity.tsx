@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { AwaitingValidationBadge } from "../AwaitingValidationBadge/AwaitingValidationBadge";
 import { Box } from "../Box/Box";
 import { Button, ButtonVariant } from "../Button/Button";
+import { ClickAwayListener } from "../ConfirmationBox/ClickAwayListener";
 import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
@@ -78,6 +79,11 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
           >
             Make this my primary {type}
           </Button>
+          {!hidePrimaryConfirmationBox && (
+            <ClickAwayListener
+              onClick={() => sethidePrimaryConfirmationBox(true)}
+            />
+          )}
           <ConfirmationBox hidden={hidePrimaryConfirmationBox}>
             <p className="confirmation-text">
               You are about to replace mail@mail.com as your main address
@@ -104,6 +110,11 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
           >
             Delete this {type === "phone" ? "phone number" : "email address"}
           </Button>
+          {!hideDeleteConfirmationBox && (
+            <ClickAwayListener
+              onClick={() => sethideDeleteConfirmationBox(true)}
+            />
+          )}
           <ConfirmationBox hidden={hideDeleteConfirmationBox}>
             <p className="confirmation-text">You are about to delete {value}</p>
             <DeleteIdentity type={type} value={value}>

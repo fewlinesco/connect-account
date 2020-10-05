@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
+import { ClickAwayListener } from "./ClickAwayListener";
 import { ConfirmationBox } from "./ConfirmationBox";
 
 export default {
@@ -17,8 +18,9 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
         variant={ButtonVariant.PRIMARY}
         onClick={() => setHidden(!hidden)}
       >
-        Click me
+        Show confirmation box
       </Button>
+      {!hidden && <ClickAwayListener onClick={() => setHidden(true)} />}
       <ConfirmationBox hidden={hidden}>
         <p>You are about to replace mail@mail.com as your main address</p>
         <Button variant={ButtonVariant.PRIMARY}>
@@ -37,14 +39,18 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
 
 export const DangerConfirmationBox = (): JSX.Element => {
   const [hidden, setHidden] = React.useState<boolean>(false);
+
   return (
     <Container>
-      <Button
-        variant={ButtonVariant.PRIMARY}
-        onClick={() => setHidden(!hidden)}
-      >
-        Click me
-      </Button>
+      <div>
+        <Button
+          variant={ButtonVariant.PRIMARY}
+          onClick={() => setHidden(!hidden)}
+        >
+          Show confirmation box
+        </Button>
+      </div>
+      {!hidden && <ClickAwayListener onClick={() => setHidden(true)} />}
       <ConfirmationBox hidden={hidden}>
         <p>You are about to delete mail@mail.co</p>
         <Button variant={ButtonVariant.DANGER}>

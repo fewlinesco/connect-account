@@ -19,6 +19,7 @@ export const ConfirmationBox = styled.div<ConfirmationBoxProps>`
     animation: appearFromBottom 0.1s;
     bottom: 0;
     visibility: visible;
+    z-index: 2;
     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
   `}
 
@@ -31,10 +32,12 @@ export const ConfirmationBox = styled.div<ConfirmationBoxProps>`
 
   @keyframes appearFromBottom {
     from {
-      bottom: -200px;
+      bottom: -250px;
+      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0);
     }
     to {
       bottom: 0;
+      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
     }
   }
 
@@ -42,10 +45,12 @@ export const ConfirmationBox = styled.div<ConfirmationBoxProps>`
     from {
       bottom: 0;
       visibility: visible;
+      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
     }
     to {
-      bottom: -200px;
+      bottom: -250px;
       visibility: hidden;
+      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0);
     }
   }
 `;
