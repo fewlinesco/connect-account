@@ -2,11 +2,11 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { Box } from "./Box/Box";
-import { Button, ButtonVariant } from "./Button/Button";
-import { Form } from "./Form/Form";
-import { Input } from "./Input/Input";
-import { NavigationBreadcrumbs } from "./NavigationBreadcrumbs/NavigationBreadcrumbs";
+import { Box } from "../Box/Box";
+import { Button, ButtonVariant } from "../Button/Button";
+import { Form } from "../Form/Form";
+import { Input } from "../Input/Input";
+import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { IdentityTypes } from "@lib/@types/Identity";
 import { displayAlertBar } from "@src/utils/displayAlertBar";
 

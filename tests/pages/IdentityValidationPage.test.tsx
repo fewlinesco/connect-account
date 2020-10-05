@@ -10,7 +10,7 @@ import { Layout } from "@src/components/Layout";
 import AlertBar from "@src/components/display/fewlines/AlertBar/AlertBar";
 import { Button } from "@src/components/display/fewlines/Button/Button";
 import { Form } from "@src/components/display/fewlines/Form/Form";
-import IdentityValidationForm from "@src/components/display/fewlines/IdentityValidationForm";
+import IdentityValidationForm from "@src/components/display/fewlines/IdentityValidationForm/IdentityValidationForm";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
   NavigationBreadcrumbs,

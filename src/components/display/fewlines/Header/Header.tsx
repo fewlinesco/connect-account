@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import fewlinesLogo from "../assets/logo-fewlines-2020.png";
+import fewlinesLogo from "@src/assets/logo-fewlines-2020.png";
 
 export const Header: React.FC = () => {
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { CrossIcon } from "../CrossIcon";
+import { CrossIcon } from "../CrossIcon/CrossIcon";
 
 export const AlertBar: React.FC<{ text: string }> = ({ text }) => {
   const [showAlertBar, setShowAlertBar] = React.useState<boolean>(true);

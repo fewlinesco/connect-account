@@ -2,19 +2,24 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { Button, ButtonVariant } from "./Button/Button";
-import { Form } from "./Form/Form";
-import { Input } from "./Input/Input";
-import { NavigationBreadcrumbs } from "./NavigationBreadcrumbs/NavigationBreadcrumbs";
+import { Button, ButtonVariant } from "../Button/Button";
+import { Form } from "../Form/Form";
+import { Input } from "../Input/Input";
+import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import {
   InMemoryTemporaryIdentity,
   ReceivedIdentityTypes,
 } from "@src/@types/Identity";
 
-export const AddIdentityInputForm: React.FC<{
+type AddIdentityFormProps = {
   type: ReceivedIdentityTypes;
   addIdentity: (identity: InMemoryTemporaryIdentity) => Promise<void>;
-}> = ({ type, addIdentity }) => {
+};
+
+export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
+  type,
+  addIdentity,
+}) => {
   const [identity, setIdentity] = React.useState<InMemoryTemporaryIdentity>({
     value: "",
     type,
