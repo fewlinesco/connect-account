@@ -21,6 +21,7 @@ import { PrimaryBadge } from "@src/components/display/fewlines/PrimaryBadge/Prim
 import { useCookies } from "@src/hooks/useCookies";
 import { AccountApp } from "@src/pages/_app";
 import ShowIdentityPage from "@src/pages/account/logins/[type]/[id]";
+import * as fetchJson from "@src/utils/fetchJson";
 
 enableFetchMocks();
 
@@ -414,6 +415,36 @@ describe("ShowIdentityPage", () => {
         .hostNodes();
 
       expect(confirmationBox).toHaveLength(0);
+    });
+
+    test("clicking on the delete button should delete the identity", () => {
+      const component = mount(
+        <AccountApp>
+          <ShowIdentityPage identity={nonPrimaryIdentity} />
+        </AccountApp>,
+      );
+
+      const fetchMethod = jest.spyOn(fetchJson, "fetchJson");
+
+      const deleteButton = component
+        .find(Button)
+        .find({ variant: ButtonVariant.GHOST })
+        .at(0);
+      deleteButton.simulate("click");
+
+      const confirmDeleteButton = component
+        .find(ConfirmationBox)
+        .find(Button)
+        .find({ variant: ButtonVariant.DANGER });
+
+      expect(confirmDeleteButton.text()).toEqual("Delete this email address");
+      confirmDeleteButton.simulate("click");
+
+      expect(fetchMethod).toHaveBeenCalledWith("/api/identities", "DELETE", {
+        type: "EMAIL",
+        userId: undefined,
+        value: "test@test.test",
+      });
     });
   });
 });
