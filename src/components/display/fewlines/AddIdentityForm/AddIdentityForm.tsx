@@ -10,10 +10,15 @@ import {
   ReceivedIdentityTypes,
 } from "@src/@types/Identity";
 
-export const AddIdentityInputForm: React.FC<{
+type AddIdentityFormProps = {
   type: ReceivedIdentityTypes;
   addIdentity: (identity: InMemoryTemporaryIdentity) => Promise<void>;
-}> = ({ type, addIdentity }) => {
+};
+
+export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
+  type,
+  addIdentity,
+}) => {
   const [identity, setIdentity] = React.useState<InMemoryTemporaryIdentity>({
     value: "",
     type,

@@ -1,19 +1,19 @@
 import React from "react";
 
-import { AddIdentityInputForm } from "./AddIdentityInputForm";
+import { AddIdentityForm } from "./AddIdentityForm";
 import { ReceivedIdentityTypes } from "@src/@types/Identity";
 import { AddIdentity } from "@src/components/business/AddIdentity";
 
 export default {
-  title: "pages/AddIdentityInputForm",
-  component: AddIdentityInputForm,
+  title: "pages/AddIdentityForm",
+  component: AddIdentityForm,
 };
 
-export const AddEmailInputForm = (): JSX.Element => {
+export const AddEmailForm = (): JSX.Element => {
   return (
     <AddIdentity type={ReceivedIdentityTypes.EMAIL}>
       {({ addIdentity }) => (
-        <AddIdentityInputForm
+        <AddIdentityForm
           type={ReceivedIdentityTypes.EMAIL}
           addIdentity={addIdentity}
         />
@@ -22,11 +22,11 @@ export const AddEmailInputForm = (): JSX.Element => {
   );
 };
 
-export const AddIPhoneInputForm = (): JSX.Element => {
+export const AddPhoneForm = (): JSX.Element => {
   return (
     <AddIdentity type={ReceivedIdentityTypes.PHONE}>
       {({ addIdentity }) => (
-        <AddIdentityInputForm
+        <AddIdentityForm
           type={ReceivedIdentityTypes.PHONE}
           addIdentity={addIdentity}
         />
