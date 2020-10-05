@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface ConfirmationBoxProps {
-  hidden: boolean;
+  open: boolean;
 }
 
 export const ConfirmationBox = styled.div<ConfirmationBoxProps>`
@@ -14,7 +14,7 @@ export const ConfirmationBox = styled.div<ConfirmationBoxProps>`
   width: 100%;
   left: 0;
   ${(props) =>
-    !props.hidden &&
+    props.open &&
     `
     animation: appearFromBottom 0.1s;
     bottom: 0;
@@ -24,7 +24,7 @@ export const ConfirmationBox = styled.div<ConfirmationBoxProps>`
   `}
 
   ${(props) =>
-    props.hidden &&
+    !props.open &&
     `
     animation: disappearFromBottom 0.1s;
     visibility: hidden;

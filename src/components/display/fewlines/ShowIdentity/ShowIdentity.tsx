@@ -18,12 +18,12 @@ type ShowIdentityProps = {
 
 export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
   const [
-    hideDeleteConfirmationBox,
-    sethideDeleteConfirmationBox,
-  ] = React.useState<boolean>(true);
+    deleteConfirmationBoxOpen,
+    setDeleteConfirmationBoxOpen,
+  ] = React.useState<boolean>(false);
   const [
-    hidePrimaryConfirmationBox,
-    sethidePrimaryConfirmationBox,
+    primaryConfirmationBoxOpen,
+    setPrimaryConfirmationBoxOpen,
   ] = React.useState<boolean>(true);
   const { id, primary, status, type, value } = identity;
 
@@ -73,18 +73,16 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
         <>
           <Button
             variant={ButtonVariant.SECONDARY}
-            onClick={() =>
-              sethidePrimaryConfirmationBox(!hidePrimaryConfirmationBox)
-            }
+            onClick={() => setPrimaryConfirmationBoxOpen(true)}
           >
             Make this my primary {type}
           </Button>
-          {!hidePrimaryConfirmationBox && (
+          {primaryConfirmationBoxOpen && (
             <ClickAwayListener
-              onClick={() => sethidePrimaryConfirmationBox(true)}
+              onClick={() => setPrimaryConfirmationBoxOpen(false)}
             />
           )}
-          <ConfirmationBox hidden={hidePrimaryConfirmationBox}>
+          <ConfirmationBox open={primaryConfirmationBoxOpen}>
             <p className="confirmation-text">
               You are about to replace mail@mail.com as your main address
             </p>
@@ -93,7 +91,7 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
             </Button>
             <Button
               variant={ButtonVariant.SECONDARY}
-              onClick={() => sethidePrimaryConfirmationBox(true)}
+              onClick={() => setPrimaryConfirmationBoxOpen(false)}
             >
               Keep mail@mail.co as my primary {type}
             </Button>
@@ -105,17 +103,17 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
           <Button
             variant={ButtonVariant.GHOST}
             onClick={() =>
-              sethideDeleteConfirmationBox(!hideDeleteConfirmationBox)
+              setDeleteConfirmationBoxOpen(!deleteConfirmationBoxOpen)
             }
           >
             Delete this {type === "phone" ? "phone number" : "email address"}
           </Button>
-          {!hideDeleteConfirmationBox && (
+          {deleteConfirmationBoxOpen && (
             <ClickAwayListener
-              onClick={() => sethideDeleteConfirmationBox(true)}
+              onClick={() => setDeleteConfirmationBoxOpen(false)}
             />
           )}
-          <ConfirmationBox hidden={hideDeleteConfirmationBox}>
+          <ConfirmationBox open={deleteConfirmationBoxOpen}>
             <p className="confirmation-text">You are about to delete {value}</p>
             <DeleteIdentity type={type} value={value}>
               {({ deleteIdentity }) => (
@@ -129,7 +127,7 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
             </DeleteIdentity>
             <Button
               variant={ButtonVariant.SECONDARY}
-              onClick={() => sethideDeleteConfirmationBox(true)}
+              onClick={() => setDeleteConfirmationBoxOpen(false)}
             >
               Keep{" "}
               {type === ReceivedIdentityTypes.EMAIL

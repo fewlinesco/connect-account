@@ -11,23 +11,20 @@ export default {
 };
 
 export const PrimaryConfirmationBox = (): JSX.Element => {
-  const [hidden, setHidden] = React.useState<boolean>(false);
+  const [open, setOpen] = React.useState<boolean>(false);
   return (
     <Container>
-      <Button
-        variant={ButtonVariant.PRIMARY}
-        onClick={() => setHidden(!hidden)}
-      >
+      <Button variant={ButtonVariant.PRIMARY} onClick={() => setOpen(!open)}>
         Show confirmation box
       </Button>
-      {!hidden && <ClickAwayListener onClick={() => setHidden(true)} />}
-      <ConfirmationBox hidden={hidden}>
+      {open && <ClickAwayListener onClick={() => setOpen(false)} />}
+      <ConfirmationBox open={open}>
         <p>You are about to replace mail@mail.com as your main address</p>
         <Button variant={ButtonVariant.PRIMARY}>
           Set mail2@mail.com as my main
         </Button>
         <Button
-          onClick={() => setHidden(true)}
+          onClick={() => setOpen(false)}
           variant={ButtonVariant.SECONDARY}
         >
           Keep mail@mail.co as my primary email
@@ -38,26 +35,23 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
 };
 
 export const DangerConfirmationBox = (): JSX.Element => {
-  const [hidden, setHidden] = React.useState<boolean>(false);
+  const [open, setOpen] = React.useState<boolean>(false);
 
   return (
     <Container>
       <div>
-        <Button
-          variant={ButtonVariant.PRIMARY}
-          onClick={() => setHidden(!hidden)}
-        >
+        <Button variant={ButtonVariant.PRIMARY} onClick={() => setOpen(!open)}>
           Show confirmation box
         </Button>
       </div>
-      {!hidden && <ClickAwayListener onClick={() => setHidden(true)} />}
-      <ConfirmationBox hidden={hidden}>
+      {open && <ClickAwayListener onClick={() => setOpen(false)} />}
+      <ConfirmationBox open={open}>
         <p>You are about to delete mail@mail.co</p>
         <Button variant={ButtonVariant.DANGER}>
           Delete this email address
         </Button>
         <Button
-          onClick={() => setHidden(true)}
+          onClick={() => setOpen(false)}
           variant={ButtonVariant.SECONDARY}
         >
           Keep email address
