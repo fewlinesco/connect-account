@@ -19,7 +19,7 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
       >
         Click me
       </Button>
-      <div className={hidden ? "hidden" : "visible"}>
+      <ConfirmationBox hidden={hidden}>
         <p>You are about to replace mail@mail.com as your main address</p>
         <Button variant={ButtonVariant.PRIMARY}>
           Set mail2@mail.com as my main
@@ -30,7 +30,7 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
         >
           Keep mail@mail.co as my primary email
         </Button>
-      </div>
+      </ConfirmationBox>
     </Container>
   );
 };
@@ -45,7 +45,7 @@ export const DangerConfirmationBox = (): JSX.Element => {
       >
         Click me
       </Button>
-      <div className={hidden ? "hidden" : "visible"}>
+      <ConfirmationBox hidden={hidden}>
         <p>You are about to delete mail@mail.co</p>
         <Button variant={ButtonVariant.DANGER}>
           Delete this email address
@@ -56,38 +56,12 @@ export const DangerConfirmationBox = (): JSX.Element => {
         >
           Keep email address
         </Button>
-      </div>
+      </ConfirmationBox>
     </Container>
   );
 };
 
 const Container = styled.div`
-  .visible {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4rem 2rem 3rem;
-    position: absolute;
-    width: 100%;
-    left: 0;
-    animation: appearFromBottom 0.1s;
-    bottom: 0;
-    visibility: visible;
-    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
-  }
-
-  .hidden {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4rem 2rem 3rem;
-    position: absolute;
-    width: 100%;
-    left: 0;
-    animation: disappearFromBottom 0.1s;
-    visibility: hidden;
-  }
-
   p {
     margin: 0 0 ${({ theme }) => theme.spaces.component.xs};
   }
@@ -95,29 +69,5 @@ const Container = styled.div`
   button {
     width: 100%;
     margin: 0 0 ${({ theme }) => theme.spaces.component.xxs};
-  }
-
-  @keyframes appearFromBottom {
-    from {
-      bottom: -250px;
-      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0);
-    }
-    to {
-      bottom: 0;
-      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
-    }
-  }
-
-  @keyframes disappearFromBottom {
-    from {
-      bottom: 0;
-      visibility: visible;
-      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
-    }
-    to {
-      bottom: -250px;
-      visibility: hidden;
-      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0);
-    }
   }
 `;
