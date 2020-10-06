@@ -1,57 +1,38 @@
-<!--- ↑ Provide a general summary of your changes in the Title above ↑ -->
+# Description
 
-## Description
+<!---
+Include a summary of the changes, which issue is fixed and, relevant motivation and context
 
-<!--- Describe your changes in detail -->
+‼️ List any dependencies that are required for this change. ‼️
+-->
 
-## Related Issue
+## Type of change
 
-<!--- This project only accepts pull requests related to open issues -->
-<!--- If suggesting a new feature or change, please discuss it in an -->
-<!--- issue first -->
-<!--- If fixing a bug, there should be an issue describing it with -->
-<!--- steps to reproduce -->
-<!--- Please link to the issue here with the prefix or resolve -->
-<!--- keyword -->
+Please ✔️ the relevant options.
 
-## Motivation and Context
-
-<!--- Why is this change required? What problem does it solve? -->
-
-## How Has This Been Tested?
-
-<!--- Please describe in detail how you tested your changes. -->
-<!--- Include details of your testing environment, and the tests -->
-<!--- you ran to see how your change affects other areas of the -->
-<!--- code, etc. -->
+- [ ] **Chore** (non-breaking change which refactors / improves the existing code base).
+- [ ] **Bug fix** (non-breaking change which fixes an issue).
+- [ ] **New feature** (non-breaking change which adds functionality).
+- [ ] **Breaking change** (fix or feature that would cause existing functionality to not work as expected).
 
 ## Screenshots
 
 <!--- if appropriate, otherwise the section can be removed -->
 
-## Types of changes
+# How Has This Been Tested?
 
-<!--- What types of changes does your code introduce? Stroke -->
-<!-- (i.e. ~stroked text~) the ones that don't apply: -->
+<!---
+Please describe the tests that you ran to verify your changes.
+If needed, provide instructions so we can reproduce (i.e. test configuration).
+-->
 
-- Chore (non-breaking change which refactors / improves the existing code base).
-- Bug fix (non-breaking change which fixes an issue).
-- New feature (non-breaking change which adds functionality).
-- Breaking change (fix or feature that would cause existing functionality to
-  change).
+# Checklist:
 
-## Checklist:
-
-<!--- Go over all the following points, and replace the `:red_circle:` in all -->
-<!--- the lines with a :white_check_mark: when relevant. -->
-<!--- If you're unsure about any of these, don't hesitate to ask. We're -->
-<!--- here to help! -->
-
-- :red_circle: My code follows the code style of this project.
-- :red_circle: My change requires a change to the documentation.
-- :red_circle: I have updated the documentation accordingly.
-- :red_circle: I have read the [**CONTRIBUTING**][contributing_file] document.
-- :red_circle: I have added tests to cover my changes.
-- :red_circle: All new and existing tests passed.
+- [ ] My code follows the style [**contributing guidelines**][contributing_file] of this project.
+- [ ] I have performed a self-review of my own code.
+- [ ] I have commented my code in hard-to-understand areas.
+- [ ] I have made corresponding changes to the documentation.
+- [ ] My changes generate no new warnings.
+- [ ] I have added tests that prove my fix is effective or that my feature works.
 
 [contributing_file]: https://github.com/fewlinesco/connect-account/blob/master/README.adoc
