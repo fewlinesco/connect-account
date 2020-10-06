@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Button, ButtonVariant } from "../Button/Button";
 import { ClickAwayListener } from "./ClickAwayListener";
 import { ConfirmationBox } from "./ConfirmationBox";
+import { ConfirmationText } from "./ConfirmationText";
 
 export default {
   title: "components/ConfirmationBox",
@@ -19,7 +20,9 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
       </Button>
       {open && <ClickAwayListener onClick={() => setOpen(false)} />}
       <ConfirmationBox open={open}>
-        <p>You are about to replace mail@mail.com as your main address</p>
+        <ConfirmationText>
+          You are about to replace mail@mail.com as your main address
+        </ConfirmationText>
         <Button variant={ButtonVariant.PRIMARY}>
           Set mail2@mail.com as my main
         </Button>
@@ -46,7 +49,9 @@ export const DangerConfirmationBox = (): JSX.Element => {
       </div>
       {open && <ClickAwayListener onClick={() => setOpen(false)} />}
       <ConfirmationBox open={open}>
-        <p>You are about to delete mail@mail.co</p>
+        <ConfirmationText>
+          You are about to delete mail@mail.co
+        </ConfirmationText>
         <Button variant={ButtonVariant.DANGER}>
           Delete this email address
         </Button>

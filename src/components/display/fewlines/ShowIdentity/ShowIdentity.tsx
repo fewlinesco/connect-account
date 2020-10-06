@@ -7,6 +7,7 @@ import { Box } from "../Box/Box";
 import { Button, ButtonVariant } from "../Button/Button";
 import { ClickAwayListener } from "../ConfirmationBox/ClickAwayListener";
 import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
+import { ConfirmationText } from "../ConfirmationBox/ConfirmationText";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
@@ -83,9 +84,9 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
             />
           )}
           <ConfirmationBox open={primaryConfirmationBoxOpen}>
-            <p className="confirmation-text">
+            <ConfirmationText>
               You are about to replace mail@mail.com as your main address
-            </p>
+            </ConfirmationText>
             <Button variant={ButtonVariant.PRIMARY}>
               Set {value} as my main
             </Button>
@@ -114,7 +115,7 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
             />
           )}
           <ConfirmationBox open={deleteConfirmationBoxOpen}>
-            <p className="confirmation-text">You are about to delete {value}</p>
+            <ConfirmationText>You are about to delete {value}</ConfirmationText>
             <DeleteIdentity type={type} value={value}>
               {({ deleteIdentity }) => (
                 <Button variant={ButtonVariant.DANGER} onClick={deleteIdentity}>
@@ -153,10 +154,6 @@ const Wrapper = styled.div`
   button {
     margin-bottom: ${({ theme }) => theme.spaces.component.xxs};
     width: 100%;
-  }
-
-  .confirmation-text {
-    margin: 0 0 ${({ theme }) => theme.spaces.component.xs};
   }
 `;
 
