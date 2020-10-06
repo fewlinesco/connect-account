@@ -203,6 +203,7 @@
       "tsx",
       "json"
     ],
+    "verbose": true,
     "modulePathIgnorePatterns": ["e2e"],
     "unmockedModulePathPatterns": [
       "node_modules/react/",
