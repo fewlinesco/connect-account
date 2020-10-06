@@ -10,9 +10,10 @@ export const ConfirmationBox = styled.div<ConfirmationBoxProps>`
   align-items: center;
   padding: 4rem 2rem 3rem;
   position: fixed;
+  left: 0;
   background-color: ${({ theme }) => theme.colors.background};
   width: 100%;
-  left: 0;
+
   ${(props) =>
     props.open &&
     `
