@@ -11,7 +11,7 @@ export default {
 };
 
 export const PrimaryConfirmationBox = (): JSX.Element => {
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = React.useState<boolean>(true);
   return (
     <Container>
       <Button variant={ButtonVariant.PRIMARY} onClick={() => setOpen(!open)}>
@@ -35,7 +35,7 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
 };
 
 export const DangerConfirmationBox = (): JSX.Element => {
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = React.useState<boolean>(true);
 
   return (
     <Container>
