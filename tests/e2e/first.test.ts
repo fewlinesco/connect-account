@@ -2,13 +2,11 @@ import puppeteer from "puppeteer";
 
 import { config } from "./config";
 
-jest.setTimeout(30000);
-
 describe("Account Web Application", () => {
   let browser: puppeteer.Browser;
   let page: puppeteer.Page;
 
-  const { accountURL, ...browserOptions } = config({ debug: false });
+  const { accountURL, ...browserOptions } = config({ debug: true });
 
   beforeAll(async () => {
     browser = await puppeteer.launch(browserOptions);
@@ -26,17 +24,15 @@ describe("Account Web Application", () => {
     await browser.close();
   });
 
-  it('should display "Login" text on page', async (done) => {
+  it("should display 'Login' text on '/'", async (done) => {
     expect.assertions(1);
 
-    await page.goto(accountURL, {
-      waitUntil: "networkidle2",
-    });
-
-    await page.screenshot({ path: "screenshots/screenshot.png" });
-
-    await expect(page).toMatch("Login");
-
-    done();
+    await page
+      .goto(accountURL)
+      .then(() => expect(page).toMatch("Login"))
+      .catch(() =>
+        page.screenshot({ path: "screenshots/error_on_index_page.png" }),
+      )
+      .finally(() => done());
   });
 });
