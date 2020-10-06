@@ -1,5 +1,5 @@
+import type { MongoUser } from "@lib/@types/mongo/User";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
-import type { MongoUser } from "@src/@types/mongo/User";
 import { config } from "@src/config";
 
 export async function getUser(cookie: string): Promise<MongoUser> {

@@ -1,5 +1,5 @@
+import type { ProviderUser } from "@lib/@types/ProviderUser";
 import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
-import type { ProviderUser } from "@src/@types/ProviderUser";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 
 export function sortIdentities(fetchedData: {
