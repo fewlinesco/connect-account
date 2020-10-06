@@ -7,7 +7,6 @@ import { Box } from "../Box/Box";
 import { Button, ButtonVariant } from "../Button/Button";
 import { ClickAwayListener } from "../ConfirmationBox/ClickAwayListener";
 import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
-import { ConfirmationText } from "../ConfirmationBox/ConfirmationText";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
@@ -172,4 +171,8 @@ const Value = styled.p`
 const Flex = styled.div`
   display: flex;
   align-items: center;
+`;
+
+export const ConfirmationText = styled.p`
+  margin: 0 0 ${({ theme }) => theme.spaces.component.xs};
 `;

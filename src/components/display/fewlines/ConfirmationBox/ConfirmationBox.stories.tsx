@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
+import { ConfirmationText } from "../ShowIdentity/ShowIdentity";
 import { ClickAwayListener } from "./ClickAwayListener";
 import { ConfirmationBox } from "./ConfirmationBox";
-import { ConfirmationText } from "./ConfirmationText";
 
 export default {
   title: "components/ConfirmationBox",

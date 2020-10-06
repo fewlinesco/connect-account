@@ -13,12 +13,12 @@ import {
 } from "@src/components/display/fewlines/Button/Button";
 import { ClickAwayListener } from "@src/components/display/fewlines/ConfirmationBox/ClickAwayListener";
 import { ConfirmationBox } from "@src/components/display/fewlines/ConfirmationBox/ConfirmationBox";
-import { ConfirmationText } from "@src/components/display/fewlines/ConfirmationBox/ConfirmationText";
 import {
   NavigationBreadcrumbs,
   Breadcrumbs,
 } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "@src/components/display/fewlines/PrimaryBadge/PrimaryBadge";
+import { ConfirmationText } from "@src/components/display/fewlines/ShowIdentity/ShowIdentity";
 import { useCookies } from "@src/hooks/useCookies";
 import { AccountApp } from "@src/pages/_app";
 import ShowIdentityPage from "@src/pages/account/logins/[type]/[id]";
