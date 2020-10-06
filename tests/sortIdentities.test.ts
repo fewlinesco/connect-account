@@ -1,6 +1,6 @@
-import { ProviderUser } from "../lib/@types/ProviderUser";
 import { ReceivedIdentityTypes } from "../src/@types/Identity";
 import { sortIdentities } from "../src/utils/sortIdentities";
+import { ProviderUser } from "@lib/@types";
 
 describe("sortIdentities", () => {
   it("should sort identities properly", () => {
