@@ -1,3 +1,5 @@
+// https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#puppeteerlaunchoptions
+
 // let jest_puppeteer_conf = {
 //   launch: {
 //     timeout: 30000,

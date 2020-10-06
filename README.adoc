@@ -429,7 +429,8 @@ We are using https://github.com/enzymejs/enzyme[Enzyme] to test components behav
 
 === User flow
 
-https://github.com/puppeteer/puppeteer[Puppeteer]
+- https://github.com/puppeteer/puppeteer[Puppeteer]
+- https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#puppeteerlaunchoptions[launch options]
 
 == Monitoring
 

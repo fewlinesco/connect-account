@@ -7,11 +7,10 @@ jest.setTimeout(30000);
 describe("Account Web Application", () => {
   let page: puppeteer.Page;
 
+  const { accountURL, ...browserOptions } = config;
+
   beforeAll(async () => {
-    await puppeteer.launch({
-      headless: config.headless,
-      slowMo: config.slowMo,
-    });
+    await puppeteer.launch(browserOptions);
   });
 
   beforeEach(async () => {
@@ -29,14 +28,14 @@ describe("Account Web Application", () => {
   it('should display "Login" text on page', async () => {
     console.log(page);
 
-    await page.goto(config.accountURL, {
+    await page.goto(accountURL, {
       waitUntil: "networkidle2",
     });
 
     await expect(page).toMatch("Login");
   });
 
-  test("happy path", async () => {});
+  // test("happy path", async () => {});
 });
 
 // const browser = await puppeteer.launch({
