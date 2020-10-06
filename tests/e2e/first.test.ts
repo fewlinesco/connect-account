@@ -5,45 +5,38 @@ import { config } from "./config";
 jest.setTimeout(30000);
 
 describe("Account Web Application", () => {
+  let browser: puppeteer.Browser;
   let page: puppeteer.Page;
 
   const { accountURL, ...browserOptions } = config;
 
   beforeAll(async () => {
-    await puppeteer.launch(browserOptions);
+    browser = await puppeteer.launch(browserOptions);
   });
 
   beforeEach(async () => {
     page = await browser.newPage();
   });
 
+  afterEach(async () => {
+    await page.close();
+  });
+
   afterAll(async () => {
     await browser.close();
   });
 
-  afterEach(async () => {
-    await jestPuppeteer.resetPage();
-  });
-
-  it('should display "Login" text on page', async () => {
-    console.log(page);
+  it('should display "Login" text on page', async (done) => {
+    expect.assertions(1);
 
     await page.goto(accountURL, {
       waitUntil: "networkidle2",
     });
 
+    await page.screenshot({ path: "screenshots/screenshot.png" });
+
     await expect(page).toMatch("Login");
+
+    done();
   });
-
-  // test("happy path", async () => {});
 });
-
-// const browser = await puppeteer.launch({
-//   headless: config.headless,
-//   slowMo: config.slowMo,
-// });
-// const page = await browser.newPage();
-// await page.goto(config.accountURL, {
-//   waitUntil: "networkidle2",
-// });
-// await browser.close();

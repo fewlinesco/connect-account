@@ -7,8 +7,8 @@ interface Config extends LaunchOptions {
 export const config: Config = {
   product: "chrome",
   ignoreHTTPSErrors: false,
-  headless: true,
-  slowMo: 0,
+  headless: false,
+  slowMo: 300,
   defaultViewport: {
     width: 320,
     height: 568,
