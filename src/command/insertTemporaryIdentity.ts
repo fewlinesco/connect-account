@@ -1,7 +1,7 @@
 import { Db } from "mongodb";
 
-import { CommandResult } from "@src/@types/mongo/Commands";
-import { MongoUser, TemporaryIdentity } from "@src/@types/mongo/User";
+import { CommandResult } from "@lib/@types/mongo/Commands";
+import { MongoUser, TemporaryIdentity } from "@lib/@types/mongo/User";
 
 export async function insertTemporaryIdentity(
   sub: string,

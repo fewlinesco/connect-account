@@ -2,6 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import { GetServerSideProps } from "next";
 import React from "react";
 
+import { getIdentities } from "@lib/queries/getIdentities";
 import type { Identity } from "@src/@types/Identity";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
@@ -10,7 +11,6 @@ import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
-import { getIdentities } from "@src/queries/getIdentities";
 import { getUser } from "@src/utils/getUser";
 import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry from "@src/utils/sentry";
