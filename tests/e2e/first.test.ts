@@ -6,7 +6,7 @@ describe("Account Web Application", () => {
   let browser: puppeteer.Browser;
   let page: puppeteer.Page;
 
-  const { accountURL, ...browserOptions } = config({ debug: true });
+  const { accountURL, ...browserOptions } = config({ debug: false });
 
   beforeAll(async () => {
     browser = await puppeteer.launch(browserOptions);
