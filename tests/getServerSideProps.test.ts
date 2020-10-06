@@ -5,8 +5,8 @@ import fetch from "jest-fetch-mock";
 import { enableFetchMocks } from "jest-fetch-mock";
 import { Socket } from "net";
 
+import { ProviderUser } from "../lib/@types/ProviderUser";
 import { ReceivedIdentityTypes } from "../src/@types/Identity";
-import { ProviderUser } from "../src/@types/ProviderUser";
 import { config } from "../src/config";
 import { getServerSideProps } from "../src/pages/account/logins/index";
 

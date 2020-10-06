@@ -1,6 +1,6 @@
 import { ObjectId, Db } from "mongodb";
 
-import { oAuth2UserInfo, MongoUser } from "@src/@types/mongo/User";
+import { oAuth2UserInfo, MongoUser } from "@lib/@types/mongo/User";
 import { MongoInsertError } from "@src/errors";
 
 export async function findOrInsertUser(
