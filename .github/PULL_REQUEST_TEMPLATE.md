@@ -6,7 +6,7 @@
 
 Please ✔️ the relevant options.
 
-<!--- You have to create the PR to be able to click on them -->
+<!--- To tick the checkbox, put an `x` inside the `[ ]` -->
 
 - [ ] **Chore** (non-breaking change which refactors / improves the existing code base).
 - [ ] **Bug fix** (non-breaking change which fixes an issue).
@@ -34,7 +34,7 @@ If needed, provide instructions, so we can reproduce (i.e. test configuration).
 
 ## Checklist:
 
-<!--- You have to create the PR to be able to click on them -->
+<!--- To tick the checkbox, put an `x` inside the `[ ]` -->
 
 - [ ] My code follows the style [**contributing guidelines**][contributing_file] of this project.
 - [ ] I have performed a self-review of my own code.
