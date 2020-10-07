@@ -7,6 +7,7 @@ import { Box } from "../Box/Box";
 import { Button, ButtonVariant } from "../Button/Button";
 import { ClickAwayListener } from "../ConfirmationBox/ClickAwayListener";
 import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
+import { Container } from "../Container";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, IdentityTypes } from "@lib/@types";
@@ -28,8 +29,8 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
   const { id, primary, status, type, value } = identity;
 
   return (
-    <Wrapper>
-      <h1>Logins</h1>
+    <Container>
+      <H1>Logins</H1>
       <NavigationBreadcrumbs
         breadcrumbs={[
           type.toUpperCase() === IdentityTypes.EMAIL
@@ -137,23 +138,13 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
           </ConfirmationBox>
         </>
       )}
-    </Wrapper>
+    </Container>
   );
 };
 
-const Wrapper = styled.div`
-  width: 90%;
-  margin: 0 auto;
-
-  h1 {
-    margin: ${({ theme }) => theme.spaces.component.s} 0
-      ${({ theme }) => theme.spaces.component.xxs};
-  }
-
-  button {
-    margin-bottom: ${({ theme }) => theme.spaces.component.xxs};
-    width: 100%;
-  }
+const H1 = styled.h1`
+  margin: ${({ theme }) => theme.spaces.component.s} 0
+    ${({ theme }) => theme.spaces.component.xxs};
 `;
 
 const IdentityInfo = styled.div`
