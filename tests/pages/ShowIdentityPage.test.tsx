@@ -5,12 +5,7 @@ import fetch from "jest-fetch-mock";
 import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 
-<<<<<<< HEAD
-import { ReceivedIdentityTypes, Identity } from "@src/@types/Identity";
-=======
 import { IdentityTypes, Identity } from "@lib/@types";
-import { Layout } from "@src/components/Layout";
->>>>>>> deleting src types identity file
 import { AwaitingValidationBadge } from "@src/components/display/fewlines/AwaitingValidationBadge/AwaitingValidationBadge";
 import {
   Button,
@@ -179,20 +174,11 @@ describe("ShowIdentityPage", () => {
     );
 
     const primaryBadge = component.contains(<PrimaryBadge />);
-<<<<<<< HEAD
     const makeThisPrimaryButton = component
       .find(Button)
       .find({ variant: ButtonVariant.SECONDARY })
       .at(0)
       .text();
-=======
-    const makeThisPrimaryButton = component.contains(
-      <Button variant={ButtonVariant.SECONDARY}>
-        Make this my primary email
-      </Button>,
-    );
-
->>>>>>> deleting src types identity file
     expect(primaryBadge).toEqual(false);
     expect(makeThisPrimaryButton).toEqual("Make this my primary email");
   });

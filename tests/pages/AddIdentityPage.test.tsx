@@ -4,12 +4,7 @@ import { mount } from "enzyme";
 import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 
-<<<<<<< HEAD
-import { ReceivedIdentityTypes } from "@src/@types/Identity";
-=======
 import { IdentityTypes } from "@lib/@types";
-import { Layout } from "@src/components/Layout";
->>>>>>> deleting src types identity file
 import { Form } from "@src/components/display/fewlines/AddIdentityForm/AddIdentityForm";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
@@ -43,18 +38,9 @@ jest.mock("../../src/config", () => {
 describe("AddIdentityPage", () => {
   test("it should display navigation breadcrumbs properly for emails", () => {
     const component = mount(
-<<<<<<< HEAD
       <AccountApp>
-        <AddIdentityPage type={ReceivedIdentityTypes.EMAIL} />
+        <AddIdentityPage type={IdentityTypes.EMAIL} />
       </AccountApp>,
-=======
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <AddIdentityPage type={IdentityTypes.EMAIL} />
-        </Layout>
-      </ThemeProvider>,
->>>>>>> deleting src types identity file
     );
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
@@ -68,18 +54,9 @@ describe("AddIdentityPage", () => {
 
   test("it should display navigation breadcrumbs properly for phones", () => {
     const component = mount(
-<<<<<<< HEAD
       <AccountApp>
-        <AddIdentityPage type={ReceivedIdentityTypes.PHONE} />
+        <AddIdentityPage type={IdentityTypes.PHONE} />
       </AccountApp>,
-=======
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <AddIdentityPage type={IdentityTypes.PHONE} />
-        </Layout>
-      </ThemeProvider>,
->>>>>>> deleting src types identity file
     );
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
@@ -93,18 +70,9 @@ describe("AddIdentityPage", () => {
 
   test("it should display an input", () => {
     const component = mount(
-<<<<<<< HEAD
       <AccountApp>
-        <AddIdentityPage type={ReceivedIdentityTypes.EMAIL} />
+        <AddIdentityPage type={IdentityTypes.EMAIL} />
       </AccountApp>,
-=======
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <AddIdentityPage type={IdentityTypes.EMAIL} />
-        </Layout>
-      </ThemeProvider>,
->>>>>>> deleting src types identity file
     );
 
     const addIdentityInput = component.find(Form);
@@ -115,18 +83,9 @@ describe("AddIdentityPage", () => {
     const spyDate = jest.spyOn(Date, "now").mockReturnValue(1572393600000);
 
     const component = mount(
-<<<<<<< HEAD
       <AccountApp>
-        <AddIdentityPage type={ReceivedIdentityTypes.EMAIL} />
+        <AddIdentityPage type={IdentityTypes.EMAIL} />
       </AccountApp>,
-=======
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <AddIdentityPage type={IdentityTypes.EMAIL} />
-        </Layout>
-      </ThemeProvider>,
->>>>>>> deleting src types identity file
     );
 
     const newIdentityInput = component.find(Input);
