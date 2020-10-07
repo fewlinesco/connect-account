@@ -61,7 +61,9 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                 <div key={email.value}>
                   <Link
                     href="/account/logins/[type]/[id]"
-                    as={`/account/logins/${email.type}/${email.id}`}
+                    as={`/account/logins/${email.type.toLowerCase()}/${
+                      email.id
+                    }`}
                   >
                     <NeutralLink>
                       <BoxedLink
@@ -103,7 +105,9 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                 <div key={phone.value}>
                   <Link
                     href="/account/logins/[type]/[id]"
-                    as={`/account/logins/${phone.type}/${phone.id}`}
+                    as={`/account/logins/${phone.type.toLowerCase()}/${
+                      phone.id
+                    }`}
                   >
                     <NeutralLink>
                       <BoxedLink

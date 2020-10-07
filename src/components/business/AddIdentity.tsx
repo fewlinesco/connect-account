@@ -38,9 +38,7 @@ export const AddIdentity: React.FC<AddIdentityProps> = ({ type, children }) => {
       });
 
       router &&
-        router.push(
-          `/account/logins/${type.toLowerCase()}/validation/${eventId.data}`,
-        );
+        router.push(`/account/logins/${type}/validation/${eventId.data}`);
     } catch (error) {
       router && router.push("/account/logins/email/new");
     }
