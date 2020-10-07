@@ -9,7 +9,7 @@ import { IdentityContainer } from "../IdentityContainer/IdentityContainer";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { Separator } from "../Separator/Separator";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
-import { Identity } from "@src/@types/Identity";
+import { Identity } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 
 type LoginsProps = {

@@ -1,7 +1,7 @@
 import React from "react";
 
 import Logins from "./Logins";
-import { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 
 export default { title: "pages/Logins", component: Logins };
@@ -13,14 +13,14 @@ export const StandardLogins = (): JSX.Element => {
         id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
         primary: true,
         status: "validated",
-        type: ReceivedIdentityTypes.PHONE,
+        type: IdentityTypes.PHONE,
         value: "0622116655",
       },
       {
         id: "jht5dcc1-530b-4982-878d-33f0def6a7cf",
         primary: false,
         status: "validated",
-        type: ReceivedIdentityTypes.PHONE,
+        type: IdentityTypes.PHONE,
         value: "0622116633",
       },
     ],
@@ -29,14 +29,14 @@ export const StandardLogins = (): JSX.Element => {
         id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
         primary: true,
         status: "validated",
-        type: ReceivedIdentityTypes.EMAIL,
+        type: IdentityTypes.EMAIL,
         value: "test@test.test",
       },
       {
         id: "91gercc1-530b-4982-878d-33f0def6a7cf",
         primary: false,
         status: "unvalidated",
-        type: ReceivedIdentityTypes.EMAIL,
+        type: IdentityTypes.EMAIL,
         value: "test2@test.test",
       },
     ],

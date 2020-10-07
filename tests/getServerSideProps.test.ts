@@ -5,9 +5,9 @@ import fetch from "jest-fetch-mock";
 import { enableFetchMocks } from "jest-fetch-mock";
 import { Socket } from "net";
 
-import { ReceivedIdentityTypes } from "../src/@types/Identity";
 import { config } from "../src/config";
 import { getServerSideProps } from "../src/pages/account/logins/index";
+import { IdentityTypes } from "@lib/@types";
 import { ProviderUser } from "@lib/@types";
 
 enableFetchMocks();
@@ -65,14 +65,14 @@ describe("getServerSideProps", () => {
               id: "7f8d168a-3f65-4636-9acb-7720a212680e",
               primary: true,
               status: "validated",
-              type: ReceivedIdentityTypes.PHONE,
+              type: IdentityTypes.PHONE,
               value: "0123456789",
             },
             {
               id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
               primary: true,
               status: "validated",
-              type: ReceivedIdentityTypes.EMAIL,
+              type: IdentityTypes.EMAIL,
               value: "test@test.test",
             },
           ],
@@ -106,7 +106,7 @@ describe("getServerSideProps", () => {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
           primary: true,
           status: "validated",
-          type: ReceivedIdentityTypes.EMAIL,
+          type: IdentityTypes.EMAIL,
           value: "test@test.test",
         },
       ],
@@ -115,7 +115,7 @@ describe("getServerSideProps", () => {
           id: "7f8d168a-3f65-4636-9acb-7720a212680e",
           primary: true,
           status: "validated",
-          type: ReceivedIdentityTypes.PHONE,
+          type: IdentityTypes.PHONE,
           value: "0123456789",
         },
       ],

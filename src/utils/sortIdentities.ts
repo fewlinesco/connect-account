@@ -1,5 +1,6 @@
+import { IdentityTypes } from "@lib/@types";
+import { Identity } from "@lib/@types";
 import type { ProviderUser } from "@lib/@types/ProviderUser";
-import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 
 export function sortIdentities(fetchedData: {
@@ -12,10 +13,23 @@ export function sortIdentities(fetchedData: {
     const identities: Identity[] = fetchedData.data.provider.user.identities;
 
     identities.forEach((identity) => {
-      if (identity.type === ReceivedIdentityTypes.EMAIL) {
-        emailIdentities.push(identity);
-      } else if (identity.type === ReceivedIdentityTypes.PHONE) {
-        phoneIdentities.push(identity);
+      const identityType = identity.type.toUpperCase();
+      if (identityType === IdentityTypes.EMAIL) {
+        emailIdentities.push({
+          id: identity.id,
+          primary: identity.primary,
+          status: identity.status,
+          type: IdentityTypes.EMAIL,
+          value: identity.value,
+        });
+      } else if (identityType === IdentityTypes.PHONE) {
+        phoneIdentities.push({
+          id: identity.id,
+          primary: identity.primary,
+          status: identity.status,
+          type: IdentityTypes.PHONE,
+          value: identity.value,
+        });
       }
     });
   }
