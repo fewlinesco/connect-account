@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 
+import { Container } from "../Container";
 import { Box } from "./Box";
 
 export default { title: "components/Box", component: Box };
@@ -12,8 +12,3 @@ export const StandardBox = (): JSX.Element => {
     </Container>
   );
 };
-
-const Container = styled.div`
-  width: 90%;
-  margin: 0 auto;
-`;

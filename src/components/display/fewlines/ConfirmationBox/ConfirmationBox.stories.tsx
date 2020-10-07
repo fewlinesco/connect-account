@@ -1,7 +1,7 @@
 import React from "react";
-import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
+import { Container } from "../Container";
 import { ConfirmationText } from "../ShowIdentity/ShowIdentity";
 import { ClickAwayListener } from "./ClickAwayListener";
 import { ConfirmationBox } from "./ConfirmationBox";
@@ -65,14 +65,3 @@ export const DangerConfirmationBox = (): JSX.Element => {
     </Container>
   );
 };
-
-const Container = styled.div`
-  p {
-    margin: 0 0 ${({ theme }) => theme.spaces.component.xs};
-  }
-
-  button {
-    width: 100%;
-    margin: 0 0 ${({ theme }) => theme.spaces.component.xxs};
-  }
-`;
