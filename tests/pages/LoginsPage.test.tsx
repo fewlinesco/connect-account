@@ -1,16 +1,13 @@
 import { mount } from "enzyme";
 import React from "react";
-import { ThemeProvider } from "styled-components";
 
 import { ReceivedIdentityTypes } from "@src/@types/Identity";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
-import { Layout } from "@src/components/Layout";
 import { BoxedLink } from "@src/components/display/fewlines/BoxedLink/BoxedLink";
 import { Value } from "@src/components/display/fewlines/Logins/Logins";
 import { SmallHeader } from "@src/components/display/fewlines/Logins/Logins";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
-import { GlobalStyle } from "@src/design-system/globals/globalStyle";
-import { lightTheme } from "@src/design-system/theme/lightTheme";
+import { AccountApp } from "@src/pages/_app";
 import LoginsPage from "@src/pages/account/logins/index";
 
 jest.mock("@src/config", () => {
@@ -45,12 +42,9 @@ describe("LoginsPage", () => {
       ],
     };
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
     );
     const boxedLink = component.find(BoxedLink);
     expect(boxedLink).toHaveLength(2);
@@ -92,12 +86,9 @@ describe("LoginsPage", () => {
       ],
     };
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
     );
     const boxedLink = component.find(BoxedLink);
     expect(boxedLink).toHaveLength(2);
@@ -117,12 +108,9 @@ describe("LoginsPage", () => {
       emailIdentities: [],
     };
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
     );
     const boxedLink = component.find(BoxedLink);
     const noEmail = component.contains(<Value>No emails</Value>);
@@ -144,12 +132,9 @@ describe("LoginsPage", () => {
       ],
     };
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
     );
     const boxedLink = component.find(BoxedLink);
     const noPhone = component.contains(<Value>No phones</Value>);
@@ -164,12 +149,9 @@ describe("LoginsPage", () => {
       emailIdentities: [],
     };
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
     );
     const noPhone = component.contains(<Value>No phones</Value>);
     const noEmail = component.contains(<Value>No emails</Value>);
@@ -183,12 +165,9 @@ describe("LoginsPage", () => {
       emailIdentities: [],
     };
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
     );
 
     const smallHeader = component.find(SmallHeader);
@@ -258,12 +237,9 @@ describe('the "show more" button should behave properly', () => {
       ],
     };
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
     );
 
     const showMoreButton1 = component.find(ShowMoreButton).at(0);
@@ -315,12 +291,9 @@ describe('the "show more" button should behave properly', () => {
       ],
     };
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
     );
     const boxedLink = component.find(BoxedLink);
     const showMoreButton1 = component.find(ShowMoreButton).at(0);
@@ -360,12 +333,9 @@ describe('the "show more" button should behave properly', () => {
       ],
     };
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
     );
     const showMoreButton = component.find(ShowMoreButton);
     expect(showMoreButton).toHaveLength(0);

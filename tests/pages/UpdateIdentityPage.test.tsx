@@ -4,10 +4,8 @@ import { mount } from "enzyme";
 import fetch from "jest-fetch-mock";
 import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
-import { ThemeProvider } from "styled-components";
 
 import { ReceivedIdentityTypes, Identity } from "@src/@types/Identity";
-import { Layout } from "@src/components/Layout";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
   NavigationBreadcrumbs,
@@ -17,9 +15,8 @@ import {
   UpdateIdentityForm,
   Form,
 } from "@src/components/display/fewlines/UpdateIdentityForm/UpdateIdentityForm";
-import { GlobalStyle } from "@src/design-system/globals/globalStyle";
-import { lightTheme } from "@src/design-system/theme/lightTheme";
 import { useCookies } from "@src/hooks/useCookies";
+import { AccountApp } from "@src/pages/_app";
 import UpdateIdentityPage from "@src/pages/account/logins/[type]/[id]/update";
 import * as fetchJson from "@src/utils/fetchJson";
 
@@ -65,12 +62,9 @@ describe("UpdateIdentityPage", () => {
 
   test("it should display navigation breadcrumbs properly for emails", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <UpdateIdentityPage identity={nonPrimaryIdentity} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <UpdateIdentityPage identity={nonPrimaryIdentity} />
+      </AccountApp>,
     );
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
@@ -84,12 +78,9 @@ describe("UpdateIdentityPage", () => {
 
   test("it should display navigation breadcrumbs properly for phones", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <UpdateIdentityPage identity={phoneIdentity} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <UpdateIdentityPage identity={phoneIdentity} />
+      </AccountApp>,
     );
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
@@ -103,12 +94,9 @@ describe("UpdateIdentityPage", () => {
 
   test("it should display an update identity input", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <UpdateIdentityPage identity={nonPrimaryIdentity} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <UpdateIdentityPage identity={nonPrimaryIdentity} />
+      </AccountApp>,
     );
 
     const updateIdentityInput = component.find(UpdateIdentityForm).find(Input);
@@ -118,12 +106,9 @@ describe("UpdateIdentityPage", () => {
   test("it should create the new identity if the form is submitted", () => {
     expect.assertions(1);
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <UpdateIdentityPage identity={nonPrimaryIdentity} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <UpdateIdentityPage identity={nonPrimaryIdentity} />
+      </AccountApp>,
     );
 
     const fetchMethod = jest.spyOn(fetchJson, "fetchJson");
@@ -146,12 +131,9 @@ describe("UpdateIdentityPage", () => {
   test("it should delete the old identity if the form is submitted", async () => {
     expect.assertions(1);
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <UpdateIdentityPage identity={nonPrimaryIdentity} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <UpdateIdentityPage identity={nonPrimaryIdentity} />
+      </AccountApp>,
     );
 
     const updateInput = component.find(UpdateIdentityPage).find(Input);

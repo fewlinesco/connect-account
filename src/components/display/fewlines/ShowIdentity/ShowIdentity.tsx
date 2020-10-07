@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { AwaitingValidationBadge } from "../AwaitingValidationBadge/AwaitingValidationBadge";
 import { Box } from "../Box/Box";
 import { Button, ButtonVariant } from "../Button/Button";
+import { ClickAwayListener } from "../ConfirmationBox/ClickAwayListener";
+import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
@@ -15,6 +17,14 @@ type ShowIdentityProps = {
 };
 
 export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
+  const [
+    deleteConfirmationBoxOpen,
+    setDeleteConfirmationBoxOpen,
+  ] = React.useState<boolean>(false);
+  const [
+    primaryConfirmationBoxOpen,
+    setPrimaryConfirmationBoxOpen,
+  ] = React.useState<boolean>(false);
   const { id, primary, status, type, value } = identity;
 
   return (
@@ -60,18 +70,72 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
         </Link>
       )}
       {!primary && status === "validated" && (
-        <Button variant={ButtonVariant.SECONDARY}>
-          Make this my primary {type}
-        </Button>
+        <>
+          <Button
+            variant={ButtonVariant.SECONDARY}
+            onClick={() => setPrimaryConfirmationBoxOpen(true)}
+          >
+            Make this my primary {type}
+          </Button>
+          {primaryConfirmationBoxOpen && (
+            <ClickAwayListener
+              onClick={() => setPrimaryConfirmationBoxOpen(false)}
+            />
+          )}
+          <ConfirmationBox open={primaryConfirmationBoxOpen}>
+            <ConfirmationText>
+              You are about to replace mail@mail.com as your main address
+            </ConfirmationText>
+            <Button variant={ButtonVariant.PRIMARY}>
+              Set {value} as my main
+            </Button>
+            <Button
+              variant={ButtonVariant.SECONDARY}
+              onClick={() => setPrimaryConfirmationBoxOpen(false)}
+            >
+              Keep mail@mail.co as my primary {type}
+            </Button>
+          </ConfirmationBox>
+        </>
       )}
       {!primary && (
-        <DeleteIdentity type={type} value={value}>
-          {({ deleteIdentity }) => (
-            <Button variant={ButtonVariant.GHOST} onClick={deleteIdentity}>
-              Delete this {type === "phone" ? "phone number" : "email address"}
-            </Button>
+        <>
+          <Button
+            variant={ButtonVariant.GHOST}
+            onClick={() =>
+              setDeleteConfirmationBoxOpen(!deleteConfirmationBoxOpen)
+            }
+          >
+            Delete this {type === "phone" ? "phone number" : "email address"}
+          </Button>
+          {deleteConfirmationBoxOpen && (
+            <ClickAwayListener
+              onClick={() => setDeleteConfirmationBoxOpen(false)}
+            />
           )}
-        </DeleteIdentity>
+          <ConfirmationBox open={deleteConfirmationBoxOpen}>
+            <ConfirmationText>You are about to delete {value}</ConfirmationText>
+            <DeleteIdentity type={type} value={value}>
+              {({ deleteIdentity }) => (
+                <Button variant={ButtonVariant.DANGER} onClick={deleteIdentity}>
+                  Delete this{" "}
+                  {type === ReceivedIdentityTypes.EMAIL
+                    ? "email address"
+                    : "phone number"}
+                </Button>
+              )}
+            </DeleteIdentity>
+            <Button
+              variant={ButtonVariant.SECONDARY}
+              onClick={() => setDeleteConfirmationBoxOpen(false)}
+            >
+              Keep{" "}
+              {type === ReceivedIdentityTypes.EMAIL
+                ? "email address"
+                : "phone number"}
+            </Button>
+          </ConfirmationBox>
+        </>
       )}
     </Wrapper>
   );
@@ -107,4 +171,8 @@ const Value = styled.p`
 const Flex = styled.div`
   display: flex;
   align-items: center;
+`;
+
+export const ConfirmationText = styled.p`
+  margin: 0 0 ${({ theme }) => theme.spaces.component.xs};
 `;
