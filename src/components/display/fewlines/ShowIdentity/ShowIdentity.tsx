@@ -9,7 +9,8 @@ import { ClickAwayListener } from "../ConfirmationBox/ClickAwayListener";
 import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
-import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
+import { IdentityTypes } from "@lib/@types";
+import { Identity } from "@lib/@types";
 import { DeleteIdentity } from "@src/components/business/DeleteIdentity";
 
 type ShowIdentityProps = {
@@ -32,7 +33,7 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
       <h1>Logins</h1>
       <NavigationBreadcrumbs
         breadcrumbs={[
-          type === ReceivedIdentityTypes.EMAIL
+          type.toUpperCase() === IdentityTypes.EMAIL
             ? "Email address"
             : "Phone number",
         ]}
@@ -64,7 +65,8 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
         <Link href={`/account/logins/${type}/${id}/update`}>
           <a>
             <Button variant={ButtonVariant.PRIMARY}>
-              Update this {type === "phone" ? "phone number" : "email address"}
+              Update this{" "}
+              {type === IdentityTypes.PHONE ? "phone number" : "email address"}
             </Button>
           </a>
         </Link>
@@ -106,7 +108,8 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
               setDeleteConfirmationBoxOpen(!deleteConfirmationBoxOpen)
             }
           >
-            Delete this {type === "phone" ? "phone number" : "email address"}
+            Delete this{" "}
+            {type === IdentityTypes.PHONE ? "phone number" : "email address"}
           </Button>
           {deleteConfirmationBoxOpen && (
             <ClickAwayListener
@@ -119,9 +122,9 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
               {({ deleteIdentity }) => (
                 <Button variant={ButtonVariant.DANGER} onClick={deleteIdentity}>
                   Delete this{" "}
-                  {type === ReceivedIdentityTypes.EMAIL
-                    ? "email address"
-                    : "phone number"}
+                  {type === IdentityTypes.PHONE
+                    ? "phone number"
+                    : "email address"}
                 </Button>
               )}
             </DeleteIdentity>
@@ -130,9 +133,7 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
               onClick={() => setDeleteConfirmationBoxOpen(false)}
             >
               Keep{" "}
-              {type === ReceivedIdentityTypes.EMAIL
-                ? "email address"
-                : "phone number"}
+              {type === IdentityTypes.PHONE ? "phone number" : "email address"}
             </Button>
           </ConfirmationBox>
         </>

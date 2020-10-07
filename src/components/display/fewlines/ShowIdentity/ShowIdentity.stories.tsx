@@ -1,7 +1,7 @@
 import React from "react";
 
 import { ShowIdentity } from "./ShowIdentity";
-import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
+import { Identity, IdentityTypes } from "@lib/@types";
 
 export default { title: "pages/ShowIdentity", component: ShowIdentity };
 
@@ -10,7 +10,7 @@ export const ShowPrimaryIdentity = (): JSX.Element => {
     id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
     primary: true,
     status: "validated",
-    type: ReceivedIdentityTypes.EMAIL,
+    type: IdentityTypes.EMAIL,
     value: "test@test.test",
   };
 
@@ -22,7 +22,7 @@ export const ShowNonPrimaryIdentity = (): JSX.Element => {
     id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
     primary: false,
     status: "validated",
-    type: ReceivedIdentityTypes.EMAIL,
+    type: IdentityTypes.EMAIL,
     value: "test@test.test",
   };
 
@@ -34,7 +34,7 @@ export const ShowNonValidatedIdentity = (): JSX.Element => {
     id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
     primary: false,
     status: "unvalidated",
-    type: ReceivedIdentityTypes.EMAIL,
+    type: IdentityTypes.EMAIL,
     value: "test@test.test",
   };
 
