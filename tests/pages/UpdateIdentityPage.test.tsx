@@ -5,7 +5,12 @@ import fetch from "jest-fetch-mock";
 import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 
+<<<<<<< HEAD
 import { ReceivedIdentityTypes, Identity } from "@src/@types/Identity";
+=======
+import { IdentityTypes, Identity } from "@lib/@types";
+import { Layout } from "@src/components/Layout";
+>>>>>>> deleting src types identity file
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
   NavigationBreadcrumbs,
@@ -48,7 +53,7 @@ describe("UpdateIdentityPage", () => {
     id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
     primary: false,
     status: "validated",
-    type: ReceivedIdentityTypes.EMAIL,
+    type: IdentityTypes.EMAIL,
     value: "test@test.test",
   };
 
@@ -56,7 +61,7 @@ describe("UpdateIdentityPage", () => {
     id: "htg6dcc1-530b-4982-878d-33f0def6a7cf",
     primary: false,
     status: "validated",
-    type: ReceivedIdentityTypes.PHONE,
+    type: IdentityTypes.PHONE,
     value: "0788992255",
   };
 

@@ -1,16 +1,13 @@
 import { useRouter } from "next/router";
 import React from "react";
 
+import type { InMemoryTemporaryIdentity, IdentityTypes } from "@lib/@types";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
-import type {
-  InMemoryTemporaryIdentity,
-  ReceivedIdentityTypes,
-} from "@src/@types/Identity";
 import { ErrorSendingValidationCode } from "@src/clientErrors";
 import { fetchJson } from "@src/utils/fetchJson";
 
 interface AddIdentityProps {
-  type: ReceivedIdentityTypes;
+  type: IdentityTypes;
   children: (props: {
     addIdentity: (identity: InMemoryTemporaryIdentity) => Promise<void>;
   }) => JSX.Element;
@@ -41,7 +38,9 @@ export const AddIdentity: React.FC<AddIdentityProps> = ({ type, children }) => {
       });
 
       router &&
-        router.push(`/account/logins/${type}/validation/${eventId.data}`);
+        router.push(
+          `/account/logins/${type.toLowerCase()}/validation/${eventId.data}`,
+        );
     } catch (error) {
       router && router.push("/account/logins/email/new");
     }

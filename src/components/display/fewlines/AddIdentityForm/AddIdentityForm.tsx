@@ -5,13 +5,10 @@ import styled from "styled-components";
 import { Button, ButtonVariant } from "../Button/Button";
 import { Input } from "../Input/Input";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
-import {
-  InMemoryTemporaryIdentity,
-  ReceivedIdentityTypes,
-} from "@src/@types/Identity";
+import { InMemoryTemporaryIdentity, IdentityTypes } from "@lib/@types";
 
 type AddIdentityFormProps = {
-  type: ReceivedIdentityTypes;
+  type: IdentityTypes;
   addIdentity: (identity: InMemoryTemporaryIdentity) => Promise<void>;
 };
 
@@ -32,9 +29,7 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
       <h1>Logins</h1>
       <NavigationBreadcrumbs
         breadcrumbs={[
-          type === ReceivedIdentityTypes.EMAIL
-            ? "Email address"
-            : "Phone number",
+          type === IdentityTypes.EMAIL ? "Email address" : "Phone number",
           "new",
         ]}
       />
@@ -47,10 +42,7 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
         }}
       >
         <p>
-          {type === ReceivedIdentityTypes.PHONE
-            ? "phone number"
-            : "email address"}{" "}
-          *
+          {type === IdentityTypes.PHONE ? "phone number" : "email address"} *
         </p>
         <Input
           type="text"

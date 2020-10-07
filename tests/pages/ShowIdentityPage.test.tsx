@@ -5,7 +5,12 @@ import fetch from "jest-fetch-mock";
 import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 
+<<<<<<< HEAD
 import { ReceivedIdentityTypes, Identity } from "@src/@types/Identity";
+=======
+import { IdentityTypes, Identity } from "@lib/@types";
+import { Layout } from "@src/components/Layout";
+>>>>>>> deleting src types identity file
 import { AwaitingValidationBadge } from "@src/components/display/fewlines/AwaitingValidationBadge/AwaitingValidationBadge";
 import {
   Button,
@@ -52,7 +57,7 @@ describe("ShowIdentityPage", () => {
     id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
     primary: false,
     status: "validated",
-    type: ReceivedIdentityTypes.EMAIL,
+    type: IdentityTypes.EMAIL,
     value: "test@test.test",
   };
 
@@ -60,7 +65,7 @@ describe("ShowIdentityPage", () => {
     id: "6tf443c1-530b-4982-878d-33f0def6a7cf",
     primary: true,
     status: "validated",
-    type: ReceivedIdentityTypes.EMAIL,
+    type: IdentityTypes.EMAIL,
     value: "test4@test.test",
   };
 
@@ -68,7 +73,7 @@ describe("ShowIdentityPage", () => {
     id: "77yt43c1-530b-4982-878d-33f0def6a7cf",
     primary: false,
     status: "unvalidated",
-    type: ReceivedIdentityTypes.EMAIL,
+    type: IdentityTypes.EMAIL,
     value: "test6@test.test",
   };
 
@@ -76,7 +81,7 @@ describe("ShowIdentityPage", () => {
     id: "81z343c1-530b-4982-878d-33f0def6a7cf",
     primary: false,
     status: "unvalidated",
-    type: ReceivedIdentityTypes.PHONE,
+    type: IdentityTypes.PHONE,
     value: "0722443311",
   };
 
@@ -166,7 +171,7 @@ describe("ShowIdentityPage", () => {
     expect(deleteButton).toHaveLength(0);
   });
 
-  test("it should not display the primary tag if the identity is not primary", () => {
+  test("it should not display the primary badge if the identity is not primary", () => {
     const component = mount(
       <AccountApp>
         <ShowIdentityPage identity={nonPrimaryIdentity} />
@@ -174,11 +179,20 @@ describe("ShowIdentityPage", () => {
     );
 
     const primaryBadge = component.contains(<PrimaryBadge />);
+<<<<<<< HEAD
     const makeThisPrimaryButton = component
       .find(Button)
       .find({ variant: ButtonVariant.SECONDARY })
       .at(0)
       .text();
+=======
+    const makeThisPrimaryButton = component.contains(
+      <Button variant={ButtonVariant.SECONDARY}>
+        Make this my primary email
+      </Button>,
+    );
+
+>>>>>>> deleting src types identity file
     expect(primaryBadge).toEqual(false);
     expect(makeThisPrimaryButton).toEqual("Make this my primary email");
   });

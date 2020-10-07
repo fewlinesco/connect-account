@@ -21,7 +21,7 @@ export const UpdateIdentityForm: React.FC<{
       <h1>Logins</h1>
       <NavigationBreadcrumbs
         breadcrumbs={[
-          currentIdentity.type === IdentityTypes.EMAIL.toLowerCase()
+          currentIdentity.type === IdentityTypes.EMAIL
             ? "Email address"
             : "Phone number",
           "edit",

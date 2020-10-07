@@ -77,7 +77,7 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
             variant={ButtonVariant.SECONDARY}
             onClick={() => setPrimaryConfirmationBoxOpen(true)}
           >
-            Make this my primary {type}
+            Make this my primary {type.toLowerCase()}
           </Button>
           {primaryConfirmationBoxOpen && (
             <ClickAwayListener
@@ -95,7 +95,7 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
               variant={ButtonVariant.SECONDARY}
               onClick={() => setPrimaryConfirmationBoxOpen(false)}
             >
-              Keep mail@mail.co as my primary {type}
+              Keep mail@mail.co as my primary {type.toLowerCase()}
             </Button>
           </ConfirmationBox>
         </>
