@@ -5,8 +5,9 @@ import React from "react";
 import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 import { BoxedLink } from "@src/components/display/fewlines/BoxedLink/BoxedLink";
+import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { Value } from "@src/components/display/fewlines/Logins/Logins";
-import { SmallHeader } from "@src/components/display/fewlines/Logins/Logins";
+import { SubTitle } from "@src/components/display/fewlines/Logins/Logins";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
 import { AccountApp } from "@src/pages/_app";
 import LoginsPage from "@src/pages/account/logins/index";
@@ -172,227 +173,227 @@ describe("LoginsPage", () => {
         </AccountApp>,
       );
 
-      const smallHeader = component.find(SmallHeader);
-      expect(smallHeader).toHaveLength(1);
-      expect(smallHeader.contains(<h1>Logins</h1>)).toEqual(true);
-      expect(
-        smallHeader.contains(<p>Your emails, phones and social logins</p>),
-      ).toEqual(true);
-    });
-
-    test("it should redirect to phone page on click", () => {
-      const mockedSortedResponse: SortedIdentities = {
-        phoneIdentities: [
-          {
-            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-            primary: true,
-            status: "validated",
-            type: IdentityTypes.PHONE,
-            value: "0622116655",
-          },
-        ],
-        emailIdentities: [],
-      };
-      const component = mount(
-        <AccountApp>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </AccountApp>,
-      );
-
-      const link = component.find(Link).find({
-        as: "/account/logins/phone/8f79dcc1-530b-4982-878d-33f0def6a7cf",
-      });
-
-      expect(link).toHaveLength(1);
-    });
-
-    test("it should redirect to email page on click", () => {
-      const mockedSortedResponse: SortedIdentities = {
-        phoneIdentities: [],
-        emailIdentities: [
-          {
-            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-            primary: true,
-            status: "validated",
-            type: IdentityTypes.EMAIL,
-            value: "test@test.test",
-          },
-        ],
-      };
-      const component = mount(
-        <AccountApp>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </AccountApp>,
-      );
-
-      const link = component.find(Link).find({
-        as: "/account/logins/email/8f79dcc1-530b-4982-878d-33f0def6a7cf",
-      });
-
-      expect(link).toHaveLength(1);
+      const h1 = component.find(H1);
+      const subTitle = component.find(SubTitle);
+      expect(h1).toHaveLength(1);
+      expect(h1.text()).toEqual("Logins");
+      expect(subTitle).toHaveLength(1);
+      expect(subTitle.text()).toEqual("Your emails, phones and social logins");
     });
   });
 
-  describe("ShowMoreButton", () => {
-    test("the button's text should be relevant", () => {
-      const mockedSortedResponse: SortedIdentities = {
-        phoneIdentities: [
-          {
-            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-            primary: true,
-            status: "validated",
-            type: IdentityTypes.PHONE,
-            value: "0622116655",
-          },
-          {
-            id: "7y6edcc1-530b-4982-878d-33f0def6a7cf",
-            primary: false,
-            status: "validated",
-            type: IdentityTypes.PHONE,
-            value: "0622116688",
-          },
-          {
-            id: "5r32scc1-530b-4982-878d-33f0def6a7cf",
-            primary: false,
-            status: "validated",
-            type: IdentityTypes.PHONE,
-            value: "0622116633",
-          },
-          {
-            id: "87uytcc1-530b-4982-878d-33f0def6a7cf",
-            primary: false,
-            status: "validated",
-            type: IdentityTypes.PHONE,
-            value: "0622116611",
-          },
-        ],
-        emailIdentities: [
-          {
-            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-            primary: true,
-            status: "validated",
-            type: IdentityTypes.EMAIL,
-            value: "test@test.test",
-          },
-          {
-            id: "66tedcc1-530b-4982-878d-33f0def6a7cf",
-            primary: false,
-            status: "validated",
-            type: IdentityTypes.EMAIL,
-            value: "test2@test.test",
-          },
-          {
-            id: "ttr43cc1-530b-4982-878d-33f0def6a7cf",
-            primary: false,
-            status: "validated",
-            type: IdentityTypes.EMAIL,
-            value: "test3@test.test",
-          },
-        ],
-      };
-      const component = mount(
-        <AccountApp>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </AccountApp>,
-      );
+  test("it should redirect to phone page on click", () => {
+    const mockedSortedResponse: SortedIdentities = {
+      phoneIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.PHONE,
+          value: "0622116655",
+        },
+      ],
+      emailIdentities: [],
+    };
+    const component = mount(
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
+    );
 
-      const showMoreButton1 = component.find(ShowMoreButton).at(0);
-      const showMoreButton2 = component.find(ShowMoreButton).at(1);
-      expect(showMoreButton1).toHaveLength(1);
-      expect(showMoreButton2).toHaveLength(1);
-      expect(showMoreButton1.text()).toEqual("Show 2 more ");
-      expect(showMoreButton2.text()).toEqual("Show 3 more ");
-
-      showMoreButton1.simulate("click");
-      showMoreButton2.simulate("click");
-      expect(showMoreButton1.text()).toEqual("Hide 2 ");
-      expect(showMoreButton2.text()).toEqual("Hide 3 ");
+    const link = component.find(Link).find({
+      as: "/account/logins/phone/8f79dcc1-530b-4982-878d-33f0def6a7cf",
     });
 
-    test("the button should show/hide identities", () => {
-      const mockedSortedResponse: SortedIdentities = {
-        phoneIdentities: [
-          {
-            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-            primary: true,
-            status: "validated",
-            type: IdentityTypes.PHONE,
-            value: "0622116655",
-          },
-          {
-            id: "7y6edcc1-530b-4982-878d-33f0def6a7cf",
-            primary: false,
-            status: "validated",
-            type: IdentityTypes.PHONE,
-            value: "0622116688",
-          },
-        ],
-        emailIdentities: [
-          {
-            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-            primary: true,
-            status: "validated",
-            type: IdentityTypes.EMAIL,
-            value: "test@test.test",
-          },
-          {
-            id: "66tedcc1-530b-4982-878d-33f0def6a7cf",
-            primary: false,
-            status: "validated",
-            type: IdentityTypes.EMAIL,
-            value: "test2@test.test",
-          },
-        ],
-      };
-      const component = mount(
-        <AccountApp>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </AccountApp>,
-      );
-      const boxedLink = component.find(BoxedLink);
-      const showMoreButton1 = component.find(ShowMoreButton).at(0);
-      const showMoreButton2 = component.find(ShowMoreButton).at(1);
-      expect(boxedLink).toHaveLength(2);
+    expect(link).toHaveLength(1);
+  });
 
-      showMoreButton1.simulate("click");
-      showMoreButton2.simulate("click");
-      const boxedLink2 = component.find(BoxedLink);
-      expect(boxedLink2).toHaveLength(4);
+  test("it should redirect to email page on click", () => {
+    const mockedSortedResponse: SortedIdentities = {
+      phoneIdentities: [],
+      emailIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.EMAIL,
+          value: "test@test.test",
+        },
+      ],
+    };
+    const component = mount(
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
+    );
 
-      showMoreButton1.simulate("click");
-      showMoreButton2.simulate("click");
-      const boxedLink3 = component.find(BoxedLink);
-      expect(boxedLink3).toHaveLength(2);
+    const link = component.find(Link).find({
+      as: "/account/logins/email/8f79dcc1-530b-4982-878d-33f0def6a7cf",
     });
 
-    test("the button should not appear if the corresponding identity list < 2", () => {
-      const mockedSortedResponse: SortedIdentities = {
-        phoneIdentities: [
-          {
-            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-            primary: true,
-            status: "validated",
-            type: IdentityTypes.PHONE,
-            value: "0622116655",
-          },
-        ],
-        emailIdentities: [
-          {
-            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-            primary: true,
-            status: "validated",
-            type: IdentityTypes.EMAIL,
-            value: "test@test.test",
-          },
-        ],
-      };
-      const component = mount(
-        <AccountApp>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </AccountApp>,
-      );
-      const showMoreButton = component.find(ShowMoreButton);
-      expect(showMoreButton).toHaveLength(0);
-    });
+    expect(link).toHaveLength(1);
+  });
+});
+
+describe("ShowMoreButton", () => {
+  test("the button's text should be relevant", () => {
+    const mockedSortedResponse: SortedIdentities = {
+      phoneIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.PHONE,
+          value: "0622116655",
+        },
+        {
+          id: "7y6edcc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: IdentityTypes.PHONE,
+          value: "0622116688",
+        },
+        {
+          id: "5r32scc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: IdentityTypes.PHONE,
+          value: "0622116633",
+        },
+        {
+          id: "87uytcc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: IdentityTypes.PHONE,
+          value: "0622116611",
+        },
+      ],
+      emailIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.EMAIL,
+          value: "test@test.test",
+        },
+        {
+          id: "66tedcc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: IdentityTypes.EMAIL,
+          value: "test2@test.test",
+        },
+        {
+          id: "ttr43cc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: IdentityTypes.EMAIL,
+          value: "test3@test.test",
+        },
+      ],
+    };
+    const component = mount(
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
+    );
+
+    const showMoreButton1 = component.find(ShowMoreButton).at(0);
+    const showMoreButton2 = component.find(ShowMoreButton).at(1);
+    expect(showMoreButton1).toHaveLength(1);
+    expect(showMoreButton2).toHaveLength(1);
+    expect(showMoreButton1.text()).toEqual("Show 2 more ");
+    expect(showMoreButton2.text()).toEqual("Show 3 more ");
+
+    showMoreButton1.simulate("click");
+    showMoreButton2.simulate("click");
+    expect(showMoreButton1.text()).toEqual("Hide 2 ");
+    expect(showMoreButton2.text()).toEqual("Hide 3 ");
+  });
+
+  test("the button should show/hide identities", () => {
+    const mockedSortedResponse: SortedIdentities = {
+      phoneIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.PHONE,
+          value: "0622116655",
+        },
+        {
+          id: "7y6edcc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: IdentityTypes.PHONE,
+          value: "0622116688",
+        },
+      ],
+      emailIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.EMAIL,
+          value: "test@test.test",
+        },
+        {
+          id: "66tedcc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: IdentityTypes.EMAIL,
+          value: "test2@test.test",
+        },
+      ],
+    };
+    const component = mount(
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
+    );
+    const boxedLink = component.find(BoxedLink);
+    const showMoreButton1 = component.find(ShowMoreButton).at(0);
+    const showMoreButton2 = component.find(ShowMoreButton).at(1);
+    expect(boxedLink).toHaveLength(2);
+
+    showMoreButton1.simulate("click");
+    showMoreButton2.simulate("click");
+    const boxedLink2 = component.find(BoxedLink);
+    expect(boxedLink2).toHaveLength(4);
+
+    showMoreButton1.simulate("click");
+    showMoreButton2.simulate("click");
+    const boxedLink3 = component.find(BoxedLink);
+    expect(boxedLink3).toHaveLength(2);
+  });
+
+  test("the button should not appear if the corresponding identity list < 2", () => {
+    const mockedSortedResponse: SortedIdentities = {
+      phoneIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.PHONE,
+          value: "0622116655",
+        },
+      ],
+      emailIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.EMAIL,
+          value: "test@test.test",
+        },
+      ],
+    };
+    const component = mount(
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
+    );
+    const showMoreButton = component.find(ShowMoreButton);
+    expect(showMoreButton).toHaveLength(0);
   });
 });

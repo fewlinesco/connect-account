@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Box } from "../Box/Box";
 import { Button, ButtonVariant } from "../Button/Button";
 import { Container } from "../Container";
+import { H1 } from "../H1/H1";
 import { Input } from "../Input/Input";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { IdentityTypes } from "@lib/@types/Identity";
@@ -74,11 +75,6 @@ const IdentityValidationForm: React.FC<{
 };
 
 export default IdentityValidationForm;
-
-const H1 = styled.h1`
-  margin: ${({ theme }) => theme.spaces.component.s} 0
-    ${({ theme }) => theme.spaces.component.xxs};
-`;
 
 const DidntReceiveCode = styled.p`
   margin: ${({ theme }) => theme.spaces.component.xs} 0

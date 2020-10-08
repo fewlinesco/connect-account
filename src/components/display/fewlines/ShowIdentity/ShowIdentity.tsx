@@ -8,6 +8,7 @@ import { Button, ButtonVariant } from "../Button/Button";
 import { ClickAwayListener } from "../ConfirmationBox/ClickAwayListener";
 import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
 import { Container } from "../Container";
+import { H1 } from "../H1/H1";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, IdentityTypes } from "@lib/@types";
@@ -141,11 +142,6 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
     </Container>
   );
 };
-
-const H1 = styled.h1`
-  margin: ${({ theme }) => theme.spaces.component.s} 0
-    ${({ theme }) => theme.spaces.component.xxs};
-`;
 
 const IdentityInfo = styled.div`
   p {

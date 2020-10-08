@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
 import { Container } from "../Container";
+import { H1 } from "../H1/H1";
 import { Input } from "../Input/Input";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { IdentityTypes } from "@lib/@types";
@@ -73,11 +74,6 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
     </Container>
   );
 };
-
-const H1 = styled.h1`
-  margin: ${({ theme }) => theme.spaces.component.s} 0
-    ${({ theme }) => theme.spaces.component.xxs};
-`;
 
 export const Form = styled.form`
   display: column;
