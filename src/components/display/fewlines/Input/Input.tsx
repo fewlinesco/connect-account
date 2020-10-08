@@ -6,6 +6,8 @@ export const Input = styled.input`
   border-radius: ${({ theme }) => theme.radii[0]};
   height: 4rem;
   padding-left: 1.6rem;
+  width: 100%;
+  margin: ${({ theme }) => theme.spaces.xxs} 0 ${({ theme }) => theme.spaces.xs};
 
   ::placeholder {
     color: ${({ theme }) => theme.colors.placeholder};

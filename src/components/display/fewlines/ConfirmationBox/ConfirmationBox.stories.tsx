@@ -1,7 +1,7 @@
 import React from "react";
-import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
+import { Container } from "../Container";
 import { ConfirmationText } from "../ShowIdentity/ShowIdentity";
 import { ClickAwayListener } from "./ClickAwayListener";
 import { ConfirmationBox } from "./ConfirmationBox";
@@ -12,14 +12,22 @@ export default {
 };
 
 export const PrimaryConfirmationBox = (): JSX.Element => {
-  const [open, setOpen] = React.useState<boolean>(true);
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
+
   return (
     <Container>
-      <Button variant={ButtonVariant.PRIMARY} onClick={() => setOpen(!open)}>
+      <Button
+        variant={ButtonVariant.PRIMARY}
+        onClick={() => {
+          setPreventAnimation(false);
+          setOpen(!open);
+        }}
+      >
         Show confirmation box
       </Button>
       {open && <ClickAwayListener onClick={() => setOpen(false)} />}
-      <ConfirmationBox open={open}>
+      <ConfirmationBox open={open} preventAnimation={preventAnimation}>
         <ConfirmationText>
           You are about to replace mail@mail.com as your main address
         </ConfirmationText>
@@ -38,17 +46,24 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
 };
 
 export const DangerConfirmationBox = (): JSX.Element => {
-  const [open, setOpen] = React.useState<boolean>(true);
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
 
   return (
     <Container>
       <div>
-        <Button variant={ButtonVariant.PRIMARY} onClick={() => setOpen(!open)}>
+        <Button
+          variant={ButtonVariant.PRIMARY}
+          onClick={() => {
+            setPreventAnimation(false);
+            setOpen(!open);
+          }}
+        >
           Show confirmation box
         </Button>
       </div>
       {open && <ClickAwayListener onClick={() => setOpen(false)} />}
-      <ConfirmationBox open={open}>
+      <ConfirmationBox open={open} preventAnimation={preventAnimation}>
         <ConfirmationText>
           You are about to delete mail@mail.co
         </ConfirmationText>
@@ -65,14 +80,3 @@ export const DangerConfirmationBox = (): JSX.Element => {
     </Container>
   );
 };
-
-const Container = styled.div`
-  p {
-    margin: 0 0 ${({ theme }) => theme.spaces.component.xs};
-  }
-
-  button {
-    width: 100%;
-    margin: 0 0 ${({ theme }) => theme.spaces.component.xxs};
-  }
-`;

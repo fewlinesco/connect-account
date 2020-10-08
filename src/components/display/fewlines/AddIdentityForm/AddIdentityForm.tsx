@@ -3,6 +3,8 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
+import { Container } from "../Container";
+import { H1 } from "../H1/H1";
 import { Input } from "../Input/Input";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { IdentityTypes } from "@lib/@types";
@@ -26,8 +28,8 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
   const router = useRouter();
 
   return (
-    <Wrapper>
-      <h1>Logins</h1>
+    <Container>
+      <H1>Logins</H1>
       <NavigationBreadcrumbs
         breadcrumbs={[
           type === IdentityTypes.EMAIL ? "Email address" : "Phone number",
@@ -59,7 +61,6 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
           }
         />
         <Button
-          className="send-button"
           variant={ButtonVariant.PRIMARY}
           type="submit"
         >{`Add ${type}`}</Button>
@@ -70,32 +71,9 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
       >
         Cancel
       </Button>
-    </Wrapper>
+    </Container>
   );
 };
-
-const Wrapper = styled.div`
-  max-width: 90%;
-  margin: 0 auto;
-
-  h1 {
-    margin: ${({ theme }) => theme.spaces.component.s} 0
-      ${({ theme }) => theme.spaces.component.xxs};
-  }
-
-  .send-button {
-    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
-  }
-
-  button {
-    width: 100%;
-  }
-
-  input {
-    width: 100%;
-    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
-  }
-`;
 
 export const Form = styled.form`
   display: column;

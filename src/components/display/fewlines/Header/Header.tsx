@@ -15,18 +15,17 @@ export const Header: React.FC = () => {
 const Flex = styled.div`
   display: flex;
   align-items: center;
-  margin: ${({ theme }) =>
-    `${theme.spaces.component.xs} ${theme.spaces.component.xs}`};
+  margin: ${({ theme }) => `${theme.spaces.xs} ${theme.spaces.xs}`};
 `;
 
 const H5 = styled.h5`
-  padding-left: ${({ theme }) => theme.spaces.component.xxs};
-  margin-left: ${({ theme }) => theme.spaces.component.xxs};
+  padding-left: ${({ theme }) => theme.spaces.xxs};
+  margin-left: ${({ theme }) => theme.spaces.xxs};
   border-left: ${({ theme }) =>
     `${theme.colors.blacks[0]} ${theme.borders.thin}`};
   font-weight: ${({ theme }) => theme.fontWeights.normal};
   font-size: ${({ theme }) => theme.fontSizes.s};
   display: flex;
   align-items: center;
-  height: ${({ theme }) => theme.spaces.component.s}; ;
+  height: ${({ theme }) => theme.spaces.s}; ;
 `;

@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 
+import { Container } from "../Container";
 import { Input } from "./Input";
 
 export default { title: "components/Input", component: Input };
@@ -12,12 +12,3 @@ export const StandardInput = (): JSX.Element => {
     </Container>
   );
 };
-
-const Container = styled.div`
-  width: 90%;
-  margin: 0 auto;
-
-  input {
-    width: 100%;
-  }
-`;

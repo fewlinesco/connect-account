@@ -3,6 +3,8 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
+import { Container } from "../Container";
+import { H1 } from "../H1/H1";
 import { Input } from "../Input/Input";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { Identity, IdentityTypes } from "@lib/@types";
@@ -17,8 +19,8 @@ export const UpdateIdentityForm: React.FC<{
   const { value } = currentIdentity;
 
   return (
-    <Wrapper>
-      <h1>Logins</h1>
+    <Container>
+      <H1>Logins</H1>
       <NavigationBreadcrumbs
         breadcrumbs={[
           currentIdentity.type === IdentityTypes.EMAIL
@@ -51,11 +53,7 @@ export const UpdateIdentityForm: React.FC<{
           value={identity}
           onChange={(event) => setIdentity(event.target.value)}
         />
-        <Button
-          className="send-button"
-          variant={ButtonVariant.PRIMARY}
-          type="submit"
-        >
+        <Button variant={ButtonVariant.PRIMARY} type="submit">
           Update {currentIdentity.type}
         </Button>
       </Form>
@@ -65,32 +63,9 @@ export const UpdateIdentityForm: React.FC<{
       >
         Cancel
       </Button>
-    </Wrapper>
+    </Container>
   );
 };
-
-const Wrapper = styled.div`
-  width: 90%;
-  margin: 0 auto;
-
-  h1 {
-    margin: ${({ theme }) => theme.spaces.component.s} 0
-      ${({ theme }) => theme.spaces.component.xxs};
-  }
-
-  input {
-    width: 100%;
-    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
-  }
-
-  button {
-    width: 100%;
-  }
-
-  .send-button {
-    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
-  }
-`;
 
 export const Form = styled.form`
   display: column;

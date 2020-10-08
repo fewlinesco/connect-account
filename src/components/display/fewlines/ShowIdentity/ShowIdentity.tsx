@@ -7,6 +7,8 @@ import { Box } from "../Box/Box";
 import { Button, ButtonVariant } from "../Button/Button";
 import { ClickAwayListener } from "../ConfirmationBox/ClickAwayListener";
 import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
+import { Container } from "../Container";
+import { H1 } from "../H1/H1";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, IdentityTypes } from "@lib/@types";
@@ -21,15 +23,25 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
     deleteConfirmationBoxOpen,
     setDeleteConfirmationBoxOpen,
   ] = React.useState<boolean>(false);
+
   const [
     primaryConfirmationBoxOpen,
     setPrimaryConfirmationBoxOpen,
   ] = React.useState<boolean>(false);
+
+  const [preventPrimaryAnimation, setPreventPrimaryAnimation] = React.useState<
+    boolean
+  >(true);
+
+  const [preventDeleteAnimation, setPreventDeleteAnimation] = React.useState<
+    boolean
+  >(true);
+
   const { id, primary, status, type, value } = identity;
 
   return (
-    <Wrapper>
-      <h1>Logins</h1>
+    <Container>
+      <H1>Logins</H1>
       <NavigationBreadcrumbs
         breadcrumbs={[
           type.toUpperCase() === IdentityTypes.EMAIL
@@ -74,16 +86,24 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
         <>
           <Button
             variant={ButtonVariant.SECONDARY}
-            onClick={() => setPrimaryConfirmationBoxOpen(true)}
+            onClick={() => {
+              setPreventPrimaryAnimation(false);
+              setPrimaryConfirmationBoxOpen(true);
+            }}
           >
             Make this my primary {type.toLowerCase()}
           </Button>
           {primaryConfirmationBoxOpen && (
             <ClickAwayListener
-              onClick={() => setPrimaryConfirmationBoxOpen(false)}
+              onClick={() => {
+                setPrimaryConfirmationBoxOpen(false);
+              }}
             />
           )}
-          <ConfirmationBox open={primaryConfirmationBoxOpen}>
+          <ConfirmationBox
+            open={primaryConfirmationBoxOpen}
+            preventAnimation={preventPrimaryAnimation}
+          >
             <ConfirmationText>
               You are about to replace mail@mail.com as your main address
             </ConfirmationText>
@@ -92,7 +112,9 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
             </Button>
             <Button
               variant={ButtonVariant.SECONDARY}
-              onClick={() => setPrimaryConfirmationBoxOpen(false)}
+              onClick={() => {
+                setPrimaryConfirmationBoxOpen(false);
+              }}
             >
               Keep mail@mail.co as my primary {type.toLowerCase()}
             </Button>
@@ -103,9 +125,10 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
         <>
           <Button
             variant={ButtonVariant.GHOST}
-            onClick={() =>
-              setDeleteConfirmationBoxOpen(!deleteConfirmationBoxOpen)
-            }
+            onClick={() => {
+              setPreventDeleteAnimation(false);
+              setDeleteConfirmationBoxOpen(!deleteConfirmationBoxOpen);
+            }}
           >
             Delete this{" "}
             {type === IdentityTypes.PHONE ? "phone number" : "email address"}
@@ -115,7 +138,10 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
               onClick={() => setDeleteConfirmationBoxOpen(false)}
             />
           )}
-          <ConfirmationBox open={deleteConfirmationBoxOpen}>
+          <ConfirmationBox
+            open={deleteConfirmationBoxOpen}
+            preventAnimation={preventDeleteAnimation}
+          >
             <ConfirmationText>You are about to delete {value}</ConfirmationText>
             <DeleteIdentity type={type} value={value}>
               {({ deleteIdentity }) => (
@@ -137,24 +163,9 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
           </ConfirmationBox>
         </>
       )}
-    </Wrapper>
+    </Container>
   );
 };
-
-const Wrapper = styled.div`
-  width: 90%;
-  margin: 0 auto;
-
-  h1 {
-    margin: ${({ theme }) => theme.spaces.component.s} 0
-      ${({ theme }) => theme.spaces.component.xxs};
-  }
-
-  button {
-    margin-bottom: ${({ theme }) => theme.spaces.component.xxs};
-    width: 100%;
-  }
-`;
 
 const IdentityInfo = styled.div`
   p {
@@ -165,7 +176,7 @@ const IdentityInfo = styled.div`
 
 const Value = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.bold};
-  margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
+  margin: 0 0 ${({ theme }) => theme.spaces.xxs} 0;
 `;
 
 const Flex = styled.div`
@@ -174,5 +185,5 @@ const Flex = styled.div`
 `;
 
 export const ConfirmationText = styled.p`
-  margin: 0 0 ${({ theme }) => theme.spaces.component.xs};
+  margin: 0 0 ${({ theme }) => theme.spaces.xs};
 `;

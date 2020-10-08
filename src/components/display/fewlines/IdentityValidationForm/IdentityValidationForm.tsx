@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 import { Box } from "../Box/Box";
 import { Button, ButtonVariant } from "../Button/Button";
+import { Container } from "../Container";
+import { H1 } from "../H1/H1";
 import { Input } from "../Input/Input";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { IdentityTypes } from "@lib/@types/Identity";
@@ -18,8 +20,8 @@ const IdentityValidationForm: React.FC<{
   const router = useRouter();
 
   return (
-    <Wrapper>
-      <h1>Logins</h1>
+    <Container>
+      <H1>Logins</H1>
       <NavigationBreadcrumbs
         breadcrumbs={[
           type.toUpperCase() === IdentityTypes.EMAIL
@@ -42,7 +44,9 @@ const IdentityValidationForm: React.FC<{
             : "confirmation SMS has been sent",
         )}
 
-        <Box className="instructions">Enter the validation code below</Box>
+        <Box>
+          <Value>Enter the validation code below</Value>
+        </Box>
         <p>Validation code</p>
         <Input
           type="text"
@@ -52,66 +56,33 @@ const IdentityValidationForm: React.FC<{
           onChange={(event) => setValidationCode(event.target.value)}
         />
         <Button
-          className="send-button"
           variant={ButtonVariant.PRIMARY}
           type="submit"
         >{`Confirm ${type.toLowerCase()}`}</Button>
       </Form>
       <Button
-        className="discard-button"
         variant={ButtonVariant.SECONDARY}
         onClick={() => router.push("/account/logins/")}
       >
         Discard all changes
       </Button>
-      <p className="didnt-receive-code">Didn&apos;t receive code?</p>
-      <Button className="resend-button" variant={ButtonVariant.SECONDARY}>
+      <DidntReceiveCode>Didn&apos;t receive code?</DidntReceiveCode>
+      <Button variant={ButtonVariant.SECONDARY}>
         Resend confirmation code
       </Button>
-    </Wrapper>
+    </Container>
   );
 };
 
 export default IdentityValidationForm;
 
-const Wrapper = styled.div`
-  max-width: 90%;
-  margin: 0 auto;
+const DidntReceiveCode = styled.p`
+  margin: ${({ theme }) => theme.spaces.xs} 0 ${({ theme }) => theme.spaces.xxs};
+`;
 
-  h1 {
-    margin: ${({ theme }) => theme.spaces.component.s} 0
-      ${({ theme }) => theme.spaces.component.xxs};
-  }
-
-  input {
-    width: 100%;
-    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
-  }
-
-  button {
-    width: 100%;
-  }
-
-  .instructions {
-    font-weight: ${({ theme }) => theme.fontWeights.light};
-    font-size: ${({ theme }) => theme.fontSizes.s};
-  }
-
-  .didnt-receive-code {
-    margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
-  }
-
-  .send-button {
-    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
-  }
-
-  .discard-button {
-    margin: 0 0 ${({ theme }) => theme.spaces.component.s} 0;
-  }
-
-  .resend-button {
-    margin: ${({ theme }) => theme.spaces.component.xxs} 0;
-  }
+const Value = styled.p`
+  font-weight: ${({ theme }) => theme.fontWeights.light};
+  font-size: ${({ theme }) => theme.fontSizes.s};
 `;
 
 export const Form = styled.form`
