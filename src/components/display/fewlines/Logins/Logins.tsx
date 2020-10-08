@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import { BoxedLink } from "../BoxedLink/BoxedLink";
 import { Button, ButtonVariant } from "../Button/Button";
+import { Container } from "../Container";
 import { IdentityContainer } from "../IdentityContainer/IdentityContainer";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { Separator } from "../Separator/Separator";
@@ -42,7 +43,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
   const { emailIdentities, phoneIdentities } = sortedIdentities;
 
   return (
-    <Wrapper>
+    <Container>
       <Head>
         <title>Connect Logins</title>
       </Head>
@@ -52,7 +53,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           <p>Your emails, phones and social logins</p>
         </SmallHeader>
         <h3>Email addresses</h3>
-        <IdentityContainer className="identity-container">
+        <IdentityContainer>
           {emailIdentities.length === 0 ? (
             <Value>No emails</Value>
           ) : (
@@ -96,7 +97,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           </Link>
         </Flex>
         <h3>Phone numbers</h3>
-        <IdentityContainer className="identity-container">
+        <IdentityContainer>
           {phoneIdentities.length === 0 ? (
             <Value>No phones</Value>
           ) : (
@@ -141,26 +142,11 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
         </Flex>
         <h3>Social logins</h3>
       </IdentitySection>
-    </Wrapper>
+    </Container>
   );
 };
 
 export default Logins;
-
-const Wrapper = styled.div`
-  max-width: 90%;
-  margin: 0 auto;
-
-  .identity-container {
-    margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
-  }
-
-  button {
-    width: 100%;
-    margin: 0 0 ${({ theme }) => theme.spaces.component.s} 0;
-    background-color: ${({ theme }) => theme.colors.background};
-  }
-`;
 
 const IdentitySection = styled.div`
   .section-description {
