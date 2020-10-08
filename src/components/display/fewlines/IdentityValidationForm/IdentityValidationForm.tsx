@@ -19,61 +19,57 @@ const IdentityValidationForm: React.FC<{
   const router = useRouter();
 
   return (
-    <Wrapper>
-      <Container>
-        <H1>Logins</H1>
-        <NavigationBreadcrumbs
-          breadcrumbs={[
-            type.toUpperCase() === IdentityTypes.EMAIL
-              ? "Email address"
-              : "Phone number",
-            "validation",
-          ]}
+    <Container>
+      <H1>Logins</H1>
+      <NavigationBreadcrumbs
+        breadcrumbs={[
+          type.toUpperCase() === IdentityTypes.EMAIL
+            ? "Email address"
+            : "Phone number",
+          "validation",
+        ]}
+      />
+      <Form
+        method="post"
+        onSubmit={async (event) => {
+          event.preventDefault();
+
+          await verifyIdentity(validationCode);
+        }}
+      >
+        {displayAlertBar(
+          type.toUpperCase() === IdentityTypes.EMAIL
+            ? "Confirmation email has been sent"
+            : "confirmation SMS has been sent",
+        )}
+
+        <Box>
+          <Value>Enter the validation code below</Value>
+        </Box>
+        <p>Validation code</p>
+        <Input
+          type="text"
+          name="value"
+          placeholder="012345"
+          value={validationCode}
+          onChange={(event) => setValidationCode(event.target.value)}
         />
-        <Form
-          method="post"
-          onSubmit={async (event) => {
-            event.preventDefault();
-
-            await verifyIdentity(validationCode);
-          }}
-        >
-          {displayAlertBar(
-            type.toUpperCase() === IdentityTypes.EMAIL
-              ? "Confirmation email has been sent"
-              : "confirmation SMS has been sent",
-          )}
-
-          <Box className="instructions">Enter the validation code below</Box>
-          <p>Validation code</p>
-          <Input
-            type="text"
-            name="value"
-            placeholder="012345"
-            value={validationCode}
-            onChange={(event) => setValidationCode(event.target.value)}
-          />
-          <Button
-            className="send-button"
-            variant={ButtonVariant.PRIMARY}
-            type="submit"
-          >{`Confirm ${type.toLowerCase()}`}</Button>
-        </Form>
         <Button
-          className="discard-button"
-          variant={ButtonVariant.SECONDARY}
-          onClick={() => router.push("/account/logins/")}
-        >
-          Discard all changes
-        </Button>
-        <DidntReceiveCode className="didnt-receive-code">
-          Didn&apos;t receive code?
-        </DidntReceiveCode>
-        <Button className="resend-button" variant={ButtonVariant.SECONDARY}>
-          Resend confirmation code
-        </Button>
-      </Container>
-    </Wrapper>
+          variant={ButtonVariant.PRIMARY}
+          type="submit"
+        >{`Confirm ${type.toLowerCase()}`}</Button>
+      </Form>
+      <Button
+        variant={ButtonVariant.SECONDARY}
+        onClick={() => router.push("/account/logins/")}
+      >
+        Discard all changes
+      </Button>
+      <DidntReceiveCode>Didn&apos;t receive code?</DidntReceiveCode>
+      <Button variant={ButtonVariant.SECONDARY}>
+        Resend confirmation code
+      </Button>
+    </Container>
   );
 };
 
@@ -89,11 +85,9 @@ const DidntReceiveCode = styled.p`
     ${({ theme }) => theme.spaces.component.xxs};
 `;
 
-const Wrapper = styled.div`
-  .instructions {
-    font-weight: ${({ theme }) => theme.fontWeights.light};
-    font-size: ${({ theme }) => theme.fontSizes.s};
-  }
+const Value = styled.p`
+  font-weight: ${({ theme }) => theme.fontWeights.light};
+  font-size: ${({ theme }) => theme.fontSizes.s};
 `;
 
 export const Form = styled.form`

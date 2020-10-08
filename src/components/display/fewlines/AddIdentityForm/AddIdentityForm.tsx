@@ -60,7 +60,6 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
           }
         />
         <Button
-          className="send-button"
           variant={ButtonVariant.PRIMARY}
           type="submit"
         >{`Add ${type}`}</Button>

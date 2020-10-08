@@ -52,11 +52,7 @@ export const UpdateIdentityForm: React.FC<{
           value={identity}
           onChange={(event) => setIdentity(event.target.value)}
         />
-        <Button
-          className="send-button"
-          variant={ButtonVariant.PRIMARY}
-          type="submit"
-        >
+        <Button variant={ButtonVariant.PRIMARY} type="submit">
           Update {currentIdentity.type}
         </Button>
       </Form>
