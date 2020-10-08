@@ -1,16 +1,14 @@
 import { useRouter } from "next/router";
 import React from "react";
 
+import type { IdentityTypes } from "@lib/@types";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
-import type {
-  InMemoryTemporaryIdentity,
-  ReceivedIdentityTypes,
-} from "@src/@types/Identity";
+import { InMemoryTemporaryIdentity } from "@src/@types/InMemoryTemporaryIdentity";
 import { ErrorSendingValidationCode } from "@src/clientErrors";
 import { fetchJson } from "@src/utils/fetchJson";
 
 interface AddIdentityProps {
-  type: ReceivedIdentityTypes;
+  type: IdentityTypes;
   children: (props: {
     addIdentity: (identity: InMemoryTemporaryIdentity) => Promise<void>;
   }) => JSX.Element;

@@ -2,8 +2,8 @@ import { HttpStatus } from "@fwl/web";
 import { GetServerSideProps } from "next";
 import React from "react";
 
+import type { Identity } from "@lib/@types";
 import { getIdentities } from "@lib/queries/getIdentities";
-import type { Identity } from "@src/@types/Identity";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
 import { UpdateIdentityForm } from "@src/components/display/fewlines/UpdateIdentityForm/UpdateIdentityForm";

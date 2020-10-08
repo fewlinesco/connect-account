@@ -9,7 +9,7 @@ import { IdentityContainer } from "../IdentityContainer/IdentityContainer";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { Separator } from "../Separator/Separator";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
-import { Identity } from "@src/@types/Identity";
+import { Identity } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 
 type LoginsProps = {
@@ -61,7 +61,9 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                 <div key={email.value}>
                   <Link
                     href="/account/logins/[type]/[id]"
-                    as={`/account/logins/${email.type}/${email.id}`}
+                    as={`/account/logins/${email.type.toLowerCase()}/${
+                      email.id
+                    }`}
                   >
                     <NeutralLink>
                       <BoxedLink
@@ -103,7 +105,9 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                 <div key={phone.value}>
                   <Link
                     href="/account/logins/[type]/[id]"
-                    as={`/account/logins/${phone.type}/${phone.id}`}
+                    as={`/account/logins/${phone.type.toLowerCase()}/${
+                      phone.id
+                    }`}
                   >
                     <NeutralLink>
                       <BoxedLink

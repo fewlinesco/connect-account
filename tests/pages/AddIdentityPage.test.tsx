@@ -4,7 +4,7 @@ import { mount } from "enzyme";
 import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 
-import { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { IdentityTypes } from "@lib/@types";
 import { Form } from "@src/components/display/fewlines/AddIdentityForm/AddIdentityForm";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
@@ -39,7 +39,7 @@ describe("AddIdentityPage", () => {
   test("it should display navigation breadcrumbs properly for emails", () => {
     const component = mount(
       <AccountApp>
-        <AddIdentityPage type={ReceivedIdentityTypes.EMAIL} />
+        <AddIdentityPage type={IdentityTypes.EMAIL} />
       </AccountApp>,
     );
 
@@ -55,7 +55,7 @@ describe("AddIdentityPage", () => {
   test("it should display navigation breadcrumbs properly for phones", () => {
     const component = mount(
       <AccountApp>
-        <AddIdentityPage type={ReceivedIdentityTypes.PHONE} />
+        <AddIdentityPage type={IdentityTypes.PHONE} />
       </AccountApp>,
     );
 
@@ -71,7 +71,7 @@ describe("AddIdentityPage", () => {
   test("it should display an input", () => {
     const component = mount(
       <AccountApp>
-        <AddIdentityPage type={ReceivedIdentityTypes.EMAIL} />
+        <AddIdentityPage type={IdentityTypes.EMAIL} />
       </AccountApp>,
     );
 
@@ -84,7 +84,7 @@ describe("AddIdentityPage", () => {
 
     const component = mount(
       <AccountApp>
-        <AddIdentityPage type={ReceivedIdentityTypes.EMAIL} />
+        <AddIdentityPage type={IdentityTypes.EMAIL} />
       </AccountApp>,
     );
 
@@ -107,7 +107,7 @@ describe("AddIdentityPage", () => {
         callbackUrl: "/",
         identityInput: {
           expiresAt: 1572393600000 + 300,
-          type: "email",
+          type: IdentityTypes.EMAIL,
           value: "test3@test.test ",
         },
       },
