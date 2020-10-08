@@ -12,14 +12,21 @@ export default {
 };
 
 export const PrimaryConfirmationBox = (): JSX.Element => {
-  const [open, setOpen] = React.useState<boolean>(true);
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
   return (
     <Container>
-      <Button variant={ButtonVariant.PRIMARY} onClick={() => setOpen(!open)}>
+      <Button
+        variant={ButtonVariant.PRIMARY}
+        onClick={() => {
+          setPreventAnimation(false);
+          setOpen(!open);
+        }}
+      >
         Show confirmation box
       </Button>
       {open && <ClickAwayListener onClick={() => setOpen(false)} />}
-      <ConfirmationBox open={open}>
+      <ConfirmationBox open={open} preventAnimation={preventAnimation}>
         <ConfirmationText>
           You are about to replace mail@mail.com as your main address
         </ConfirmationText>
@@ -38,17 +45,24 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
 };
 
 export const DangerConfirmationBox = (): JSX.Element => {
-  const [open, setOpen] = React.useState<boolean>(true);
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
 
   return (
     <Container>
       <div>
-        <Button variant={ButtonVariant.PRIMARY} onClick={() => setOpen(!open)}>
+        <Button
+          variant={ButtonVariant.PRIMARY}
+          onClick={() => {
+            setPreventAnimation(false);
+            setOpen(!open);
+          }}
+        >
           Show confirmation box
         </Button>
       </div>
       {open && <ClickAwayListener onClick={() => setOpen(false)} />}
-      <ConfirmationBox open={open}>
+      <ConfirmationBox open={open} preventAnimation={preventAnimation}>
         <ConfirmationText>
           You are about to delete mail@mail.co
         </ConfirmationText>

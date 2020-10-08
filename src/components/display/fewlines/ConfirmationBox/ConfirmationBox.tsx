@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 interface ConfirmationBoxProps {
   open: boolean;
+  preventAnimation: boolean;
 }
 
 export const ConfirmationBox = styled.div<ConfirmationBoxProps>`
@@ -29,6 +30,12 @@ export const ConfirmationBox = styled.div<ConfirmationBoxProps>`
     `
     animation: disappearFromBottom 0.1s;
     visibility: hidden;
+  `};
+
+  ${(props) =>
+    props.preventAnimation &&
+    `
+    animation: none;
   `};
 
   @keyframes appearFromBottom {
