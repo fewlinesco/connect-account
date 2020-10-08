@@ -109,15 +109,6 @@ const spaces = {
     xl: spacer(6),
     xxl: spacer(8),
   },
-  layout: {
-    xxs: spacer(4),
-    xs: spacer(6),
-    s: spacer(8),
-    m: spacer(10),
-    l: spacer(12),
-    xl: spacer(16),
-    xxl: spacer(20),
-  },
 };
 
 const transitions = {
