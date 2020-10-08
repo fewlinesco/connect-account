@@ -12,9 +12,7 @@ type Spacing = {
 
 declare module "styled-components" {
   export interface DefaultTheme {
-    spaces: {
-      component: Spacing;
-    };
+    spaces: Spacing;
     fontSizes: {
       xs: string;
       s: string;

@@ -100,15 +100,13 @@ function spacer(n: number): string {
 }
 
 const spaces = {
-  component: {
-    xxs: spacer(0.25),
-    xs: spacer(0.5),
-    s: spacer(1),
-    m: spacer(2),
-    l: spacer(4),
-    xl: spacer(6),
-    xxl: spacer(8),
-  },
+  xxs: spacer(0.25),
+  xs: spacer(0.5),
+  s: spacer(1),
+  m: spacer(2),
+  l: spacer(4),
+  xl: spacer(6),
+  xxl: spacer(8),
 };
 
 const transitions = {

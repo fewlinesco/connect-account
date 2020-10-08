@@ -16,7 +16,7 @@ export const Button = styled.button<ButtonProps>`
   border-radius: ${({ theme }) => theme.radii[0]};
   font-size: ${({ theme }) => theme.fontSizes.s};
   cursor: pointer;
-  margin-bottom: ${({ theme }) => theme.spaces.component.xxs};
+  margin-bottom: ${({ theme }) => theme.spaces.xxs};
   width: 100%;
 
   ${(props) =>

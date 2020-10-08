@@ -77,8 +77,7 @@ const IdentityValidationForm: React.FC<{
 export default IdentityValidationForm;
 
 const DidntReceiveCode = styled.p`
-  margin: ${({ theme }) => theme.spaces.component.xs} 0
-    ${({ theme }) => theme.spaces.component.xxs};
+  margin: ${({ theme }) => theme.spaces.xs} 0 ${({ theme }) => theme.spaces.xxs};
 `;
 
 const Value = styled.p`

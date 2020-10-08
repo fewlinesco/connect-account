@@ -83,14 +83,14 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
 
 const AccountBox = styled.div`
   width: 100rem;
-  padding-top: ${({ theme }) => theme.spaces.component.xxs};
+  padding-top: ${({ theme }) => theme.spaces.xxs};
   border-radius: ${({ theme }) => theme.radii[1]};
   background-color: ${({ theme }) => theme.colors.background};
   box-shadow: ${({ theme }) => theme.shadows.base};
 `;
 
 const AccountCard = styled.div`
-  padding: ${({ theme }) => theme.spaces.component.xs};
+  padding: ${({ theme }) => theme.spaces.xs};
   border-bottom: ${({ theme }) =>
     `${theme.colors.blacks[0]} ${theme.borders.thin}`};
 `;

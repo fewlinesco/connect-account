@@ -176,7 +176,7 @@ const IdentityInfo = styled.div`
 
 const Value = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.bold};
-  margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
+  margin: 0 0 ${({ theme }) => theme.spaces.xxs} 0;
 `;
 
 const Flex = styled.div`
@@ -185,5 +185,5 @@ const Flex = styled.div`
 `;
 
 export const ConfirmationText = styled.p`
-  margin: 0 0 ${({ theme }) => theme.spaces.component.xs};
+  margin: 0 0 ${({ theme }) => theme.spaces.xs};
 `;

@@ -7,8 +7,7 @@ export const Input = styled.input`
   height: 4rem;
   padding-left: 1.6rem;
   width: 100%;
-  margin: ${({ theme }) => theme.spaces.component.xxs} 0
-    ${({ theme }) => theme.spaces.component.xs};
+  margin: ${({ theme }) => theme.spaces.xxs} 0 ${({ theme }) => theme.spaces.xs};
 
   ::placeholder {
     color: ${({ theme }) => theme.colors.placeholder};

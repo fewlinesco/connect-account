@@ -157,7 +157,7 @@ const Flex = styled.div`
 `;
 
 const IdentitySection = styled.div`
-  margin: 0 0 ${({ theme }) => theme.spaces.component.s} 0;
+  margin: 0 0 ${({ theme }) => theme.spaces.s} 0;
 `;
 
 export const Value = styled.p`
@@ -167,5 +167,5 @@ export const Value = styled.p`
 export const SubTitle = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.light};
   font-size: ${({ theme }) => theme.fontSizes.s};
-  margin: 0 0 ${({ theme }) => theme.spaces.component.s} 0;
+  margin: 0 0 ${({ theme }) => theme.spaces.s} 0;
 `;
