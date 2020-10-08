@@ -50,91 +50,101 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       </Head>
       <H1>Logins</H1>
       <SubTitle>Your emails, phones and social logins</SubTitle>
-      <h3>Email addresses</h3>
-      <IdentityContainer>
-        {emailIdentities.length === 0 ? (
-          <Value>No emails</Value>
-        ) : (
-          emailList.map((email: Identity) => {
-            return (
-              <div key={email.value}>
-                <Link
-                  href="/account/logins/[type]/[id]"
-                  as={`/account/logins/${email.type.toLowerCase()}/${email.id}`}
-                >
-                  <NeutralLink>
-                    <BoxedLink
-                      value={email.value}
-                      primary={email.primary}
-                      status={email.status}
-                    />
-                  </NeutralLink>
-                </Link>
-                {emailList.indexOf(email) < emailList.length - 1 && (
-                  <Separator />
-                )}
-              </div>
-            );
-          })
+      <IdentitySection>
+        <h3>Email addresses</h3>
+        <IdentityContainer>
+          {emailIdentities.length === 0 ? (
+            <Value>No emails</Value>
+          ) : (
+            emailList.map((email: Identity) => {
+              return (
+                <div key={email.value}>
+                  <Link
+                    href="/account/logins/[type]/[id]"
+                    as={`/account/logins/${email.type.toLowerCase()}/${
+                      email.id
+                    }`}
+                  >
+                    <NeutralLink>
+                      <BoxedLink
+                        value={email.value}
+                        primary={email.primary}
+                        status={email.status}
+                      />
+                    </NeutralLink>
+                  </Link>
+                  {emailList.indexOf(email) < emailList.length - 1 && (
+                    <Separator />
+                  )}
+                </div>
+              );
+            })
+          )}
+        </IdentityContainer>
+        {emailIdentities.length > 1 && (
+          <ShowMoreButton
+            hide={hideSecondaryEmails}
+            quantity={emailIdentities.length - 1}
+            setHideSecondary={setHideSecondaryEmails}
+          />
         )}
-      </IdentityContainer>
-      {emailIdentities.length > 1 && (
-        <ShowMoreButton
-          hide={hideSecondaryEmails}
-          quantity={emailIdentities.length - 1}
-          setHideSecondary={setHideSecondaryEmails}
-        />
-      )}
-      <Flex>
-        <Link href="/account/logins/email/new">
-          <Button variant={ButtonVariant.SECONDARY}>
-            + Add new email address
-          </Button>
-        </Link>
-      </Flex>
-      <h3>Phone numbers</h3>
-      <IdentityContainer>
-        {phoneIdentities.length === 0 ? (
-          <Value>No phones</Value>
-        ) : (
-          phoneList.map((phone: Identity) => {
-            return (
-              <div key={phone.value}>
-                <Link
-                  href="/account/logins/[type]/[id]"
-                  as={`/account/logins/${phone.type.toLowerCase()}/${phone.id}`}
-                >
-                  <NeutralLink>
-                    <BoxedLink
-                      value={phone.value}
-                      primary={phone.primary}
-                      status={phone.status}
-                    />
-                  </NeutralLink>
-                </Link>
-                {phoneList.indexOf(phone) < phoneList.length - 1 && (
-                  <Separator />
-                )}
-              </div>
-            );
-          })
+        <Flex>
+          <Link href="/account/logins/email/new">
+            <Button variant={ButtonVariant.SECONDARY}>
+              + Add new email address
+            </Button>
+          </Link>
+        </Flex>
+      </IdentitySection>
+      <IdentitySection>
+        <h3>Phone numbers</h3>
+        <IdentityContainer>
+          {phoneIdentities.length === 0 ? (
+            <Value>No phones</Value>
+          ) : (
+            phoneList.map((phone: Identity) => {
+              return (
+                <div key={phone.value}>
+                  <Link
+                    href="/account/logins/[type]/[id]"
+                    as={`/account/logins/${phone.type.toLowerCase()}/${
+                      phone.id
+                    }`}
+                  >
+                    <NeutralLink>
+                      <BoxedLink
+                        value={phone.value}
+                        primary={phone.primary}
+                        status={phone.status}
+                      />
+                    </NeutralLink>
+                  </Link>
+                  {phoneList.indexOf(phone) < phoneList.length - 1 && (
+                    <Separator />
+                  )}
+                </div>
+              );
+            })
+          )}
+        </IdentityContainer>
+        {phoneIdentities.length > 1 && (
+          <ShowMoreButton
+            hide={hideSecondaryPhones}
+            quantity={phoneIdentities.length - 1}
+            setHideSecondary={setHideSecondaryPhones}
+          />
         )}
-      </IdentityContainer>
-      {phoneIdentities.length > 1 && (
-        <ShowMoreButton
-          hide={hideSecondaryPhones}
-          quantity={phoneIdentities.length - 1}
-          setHideSecondary={setHideSecondaryPhones}
-        />
-      )}
-      <Flex>
-        <Link href="/account/logins/phone/new">
-          <Button variant={ButtonVariant.SECONDARY}>
-            + Add new phone number
-          </Button>
-        </Link>
-      </Flex>
-      <h3>Social logins</h3>
+        <Flex>
+          <Link href="/account/logins/phone/new">
+            <Button variant={ButtonVariant.SECONDARY}>
+              + Add new phone number
+            </Button>
+          </Link>
+        </Flex>
+      </IdentitySection>
+      <IdentitySection>
+        <h3>Social logins</h3>
+      </IdentitySection>
     </Container>
   );
 };
@@ -144,6 +154,10 @@ export default Logins;
 const Flex = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const IdentitySection = styled.div`
+  margin: 0 0 ${({ theme }) => theme.spaces.component.s} 0;
 `;
 
 export const Value = styled.p`
