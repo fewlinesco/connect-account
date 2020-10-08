@@ -5,7 +5,8 @@ import styled from "styled-components";
 import { Button, ButtonVariant } from "../Button/Button";
 import { Input } from "../Input/Input";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
-import { InMemoryTemporaryIdentity, IdentityTypes } from "@lib/@types";
+import { IdentityTypes } from "@lib/@types";
+import { InMemoryTemporaryIdentity } from "@src/@types/InMemoryTemporaryIdentity";
 
 type AddIdentityFormProps = {
   type: IdentityTypes;

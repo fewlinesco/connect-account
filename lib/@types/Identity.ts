@@ -32,9 +32,3 @@ export type Identity = {
   type: IdentityTypes;
   value: string;
 };
-
-export type InMemoryTemporaryIdentity = {
-  value: string;
-  type: IdentityTypes;
-  expiresAt: number;
-};
