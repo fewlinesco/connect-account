@@ -9,8 +9,7 @@ import { ClickAwayListener } from "../ConfirmationBox/ClickAwayListener";
 import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
-import { IdentityTypes } from "@lib/@types";
-import { Identity } from "@lib/@types";
+import { Identity, IdentityTypes } from "@lib/@types";
 import { DeleteIdentity } from "@src/components/business/DeleteIdentity";
 
 type ShowIdentityProps = {
