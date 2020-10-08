@@ -14,6 +14,7 @@ export default {
 export const PrimaryConfirmationBox = (): JSX.Element => {
   const [open, setOpen] = React.useState<boolean>(false);
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
+
   return (
     <Container>
       <Button
