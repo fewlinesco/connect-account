@@ -7,9 +7,9 @@ import { BoxedLink } from "../BoxedLink/BoxedLink";
 import { Button, ButtonVariant } from "../Button/Button";
 import { Container } from "../Container";
 import { H1 } from "../H1/H1";
-import { IdentityContainer } from "../IdentityContainer/IdentityContainer";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { Separator } from "../Separator/Separator";
+import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
 import { Identity } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
@@ -52,7 +52,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       <SubTitle>Your emails, phones and social logins</SubTitle>
       <IdentitySection>
         <h3>Email addresses</h3>
-        <IdentityContainer>
+        <ShadowBox>
           {emailIdentities.length === 0 ? (
             <Value>No emails</Value>
           ) : (
@@ -80,25 +80,25 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-        </IdentityContainer>
+        </ShadowBox>
         {emailIdentities.length > 1 && (
-          <ShowMoreButton
-            hide={hideSecondaryEmails}
-            quantity={emailIdentities.length - 1}
-            setHideSecondary={setHideSecondaryEmails}
-          />
+          <Flex>
+            <ShowMoreButton
+              hide={hideSecondaryEmails}
+              quantity={emailIdentities.length - 1}
+              setHideSecondary={setHideSecondaryEmails}
+            />
+          </Flex>
         )}
-        <Flex>
-          <Link href="/account/logins/email/new">
-            <Button variant={ButtonVariant.SECONDARY}>
-              + Add new email address
-            </Button>
-          </Link>
-        </Flex>
+        <Link href="/account/logins/email/new">
+          <Button variant={ButtonVariant.SECONDARY}>
+            + Add new email address
+          </Button>
+        </Link>
       </IdentitySection>
       <IdentitySection>
         <h3>Phone numbers</h3>
-        <IdentityContainer>
+        <ShadowBox>
           {phoneIdentities.length === 0 ? (
             <Value>No phones</Value>
           ) : (
@@ -126,21 +126,21 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-        </IdentityContainer>
+        </ShadowBox>
         {phoneIdentities.length > 1 && (
-          <ShowMoreButton
-            hide={hideSecondaryPhones}
-            quantity={phoneIdentities.length - 1}
-            setHideSecondary={setHideSecondaryPhones}
-          />
+          <Flex>
+            <ShowMoreButton
+              hide={hideSecondaryPhones}
+              quantity={phoneIdentities.length - 1}
+              setHideSecondary={setHideSecondaryPhones}
+            />
+          </Flex>
         )}
-        <Flex>
-          <Link href="/account/logins/phone/new">
-            <Button variant={ButtonVariant.SECONDARY}>
-              + Add new phone number
-            </Button>
-          </Link>
-        </Flex>
+        <Link href="/account/logins/phone/new">
+          <Button variant={ButtonVariant.SECONDARY}>
+            + Add new phone number
+          </Button>
+        </Link>
       </IdentitySection>
       <IdentitySection>
         <h3>Social logins</h3>
@@ -153,7 +153,7 @@ export default Logins;
 
 const Flex = styled.div`
   display: flex;
-  align-items: center;
+  justify-content: center;
 `;
 
 const IdentitySection = styled.div`

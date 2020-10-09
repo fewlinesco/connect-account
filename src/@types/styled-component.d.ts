@@ -14,6 +14,7 @@ declare module "styled-components" {
   export interface DefaultTheme {
     spaces: Spacing;
     fontSizes: {
+      xxs: string;
       xs: string;
       s: string;
       m: string;
