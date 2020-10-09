@@ -7,9 +7,9 @@ import { BoxedLink } from "../BoxedLink/BoxedLink";
 import { Button, ButtonVariant } from "../Button/Button";
 import { Container } from "../Container";
 import { H1 } from "../H1/H1";
-import { IdentityContainer } from "../IdentityContainer/IdentityContainer";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { Separator } from "../Separator/Separator";
+import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
 import { Identity } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
@@ -52,7 +52,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       <SubTitle>Your emails, phones and social logins</SubTitle>
       <IdentitySection>
         <h3>Email addresses</h3>
-        <IdentityContainer>
+        <ShadowBox>
           {emailIdentities.length === 0 ? (
             <Value>No emails</Value>
           ) : (
@@ -80,7 +80,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-        </IdentityContainer>
+        </ShadowBox>
         {emailIdentities.length > 1 && (
           <Flex>
             <ShowMoreButton
@@ -98,7 +98,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       </IdentitySection>
       <IdentitySection>
         <h3>Phone numbers</h3>
-        <IdentityContainer>
+        <ShadowBox>
           {phoneIdentities.length === 0 ? (
             <Value>No phones</Value>
           ) : (
@@ -126,7 +126,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-        </IdentityContainer>
+        </ShadowBox>
         {phoneIdentities.length > 1 && (
           <Flex>
             <ShowMoreButton

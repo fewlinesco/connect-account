@@ -5,10 +5,10 @@ import styled from "styled-components";
 
 import { Container } from "../Container";
 import { H1 } from "../H1/H1";
-import { IdentityContainer } from "../IdentityContainer/IdentityContainer";
 import { LoginsIcon } from "../LoginsIcon/LoginsIcon";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import RightChevron from "../RightChevron/RightChevron";
+import { ShadowBox } from "../ShadowBox/ShadowBox";
 
 const Account: React.FC = () => {
   return (
@@ -18,7 +18,7 @@ const Account: React.FC = () => {
       </Head>
       <H1>Welcome to your account</H1>
       <SubTitle>First name last name</SubTitle>
-      <IdentityContainer>
+      <ShadowBox>
         <Link href="/account/logins">
           <NeutralLink>
             <Flex>
@@ -34,7 +34,7 @@ const Account: React.FC = () => {
             </Flex>
           </NeutralLink>
         </Link>
-      </IdentityContainer>
+      </ShadowBox>
     </Container>
   );
 };
