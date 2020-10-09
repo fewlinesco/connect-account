@@ -54,14 +54,14 @@ const Flex = styled.div`
   padding: ${({ theme }) => theme.spaces.xs};
 `;
 
-const Span = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.s};
-`;
-
 const TextBox = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 50%;
   font-size: ${({ theme }) => theme.fontSizes.xxs};
   line-height: ${({ theme }) => theme.lineHeights.title};
+`;
+
+const Span = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.s};
 `;
