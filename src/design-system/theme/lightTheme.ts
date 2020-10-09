@@ -61,6 +61,7 @@ const fontWeights = {
 };
 
 const fontSizes = {
+  xxs: "1rem",
   xs: "1.2rem",
   s: "1.4rem",
   m: "1.8rem",
@@ -80,8 +81,8 @@ const letterSpacing = {
 
 const lineHeights = {
   solid: 1,
-  copy: 1.25,
-  title: 1.5,
+  copy: 1.5,
+  title: 2,
 };
 
 const radii = ["0.4rem", "0.5rem", "55.5rem", "50%"];

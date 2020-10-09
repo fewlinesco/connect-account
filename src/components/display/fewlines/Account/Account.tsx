@@ -24,7 +24,7 @@ const Account: React.FC = () => {
             <Flex>
               <LoginsIcon />
               <TextBox>
-                <Span>Logins</Span>
+                <Span>LOGINS</Span>
                 <div>
                   Manage your logins options, including emails, phone numbers
                   and social logins
@@ -54,14 +54,14 @@ const Flex = styled.div`
   padding: ${({ theme }) => theme.spaces.xs};
 `;
 
+const Span = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.s};
+`;
+
 const TextBox = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   max-width: 50%;
-  font-size: 1rem;
-`;
-
-const Span = styled.p`
-  font-weight: ${({ theme }) => theme.fontWeights.semibold};
+  font-size: ${({ theme }) => theme.fontSizes.xxs};
+  line-height: ${({ theme }) => theme.lineHeights.title};
 `;
