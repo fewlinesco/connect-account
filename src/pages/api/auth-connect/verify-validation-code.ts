@@ -2,6 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import { Handler } from "next-iron-session";
 
 import { checkVerificationCode } from "@lib/queries/checkVerificationCode";
+import { getTemporaryIdentities } from "@lib/queries/getTemporaryIdentities";
 import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
 import { config } from "@src/config";
@@ -9,7 +10,6 @@ import { MongoNoDataReturned, TemporaryIdentityExpired } from "@src/errors";
 import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
 import { withMongoDB } from "@src/middleware/withMongoDB";
 import withSession from "@src/middleware/withSession";
-import { getTemporaryIdentities } from "@src/queries/getTemporaryIdentities";
 import { fetchJson } from "@src/utils/fetchJson";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 

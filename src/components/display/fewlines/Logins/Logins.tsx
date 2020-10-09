@@ -5,11 +5,13 @@ import styled from "styled-components";
 
 import { BoxedLink } from "../BoxedLink/BoxedLink";
 import { Button, ButtonVariant } from "../Button/Button";
-import { IdentityContainer } from "../IdentityContainer/IdentityContainer";
+import { Container } from "../Container";
+import { H1 } from "../H1/H1";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { Separator } from "../Separator/Separator";
+import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
-import { Identity } from "@src/@types/Identity";
+import { Identity } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 
 type LoginsProps = {
@@ -42,17 +44,15 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
   const { emailIdentities, phoneIdentities } = sortedIdentities;
 
   return (
-    <Wrapper>
+    <Container>
       <Head>
         <title>Connect Logins</title>
       </Head>
+      <H1>Logins</H1>
+      <SubTitle>Your emails, phones and social logins</SubTitle>
       <IdentitySection>
-        <SmallHeader>
-          <h1>Logins</h1>
-          <p>Your emails, phones and social logins</p>
-        </SmallHeader>
         <h3>Email addresses</h3>
-        <IdentityContainer className="identity-container">
+        <ShadowBox>
           {emailIdentities.length === 0 ? (
             <Value>No emails</Value>
           ) : (
@@ -61,7 +61,9 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                 <div key={email.value}>
                   <Link
                     href="/account/logins/[type]/[id]"
-                    as={`/account/logins/${email.type}/${email.id}`}
+                    as={`/account/logins/${email.type.toLowerCase()}/${
+                      email.id
+                    }`}
                   >
                     <NeutralLink>
                       <BoxedLink
@@ -78,23 +80,25 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-        </IdentityContainer>
+        </ShadowBox>
         {emailIdentities.length > 1 && (
-          <ShowMoreButton
-            hide={hideSecondaryEmails}
-            quantity={emailIdentities.length - 1}
-            setHideSecondary={setHideSecondaryEmails}
-          />
+          <Flex>
+            <ShowMoreButton
+              hide={hideSecondaryEmails}
+              quantity={emailIdentities.length - 1}
+              setHideSecondary={setHideSecondaryEmails}
+            />
+          </Flex>
         )}
-        <Flex>
-          <Link href="/account/logins/email/new">
-            <Button variant={ButtonVariant.SECONDARY}>
-              + Add new email address
-            </Button>
-          </Link>
-        </Flex>
+        <Link href="/account/logins/email/new">
+          <Button variant={ButtonVariant.SECONDARY}>
+            + Add new email address
+          </Button>
+        </Link>
+      </IdentitySection>
+      <IdentitySection>
         <h3>Phone numbers</h3>
-        <IdentityContainer className="identity-container">
+        <ShadowBox>
           {phoneIdentities.length === 0 ? (
             <Value>No phones</Value>
           ) : (
@@ -103,7 +107,9 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
                 <div key={phone.value}>
                   <Link
                     href="/account/logins/[type]/[id]"
-                    as={`/account/logins/${phone.type}/${phone.id}`}
+                    as={`/account/logins/${phone.type.toLowerCase()}/${
+                      phone.id
+                    }`}
                   >
                     <NeutralLink>
                       <BoxedLink
@@ -120,69 +126,46 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
               );
             })
           )}
-        </IdentityContainer>
+        </ShadowBox>
         {phoneIdentities.length > 1 && (
-          <ShowMoreButton
-            hide={hideSecondaryPhones}
-            quantity={phoneIdentities.length - 1}
-            setHideSecondary={setHideSecondaryPhones}
-          />
+          <Flex>
+            <ShowMoreButton
+              hide={hideSecondaryPhones}
+              quantity={phoneIdentities.length - 1}
+              setHideSecondary={setHideSecondaryPhones}
+            />
+          </Flex>
         )}
-        <Flex>
-          <Link href="/account/logins/phone/new">
-            <Button variant={ButtonVariant.SECONDARY}>
-              + Add new phone number
-            </Button>
-          </Link>
-        </Flex>
+        <Link href="/account/logins/phone/new">
+          <Button variant={ButtonVariant.SECONDARY}>
+            + Add new phone number
+          </Button>
+        </Link>
+      </IdentitySection>
+      <IdentitySection>
         <h3>Social logins</h3>
       </IdentitySection>
-    </Wrapper>
+    </Container>
   );
 };
 
 export default Logins;
 
-const Wrapper = styled.div`
-  max-width: 90%;
-  margin: 0 auto;
-
-  .identity-container {
-    margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
-  }
-
-  button {
-    width: 100%;
-    margin: 0 0 ${({ theme }) => theme.spaces.component.s} 0;
-    background-color: ${({ theme }) => theme.colors.background};
-  }
+const Flex = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const IdentitySection = styled.div`
-  .section-description {
-    margin: 0 0 ${({ theme }) => theme.spaces.component.s} 0;
-  }
-`;
-
-const Flex = styled.div`
-  display: flex;
-  align-items: center;
+  margin: 0 0 ${({ theme }) => theme.spaces.s} 0;
 `;
 
 export const Value = styled.p`
   margin-right: 0.5rem;
 `;
 
-export const SmallHeader = styled.div`
-  padding: ${({ theme }) => theme.spaces.component.xs} 0
-    ${({ theme }) => theme.spaces.component.s};
-
-  h1 {
-    margin: 0 0 ${({ theme }) => theme.spaces.component.xxs} 0;
-  }
-
-  p {
-    font-weight: ${({ theme }) => theme.fontWeights.light};
-    font-size: ${({ theme }) => theme.fontSizes.s};
-  }
+export const SubTitle = styled.p`
+  font-weight: ${({ theme }) => theme.fontWeights.light};
+  font-size: ${({ theme }) => theme.fontSizes.s};
+  margin: 0 0 ${({ theme }) => theme.spaces.s} 0;
 `;

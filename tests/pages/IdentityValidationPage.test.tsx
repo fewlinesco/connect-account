@@ -3,10 +3,8 @@ jest.mock("@src/hooks/useCookies");
 import { mount } from "enzyme";
 import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
-import { ThemeProvider } from "styled-components";
 
 import { IdentityTypes } from "@lib/@types/Identity";
-import { Layout } from "@src/components/Layout";
 import AlertBar from "@src/components/display/fewlines/AlertBar/AlertBar";
 import { Button } from "@src/components/display/fewlines/Button/Button";
 import IdentityValidationForm, {
@@ -17,9 +15,8 @@ import {
   NavigationBreadcrumbs,
   Breadcrumbs,
 } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
-import { GlobalStyle } from "@src/design-system/globals/globalStyle";
-import { lightTheme } from "@src/design-system/theme/lightTheme";
 import { useCookies } from "@src/hooks/useCookies";
+import { AccountApp } from "@src/pages/_app";
 import IdentityValidation from "@src/pages/account/logins/[type]/validation/[eventId]";
 import IdentityValidationPage from "@src/pages/account/logins/[type]/validation/[eventId]";
 import * as fetchJson from "@src/utils/fetchJson";
@@ -48,15 +45,9 @@ describe("IdentityValidationPage", () => {
 
   test("it should display navigation breadcrumbs properly for emails", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <IdentityValidationPage
-            type={IdentityTypes.EMAIL}
-            eventId={eventId}
-          />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <IdentityValidationPage type={IdentityTypes.EMAIL} eventId={eventId} />
+      </AccountApp>,
     );
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
@@ -70,15 +61,9 @@ describe("IdentityValidationPage", () => {
 
   test("it should display navigation breadcrumbs properly for phones", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <IdentityValidationPage
-            type={IdentityTypes.PHONE}
-            eventId={eventId}
-          />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <IdentityValidationPage type={IdentityTypes.PHONE} eventId={eventId} />
+      </AccountApp>,
     );
 
     const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
@@ -92,15 +77,9 @@ describe("IdentityValidationPage", () => {
 
   test("it should display an input ans 3 buttons for emails", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <IdentityValidationPage
-            type={IdentityTypes.EMAIL}
-            eventId={eventId}
-          />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <IdentityValidationPage type={IdentityTypes.EMAIL} eventId={eventId} />
+      </AccountApp>,
     );
 
     const validationCodeInput = component
@@ -119,15 +98,9 @@ describe("IdentityValidationPage", () => {
 
   test("it should display properly an input and 3 buttons for phones", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <IdentityValidationPage
-            type={IdentityTypes.PHONE}
-            eventId={eventId}
-          />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <IdentityValidationPage type={IdentityTypes.PHONE} eventId={eventId} />
+      </AccountApp>,
     );
 
     const validationCodeInput = component
@@ -146,15 +119,9 @@ describe("IdentityValidationPage", () => {
 
   test("it should display an alert bar with the correct message for phones", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <IdentityValidationPage
-            type={IdentityTypes.PHONE}
-            eventId={eventId}
-          />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <IdentityValidationPage type={IdentityTypes.PHONE} eventId={eventId} />
+      </AccountApp>,
     );
 
     const alertBar = component.find(AlertBar);
@@ -165,15 +132,9 @@ describe("IdentityValidationPage", () => {
 
   test("it should display an alert bar with the correct message for emails", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <IdentityValidationPage
-            type={IdentityTypes.EMAIL}
-            eventId={eventId}
-          />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <IdentityValidationPage type={IdentityTypes.EMAIL} eventId={eventId} />
+      </AccountApp>,
     );
 
     const alertBar = component.find(AlertBar);
@@ -184,12 +145,9 @@ describe("IdentityValidationPage", () => {
 
   test("it should call `send-identity-validation-code` API page on submit", () => {
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <IdentityValidation type={IdentityTypes.EMAIL} eventId={eventId} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <IdentityValidation type={IdentityTypes.EMAIL} eventId={eventId} />
+      </AccountApp>,
     );
 
     const verifyIdentityInput = component

@@ -1,10 +1,8 @@
 import { HttpStatus } from "@fwl/web";
 import type { GetServerSideProps } from "next";
-import Head from "next/head";
-import Link from "next/link";
 import React from "react";
-import styled from "styled-components";
 
+import Account from "@src/components/display/fewlines/Account/Account";
 import { oauth2Client, config } from "@src/config";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
@@ -12,24 +10,11 @@ import { getUser } from "@src/utils/getUser";
 import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
-const AccountIndexPage: React.FC = () => {
-  return (
-    <>
-      <Head>
-        <title>Connect Account</title>
-      </Head>
-      <AccountBox>
-        <AccountCard>
-          <Link href="/account/logins">
-            <a>Logins</a>
-          </Link>
-        </AccountCard>
-      </AccountBox>
-    </>
-  );
+const AccountPage: React.FC = () => {
+  return <Account />;
 };
 
-export default AccountIndexPage;
+export default AccountPage;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
@@ -80,17 +65,3 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     }
   }),
 );
-
-const AccountBox = styled.div`
-  width: 100rem;
-  padding-top: ${({ theme }) => theme.spaces.component.xxs};
-  border-radius: ${({ theme }) => theme.radii[1]};
-  background-color: ${({ theme }) => theme.colors.background};
-  box-shadow: ${({ theme }) => theme.shadows.base};
-`;
-
-const AccountCard = styled.div`
-  padding: ${({ theme }) => theme.spaces.component.xs};
-  border-bottom: ${({ theme }) =>
-    `${theme.colors.blacks[0]} ${theme.borders.thin}`};
-`;

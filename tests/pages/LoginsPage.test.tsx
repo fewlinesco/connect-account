@@ -1,16 +1,15 @@
 import { mount } from "enzyme";
+import Link from "next/link";
 import React from "react";
-import { ThemeProvider } from "styled-components";
 
-import { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
-import { Layout } from "@src/components/Layout";
 import { BoxedLink } from "@src/components/display/fewlines/BoxedLink/BoxedLink";
+import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { Value } from "@src/components/display/fewlines/Logins/Logins";
-import { SmallHeader } from "@src/components/display/fewlines/Logins/Logins";
+import { SubTitle } from "@src/components/display/fewlines/Logins/Logins";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
-import { GlobalStyle } from "@src/design-system/globals/globalStyle";
-import { lightTheme } from "@src/design-system/theme/lightTheme";
+import { AccountApp } from "@src/pages/_app";
 import LoginsPage from "@src/pages/account/logins/index";
 
 jest.mock("@src/config", () => {
@@ -23,114 +22,193 @@ jest.mock("@src/config", () => {
 });
 
 describe("LoginsPage", () => {
-  test("it should display email and phone when there are one of each", () => {
-    const mockedSortedResponse: SortedIdentities = {
-      phoneIdentities: [
-        {
-          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-          primary: true,
-          status: "validated",
-          type: ReceivedIdentityTypes.PHONE,
-          value: "0622116655",
-        },
-      ],
-      emailIdentities: [
-        {
-          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-          primary: true,
-          status: "validated",
-          type: ReceivedIdentityTypes.EMAIL,
-          value: "test@test.test",
-        },
-      ],
-    };
-    const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
+  describe("Boxedlink", () => {
+    test("it should display email and phone when there are one of each", () => {
+      const mockedSortedResponse: SortedIdentities = {
+        phoneIdentities: [
+          {
+            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: true,
+            status: "validated",
+            type: IdentityTypes.PHONE,
+            value: "0622116655",
+          },
+        ],
+        emailIdentities: [
+          {
+            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: true,
+            status: "validated",
+            type: IdentityTypes.EMAIL,
+            value: "test@test.test",
+          },
+        ],
+      };
+      const component = mount(
+        <AccountApp>
           <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
-    );
-    const boxedLink = component.find(BoxedLink);
-    expect(boxedLink).toHaveLength(2);
+        </AccountApp>,
+      );
+      const boxedLink = component.find(BoxedLink);
+      expect(boxedLink).toHaveLength(2);
+    });
+
+    test("it should display primary email and primary phone when there are many of each", () => {
+      const mockedSortedResponse: SortedIdentities = {
+        phoneIdentities: [
+          {
+            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: true,
+            status: "validated",
+            type: IdentityTypes.PHONE,
+            value: "0622116655",
+          },
+          {
+            id: "7y6edcc1-530b-4982-878d-33f0def6a7cf",
+            primary: false,
+            status: "validated",
+            type: IdentityTypes.PHONE,
+            value: "0622116688",
+          },
+        ],
+        emailIdentities: [
+          {
+            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: true,
+            status: "validated",
+            type: IdentityTypes.EMAIL,
+            value: "test@test.test",
+          },
+          {
+            id: "66tedcc1-530b-4982-878d-33f0def6a7cf",
+            primary: false,
+            status: "validated",
+            type: IdentityTypes.EMAIL,
+            value: "test2@test.test",
+          },
+        ],
+      };
+      const component = mount(
+        <AccountApp>
+          <LoginsPage sortedIdentities={mockedSortedResponse} />
+        </AccountApp>,
+      );
+      const boxedLink = component.find(BoxedLink);
+      expect(boxedLink).toHaveLength(2);
+    });
+
+    test("it should display no emails when there are not", () => {
+      const mockedSortedResponse: SortedIdentities = {
+        phoneIdentities: [
+          {
+            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: true,
+            status: "validated",
+            type: IdentityTypes.PHONE,
+            value: "0622116655",
+          },
+        ],
+        emailIdentities: [],
+      };
+      const component = mount(
+        <AccountApp>
+          <LoginsPage sortedIdentities={mockedSortedResponse} />
+        </AccountApp>,
+      );
+      const boxedLink = component.find(BoxedLink);
+      const noEmail = component.contains(<Value>No emails</Value>);
+      expect(noEmail).toEqual(true);
+      expect(boxedLink).toHaveLength(1);
+    });
+
+    test("it should display no phones when there are not", () => {
+      const mockedSortedResponse: SortedIdentities = {
+        phoneIdentities: [],
+        emailIdentities: [
+          {
+            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: true,
+            status: "validated",
+            type: IdentityTypes.EMAIL,
+            value: "test@test.test",
+          },
+        ],
+      };
+      const component = mount(
+        <AccountApp>
+          <LoginsPage sortedIdentities={mockedSortedResponse} />
+        </AccountApp>,
+      );
+      const boxedLink = component.find(BoxedLink);
+      const noPhone = component.contains(<Value>No phones</Value>);
+
+      expect(noPhone).toEqual(true);
+      expect(boxedLink).toHaveLength(1);
+    });
+
+    test("it should display no emails and no phones where there are neither", () => {
+      const mockedSortedResponse: SortedIdentities = {
+        phoneIdentities: [],
+        emailIdentities: [],
+      };
+      const component = mount(
+        <AccountApp>
+          <LoginsPage sortedIdentities={mockedSortedResponse} />
+        </AccountApp>,
+      );
+      const noPhone = component.contains(<Value>No phones</Value>);
+      const noEmail = component.contains(<Value>No emails</Value>);
+      expect(noPhone).toEqual(true);
+      expect(noEmail).toEqual(true);
+    });
+
+    test("it should display navigation breadcrumbs", () => {
+      const mockedSortedResponse: SortedIdentities = {
+        phoneIdentities: [],
+        emailIdentities: [],
+      };
+      const component = mount(
+        <AccountApp>
+          <LoginsPage sortedIdentities={mockedSortedResponse} />
+        </AccountApp>,
+      );
+
+      const h1 = component.find(H1);
+      const subTitle = component.find(SubTitle);
+      expect(h1).toHaveLength(1);
+      expect(h1.text()).toEqual("Logins");
+      expect(subTitle).toHaveLength(1);
+      expect(subTitle.text()).toEqual("Your emails, phones and social logins");
+    });
   });
 
-  test("it should display primary email and primary phone when there are many of each", () => {
+  test("it should redirect to phone page on click", () => {
     const mockedSortedResponse: SortedIdentities = {
       phoneIdentities: [
         {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
           primary: true,
           status: "validated",
-          type: ReceivedIdentityTypes.PHONE,
-          value: "0622116655",
-        },
-        {
-          id: "7y6edcc1-530b-4982-878d-33f0def6a7cf",
-          primary: false,
-          status: "validated",
-          type: ReceivedIdentityTypes.PHONE,
-          value: "0622116688",
-        },
-      ],
-      emailIdentities: [
-        {
-          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-          primary: true,
-          status: "validated",
-          type: ReceivedIdentityTypes.EMAIL,
-          value: "test@test.test",
-        },
-        {
-          id: "66tedcc1-530b-4982-878d-33f0def6a7cf",
-          primary: false,
-          status: "validated",
-          type: ReceivedIdentityTypes.EMAIL,
-          value: "test2@test.test",
-        },
-      ],
-    };
-    const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
-    );
-    const boxedLink = component.find(BoxedLink);
-    expect(boxedLink).toHaveLength(2);
-  });
-
-  test("it should display no emails when there are not", () => {
-    const mockedSortedResponse: SortedIdentities = {
-      phoneIdentities: [
-        {
-          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-          primary: true,
-          status: "validated",
-          type: ReceivedIdentityTypes.PHONE,
+          type: IdentityTypes.PHONE,
           value: "0622116655",
         },
       ],
       emailIdentities: [],
     };
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
     );
-    const boxedLink = component.find(BoxedLink);
-    const noEmail = component.contains(<Value>No emails</Value>);
-    expect(noEmail).toEqual(true);
-    expect(boxedLink).toHaveLength(1);
+
+    const link = component.find(Link).find({
+      as: "/account/logins/phone/8f79dcc1-530b-4982-878d-33f0def6a7cf",
+    });
+
+    expect(link).toHaveLength(1);
   });
 
-  test("it should display no phones when there are not", () => {
+  test("it should redirect to email page on click", () => {
     const mockedSortedResponse: SortedIdentities = {
       phoneIdentities: [],
       emailIdentities: [
@@ -138,69 +216,26 @@ describe("LoginsPage", () => {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
           primary: true,
           status: "validated",
-          type: ReceivedIdentityTypes.EMAIL,
+          type: IdentityTypes.EMAIL,
           value: "test@test.test",
         },
       ],
     };
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
-    );
-    const boxedLink = component.find(BoxedLink);
-    const noPhone = component.contains(<Value>No phones</Value>);
-
-    expect(noPhone).toEqual(true);
-    expect(boxedLink).toHaveLength(1);
-  });
-
-  test("it should display no emails and no phones where there is nothing", () => {
-    const mockedSortedResponse: SortedIdentities = {
-      phoneIdentities: [],
-      emailIdentities: [],
-    };
-    const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
-    );
-    const noPhone = component.contains(<Value>No phones</Value>);
-    const noEmail = component.contains(<Value>No emails</Value>);
-    expect(noPhone).toEqual(true);
-    expect(noEmail).toEqual(true);
-  });
-
-  test("it should display navigation breadcrumbs", () => {
-    const mockedSortedResponse: SortedIdentities = {
-      phoneIdentities: [],
-      emailIdentities: [],
-    };
-    const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
     );
 
-    const smallHeader = component.find(SmallHeader);
-    expect(smallHeader).toHaveLength(1);
-    expect(smallHeader.contains(<h1>Logins</h1>)).toEqual(true);
-    expect(
-      smallHeader.contains(<p>Your emails, phones and social logins</p>),
-    ).toEqual(true);
+    const link = component.find(Link).find({
+      as: "/account/logins/email/8f79dcc1-530b-4982-878d-33f0def6a7cf",
+    });
+
+    expect(link).toHaveLength(1);
   });
 });
 
-describe('the "show more" button should behave properly', () => {
+describe("ShowMoreButton", () => {
   test("the button's text should be relevant", () => {
     const mockedSortedResponse: SortedIdentities = {
       phoneIdentities: [
@@ -208,28 +243,28 @@ describe('the "show more" button should behave properly', () => {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
           primary: true,
           status: "validated",
-          type: ReceivedIdentityTypes.PHONE,
+          type: IdentityTypes.PHONE,
           value: "0622116655",
         },
         {
           id: "7y6edcc1-530b-4982-878d-33f0def6a7cf",
           primary: false,
           status: "validated",
-          type: ReceivedIdentityTypes.PHONE,
+          type: IdentityTypes.PHONE,
           value: "0622116688",
         },
         {
           id: "5r32scc1-530b-4982-878d-33f0def6a7cf",
           primary: false,
           status: "validated",
-          type: ReceivedIdentityTypes.PHONE,
+          type: IdentityTypes.PHONE,
           value: "0622116633",
         },
         {
           id: "87uytcc1-530b-4982-878d-33f0def6a7cf",
           primary: false,
           status: "validated",
-          type: ReceivedIdentityTypes.PHONE,
+          type: IdentityTypes.PHONE,
           value: "0622116611",
         },
       ],
@@ -238,32 +273,29 @@ describe('the "show more" button should behave properly', () => {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
           primary: true,
           status: "validated",
-          type: ReceivedIdentityTypes.EMAIL,
+          type: IdentityTypes.EMAIL,
           value: "test@test.test",
         },
         {
           id: "66tedcc1-530b-4982-878d-33f0def6a7cf",
           primary: false,
           status: "validated",
-          type: ReceivedIdentityTypes.EMAIL,
+          type: IdentityTypes.EMAIL,
           value: "test2@test.test",
         },
         {
           id: "ttr43cc1-530b-4982-878d-33f0def6a7cf",
           primary: false,
           status: "validated",
-          type: ReceivedIdentityTypes.EMAIL,
+          type: IdentityTypes.EMAIL,
           value: "test3@test.test",
         },
       ],
     };
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
     );
 
     const showMoreButton1 = component.find(ShowMoreButton).at(0);
@@ -286,14 +318,14 @@ describe('the "show more" button should behave properly', () => {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
           primary: true,
           status: "validated",
-          type: ReceivedIdentityTypes.PHONE,
+          type: IdentityTypes.PHONE,
           value: "0622116655",
         },
         {
           id: "7y6edcc1-530b-4982-878d-33f0def6a7cf",
           primary: false,
           status: "validated",
-          type: ReceivedIdentityTypes.PHONE,
+          type: IdentityTypes.PHONE,
           value: "0622116688",
         },
       ],
@@ -302,25 +334,22 @@ describe('the "show more" button should behave properly', () => {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
           primary: true,
           status: "validated",
-          type: ReceivedIdentityTypes.EMAIL,
+          type: IdentityTypes.EMAIL,
           value: "test@test.test",
         },
         {
           id: "66tedcc1-530b-4982-878d-33f0def6a7cf",
           primary: false,
           status: "validated",
-          type: ReceivedIdentityTypes.EMAIL,
+          type: IdentityTypes.EMAIL,
           value: "test2@test.test",
         },
       ],
     };
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
     );
     const boxedLink = component.find(BoxedLink);
     const showMoreButton1 = component.find(ShowMoreButton).at(0);
@@ -345,7 +374,7 @@ describe('the "show more" button should behave properly', () => {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
           primary: true,
           status: "validated",
-          type: ReceivedIdentityTypes.PHONE,
+          type: IdentityTypes.PHONE,
           value: "0622116655",
         },
       ],
@@ -354,18 +383,15 @@ describe('the "show more" button should behave properly', () => {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
           primary: true,
           status: "validated",
-          type: ReceivedIdentityTypes.EMAIL,
+          type: IdentityTypes.EMAIL,
           value: "test@test.test",
         },
       ],
     };
     const component = mount(
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <Layout>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
-        </Layout>
-      </ThemeProvider>,
+      <AccountApp>
+        <LoginsPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
     );
     const showMoreButton = component.find(ShowMoreButton);
     expect(showMoreButton).toHaveLength(0);

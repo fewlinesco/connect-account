@@ -24,7 +24,7 @@ export const BoxedLink: React.FC<{
 
 const Box = style.div`
     height: 7.2rem;
-    margin: 0 ${({ theme }) => theme.spaces.component.xs};
+    margin: 0 ${({ theme }) => theme.spaces.xs};
     display: flex;
     align-items: center;
     justify-content: space-between;

@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 
+import { Container } from "../Container";
 import { BoxedLink } from "./BoxedLink";
 
 export default { title: "components/BoxedLink", component: BoxedLink };
@@ -16,8 +16,3 @@ export const StandardBoxedLink = (): JSX.Element => {
     </Container>
   );
 };
-
-const Container = styled.div`
-  width: 90%;
-  margin: 0 auto;
-`;

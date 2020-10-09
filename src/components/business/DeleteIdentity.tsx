@@ -1,13 +1,13 @@
 import { useRouter } from "next/router";
 import React from "react";
 
+import type { IdentityTypes } from "@lib/@types";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
-import type { ReceivedIdentityTypes } from "@src/@types/Identity";
 import { useCookies } from "@src/hooks/useCookies";
 import { fetchJson } from "@src/utils/fetchJson";
 
 interface DeleteIdentityProps {
-  type: ReceivedIdentityTypes;
+  type: IdentityTypes;
   value: string;
   children: (props: { deleteIdentity: () => Promise<void> }) => JSX.Element;
 }

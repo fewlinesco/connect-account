@@ -3,13 +3,13 @@ import React from "react";
 
 import { AddIdentity_Deprecated } from "./AddIdentity.deprecated";
 import { DeleteIdentity } from "./DeleteIdentity";
-import type { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
+import type { Identity, IdentityTypes } from "@lib/@types";
 
 interface UpdateIdentityProps {
   identity: Identity;
   children: (props: {
     updateIdentity: (newValue: string) => Promise<void>;
-    type: ReceivedIdentityTypes;
+    type: IdentityTypes;
   }) => JSX.Element;
 }
 

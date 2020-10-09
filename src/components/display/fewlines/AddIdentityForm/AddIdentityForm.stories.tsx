@@ -1,7 +1,7 @@
 import React from "react";
 
 import { AddIdentityForm } from "./AddIdentityForm";
-import { ReceivedIdentityTypes } from "@src/@types/Identity";
+import { IdentityTypes } from "@lib/@types";
 import { AddIdentity } from "@src/components/business/AddIdentity";
 
 export default {
@@ -11,12 +11,9 @@ export default {
 
 export const AddEmailForm = (): JSX.Element => {
   return (
-    <AddIdentity type={ReceivedIdentityTypes.EMAIL}>
+    <AddIdentity type={IdentityTypes.EMAIL}>
       {({ addIdentity }) => (
-        <AddIdentityForm
-          type={ReceivedIdentityTypes.EMAIL}
-          addIdentity={addIdentity}
-        />
+        <AddIdentityForm type={IdentityTypes.EMAIL} addIdentity={addIdentity} />
       )}
     </AddIdentity>
   );
@@ -24,12 +21,9 @@ export const AddEmailForm = (): JSX.Element => {
 
 export const AddPhoneForm = (): JSX.Element => {
   return (
-    <AddIdentity type={ReceivedIdentityTypes.PHONE}>
+    <AddIdentity type={IdentityTypes.PHONE}>
       {({ addIdentity }) => (
-        <AddIdentityForm
-          type={ReceivedIdentityTypes.PHONE}
-          addIdentity={addIdentity}
-        />
+        <AddIdentityForm type={IdentityTypes.PHONE} addIdentity={addIdentity} />
       )}
     </AddIdentity>
   );

@@ -24,3 +24,11 @@ export type IdentityInput = {
   type: IdentityTypes;
   value: string;
 };
+
+export type Identity = {
+  id: string;
+  primary: boolean;
+  status: "validated" | "unvalidated";
+  type: IdentityTypes;
+  value: string;
+};

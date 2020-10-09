@@ -1,8 +1,8 @@
 import { HttpStatus } from "@fwl/web";
 import { ObjectId } from "mongodb";
 
+import type { MongoUser } from "@lib/@types/mongo/User";
 import type { Handler } from "@src/@types/ApiPageHandler";
-import type { MongoUser } from "@src/@types/mongo/User";
 import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
 import { withMongoDB } from "@src/middleware/withMongoDB";
 import withSession from "@src/middleware/withSession";
