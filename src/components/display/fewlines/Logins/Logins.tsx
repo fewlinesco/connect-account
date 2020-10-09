@@ -82,19 +82,19 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           )}
         </IdentityContainer>
         {emailIdentities.length > 1 && (
-          <ShowMoreButton
-            hide={hideSecondaryEmails}
-            quantity={emailIdentities.length - 1}
-            setHideSecondary={setHideSecondaryEmails}
-          />
+          <Flex>
+            <ShowMoreButton
+              hide={hideSecondaryEmails}
+              quantity={emailIdentities.length - 1}
+              setHideSecondary={setHideSecondaryEmails}
+            />
+          </Flex>
         )}
-        <Flex>
-          <Link href="/account/logins/email/new">
-            <Button variant={ButtonVariant.SECONDARY}>
-              + Add new email address
-            </Button>
-          </Link>
-        </Flex>
+        <Link href="/account/logins/email/new">
+          <Button variant={ButtonVariant.SECONDARY}>
+            + Add new email address
+          </Button>
+        </Link>
       </IdentitySection>
       <IdentitySection>
         <h3>Phone numbers</h3>
@@ -128,19 +128,19 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
           )}
         </IdentityContainer>
         {phoneIdentities.length > 1 && (
-          <ShowMoreButton
-            hide={hideSecondaryPhones}
-            quantity={phoneIdentities.length - 1}
-            setHideSecondary={setHideSecondaryPhones}
-          />
+          <Flex>
+            <ShowMoreButton
+              hide={hideSecondaryPhones}
+              quantity={phoneIdentities.length - 1}
+              setHideSecondary={setHideSecondaryPhones}
+            />
+          </Flex>
         )}
-        <Flex>
-          <Link href="/account/logins/phone/new">
-            <Button variant={ButtonVariant.SECONDARY}>
-              + Add new phone number
-            </Button>
-          </Link>
-        </Flex>
+        <Link href="/account/logins/phone/new">
+          <Button variant={ButtonVariant.SECONDARY}>
+            + Add new phone number
+          </Button>
+        </Link>
       </IdentitySection>
       <IdentitySection>
         <h3>Social logins</h3>
@@ -153,7 +153,7 @@ export default Logins;
 
 const Flex = styled.div`
   display: flex;
-  align-items: center;
+  justify-content: center;
 `;
 
 const IdentitySection = styled.div`
