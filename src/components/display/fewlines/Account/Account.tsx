@@ -3,11 +3,12 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { BoxedLink } from "../BoxedLink/BoxedLink";
 import { Container } from "../Container";
 import { H1 } from "../H1/H1";
 import { IdentityContainer } from "../IdentityContainer/IdentityContainer";
+import { LoginsIcon } from "../LoginsIcon/LoginsIcon";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
+import RightChevron from "../RightChevron/RightChevron";
 
 const Account: React.FC = () => {
   return (
@@ -20,7 +21,17 @@ const Account: React.FC = () => {
       <IdentityContainer>
         <Link href="/account/logins">
           <NeutralLink>
-            <BoxedLink value="Logins" primary={true} status="validated" />
+            <Flex>
+              <LoginsIcon />
+              <TextBox>
+                <Span>Logins</Span>
+                <div>
+                  Manage your logins options, including emails, phone numbers
+                  and social logins
+                </div>
+              </TextBox>
+              <RightChevron />
+            </Flex>
           </NeutralLink>
         </Link>
       </IdentityContainer>
@@ -34,4 +45,23 @@ export const SubTitle = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.light};
   font-size: ${({ theme }) => theme.fontSizes.s};
   margin: 0 0 ${({ theme }) => theme.spaces.s} 0;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: ${({ theme }) => theme.spaces.xs};
+`;
+
+const TextBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 50%;
+  font-size: 1rem;
+`;
+
+const Span = styled.p`
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
 `;
