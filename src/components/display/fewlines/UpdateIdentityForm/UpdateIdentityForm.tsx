@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
 import { Container } from "../Container";
+import { Form } from "../Form/Form";
 import { H1 } from "../H1/H1";
 import { Input } from "../Input/Input";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
@@ -33,9 +34,7 @@ export const UpdateIdentityForm: React.FC<{
         <Value>{value}</Value>
       </Box>
       <Form
-        method="post"
-        onSubmit={async (event) => {
-          event.preventDefault();
+        onSubmit={async () => {
           updateIdentity(identity);
         }}
       >
@@ -66,11 +65,6 @@ export const UpdateIdentityForm: React.FC<{
     </Container>
   );
 };
-
-export const Form = styled.form`
-  display: column;
-  align-items: center;
-`;
 
 const Value = styled.p`
   margin-right: 0.5rem;
