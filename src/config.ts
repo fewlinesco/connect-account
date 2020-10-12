@@ -15,6 +15,8 @@ type Config = {
   connectRedirectUri: string;
   connectAudience: string;
   connectJwtAlgorithm: string;
+  connectTestAccountEmail: string;
+  connectTestAccountPassword: string;
 };
 
 const config: Config = {
@@ -32,6 +34,8 @@ const config: Config = {
   connectRedirectUri: "",
   connectAudience: "",
   connectJwtAlgorithm: "",
+  connectTestAccountEmail: "",
+  connectTestAccountPassword: "",
 };
 
 function handleEnvVars(): void {
@@ -54,6 +58,9 @@ function handleEnvVars(): void {
   config.connectRedirectUri = process.env.CONNECT_REDIRECT_URI || "";
   config.connectAudience = process.env.CONNECT_AUDIENCE || "";
   config.connectJwtAlgorithm = process.env.CONNECT_JWT_ALGORITHM || "";
+  config.connectTestAccountEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL || "";
+  config.connectTestAccountPassword =
+    process.env.CONNECT_TEST_ACCOUNT_PASSWORD || "";
 }
 
 handleEnvVars();

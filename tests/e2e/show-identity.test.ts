@@ -9,6 +9,8 @@ import {
   screenshot,
 } from "taiko";
 
+import { config } from "@src/config";
+
 jest.setTimeout(30000);
 
 describe("Account Web Application happy path", () => {
@@ -53,7 +55,7 @@ describe("Account Web Application happy path", () => {
       expect.assertions(1);
 
       try {
-        await write("taiko@2e2.test");
+        await write(config.connectTestAccountEmail);
         await press("Enter");
 
         expect(text("Password").exists()).toBeTruthy();
@@ -68,7 +70,7 @@ describe("Account Web Application happy path", () => {
       expect.assertions(1);
 
       try {
-        await write("3qB7bFAxMZViAWpzso4Qp6n5Bx1pNj9GGxZLYaBNjk");
+        await write(config.connectTestAccountPassword);
         await press("Enter");
 
         expect(
