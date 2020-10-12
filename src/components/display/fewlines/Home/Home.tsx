@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
@@ -8,6 +9,7 @@ import { ShadowBox } from "../ShadowBox/ShadowBox";
 type HomeProps = { authorizeURL: string };
 
 const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
+  const router = useRouter();
   return (
     <>
       <HomeBackground />
@@ -18,11 +20,12 @@ const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
               <DescriptionText>
                 You are about to access your account from fewlines.co
               </DescriptionText>
-              <a href={authorizeURL}>
-                <Button variant={ButtonVariant.PRIMARY}>
-                  Access my account
-                </Button>
-              </a>
+              <Button
+                variant={ButtonVariant.PRIMARY}
+                onClick={() => router.push(authorizeURL)}
+              >
+                Access my account
+              </Button>
               <BackLink>Go back to fewlines.co</BackLink>
             </Flex>
           </ShadowBox>
