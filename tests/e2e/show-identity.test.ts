@@ -11,7 +11,7 @@ import {
 
 import { config } from "@src/config";
 
-jest.setTimeout(30000);
+jest.setTimeout(10000);
 
 describe("Account Web Application happy path", () => {
   beforeAll(async () => {
@@ -30,7 +30,7 @@ describe("Account Web Application happy path", () => {
 
       expect(text("Login").exists()).toBeTruthy();
     } catch (error) {
-      await screenshot({ path: "screenshots/launch.png" });
+      await screenshot({ path: "tests/e2e/screenshots/launch.png" });
 
       throw error;
     }
@@ -45,7 +45,9 @@ describe("Account Web Application happy path", () => {
 
         expect(text("Email").exists()).toBeTruthy();
       } catch (error) {
-        await screenshot({ path: "screenshots/click_login_btn.png" });
+        await screenshot({
+          path: "tests/e2e/screenshots/click_login_btn.png",
+        });
 
         throw error;
       }
@@ -60,7 +62,7 @@ describe("Account Web Application happy path", () => {
 
         expect(text("Password").exists()).toBeTruthy();
       } catch (error) {
-        await screenshot({ path: "screenshots/enter_email.png" });
+        await screenshot({ path: "tests/e2e/screenshots/enter_email.png" });
 
         throw error;
       }
@@ -79,7 +81,7 @@ describe("Account Web Application happy path", () => {
           ).exists(),
         ).toBeTruthy();
       } catch (error) {
-        await screenshot({ path: "screenshots/enter_password.png" });
+        await screenshot({ path: "tests/e2e/screenshots/enter_password.png" });
 
         throw error;
       }
@@ -95,7 +97,9 @@ describe("Account Web Application happy path", () => {
           text("Your emails, phones and social logins").exists(),
         ).toBeTruthy();
       } catch (error) {
-        await screenshot({ path: "screenshots/click_login_btn.png" });
+        await screenshot({
+          path: "tests/e2e/screenshots/click_login_btn.png",
+        });
 
         throw error;
       }
@@ -109,7 +113,9 @@ describe("Account Web Application happy path", () => {
 
         expect(text("Primary").exists()).toBeTruthy();
       } catch (error) {
-        await screenshot({ path: "screenshots/click_login_btn.png" });
+        await screenshot({
+          path: "tests/e2e/screenshots/click_login_btn.png",
+        });
 
         throw error;
       }
