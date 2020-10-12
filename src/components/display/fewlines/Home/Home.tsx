@@ -2,33 +2,49 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
+import { HomeBackground } from "../HomeBackground/HomeBackground";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 
 type HomeProps = { authorizeURL: string };
 
 const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
   return (
-    <Container>
-      <ShadowBox>
-        <Flex>
-          <DescriptionText>
-            You are about to access your account from fewlines.co
-          </DescriptionText>
-          <a href={authorizeURL}>
-            <Button variant={ButtonVariant.PRIMARY}>Access my account</Button>
-          </a>
-          <BackLink>Go back to fewlines.co</BackLink>
-        </Flex>
-      </ShadowBox>
-    </Container>
+    <>
+      <HomeBackground />
+      <Wrapper>
+        <Container>
+          <ShadowBox>
+            <Flex>
+              <DescriptionText>
+                You are about to access your account from fewlines.co
+              </DescriptionText>
+              <a href={authorizeURL}>
+                <Button variant={ButtonVariant.PRIMARY}>
+                  Access my account
+                </Button>
+              </a>
+              <BackLink>Go back to fewlines.co</BackLink>
+            </Flex>
+          </ShadowBox>
+        </Container>
+      </Wrapper>
+    </>
   );
 };
 
 export default Home;
 
-export const Container = styled.div`
-  max-width: 80%;
+const Wrapper = styled.div`
+  position: absolute;
+  top: ${({ theme }) => theme.spaces.m};
+  left: 0;
+  width: 100%;
+`;
+
+const Container = styled.div`
+  width: 80%;
   margin: 0 auto;
+  z-index: 2;
 `;
 
 const Flex = styled.div`
