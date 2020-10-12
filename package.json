@@ -1,6 +1,7 @@
 {
   "name": "connect-account",
   "version": "0.1.0",
+  "author": "Fewlines",
   "private": true,
   "repository": "git@github.com:fewlinesco/connect-account.git",
   "scripts": {
@@ -201,6 +202,7 @@
       "tsx",
       "json"
     ],
+    "verbose": true,
     "unmockedModulePathPatterns": [
       "node_modules/react/",
       "node_modules/enzyme/"
