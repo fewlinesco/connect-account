@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 
+import { Container } from "../Container";
 import { Button, ButtonVariant } from "./Button";
 
 export default { title: "components/Button", component: Button };
@@ -36,12 +36,3 @@ export const GhostButton = (): JSX.Element => {
     </Container>
   );
 };
-
-const Container = styled.div`
-  width: 90%;
-  margin: 0 auto;
-
-  button {
-    width: 100%;
-  }
-`;

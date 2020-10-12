@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
+import { Container } from "../Container";
 import { Input } from "../Input/Input";
 import { Form } from "./Form";
 
@@ -9,7 +10,7 @@ export default { title: "Form", component: Form };
 
 export const StandardForm = (): JSX.Element => {
   return (
-    <Container>
+    <StoryContainer>
       <Form
         onSubmit={async () => {
           return;
@@ -20,20 +21,12 @@ export const StandardForm = (): JSX.Element => {
           Update email
         </Button>
       </Form>
-    </Container>
+    </StoryContainer>
   );
 };
 
-const Container = styled.div`
-  width: 90%;
-  margin: 0 auto;
-
-  form {
-    display: flex;
-    flex-direction: column;
-
-    button {
-      margin: ${({ theme }) => theme.spaces.component.xxs} 0;
-    }
+const StoryContainer = styled(Container)`
+  button {
+    margin: ${({ theme }) => theme.spaces.xxs} 0;
   }
 `;

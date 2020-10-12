@@ -1,4 +1,4 @@
-import { Identity } from "./Identity";
+import { Identity } from "@lib/@types";
 
 export type SortedIdentities = {
   phoneIdentities: Identity[];

@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 
 type FormProps = {
   onSubmit: (event?: React.FormEvent<HTMLFormElement>) => Promise<void>;
@@ -9,9 +10,9 @@ export const Form: React.FC<FormProps> = ({ onSubmit, children }) => {
   const [isNotSubmitted, setIsNotSubmitted] = React.useState(true);
 
   return (
-    <form
+    <StyledForm
       method="post"
-      onSubmit={async (event) => {
+      onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         setIsNotSubmitted(false);
@@ -22,6 +23,11 @@ export const Form: React.FC<FormProps> = ({ onSubmit, children }) => {
       }}
     >
       {children}
-    </form>
+    </StyledForm>
   );
 };
+
+export const StyledForm = styled.form`
+  display: column;
+  align-items: center;
+`;

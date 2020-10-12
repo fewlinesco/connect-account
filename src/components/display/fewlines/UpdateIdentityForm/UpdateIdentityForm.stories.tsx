@@ -1,7 +1,7 @@
 import React from "react";
 
 import { UpdateIdentityForm } from "./UpdateIdentityForm";
-import { Identity, ReceivedIdentityTypes } from "@src/@types/Identity";
+import { Identity, IdentityTypes } from "@lib/@types";
 import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
 
 export default {
@@ -14,7 +14,7 @@ export const UpdateEmailForm = (): JSX.Element => {
     id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
     primary: true,
     status: "validated",
-    type: ReceivedIdentityTypes.EMAIL,
+    type: IdentityTypes.EMAIL,
     value: "test@test.test",
   };
 
@@ -35,7 +35,7 @@ export const UpdatePhoneForm = (): JSX.Element => {
     id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
     primary: true,
     status: "validated",
-    type: ReceivedIdentityTypes.PHONE,
+    type: IdentityTypes.PHONE,
     value: "0677112244",
   };
 
