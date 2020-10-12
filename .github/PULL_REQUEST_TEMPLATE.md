@@ -4,8 +4,6 @@
 
 ## Type of change
 
-Please ✔️ the relevant options.
-
 <!--- To tick the checkbox, put an `x` inside the `[ ]` -->
 
 - [ ] **Chore** (non-breaking change which refactors / improves the existing code base).
