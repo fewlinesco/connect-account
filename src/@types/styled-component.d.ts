@@ -53,7 +53,7 @@ declare module "styled-components" {
       mega: string;
     };
     fonts: {
-      sansSerif: string;
+      openSans: string;
     };
     shadows: {
       xs: string;
