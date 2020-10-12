@@ -72,6 +72,7 @@ declare module "styled-components" {
       placeholder: string;
       separator: string;
       box: string;
+      breadcrumbs: string;
       blacks: string[];
     };
     transitions: {

@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import { Container } from "../Container";
 import { H1 } from "../H1/H1";
+import { H2 } from "../H2/H2";
 import { LoginsIcon } from "../LoginsIcon/LoginsIcon";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import RightChevron from "../RightChevron/RightChevron";
@@ -17,7 +18,7 @@ const Account: React.FC = () => {
         <title>Connect Account</title>
       </Head>
       <H1>Welcome to your account</H1>
-      <SubTitle>First name last name</SubTitle>
+      <H2>First name last name</H2>
       <ShadowBox>
         <Link href="/account/logins">
           <NeutralLink>
@@ -40,12 +41,6 @@ const Account: React.FC = () => {
 };
 
 export default Account;
-
-export const SubTitle = styled.p`
-  font-weight: ${({ theme }) => theme.fontWeights.light};
-  font-size: ${({ theme }) => theme.fontSizes.s};
-  margin: 0 0 ${({ theme }) => theme.spaces.s} 0;
-`;
 
 const Flex = styled.div`
   display: flex;
