@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
+
 export const HomeBackground: React.FC = () => {
   return (
     <Wrapper>
@@ -96,7 +98,17 @@ export const HomeBackground: React.FC = () => {
 };
 
 const Wrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   z-index: 1;
+  visibility: hidden;
+
+  @media ${deviceBreakpoints.m} {
+    visibility: visible;
+  }
 `;
