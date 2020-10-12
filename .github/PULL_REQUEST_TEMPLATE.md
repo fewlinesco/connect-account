@@ -1,32 +1,40 @@
-# Description
+## Description
 
-<!---
-Include a summary of the changes, which issue is fixed and, relevant motivation and context
-
-‼️ List any dependencies that are required for this change. ‼️
--->
+<!--- Include a summary of the changes, which issue is fixed and, relevant motivation and context -->
 
 ## Type of change
 
 Please ✔️ the relevant options.
+
+<!--- To tick the checkbox, put an `x` inside the `[ ]` -->
 
 - [ ] **Chore** (non-breaking change which refactors / improves the existing code base).
 - [ ] **Bug fix** (non-breaking change which fixes an issue).
 - [ ] **New feature** (non-breaking change which adds functionality).
 - [ ] **Breaking change** (fix or feature that would cause existing functionality to not work as expected).
 
+## Issues
+
+<!--- Use this section if you had issues that led you to some workaround, otherwise the section can be removed -->
+
+## How Has This Been Tested?
+
+<!---
+Please describe the tests that you ran to verify your changes.
+If needed, provide instructions, so we can reproduce (i.e. test configuration).
+-->
+
+## List of added dependencies
+
+<!--- if appropriate, otherwise the section can be removed -->
+
 ## Screenshots
 
 <!--- if appropriate, otherwise the section can be removed -->
 
-# How Has This Been Tested?
+## Checklist:
 
-<!---
-Please describe the tests that you ran to verify your changes.
-If needed, provide instructions so we can reproduce (i.e. test configuration).
--->
-
-# Checklist:
+<!--- To tick the checkbox, put an `x` inside the `[ ]` -->
 
 - [ ] My code follows the style [**contributing guidelines**][contributing_file] of this project.
 - [ ] I have performed a self-review of my own code.
