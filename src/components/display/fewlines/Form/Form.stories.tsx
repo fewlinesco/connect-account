@@ -1,19 +1,20 @@
 import React from "react";
-import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
 import { Container } from "../Container";
 import { Input } from "../Input/Input";
 import { Form } from "./Form";
 
-export default { title: "Form", component: Form };
+export default { title: "components/Form", component: Form };
 
 export const StandardForm = (): JSX.Element => {
+  const [numberOfSubmit, setNumberOfSubmit] = React.useState(0);
+
   return (
-    <StoryContainer>
+    <Container>
       <Form
         onSubmit={async () => {
-          return;
+          setNumberOfSubmit(numberOfSubmit + 1);
         }}
       >
         <Input type="text" name="value" placeholder={`Enter your email`} />
@@ -21,12 +22,7 @@ export const StandardForm = (): JSX.Element => {
           Update email
         </Button>
       </Form>
-    </StoryContainer>
+      <p>Number of submits: {numberOfSubmit}</p>
+    </Container>
   );
 };
-
-const StoryContainer = styled(Container)`
-  button {
-    margin: ${({ theme }) => theme.spaces.xxs} 0;
-  }
-`;
