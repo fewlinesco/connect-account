@@ -98,6 +98,5 @@ export const HomeBackground: React.FC = () => {
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: -${({ theme }) => theme.spaces.xxs};
   z-index: 1;
 `;

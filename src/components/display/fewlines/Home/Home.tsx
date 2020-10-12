@@ -36,7 +36,7 @@ export default Home;
 
 const Wrapper = styled.div`
   position: absolute;
-  top: ${({ theme }) => theme.spaces.m};
+  top: 7rem;
   left: 0;
   width: 100%;
 `;
