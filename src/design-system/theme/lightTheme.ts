@@ -31,7 +31,7 @@ const colors = {
   black: "#03083C",
   red: "#EB5757",
   green: "#08D079",
-  placeholder: "#8b90a0",
+  lightGrey: "#8b90a0",
   separator: "#F0F1F3",
   box: "#FAFAFC",
   breadcrumbs: "#505556",
