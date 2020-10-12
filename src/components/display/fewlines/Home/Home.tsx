@@ -29,7 +29,9 @@ const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
               >
                 Access my account
               </Button>
-              <BackLink>Go back to fewlines.co</BackLink>
+              <BackLink onClick={() => router.push("http://fewlines.co")}>
+                Go back to fewlines.co
+              </BackLink>
             </Flex>
           </ShadowBox>
         </Container>
@@ -82,4 +84,5 @@ const BackLink = styled.p`
   text-align: center;
   margin: ${({ theme }) => theme.spaces.xs} 0;
   color: ${({ theme }) => theme.colors.primary};
+  cursor: pointer;
 `;
