@@ -6,8 +6,8 @@ import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 import { BoxedLink } from "@src/components/display/fewlines/BoxedLink/BoxedLink";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
+import { H2 } from "@src/components/display/fewlines/H2/H2";
 import { Value } from "@src/components/display/fewlines/Logins/Logins";
-import { SubTitle } from "@src/components/display/fewlines/Logins/Logins";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
 import { AccountApp } from "@src/pages/_app";
 import LoginsPage from "@src/pages/account/logins/index";
@@ -174,11 +174,11 @@ describe("LoginsPage", () => {
       );
 
       const h1 = component.find(H1);
-      const subTitle = component.find(SubTitle);
+      const h2 = component.find(H2);
       expect(h1).toHaveLength(1);
       expect(h1.text()).toEqual("Logins");
-      expect(subTitle).toHaveLength(1);
-      expect(subTitle.text()).toEqual("Your emails, phones and social logins");
+      expect(h2).toHaveLength(1);
+      expect(h2.text()).toEqual("Your emails, phones and social logins");
     });
   });
 

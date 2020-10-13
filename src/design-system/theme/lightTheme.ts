@@ -28,11 +28,12 @@ const colors = {
   primary: "#1825aa",
   primaryBadge: "#030e80",
   background: "#FFFFFF",
-  black: "#202020",
+  black: "#03083C",
   red: "#EB5757",
-  placeholder: "#8b90a0",
+  lightGrey: "#8b90a0",
   separator: "#F0F1F3",
   box: "#FAFAFC",
+  breadcrumbs: "#505556",
   blacks: [
     "hsl(0, 0%, 90%)", // 0
     "hsl(0, 0%, 75%)", // 1
@@ -43,8 +44,7 @@ const colors = {
 };
 
 const fonts = {
-  sansSerif:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
+  openSans: "'Open Sans', sans-serif",
 };
 
 const fontWeights = {

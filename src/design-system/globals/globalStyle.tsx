@@ -22,7 +22,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
 		margin: 0;
 		padding: 0;
 		border: 0;
-		font-family: ${({ theme }) => theme.fonts.sansSerif};
+		font-family: ${({ theme }) => theme.fonts.openSans};
 		vertical-align: baseline;
 		scroll-behavior: smooth;
 	}

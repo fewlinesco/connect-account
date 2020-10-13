@@ -12,6 +12,7 @@ export const Layout: React.FC = ({ children }) => {
     <>
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <title>Connect Account</title>
       </Head>
       <Main>
         {router && router.pathname !== "/" && <Header />}

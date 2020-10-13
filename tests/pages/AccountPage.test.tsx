@@ -2,12 +2,12 @@ import { mount } from "enzyme";
 import React from "react";
 
 import {
-  SubTitle,
   TextBox,
   Span,
 } from "@src/components/display/fewlines/Account/Account";
 import { AccountPage } from "@src/components/display/fewlines/Account/Account.stories";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
+import { H2 } from "@src/components/display/fewlines/H2/H2";
 import { ShadowBox } from "@src/components/display/fewlines/ShadowBox/ShadowBox";
 import { AccountApp } from "@src/pages/_app";
 
@@ -29,7 +29,7 @@ describe("AccountPage", () => {
         <AccountPage />
       </AccountApp>,
     );
-    const subTitle = component.find(SubTitle);
+    const subTitle = component.find(H2);
     expect(subTitle.text()).toEqual("First name last name");
     expect(subTitle).toHaveLength(1);
   });

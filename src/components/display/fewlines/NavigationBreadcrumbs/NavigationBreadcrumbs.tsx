@@ -9,6 +9,5 @@ export const NavigationBreadcrumbs: React.FC<{
 
 export const Breadcrumbs = styled.div`
   padding: 0 0 ${({ theme }) => theme.spaces.s};
-  font-weight: ${({ theme }) => theme.fontWeights.light};
   font-size: ${({ theme }) => theme.fontSizes.s};
 `;

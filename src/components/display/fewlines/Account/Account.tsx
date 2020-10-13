@@ -1,10 +1,10 @@
-import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
 import { Container } from "../Container";
 import { H1 } from "../H1/H1";
+import { H2 } from "../H2/H2";
 import { LoginsIcon } from "../LoginsIcon/LoginsIcon";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import RightChevron from "../RightChevron/RightChevron";
@@ -14,11 +14,8 @@ import { ShadowBox } from "../ShadowBox/ShadowBox";
 const Account: React.FC = () => {
   return (
     <Container>
-      <Head>
-        <title>Connect Account</title>
-      </Head>
       <H1>Welcome to your account</H1>
-      <SubTitle>First name last name</SubTitle>
+      <H2>First name last name</H2>
       <ShadowBox>
         <Content>
           <Link href="/account/logins">
@@ -62,12 +59,6 @@ const Account: React.FC = () => {
 };
 
 export default Account;
-
-export const SubTitle = styled.p`
-  font-weight: ${({ theme }) => theme.fontWeights.light};
-  font-size: ${({ theme }) => theme.fontSizes.s};
-  margin: 0 0 ${({ theme }) => theme.spaces.s} 0;
-`;
 
 const Content = styled.div`
   cursor: pointer;

@@ -26,6 +26,8 @@ export const ShowMoreButton: React.FC<{
 const Button = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 3rem;
+  align-items: center;
+  height: 4.5rem;
+  margin-bottom: 2rem;
   cursor: pointer;
 `;
