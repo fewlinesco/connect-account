@@ -5,30 +5,47 @@ import { Arrow } from "../Arrow/Arrow";
 import { BurgerIcon } from "../BurgerIcon/BurgerIcon";
 import { NavBarCrossIcon } from "../NavBarCrossIcon/NavBarCrossIcon";
 
+interface MenuItemProps {
+  color?: string;
+  borderLeft?: boolean;
+}
+
 export const MobileNavigationBar: React.FC = () => {
   const [open, setOpen] = React.useState<boolean>(false);
 
   return (
-    <Bar>
-      <MenuItem>
-        <Arrow />
-        Back
-      </MenuItem>
-
-      <SecondItem onClick={() => setOpen(!open)}>
+    <>
+      <Bar>
         {open ? (
-          <>
-            <div>Close</div>
-            <NavBarCrossIcon />
-          </>
+          <MenuItem color="primary">
+            <Content>
+              <div>English</div>
+            </Content>
+          </MenuItem>
         ) : (
-          <>
-            <div>Menu</div>
-            <BurgerIcon />
-          </>
+          <MenuItem>
+            <Content>
+              <Arrow />
+              <div>Back</div>
+            </Content>
+          </MenuItem>
         )}
-      </SecondItem>
-    </Bar>
+
+        <MenuItem borderLeft={true} onClick={() => setOpen(!open)}>
+          {open ? (
+            <Content>
+              <div>Close</div>
+              <NavBarCrossIcon />
+            </Content>
+          ) : (
+            <Content>
+              <div>Menu</div>
+              <BurgerIcon />
+            </Content>
+          )}
+        </MenuItem>
+      </Bar>
+    </>
   );
 };
 
@@ -38,24 +55,33 @@ const Bar = styled.div`
   left: 0;
   height: 7.2rem;
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.box};
   display: flex;
   border-top: 0.1rem solid ${({ theme }) => theme.colors.separator};
 `;
 
-const MenuItem = styled.div`
+const MenuItem = styled.div<MenuItemProps>`
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
-  padding: 0 ${({ theme }) => theme.spaces.xs};
+  background-color: ${({ theme }) => theme.colors.box};
+  ${(props) =>
+    props.color === "primary" &&
+    `
+    background-color: ${props.theme.colors.primary};
+    color: ${props.theme.colors.background}
+  `};
+
+  ${(props) =>
+    props.borderLeft &&
+    `
+    border-left: 0.1rem solid ${props.theme.colors.separator};
+  `};
 `;
 
-const SecondItem = styled.div`
+const Content = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
-  padding: 0 ${({ theme }) => theme.spaces.xs};
-  border-left: 0.1rem solid ${({ theme }) => theme.colors.separator};
+  margin: 0 ${({ theme }) => theme.spaces.xs};
 `;
