@@ -36,8 +36,6 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
               };
 
               await refreshTokens(body);
-
-              context.res.end();
             } else {
               throw error;
             }
