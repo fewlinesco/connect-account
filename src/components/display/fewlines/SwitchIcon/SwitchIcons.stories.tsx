@@ -8,7 +8,7 @@ export default {
   component: SwitchIcon,
 };
 
-export const StandardlSwitchIcon = (): JSX.Element => {
+export const StandardSwitchIcon = (): JSX.Element => {
   return (
     <Wrapper>
       <SwitchIcon />

@@ -1,5 +1,6 @@
 import React from "react";
 
+import { ClickAwayListener } from "../ConfirmationBox/ClickAwayListener";
 import { MobileNavigationBar } from "./MobileNavigationBar";
 
 export default {
@@ -7,6 +8,12 @@ export default {
   component: MobileNavigationBar,
 };
 
-export const StandardlMobileNavigationBar = (): JSX.Element => {
-  return <MobileNavigationBar />;
+export const StandardMobileNavigationBar = (): JSX.Element => {
+  const [open, setOpen] = React.useState<boolean>(true);
+  return (
+    <>
+      {open && <ClickAwayListener onClick={() => setOpen(false)} />}
+      <MobileNavigationBar open={open} setOpen={setOpen} />
+    </>
+  );
 };

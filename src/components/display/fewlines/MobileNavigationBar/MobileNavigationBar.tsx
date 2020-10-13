@@ -1,9 +1,10 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 
 import { Arrow } from "../Arrow/Arrow";
 import { BurgerIcon } from "../BurgerIcon/BurgerIcon";
 import { NavBarCrossIcon } from "../NavBarCrossIcon/NavBarCrossIcon";
+import RightChevron from "../RightChevron/RightChevron";
 import { SwitchIcon } from "../SwitchIcon/SwitchIcon";
 import { WorldIcon } from "../WorldIcon/WorldIcon";
 
@@ -12,11 +13,27 @@ interface MenuItemProps {
   borderLeft?: boolean;
 }
 
-export const MobileNavigationBar: React.FC = () => {
-  const [open, setOpen] = React.useState<boolean>(true);
+type MobileNavigationBarProp = {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+};
 
+export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
+  open,
+  setOpen,
+}) => {
   return (
-    <>
+    <Container>
+      {open && (
+        <>
+          <MenuList>
+            <ListItem>
+              <div>Logins</div>
+              <RightChevron />
+            </ListItem>
+          </MenuList>
+        </>
+      )}
       <Bar>
         {open ? (
           <MenuItem color="primary">
@@ -51,16 +68,20 @@ export const MobileNavigationBar: React.FC = () => {
           )}
         </MenuItem>
       </Bar>
-    </>
+    </Container>
   );
 };
 
-const Bar = styled.div`
+const Container = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
-  height: 7.2rem;
   width: 100%;
+  z-index: 2;
+`;
+
+const Bar = styled.div`
+  height: 7.2rem;
   display: flex;
   border-top: 0.1rem solid ${({ theme }) => theme.colors.separator};
 `;
@@ -70,6 +91,7 @@ const MenuItem = styled.div<MenuItemProps>`
   align-items: center;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.box};
+
   ${(props) =>
     props.color === "primary" &&
     `
@@ -99,4 +121,19 @@ const LanguagesOptions = styled.div`
   div {
     margin: 0 0 0 ${({ theme }) => theme.spaces.xxs};
   }
+`;
+
+const MenuList = styled.div`
+  z-index: 2;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
+  background-color: ${({ theme }) => theme.colors.background};
+`;
+
+const ListItem = styled.div`
+  height: 7.2rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 ${({ theme }) => theme.spaces.xs};
 `;

@@ -8,7 +8,7 @@ export default {
   component: WorldIcon,
 };
 
-export const StandardlWorldIcon = (): JSX.Element => {
+export const StandardWorldIcon = (): JSX.Element => {
   return (
     <Wrapper>
       <WorldIcon />
