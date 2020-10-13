@@ -217,7 +217,7 @@
       "config"
     ],
     "moduleNameMapper": {
-      "\\.(png|svg|jpg|gif|eot|ttf|woff|woff2)$": "<rootDir>/tests/__mocks__/fileMock.ts",
+      "\\.(png|svg|jpg|gif|eot|ttf|woff|woff2)$": "<rootDir>/tests/config/import-asset-fix.ts",
       "@src/(.*)": "<rootDir>/src/$1",
       "@lib/(.*)": "<rootDir>/lib/$1"
     },

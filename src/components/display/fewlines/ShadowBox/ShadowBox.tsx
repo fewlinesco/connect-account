@@ -5,5 +5,4 @@ export const ShadowBox = style.div`
     border-radius: ${({ theme }) => theme.radii[0]};
     box-shadow: ${({ theme }) => theme.shadows.box};
     margin: 0 0 ${({ theme }) => theme.spaces.xxs} 0;
-    cursor: pointer;
 `;
