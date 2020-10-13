@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Box } from "../Box/Box";
 import { Button, ButtonVariant } from "../Button/Button";
 import { Container } from "../Container";
+import { Form } from "../Form/Form";
 import { H1 } from "../H1/H1";
 import { Input } from "../Input/Input";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
@@ -31,10 +32,7 @@ const IdentityValidationForm: React.FC<{
         ]}
       />
       <Form
-        method="post"
-        onSubmit={async (event) => {
-          event.preventDefault();
-
+        onSubmit={async () => {
           await verifyIdentity(validationCode);
         }}
       >
@@ -83,9 +81,4 @@ const DidntReceiveCode = styled.p`
 const Value = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.light};
   font-size: ${({ theme }) => theme.fontSizes.s};
-`;
-
-export const Form = styled.form`
-  display: column;
-  align-items: center;
 `;

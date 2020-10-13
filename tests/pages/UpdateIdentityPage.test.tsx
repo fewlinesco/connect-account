@@ -6,15 +6,13 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 
 import { IdentityTypes, Identity } from "@lib/@types";
+import { Form } from "@src/components/display/fewlines/Form/Form";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
   NavigationBreadcrumbs,
   Breadcrumbs,
 } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
-import {
-  UpdateIdentityForm,
-  Form,
-} from "@src/components/display/fewlines/UpdateIdentityForm/UpdateIdentityForm";
+import { UpdateIdentityForm } from "@src/components/display/fewlines/UpdateIdentityForm/UpdateIdentityForm";
 import { useCookies } from "@src/hooks/useCookies";
 import { AccountApp } from "@src/pages/_app";
 import UpdateIdentityPage from "@src/pages/account/logins/[type]/[id]/update";
