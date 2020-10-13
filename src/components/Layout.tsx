@@ -1,17 +1,21 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
 import { Header } from "./display/fewlines/Header/Header";
 
 export const Layout: React.FC = ({ children }) => {
+  const router = useRouter();
+
   return (
     <>
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <title>Connect Account</title>
       </Head>
       <Main>
-        <Header />
+        {router && router.pathname !== "/" && <Header />}
         {children}
       </Main>
     </>

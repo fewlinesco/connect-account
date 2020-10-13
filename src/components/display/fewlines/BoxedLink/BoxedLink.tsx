@@ -24,10 +24,15 @@ export const BoxedLink: React.FC<BoxedLinkProps> = ({
 
 const Box = styled.div<Pick<BoxedLinkProps, "primary" | "status">>`
   height: 7.2rem;
-  margin: 0 ${({ theme }) => theme.spaces.xs};
+  padding: 0 ${({ theme }) => theme.spaces.xs};
   display: flex;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
+
+  .bold {
+    font-weight: bold;
+  }
 
   ${(props) =>
     props.primary &&

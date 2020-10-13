@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
@@ -14,33 +13,36 @@ import { ShadowBox } from "../ShadowBox/ShadowBox";
 const Account: React.FC = () => {
   return (
     <Container>
-      <Head>
-        <title>Connect Account</title>
-      </Head>
       <H1>Welcome to your account</H1>
       <H2>First name last name</H2>
       <ShadowBox>
-        <Link href="/account/logins">
-          <NeutralLink>
-            <Flex>
-              <LoginsIcon />
-              <TextBox>
-                <Span>LOGINS</Span>
-                <div>
-                  Manage your logins options, including emails, phone numbers
-                  and social logins
-                </div>
-              </TextBox>
-              <RightChevron />
-            </Flex>
-          </NeutralLink>
-        </Link>
+        <Content>
+          <Link href="/account/logins">
+            <NeutralLink>
+              <Flex>
+                <LoginsIcon />
+                <TextBox>
+                  <Span>LOGINS</Span>
+                  <div>
+                    Manage your logins options, including emails, phone numbers
+                    and social logins
+                  </div>
+                </TextBox>
+                <RightChevron />
+              </Flex>
+            </NeutralLink>
+          </Link>
+        </Content>
       </ShadowBox>
     </Container>
   );
 };
 
 export default Account;
+
+const Content = styled.div`
+  cursor: pointer;
+`;
 
 const Flex = styled.div`
   display: flex;
@@ -49,7 +51,7 @@ const Flex = styled.div`
   padding: ${({ theme }) => theme.spaces.xs};
 `;
 
-const TextBox = styled.div`
+export const TextBox = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 50%;
@@ -57,6 +59,6 @@ const TextBox = styled.div`
   line-height: ${({ theme }) => theme.lineHeights.title};
 `;
 
-const Span = styled.p`
+export const Span = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.s};
 `;
