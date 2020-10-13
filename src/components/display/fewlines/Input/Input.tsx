@@ -10,7 +10,7 @@ export const Input = styled.input`
   margin: ${({ theme }) => theme.spaces.xxs} 0 ${({ theme }) => theme.spaces.xs};
 
   ::placeholder {
-    color: ${({ theme }) => theme.colors.placeholder};
+    color: ${({ theme }) => theme.colors.lightGrey};
     font-size: ${({ theme }) => theme.fontSizes.s};
   }
 `;

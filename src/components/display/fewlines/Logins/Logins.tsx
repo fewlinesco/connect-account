@@ -7,6 +7,7 @@ import { BoxedLink } from "../BoxedLink/BoxedLink";
 import { Button, ButtonVariant } from "../Button/Button";
 import { Container } from "../Container";
 import { H1 } from "../H1/H1";
+import { H2 } from "../H2/H2";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
@@ -49,7 +50,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
         <title>Connect Logins</title>
       </Head>
       <H1>Logins</H1>
-      <SubTitle>Your emails, phones and social logins</SubTitle>
+      <H2>Your emails, phones and social logins</H2>
       <IdentitySection>
         <h3>Email addresses</h3>
         <ShadowBox>
@@ -162,10 +163,4 @@ const IdentitySection = styled.div`
 
 export const Value = styled.p`
   margin-right: 0.5rem;
-`;
-
-export const SubTitle = styled.p`
-  font-weight: ${({ theme }) => theme.fontWeights.light};
-  font-size: ${({ theme }) => theme.fontSizes.s};
-  margin: 0 0 ${({ theme }) => theme.spaces.s} 0;
 `;

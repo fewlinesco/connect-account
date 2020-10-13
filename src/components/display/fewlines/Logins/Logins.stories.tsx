@@ -23,6 +23,13 @@ export const LoginsPage = (): JSX.Element => {
         type: IdentityTypes.PHONE,
         value: "0622116633",
       },
+      {
+        id: "jht5dcc1-530b-4982-878d-33f0def6a7cf",
+        primary: false,
+        status: "unvalidated",
+        type: IdentityTypes.PHONE,
+        value: "0622116622",
+      },
     ],
     emailIdentities: [
       {
@@ -31,6 +38,13 @@ export const LoginsPage = (): JSX.Element => {
         status: "validated",
         type: IdentityTypes.EMAIL,
         value: "test@test.test",
+      },
+      {
+        id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+        primary: false,
+        status: "validated",
+        type: IdentityTypes.EMAIL,
+        value: "test1@test.test",
       },
       {
         id: "91gercc1-530b-4982-878d-33f0def6a7cf",
