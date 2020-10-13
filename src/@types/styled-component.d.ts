@@ -68,7 +68,6 @@ declare module "styled-components" {
       background: string;
       black: string;
       red: string;
-      green: string;
       placeholder: string;
       separator: string;
       box: string;
