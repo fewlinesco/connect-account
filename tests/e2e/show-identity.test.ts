@@ -14,14 +14,8 @@ import { config } from "@src/config";
 
 describe("Account Web Application happy path", () => {
   const headless = true;
-  let waitTime = 0;
-  jest.setTimeout(10000);
-
-  if (!headless) {
-    jest.setTimeout(30000);
-
-    waitTime = 5000;
-  }
+  const waitTime = headless ? 0 : 5000;
+  jest.setTimeout(20000);
 
   beforeAll(async () => {
     await openBrowser({ headless });
@@ -37,9 +31,9 @@ describe("Account Web Application happy path", () => {
     try {
       await goto("http://localhost:29703");
       waitFor(5000);
-      expect(text("Login").exists()).toBeTruthy();
+      expect(text("Access my account").exists()).toBeTruthy();
 
-      await click("Login");
+      await click("Access my account");
       waitFor(waitTime);
       expect(text("Email").exists()).toBeTruthy();
 
