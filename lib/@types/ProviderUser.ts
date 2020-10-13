@@ -17,3 +17,14 @@ export type SingleIdentityProviderUser = {
     identity: Identity | null;
   };
 };
+
+export type ProviderUserPasswordSet = {
+  id: string;
+  name: string;
+  user: {
+    id: string;
+    passwords: {
+      available: boolean;
+    };
+  };
+};
