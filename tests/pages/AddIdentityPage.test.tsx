@@ -5,7 +5,7 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 
 import { IdentityTypes } from "@lib/@types";
-import { Form } from "@src/components/display/fewlines/AddIdentityForm/AddIdentityForm";
+import { Form } from "@src/components/display/fewlines/Form/Form";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
   NavigationBreadcrumbs,

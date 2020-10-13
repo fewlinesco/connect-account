@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import React from "react";
-import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
 import { Container } from "../Container";
+import { Form } from "../Form/Form";
 import { H1 } from "../H1/H1";
 import { Input } from "../Input/Input";
 import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
@@ -37,10 +37,7 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
         ]}
       />
       <Form
-        method="post"
-        onSubmit={async (event) => {
-          event.preventDefault();
-
+        onSubmit={async () => {
           await addIdentity(identity);
         }}
       >
@@ -74,8 +71,3 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
     </Container>
   );
 };
-
-export const Form = styled.form`
-  display: column;
-  align-items: center;
-`;
