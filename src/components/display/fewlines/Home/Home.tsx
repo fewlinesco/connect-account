@@ -80,7 +80,7 @@ const DescriptionText = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.semibold};
 `;
 
-const BackLink = styled.p`
+export const BackLink = styled.p`
   text-align: center;
   margin: ${({ theme }) => theme.spaces.xs} 0;
   color: ${({ theme }) => theme.colors.primary};

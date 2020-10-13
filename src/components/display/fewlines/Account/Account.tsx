@@ -60,7 +60,7 @@ const Flex = styled.div`
   padding: ${({ theme }) => theme.spaces.xs};
 `;
 
-const TextBox = styled.div`
+export const TextBox = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 50%;
@@ -68,6 +68,6 @@ const TextBox = styled.div`
   line-height: ${({ theme }) => theme.lineHeights.title};
 `;
 
-const Span = styled.p`
+export const Span = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.s};
 `;
