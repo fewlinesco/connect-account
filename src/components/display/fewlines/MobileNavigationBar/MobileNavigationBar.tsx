@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { Arrow } from "../Arrow/Arrow";
 import { BurgerIcon } from "../BurgerIcon/BurgerIcon";
 import { NavBarCrossIcon } from "../NavBarCrossIcon/NavBarCrossIcon";
+import { SwitchIcon } from "../SwitchIcon/SwitchIcon";
+import { WorldIcon } from "../WorldIcon/WorldIcon";
 
 interface MenuItemProps {
   color?: string;
@@ -11,7 +13,7 @@ interface MenuItemProps {
 }
 
 export const MobileNavigationBar: React.FC = () => {
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = React.useState<boolean>(true);
 
   return (
     <>
@@ -19,7 +21,11 @@ export const MobileNavigationBar: React.FC = () => {
         {open ? (
           <MenuItem color="primary">
             <Content>
-              <div>English</div>
+              <LanguagesOptions>
+                <WorldIcon />
+                <div>English</div>
+              </LanguagesOptions>
+              <SwitchIcon />
             </Content>
           </MenuItem>
         ) : (
@@ -84,4 +90,13 @@ const Content = styled.div`
   align-items: center;
   width: 100%;
   margin: 0 ${({ theme }) => theme.spaces.xs};
+`;
+
+const LanguagesOptions = styled.div`
+  display: flex;
+  align-items: center;
+
+  div {
+    margin: 0 0 0 ${({ theme }) => theme.spaces.xxs};
+  }
 `;
