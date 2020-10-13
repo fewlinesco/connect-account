@@ -1,8 +1,12 @@
+import { useRouter } from "next/router";
 import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 
 import { Arrow } from "../Arrow/Arrow";
 import { BurgerIcon } from "../BurgerIcon/BurgerIcon";
+import { HomeIcon } from "../HomeIcon/HomeIcon";
+import { KeyIcon } from "../KeyIcon/KeyIcon";
+import { LockIcon } from "../LockIcon/LockIcon";
 import { NavBarCrossIcon } from "../NavBarCrossIcon/NavBarCrossIcon";
 import RightChevron from "../RightChevron/RightChevron";
 import { SwitchIcon } from "../SwitchIcon/SwitchIcon";
@@ -22,13 +26,32 @@ export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
   open,
   setOpen,
 }) => {
+  const router = useRouter();
+
   return (
     <Container>
       {open && (
         <>
           <MenuList>
+            <ListItem onClick={() => router.push("/account")}>
+              <ListItemLabel>
+                <HomeIcon />
+                <div>Home</div>
+              </ListItemLabel>
+              <RightChevron />
+            </ListItem>
+            <ListItem onClick={() => router.push("/logins")}>
+              <ListItemLabel>
+                <KeyIcon />
+                <div>Logins</div>
+              </ListItemLabel>
+              <RightChevron />
+            </ListItem>
             <ListItem>
-              <div>Logins</div>
+              <ListItemLabel>
+                <LockIcon />
+                <div>Security</div>
+              </ListItemLabel>
               <RightChevron />
             </ListItem>
           </MenuList>
@@ -136,4 +159,13 @@ const ListItem = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 ${({ theme }) => theme.spaces.xs};
+`;
+
+const ListItemLabel = styled.div`
+  display: flex;
+  align-items: center;
+
+  div {
+    margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
+  }
 `;
