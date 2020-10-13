@@ -13,6 +13,7 @@ node_modules
 courses/
 config.json
 storybook-static
+**/screenshots/*.png
 
 # debug
 npm-debug.log*
