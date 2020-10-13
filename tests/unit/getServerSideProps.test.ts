@@ -4,15 +4,17 @@ import { IncomingMessage, ServerResponse } from "http";
 import fetch from "jest-fetch-mock";
 import { enableFetchMocks } from "jest-fetch-mock";
 import { Socket } from "net";
+import { GetServerSidePropsContext } from "next";
+import { ParsedUrlQuery } from "querystring";
 
-import { config } from "../src/config";
-import { getServerSideProps } from "../src/pages/account/logins/index";
 import { IdentityTypes } from "@lib/@types";
 import { ProviderUser } from "@lib/@types";
+import { config } from "@src/config";
+import { getServerSideProps } from "@src/pages/account/logins/index";
 
 enableFetchMocks();
 
-jest.mock("../src/config", () => {
+jest.mock("@src/config", () => {
   return {
     config: {
       connectAccountSessionSalt: "#*b+x3ZXE3-h[E+Q5YC5`jr~y%CA~R-[",
@@ -37,10 +39,11 @@ jest.mock("../src/config", () => {
 
 const mockedRequest = new IncomingMessage(new Socket());
 
-const mockedContext = {
+const mockedContext: GetServerSidePropsContext<ParsedUrlQuery> = {
   req: mockedRequest,
   res: new ServerResponse(mockedRequest),
   query: {},
+  resolvedUrl: "",
 };
 
 describe("getServerSideProps", () => {
