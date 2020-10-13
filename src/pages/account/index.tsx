@@ -22,8 +22,10 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
 
     try {
       const userDocumentId = context.req.session.get("user-session-id");
+      console.log({ userDocumentId });
 
       const user = await getUser(context.req.headers["cookie"]);
+      console.log({ user });
 
       if (user) {
         await oauth2Client

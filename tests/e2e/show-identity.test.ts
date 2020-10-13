@@ -12,13 +12,11 @@ import {
 
 import { config } from "@src/config";
 
-describe("Account Web Application happy path", () => {
-  const headless = true;
-  const waitTime = headless ? 0 : 5000;
+describe("Account Web Application show identity", () => {
   jest.setTimeout(20000);
 
   beforeAll(async () => {
-    await openBrowser({ headless });
+    await openBrowser({ args: ["--window-size=1440,1000"], headless: true });
   });
 
   afterAll(async () => {
@@ -30,44 +28,38 @@ describe("Account Web Application happy path", () => {
 
     try {
       await goto("http://localhost:29703");
-      waitFor(5000);
+      await waitFor("Access my account");
       expect(text("Access my account").exists()).toBeTruthy();
 
       await click("Access my account");
-      waitFor(waitTime);
+      await waitFor("Email");
       expect(text("Email").exists()).toBeTruthy();
 
       await write(config.connectTestAccountEmail);
       await press("Enter");
-      waitFor(waitTime);
+      await waitFor("Password");
       expect(text("Password").exists()).toBeTruthy();
 
       await write(config.connectTestAccountPassword);
       await press("Enter");
-      waitFor(waitTime);
-      expect(
-        text(
-          "Manage your logins options, including emails, phone numbers and social logins",
-        ).exists(),
-      ).toBeTruthy();
+      await waitFor("LOGINS");
+      expect(text("LOGINS").exists()).toBeTruthy();
 
-      await click("Logins");
-      waitFor(waitTime);
-      expect(
-        text("Your emails, phones and social logins").exists(),
-      ).toBeTruthy();
+      await click("LOGINS");
+      await waitFor("Email addresses");
+      expect(text("Email addresses").exists()).toBeTruthy();
 
-      await click("taiko@2e2.test");
-      waitFor(waitTime);
+      await click(config.connectTestAccountEmail);
+      await waitFor("Primary");
       expect(text("Primary").exists()).toBeTruthy();
+
+      done();
     } catch (error) {
       await screenshot({
-        path: "tests/e2e/screenshots/click_login_btn.png",
+        path: "tests/e2e/screenshots/show_identity.png",
       });
 
-      throw error;
-    } finally {
-      done();
+      done(error);
     }
   });
 });

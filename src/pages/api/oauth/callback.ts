@@ -35,7 +35,7 @@ const handler: Handler = async (
       };
 
       const documentId = await findOrInsertUser(oauthUserInfo, request.mongoDb);
-
+      console.log({ documentId });
       request.session.set("user-session-id", documentId);
       request.session.set("user-sub", decodedAccessToken.sub);
 
