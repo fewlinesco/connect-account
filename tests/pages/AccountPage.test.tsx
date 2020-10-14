@@ -41,10 +41,9 @@ describe("AccountPage", () => {
       </AccountApp>,
     );
     const shadowBox = component.find(ShadowBox);
-    expect(shadowBox).toHaveLength(2);
+    expect(shadowBox).toHaveLength(1);
 
-    const loginsShadowBox = shadowBox.at(0);
-    const textBox = loginsShadowBox.find(TextBox);
+    const textBox = shadowBox.find(TextBox);
 
     expect(textBox.find(Span).text()).toEqual("LOGINS");
     expect(
@@ -52,27 +51,6 @@ describe("AccountPage", () => {
         <div>
           Manage your logins options, including emails, phone numbers and social
           logins
-        </div>,
-      ),
-    ).toEqual(true);
-  });
-
-  test("it should display one Security shadow box", () => {
-    const component = mount(
-      <AccountApp>
-        <AccountPage />
-      </AccountApp>,
-    );
-    const shadowBox = component.find(ShadowBox);
-    const loginsShadowBox = shadowBox.at(1);
-    const textBox = loginsShadowBox.find(TextBox);
-
-    expect(textBox.find(Span).text()).toEqual("SECURITY");
-    expect(
-      textBox.contains(
-        <div>
-          Set or change your password. You can check your connexions history
-          here
         </div>,
       ),
     ).toEqual(true);
