@@ -11,6 +11,7 @@ import { NavBarCrossIcon } from "../NavBarCrossIcon/NavBarCrossIcon";
 import RightChevron from "../RightChevron/RightChevron";
 import { SwitchIcon } from "../SwitchIcon/SwitchIcon";
 import { WorldIcon } from "../WorldIcon/WorldIcon";
+import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 interface MenuItemProps {
   color?: string;
@@ -33,14 +34,20 @@ export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
       {open && (
         <>
           <MenuList>
-            <ListItem onClick={() => router.push("/account")}>
+            <ListItem
+              onClick={() => router.push("/account").then(() => setOpen(false))}
+            >
               <ListItemLabel>
                 <HomeIcon />
                 <div>Home</div>
               </ListItemLabel>
               <RightChevron />
             </ListItem>
-            <ListItem onClick={() => router.push("/logins")}>
+            <ListItem
+              onClick={() =>
+                router.push("/account/logins").then(() => setOpen(false))
+              }
+            >
               <ListItemLabel>
                 <KeyIcon />
                 <div>Logins</div>
@@ -101,6 +108,11 @@ const Container = styled.div`
   left: 0;
   width: 100%;
   z-index: 2;
+  visibility: hidden;
+
+  @media ${deviceBreakpoints.m} {
+    visibility: visible;
+  }
 `;
 
 const Bar = styled.div`

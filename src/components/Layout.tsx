@@ -3,9 +3,14 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
+import { ClickAwayListener } from "./display/fewlines/ClickAwayListener";
 import { Header } from "./display/fewlines/Header/Header";
+import { MobileNavigationBar } from "./display/fewlines/MobileNavigationBar/MobileNavigationBar";
 
 export const Layout: React.FC = ({ children }) => {
+  const [mobileNavBarOpen, setMobileNavbarOpen] = React.useState<boolean>(
+    false,
+  );
   const router = useRouter();
 
   return (
@@ -17,6 +22,15 @@ export const Layout: React.FC = ({ children }) => {
       <Main>
         {router && router.pathname !== "/" && <Header />}
         {children}
+        {router && router.pathname !== "/" && mobileNavBarOpen && (
+          <ClickAwayListener onClick={() => setMobileNavbarOpen(false)} />
+        )}
+        {router && router.pathname !== "/" && (
+          <MobileNavigationBar
+            open={mobileNavBarOpen}
+            setOpen={setMobileNavbarOpen}
+          />
+        )}
       </Main>
     </>
   );
