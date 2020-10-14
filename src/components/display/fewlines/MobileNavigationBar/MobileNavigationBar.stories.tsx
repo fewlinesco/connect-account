@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ClickAwayListener } from "../ConfirmationBox/ClickAwayListener";
+import { ClickAwayListener } from "../ClickAwayListener";
 import { MobileNavigationBar } from "./MobileNavigationBar";
 
 export default {
