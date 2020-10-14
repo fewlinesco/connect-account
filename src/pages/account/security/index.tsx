@@ -17,12 +17,7 @@ type SecurityPageProps = {
 };
 
 const SecurityPage: React.FC<SecurityPageProps> = ({ isPasswordSet }) => {
-  console.log(isPasswordSet);
-  if (isPasswordSet) {
-    return <div />;
-  }
-
-  return <div />;
+  return <SecurityPage isPasswordSet={isPasswordSet} />;
 };
 
 export default SecurityPage;

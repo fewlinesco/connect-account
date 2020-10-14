@@ -1,9 +1,13 @@
 import React from "react";
 
-import Logins from "./Security";
+import Security from "./Security";
 
-export default { title: "pages/Logins", component: Logins };
+export default { title: "pages/Security", component: Security };
 
-export const LoginsPage = (): JSX.Element => {
-  return <div />;
+export const PasswordNotSet = (): JSX.Element => {
+  return <Security isPasswordSet={false} />;
+};
+
+export const PasswordSet = (): JSX.Element => {
+  return <Security isPasswordSet={true} />;
 };

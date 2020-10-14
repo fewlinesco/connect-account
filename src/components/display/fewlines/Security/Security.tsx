@@ -1,152 +1,65 @@
-import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { BoxedLink } from "../BoxedLink/BoxedLink";
-import { Button, ButtonVariant } from "../Button/Button";
 import { Container } from "../Container";
 import { H1 } from "../H1/H1";
+import { H2 } from "../H2/H2";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
-import { Separator } from "../Separator/Separator";
+import RightChevron from "../RightChevron/RightChevron";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
-import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
-import { Identity } from "@lib/@types";
-import { SortedIdentities } from "@src/@types/SortedIdentities";
 
 type SecurityProps = {
-  sortedIdentities: SortedIdentities;
+  isPasswordSet: boolean;
 };
 
-const Security: React.FC<SecurityProps> = ({ sortedIdentities }) => {
-  const [hideSecondaryEmails, setHideSecondaryEmails] = React.useState<boolean>(
-    true,
-  );
-  const [hideSecondaryPhones, setHideSecondaryPhones] = React.useState<boolean>(
-    true,
-  );
-
-  let emailList: Identity[];
-  let phoneList: Identity[];
-
-  hideSecondaryEmails
-    ? (emailList = sortedIdentities.emailIdentities.filter(
-        (identity) => identity.primary,
-      ))
-    : (emailList = sortedIdentities.emailIdentities);
-
-  hideSecondaryPhones
-    ? (phoneList = sortedIdentities.phoneIdentities.filter(
-        (identity) => identity.primary,
-      ))
-    : (phoneList = sortedIdentities.phoneIdentities);
-
-  const { emailIdentities, phoneIdentities } = sortedIdentities;
-
+const Security: React.FC<SecurityProps> = ({ isPasswordSet }) => {
   return (
     <Container>
-      <Head>
-        <title>Connect Security</title>
-      </Head>
-      <H1>Logins</H1>
-      <SubTitle>Your emails, phones and social logins</SubTitle>
-      <IdentitySection>
-        <h3>Email addresses</h3>
+      <H1>Security</H1>
+      <H2>Password, login history and more</H2>
+      {isPasswordSet ? (
         <ShadowBox>
-          {emailIdentities.length === 0 ? (
-            <Value>No emails</Value>
-          ) : (
-            emailList.map((email: Identity) => {
-              return (
-                <div key={email.value}>
-                  <Link
-                    href="/account/logins/[type]/[id]"
-                    as={`/account/logins/${email.type.toLowerCase()}/${
-                      email.id
-                    }`}
-                  >
-                    <NeutralLink>
-                      <BoxedLink
-                        value={email.value}
-                        primary={email.primary}
-                        status={email.status}
-                      />
-                    </NeutralLink>
-                  </Link>
-                  {emailList.indexOf(email) < emailList.length - 1 && (
-                    <Separator />
-                  )}
-                </div>
-              );
-            })
-          )}
+          <Content>
+            <Link href="/account/logins">
+              <NeutralLink>
+                <Flex>
+                  <TextBox>
+                    <div>
+                      Manage your logins options, including emails, phone
+                      numbers and social logins
+                    </div>
+                  </TextBox>
+                  <RightChevron />
+                </Flex>
+              </NeutralLink>
+            </Link>
+          </Content>
         </ShadowBox>
-        {emailIdentities.length > 1 && (
-          <Flex>
-            <ShowMoreButton
-              hide={hideSecondaryEmails}
-              quantity={emailIdentities.length - 1}
-              setHideSecondary={setHideSecondaryEmails}
-            />
-          </Flex>
-        )}
-        <Link href="/account/logins/email/new">
-          <Button variant={ButtonVariant.SECONDARY}>
-            + Add new email address
-          </Button>
-        </Link>
-      </IdentitySection>
-      <IdentitySection>
-        <h3>Phone numbers</h3>
-        <ShadowBox>
-          {phoneIdentities.length === 0 ? (
-            <Value>No phones</Value>
-          ) : (
-            phoneList.map((phone: Identity) => {
-              return (
-                <div key={phone.value}>
-                  <Link
-                    href="/account/logins/[type]/[id]"
-                    as={`/account/logins/${phone.type.toLowerCase()}/${
-                      phone.id
-                    }`}
-                  >
-                    <NeutralLink>
-                      <BoxedLink
-                        value={phone.value}
-                        primary={phone.primary}
-                        status={phone.status}
-                      />
-                    </NeutralLink>
-                  </Link>
-                  {phoneList.indexOf(phone) < phoneList.length - 1 && (
-                    <Separator />
-                  )}
-                </div>
-              );
-            })
-          )}
-        </ShadowBox>
-        {phoneIdentities.length > 1 && (
-          <Flex>
-            <ShowMoreButton
-              hide={hideSecondaryPhones}
-              quantity={phoneIdentities.length - 1}
-              setHideSecondary={setHideSecondaryPhones}
-            />
-          </Flex>
-        )}
-        <Link href="/account/logins/phone/new">
-          <Button variant={ButtonVariant.SECONDARY}>
-            + Add new phone number
-          </Button>
-        </Link>
-      </IdentitySection>
-      <IdentitySection>
-        <h3>Social logins</h3>
-      </IdentitySection>
+      ) : (
+        <div />
+      )}
     </Container>
   );
 };
 
 export default Security;
+
+const Content = styled.div`
+  cursor: pointer;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: ${({ theme }) => theme.spaces.xs};
+`;
+
+export const TextBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+  font-size: ${({ theme }) => theme.fontSizes.xxs};
+  line-height: ${({ theme }) => theme.lineHeights.title};
+`;
