@@ -21,7 +21,7 @@ export const ConfirmationBox = styled.div<ConfirmationBoxProps>`
     animation: appearFromBottom 0.1s;
     bottom: 0;
     visibility: visible;
-    z-index: 2;
+    z-index: 3;
     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
   `}
 
