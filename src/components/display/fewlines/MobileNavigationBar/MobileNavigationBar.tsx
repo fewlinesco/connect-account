@@ -76,7 +76,7 @@ export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
             </Content>
           </MenuItem>
         ) : (
-          <MenuItem>
+          <MenuItem onClick={() => router.back()}>
             <Content>
               <Arrow />
               <div>Back</div>
