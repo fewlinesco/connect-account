@@ -435,4 +435,46 @@ https://github.com/puppeteer/puppeteer[Puppeteer]
 
 We are using https://docs.sentry.io/[Sentry] to monitor production's exceptions raised.
 
-A custom utility function, called `addRequestScopeToSentry`, is provided to format the data used for the report. 
+A custom utility function, called `addRequestScopeToSentry`, is provided to format the data used for the report.
+
+== HTTPS certificates
+
+You might need using HTTPS certificates on your localhost to make your navigator allowing cookies writing. It uses an `nginx` proxy which listens on port 29704 and redirects with the certificate on port 29703
+
+Install `mkcert` on your machine:
+----
+brew install mkcert
+----
+
+Create certificates:
+----
+mkdir certs
+(cd certs; mkcert connect-account.local)
+----
+
+Install `nginx`:
+
+----
+brew install nginx
+----
+
+Install and configure `hivemind`
+
+----
+brew install hivemind
+----
+
+Create your `Procfile` file
+
+----
+touch Procfile
+----
+
+Fill your `Procfile` file with the following:
+
+```
+proxy: nginx -p ./ -c nginx.conf
+connect-account: source .env_vars && yarn dev
+```
+
+From now on, run `hivemind` to start your server, and acces your application on URL: `https://connect-account.local:29704`
