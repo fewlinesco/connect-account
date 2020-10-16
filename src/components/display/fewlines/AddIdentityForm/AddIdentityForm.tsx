@@ -47,7 +47,7 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
         <Input
           type="text"
           name="value"
-          placeholder={`Enter your ${type}`}
+          placeholder={`Enter your ${type.toLowerCase()}`}
           value={identity.value}
           onChange={(event) =>
             setIdentity({
@@ -60,7 +60,7 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
         <Button
           variant={ButtonVariant.PRIMARY}
           type="submit"
-        >{`Add ${type}`}</Button>
+        >{`Add ${type.toLowerCase()}`}</Button>
       </Form>
       <Button
         variant={ButtonVariant.SECONDARY}

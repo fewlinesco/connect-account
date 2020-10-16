@@ -5,6 +5,10 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 
 import { IdentityTypes } from "@lib/@types";
+import {
+  Button,
+  ButtonVariant,
+} from "@src/components/display/fewlines/Button/Button";
 import { Form } from "@src/components/display/fewlines/Form/Form";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
@@ -68,15 +72,56 @@ describe("AddIdentityPage", () => {
     ).toEqual(true);
   });
 
-  test("it should display an input", () => {
+  test("it should display the form properly for emails", () => {
     const component = mount(
       <AccountApp>
         <AddIdentityPage type={IdentityTypes.EMAIL} />
       </AccountApp>,
     );
 
-    const addIdentityInput = component.find(Form);
+    const addIdentityInput = component.find(Form).find(Input);
     expect(addIdentityInput).toHaveLength(1);
+    expect(addIdentityInput.props().placeholder).toEqual("Enter your email");
+
+    const addButton = component
+      .find(Form)
+      .find(Button)
+      .find({ variant: ButtonVariant.PRIMARY });
+
+    const cancelButton = component
+      .find(Button)
+      .find({ variant: ButtonVariant.SECONDARY });
+
+    expect(addButton).toHaveLength(1);
+    expect(addButton.text()).toEqual("Add email");
+    expect(cancelButton).toHaveLength(1);
+    expect(cancelButton.text()).toEqual("Cancel");
+  });
+
+  test("it should display the form properly for phones", () => {
+    const component = mount(
+      <AccountApp>
+        <AddIdentityPage type={IdentityTypes.PHONE} />
+      </AccountApp>,
+    );
+
+    const addIdentityInput = component.find(Form).find(Input);
+    expect(addIdentityInput).toHaveLength(1);
+    expect(addIdentityInput.props().placeholder).toEqual("Enter your phone");
+
+    const addButton = component
+      .find(Form)
+      .find(Button)
+      .find({ variant: ButtonVariant.PRIMARY });
+
+    const cancelButton = component
+      .find(Button)
+      .find({ variant: ButtonVariant.SECONDARY });
+
+    expect(addButton).toHaveLength(1);
+    expect(addButton.text()).toEqual("Add phone");
+    expect(cancelButton).toHaveLength(1);
+    expect(cancelButton.text()).toEqual("Cancel");
   });
 
   test("it should call `send-identity-validation-code` API page on submit", () => {

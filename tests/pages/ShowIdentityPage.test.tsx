@@ -11,7 +11,7 @@ import {
   Button,
   ButtonVariant,
 } from "@src/components/display/fewlines/Button/Button";
-import { ClickAwayListener } from "@src/components/display/fewlines/ConfirmationBox/ClickAwayListener";
+import { ClickAwayListener } from "@src/components/display/fewlines/ClickAwayListener";
 import { ConfirmationBox } from "@src/components/display/fewlines/ConfirmationBox/ConfirmationBox";
 import {
   NavigationBreadcrumbs,
