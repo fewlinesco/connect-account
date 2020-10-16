@@ -1,0 +1,12 @@
+node_modules/
+.env_vars
+.tool_versions
+README.adoc
+vercel.json
+.next
+.storybook
+storybook-static
+doc
+**/screenshots/
+certs/
+/doc
