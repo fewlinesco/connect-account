@@ -1,14 +1,14 @@
 import { mount } from "enzyme";
-import { execPath } from "process";
 import React from "react";
 
-import {
-  TextBox,
-  Span,
-} from "@src/components/display/fewlines/Account/Account";
+import { SECTION_LIST_CONTENT } from "@src/components/display/fewlines/Account/Account";
 import { AccountPage } from "@src/components/display/fewlines/Account/Account.stories";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { H2 } from "@src/components/display/fewlines/H2/H2";
+import {
+  TextBox,
+  SectionName,
+} from "@src/components/display/fewlines/SectionListItem/SectionListItem";
 import { ShadowBox } from "@src/components/display/fewlines/ShadowBox/ShadowBox";
 import { AccountApp } from "@src/pages/_app";
 
@@ -50,20 +50,14 @@ describe("AccountPage", () => {
     const shadowBoxes = component.find(ShadowBox);
     expect(shadowBoxes).toHaveLength(2);
 
-    const accountSectionListName = ["LOGINS", "SECURITY"];
-    const accountSectionListContent = [
-      "Manage your logins options, including emails, phone numbers and social logins",
-      "Set or change your password. You can check your connections history here,",
-    ];
-
     shadowBoxes.forEach((shadowBox, index) => {
       const textBox = shadowBox.find(TextBox);
+      const [sectionName, { text }] = Object.entries(SECTION_LIST_CONTENT)[
+        index
+      ];
 
-      expect(textBox.find(Span).text()).toEqual(accountSectionListName[index]);
-
-      expect(
-        textBox.contains(<div>{accountSectionListContent[index]}</div>),
-      ).toEqual(true);
+      expect(textBox.find(SectionName).text()).toEqual(sectionName);
+      expect(textBox.contains(text)).toEqual(true);
     });
   });
 });
