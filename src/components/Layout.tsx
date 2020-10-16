@@ -28,7 +28,7 @@ export const Layout: React.FC = ({ children }) => {
           </MobileDisplayOnly>
         )}
         <DesktopView>
-          <DesktopNavigationBar />
+          {router && router.pathname !== "/" && <DesktopNavigationBar />}
           {children}
         </DesktopView>
         {router && router.pathname !== "/" && isMobileNavBarOpen && (

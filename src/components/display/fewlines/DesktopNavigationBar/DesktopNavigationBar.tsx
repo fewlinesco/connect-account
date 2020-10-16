@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
@@ -11,16 +12,18 @@ import { Separator } from "../Separator/Separator";
 import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 export const DesktopNavigationBar: React.FC = () => {
+  const router = useRouter();
+
   return (
     <Bar>
       <Header />
-      <ListItem>
+      <ListItem onClick={() => router.push("/account")}>
         <HomeIcon />
         <div>Home</div>
       </ListItem>
       <ListItem>
         <KeyIcon />
-        <div>Logins</div>
+        <div onClick={() => router.push("/account/logins")}>Logins</div>
       </ListItem>
       <ListItem>
         <LockIcon />
@@ -52,6 +55,7 @@ const ListItem = styled.div`
   align-items: center;
   padding: ${({ theme }) => theme.spaces.xs} 0 ${({ theme }) => theme.spaces.xs}
     ${({ theme }) => theme.spaces.xs};
+  cursor: pointer;
 
   div {
     margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
@@ -62,6 +66,7 @@ const SwitchLanguageItem = styled.div`
   display: flex;
   justify-content: space-between;
   padding: ${({ theme }) => theme.spaces.xs};
+  cursor: pointer;
 `;
 
 const SwitchLanguageLabel = styled.div`
