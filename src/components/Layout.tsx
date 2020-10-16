@@ -27,10 +27,14 @@ export const Layout: React.FC = ({ children }) => {
             <Header />
           </MobileDisplayOnly>
         )}
-        <DesktopView>
-          {router && router.pathname !== "/" && <DesktopNavigationBar />}
-          {children}
-        </DesktopView>
+        <Flex>
+          {router && router.pathname !== "/" && (
+            <DesktopNavigationBarWrapper>
+              <DesktopNavigationBar />
+            </DesktopNavigationBarWrapper>
+          )}
+          <ChildrenContainer>{children}</ChildrenContainer>
+        </Flex>
         {router && router.pathname !== "/" && isMobileNavBarOpen && (
           <ClickAwayListener onClick={() => setIsMobileNavbarOpen(false)} />
         )}
@@ -52,12 +56,31 @@ const Main = styled.main`
   margin: ${({ theme }) => theme.spaces.xxs} auto 0;
 `;
 
-const DesktopView = styled.div`
+const Flex = styled.div`
   display: flex;
+`;
+
+const DesktopNavigationBarWrapper = styled.div`
+  min-width: 24rem;
+  width: 30%;
+
+  @media ${deviceBreakpoints.m} {
+    display: none;
+  }
+`;
+
+const ChildrenContainer = styled.div`
+  width: 60%;
+  margin: 0 auto;
+
+  @media ${deviceBreakpoints.m} {
+    width: 90%;
+  }
 `;
 
 const MobileDisplayOnly = styled.div`
   display: none;
+
   @media ${deviceBreakpoints.m} {
     display: block;
   }

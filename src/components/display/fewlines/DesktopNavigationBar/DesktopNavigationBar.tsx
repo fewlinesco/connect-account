@@ -9,7 +9,6 @@ import { HomeIcon } from "../HomeIcon/HomeIcon";
 import { KeyIcon } from "../KeyIcon/KeyIcon";
 import { LockIcon } from "../LockIcon/LockIcon";
 import { Separator } from "../Separator/Separator";
-import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 export const DesktopNavigationBar: React.FC = () => {
   const router = useRouter();
@@ -42,12 +41,7 @@ export const DesktopNavigationBar: React.FC = () => {
 };
 
 const Bar = styled.div`
-  min-width: 24rem;
-  max-width: 30%;
-
-  @media ${deviceBreakpoints.m} {
-    display: none;
-  }
+  width: 100%;
 `;
 
 const ListItem = styled.div`
