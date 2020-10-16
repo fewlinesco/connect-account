@@ -19,33 +19,28 @@ export const SectionListItem: React.FC<SectionListItemProps> = ({
 
   return (
     <ShadowBox>
-      <Content>
-        <Link href={`/account/${sectionName.toLocaleLowerCase()}`}>
-          <NeutralLink>
-            <Flex>
-              {icon}
-              <TextBox>
-                <SectionName>{sectionName}</SectionName>
-                {text}
-              </TextBox>
-              <RightChevron />
-            </Flex>
-          </NeutralLink>
-        </Link>
-      </Content>
+      <Link href={`/account/${sectionName.toLocaleLowerCase()}`}>
+        <NeutralLink>
+          <Flex>
+            {icon}
+            <TextBox>
+              <SectionName>{sectionName}</SectionName>
+              {text}
+            </TextBox>
+            <RightChevron />
+          </Flex>
+        </NeutralLink>
+      </Link>
     </ShadowBox>
   );
 };
-
-const Content = styled.div`
-  cursor: pointer;
-`;
 
 const Flex = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: ${({ theme }) => theme.spaces.xs};
+  cursor: pointer;
 `;
 
 export const TextBox = styled.div`
