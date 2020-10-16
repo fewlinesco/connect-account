@@ -1,17 +1,20 @@
-import { HttpStatus } from "@fwl/web";
+import { ServerResponse } from "http";
 import { GetServerSideProps } from "next";
 import React from "react";
 
 import { IdentityTypes } from "@lib/@types/Identity";
+import { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { ValidateIdentity } from "@src/components/business/ValidateIdentity";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { ValidateIdentityForm } from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
-import { OAuth2Error } from "@src/errors";
-import { withSSRLogger } from "@src/middlewares/withSSRLogger";
-import withSession from "@src/middlewares/withSession";
-import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
+import { withAuth } from "@src/middlewares/withAuth";
+import { withLogger } from "@src/middlewares/withLogger";
+import { withMongoDB } from "@src/middlewares/withMongoDB";
+import { withSentry } from "@src/middlewares/withSentry";
+import { withSession } from "@src/middlewares/withSession";
+import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 
 const ValidateIdentityPage: React.FC<{
   type: IdentityTypes;
@@ -42,35 +45,28 @@ const ValidateIdentityPage: React.FC<{
 
 export default ValidateIdentityPage;
 
-export const getServerSideProps: GetServerSideProps = withSSRLogger(
-  withSession(async (context) => {
-    addRequestScopeToSentry(context.req);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return wrapMiddlewaresForSSR<{ type: string }>(
+    context,
+    [withLogger, withSentry, withMongoDB, withSession, withAuth],
+    async (request: ExtendedRequest, response: ServerResponse) => {
+      if (!context?.params?.type) {
+        response.statusCode = 400;
+        response.end();
+        return;
+      }
+      if (!context?.params?.eventId) {
+        response.statusCode = 400;
+        response.end();
+        return;
+      }
 
-    try {
       return {
         props: {
           type: context.params.type,
           eventId: context.params.eventId,
         },
       };
-    } catch (error) {
-      if (error instanceof OAuth2Error) {
-        Sentry.withScope((scope) => {
-          scope.setTag(
-            `/pages/account/logins/${context.params.type}/validation SSR`,
-            `/pages/account/logins/${context.params.type}/validation SSR`,
-          );
-          Sentry.captureException(error);
-        });
-
-        context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-        context.res.setHeader("location", context.req.headers.referer || "/");
-        context.res.end();
-
-        return { props: {} };
-      }
-
-      throw error;
-    }
-  }),
-);
+    },
+  );
+};

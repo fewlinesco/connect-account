@@ -1,5 +1,5 @@
+import { ServerResponse } from "http";
 import { MongoClient } from "mongodb";
-import { NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/ApiPageHandler";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
@@ -26,15 +26,13 @@ async function getMongoClient(): Promise<MongoClient> {
   });
 }
 
-export function withMongoDB(
-  handler: Handler,
-): (request: ExtendedRequest, response: NextApiResponse) => void {
+export function withMongoDB(handler: Handler): Handler {
   return async (
     request: ExtendedRequest,
-    response: NextApiResponse,
+    response: ServerResponse,
   ): Promise<void> => {
     request.mongoDb = (await getMongoClient()).db(config.connectMongoDbName);
 
-    await handler(request, response);
+    return handler(request, response);
   };
 }

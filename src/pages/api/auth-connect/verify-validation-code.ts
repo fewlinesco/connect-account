@@ -7,68 +7,58 @@ import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
 import { config } from "@src/config";
 import { MongoNoDataReturned, TemporaryIdentityExpired } from "@src/errors";
-import { withAPIPageLogger } from "@src/middlewares/withAPIPageLogger";
+import { withAuth } from "@src/middlewares/withAuth";
+import { withLogger } from "@src/middlewares/withLogger";
 import { withMongoDB } from "@src/middlewares/withMongoDB";
-import withSession from "@src/middlewares/withSession";
+import { withSentry } from "@src/middlewares/withSentry";
+import { withSession } from "@src/middlewares/withSession";
+import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import { fetchJson } from "@src/utils/fetchJson";
-import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const handler: Handler = async (request: ExtendedRequest, response) => {
-  addRequestScopeToSentry(request);
+  if (request.method === "POST") {
+    const { validationCode, eventId } = request.body;
 
-  try {
-    if (request.method === "POST") {
-      const { validationCode, eventId } = request.body;
+    const user = await getTemporaryIdentities(eventId, request.mongoDb);
 
-      const user = await getTemporaryIdentities(eventId, request.mongoDb);
+    if (user.length === 1 && user[0].temporaryIdentities) {
+      const temporaryIdentity = user[0].temporaryIdentities.find(
+        (temporaryIdentity) => temporaryIdentity.eventId === eventId,
+      );
 
-      if (user.length === 1 && user[0].temporaryIdentities) {
-        const temporaryIdentity = user[0].temporaryIdentities.find(
-          (temporaryIdentity) => temporaryIdentity.eventId === eventId,
-        );
+      if (temporaryIdentity && temporaryIdentity.expiresAt < Date.now()) {
+        const { data } = await checkVerificationCode(validationCode, eventId);
 
-        if (temporaryIdentity && temporaryIdentity.expiresAt < Date.now()) {
-          const { data } = await checkVerificationCode(validationCode, eventId);
+        const { value, type } = temporaryIdentity;
 
-          const { value, type } = temporaryIdentity;
+        if (data && data.checkVerificationCode.status === "VALID") {
+          const body = {
+            userId: user[0].sub,
+            type: type.toUpperCase(),
+            value,
+          };
 
-          if (data && data.checkVerificationCode.status === "VALID") {
-            const body = {
-              userId: user[0].sub,
-              type: type.toUpperCase(),
-              value,
-            };
+          const route = "/api/identities";
+          const absoluteURL = new URL(route, config.connectDomain).toString();
 
-            const route = "/api/identities";
-            const absoluteURL = new URL(route, config.connectDomain).toString();
+          await fetchJson(absoluteURL, HttpVerbs.POST, body);
 
-            await fetchJson(absoluteURL, HttpVerbs.POST, body);
+          response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
+            Location: "/account/logins",
+          });
 
-            response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
-              Location: "/account/logins",
-            });
-
-            return response.end();
-          } else {
-            response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
-              Location: `/account/logins/${type}/validation/${eventId}`,
-            });
-          }
+          return response.end();
         } else {
-          throw new TemporaryIdentityExpired();
+          response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
+            Location: `/account/logins/${type}/validation/${eventId}`,
+          });
         }
       } else {
-        throw new MongoNoDataReturned();
+        throw new TemporaryIdentityExpired();
       }
+    } else {
+      throw new MongoNoDataReturned();
     }
-  } catch (error) {
-    Sentry.withScope((scope) => {
-      scope.setTag(
-        "send-identity-validation-code",
-        "send-identity-validation-code",
-      );
-      Sentry.captureException(error);
-    });
   }
 
   response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
@@ -76,4 +66,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
   return Promise.reject();
 };
 
-export default withAPIPageLogger(withSession(withMongoDB(handler)));
+export default wrapMiddlewares(
+  [withLogger, withSentry, withMongoDB, withSession, withAuth],
+  handler,
+);

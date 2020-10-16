@@ -1,4 +1,4 @@
-import { ObjectId, Db } from "mongodb";
+import { Db } from "mongodb";
 
 import { oAuth2UserInfo, MongoUser } from "@lib/@types/mongo/User";
 import { MongoInsertError } from "@src/errors";
@@ -17,15 +17,27 @@ export async function findOrInsertUser(
 
   let documentId;
 
-  if (!user) {
+  if (user) {
+    const result = await collection.updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          accessToken: oauthUserInfo.accessToken,
+          refreshToken: oauthUserInfo.refreshToken,
+        },
+      },
+    );
+    if (result.modifiedCount !== 1) {
+      throw new MongoInsertError("User update failed");
+    }
+    documentId = user._id.toString();
+  } else {
     const insertResult = await collection.insertOne(oauthUserInfo);
     if (insertResult.insertedCount === 0) {
       throw new MongoInsertError("User insertion failed");
     }
 
     documentId = insertResult.ops[0]._id.toString();
-  } else {
-    documentId = (user._id as ObjectId).toString();
   }
 
   return documentId;

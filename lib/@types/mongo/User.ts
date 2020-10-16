@@ -14,7 +14,7 @@ export type TemporaryIdentity = {
 };
 
 export type MongoUser = {
-  _id?: ObjectId;
+  _id: ObjectId;
   sub: string;
   accessToken: string;
   refreshToken: string;

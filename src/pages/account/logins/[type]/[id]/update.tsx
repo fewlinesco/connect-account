@@ -1,22 +1,23 @@
-import { HttpStatus } from "@fwl/web";
+import { ServerResponse } from "http";
 import { GetServerSideProps } from "next";
 import React from "react";
 
 import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentities } from "@lib/queries/getIdentities";
-import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { UpdateIdentityForm } from "@src/components/display/fewlines/UpdateIdentityForm/UpdateIdentityForm";
-import { config, oauth2Client } from "@src/config";
-import { GraphqlErrors, OAuth2Error } from "@src/errors";
-import { withSSRLogger } from "@src/middlewares/withSSRLogger";
-import withSession from "@src/middlewares/withSession";
+import { GraphqlErrors } from "@src/errors";
+import { withAuth } from "@src/middlewares/withAuth";
+import { withLogger } from "@src/middlewares/withLogger";
+import { withMongoDB } from "@src/middlewares/withMongoDB";
+import { withSentry } from "@src/middlewares/withSentry";
+import { withSession } from "@src/middlewares/withSession";
+import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 import { getUser } from "@src/utils/getUser";
-import { refreshTokens } from "@src/utils/refreshTokens";
-import Sentry from "@src/utils/sentry";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   return (
@@ -44,40 +45,28 @@ const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
 
 export default UpdateIdentityPage;
 
-export const getServerSideProps: GetServerSideProps = withSSRLogger(
-  withSession(async (context) => {
-    try {
-      const userDocumentId = context.req.session.get("user-session-id");
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return wrapMiddlewaresForSSR<{ type: string }>(
+    context,
+    [withLogger, withSentry, withMongoDB, withSession, withAuth],
+    async (request: ExtendedRequest, response: ServerResponse) => {
+      if (!context?.params?.id) {
+        response.statusCode = 400;
+        response.end();
+        return;
+      }
+      const userId = context.params.id.toString();
 
-      const user = await getUser(context.req.headers["cookie"]);
+      const user = await getUser(request.headers.cookie as string);
 
       if (user) {
-        const decodedJWT = await oauth2Client
-          .verifyJWT<AccessToken>(user.accessToken, config.connectJwtAlgorithm)
-          .catch(async (error) => {
-            if (error.name === "TokenExpiredError") {
-              const body = {
-                userDocumentId,
-                refreshToken: user.refreshToken,
-              };
-
-              const { access_token } = await refreshTokens(body);
-
-              return access_token;
-            } else {
-              throw error;
-            }
-          });
-
-        const identity = await getIdentities(
-          (decodedJWT as AccessToken).sub,
-        ).then((result) => {
+        const identity = await getIdentities(user.sub).then((result) => {
           if (result.errors) {
             throw new GraphqlErrors(result.errors);
           }
 
           const res = result.data?.provider.user.identities.filter(
-            (id) => id.id === context.params.id,
+            (id) => id.id === userId,
           )[0];
 
           return res;
@@ -89,30 +78,8 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
           },
         };
       } else {
-        context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-        context.res.setHeader("location", context.req.headers.referer || "/");
-        context.res.end();
-
-        return { props: {} };
+        throw new Error("No User found");
       }
-    } catch (error) {
-      if (error instanceof OAuth2Error) {
-        Sentry.withScope((scope) => {
-          scope.setTag(
-            `/pages/account/logins/${context.params.type}/update SSR`,
-            `/pages/account/logins/${context.params.type}/update SSR`,
-          );
-          Sentry.captureException(error);
-        });
-
-        context.res.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-        context.res.setHeader("location", context.req.headers.referer || "/");
-        context.res.end();
-
-        return { props: {} };
-      }
-
-      throw error;
-    }
-  }),
-);
+    },
+  );
+};

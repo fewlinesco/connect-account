@@ -1,2 +1,2 @@
 proxy: nginx -p ./ -c nginx.conf
-connect-account: source .env_vars && yarn dev
+connect-account: source .env_vars && NODE_TLS_REJECT_UNAUTHORIZED=0 yarn dev
