@@ -8,7 +8,7 @@ import { Header } from "./display/fewlines/Header/Header";
 import { MobileNavigationBar } from "./display/fewlines/MobileNavigationBar/MobileNavigationBar";
 
 export const Layout: React.FC = ({ children }) => {
-  const [mobileNavBarOpen, setMobileNavbarOpen] = React.useState<boolean>(
+  const [isMobileNavBarOpen, setIsMobileNavbarOpen] = React.useState<boolean>(
     false,
   );
   const router = useRouter();
@@ -22,13 +22,13 @@ export const Layout: React.FC = ({ children }) => {
       <Main>
         {router && router.pathname !== "/" && <Header />}
         {children}
-        {router && router.pathname !== "/" && mobileNavBarOpen && (
-          <ClickAwayListener onClick={() => setMobileNavbarOpen(false)} />
+        {router && router.pathname !== "/" && isMobileNavBarOpen && (
+          <ClickAwayListener onClick={() => setIsMobileNavbarOpen(false)} />
         )}
         {router && router.pathname !== "/" && (
           <MobileNavigationBar
-            open={mobileNavBarOpen}
-            setOpen={setMobileNavbarOpen}
+            isOpen={isMobileNavBarOpen}
+            setIsOpen={setIsMobileNavbarOpen}
           />
         )}
       </Main>

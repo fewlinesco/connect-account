@@ -9,11 +9,11 @@ export default {
 };
 
 export const StandardMobileNavigationBar = (): JSX.Element => {
-  const [open, setOpen] = React.useState<boolean>(true);
+  const [isOpen, setIsOpen] = React.useState<boolean>(true);
   return (
     <>
-      {open && <ClickAwayListener onClick={() => setOpen(false)} />}
-      <MobileNavigationBar open={open} setOpen={setOpen} />
+      {open && <ClickAwayListener onClick={() => setIsOpen(false)} />}
+      <MobileNavigationBar isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 };

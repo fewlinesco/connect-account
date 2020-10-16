@@ -19,53 +19,51 @@ interface MenuItemProps {
 }
 
 type MobileNavigationBarProp = {
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
-  open,
-  setOpen,
+  isOpen,
+  setIsOpen,
 }) => {
   const router = useRouter();
 
   return (
     <Container>
-      {open && (
-        <>
-          <MenuList>
-            <ListItem
-              onClick={() => router.push("/account").then(() => setOpen(false))}
-            >
-              <ListItemLabel>
-                <HomeIcon />
-                <div>Home</div>
-              </ListItemLabel>
-              <RightChevron />
-            </ListItem>
-            <ListItem
-              onClick={() =>
-                router.push("/account/logins").then(() => setOpen(false))
-              }
-            >
-              <ListItemLabel>
-                <KeyIcon />
-                <div>Logins</div>
-              </ListItemLabel>
-              <RightChevron />
-            </ListItem>
-            <ListItem>
-              <ListItemLabel>
-                <LockIcon />
-                <div>Security</div>
-              </ListItemLabel>
-              <RightChevron />
-            </ListItem>
-          </MenuList>
-        </>
+      {isOpen && (
+        <MenuList>
+          <ListItem
+            onClick={() => router.push("/account").then(() => setIsOpen(false))}
+          >
+            <ListItemLabel>
+              <HomeIcon />
+              <div>Home</div>
+            </ListItemLabel>
+            <RightChevron />
+          </ListItem>
+          <ListItem
+            onClick={() =>
+              router.push("/account/logins").then(() => setIsOpen(false))
+            }
+          >
+            <ListItemLabel>
+              <KeyIcon />
+              <div>Logins</div>
+            </ListItemLabel>
+            <RightChevron />
+          </ListItem>
+          <ListItem>
+            <ListItemLabel>
+              <LockIcon />
+              <div>Security</div>
+            </ListItemLabel>
+            <RightChevron />
+          </ListItem>
+        </MenuList>
       )}
       <Bar>
-        {open ? (
+        {isOpen ? (
           <MenuItem color="primary">
             <Content>
               <LanguagesOptions>
@@ -83,9 +81,8 @@ export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
             </Content>
           </MenuItem>
         )}
-
-        <MenuItem borderLeft={true} onClick={() => setOpen(!open)}>
-          {open ? (
+        <MenuItem borderLeft={true} onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? (
             <Content>
               <div>Close</div>
               <NavBarCrossIcon />
