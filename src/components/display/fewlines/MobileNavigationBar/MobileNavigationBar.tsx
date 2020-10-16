@@ -105,10 +105,10 @@ const Container = styled.div`
   left: 0;
   width: 100%;
   z-index: 2;
-  visibility: hidden;
+  display: none;
 
   @media ${deviceBreakpoints.m} {
-    visibility: visible;
+    display: block;
   }
 `;
 
