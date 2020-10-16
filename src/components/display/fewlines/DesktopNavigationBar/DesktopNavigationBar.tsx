@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { BlackSwitchIcon } from "../BlackSwitchIcon/BlackSwitchIcon";
 import { BlackWorldIcon } from "../BlackWorldIcon/BlackWorldIcon";
+import { Header } from "../Header/Header";
 import { HomeIcon } from "../HomeIcon/HomeIcon";
 import { KeyIcon } from "../KeyIcon/KeyIcon";
 import { LockIcon } from "../LockIcon/LockIcon";
@@ -12,6 +13,7 @@ import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 export const DesktopNavigationBar: React.FC = () => {
   return (
     <Bar>
+      <Header />
       <ListItem>
         <HomeIcon />
         <div>Home</div>
@@ -37,6 +39,7 @@ export const DesktopNavigationBar: React.FC = () => {
 };
 
 const Bar = styled.div`
+  min-width: 24rem;
   max-width: 30%;
 
   @media ${deviceBreakpoints.m} {
