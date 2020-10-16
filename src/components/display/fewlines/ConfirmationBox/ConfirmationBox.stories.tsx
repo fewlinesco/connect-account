@@ -1,9 +1,9 @@
 import React from "react";
 
 import { Button, ButtonVariant } from "../Button/Button";
+import { ClickAwayListener } from "../ClickAwayListener";
 import { Container } from "../Container";
 import { ConfirmationText } from "../ShowIdentity/ShowIdentity";
-import { ClickAwayListener } from "./ClickAwayListener";
 import { ConfirmationBox } from "./ConfirmationBox";
 
 export default {

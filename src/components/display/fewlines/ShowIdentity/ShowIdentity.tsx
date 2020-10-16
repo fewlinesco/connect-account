@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { AwaitingValidationBadge } from "../AwaitingValidationBadge/AwaitingValidationBadge";
 import { Box } from "../Box/Box";
 import { Button, ButtonVariant } from "../Button/Button";
-import { ClickAwayListener } from "../ConfirmationBox/ClickAwayListener";
+import { ClickAwayListener } from "../ClickAwayListener";
 import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
 import { Container } from "../Container";
 import { H1 } from "../H1/H1";
