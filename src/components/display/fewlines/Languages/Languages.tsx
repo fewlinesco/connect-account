@@ -2,14 +2,19 @@ import React from "react";
 import styled from "styled-components";
 
 import { H1 } from "../H1/H1";
-import { Input } from "../Input/Input";
+import { MagnifyingGlass } from "../Icons/MagnifyingGlas/MagnifyingGlass";
 import { Separator } from "../Separator/Separator";
 
 export const Languages: React.FC = () => {
   return (
-    <div>
+    <Container>
       <H1>Switch Language</H1>
-      <Input />
+      <div className="search-input">
+        <input />
+        <div className="magnifying-glass">
+          <MagnifyingGlass />
+        </div>
+      </div>
       <Wrapper>
         <div className="list-item">
           <div>English</div>
@@ -27,9 +32,23 @@ export const Languages: React.FC = () => {
           </label>
         </div>
       </Wrapper>
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  .search-input {
+    display: flex;
+    align-items: center;
+    border: 0.1rem solid ${({ theme }) => theme.colors.blacks[2]};
+    border-radius: ${({ theme }) => theme.radii[0]};
+  }
+
+  input {
+    width: 100%;
+    display: block;
+  }
+`;
 
 const Wrapper = styled.div`
   display: flex;
