@@ -1,10 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 
+import { StoriesContainer } from "../StoriesContainer";
 import Logins from "./Logins";
 import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
-import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 export default { title: "pages/Logins", component: Logins };
 
@@ -57,18 +56,10 @@ export const LoginsPage = (): JSX.Element => {
       },
     ],
   };
+
   return (
-    <Wrapper>
+    <StoriesContainer>
       <Logins sortedIdentities={mockedSortedResponse} />
-    </Wrapper>
+    </StoriesContainer>
   );
 };
-
-const Wrapper = styled.div`
-  width: 60%;
-  margin: 0 auto;
-
-  @media ${deviceBreakpoints.m} {
-    width: 90%;
-  }
-`;
