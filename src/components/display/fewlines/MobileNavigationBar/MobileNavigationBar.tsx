@@ -8,7 +8,7 @@ import { HomeIcon } from "../Icons/HomeIcon/HomeIcon";
 import { KeyIcon } from "../Icons/KeyIcon/KeyIcon";
 import { LockIcon } from "../Icons/LockIcon/LockIcon";
 import { NavBarCrossIcon } from "../Icons/NavBarCrossIcon/NavBarCrossIcon";
-import RightChevron from "../Icons/RightChevron/RightChevron";
+import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import { SwitchIcon } from "../Icons/SwitchIcon/SwitchIcon";
 import { WorldIcon } from "../Icons/WorldIcon/WorldIcon";
 import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";

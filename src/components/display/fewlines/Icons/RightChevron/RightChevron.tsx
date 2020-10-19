@@ -13,5 +13,3 @@ export const RightChevron: React.FC = () => {
     </svg>
   );
 };
-
-export default RightChevron;
