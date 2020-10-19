@@ -5,9 +5,9 @@ import styled from "styled-components";
 import { Container } from "../Container";
 import { H1 } from "../H1/H1";
 import { H2 } from "../H2/H2";
-import { LoginsIcon } from "../LoginsIcon/LoginsIcon";
+import { LoginsIcon } from "../Icons/LoginsIcon/LoginsIcon";
+import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
-import RightChevron from "../RightChevron/RightChevron";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 
 const Account: React.FC = () => {

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { RightChevron } from "../RightChevron/RightChevron";
+import { RightChevron } from "../Icons/RightChevron/RightChevron";
 
 type BoxedLinkProps = {
   value: string;

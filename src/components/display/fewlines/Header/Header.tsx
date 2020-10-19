@@ -15,7 +15,7 @@ export const Header: React.FC = () => {
 const Flex = styled.div`
   display: flex;
   align-items: center;
-  margin: ${({ theme }) => `${theme.spaces.xs} ${theme.spaces.xs}`};
+  margin: ${({ theme }) => theme.spaces.xs};
 `;
 
 const H5 = styled.h5`
@@ -27,5 +27,5 @@ const H5 = styled.h5`
   font-size: ${({ theme }) => theme.fontSizes.s};
   display: flex;
   align-items: center;
-  height: ${({ theme }) => theme.spaces.s}; ;
+  height: ${({ theme }) => theme.spaces.s};
 `;
