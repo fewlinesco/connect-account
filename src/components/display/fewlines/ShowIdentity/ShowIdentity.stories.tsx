@@ -1,7 +1,9 @@
 import React from "react";
+import styled from "styled-components";
 
 import { ShowIdentity } from "./ShowIdentity";
 import { Identity, IdentityTypes } from "@lib/@types";
+import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 export default { title: "pages/ShowIdentity", component: ShowIdentity };
 
@@ -14,7 +16,11 @@ export const ShowPrimaryIdentity = (): JSX.Element => {
     value: "test@test.test",
   };
 
-  return <ShowIdentity identity={mockedResponse} />;
+  return (
+    <Wrapper>
+      <ShowIdentity identity={mockedResponse} />
+    </Wrapper>
+  );
 };
 
 export const ShowNonPrimaryIdentity = (): JSX.Element => {
@@ -26,7 +32,11 @@ export const ShowNonPrimaryIdentity = (): JSX.Element => {
     value: "test@test.test",
   };
 
-  return <ShowIdentity identity={mockedResponse} />;
+  return (
+    <Wrapper>
+      <ShowIdentity identity={mockedResponse} />
+    </Wrapper>
+  );
 };
 
 export const ShowNonValidatedIdentity = (): JSX.Element => {
@@ -38,5 +48,18 @@ export const ShowNonValidatedIdentity = (): JSX.Element => {
     value: "test@test.test",
   };
 
-  return <ShowIdentity identity={mockedResponse} />;
+  return (
+    <Wrapper>
+      <ShowIdentity identity={mockedResponse} />
+    </Wrapper>
+  );
 };
+
+const Wrapper = styled.div`
+  width: 60%;
+  margin: 0 auto;
+
+  @media ${deviceBreakpoints.m} {
+    width: 90%;
+  }
+`;

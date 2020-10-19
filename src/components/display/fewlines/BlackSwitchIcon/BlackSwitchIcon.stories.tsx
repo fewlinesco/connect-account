@@ -3,7 +3,7 @@ import React from "react";
 import { BlackSwitchIcon } from "./BlackSwitchIcon";
 
 export default {
-  title: "components/BlackSwitchIcon",
+  title: "icons/BlackSwitchIcon",
   component: BlackSwitchIcon,
 };
 

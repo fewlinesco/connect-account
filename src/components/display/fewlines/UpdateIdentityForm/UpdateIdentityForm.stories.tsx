@@ -1,8 +1,10 @@
 import React from "react";
+import styled from "styled-components";
 
 import { UpdateIdentityForm } from "./UpdateIdentityForm";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
+import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 export default {
   title: "pages/UpdateIdentityForm",
@@ -19,14 +21,16 @@ export const UpdateEmailForm = (): JSX.Element => {
   };
 
   return (
-    <UpdateIdentity identity={mockedResponse}>
-      {({ updateIdentity }) => (
-        <UpdateIdentityForm
-          updateIdentity={updateIdentity}
-          currentIdentity={mockedResponse}
-        />
-      )}
-    </UpdateIdentity>
+    <Wrapper>
+      <UpdateIdentity identity={mockedResponse}>
+        {({ updateIdentity }) => (
+          <UpdateIdentityForm
+            updateIdentity={updateIdentity}
+            currentIdentity={mockedResponse}
+          />
+        )}
+      </UpdateIdentity>
+    </Wrapper>
   );
 };
 
@@ -40,13 +44,24 @@ export const UpdatePhoneForm = (): JSX.Element => {
   };
 
   return (
-    <UpdateIdentity identity={mockedResponse}>
-      {({ updateIdentity }) => (
-        <UpdateIdentityForm
-          updateIdentity={updateIdentity}
-          currentIdentity={mockedResponse}
-        />
-      )}
-    </UpdateIdentity>
+    <Wrapper>
+      <UpdateIdentity identity={mockedResponse}>
+        {({ updateIdentity }) => (
+          <UpdateIdentityForm
+            updateIdentity={updateIdentity}
+            currentIdentity={mockedResponse}
+          />
+        )}
+      </UpdateIdentity>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  width: 60%;
+  margin: 0 auto;
+
+  @media ${deviceBreakpoints.m} {
+    width: 90%;
+  }
+`;
