@@ -1,10 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 
+import { StoriesContainer } from "../StoriesContainer";
 import { UpdateIdentityForm } from "./UpdateIdentityForm";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
-import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 export default {
   title: "pages/UpdateIdentityForm",
@@ -21,7 +20,7 @@ export const UpdateEmailForm = (): JSX.Element => {
   };
 
   return (
-    <Wrapper>
+    <StoriesContainer>
       <UpdateIdentity identity={mockedResponse}>
         {({ updateIdentity }) => (
           <UpdateIdentityForm
@@ -30,7 +29,7 @@ export const UpdateEmailForm = (): JSX.Element => {
           />
         )}
       </UpdateIdentity>
-    </Wrapper>
+    </StoriesContainer>
   );
 };
 
@@ -44,7 +43,7 @@ export const UpdatePhoneForm = (): JSX.Element => {
   };
 
   return (
-    <Wrapper>
+    <StoriesContainer>
       <UpdateIdentity identity={mockedResponse}>
         {({ updateIdentity }) => (
           <UpdateIdentityForm
@@ -53,15 +52,6 @@ export const UpdatePhoneForm = (): JSX.Element => {
           />
         )}
       </UpdateIdentity>
-    </Wrapper>
+    </StoriesContainer>
   );
 };
-
-const Wrapper = styled.div`
-  width: 60%;
-  margin: 0 auto;
-
-  @media ${deviceBreakpoints.m} {
-    width: 90%;
-  }
-`;

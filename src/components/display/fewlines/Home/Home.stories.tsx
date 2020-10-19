@@ -1,25 +1,14 @@
 import React from "react";
-import styled from "styled-components";
 
+import { StoriesContainer } from "../StoriesContainer";
 import Home from "./Home";
-import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 export default { title: "pages/Home", component: Home };
 
 export const HomePage = (): JSX.Element => {
   return (
-    <Wrapper>
-      {" "}
-      <Home authorizeURL={"#"} />{" "}
-    </Wrapper>
+    <StoriesContainer>
+      <Home authorizeURL={"#"} />
+    </StoriesContainer>
   );
 };
-
-const Wrapper = styled.div`
-  width: 60%;
-  margin: 0 auto;
-
-  @media ${deviceBreakpoints.m} {
-    width: 90%;
-  }
-`;

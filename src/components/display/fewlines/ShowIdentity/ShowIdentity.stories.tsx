@@ -1,9 +1,8 @@
 import React from "react";
-import styled from "styled-components";
 
+import { StoriesContainer } from "../StoriesContainer";
 import { ShowIdentity } from "./ShowIdentity";
 import { Identity, IdentityTypes } from "@lib/@types";
-import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 export default { title: "pages/ShowIdentity", component: ShowIdentity };
 
@@ -17,9 +16,9 @@ export const ShowPrimaryIdentity = (): JSX.Element => {
   };
 
   return (
-    <Wrapper>
+    <StoriesContainer>
       <ShowIdentity identity={mockedResponse} />
-    </Wrapper>
+    </StoriesContainer>
   );
 };
 
@@ -33,9 +32,9 @@ export const ShowNonPrimaryIdentity = (): JSX.Element => {
   };
 
   return (
-    <Wrapper>
+    <StoriesContainer>
       <ShowIdentity identity={mockedResponse} />
-    </Wrapper>
+    </StoriesContainer>
   );
 };
 
@@ -49,17 +48,8 @@ export const ShowNonValidatedIdentity = (): JSX.Element => {
   };
 
   return (
-    <Wrapper>
+    <StoriesContainer>
       <ShowIdentity identity={mockedResponse} />
-    </Wrapper>
+    </StoriesContainer>
   );
 };
-
-const Wrapper = styled.div`
-  width: 60%;
-  margin: 0 auto;
-
-  @media ${deviceBreakpoints.m} {
-    width: 90%;
-  }
-`;

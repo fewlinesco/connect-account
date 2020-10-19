@@ -1,10 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 
+import { StoriesContainer } from "../StoriesContainer";
 import { AddIdentityForm } from "./AddIdentityForm";
 import { IdentityTypes } from "@lib/@types";
 import { AddIdentity } from "@src/components/business/AddIdentity";
-import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 export default {
   title: "pages/AddIdentityForm",
@@ -13,7 +12,7 @@ export default {
 
 export const AddEmailForm = (): JSX.Element => {
   return (
-    <Wrapper>
+    <StoriesContainer>
       <AddIdentity type={IdentityTypes.EMAIL}>
         {({ addIdentity }) => (
           <AddIdentityForm
@@ -22,13 +21,13 @@ export const AddEmailForm = (): JSX.Element => {
           />
         )}
       </AddIdentity>
-    </Wrapper>
+    </StoriesContainer>
   );
 };
 
 export const AddPhoneForm = (): JSX.Element => {
   return (
-    <Wrapper>
+    <StoriesContainer>
       <AddIdentity type={IdentityTypes.PHONE}>
         {({ addIdentity }) => (
           <AddIdentityForm
@@ -37,15 +36,6 @@ export const AddPhoneForm = (): JSX.Element => {
           />
         )}
       </AddIdentity>
-    </Wrapper>
+    </StoriesContainer>
   );
 };
-
-const Wrapper = styled.div`
-  width: 60%;
-  margin: 0 auto;
-
-  @media ${deviceBreakpoints.m} {
-    width: 90%;
-  }
-`;
