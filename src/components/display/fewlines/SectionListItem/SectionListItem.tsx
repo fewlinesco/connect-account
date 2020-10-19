@@ -2,8 +2,8 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
+import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
-import { RightChevron } from "../RightChevron/RightChevron";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 
 type SectionListItemProps = {

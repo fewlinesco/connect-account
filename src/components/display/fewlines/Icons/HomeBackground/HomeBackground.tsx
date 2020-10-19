@@ -103,12 +103,11 @@ const Wrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
   z-index: 1;
-  visibility: hidden;
+  display: none;
 
   @media ${deviceBreakpoints.m} {
-    visibility: visible;
+    display: flex;
+    justify-content: center;
   }
 `;

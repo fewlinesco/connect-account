@@ -1,5 +1,6 @@
 import React from "react";
 
+import { StoriesContainer } from "../StoriesContainer";
 import Logins from "./Logins";
 import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
@@ -55,5 +56,10 @@ export const LoginsPage = (): JSX.Element => {
       },
     ],
   };
-  return <Logins sortedIdentities={mockedSortedResponse} />;
+
+  return (
+    <StoriesContainer>
+      <Logins sortedIdentities={mockedSortedResponse} />
+    </StoriesContainer>
+  );
 };

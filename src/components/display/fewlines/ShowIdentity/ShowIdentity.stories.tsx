@@ -1,5 +1,6 @@
 import React from "react";
 
+import { StoriesContainer } from "../StoriesContainer";
 import { ShowIdentity } from "./ShowIdentity";
 import { Identity, IdentityTypes } from "@lib/@types";
 
@@ -14,7 +15,11 @@ export const ShowPrimaryIdentity = (): JSX.Element => {
     value: "test@test.test",
   };
 
-  return <ShowIdentity identity={mockedResponse} />;
+  return (
+    <StoriesContainer>
+      <ShowIdentity identity={mockedResponse} />
+    </StoriesContainer>
+  );
 };
 
 export const ShowNonPrimaryIdentity = (): JSX.Element => {
@@ -26,7 +31,11 @@ export const ShowNonPrimaryIdentity = (): JSX.Element => {
     value: "test@test.test",
   };
 
-  return <ShowIdentity identity={mockedResponse} />;
+  return (
+    <StoriesContainer>
+      <ShowIdentity identity={mockedResponse} />
+    </StoriesContainer>
+  );
 };
 
 export const ShowNonValidatedIdentity = (): JSX.Element => {
@@ -38,5 +47,9 @@ export const ShowNonValidatedIdentity = (): JSX.Element => {
     value: "test@test.test",
   };
 
-  return <ShowIdentity identity={mockedResponse} />;
+  return (
+    <StoriesContainer>
+      <ShowIdentity identity={mockedResponse} />
+    </StoriesContainer>
+  );
 };

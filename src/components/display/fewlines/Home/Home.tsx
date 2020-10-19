@@ -3,8 +3,8 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
-import { HomeBackground } from "../HomeBackground/HomeBackground";
-import { HomeDesktopBackground } from "../HomeDesktopBackground/HomeDesktopBackground";
+import { HomeBackground } from "../Icons/HomeBackground/HomeBackground";
+import { HomeDesktopBackground } from "../Icons/HomeDesktopBackground/HomeDesktopBackground";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 

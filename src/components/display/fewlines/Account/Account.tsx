@@ -3,9 +3,9 @@ import React from "react";
 import { Container } from "../Container";
 import { H1 } from "../H1/H1";
 import { H2 } from "../H2/H2";
-import { LoginsIcon } from "../LoginsIcon/LoginsIcon";
+import { LoginsIcon } from "../Icons/LoginsIcon/LoginsIcon";
+import { SecurityIcon } from "../Icons/SecurityIcon/SecurityIcon";
 import { SectionListItem } from "../SectionListItem/SectionListItem";
-import { SecurityIcon } from "../SecurityIcon/SecurityIcon";
 
 export const SECTION_LIST_CONTENT = {
   LOGINS: {
