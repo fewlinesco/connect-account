@@ -2,15 +2,15 @@ import { useRouter } from "next/router";
 import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 
-import { Arrow } from "../Arrow/Arrow";
-import { BurgerIcon } from "../BurgerIcon/BurgerIcon";
-import { HomeIcon } from "../HomeIcon/HomeIcon";
-import { KeyIcon } from "../KeyIcon/KeyIcon";
-import { LockIcon } from "../LockIcon/LockIcon";
-import { NavBarCrossIcon } from "../NavBarCrossIcon/NavBarCrossIcon";
-import RightChevron from "../RightChevron/RightChevron";
-import { SwitchIcon } from "../SwitchIcon/SwitchIcon";
-import { WorldIcon } from "../WorldIcon/WorldIcon";
+import { Arrow } from "../Icons/Arrow/Arrow";
+import { BurgerIcon } from "../Icons/BurgerIcon/BurgerIcon";
+import { HomeIcon } from "../Icons/HomeIcon/HomeIcon";
+import { KeyIcon } from "../Icons/KeyIcon/KeyIcon";
+import { LockIcon } from "../Icons/LockIcon/LockIcon";
+import { NavBarCrossIcon } from "../Icons/NavBarCrossIcon/NavBarCrossIcon";
+import RightChevron from "../Icons/RightChevron/RightChevron";
+import { SwitchIcon } from "../Icons/SwitchIcon/SwitchIcon";
+import { WorldIcon } from "../Icons/WorldIcon/WorldIcon";
 import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 interface MenuItemProps {

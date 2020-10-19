@@ -2,12 +2,12 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { BlackSwitchIcon } from "../BlackSwitchIcon/BlackSwitchIcon";
-import { BlackWorldIcon } from "../BlackWorldIcon/BlackWorldIcon";
 import { Header } from "../Header/Header";
-import { HomeIcon } from "../HomeIcon/HomeIcon";
-import { KeyIcon } from "../KeyIcon/KeyIcon";
-import { LockIcon } from "../LockIcon/LockIcon";
+import { BlackSwitchIcon } from "../Icons/BlackSwitchIcon/BlackSwitchIcon";
+import { BlackWorldIcon } from "../Icons/BlackWorldIcon/BlackWorldIcon";
+import { HomeIcon } from "../Icons/HomeIcon/HomeIcon";
+import { KeyIcon } from "../Icons/KeyIcon/KeyIcon";
+import { LockIcon } from "../Icons/LockIcon/LockIcon";
 import { Separator } from "../Separator/Separator";
 
 export const DesktopNavigationBar: React.FC = () => {
