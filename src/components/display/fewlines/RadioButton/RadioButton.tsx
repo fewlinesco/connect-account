@@ -20,10 +20,9 @@ export const RadioButton: React.FC<RadioButtonProps> = ({ name, checked }) => {
 const Wrapper = styled.div`
   .radio-container {
     position: relative;
-    top: -10px;
     cursor: pointer;
     user-select: none;
-    padding-left: 30px;
+    padding-left: 3rem;
   }
 
   .radio-container input {
@@ -31,27 +30,28 @@ const Wrapper = styled.div`
   }
 
   .radio-container .circle {
-    width: 20px;
-    height: 20px;
+    width: 2rem;
+    height: 2rem;
     background-color: white;
     position: absolute;
     left: 0;
     top: 0;
-    border-radius: 50%;
-    border: 2px solid black;
+    border-radius: ${({ theme }) => theme.radii[3]};
+    border: ${({ theme }) => theme.borders.normal} black;
   }
 
   .radio-container input:checked + .circle {
-    border: 2px solid ${({ theme }) => theme.colors.primary};
+    border: ${({ theme }) => theme.borders.normal}
+      ${({ theme }) => theme.colors.primary};
   }
 
   .radio-container input:checked + .circle:after {
     content: "";
-    height: 10px;
-    width: 10px;
+    height: 1rem;
+    width: 1rem;
     background-color: ${({ theme }) => theme.colors.primary};
     position: absolute;
-    border-radius: 50%;
+    border-radius: ${({ theme }) => theme.radii[3]};
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);

@@ -48,7 +48,7 @@ const Container = styled.div`
   .magnifying-glass {
     position: absolute;
     right: 1.5rem;
-    bottom: 2.7rem;
+    bottom: 2.8rem;
     cursor: pointer;
   }
 `;
