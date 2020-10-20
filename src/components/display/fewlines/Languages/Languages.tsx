@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { H1 } from "../H1/H1";
 import { MagnifyingGlass } from "../Icons/MagnifyingGlas/MagnifyingGlass";
 import { Input } from "../Input/Input";
+import { RadioButton } from "../RadioButton/RadioButton";
 import { Separator } from "../Separator/Separator";
 
 export const Languages: React.FC = () => {
@@ -21,10 +22,7 @@ export const Languages: React.FC = () => {
       <LanguagesList>
         <ListItem>
           <Value>English</Value>
-          <label className="radio-container">
-            <input type="radio" name="language" checked={true} />
-            <span className="circle"></span>
-          </label>
+          <RadioButton name="locale" checked={true} />
         </ListItem>
         <Separator />
       </LanguagesList>
@@ -55,45 +53,6 @@ const LanguagesList = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-
-  .radio-container {
-    position: relative;
-    top: -10px;
-    cursor: pointer;
-    user-select: none;
-    padding-left: 30px;
-  }
-
-  .radio-container input {
-    display: none;
-  }
-
-  .radio-container .circle {
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    position: absolute;
-    left: 0;
-    top: 0;
-    border-radius: 50%;
-    border: 2px solid black;
-  }
-
-  .radio-container input:checked + .circle {
-    border: 2px solid ${({ theme }) => theme.colors.primary};
-  }
-
-  .radio-container input:checked + .circle:after {
-    content: "";
-    height: 10px;
-    width: 10px;
-    background-color: ${({ theme }) => theme.colors.primary};
-    position: absolute;
-    border-radius: 50%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
 `;
 
 const ListItem = styled.div`
