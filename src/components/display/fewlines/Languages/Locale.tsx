@@ -7,7 +7,7 @@ import { Input } from "../Input/Input";
 import { RadioButton } from "../RadioButton/RadioButton";
 import { Separator } from "../Separator/Separator";
 
-export const Languages: React.FC = () => {
+export const Locale: React.FC = () => {
   return (
     <>
       <Container>

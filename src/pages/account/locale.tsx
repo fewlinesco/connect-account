@@ -2,6 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
+import { Locale } from "@src/components/display/fewlines/Languages/Locale";
 import { oauth2Client, config } from "@src/config";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
@@ -9,11 +10,11 @@ import { getUser } from "@src/utils/getUser";
 import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
-const LocationPage: React.FC = () => {
-  return <></>;
+const LocalePage: React.FC = () => {
+  return <Locale />;
 };
 
-export default LocationPage;
+export default LocalePage;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
