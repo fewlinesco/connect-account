@@ -1,5 +1,7 @@
+import { useRouter } from "next/router";
 import React from "react";
 
+import { CreateOrUpdatePassword } from "@lib/commands/createOrUpdatePassword";
 import {
   Button,
   ButtonVariant,
@@ -10,7 +12,7 @@ import { capitalizeFirstLetter } from "@src/utils/format";
 
 type SetPasswordFormProps = {
   conditionalBreadcrumbItem: string;
-  setPassword: (passwordInput: string) => Promise<void>;
+  setPassword: (passwordInput: string) => Promise<CreateOrUpdatePassword>;
 };
 
 export const SetPasswordForm: React.FC<SetPasswordFormProps> = ({
@@ -23,11 +25,21 @@ export const SetPasswordForm: React.FC<SetPasswordFormProps> = ({
     setPasswordConfirmationInput,
   ] = React.useState("");
 
+  const router = useRouter();
+
   return (
     <Form
       onSubmit={async () => {
         if (passwordInput === passwordConfirmationInput) {
-          await setPassword(passwordInput);
+          const { data, errors } = await setPassword(passwordInput);
+
+          if (errors) {
+            //
+          }
+
+          if (data) {
+            router && router.push("/account/security");
+          }
         } else {
           console.warn(
             "Your password confirmation doesn't match your new password",

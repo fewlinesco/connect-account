@@ -42,8 +42,8 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
   } catch (error) {
     Sentry.withScope((scope) => {
       scope.setTag(
-        "send-identity-validation-code",
-        "send-identity-validation-code",
+        "api/auth-connect/set-password",
+        "api/auth-connect/set-password",
       );
       Sentry.captureException(error);
     });

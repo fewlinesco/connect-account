@@ -1,34 +1,29 @@
-import { useRouter } from "next/router";
 import React from "react";
 
+import { CreateOrUpdatePassword } from "@lib/commands/createOrUpdatePassword";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
 import { ErrorSettingPassword } from "@src/clientErrors";
 import { fetchJson } from "@src/utils/fetchJson";
 
 interface SetPasswordProps {
   children: (props: {
-    setPassword: (passwordInput: string) => Promise<void>;
+    setPassword: (passwordInput: string) => Promise<CreateOrUpdatePassword>;
   }) => JSX.Element;
 }
 
 export const SetPassword: React.FC<SetPasswordProps> = ({ children }) => {
-  const router = useRouter();
-
-  async function setPassword(passwordInput: string): Promise<void> {
-    try {
-      const response = await fetchJson(
-        "/api/auth-connect/set-password",
-        HttpVerbs.POST,
-        { passwordInput },
-      );
-
+  async function setPassword(
+    passwordInput: string,
+  ): Promise<CreateOrUpdatePassword> {
+    return fetchJson("/api/auth-connect/set-password", HttpVerbs.POST, {
+      passwordInput,
+    }).then((response) => {
       if (response.status >= 400) {
         throw new ErrorSettingPassword();
       }
-      router && router.push(`/account/logins/`);
-    } catch (error) {
-      router && router.push("/account/logins/email/new");
-    }
+
+      return response.json();
+    });
   }
 
   return children({
