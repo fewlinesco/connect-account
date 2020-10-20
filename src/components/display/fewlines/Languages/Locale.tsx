@@ -59,7 +59,7 @@ const LanguagesList = styled.div`
   flex-direction: column;
 `;
 
-const ListItem = styled.div`
+export const ListItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
