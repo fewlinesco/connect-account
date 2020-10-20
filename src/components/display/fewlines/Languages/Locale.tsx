@@ -6,6 +6,7 @@ import { MagnifyingGlass } from "../Icons/MagnifyingGlas/MagnifyingGlass";
 import { Input } from "../Input/Input";
 import { RadioButton } from "../RadioButton/RadioButton";
 import { Separator } from "../Separator/Separator";
+import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 export const Locale: React.FC = () => {
   return (
@@ -34,17 +35,20 @@ const Container = styled.div`
   width: 90%;
   margin: 0 auto;
 
+  @media ${deviceBreakpoints.m} {
+    width: 100%;
+  }
+
   .search-input {
     display: flex;
     position: relative;
-    margin-top: ${({ theme }) => theme.spaces.m};
-    margin-bottom: ${({ theme }) => theme.spaces.s};
+    margin-top: ${({ theme }) => theme.spaces.s};
   }
 
   .magnifying-glass {
     position: absolute;
-    right: 15px;
-    bottom: 27px;
+    right: 1.5rem;
+    bottom: 2.7rem;
     cursor: pointer;
   }
 `;
@@ -60,7 +64,7 @@ const ListItem = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: 10px 0;
+  margin: ${({ theme }) => theme.spaces.xxs} 0;
   height: 4.8rem;
 `;
 

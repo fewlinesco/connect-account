@@ -20,18 +20,16 @@ export const DesktopNavigationBar: React.FC = () => {
         <HomeIcon />
         <ListLabel>Home</ListLabel>
       </ListItem>
-      <ListItem>
+      <ListItem onClick={() => router.push("/account/logins")}>
         <KeyIcon />
-        <ListLabel onClick={() => router.push("/account/logins")}>
-          Logins
-        </ListLabel>
+        <ListLabel>Logins</ListLabel>
       </ListItem>
       <ListItem>
         <LockIcon />
         <ListLabel>Security</ListLabel>
       </ListItem>
       <Separator />
-      <SwitchLanguageItem>
+      <SwitchLanguageItem onClick={() => router.push("/account/locale")}>
         <SwitchLanguageLabel>
           <BlackWorldIcon />
           <ListLabel>English</ListLabel>
