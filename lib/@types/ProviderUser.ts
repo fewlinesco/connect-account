@@ -28,3 +28,12 @@ export type ProviderUserPasswordSet = {
     };
   };
 };
+
+export type User = {
+  id: string;
+};
+
+export type CreateOrUpdatePasswordInput = {
+  cleartextPassword: string;
+  userId: string;
+};

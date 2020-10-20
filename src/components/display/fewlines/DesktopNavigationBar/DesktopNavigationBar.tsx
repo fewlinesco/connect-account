@@ -26,7 +26,7 @@ export const DesktopNavigationBar: React.FC = () => {
       </ListItem>
       <ListItem>
         <LockIcon />
-        <div>Security</div>
+        <div onClick={() => router.push("/account/security")}>Security</div>
       </ListItem>
       <Separator />
       <SwitchLanguageItem>
