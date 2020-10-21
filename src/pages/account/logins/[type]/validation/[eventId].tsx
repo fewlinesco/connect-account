@@ -3,27 +3,27 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import type { IdentityTypes } from "@lib/@types/Identity";
-import { VerifyIdentity } from "@src/components/business/VerifyIdentity";
-import IdentityValidationForm from "@src/components/display/fewlines/IdentityValidationForm/IdentityValidationForm";
+import { ValidateIdentity } from "@src/components/business/ValidateIdentity";
+import ValidateIdentityForm from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
 import { OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
-const IdentityValidationPage: React.FC<{
+const ValidateIdentityPage: React.FC<{
   type: IdentityTypes;
   eventId: string;
 }> = ({ type, eventId }) => {
   return (
-    <VerifyIdentity eventId={eventId}>
-      {({ verifyIdentity }) => (
-        <IdentityValidationForm type={type} verifyIdentity={verifyIdentity} />
+    <ValidateIdentity eventId={eventId}>
+      {({ validateIdentity }) => (
+        <ValidateIdentityForm type={type} validateIdentity={validateIdentity} />
       )}
-    </VerifyIdentity>
+    </ValidateIdentity>
   );
 };
 
-export default IdentityValidationPage;
+export default ValidateIdentityPage;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {

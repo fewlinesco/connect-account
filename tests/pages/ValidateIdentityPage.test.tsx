@@ -8,16 +8,16 @@ import { IdentityTypes } from "@lib/@types/Identity";
 import AlertBar from "@src/components/display/fewlines/AlertBar/AlertBar";
 import { Button } from "@src/components/display/fewlines/Button/Button";
 import { Form } from "@src/components/display/fewlines/Form/Form";
-import IdentityValidationForm from "@src/components/display/fewlines/IdentityValidationForm/IdentityValidationForm";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
   NavigationBreadcrumbs,
   Breadcrumbs,
 } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
+import ValidateIdentityForm from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
 import { useCookies } from "@src/hooks/useCookies";
 import { AccountApp } from "@src/pages/_app";
-import IdentityValidation from "@src/pages/account/logins/[type]/validation/[eventId]";
-import IdentityValidationPage from "@src/pages/account/logins/[type]/validation/[eventId]";
+import ValidateIdentity from "@src/pages/account/logins/[type]/validation/[eventId]";
+import ValidateIdentityPage from "@src/pages/account/logins/[type]/validation/[eventId]";
 import * as fetchJson from "@src/utils/fetchJson";
 
 enableFetchMocks();
@@ -39,13 +39,13 @@ jest.mock("@src/config", () => {
   };
 });
 
-describe("IdentityValidationPage", () => {
+describe("ValidateIdentityPage", () => {
   const eventId = "foo";
 
   test("it should display navigation breadcrumbs properly for emails", () => {
     const component = mount(
       <AccountApp>
-        <IdentityValidationPage type={IdentityTypes.EMAIL} eventId={eventId} />
+        <ValidateIdentityPage type={IdentityTypes.EMAIL} eventId={eventId} />
       </AccountApp>,
     );
 
@@ -61,7 +61,7 @@ describe("IdentityValidationPage", () => {
   test("it should display navigation breadcrumbs properly for phones", () => {
     const component = mount(
       <AccountApp>
-        <IdentityValidationPage type={IdentityTypes.PHONE} eventId={eventId} />
+        <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />
       </AccountApp>,
     );
 
@@ -77,7 +77,7 @@ describe("IdentityValidationPage", () => {
   test("it should display an input ans 3 buttons for emails", () => {
     const component = mount(
       <AccountApp>
-        <IdentityValidationPage type={IdentityTypes.EMAIL} eventId={eventId} />
+        <ValidateIdentityPage type={IdentityTypes.EMAIL} eventId={eventId} />
       </AccountApp>,
     );
 
@@ -98,7 +98,7 @@ describe("IdentityValidationPage", () => {
   test("it should display properly an input and 3 buttons for phones", () => {
     const component = mount(
       <AccountApp>
-        <IdentityValidationPage type={IdentityTypes.PHONE} eventId={eventId} />
+        <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />
       </AccountApp>,
     );
 
@@ -119,7 +119,7 @@ describe("IdentityValidationPage", () => {
   test("it should display an alert bar with the correct message for phones", () => {
     const component = mount(
       <AccountApp>
-        <IdentityValidationPage type={IdentityTypes.PHONE} eventId={eventId} />
+        <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />
       </AccountApp>,
     );
 
@@ -132,7 +132,7 @@ describe("IdentityValidationPage", () => {
   test("it should display an alert bar with the correct message for emails", () => {
     const component = mount(
       <AccountApp>
-        <IdentityValidationPage type={IdentityTypes.EMAIL} eventId={eventId} />
+        <ValidateIdentityPage type={IdentityTypes.EMAIL} eventId={eventId} />
       </AccountApp>,
     );
 
@@ -145,12 +145,12 @@ describe("IdentityValidationPage", () => {
   test("it should call `send-identity-validation-code` API page on submit", () => {
     const component = mount(
       <AccountApp>
-        <IdentityValidation type={IdentityTypes.EMAIL} eventId={eventId} />
+        <ValidateIdentity type={IdentityTypes.EMAIL} eventId={eventId} />
       </AccountApp>,
     );
 
     const verifyIdentityInput = component
-      .find(IdentityValidationForm)
+      .find(ValidateIdentityForm)
       .find(Input);
 
     const validationCode = "42";
@@ -159,7 +159,7 @@ describe("IdentityValidationPage", () => {
       target: { value: validationCode },
     });
 
-    const form = component.find(IdentityValidationForm).find(Form);
+    const form = component.find(ValidateIdentityForm).find(Form);
 
     const fetchJsonMethod = jest.spyOn(fetchJson, "fetchJson");
 

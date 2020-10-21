@@ -12,10 +12,10 @@ import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadc
 import { IdentityTypes } from "@lib/@types/Identity";
 import { displayAlertBar } from "@src/utils/displayAlertBar";
 
-const IdentityValidationForm: React.FC<{
+const ValidateIdentityForm: React.FC<{
   type: IdentityTypes;
-  verifyIdentity: (validationCode: string) => Promise<void>;
-}> = ({ type, verifyIdentity }) => {
+  validateIdentity: (validationCode: string) => Promise<void>;
+}> = ({ type, validateIdentity }) => {
   const [validationCode, setValidationCode] = React.useState("");
 
   const router = useRouter();
@@ -33,7 +33,7 @@ const IdentityValidationForm: React.FC<{
       />
       <Form
         onSubmit={async () => {
-          await verifyIdentity(validationCode);
+          await validateIdentity(validationCode);
         }}
       >
         {displayAlertBar(
@@ -72,7 +72,7 @@ const IdentityValidationForm: React.FC<{
   );
 };
 
-export default IdentityValidationForm;
+export default ValidateIdentityForm;
 
 const DidntReceiveCode = styled.p`
   margin: ${({ theme }) => theme.spaces.xs} 0 ${({ theme }) => theme.spaces.xxs};
