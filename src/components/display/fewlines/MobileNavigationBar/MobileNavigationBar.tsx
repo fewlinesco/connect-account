@@ -9,8 +9,8 @@ import { KeyIcon } from "../Icons/KeyIcon/KeyIcon";
 import { LockIcon } from "../Icons/LockIcon/LockIcon";
 import { NavBarCrossIcon } from "../Icons/NavBarCrossIcon/NavBarCrossIcon";
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
-import { SwitchIcon } from "../Icons/SwitchIcon/SwitchIcon";
-import { WorldIcon } from "../Icons/WorldIcon/WorldIcon";
+import { WhiteSwitchIcon } from "../Icons/WhiteSwitchIcon/WhiteSwitchIcon";
+import { WhiteWorldIcon } from "../Icons/WhiteWorldIcon/WhiteWorldIcon";
 import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 interface MenuItemProps {
@@ -38,7 +38,7 @@ export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
           >
             <ListItemLabel>
               <HomeIcon />
-              <div>Home</div>
+              <Value>Home</Value>
             </ListItemLabel>
             <RightChevron />
           </ListItem>
@@ -49,14 +49,14 @@ export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
           >
             <ListItemLabel>
               <KeyIcon />
-              <div>Logins</div>
+              <Value>Logins</Value>
             </ListItemLabel>
             <RightChevron />
           </ListItem>
           <ListItem>
             <ListItemLabel>
               <LockIcon />
-              <div>Security</div>
+              <Value>Security</Value>
             </ListItemLabel>
             <RightChevron />
           </ListItem>
@@ -67,10 +67,10 @@ export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
           <MenuItem color="primary">
             <Content>
               <LanguagesOptions>
-                <WorldIcon />
+                <WhiteWorldIcon />
                 <div>English</div>
               </LanguagesOptions>
-              <SwitchIcon />
+              <WhiteSwitchIcon />
             </Content>
           </MenuItem>
         ) : (
@@ -173,8 +173,8 @@ const ListItem = styled.div`
 const ListItemLabel = styled.div`
   display: flex;
   align-items: center;
+`;
 
-  div {
-    margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
-  }
+const Value = styled.div`
+  margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
 `;

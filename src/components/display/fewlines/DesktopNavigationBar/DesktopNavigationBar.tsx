@@ -18,21 +18,23 @@ export const DesktopNavigationBar: React.FC = () => {
       <Header />
       <ListItem onClick={() => router.push("/account")}>
         <HomeIcon />
-        <div>Home</div>
+        <ListLabel>Home</ListLabel>
       </ListItem>
       <ListItem>
         <KeyIcon />
-        <div onClick={() => router.push("/account/logins")}>Logins</div>
+        <ListLabel onClick={() => router.push("/account/logins")}>
+          Logins
+        </ListLabel>
       </ListItem>
       <ListItem>
         <LockIcon />
-        <div>Security</div>
+        <ListLabel>Security</ListLabel>
       </ListItem>
       <Separator />
       <SwitchLanguageItem>
         <SwitchLanguageLabel>
           <BlackWorldIcon />
-          <div>English</div>
+          <ListLabel>English</ListLabel>
         </SwitchLanguageLabel>
         <BlackSwitchIcon />
       </SwitchLanguageItem>
@@ -50,10 +52,10 @@ const ListItem = styled.div`
   padding: ${({ theme }) => theme.spaces.xs} 0 ${({ theme }) => theme.spaces.xs}
     ${({ theme }) => theme.spaces.xs};
   cursor: pointer;
+`;
 
-  div {
-    margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
-  }
+const ListLabel = styled.div`
+  margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
 `;
 
 const SwitchLanguageItem = styled.div`
@@ -66,8 +68,4 @@ const SwitchLanguageItem = styled.div`
 const SwitchLanguageLabel = styled.div`
   display: flex;
   align-items: center;
-
-  div {
-    margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
-  }
 `;
