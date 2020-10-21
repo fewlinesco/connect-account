@@ -1,6 +1,6 @@
 import React from "react";
 
-import { NavigationBarIconContainer } from "../../NavigationBarIconContainer";
+import { NavigationBarIconContainer } from "../../../NavigationBarIconContainer";
 
 export const BlackSwitchIcon: React.FC = () => {
   return (

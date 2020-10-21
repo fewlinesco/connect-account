@@ -3,11 +3,11 @@ import React from "react";
 import styled from "styled-components";
 
 import { Header } from "../Header/Header";
-import { BlackSwitchIcon } from "../Icons/BlackSwitchIcon/BlackSwitchIcon";
-import { BlackWorldIcon } from "../Icons/BlackWorldIcon/BlackWorldIcon";
 import { HomeIcon } from "../Icons/HomeIcon/HomeIcon";
 import { KeyIcon } from "../Icons/KeyIcon/KeyIcon";
 import { LockIcon } from "../Icons/LockIcon/LockIcon";
+import { BlackSwitchIcon } from "../Icons/SwitchIcon/BlackSwitchIcon/BlackSwitchIcon";
+import { BlackWorldIcon } from "../Icons/WorldIcon/BlackWorldIcon/BlackWorldIcon";
 import { Separator } from "../Separator/Separator";
 
 export const DesktopNavigationBar: React.FC = () => {

@@ -9,8 +9,8 @@ import { KeyIcon } from "../Icons/KeyIcon/KeyIcon";
 import { LockIcon } from "../Icons/LockIcon/LockIcon";
 import { NavBarCrossIcon } from "../Icons/NavBarCrossIcon/NavBarCrossIcon";
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
-import { WhiteSwitchIcon } from "../Icons/WhiteSwitchIcon/WhiteSwitchIcon";
-import { WhiteWorldIcon } from "../Icons/WhiteWorldIcon/WhiteWorldIcon";
+import { WhiteSwitchIcon } from "../Icons/SwitchIcon/WhiteSwitchIcon/WhiteSwitchIcon";
+import { WhiteWorldIcon } from "../Icons/WorldIcon/WhiteWorldIcon/WhiteWorldIcon";
 import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 interface MenuItemProps {
