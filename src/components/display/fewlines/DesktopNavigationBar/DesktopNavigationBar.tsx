@@ -54,7 +54,7 @@ const ListItem = styled.div`
   cursor: pointer;
 `;
 
-const ListLabel = styled.div`
+const ListLabel = styled.p`
   margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
 `;
 

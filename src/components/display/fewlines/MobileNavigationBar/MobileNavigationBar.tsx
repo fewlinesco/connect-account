@@ -175,6 +175,6 @@ const ListItemLabel = styled.div`
   align-items: center;
 `;
 
-const Value = styled.div`
+const Value = styled.p`
   margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
 `;
