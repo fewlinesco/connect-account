@@ -33,5 +33,12 @@ export function sortIdentities(fetchedData: {
     });
   }
 
+  function sortPrimary(a: Identity, b: Identity): number {
+    return a.primary === b.primary ? 0 : a.primary ? -1 : 1;
+  }
+
+  phoneIdentities.sort(sortPrimary);
+  emailIdentities.sort(sortPrimary);
+
   return { phoneIdentities, emailIdentities };
 }
