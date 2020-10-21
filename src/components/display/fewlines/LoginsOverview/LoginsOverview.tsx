@@ -15,11 +15,13 @@ import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
 import { Identity } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 
-type LoginsProps = {
+type LoginsOverviewProps = {
   sortedIdentities: SortedIdentities;
 };
 
-const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
+const LoginsOverview: React.FC<LoginsOverviewProps> = ({
+  sortedIdentities,
+}) => {
   const [hideSecondaryEmails, setHideSecondaryEmails] = React.useState<boolean>(
     true,
   );
@@ -150,7 +152,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
   );
 };
 
-export default Logins;
+export default LoginsOverview;
 
 const Flex = styled.div`
   display: flex;

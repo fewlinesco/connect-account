@@ -5,7 +5,7 @@ import React from "react";
 import { getIdentities } from "@lib/queries/getIdentities";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
-import Logins from "@src/components/display/fewlines/Logins/Logins";
+import Logins from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
