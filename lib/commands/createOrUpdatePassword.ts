@@ -23,8 +23,6 @@ const CREATE_OR_UPDATE_PASSWORD_MUTATION = gql`
 export async function createOrUpdatePassword(
   command: CreateOrUpdatePasswordInput,
 ): CreateOrUpdatePassword {
-  console.log(command);
-
   const operation = {
     query: CREATE_OR_UPDATE_PASSWORD_MUTATION,
     variables: command,

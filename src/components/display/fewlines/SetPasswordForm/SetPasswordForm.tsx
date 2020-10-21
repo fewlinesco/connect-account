@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { StyledForm } from "../Form/Form";
+import { PasswordRulesErrorList } from "../PasswordRulesErrorList/PasswordRulesErrorList";
 import { SetPasswordError, SetPasswordErrorRules } from "@lib/@types/Password";
 import { CreateOrUpdatePassword } from "@lib/commands/createOrUpdatePassword";
 import {
@@ -36,8 +37,6 @@ export const SetPasswordForm: React.FC<SetPasswordFormProps> = ({
 
   const router = useRouter();
 
-  console.log({ passwordRestrictionError });
-
   return (
     <StyledForm
       onSubmit={async (event) => {
@@ -70,19 +69,9 @@ export const SetPasswordForm: React.FC<SetPasswordFormProps> = ({
         }
       }}
     >
-      {passwordRestrictionError && (
-        <PasswordRestrictionErrorWrapper>
-          <p>The password you enter does not meet the criteria.</p>
-          <p>Ensure that your password contains at least:</p>
-          <ul>
-            <li>{passwordRestrictionError.min_digits.minimum} digit</li>
-            <li>{passwordRestrictionError.min_non_digits.minimum} non-digit</li>
-            <li>
-              {passwordRestrictionError.min_total_characters.minimum} characters
-            </li>
-          </ul>
-        </PasswordRestrictionErrorWrapper>
-      )}
+      {passwordRestrictionError ? (
+        <PasswordRulesErrorList rules={passwordRestrictionError} />
+      ) : null}
       <p>New password</p>
       <ExtendedInputStyle
         type="password"
@@ -106,14 +95,6 @@ export const SetPasswordForm: React.FC<SetPasswordFormProps> = ({
     </StyledForm>
   );
 };
-
-const PasswordRestrictionErrorWrapper = styled.div`
-  color: ${({ theme }) => theme.colors.red};
-
-  li {
-    list-style: inside;
-  }
-`;
 
 const ExtendedInputStyle = styled(Input)<{
   passwordRestrictionError?: Pick<SetPasswordError, "rules">;
