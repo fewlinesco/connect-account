@@ -11,7 +11,7 @@ export const RadioButton: React.FC<RadioButtonProps> = ({ name, checked }) => {
     <Wrapper>
       <label>
         <input type="radio" name={name} defaultChecked={checked} />
-        <span className="circle"></span>
+        <span />
       </label>
     </Wrapper>
   );
