@@ -1,13 +1,9 @@
-import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
 import { BoxedLink } from "../BoxedLink/BoxedLink";
 import { Button, ButtonVariant } from "../Button/Button";
-import { Container } from "../Container";
-import { H1 } from "../H1/H1";
-import { H2 } from "../H2/H2";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
@@ -47,12 +43,7 @@ const LoginsOverview: React.FC<LoginsOverviewProps> = ({
   const { emailIdentities, phoneIdentities } = sortedIdentities;
 
   return (
-    <Container>
-      <Head>
-        <title>Connect Logins</title>
-      </Head>
-      <H1>Logins</H1>
-      <H2>Your emails, phones and social logins</H2>
+    <>
       <IdentitySection>
         <h3>Email addresses</h3>
         <ShadowBox>
@@ -148,7 +139,7 @@ const LoginsOverview: React.FC<LoginsOverviewProps> = ({
       <IdentitySection>
         <h3>Social logins</h3>
       </IdentitySection>
-    </Container>
+    </>
   );
 };
 
