@@ -1,17 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-import { WorldIcon } from "./WorldIcon";
+import { WhiteWorldIcon } from "./WhiteWorldIcon";
 
 export default {
   title: "icons/WorldIcon",
-  component: WorldIcon,
+  component: WhiteWorldIcon,
 };
 
 export const StandardWorldIcon = (): JSX.Element => {
   return (
     <Wrapper>
-      <WorldIcon />
+      <WhiteWorldIcon />
     </Wrapper>
   );
 };

@@ -9,8 +9,8 @@ import { KeyIcon } from "../Icons/KeyIcon/KeyIcon";
 import { LockIcon } from "../Icons/LockIcon/LockIcon";
 import { NavBarCrossIcon } from "../Icons/NavBarCrossIcon/NavBarCrossIcon";
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
-import { SwitchIcon } from "../Icons/SwitchIcon/SwitchIcon";
-import { WorldIcon } from "../Icons/WorldIcon/WorldIcon";
+import { WhiteSwitchIcon } from "../Icons/SwitchIcon/WhiteSwitchIcon/WhiteSwitchIcon";
+import { WhiteWorldIcon } from "../Icons/WorldIcon/WhiteWorldIcon/WhiteWorldIcon";
 import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 interface MenuItemProps {
@@ -38,7 +38,7 @@ export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
           >
             <ListItemLabel>
               <HomeIcon />
-              <div>Home</div>
+              <Value>Home</Value>
             </ListItemLabel>
             <RightChevron />
           </ListItem>
@@ -49,7 +49,7 @@ export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
           >
             <ListItemLabel>
               <KeyIcon />
-              <div>Logins</div>
+              <Value>Logins</Value>
             </ListItemLabel>
             <RightChevron />
           </ListItem>
@@ -60,7 +60,7 @@ export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
           >
             <ListItemLabel>
               <LockIcon />
-              <div>Security</div>
+              <Value>Security</Value>
             </ListItemLabel>
             <RightChevron />
           </ListItem>
@@ -68,13 +68,18 @@ export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
       )}
       <Bar>
         {isOpen ? (
-          <MenuItem color="primary">
+          <MenuItem
+            color="primary"
+            onClick={() =>
+              router.push("/account/locale").then(() => setIsOpen(false))
+            }
+          >
             <Content>
               <LanguagesOptions>
-                <WorldIcon />
+                <WhiteWorldIcon />
                 <div>English</div>
               </LanguagesOptions>
-              <SwitchIcon />
+              <WhiteSwitchIcon />
             </Content>
           </MenuItem>
         ) : (
@@ -177,8 +182,8 @@ const ListItem = styled.div`
 const ListItemLabel = styled.div`
   display: flex;
   align-items: center;
+`;
 
-  div {
-    margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
-  }
+const Value = styled.p`
+  margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
 `;
