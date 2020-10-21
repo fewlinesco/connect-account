@@ -7,9 +7,6 @@ import { Box } from "../Box/Box";
 import { Button, ButtonVariant } from "../Button/Button";
 import { ClickAwayListener } from "../ClickAwayListener";
 import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
-import { Container } from "../Container";
-import { H1 } from "../H1/H1";
-import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { DeleteIdentity } from "@src/components/business/DeleteIdentity";
@@ -40,15 +37,7 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
   const { id, primary, status, type, value } = identity;
 
   return (
-    <Container>
-      <H1>Logins</H1>
-      <NavigationBreadcrumbs
-        breadcrumbs={[
-          type.toUpperCase() === IdentityTypes.EMAIL
-            ? "Email address"
-            : "Phone number",
-        ]}
-      />
+    <>
       <Box>
         <Flex>
           <Value>{value}</Value>
@@ -163,7 +152,7 @@ export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
           </ConfirmationBox>
         </>
       )}
-    </Container>
+    </>
   );
 };
 

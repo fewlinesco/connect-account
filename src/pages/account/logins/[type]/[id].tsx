@@ -2,10 +2,13 @@ import { HttpStatus } from "@fwl/web";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
-import { Identity } from "@lib/@types";
+import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentity } from "@lib/queries/getIdentity";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { NoIdentityFound } from "@src/clientErrors";
+import { Container } from "@src/components/display/fewlines/Container";
+import { H1 } from "@src/components/display/fewlines/H1/H1";
+import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { ShowIdentity } from "@src/components/display/fewlines/ShowIdentity/ShowIdentity";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
@@ -16,7 +19,21 @@ import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry from "@src/utils/sentry";
 
 const ShowIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
-  return <ShowIdentity identity={identity} />;
+  const { type } = identity;
+
+  return (
+    <Container>
+      <H1>Logins</H1>
+      <NavigationBreadcrumbs
+        breadcrumbs={[
+          type.toUpperCase() === IdentityTypes.EMAIL
+            ? "Email address"
+            : "Phone number",
+        ]}
+      />
+      <ShowIdentity identity={identity} />
+    </Container>
+  );
 };
 
 export default ShowIdentityPage;
