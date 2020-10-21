@@ -9,7 +9,7 @@ type RadioButtonProps = {
 export const RadioButton: React.FC<RadioButtonProps> = ({ name, checked }) => {
   return (
     <Wrapper>
-      <label className="radio-container">
+      <label>
         <input type="radio" name={name} defaultChecked={checked} />
         <span className="circle"></span>
       </label>
@@ -18,18 +18,18 @@ export const RadioButton: React.FC<RadioButtonProps> = ({ name, checked }) => {
 };
 
 const Wrapper = styled.div`
-  .radio-container {
+  label {
     position: relative;
     cursor: pointer;
     user-select: none;
     padding-left: 3rem;
   }
 
-  .radio-container input {
+  label input {
     display: none;
   }
 
-  .radio-container .circle {
+  label span {
     width: 2rem;
     height: 2rem;
     background-color: white;
@@ -40,12 +40,12 @@ const Wrapper = styled.div`
     border: ${({ theme }) => theme.borders.normal} black;
   }
 
-  .radio-container input:checked + .circle {
+  label input:checked + span {
     border: ${({ theme }) => theme.borders.normal}
       ${({ theme }) => theme.colors.primary};
   }
 
-  .radio-container input:checked + .circle:after {
+  label input:checked + span:after {
     content: "";
     height: 1rem;
     width: 1rem;
