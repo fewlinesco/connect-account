@@ -1,4 +1,6 @@
 import { HttpStatus } from "@fwl/web";
+import { GraphQLError } from "graphql";
+import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
 import { createOrUpdatePassword } from "@lib/commands/createOrUpdatePassword";
@@ -10,7 +12,10 @@ import withSession from "@src/middleware/withSession";
 import { getUser } from "@src/utils/getUser";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
-const handler: Handler = async (request: ExtendedRequest, response) => {
+const handler: Handler = async (
+  request: ExtendedRequest,
+  response: NextApiResponse,
+) => {
   addRequestScopeToSentry(request);
 
   try {
@@ -28,10 +33,27 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
         return createOrUpdatePassword({
           cleartextPassword: passwordInput,
           userId: decoded.sub,
-        }).then((data) => {
-          response.statusCode = HttpStatus.OK;
-          response.setHeader("Content-Type", "application/json");
-          response.json(data);
+        }).then(({ data, errors }) => {
+          if (errors) {
+            response.setHeader("Content-Type", "application/json");
+
+            const restrictionRulesError = ((errors as unknown) as GraphQLError &
+              { code?: string }[]).find(
+              (error) => error.code === "password_does_not_meet_requirements",
+            );
+
+            if (restrictionRulesError) {
+              response.statusCode = HttpStatus.UNPROCESSABLE_ENTITY;
+              response.json({ restrictionRulesError });
+            } else {
+              response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+              response.end();
+            }
+          } else {
+            response.statusCode = HttpStatus.OK;
+            response.setHeader("Content-Type", "application/json");
+            response.json({ data });
+          }
         });
       } else {
         response.statusCode = HttpStatus.TEMPORARY_REDIRECT;

@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 import { StyledForm } from "../Form/Form";
 import { PasswordRulesErrorList } from "../PasswordRulesErrorList/PasswordRulesErrorList";
-import { SetPasswordError, SetPasswordErrorRules } from "@lib/@types/Password";
-import { CreateOrUpdatePassword } from "@lib/commands/createOrUpdatePassword";
+import { SetPasswordErrorRules } from "@lib/@types/Password";
+import { SetPasswordOutput } from "@src/components/business/SetPassword";
 import {
   Button,
   ButtonVariant,
@@ -15,7 +15,7 @@ import { capitalizeFirstLetter } from "@src/utils/format";
 
 type SetPasswordFormProps = {
   conditionalBreadcrumbItem: string;
-  setPassword: (passwordInput: string) => Promise<CreateOrUpdatePassword>;
+  setPassword: (passwordInput: string) => Promise<SetPasswordOutput>;
 };
 
 export const SetPasswordForm: React.FC<SetPasswordFormProps> = ({
@@ -30,6 +30,7 @@ export const SetPasswordForm: React.FC<SetPasswordFormProps> = ({
     setPasswordConfirmationInput,
   ] = React.useState("");
 
+  const [passwordsNotMatching, setPasswordsNotMatching] = React.useState(false);
   const [
     passwordRestrictionError,
     setPasswordRestrictionError,
@@ -43,15 +44,17 @@ export const SetPasswordForm: React.FC<SetPasswordFormProps> = ({
         event.preventDefault();
 
         setIsNotSubmitted(false);
+        setPasswordsNotMatching(false);
+        setPasswordRestrictionError(undefined);
 
         if (isNotSubmitted) {
           if (passwordInput === passwordConfirmationInput) {
-            const { data, errors } = await setPassword(passwordInput);
+            const { data, restrictionRulesError } = await setPassword(
+              passwordInput,
+            );
 
-            if (errors) {
-              setPasswordRestrictionError(
-                ((errors[0] as unknown) as SetPasswordError).rules,
-              );
+            if (restrictionRulesError) {
+              setPasswordRestrictionError(restrictionRulesError.rules);
 
               setIsNotSubmitted(true);
             }
@@ -62,9 +65,7 @@ export const SetPasswordForm: React.FC<SetPasswordFormProps> = ({
           } else {
             setIsNotSubmitted(true);
 
-            console.warn(
-              "Your password confirmation doesn't match your new password",
-            );
+            setPasswordsNotMatching(true);
           }
         }
       }}
@@ -72,12 +73,19 @@ export const SetPasswordForm: React.FC<SetPasswordFormProps> = ({
       {passwordRestrictionError ? (
         <PasswordRulesErrorList rules={passwordRestrictionError} />
       ) : null}
+      {passwordsNotMatching ? (
+        <MismatchedPassword>
+          Your password confirmation do not match your new password.
+        </MismatchedPassword>
+      ) : null}
       <p>New password</p>
       <ExtendedInputStyle
         type="password"
         name="password-input"
         placeholder="New password"
         value={passwordInput}
+        passwordRestrictionError={passwordRestrictionError}
+        passwordsNotMatching={passwordsNotMatching}
         onChange={(event) => setPasswordInput(event.target.value)}
       />
       <p>Confirm new password</p>
@@ -96,9 +104,16 @@ export const SetPasswordForm: React.FC<SetPasswordFormProps> = ({
   );
 };
 
+const MismatchedPassword = styled.p`
+  color: ${({ theme }) => theme.colors.red};
+  margin-bottom: 2rem;
+`;
+
 const ExtendedInputStyle = styled(Input)<{
-  passwordRestrictionError?: Pick<SetPasswordError, "rules">;
+  passwordRestrictionError?: SetPasswordErrorRules;
+  passwordsNotMatching?: boolean;
 }>`
-  ${({ theme, passwordRestrictionError }) =>
-    passwordRestrictionError && `border-color: ${theme.colors.red};`}
+  ${({ theme, passwordRestrictionError, passwordsNotMatching }) =>
+    (passwordRestrictionError || passwordsNotMatching) &&
+    `border-color: ${theme.colors.red};`}
 `;
