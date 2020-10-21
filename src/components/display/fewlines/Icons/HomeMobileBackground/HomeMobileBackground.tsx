@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
-export const HomeBackground: React.FC = () => {
+export const HomeMobileBackground: React.FC = () => {
   return (
     <Wrapper>
       <svg

@@ -1,17 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-import { SwitchIcon } from "./SwitchIcon";
+import { WhiteSwitchIcon } from "./WhiteSwitchIcon";
 
 export default {
   title: "icons/SwitchIcon",
-  component: SwitchIcon,
+  component: WhiteSwitchIcon,
 };
 
 export const StandardSwitchIcon = (): JSX.Element => {
   return (
     <Wrapper>
-      <SwitchIcon />
+      <WhiteSwitchIcon />
     </Wrapper>
   );
 };
