@@ -1,12 +1,14 @@
 import { useRouter } from "next/router";
 import React from "react";
+import styled from "styled-components";
 
+import { StyledForm } from "../Form/Form";
+import { SetPasswordError, SetPasswordErrorRules } from "@lib/@types/Password";
 import { CreateOrUpdatePassword } from "@lib/commands/createOrUpdatePassword";
 import {
   Button,
   ButtonVariant,
 } from "@src/components/display/fewlines/Button/Button";
-import { Form } from "@src/components/display/fewlines/Form/Form";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import { capitalizeFirstLetter } from "@src/utils/format";
 
@@ -19,36 +21,70 @@ export const SetPasswordForm: React.FC<SetPasswordFormProps> = ({
   conditionalBreadcrumbItem,
   setPassword,
 }) => {
+  const [isNotSubmitted, setIsNotSubmitted] = React.useState(true);
+
   const [passwordInput, setPasswordInput] = React.useState("");
   const [
     passwordConfirmationInput,
     setPasswordConfirmationInput,
   ] = React.useState("");
 
+  const [
+    passwordRestrictionError,
+    setPasswordRestrictionError,
+  ] = React.useState<SetPasswordErrorRules | undefined>();
+
   const router = useRouter();
 
+  console.log({ passwordRestrictionError });
+
   return (
-    <Form
-      onSubmit={async () => {
-        if (passwordInput === passwordConfirmationInput) {
-          const { data, errors } = await setPassword(passwordInput);
+    <StyledForm
+      onSubmit={async (event) => {
+        event.preventDefault();
 
-          if (errors) {
-            //
-          }
+        setIsNotSubmitted(false);
 
-          if (data) {
-            router && router.push("/account/security");
+        if (isNotSubmitted) {
+          if (passwordInput === passwordConfirmationInput) {
+            const { data, errors } = await setPassword(passwordInput);
+
+            if (errors) {
+              setPasswordRestrictionError(
+                ((errors[0] as unknown) as SetPasswordError).rules,
+              );
+
+              setIsNotSubmitted(true);
+            }
+
+            if (data && data.createOrUpdatePassword) {
+              router && router.push("/account/security");
+            }
+          } else {
+            setIsNotSubmitted(true);
+
+            console.warn(
+              "Your password confirmation doesn't match your new password",
+            );
           }
-        } else {
-          console.warn(
-            "Your password confirmation doesn't match your new password",
-          );
         }
       }}
     >
+      {passwordRestrictionError && (
+        <PasswordRestrictionErrorWrapper>
+          <p>The password you enter does not meet the criteria.</p>
+          <p>Ensure that your password contains at least:</p>
+          <ul>
+            <li>{passwordRestrictionError.min_digits.minimum} digit</li>
+            <li>{passwordRestrictionError.min_non_digits.minimum} non-digit</li>
+            <li>
+              {passwordRestrictionError.min_total_characters.minimum} characters
+            </li>
+          </ul>
+        </PasswordRestrictionErrorWrapper>
+      )}
       <p>New password</p>
-      <Input
+      <ExtendedInputStyle
         type="password"
         name="password-input"
         placeholder="New password"
@@ -67,6 +103,21 @@ export const SetPasswordForm: React.FC<SetPasswordFormProps> = ({
         variant={ButtonVariant.PRIMARY}
         type="submit"
       >{`${capitalizeFirstLetter(conditionalBreadcrumbItem)} password`}</Button>
-    </Form>
+    </StyledForm>
   );
 };
+
+const PasswordRestrictionErrorWrapper = styled.div`
+  color: ${({ theme }) => theme.colors.red};
+
+  li {
+    list-style: inside;
+  }
+`;
+
+const ExtendedInputStyle = styled(Input)<{
+  passwordRestrictionError?: Pick<SetPasswordError, "rules">;
+}>`
+  ${({ theme, passwordRestrictionError }) =>
+    passwordRestrictionError && `border-color: ${theme.colors.red};`}
+`;

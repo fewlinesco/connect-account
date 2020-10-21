@@ -31,7 +31,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
         }).then((data) => {
           response.statusCode = HttpStatus.OK;
           response.setHeader("Content-Type", "application/json");
-          response.json({ data });
+          response.json(data);
         });
       } else {
         response.statusCode = HttpStatus.TEMPORARY_REDIRECT;

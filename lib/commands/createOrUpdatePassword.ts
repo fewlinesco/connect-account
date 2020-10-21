@@ -11,14 +11,9 @@ export type CreateOrUpdatePassword = Promise<
 >;
 
 const CREATE_OR_UPDATE_PASSWORD_MUTATION = gql`
-  mutation createOrUpdatePassword(
-    $cleartextPassword: String!
-    $userId: String!
-  ) {
+  mutation createOrUpdatePassword($cleartextPassword: String!, $userId: ID!) {
     createOrUpdatePassword(
-      input: {
-        input: { cleartextPassword: $cleartextPassword, userId: $userId }
-      }
+      input: { cleartextPassword: $cleartextPassword, userId: $userId }
     ) {
       id
     }
@@ -28,6 +23,8 @@ const CREATE_OR_UPDATE_PASSWORD_MUTATION = gql`
 export async function createOrUpdatePassword(
   command: CreateOrUpdatePasswordInput,
 ): CreateOrUpdatePassword {
+  console.log(command);
+
   const operation = {
     query: CREATE_OR_UPDATE_PASSWORD_MUTATION,
     variables: command,
