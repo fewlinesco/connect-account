@@ -49,7 +49,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
               throw error;
             }
           });
-        // too many redirects
+
         const isPasswordSet = await isUserPasswordSet(
           (decodedJWT as AccessToken).sub,
         ).then((result) => {

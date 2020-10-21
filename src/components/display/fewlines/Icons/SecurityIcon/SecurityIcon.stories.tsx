@@ -4,6 +4,6 @@ import { SecurityIcon } from "./SecurityIcon";
 
 export default { title: "icons/SecurityIcon", component: SecurityIcon };
 
-export const StandardLoginsIcon = (): JSX.Element => {
+export const StandardSecurityIcon = (): JSX.Element => {
   return <SecurityIcon />;
 };
