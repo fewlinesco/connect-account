@@ -1,14 +1,14 @@
 import React from "react";
 
 import { StoriesContainer } from "../StoriesContainer";
-import Account from "./Account";
+import AccountOverview from "./AccountOverview";
 
-export default { title: "pages/Account", component: Account };
+export default { title: "pages/Account", component: AccountOverview };
 
 export const AccountPage = (): JSX.Element => {
   return (
     <StoriesContainer>
-      <Account />
+      <AccountOverview />
     </StoriesContainer>
   );
 };

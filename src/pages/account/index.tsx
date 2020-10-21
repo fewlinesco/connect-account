@@ -2,7 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
-import Account from "@src/components/display/fewlines/Account/Account";
+import Account from "@src/components/display/fewlines/AccountOverview/AccountOverview";
 import { oauth2Client, config } from "@src/config";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";

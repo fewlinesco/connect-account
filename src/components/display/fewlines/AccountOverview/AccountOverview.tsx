@@ -10,7 +10,7 @@ import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 
-const Account: React.FC = () => {
+const AccountOverview: React.FC = () => {
   return (
     <Container>
       <H1>Welcome to your account</H1>
@@ -38,7 +38,7 @@ const Account: React.FC = () => {
   );
 };
 
-export default Account;
+export default AccountOverview;
 
 const Content = styled.div`
   cursor: pointer;

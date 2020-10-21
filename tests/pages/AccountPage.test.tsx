@@ -4,8 +4,8 @@ import React from "react";
 import {
   TextBox,
   Span,
-} from "@src/components/display/fewlines/Account/Account";
-import { AccountPage } from "@src/components/display/fewlines/Account/Account.stories";
+} from "@src/components/display/fewlines/AccountOverview/AccountOverview";
+import { AccountPage } from "@src/components/display/fewlines/AccountOverview/AccountOverview.stories";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { H2 } from "@src/components/display/fewlines/H2/H2";
 import { ShadowBox } from "@src/components/display/fewlines/ShadowBox/ShadowBox";
