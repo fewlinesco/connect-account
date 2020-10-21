@@ -64,7 +64,12 @@ export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
       )}
       <Bar>
         {isOpen ? (
-          <MenuItem color="primary">
+          <MenuItem
+            color="primary"
+            onClick={() =>
+              router.push("/account/locale").then(() => setIsOpen(false))
+            }
+          >
             <Content>
               <LanguagesOptions>
                 <WhiteWorldIcon />
