@@ -16,7 +16,6 @@ import {
 import ValidateIdentityForm from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
 import { useCookies } from "@src/hooks/useCookies";
 import { AccountApp } from "@src/pages/_app";
-import ValidateIdentity from "@src/pages/account/logins/[type]/validation/[eventId]";
 import ValidateIdentityPage from "@src/pages/account/logins/[type]/validation/[eventId]";
 import * as fetchJson from "@src/utils/fetchJson";
 
@@ -145,7 +144,7 @@ describe("ValidateIdentityPage", () => {
   test("it should call `send-identity-validation-code` API page on submit", () => {
     const component = mount(
       <AccountApp>
-        <ValidateIdentity type={IdentityTypes.EMAIL} eventId={eventId} />
+        <ValidateIdentityPage type={IdentityTypes.EMAIL} eventId={eventId} />
       </AccountApp>,
     );
 
