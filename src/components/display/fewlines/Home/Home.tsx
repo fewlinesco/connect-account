@@ -10,7 +10,7 @@ import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 type HomeProps = { authorizeURL: string };
 
-const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
+export const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
   const router = useRouter();
   return (
     <>
@@ -39,8 +39,6 @@ const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
     </>
   );
 };
-
-export default Home;
 
 const Wrapper = styled.div`
   position: absolute;

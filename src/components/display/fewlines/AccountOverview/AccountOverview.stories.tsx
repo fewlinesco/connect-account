@@ -1,7 +1,7 @@
 import React from "react";
 
 import { StoriesContainer } from "../StoriesContainer";
-import AccountOverview from "./AccountOverview";
+import { AccountOverview } from "./AccountOverview";
 
 export default { title: "pages/Account Overview", component: AccountOverview };
 

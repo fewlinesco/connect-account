@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import React from "react";
 
-import Home from "@src/components/display/fewlines/Home/Home";
+import { Home } from "@src/components/display/fewlines/Home/Home";
 import { oauth2Client } from "@src/config";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
