@@ -4,6 +4,9 @@ import React from "react";
 
 import { isUserPasswordSet } from "@lib/queries/isUserPasswordSet";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import { Container } from "@src/components/display/fewlines/Container";
+import { H1 } from "@src/components/display/fewlines/H1/H1";
+import { H2 } from "@src/components/display/fewlines/H2/H2";
 import { Security } from "@src/components/display/fewlines/Security/Security";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
@@ -18,7 +21,13 @@ type SecurityPageProps = {
 };
 
 const SecurityPage: React.FC<SecurityPageProps> = ({ isPasswordSet }) => {
-  return <Security isPasswordSet={isPasswordSet} />;
+  return (
+    <Container>
+      <H1>Security</H1>
+      <H2>Password, login history and more</H2>
+      <Security isPasswordSet={isPasswordSet} />
+    </Container>
+  );
 };
 
 export default SecurityPage;

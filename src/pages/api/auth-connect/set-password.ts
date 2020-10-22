@@ -1,10 +1,10 @@
 import { HttpStatus } from "@fwl/web";
 import { GraphQLError } from "graphql";
-import { NextApiResponse } from "next";
-import { Handler } from "next-iron-session";
+import type { NextApiResponse } from "next";
+import type { Handler } from "next-iron-session";
 
 import { createOrUpdatePassword } from "@lib/commands/createOrUpdatePassword";
-import { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { config, oauth2Client } from "@src/config";
 import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
 import { withMongoDB } from "@src/middleware/withMongoDB";

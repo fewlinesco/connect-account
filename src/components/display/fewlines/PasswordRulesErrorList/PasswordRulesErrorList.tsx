@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { SetPasswordErrorRules } from "@lib/@types/Password";
+import type { SetPasswordErrorRules } from "@lib/@types/Password";
 
 export const PasswordRulesErrorList: React.FC<{
   rules: SetPasswordErrorRules;

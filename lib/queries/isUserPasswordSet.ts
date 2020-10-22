@@ -1,4 +1,4 @@
-import { FetchResult } from "apollo-link";
+import type { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
 import type { ProviderUserPasswordSet } from "@lib/@types/Password";

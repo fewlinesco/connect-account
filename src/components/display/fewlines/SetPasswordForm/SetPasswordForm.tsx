@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { StyledForm } from "../Form/Form";
 import { PasswordRulesErrorList } from "../PasswordRulesErrorList/PasswordRulesErrorList";
-import { SetPasswordErrorRules } from "@lib/@types/Password";
+import type { SetPasswordErrorRules } from "@lib/@types/Password";
 import { SetPasswordOutput } from "@src/components/business/SetPassword";
 import {
   Button,

@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
@@ -12,7 +11,7 @@ import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
-import { Identity } from "@lib/@types";
+import type { Identity } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 
 type LoginsProps = {
@@ -46,9 +45,6 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
 
   return (
     <Container>
-      <Head>
-        <title>Connect Logins</title>
-      </Head>
       <H1>Logins</H1>
       <H2>Your emails, phones and social logins</H2>
       <IdentitySection>

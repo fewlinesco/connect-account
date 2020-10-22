@@ -1,4 +1,4 @@
-import { FetchResult } from "apollo-link";
+import type { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
 import { CreateOrUpdatePasswordInput, User } from "@lib/@types/ProviderUser";

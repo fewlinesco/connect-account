@@ -1,7 +1,7 @@
 import React from "react";
 
-import { SetPasswordError } from "@lib/@types/Password";
-import { User } from "@lib/@types/ProviderUser";
+import type { SetPasswordError } from "@lib/@types/Password";
+import type { User } from "@lib/@types/ProviderUser";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
 import { ErrorSettingPassword } from "@src/clientErrors";
 import { fetchJson } from "@src/utils/fetchJson";
