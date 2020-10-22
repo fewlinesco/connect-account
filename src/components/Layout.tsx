@@ -19,6 +19,13 @@ export const Layout: React.FC = ({ children }) => {
       {router && router.pathname !== "/" && (
         <MobileDisplayOnly>
           <Header />
+          <MobileNavigationBar
+            isOpen={isMobileNavBarOpen}
+            setIsOpen={setIsMobileNavbarOpen}
+          />
+          {isMobileNavBarOpen && (
+            <ClickAwayListener onClick={() => setIsMobileNavbarOpen(false)} />
+          )}
         </MobileDisplayOnly>
       )}
       <Flex>
@@ -29,15 +36,6 @@ export const Layout: React.FC = ({ children }) => {
         )}
         <ChildrenContainer>{children}</ChildrenContainer>
       </Flex>
-      {router && router.pathname !== "/" && isMobileNavBarOpen && (
-        <ClickAwayListener onClick={() => setIsMobileNavbarOpen(false)} />
-      )}
-      {router && router.pathname !== "/" && (
-        <MobileNavigationBar
-          isOpen={isMobileNavBarOpen}
-          setIsOpen={setIsMobileNavbarOpen}
-        />
-      )}
     </Main>
   );
 };
