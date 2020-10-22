@@ -2,8 +2,11 @@ import { HttpStatus } from "@fwl/web";
 import { GetServerSideProps } from "next";
 import React from "react";
 
-import type { IdentityTypes } from "@lib/@types/Identity";
+import { IdentityTypes } from "@lib/@types/Identity";
 import { ValidateIdentity } from "@src/components/business/ValidateIdentity";
+import { Container } from "@src/components/display/fewlines/Container";
+import { H1 } from "@src/components/display/fewlines/H1/H1";
+import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import ValidateIdentityForm from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
 import { OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
@@ -15,11 +18,25 @@ const ValidateIdentityPage: React.FC<{
   eventId: string;
 }> = ({ type, eventId }) => {
   return (
-    <ValidateIdentity eventId={eventId}>
-      {({ validateIdentity }) => (
-        <ValidateIdentityForm type={type} validateIdentity={validateIdentity} />
-      )}
-    </ValidateIdentity>
+    <Container>
+      <H1>Logins</H1>
+      <NavigationBreadcrumbs
+        breadcrumbs={[
+          type.toUpperCase() === IdentityTypes.EMAIL
+            ? "Email address"
+            : "Phone number",
+          "validation",
+        ]}
+      />
+      <ValidateIdentity eventId={eventId}>
+        {({ validateIdentity }) => (
+          <ValidateIdentityForm
+            type={type}
+            validateIdentity={validateIdentity}
+          />
+        )}
+      </ValidateIdentity>
+    </Container>
   );
 };
 
