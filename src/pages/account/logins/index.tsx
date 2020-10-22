@@ -1,6 +1,5 @@
 import { HttpStatus } from "@fwl/web";
 import type { GetServerSideProps } from "next";
-import Head from "next/head";
 import React from "react";
 
 import { getIdentities } from "@lib/queries/getIdentities";
@@ -26,9 +25,6 @@ type LoginsProps = {
 const LoginsPage: React.FC<LoginsProps> = ({ sortedIdentities }) => {
   return (
     <Container>
-      <Head>
-        <title>Connect Logins</title>
-      </Head>
       <H1>Logins</H1>
       <H2>Your emails, phones and social logins</H2>
       <Logins sortedIdentities={sortedIdentities} />

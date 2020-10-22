@@ -9,7 +9,7 @@ import { Input } from "../Input/Input";
 import { IdentityTypes } from "@lib/@types/Identity";
 import { displayAlertBar } from "@src/utils/displayAlertBar";
 
-const ValidateIdentityForm: React.FC<{
+export const ValidateIdentityForm: React.FC<{
   type: IdentityTypes;
   validateIdentity: (validationCode: string) => Promise<void>;
 }> = ({ type, validateIdentity }) => {
@@ -59,8 +59,6 @@ const ValidateIdentityForm: React.FC<{
     </>
   );
 };
-
-export default ValidateIdentityForm;
 
 const DidntReceiveCode = styled.p`
   margin: ${({ theme }) => theme.spaces.xs} 0 ${({ theme }) => theme.spaces.xxs};

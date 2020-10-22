@@ -1,7 +1,7 @@
 import React from "react";
 
 import { StoriesContainer } from "../StoriesContainer";
-import ValidateIdentityForm from "./ValidateIdentityForm";
+import { ValidateIdentityForm } from "./ValidateIdentityForm";
 import { IdentityTypes } from "@lib/@types/Identity";
 import { ValidateIdentity } from "@src/components/business/ValidateIdentity";
 

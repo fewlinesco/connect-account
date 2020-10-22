@@ -7,7 +7,7 @@ import { ValidateIdentity } from "@src/components/business/ValidateIdentity";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
-import ValidateIdentityForm from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
+import { ValidateIdentityForm } from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
 import { OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";

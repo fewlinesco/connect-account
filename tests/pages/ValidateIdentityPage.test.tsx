@@ -13,7 +13,7 @@ import {
   NavigationBreadcrumbs,
   Breadcrumbs,
 } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
-import ValidateIdentityForm from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
+import { ValidateIdentityForm } from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
 import { useCookies } from "@src/hooks/useCookies";
 import { AccountApp } from "@src/pages/_app";
 import ValidateIdentityPage from "@src/pages/account/logins/[type]/validation/[eventId]";
