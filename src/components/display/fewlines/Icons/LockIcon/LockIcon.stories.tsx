@@ -3,7 +3,7 @@ import React from "react";
 import { LockIcon } from "./LockIcon";
 
 export default {
-  title: "icons/LockIcon",
+  title: "icons/Lock Icon",
   component: LockIcon,
 };
 

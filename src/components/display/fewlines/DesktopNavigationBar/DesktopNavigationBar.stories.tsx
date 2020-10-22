@@ -3,7 +3,7 @@ import React from "react";
 import { DesktopNavigationBar } from "./DesktopNavigationBar";
 
 export default {
-  title: "components/DesktopNavigationBar",
+  title: "components/Desktop Navigation Bar",
   component: DesktopNavigationBar,
 };
 

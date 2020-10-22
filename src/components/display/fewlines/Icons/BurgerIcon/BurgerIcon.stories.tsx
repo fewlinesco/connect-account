@@ -3,7 +3,7 @@ import React from "react";
 import { BurgerIcon } from "./BurgerIcon";
 
 export default {
-  title: "icons/BurgerIcon",
+  title: "icons/Burger Icon",
   component: BurgerIcon,
 };
 

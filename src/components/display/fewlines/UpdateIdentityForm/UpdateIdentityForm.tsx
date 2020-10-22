@@ -3,11 +3,8 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
-import { Container } from "../Container";
 import { Form } from "../Form/Form";
-import { H1 } from "../H1/H1";
 import { Input } from "../Input/Input";
-import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { Box } from "@src/components/display/fewlines/Box/Box";
 
@@ -20,16 +17,7 @@ export const UpdateIdentityForm: React.FC<{
   const { value } = currentIdentity;
 
   return (
-    <Container>
-      <H1>Logins</H1>
-      <NavigationBreadcrumbs
-        breadcrumbs={[
-          currentIdentity.type === IdentityTypes.EMAIL
-            ? "Email address"
-            : "Phone number",
-          "edit",
-        ]}
-      />
+    <>
       <Box key={value}>
         <Value>{value}</Value>
       </Box>
@@ -62,7 +50,7 @@ export const UpdateIdentityForm: React.FC<{
       >
         Cancel
       </Button>
-    </Container>
+    </>
   );
 };
 

@@ -1,13 +1,13 @@
 import React from "react";
 
 import { StoriesContainer } from "../StoriesContainer";
-import Logins from "./Logins";
+import LoginsOverview from "./LoginsOverview";
 import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 
-export default { title: "pages/Logins", component: Logins };
+export default { title: "pages/Logins Overview", component: LoginsOverview };
 
-export const LoginsPage = (): JSX.Element => {
+export const LoginsOverviewPage = (): JSX.Element => {
   const mockedSortedResponse: SortedIdentities = {
     phoneIdentities: [
       {
@@ -59,7 +59,7 @@ export const LoginsPage = (): JSX.Element => {
 
   return (
     <StoriesContainer>
-      <Logins sortedIdentities={mockedSortedResponse} />
+      <LoginsOverview sortedIdentities={mockedSortedResponse} />
     </StoriesContainer>
   );
 };

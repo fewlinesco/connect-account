@@ -3,7 +3,7 @@ import React from "react";
 import { Container } from "../Container";
 import { BoxedLink } from "./BoxedLink";
 
-export default { title: "components/BoxedLink", component: BoxedLink };
+export default { title: "components/Boxed Link", component: BoxedLink };
 
 export const StandardBoxedLink = (): JSX.Element => {
   return (

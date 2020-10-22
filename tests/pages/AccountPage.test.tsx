@@ -1,8 +1,7 @@
 import { mount } from "enzyme";
 import React from "react";
 
-import { SECTION_LIST_CONTENT } from "@src/components/display/fewlines/Account/Account";
-import { AccountPage } from "@src/components/display/fewlines/Account/Account.stories";
+import { SECTION_LIST_CONTENT } from "@src/components/display/fewlines/AccountOverview/AccountOverview";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { H2 } from "@src/components/display/fewlines/H2/H2";
 import {
@@ -11,6 +10,7 @@ import {
 } from "@src/components/display/fewlines/SectionListItem/SectionListItem";
 import { ShadowBox } from "@src/components/display/fewlines/ShadowBox/ShadowBox";
 import { AccountApp } from "@src/pages/_app";
+import AccountPage from "@src/pages/account/index";
 
 describe("AccountPage", () => {
   test("should display an H1 with the right text", () => {

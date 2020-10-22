@@ -5,20 +5,20 @@ import { HttpVerbs } from "@src/@types/HttpVerbs";
 import { ErrorVerifyingValidationCode } from "@src/clientErrors";
 import { fetchJson } from "@src/utils/fetchJson";
 
-interface VerifyIdentity {
+interface ValidateIdentity {
   eventId: string;
   children: (props: {
-    verifyIdentity: (validationCode: string) => Promise<void>;
+    validateIdentity: (validationCode: string) => Promise<void>;
   }) => JSX.Element;
 }
 
-export const VerifyIdentity: React.FC<VerifyIdentity> = ({
+export const ValidateIdentity: React.FC<ValidateIdentity> = ({
   eventId,
   children,
 }) => {
   const router = useRouter();
 
-  async function verifyIdentity(validationCode: string): Promise<void> {
+  async function validateIdentity(validationCode: string): Promise<void> {
     try {
       const response = await fetchJson(
         "/api/auth-connect/verify-validation-code",
@@ -39,6 +39,6 @@ export const VerifyIdentity: React.FC<VerifyIdentity> = ({
   }
 
   return children({
-    verifyIdentity,
+    validateIdentity,
   });
 };

@@ -4,36 +4,24 @@ import styled from "styled-components";
 
 import { Box } from "../Box/Box";
 import { Button, ButtonVariant } from "../Button/Button";
-import { Container } from "../Container";
 import { Form } from "../Form/Form";
-import { H1 } from "../H1/H1";
 import { Input } from "../Input/Input";
-import { NavigationBreadcrumbs } from "../NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { IdentityTypes } from "@lib/@types/Identity";
 import { displayAlertBar } from "@src/utils/displayAlertBar";
 
-const IdentityValidationForm: React.FC<{
+export const ValidateIdentityForm: React.FC<{
   type: IdentityTypes;
-  verifyIdentity: (validationCode: string) => Promise<void>;
-}> = ({ type, verifyIdentity }) => {
+  validateIdentity: (validationCode: string) => Promise<void>;
+}> = ({ type, validateIdentity }) => {
   const [validationCode, setValidationCode] = React.useState("");
 
   const router = useRouter();
 
   return (
-    <Container>
-      <H1>Logins</H1>
-      <NavigationBreadcrumbs
-        breadcrumbs={[
-          type.toUpperCase() === IdentityTypes.EMAIL
-            ? "Email address"
-            : "Phone number",
-          "validation",
-        ]}
-      />
+    <>
       <Form
         onSubmit={async () => {
-          await verifyIdentity(validationCode);
+          await validateIdentity(validationCode);
         }}
       >
         {displayAlertBar(
@@ -68,11 +56,9 @@ const IdentityValidationForm: React.FC<{
       <Button variant={ButtonVariant.SECONDARY}>
         Resend confirmation code
       </Button>
-    </Container>
+    </>
   );
 };
-
-export default IdentityValidationForm;
 
 const DidntReceiveCode = styled.p`
   margin: ${({ theme }) => theme.spaces.xs} 0 ${({ theme }) => theme.spaces.xxs};

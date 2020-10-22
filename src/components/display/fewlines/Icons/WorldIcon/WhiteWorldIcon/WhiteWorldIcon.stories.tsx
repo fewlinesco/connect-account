@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { WhiteWorldIcon } from "./WhiteWorldIcon";
 
 export default {
-  title: "icons/WorldIcon",
+  title: "icons/World Icon",
   component: WhiteWorldIcon,
 };
 

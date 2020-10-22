@@ -4,9 +4,6 @@ import styled from "styled-components";
 
 import { BoxedLink } from "../BoxedLink/BoxedLink";
 import { Button, ButtonVariant } from "../Button/Button";
-import { Container } from "../Container";
-import { H1 } from "../H1/H1";
-import { H2 } from "../H2/H2";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
@@ -14,11 +11,13 @@ import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
 import type { Identity } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 
-type LoginsProps = {
+type LoginsOverviewProps = {
   sortedIdentities: SortedIdentities;
 };
 
-const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
+const LoginsOverview: React.FC<LoginsOverviewProps> = ({
+  sortedIdentities,
+}) => {
   const [hideSecondaryEmails, setHideSecondaryEmails] = React.useState<boolean>(
     true,
   );
@@ -44,9 +43,7 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
   const { emailIdentities, phoneIdentities } = sortedIdentities;
 
   return (
-    <Container>
-      <H1>Logins</H1>
-      <H2>Your emails, phones and social logins</H2>
+    <>
       <IdentitySection>
         <h3>Email addresses</h3>
         <ShadowBox>
@@ -142,11 +139,11 @@ const Logins: React.FC<LoginsProps> = ({ sortedIdentities }) => {
       <IdentitySection>
         <h3>Social logins</h3>
       </IdentitySection>
-    </Container>
+    </>
   );
 };
 
-export default Logins;
+export default LoginsOverview;
 
 const Flex = styled.div`
   display: flex;

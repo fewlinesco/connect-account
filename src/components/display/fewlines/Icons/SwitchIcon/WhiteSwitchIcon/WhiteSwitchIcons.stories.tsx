@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { WhiteSwitchIcon } from "./WhiteSwitchIcon";
 
 export default {
-  title: "icons/SwitchIcon",
+  title: "icons/Switch Icon",
   component: WhiteSwitchIcon,
 };
 

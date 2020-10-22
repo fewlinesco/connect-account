@@ -4,7 +4,7 @@ import { Container } from "../Container";
 import { ShadowBox } from "./ShadowBox";
 
 export default {
-  title: "components/ShadowBox",
+  title: "components/Shadow Box",
   component: ShadowBox,
 };
 

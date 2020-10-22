@@ -3,7 +3,7 @@ import React from "react";
 import { AwaitingValidationBadge } from "./AwaitingValidationBadge";
 
 export default {
-  title: "components/AwaitingValidationBadge",
+  title: "components/Awaiting Validation Badge",
   component: AwaitingValidationBadge,
 };
 

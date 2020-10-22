@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { AwaitingValidationIcon } from "./AwaitingValidationIcon";
 
 export default {
-  title: "icons/AwaitingValidationIcon",
+  title: "icons/Awaiting Validation Icon",
   component: AwaitingValidationIcon,
 };
 

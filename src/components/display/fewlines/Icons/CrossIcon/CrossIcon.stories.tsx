@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { CrossIcon } from "./CrossIcon";
 
 export default {
-  title: "icons/CrossIcon",
+  title: "icons/Cross Icon",
   component: CrossIcon,
 };
 
