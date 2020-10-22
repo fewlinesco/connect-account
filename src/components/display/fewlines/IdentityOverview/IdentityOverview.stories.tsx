@@ -1,12 +1,12 @@
 import React from "react";
 
 import { StoriesContainer } from "../StoriesContainer";
-import { ShowIdentity } from "./ShowIdentity";
+import { IdentityOverview } from "./IdentityOverview";
 import { Identity, IdentityTypes } from "@lib/@types";
 
-export default { title: "pages/ShowIdentity", component: ShowIdentity };
+export default { title: "pages/IdentityOverview", component: IdentityOverview };
 
-export const ShowPrimaryIdentity = (): JSX.Element => {
+export const PrimaryIdentityOverview = (): JSX.Element => {
   const mockedResponse: Identity = {
     id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
     primary: true,
@@ -17,12 +17,12 @@ export const ShowPrimaryIdentity = (): JSX.Element => {
 
   return (
     <StoriesContainer>
-      <ShowIdentity identity={mockedResponse} />
+      <IdentityOverview identity={mockedResponse} />
     </StoriesContainer>
   );
 };
 
-export const ShowNonPrimaryIdentity = (): JSX.Element => {
+export const NonPrimaryIdentityOverview = (): JSX.Element => {
   const mockedResponse: Identity = {
     id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
     primary: false,
@@ -33,12 +33,12 @@ export const ShowNonPrimaryIdentity = (): JSX.Element => {
 
   return (
     <StoriesContainer>
-      <ShowIdentity identity={mockedResponse} />
+      <IdentityOverview identity={mockedResponse} />
     </StoriesContainer>
   );
 };
 
-export const ShowNonValidatedIdentity = (): JSX.Element => {
+export const NonValidatedIdentityOverview = (): JSX.Element => {
   const mockedResponse: Identity = {
     id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
     primary: false,
@@ -49,7 +49,7 @@ export const ShowNonValidatedIdentity = (): JSX.Element => {
 
   return (
     <StoriesContainer>
-      <ShowIdentity identity={mockedResponse} />
+      <IdentityOverview identity={mockedResponse} />
     </StoriesContainer>
   );
 };

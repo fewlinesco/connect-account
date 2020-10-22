@@ -8,8 +8,8 @@ import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { NoIdentityFound } from "@src/clientErrors";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
+import { IdentityOverview } from "@src/components/display/fewlines/IdentityOverview/IdentityOverview";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
-import { ShowIdentity } from "@src/components/display/fewlines/ShowIdentity/ShowIdentity";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
@@ -18,7 +18,9 @@ import { getUser } from "@src/utils/getUser";
 import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry from "@src/utils/sentry";
 
-const ShowIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
+const IdentityOverviewPage: React.FC<{ identity: Identity }> = ({
+  identity,
+}) => {
   const { type } = identity;
 
   return (
@@ -31,12 +33,12 @@ const ShowIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
             : "Phone number",
         ]}
       />
-      <ShowIdentity identity={identity} />
+      <IdentityOverview identity={identity} />
     </Container>
   );
 };
 
-export default ShowIdentityPage;
+export default IdentityOverviewPage;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {

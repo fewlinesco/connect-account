@@ -11,11 +11,13 @@ import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { DeleteIdentity } from "@src/components/business/DeleteIdentity";
 
-type ShowIdentityProps = {
+type IdentityOverviewProps = {
   identity: Identity;
 };
 
-export const ShowIdentity: React.FC<ShowIdentityProps> = ({ identity }) => {
+export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
+  identity,
+}) => {
   const [
     deleteConfirmationBoxOpen,
     setDeleteConfirmationBoxOpen,
