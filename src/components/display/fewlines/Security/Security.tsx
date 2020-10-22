@@ -13,7 +13,7 @@ type SecurityProps = {
 export const Security: React.FC<SecurityProps> = ({ isPasswordSet }) => {
   return (
     <ShadowBox>
-      <Link href={`/account/security/${isPasswordSet ? "update" : "set"}`}>
+      <Link href="/account/security/update">
         <NeutralLink>
           <Flex>
             <TextBox>{isPasswordSet ? "Update" : "Set"} your password</TextBox>
