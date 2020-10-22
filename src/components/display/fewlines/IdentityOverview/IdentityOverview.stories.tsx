@@ -4,7 +4,10 @@ import { StoriesContainer } from "../StoriesContainer";
 import { IdentityOverview } from "./IdentityOverview";
 import { Identity, IdentityTypes } from "@lib/@types";
 
-export default { title: "pages/IdentityOverview", component: IdentityOverview };
+export default {
+  title: "pages/Identity Overview",
+  component: IdentityOverview,
+};
 
 export const PrimaryIdentityOverview = (): JSX.Element => {
   const mockedResponse: Identity = {

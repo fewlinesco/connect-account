@@ -6,7 +6,7 @@ import { IdentityTypes } from "@lib/@types/Identity";
 import { ValidateIdentity } from "@src/components/business/ValidateIdentity";
 
 export default {
-  title: "pages/ValidateIdentityForm",
+  title: "pages/Validate Identity Form",
   component: ValidateIdentityForm,
 };
 

@@ -7,7 +7,7 @@ import { ConfirmationText } from "../IdentityOverview/IdentityOverview";
 import { ConfirmationBox } from "./ConfirmationBox";
 
 export default {
-  title: "components/ConfirmationBox",
+  title: "components/Confirmation Box",
   component: ConfirmationBox,
 };
 

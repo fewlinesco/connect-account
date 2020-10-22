@@ -3,7 +3,7 @@ import React from "react";
 import { HomeDesktopBackground } from "./HomeDesktopBackground";
 
 export default {
-  title: "icons/HomeDesktopBackground",
+  title: "icons/Home Desktop Background",
   component: HomeDesktopBackground,
 };
 

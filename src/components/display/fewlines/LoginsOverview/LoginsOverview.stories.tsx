@@ -5,7 +5,7 @@ import LoginsOverview from "./LoginsOverview";
 import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 
-export default { title: "pages/LoginsOverview", component: LoginsOverview };
+export default { title: "pages/Logins Overview", component: LoginsOverview };
 
 export const LoginsOverviewPage = (): JSX.Element => {
   const mockedSortedResponse: SortedIdentities = {

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { RightChevron } from "./RightChevron";
 
 export default {
-  title: "icons/RightChevron",
+  title: "icons/Right Chevron",
   component: RightChevron,
 };
 

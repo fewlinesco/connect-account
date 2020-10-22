@@ -3,7 +3,7 @@ import React from "react";
 import { AlertBar } from "./AlertBar";
 
 export default {
-  title: "components/AlertBar",
+  title: "components/Alert Bar",
   component: AlertBar,
 };
 

@@ -3,7 +3,7 @@ import React from "react";
 import { ShowMoreButton } from "./ShowMoreButton";
 
 export default {
-  title: "components/ShowMoreButton",
+  title: "components/Show More Button",
   component: ShowMoreButton,
 };
 
