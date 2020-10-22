@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
-import { NeutralLink } from "../NeutralLink";
 
 type BoxedLinkProps = {
   value: string;
@@ -23,7 +22,7 @@ export const BoxedLink: React.FC<BoxedLinkProps> = ({
   );
 };
 
-const Box = styled(NeutralLink)<Pick<BoxedLinkProps, "primary" | "status">>`
+const Box = styled.div<Pick<BoxedLinkProps, "primary" | "status">>`
   height: 7.2rem;
   padding: 0 ${({ theme }) => theme.spaces.xs};
   display: flex;
