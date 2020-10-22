@@ -8,6 +8,7 @@ import { KeyIcon } from "../Icons/KeyIcon/KeyIcon";
 import { LockIcon } from "../Icons/LockIcon/LockIcon";
 import { BlackSwitchIcon } from "../Icons/SwitchIcon/BlackSwitchIcon/BlackSwitchIcon";
 import { BlackWorldIcon } from "../Icons/WorldIcon/BlackWorldIcon/BlackWorldIcon";
+import { NeutralLink } from "../NeutralLink";
 import { Separator } from "../Separator/Separator";
 
 export const DesktopNavigationBar: React.FC = () => {
@@ -46,7 +47,7 @@ const Bar = styled.div`
   width: 100%;
 `;
 
-const ListItem = styled.div`
+const ListItem = styled(NeutralLink)`
   display: flex;
   align-items: center;
   padding: ${({ theme }) => theme.spaces.xs} 0 ${({ theme }) => theme.spaces.xs}

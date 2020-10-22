@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { BoxedLink } from "../BoxedLink/BoxedLink";
 import { Button, ButtonVariant } from "../Button/Button";
-import { NeutralLink } from "../NeutralLink/NeutralLink";
+import { NeutralLink } from "../NeutralLink";
 import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
