@@ -2,7 +2,10 @@ import { HttpStatus } from "@fwl/web";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
-import Account from "@src/components/display/fewlines/Account/Account";
+import Account from "@src/components/display/fewlines/AccountOverview/AccountOverview";
+import { Container } from "@src/components/display/fewlines/Container";
+import { H1 } from "@src/components/display/fewlines/H1/H1";
+import { H2 } from "@src/components/display/fewlines/H2/H2";
 import { oauth2Client, config } from "@src/config";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
@@ -11,7 +14,13 @@ import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const AccountPage: React.FC = () => {
-  return <Account />;
+  return (
+    <Container>
+      <H1>Welcome to your account</H1>
+      <H2>First name last name</H2>
+      <Account />
+    </Container>
+  );
 };
 
 export default AccountPage;

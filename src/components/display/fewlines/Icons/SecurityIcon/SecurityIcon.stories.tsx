@@ -3,7 +3,7 @@ import React from "react";
 import { SecurityIcon } from "./SecurityIcon";
 
 export default {
-  title: "icons/SecurityIcon",
+  title: "icons/Security Icon",
   component: SecurityIcon,
 };
 

@@ -7,7 +7,7 @@ import { SortedIdentities } from "@src/@types/SortedIdentities";
 import { BoxedLink } from "@src/components/display/fewlines/BoxedLink/BoxedLink";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { H2 } from "@src/components/display/fewlines/H2/H2";
-import { Value } from "@src/components/display/fewlines/Logins/Logins";
+import { Value } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
 import { AccountApp } from "@src/pages/_app";
 import LoginsPage from "@src/pages/account/logins/index";

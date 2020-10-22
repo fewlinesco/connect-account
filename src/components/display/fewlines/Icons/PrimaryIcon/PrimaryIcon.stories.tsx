@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { PrimaryIcon } from "./PrimaryIcon";
 
-export default { title: "icons/PrimaryIcon", component: PrimaryIcon };
+export default { title: "icons/Primary Icon", component: PrimaryIcon };
 
 export const StandardPrimaryIcon = (): JSX.Element => {
   return (

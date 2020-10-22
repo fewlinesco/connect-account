@@ -5,7 +5,10 @@ import React from "react";
 import { getIdentities } from "@lib/queries/getIdentities";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
-import Logins from "@src/components/display/fewlines/Logins/Logins";
+import { Container } from "@src/components/display/fewlines/Container";
+import { H1 } from "@src/components/display/fewlines/H1/H1";
+import { H2 } from "@src/components/display/fewlines/H2/H2";
+import Logins from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
@@ -20,7 +23,13 @@ type LoginsProps = {
 };
 
 const LoginsPage: React.FC<LoginsProps> = ({ sortedIdentities }) => {
-  return <Logins sortedIdentities={sortedIdentities} />;
+  return (
+    <Container>
+      <H1>Logins</H1>
+      <H2>Your emails, phones and social logins</H2>
+      <Logins sortedIdentities={sortedIdentities} />
+    </Container>
+  );
 };
 
 export default LoginsPage;

@@ -6,7 +6,7 @@ import { IdentityTypes } from "@lib/@types";
 import { AddIdentity } from "@src/components/business/AddIdentity";
 
 export default {
-  title: "pages/AddIdentityForm",
+  title: "pages/Add Identity Form",
   component: AddIdentityForm,
 };
 

@@ -13,15 +13,15 @@ import {
 } from "@src/components/display/fewlines/Button/Button";
 import { ClickAwayListener } from "@src/components/display/fewlines/ClickAwayListener";
 import { ConfirmationBox } from "@src/components/display/fewlines/ConfirmationBox/ConfirmationBox";
+import { ConfirmationText } from "@src/components/display/fewlines/IdentityOverview/IdentityOverview";
 import {
   NavigationBreadcrumbs,
   Breadcrumbs,
 } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "@src/components/display/fewlines/PrimaryBadge/PrimaryBadge";
-import { ConfirmationText } from "@src/components/display/fewlines/ShowIdentity/ShowIdentity";
 import { useCookies } from "@src/hooks/useCookies";
 import { AccountApp } from "@src/pages/_app";
-import ShowIdentityPage from "@src/pages/account/logins/[type]/[id]";
+import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
 import * as fetchJson from "@src/utils/fetchJson";
 
 enableFetchMocks();
@@ -43,7 +43,7 @@ jest.mock("@src/config", () => {
   };
 });
 
-describe("ShowIdentityPage", () => {
+describe("IdentityOverviewPage", () => {
   beforeEach(() => {
     fetch.resetMocks();
   });
@@ -83,7 +83,7 @@ describe("ShowIdentityPage", () => {
   test("it should display navigation breadcrumbs properly for emails", () => {
     const component = mount(
       <AccountApp>
-        <ShowIdentityPage identity={nonPrimaryIdentity} />
+        <IdentityOverviewPage identity={nonPrimaryIdentity} />
       </AccountApp>,
     );
 
@@ -98,7 +98,7 @@ describe("ShowIdentityPage", () => {
   test("it should display navigation breadcrumbs properly for phones", () => {
     const component = mount(
       <AccountApp>
-        <ShowIdentityPage identity={phoneIdentity} />
+        <IdentityOverviewPage identity={phoneIdentity} />
       </AccountApp>,
     );
 
@@ -112,7 +112,7 @@ describe("ShowIdentityPage", () => {
   test("it should display the update button for a non primary identity", () => {
     const component = mount(
       <AccountApp>
-        <ShowIdentityPage identity={nonPrimaryIdentity} />
+        <IdentityOverviewPage identity={nonPrimaryIdentity} />
       </AccountApp>,
     );
 
@@ -127,7 +127,7 @@ describe("ShowIdentityPage", () => {
   test("it should display the update button for a primary identity", () => {
     const component = mount(
       <AccountApp>
-        <ShowIdentityPage identity={primaryIdentity} />
+        <IdentityOverviewPage identity={primaryIdentity} />
       </AccountApp>,
     );
 
@@ -142,7 +142,7 @@ describe("ShowIdentityPage", () => {
   test("it should display the delete button for a non primary identity", () => {
     const component = mount(
       <AccountApp>
-        <ShowIdentityPage identity={nonPrimaryIdentity} />
+        <IdentityOverviewPage identity={nonPrimaryIdentity} />
       </AccountApp>,
     );
 
@@ -156,7 +156,7 @@ describe("ShowIdentityPage", () => {
   test("it should not display the delete button for a primary identity", () => {
     const component = mount(
       <AccountApp>
-        <ShowIdentityPage identity={primaryIdentity} />
+        <IdentityOverviewPage identity={primaryIdentity} />
       </AccountApp>,
     );
 
@@ -169,7 +169,7 @@ describe("ShowIdentityPage", () => {
   test("it should not display the primary badge if the identity is not primary", () => {
     const component = mount(
       <AccountApp>
-        <ShowIdentityPage identity={nonPrimaryIdentity} />
+        <IdentityOverviewPage identity={nonPrimaryIdentity} />
       </AccountApp>,
     );
 
@@ -186,7 +186,7 @@ describe("ShowIdentityPage", () => {
   test("it should display the primary tag if the identity is primary", () => {
     const component = mount(
       <AccountApp>
-        <ShowIdentityPage identity={primaryIdentity} />
+        <IdentityOverviewPage identity={primaryIdentity} />
       </AccountApp>,
     );
 
@@ -207,7 +207,7 @@ describe("ShowIdentityPage", () => {
   test("it should display the validation button and the awaiting validation tag if the identity is not validated", () => {
     const component = mount(
       <AccountApp>
-        <ShowIdentityPage identity={nonValidatedIdentity} />
+        <IdentityOverviewPage identity={nonValidatedIdentity} />
       </AccountApp>,
     );
 
@@ -224,7 +224,7 @@ describe("ShowIdentityPage", () => {
   test("it should not display the make this identity primary button if the identity is not validated", () => {
     const component = mount(
       <AccountApp>
-        <ShowIdentityPage identity={nonValidatedIdentity} />
+        <IdentityOverviewPage identity={nonValidatedIdentity} />
       </AccountApp>,
     );
 
@@ -240,7 +240,7 @@ describe("ShowIdentityPage", () => {
     test("no confirmation box should be displayed at the page's render", () => {
       const component = mount(
         <AccountApp>
-          <ShowIdentityPage identity={nonPrimaryIdentity} />
+          <IdentityOverviewPage identity={nonPrimaryIdentity} />
         </AccountApp>,
       );
 
@@ -253,7 +253,7 @@ describe("ShowIdentityPage", () => {
     test("the primary confirmation box shoud appear on click on 'make this my primary { type }' button", () => {
       const component = mount(
         <AccountApp>
-          <ShowIdentityPage identity={nonPrimaryIdentity} />
+          <IdentityOverviewPage identity={nonPrimaryIdentity} />
         </AccountApp>,
       );
 
@@ -281,7 +281,7 @@ describe("ShowIdentityPage", () => {
     test("we should be able to close the confirmation box by clicking on 'keep { value } as my primary { type }' button", () => {
       const component = mount(
         <AccountApp>
-          <ShowIdentityPage identity={nonPrimaryIdentity} />
+          <IdentityOverviewPage identity={nonPrimaryIdentity} />
         </AccountApp>,
       );
 
@@ -313,7 +313,7 @@ describe("ShowIdentityPage", () => {
     test("we should be able to close the confirmation box by clicking on the ClickAwayListener", () => {
       const component = mount(
         <AccountApp>
-          <ShowIdentityPage identity={nonPrimaryIdentity} />
+          <IdentityOverviewPage identity={nonPrimaryIdentity} />
         </AccountApp>,
       );
 
@@ -338,7 +338,7 @@ describe("ShowIdentityPage", () => {
     test("the delete confirmation box shoud appear on click on 'delete this { type }' button", () => {
       const component = mount(
         <AccountApp>
-          <ShowIdentityPage identity={nonPrimaryIdentity} />
+          <IdentityOverviewPage identity={nonPrimaryIdentity} />
         </AccountApp>,
       );
 
@@ -366,7 +366,7 @@ describe("ShowIdentityPage", () => {
     test("we should be able to close the confirmation box by clicking on 'keep { type }' button", () => {
       const component = mount(
         <AccountApp>
-          <ShowIdentityPage identity={nonPrimaryIdentity} />
+          <IdentityOverviewPage identity={nonPrimaryIdentity} />
         </AccountApp>,
       );
 
@@ -396,7 +396,7 @@ describe("ShowIdentityPage", () => {
     test("we should be able to close the confirmation box by clicking on the ClickAwayListener", () => {
       const component = mount(
         <AccountApp>
-          <ShowIdentityPage identity={nonPrimaryIdentity} />
+          <IdentityOverviewPage identity={nonPrimaryIdentity} />
         </AccountApp>,
       );
 
@@ -421,7 +421,7 @@ describe("ShowIdentityPage", () => {
     test("clicking on the delete button should delete the identity", () => {
       const component = mount(
         <AccountApp>
-          <ShowIdentityPage identity={nonPrimaryIdentity} />
+          <IdentityOverviewPage identity={nonPrimaryIdentity} />
         </AccountApp>,
       );
 

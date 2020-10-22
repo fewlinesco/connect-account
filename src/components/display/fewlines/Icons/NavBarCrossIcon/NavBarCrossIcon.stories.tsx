@@ -3,7 +3,7 @@ import React from "react";
 import { NavBarCrossIcon } from "./NavBarCrossIcon";
 
 export default {
-  title: "icons/NavBarCrossIcon",
+  title: "icons/Nav Bar Cross Icon",
   component: NavBarCrossIcon,
 };
 

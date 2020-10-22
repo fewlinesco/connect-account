@@ -2,7 +2,7 @@ import { mount } from "enzyme";
 import React from "react";
 
 import { Input } from "@src/components/display/fewlines/Input/Input";
-import { ListItem } from "@src/components/display/fewlines/Languages/Locale";
+import { ListItem } from "@src/components/display/fewlines/Locale/Locale";
 import { RadioButton } from "@src/components/display/fewlines/RadioButton/RadioButton";
 import { AccountApp } from "@src/pages/_app";
 import LocalePage from "@src/pages/account/locale";

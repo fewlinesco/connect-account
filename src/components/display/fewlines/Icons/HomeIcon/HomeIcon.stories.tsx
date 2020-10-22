@@ -3,7 +3,7 @@ import React from "react";
 import { HomeIcon } from "./HomeIcon";
 
 export default {
-  title: "icons/HomeIcon",
+  title: "icons/Home Icon",
   component: HomeIcon,
 };
 
