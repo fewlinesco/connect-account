@@ -10,7 +10,7 @@ import { H2 } from "@src/components/display/fewlines/H2/H2";
 import { Value } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
 import { AccountApp } from "@src/pages/_app";
-import LoginsPage from "@src/pages/account/logins/index";
+import LoginsOverviewPage from "@src/pages/account/logins/index";
 
 jest.mock("@src/config", () => {
   return {
@@ -21,7 +21,7 @@ jest.mock("@src/config", () => {
   };
 });
 
-describe("LoginsPage", () => {
+describe("LoginsOverviewPage", () => {
   describe("Boxedlink", () => {
     test("it should display email and phone when there are one of each", () => {
       const mockedSortedResponse: SortedIdentities = {
@@ -46,7 +46,7 @@ describe("LoginsPage", () => {
       };
       const component = mount(
         <AccountApp>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
+          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
         </AccountApp>,
       );
       const boxedLink = component.find(BoxedLink);
@@ -90,7 +90,7 @@ describe("LoginsPage", () => {
       };
       const component = mount(
         <AccountApp>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
+          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
         </AccountApp>,
       );
       const boxedLink = component.find(BoxedLink);
@@ -112,7 +112,7 @@ describe("LoginsPage", () => {
       };
       const component = mount(
         <AccountApp>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
+          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
         </AccountApp>,
       );
       const boxedLink = component.find(BoxedLink);
@@ -136,7 +136,7 @@ describe("LoginsPage", () => {
       };
       const component = mount(
         <AccountApp>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
+          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
         </AccountApp>,
       );
       const boxedLink = component.find(BoxedLink);
@@ -153,7 +153,7 @@ describe("LoginsPage", () => {
       };
       const component = mount(
         <AccountApp>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
+          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
         </AccountApp>,
       );
       const noPhone = component.contains(<Value>No phones</Value>);
@@ -169,7 +169,7 @@ describe("LoginsPage", () => {
       };
       const component = mount(
         <AccountApp>
-          <LoginsPage sortedIdentities={mockedSortedResponse} />
+          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
         </AccountApp>,
       );
 
@@ -197,7 +197,7 @@ describe("LoginsPage", () => {
     };
     const component = mount(
       <AccountApp>
-        <LoginsPage sortedIdentities={mockedSortedResponse} />
+        <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
       </AccountApp>,
     );
 
@@ -223,7 +223,7 @@ describe("LoginsPage", () => {
     };
     const component = mount(
       <AccountApp>
-        <LoginsPage sortedIdentities={mockedSortedResponse} />
+        <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
       </AccountApp>,
     );
 
@@ -294,7 +294,7 @@ describe("ShowMoreButton", () => {
     };
     const component = mount(
       <AccountApp>
-        <LoginsPage sortedIdentities={mockedSortedResponse} />
+        <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
       </AccountApp>,
     );
 
@@ -348,7 +348,7 @@ describe("ShowMoreButton", () => {
     };
     const component = mount(
       <AccountApp>
-        <LoginsPage sortedIdentities={mockedSortedResponse} />
+        <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
       </AccountApp>,
     );
     const boxedLink = component.find(BoxedLink);
@@ -390,7 +390,7 @@ describe("ShowMoreButton", () => {
     };
     const component = mount(
       <AccountApp>
-        <LoginsPage sortedIdentities={mockedSortedResponse} />
+        <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
       </AccountApp>,
     );
     const showMoreButton = component.find(ShowMoreButton);

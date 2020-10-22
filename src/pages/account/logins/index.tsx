@@ -8,7 +8,7 @@ import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { H2 } from "@src/components/display/fewlines/H2/H2";
-import Logins from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
+import LoginsOverview from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
@@ -18,21 +18,23 @@ import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 import { sortIdentities } from "@src/utils/sortIdentities";
 
-type LoginsProps = {
+type LoginsOverviewPageProps = {
   sortedIdentities: SortedIdentities;
 };
 
-const LoginsPage: React.FC<LoginsProps> = ({ sortedIdentities }) => {
+const LoginsOverviewPage: React.FC<LoginsOverviewPageProps> = ({
+  sortedIdentities,
+}) => {
   return (
     <Container>
       <H1>Logins</H1>
       <H2>Your emails, phones and social logins</H2>
-      <Logins sortedIdentities={sortedIdentities} />
+      <LoginsOverview sortedIdentities={sortedIdentities} />
     </Container>
   );
 };
 
-export default LoginsPage;
+export default LoginsOverviewPage;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {
