@@ -2,8 +2,8 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { BoxedLink } from "../BoxedLink/BoxedLink";
 import { Button, ButtonVariant } from "../Button/Button";
+import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import { NeutralLink } from "../NeutralLink";
 import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
@@ -13,6 +13,11 @@ import { SortedIdentities } from "@src/@types/SortedIdentities";
 
 type LoginsOverviewProps = {
   sortedIdentities: SortedIdentities;
+};
+
+type BoxedLinkProps = {
+  primary: boolean;
+  status: "validated" | "unvalidated";
 };
 
 const LoginsOverview: React.FC<LoginsOverviewProps> = ({
@@ -59,13 +64,10 @@ const LoginsOverview: React.FC<LoginsOverviewProps> = ({
                       email.id
                     }`}
                   >
-                    <NeutralLink>
-                      <BoxedLink
-                        value={email.value}
-                        primary={email.primary}
-                        status={email.status}
-                      />
-                    </NeutralLink>
+                    <BoxedLink primary={email.primary} status={email.status}>
+                      <p>{email.value}</p>
+                      <RightChevron />
+                    </BoxedLink>
                   </Link>
                   {emailList.indexOf(email) < emailList.length - 1 && (
                     <Separator />
@@ -105,13 +107,10 @@ const LoginsOverview: React.FC<LoginsOverviewProps> = ({
                       phone.id
                     }`}
                   >
-                    <NeutralLink>
-                      <BoxedLink
-                        value={phone.value}
-                        primary={phone.primary}
-                        status={phone.status}
-                      />
-                    </NeutralLink>
+                    <BoxedLink primary={phone.primary} status={phone.status}>
+                      <p>{phone.value}</p>
+                      <RightChevron />
+                    </BoxedLink>
                   </Link>
                   {phoneList.indexOf(phone) < phoneList.length - 1 && (
                     <Separator />
@@ -156,4 +155,27 @@ const IdentitySection = styled.div`
 
 export const Value = styled.p`
   margin-right: 0.5rem;
+`;
+
+export const BoxedLink = styled(NeutralLink)<
+  Pick<BoxedLinkProps, "primary" | "status">
+>`
+  height: 7.2rem;
+  padding: 0 ${({ theme }) => theme.spaces.xs};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+
+  ${(props) =>
+    props.primary &&
+    `
+        font-weight: ${props.theme.fontWeights.semibold};
+    `}
+
+  ${(props) =>
+    props.status === "unvalidated" &&
+    `
+    color: ${props.theme.colors.lightGrey};
+    `};
 `;
