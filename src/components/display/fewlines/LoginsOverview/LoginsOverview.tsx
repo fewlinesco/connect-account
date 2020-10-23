@@ -15,10 +15,7 @@ type LoginsOverviewProps = {
   sortedIdentities: SortedIdentities;
 };
 
-type BoxedLinkProps = {
-  primary: boolean;
-  status: "validated" | "unvalidated";
-};
+type BoxedLinkProps = Pick<Identity, "primary" | "status">;
 
 export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
   sortedIdentities,
