@@ -28,18 +28,20 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
       </Button>
       {open && <ClickAwayListener onClick={() => setOpen(false)} />}
       <ConfirmationBox open={open} preventAnimation={preventAnimation}>
-        <ConfirmationText>
-          You are about to replace mail@mail.com as your main address
-        </ConfirmationText>
-        <Button variant={ButtonVariant.PRIMARY}>
-          Set mail2@mail.com as my main
-        </Button>
-        <Button
-          onClick={() => setOpen(false)}
-          variant={ButtonVariant.SECONDARY}
-        >
-          Keep mail@mail.co as my primary email
-        </Button>
+        <>
+          <ConfirmationText>
+            You are about to replace mail@mail.com as your main address
+          </ConfirmationText>
+          <Button variant={ButtonVariant.PRIMARY}>
+            Set mail2@mail.com as my main
+          </Button>
+          <Button
+            onClick={() => setOpen(false)}
+            variant={ButtonVariant.SECONDARY}
+          >
+            Keep mail@mail.co as my primary email
+          </Button>
+        </>
       </ConfirmationBox>
     </Container>
   );
@@ -64,18 +66,20 @@ export const DangerConfirmationBox = (): JSX.Element => {
       </div>
       {open && <ClickAwayListener onClick={() => setOpen(false)} />}
       <ConfirmationBox open={open} preventAnimation={preventAnimation}>
-        <ConfirmationText>
-          You are about to delete mail@mail.co
-        </ConfirmationText>
-        <Button variant={ButtonVariant.DANGER}>
-          Delete this email address
-        </Button>
-        <Button
-          onClick={() => setOpen(false)}
-          variant={ButtonVariant.SECONDARY}
-        >
-          Keep email address
-        </Button>
+        <>
+          <ConfirmationText>
+            You are about to delete mail@mail.co
+          </ConfirmationText>
+          <Button variant={ButtonVariant.DANGER}>
+            Delete this email address
+          </Button>
+          <Button
+            onClick={() => setOpen(false)}
+            variant={ButtonVariant.SECONDARY}
+          >
+            Keep email address
+          </Button>
+        </>
       </ConfirmationBox>
     </Container>
   );

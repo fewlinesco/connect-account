@@ -95,20 +95,22 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
             open={primaryConfirmationBoxOpen}
             preventAnimation={preventPrimaryAnimation}
           >
-            <ConfirmationText>
-              You are about to replace mail@mail.com as your main address
-            </ConfirmationText>
-            <Button variant={ButtonVariant.PRIMARY}>
-              Set {value} as my main
-            </Button>
-            <Button
-              variant={ButtonVariant.SECONDARY}
-              onClick={() => {
-                setPrimaryConfirmationBoxOpen(false);
-              }}
-            >
-              Keep mail@mail.co as my primary {type.toLowerCase()}
-            </Button>
+            <>
+              <ConfirmationText>
+                You are about to replace mail@mail.com as your main address
+              </ConfirmationText>
+              <Button variant={ButtonVariant.PRIMARY}>
+                Set {value} as my main
+              </Button>
+              <Button
+                variant={ButtonVariant.SECONDARY}
+                onClick={() => {
+                  setPrimaryConfirmationBoxOpen(false);
+                }}
+              >
+                Keep mail@mail.co as my primary {type.toLowerCase()}
+              </Button>
+            </>
           </ConfirmationBox>
         </>
       )}
@@ -133,24 +135,33 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
             open={deleteConfirmationBoxOpen}
             preventAnimation={preventDeleteAnimation}
           >
-            <ConfirmationText>You are about to delete {value}</ConfirmationText>
-            <DeleteIdentity type={type} value={value}>
-              {({ deleteIdentity }) => (
-                <Button variant={ButtonVariant.DANGER} onClick={deleteIdentity}>
-                  Delete this{" "}
-                  {type === IdentityTypes.PHONE
-                    ? "phone number"
-                    : "email address"}
-                </Button>
-              )}
-            </DeleteIdentity>
-            <Button
-              variant={ButtonVariant.SECONDARY}
-              onClick={() => setDeleteConfirmationBoxOpen(false)}
-            >
-              Keep{" "}
-              {type === IdentityTypes.PHONE ? "phone number" : "email address"}
-            </Button>
+            <>
+              <ConfirmationText>
+                You are about to delete {value}
+              </ConfirmationText>
+              <DeleteIdentity type={type} value={value}>
+                {({ deleteIdentity }) => (
+                  <Button
+                    variant={ButtonVariant.DANGER}
+                    onClick={deleteIdentity}
+                  >
+                    Delete this{" "}
+                    {type === IdentityTypes.PHONE
+                      ? "phone number"
+                      : "email address"}
+                  </Button>
+                )}
+              </DeleteIdentity>
+              <Button
+                variant={ButtonVariant.SECONDARY}
+                onClick={() => setDeleteConfirmationBoxOpen(false)}
+              >
+                Keep{" "}
+                {type === IdentityTypes.PHONE
+                  ? "phone number"
+                  : "email address"}
+              </Button>
+            </>
           </ConfirmationBox>
         </>
       )}

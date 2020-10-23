@@ -1,11 +1,25 @@
+import React from "react";
 import styled from "styled-components";
 
 interface ConfirmationBoxProps {
   open: boolean;
   preventAnimation: boolean;
+  children: JSX.Element;
 }
 
-export const ConfirmationBox = styled.div<ConfirmationBoxProps>`
+export const ConfirmationBox: React.FC<ConfirmationBoxProps> = ({
+  open,
+  preventAnimation,
+  children,
+}) => {
+  return (
+    <Box open={open} preventAnimation={preventAnimation}>
+      {children}
+    </Box>
+  );
+};
+
+const Box = styled.div<ConfirmationBoxProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
