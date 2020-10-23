@@ -20,7 +20,7 @@ type BoxedLinkProps = {
   status: "validated" | "unvalidated";
 };
 
-const LoginsOverview: React.FC<LoginsOverviewProps> = ({
+export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
   sortedIdentities,
 }) => {
   const [hideSecondaryEmails, setHideSecondaryEmails] = React.useState<boolean>(
@@ -142,8 +142,6 @@ const LoginsOverview: React.FC<LoginsOverviewProps> = ({
   );
 };
 
-export default LoginsOverview;
-
 const Flex = styled.div`
   display: flex;
   justify-content: center;
@@ -157,9 +155,7 @@ export const Value = styled.p`
   margin-right: 0.5rem;
 `;
 
-export const BoxedLink = styled(NeutralLink)<
-  Pick<BoxedLinkProps, "primary" | "status">
->`
+export const BoxedLink = styled(NeutralLink)<BoxedLinkProps>`
   height: 7.2rem;
   padding: 0 ${({ theme }) => theme.spaces.xs};
   display: flex;

@@ -8,7 +8,7 @@ import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { H2 } from "@src/components/display/fewlines/H2/H2";
-import LoginsOverview from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
+import { LoginsOverview } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
