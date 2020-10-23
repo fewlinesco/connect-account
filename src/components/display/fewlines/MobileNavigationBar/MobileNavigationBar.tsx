@@ -11,6 +11,7 @@ import { NavBarCrossIcon } from "../Icons/NavBarCrossIcon/NavBarCrossIcon";
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import { WhiteSwitchIcon } from "../Icons/SwitchIcon/WhiteSwitchIcon/WhiteSwitchIcon";
 import { WhiteWorldIcon } from "../Icons/WorldIcon/WhiteWorldIcon/WhiteWorldIcon";
+import { NeutralLink } from "../NeutralLink";
 import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 interface MenuItemProps {
@@ -170,7 +171,7 @@ const MenuList = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
-const ListItem = styled.div`
+const ListItem = styled(NeutralLink)`
   height: 7.2rem;
   width: 100%;
   display: flex;

@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
-import { NeutralLink } from "../NeutralLink/NeutralLink";
+import { NeutralLink } from "../NeutralLink";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 
 type SectionListItemProps = {
@@ -20,22 +20,20 @@ export const SectionListItem: React.FC<SectionListItemProps> = ({
   return (
     <ShadowBox>
       <Link href={`/account/${sectionName.toLocaleLowerCase()}`}>
-        <NeutralLink>
-          <Flex>
-            {icon}
-            <TextBox>
-              <SectionName>{sectionName}</SectionName>
-              {text}
-            </TextBox>
-            <RightChevron />
-          </Flex>
-        </NeutralLink>
+        <Flex>
+          {icon}
+          <TextBox>
+            <SectionName>{sectionName}</SectionName>
+            {text}
+          </TextBox>
+          <RightChevron />
+        </Flex>
       </Link>
     </ShadowBox>
   );
 };
 
-const Flex = styled.div`
+const Flex = styled(NeutralLink)`
   display: flex;
   justify-content: space-between;
   align-items: center;

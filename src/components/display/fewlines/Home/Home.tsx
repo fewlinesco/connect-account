@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
@@ -23,12 +24,11 @@ export const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
               <DescriptionText>
                 You are about to access your account from fewlines.co
               </DescriptionText>
-              <Button
-                variant={ButtonVariant.PRIMARY}
-                onClick={() => router.push(authorizeURL)}
-              >
-                Access my account
-              </Button>
+              <Link href={authorizeURL}>
+                <Button variant={ButtonVariant.PRIMARY}>
+                  Access my account
+                </Button>
+              </Link>
               <BackLink onClick={() => router.push("http://fewlines.co")}>
                 Go back to fewlines.co
               </BackLink>

@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
-import { NeutralLink } from "../NeutralLink/NeutralLink";
+import { NeutralLink } from "../NeutralLink";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 
 type SecurityProps = {
@@ -12,20 +12,21 @@ type SecurityProps = {
 
 export const Security: React.FC<SecurityProps> = ({ isPasswordSet }) => {
   return (
-    <ShadowBox>
-      <Link href="/account/security/update">
-        <NeutralLink>
+    <>
+      <h3>Password</h3>
+      <ShadowBox>
+        <Link href="/account/security/update">
           <Flex>
             <TextBox>{isPasswordSet ? "Update" : "Set"} your password</TextBox>
             <RightChevron />
           </Flex>
-        </NeutralLink>
-      </Link>
-    </ShadowBox>
+        </Link>
+      </ShadowBox>
+    </>
   );
 };
 
-const Flex = styled.div`
+const Flex = styled(NeutralLink)`
   display: flex;
   justify-content: space-between;
   align-items: center;
