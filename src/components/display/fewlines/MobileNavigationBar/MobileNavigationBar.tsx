@@ -53,7 +53,11 @@ export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
             </ListItemLabel>
             <RightChevron />
           </ListItem>
-          <ListItem>
+          <ListItem
+            onClick={() =>
+              router.push("/account/security").then(() => setIsOpen(false))
+            }
+          >
             <ListItemLabel>
               <LockIcon />
               <Value>Security</Value>

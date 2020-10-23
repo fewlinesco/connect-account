@@ -1,7 +1,7 @@
 import React from "react";
 
 import { StoriesContainer } from "../StoriesContainer";
-import Home from "./Home";
+import { Home } from "./Home";
 
 export default { title: "pages/Home", component: Home };
 

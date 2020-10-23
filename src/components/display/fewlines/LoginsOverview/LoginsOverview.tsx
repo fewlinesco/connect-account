@@ -8,7 +8,7 @@ import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
-import { Identity } from "@lib/@types";
+import type { Identity } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 
 type LoginsOverviewProps = {

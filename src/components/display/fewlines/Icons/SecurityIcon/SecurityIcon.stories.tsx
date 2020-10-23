@@ -7,6 +7,6 @@ export default {
   component: SecurityIcon,
 };
 
-export const StandardlSecurityIcon = (): JSX.Element => {
+export const StandardSecurityIcon = (): JSX.Element => {
   return <SecurityIcon />;
 };

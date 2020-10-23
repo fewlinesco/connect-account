@@ -2,7 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
-import Account from "@src/components/display/fewlines/AccountOverview/AccountOverview";
+import { AccountOverview } from "@src/components/display/fewlines/AccountOverview/AccountOverview";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { H2 } from "@src/components/display/fewlines/H2/H2";
@@ -18,7 +18,7 @@ const AccountPage: React.FC = () => {
     <Container>
       <H1>Welcome to your account</H1>
       <H2>First name last name</H2>
-      <Account />
+      <AccountOverview />
     </Container>
   );
 };

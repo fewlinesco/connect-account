@@ -17,3 +17,12 @@ export type SingleIdentityProviderUser = {
     identity: Identity | null;
   };
 };
+
+export type User = {
+  id: string;
+};
+
+export type CreateOrUpdatePasswordInput = {
+  cleartextPassword: string;
+  userId: string;
+};

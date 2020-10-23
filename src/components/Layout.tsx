@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
@@ -16,36 +15,28 @@ export const Layout: React.FC = ({ children }) => {
   const router = useRouter();
 
   return (
-    <>
-      <Head>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <title>Connect Account</title>
-      </Head>
-      <Main>
-        {router && router.pathname !== "/" && (
-          <MobileDisplayOnly>
-            <Header />
-          </MobileDisplayOnly>
-        )}
-        <Flex>
-          {router && router.pathname !== "/" && (
-            <DesktopNavigationBarWrapper>
-              <DesktopNavigationBar />
-            </DesktopNavigationBarWrapper>
-          )}
-          <ChildrenContainer>{children}</ChildrenContainer>
-        </Flex>
-        {router && router.pathname !== "/" && isMobileNavBarOpen && (
-          <ClickAwayListener onClick={() => setIsMobileNavbarOpen(false)} />
-        )}
-        {router && router.pathname !== "/" && (
+    <Main>
+      {router && router.pathname !== "/" && (
+        <MobileDisplayOnly>
+          <Header />
           <MobileNavigationBar
             isOpen={isMobileNavBarOpen}
             setIsOpen={setIsMobileNavbarOpen}
           />
+          {isMobileNavBarOpen && (
+            <ClickAwayListener onClick={() => setIsMobileNavbarOpen(false)} />
+          )}
+        </MobileDisplayOnly>
+      )}
+      <Flex>
+        {router && router.pathname !== "/" && (
+          <DesktopNavigationBarWrapper>
+            <DesktopNavigationBar />
+          </DesktopNavigationBarWrapper>
         )}
-      </Main>
-    </>
+        <ChildrenContainer>{children}</ChildrenContainer>
+      </Flex>
+    </Main>
   );
 };
 

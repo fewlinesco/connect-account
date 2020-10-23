@@ -75,8 +75,8 @@ mkdir certs
 Add the local FQDN in /etc/hosts
 
 ----
-echo "127.0.0.1 sparta.fewlines.local front.sparta.fewlines.local slidedeck.sparta.fewlines.local" | sudo tee -a /etc/hosts
-echo "::1 sparta.fewlines.local front.sparta.fewlines.local slidedeck.sparta.fewlines.local" | sudo tee -a /etc/hosts
+echo "127.0.0.1 connect-account.local" | sudo tee -a /etc/hosts
+echo "::1 connect-account.local" | sudo tee -a /etc/hosts
 ----
 
 === Development Process
