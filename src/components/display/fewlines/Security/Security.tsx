@@ -14,18 +14,16 @@ export const Security: React.FC<SecurityProps> = ({ isPasswordSet }) => {
   return (
     <ShadowBox>
       <Link href="/account/security/update">
-        <NeutralLink>
-          <Flex>
-            <TextBox>{isPasswordSet ? "Update" : "Set"} your password</TextBox>
-            <RightChevron />
-          </Flex>
-        </NeutralLink>
+        <Flex>
+          <TextBox>{isPasswordSet ? "Update" : "Set"} your password</TextBox>
+          <RightChevron />
+        </Flex>
       </Link>
     </ShadowBox>
   );
 };
 
-const Flex = styled.div`
+const Flex = styled(NeutralLink)`
   display: flex;
   justify-content: space-between;
   align-items: center;

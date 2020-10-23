@@ -30,10 +30,6 @@ const Box = styled.div<Pick<BoxedLinkProps, "primary" | "status">>`
   justify-content: space-between;
   cursor: pointer;
 
-  .bold {
-    font-weight: bold;
-  }
-
   ${(props) =>
     props.primary &&
     `
