@@ -84,9 +84,11 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
           </Flex>
         )}
         <Link href="/account/logins/email/new">
-          <Button variant={ButtonVariant.SECONDARY}>
-            + Add new email address
-          </Button>
+          <a>
+            <Button variant={ButtonVariant.SECONDARY}>
+              + Add new email address
+            </Button>
+          </a>
         </Link>
       </IdentitySection>
       <IdentitySection>
@@ -127,9 +129,11 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
           </Flex>
         )}
         <Link href="/account/logins/phone/new">
-          <Button variant={ButtonVariant.SECONDARY}>
-            + Add new phone number
-          </Button>
+          <a>
+            <Button variant={ButtonVariant.SECONDARY}>
+              + Add new phone number
+            </Button>
+          </a>
         </Link>
       </IdentitySection>
       <IdentitySection>
