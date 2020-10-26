@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
+
 interface ConfirmationBoxProps {
   open: boolean;
   preventAnimation: boolean;
@@ -25,9 +27,14 @@ const Box = styled.div<ConfirmationBoxProps>`
   align-items: center;
   padding: 4rem 2rem 3rem;
   position: fixed;
-  left: 0;
+  left: 41%;
   background-color: ${({ theme }) => theme.colors.background};
-  width: 100%;
+  width: 52.8rem;
+
+  @media ${deviceBreakpoints.m} {
+    width: 100%;
+    left: 0;
+  }
 
   ${(props) =>
     props.open &&
