@@ -1,11 +1,12 @@
-import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
 import { ClickAwayListener } from "./display/fewlines/ClickAwayListener";
+import { DesktopNavigationBar } from "./display/fewlines/DesktopNavigationBar/DesktopNavigationBar";
 import { Header } from "./display/fewlines/Header/Header";
 import { MobileNavigationBar } from "./display/fewlines/MobileNavigationBar/MobileNavigationBar";
+import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 export const Layout: React.FC = ({ children }) => {
   const [isMobileNavBarOpen, setIsMobileNavbarOpen] = React.useState<boolean>(
@@ -14,25 +15,28 @@ export const Layout: React.FC = ({ children }) => {
   const router = useRouter();
 
   return (
-    <>
-      <Head>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <title>Connect Account</title>
-      </Head>
-      <Main>
-        {router && router.pathname !== "/" && <Header />}
-        {children}
-        {router && router.pathname !== "/" && isMobileNavBarOpen && (
-          <ClickAwayListener onClick={() => setIsMobileNavbarOpen(false)} />
-        )}
-        {router && router.pathname !== "/" && (
+    <Main>
+      {router && router.pathname !== "/" && (
+        <MobileDisplayOnly>
+          <Header />
           <MobileNavigationBar
             isOpen={isMobileNavBarOpen}
             setIsOpen={setIsMobileNavbarOpen}
           />
+          {isMobileNavBarOpen && (
+            <ClickAwayListener onClick={() => setIsMobileNavbarOpen(false)} />
+          )}
+        </MobileDisplayOnly>
+      )}
+      <Flex>
+        {router && router.pathname !== "/" && (
+          <DesktopNavigationBarWrapper>
+            <DesktopNavigationBar />
+          </DesktopNavigationBarWrapper>
         )}
-      </Main>
-    </>
+        <ChildrenContainer>{children}</ChildrenContainer>
+      </Flex>
+    </Main>
   );
 };
 
@@ -40,5 +44,35 @@ const Main = styled.main`
   width: 100%;
   height: 100vh;
   max-width: 88rem;
+  margin: ${({ theme }) => theme.spaces.xxs} auto 0;
+`;
+
+const Flex = styled.div`
+  display: flex;
+`;
+
+const DesktopNavigationBarWrapper = styled.div`
+  min-width: 24rem;
+  width: 30%;
+
+  @media ${deviceBreakpoints.m} {
+    display: none;
+  }
+`;
+
+const ChildrenContainer = styled.div`
+  width: 60%;
   margin: 0 auto;
+
+  @media ${deviceBreakpoints.m} {
+    width: 90%;
+  }
+`;
+
+const MobileDisplayOnly = styled.div`
+  display: none;
+
+  @media ${deviceBreakpoints.m} {
+    display: block;
+  }
 `;

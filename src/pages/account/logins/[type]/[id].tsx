@@ -2,11 +2,14 @@ import { HttpStatus } from "@fwl/web";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
-import { Identity } from "@lib/@types";
+import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentity } from "@lib/queries/getIdentity";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { NoIdentityFound } from "@src/clientErrors";
-import { ShowIdentity } from "@src/components/display/fewlines/ShowIdentity/ShowIdentity";
+import { Container } from "@src/components/display/fewlines/Container";
+import { H1 } from "@src/components/display/fewlines/H1/H1";
+import { IdentityOverview } from "@src/components/display/fewlines/IdentityOverview/IdentityOverview";
+import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
@@ -15,11 +18,27 @@ import { getUser } from "@src/utils/getUser";
 import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry from "@src/utils/sentry";
 
-const ShowIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
-  return <ShowIdentity identity={identity} />;
+const IdentityOverviewPage: React.FC<{ identity: Identity }> = ({
+  identity,
+}) => {
+  const { type } = identity;
+
+  return (
+    <Container>
+      <H1>Logins</H1>
+      <NavigationBreadcrumbs
+        breadcrumbs={[
+          type.toUpperCase() === IdentityTypes.EMAIL
+            ? "Email address"
+            : "Phone number",
+        ]}
+      />
+      <IdentityOverview identity={identity} />
+    </Container>
+  );
 };
 
-export default ShowIdentityPage;
+export default IdentityOverviewPage;
 
 export const getServerSideProps: GetServerSideProps = withSSRLogger(
   withSession(async (context) => {

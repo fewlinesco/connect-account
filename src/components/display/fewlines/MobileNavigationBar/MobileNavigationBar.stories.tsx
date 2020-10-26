@@ -4,7 +4,7 @@ import { ClickAwayListener } from "../ClickAwayListener";
 import { MobileNavigationBar } from "./MobileNavigationBar";
 
 export default {
-  title: "components/MobileNavigationBar",
+  title: "components/Mobile Navigation Bar",
   component: MobileNavigationBar,
 };
 

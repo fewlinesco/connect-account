@@ -1,9 +1,14 @@
 import React from "react";
 
-import Home from "./Home";
+import { StoriesContainer } from "../StoriesContainer";
+import { Home } from "./Home";
 
 export default { title: "pages/Home", component: Home };
 
 export const HomePage = (): JSX.Element => {
-  return <Home authorizeURL={"#"} />;
+  return (
+    <StoriesContainer>
+      <Home authorizeURL={"#"} />
+    </StoriesContainer>
+  );
 };

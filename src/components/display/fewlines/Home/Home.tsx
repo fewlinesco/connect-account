@@ -1,21 +1,22 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
-import { HomeBackground } from "../HomeBackground/HomeBackground";
-import { HomeDesktopBackground } from "../HomeDesktopBackground/HomeDesktopBackground";
+import { HomeDesktopBackground } from "../Icons/HomeDesktopBackground/HomeDesktopBackground";
+import { HomeMobileBackground } from "../Icons/HomeMobileBackground/HomeMobileBackground";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 type HomeProps = { authorizeURL: string };
 
-const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
+export const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
   const router = useRouter();
   return (
     <>
       <HomeDesktopBackground />
-      <HomeBackground />
+      <HomeMobileBackground />
       <Wrapper>
         <Container>
           <ShadowBox>
@@ -23,12 +24,11 @@ const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
               <DescriptionText>
                 You are about to access your account from fewlines.co
               </DescriptionText>
-              <Button
-                variant={ButtonVariant.PRIMARY}
-                onClick={() => router.push(authorizeURL)}
-              >
-                Access my account
-              </Button>
+              <Link href={authorizeURL}>
+                <Button variant={ButtonVariant.PRIMARY}>
+                  Access my account
+                </Button>
+              </Link>
               <BackLink onClick={() => router.push("http://fewlines.co")}>
                 Go back to fewlines.co
               </BackLink>
@@ -39,8 +39,6 @@ const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
     </>
   );
 };
-
-export default Home;
 
 const Wrapper = styled.div`
   position: absolute;

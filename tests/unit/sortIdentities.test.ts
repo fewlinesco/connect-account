@@ -223,4 +223,138 @@ describe("sortIdentities", () => {
     const call = sortIdentities(mockedResponse);
     expect(call).toStrictEqual(mockedSortedResponse);
   });
+
+  test("it should put the primary phone at the top of the list", () => {
+    const mockedResponse: { data: { provider: ProviderUser } } = {
+      data: {
+        provider: {
+          id: "4a5f8589-0d91-4a69-924a-6f227a69666d",
+          name: "Mocked Provider",
+          user: {
+            id: "299d268e-3e19-4486-9be7-29c539d241ac",
+            identities: [
+              {
+                id: "7f8d168a-3f65-4636-9acb-7720a212680e",
+                primary: false,
+                status: "validated",
+                type: IdentityTypes.PHONE,
+                value: "0123456789",
+              },
+              {
+                id: "hut67cc1-530b-4982-878d-33f0def6a7cf",
+                primary: true,
+                status: "validated",
+                type: IdentityTypes.PHONE,
+                value: "0677113322",
+              },
+              {
+                id: "ftardcc1-530b-4982-878d-33f0def6a7cf",
+                primary: false,
+                status: "validated",
+                type: IdentityTypes.PHONE,
+                value: "0677113300",
+              },
+            ],
+          },
+        },
+      },
+    };
+
+    const mockedSortedResponse = {
+      emailIdentities: [],
+      phoneIdentities: [
+        {
+          id: "hut67cc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.PHONE,
+          value: "0677113322",
+        },
+        {
+          id: "7f8d168a-3f65-4636-9acb-7720a212680e",
+          primary: false,
+          status: "validated",
+          type: IdentityTypes.PHONE,
+          value: "0123456789",
+        },
+        {
+          id: "ftardcc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: IdentityTypes.PHONE,
+          value: "0677113300",
+        },
+      ],
+    };
+
+    const call = sortIdentities(mockedResponse);
+    expect(call).toStrictEqual(mockedSortedResponse);
+  });
+
+  test("it should put the primary email at the top of the list", () => {
+    const mockedResponse: { data: { provider: ProviderUser } } = {
+      data: {
+        provider: {
+          id: "4a5f8589-0d91-4a69-924a-6f227a69666d",
+          name: "Mocked Provider",
+          user: {
+            id: "299d268e-3e19-4486-9be7-29c539d241ac",
+            identities: [
+              {
+                id: "611ed68a-3f65-4636-9acb-7720a212680e",
+                primary: false,
+                status: "validated",
+                type: IdentityTypes.EMAIL,
+                value: "test@test.test",
+              },
+              {
+                id: "0optncc1-530b-4982-878d-33f0def6a7cf",
+                primary: false,
+                status: "validated",
+                type: IdentityTypes.EMAIL,
+                value: "test2@test.test",
+              },
+              {
+                id: "ghhg5cc1-530b-4982-878d-33f0def6a7cf",
+                primary: true,
+                status: "validated",
+                type: IdentityTypes.EMAIL,
+                value: "test3@test.test",
+              },
+            ],
+          },
+        },
+      },
+    };
+
+    const mockedSortedResponse = {
+      emailIdentities: [
+        {
+          id: "ghhg5cc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.EMAIL,
+          value: "test3@test.test",
+        },
+        {
+          id: "611ed68a-3f65-4636-9acb-7720a212680e",
+          primary: false,
+          status: "validated",
+          type: IdentityTypes.EMAIL,
+          value: "test@test.test",
+        },
+        {
+          id: "0optncc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: IdentityTypes.EMAIL,
+          value: "test2@test.test",
+        },
+      ],
+      phoneIdentities: [],
+    };
+
+    const call = sortIdentities(mockedResponse);
+    expect(call).toStrictEqual(mockedSortedResponse);
+  });
 });
