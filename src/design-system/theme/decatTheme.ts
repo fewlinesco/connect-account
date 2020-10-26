@@ -15,7 +15,7 @@ export type DeviceBreakpoints = {
   l: string;
 };
 
-export const deviceBreakpoints = {
+export const deviceBreakpoints: DeviceBreakpoints = {
   xs: `(max-width: ${breakpoints.xs}px)`,
   s: `(max-width: ${breakpoints.s}px)`,
   m: `(max-width: ${breakpoints.m}px)`,
@@ -121,7 +121,7 @@ const transitions = {
   classic: "ease-in-out 0.3s",
 };
 
-export const lightTheme: DefaultTheme = {
+export const decatTheme: DefaultTheme = {
   spaces,
   fontSizes,
   fontWeights,

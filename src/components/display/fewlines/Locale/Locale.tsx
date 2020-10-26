@@ -6,7 +6,7 @@ import { MagnifyingGlass } from "../Icons/MagnifyingGlas/MagnifyingGlass";
 import { Input } from "../Input/Input";
 import { RadioButton } from "../RadioButton/RadioButton";
 import { Separator } from "../Separator/Separator";
-import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
+import { deviceBreakpoints } from "@src/design-system/theme";
 
 export const Locale: React.FC = () => {
   return (

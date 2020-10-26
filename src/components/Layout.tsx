@@ -6,7 +6,7 @@ import { ClickAwayListener } from "./display/fewlines/ClickAwayListener";
 import { DesktopNavigationBar } from "./display/fewlines/DesktopNavigationBar/DesktopNavigationBar";
 import { Header } from "./display/fewlines/Header/Header";
 import { MobileNavigationBar } from "./display/fewlines/MobileNavigationBar/MobileNavigationBar";
-import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
+import { deviceBreakpoints } from "@src/design-system/theme";
 
 export const Layout: React.FC = ({ children }) => {
   const [isMobileNavBarOpen, setIsMobileNavbarOpen] = React.useState<boolean>(
