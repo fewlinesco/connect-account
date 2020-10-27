@@ -2,6 +2,7 @@ import OAuth2Client, { OAuth2ClientConstructor } from "@fwl/oauth2";
 
 type Config = {
   connectDomain: string;
+  connectTheme: string;
   connectManagementUrl: string;
   connectMongoUrl: string;
   connectMongoDbName: string;
@@ -21,6 +22,7 @@ type Config = {
 
 const config: Config = {
   connectDomain: "",
+  connectTheme: "",
   connectManagementUrl: "",
   connectMongoUrl: "",
   connectMongoDbName: "",
@@ -40,6 +42,7 @@ const config: Config = {
 
 function handleEnvVars(): void {
   config.connectDomain = process.env.CONNECT_ACCOUNT_DOMAIN || "";
+  config.connectTheme = process.env.CONNECT_ACCOUNT_THEME || "fewlines";
   config.connectManagementUrl = process.env.CONNECT_MANAGEMENT_URL || "";
   config.connectMongoUrl = process.env.MONGO_URL || "";
   config.connectMongoDbName = process.env.MONGO_DB_NAME || "";

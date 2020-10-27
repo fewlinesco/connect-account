@@ -1,7 +1,6 @@
 import { DefaultTheme } from "styled-components";
 
-import fewlinesLogo from "@src/assets/logo/logo-fewlines-2020.png";
-
+import decatLogo from "@src/assets/logo/decathlon-logo.png";
 // Based on Bootstrap breakpoints
 const breakpoints = {
   xs: 576,
@@ -17,7 +16,7 @@ export type DeviceBreakpoints = {
   l: string;
 };
 
-export const deviceBreakpoints = {
+export const deviceBreakpoints: DeviceBreakpoints = {
   xs: `(max-width: ${breakpoints.xs}px)`,
   s: `(max-width: ${breakpoints.s}px)`,
   m: `(max-width: ${breakpoints.m}px)`,
@@ -123,9 +122,9 @@ const transitions = {
   classic: "ease-in-out 0.3s",
 };
 
-const logo = fewlinesLogo;
+const logo = decatLogo;
 
-export const lightTheme: DefaultTheme = {
+export const decatTheme: DefaultTheme = {
   spaces,
   fontSizes,
   fontWeights,

@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'styled-components';
-import { lightTheme } from "../src/design-system/theme/lightTheme";
+import { theme } from "../src/design-system/theme";
 import { GlobalStyle } from "../src/design-system/globals/globalStyle";
 
 export const parameters = {
@@ -8,7 +8,7 @@ export const parameters = {
 
 const withThemeProvider=(Story,context)=>{
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Story {...context} />
     </ThemeProvider>

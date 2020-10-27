@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-import fewlinesLogo from "@src/assets/logo-fewlines-2020.png";
+import { useTheme } from "@src/design-system/theme/useTheme";
 
 export const Header: React.FC = () => {
+  const theme = useTheme();
+
   return (
     <Flex>
-      <img width="90" src={fewlinesLogo} aria-label="Fewlines logo" />
+      <img width="90" src={theme.logo} aria-label="Fewlines logo" />
       <p>Account</p>
     </Flex>
   );

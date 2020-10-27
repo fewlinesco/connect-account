@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
+import { deviceBreakpoints } from "@src/design-system/theme";
 
 export const StoriesContainer = styled.div`
   width: 60%;
