@@ -1,5 +1,7 @@
 import { DefaultTheme } from "styled-components";
 
+import fewlinesLogo from "@src/assets/logo/logo-fewlines-2020.png";
+
 // Based on Bootstrap breakpoints
 const breakpoints = {
   xs: 576,
@@ -121,6 +123,8 @@ const transitions = {
   classic: "ease-in-out 0.3s",
 };
 
+const logo = fewlinesLogo;
+
 export const lightTheme: DefaultTheme = {
   spaces,
   fontSizes,
@@ -133,4 +137,5 @@ export const lightTheme: DefaultTheme = {
   letterSpacing,
   radii,
   transitions,
+  logo,
 };

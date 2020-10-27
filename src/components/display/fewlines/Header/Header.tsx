@@ -1,16 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-import { config } from "@src/config";
-import decatLogo from "@src/design-system/theme/assets/logo/decathlon-logo.png";
-import fewlinesLogo from "@src/design-system/theme/assets/logo/logo-fewlines-2020.png";
+import { useTheme } from "@src/design-system/theme/useTheme";
 
 export const Header: React.FC = () => {
-  const logo = config.connectTheme === "decathlon" ? decatLogo : fewlinesLogo;
+  const theme = useTheme();
 
   return (
     <Flex>
-      <img width="90" src={logo} aria-label="Fewlines logo" />
+      <img width="90" src={theme.logo} aria-label="Fewlines logo" />
       <p>Account</p>
     </Flex>
   );
