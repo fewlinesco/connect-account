@@ -25,9 +25,11 @@ export const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
                 You are about to access your account from fewlines.co
               </DescriptionText>
               <Link href={authorizeURL}>
-                <Button variant={ButtonVariant.PRIMARY}>
-                  Access my account
-                </Button>
+                <a>
+                  <Button variant={ButtonVariant.PRIMARY}>
+                    Access my account
+                  </Button>
+                </a>
               </Link>
               <BackLink onClick={() => router.push("http://fewlines.co")}>
                 Go back to fewlines.co

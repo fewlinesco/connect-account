@@ -13,7 +13,8 @@ import {
 } from "@src/components/display/fewlines/Button/Button";
 import { ClickAwayListener } from "@src/components/display/fewlines/ClickAwayListener";
 import { ConfirmationBox } from "@src/components/display/fewlines/ConfirmationBox/ConfirmationBox";
-import { ConfirmationText } from "@src/components/display/fewlines/IdentityOverview/IdentityOverview";
+import { DeleteConfirmationText } from "@src/components/display/fewlines/ConfirmationBox/DeleteConfirmationBox";
+import { PrimaryConfirmationText } from "@src/components/display/fewlines/ConfirmationBox/PrimaryConfirmationBox";
 import {
   NavigationBreadcrumbs,
   Breadcrumbs,
@@ -269,9 +270,9 @@ describe("IdentityOverviewPage", () => {
         .hostNodes();
 
       const confirmationText = confirmationBox.contains(
-        <ConfirmationText>
+        <PrimaryConfirmationText>
           You are about to replace mail@mail.com as your main address
-        </ConfirmationText>,
+        </PrimaryConfirmationText>,
       );
 
       expect(confirmationBox).toHaveLength(1);
@@ -354,9 +355,9 @@ describe("IdentityOverviewPage", () => {
         .hostNodes();
 
       const confirmationText = confirmationBox.contains(
-        <ConfirmationText>
+        <DeleteConfirmationText>
           You are about to delete test@test.test
-        </ConfirmationText>,
+        </DeleteConfirmationText>,
       );
 
       expect(confirmationBox).toHaveLength(1);

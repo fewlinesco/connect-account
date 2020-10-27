@@ -1,19 +1,40 @@
+import React from "react";
 import styled from "styled-components";
+
+import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 interface ConfirmationBoxProps {
   open: boolean;
   preventAnimation: boolean;
+  children: JSX.Element;
 }
 
-export const ConfirmationBox = styled.div<ConfirmationBoxProps>`
+export const ConfirmationBox: React.FC<ConfirmationBoxProps> = ({
+  open,
+  preventAnimation,
+  children,
+}) => {
+  return (
+    <Box open={open} preventAnimation={preventAnimation}>
+      {children}
+    </Box>
+  );
+};
+
+const Box = styled.div<ConfirmationBoxProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 4rem 2rem 3rem;
   position: fixed;
-  left: 0;
+  left: 41%;
   background-color: ${({ theme }) => theme.colors.background};
-  width: 100%;
+  width: 52.8rem;
+
+  @media ${deviceBreakpoints.m} {
+    width: 100%;
+    left: 0;
+  }
 
   ${(props) =>
     props.open &&

@@ -5,11 +5,10 @@ import styled from "styled-components";
 import { AwaitingValidationBadge } from "../AwaitingValidationBadge/AwaitingValidationBadge";
 import { Box } from "../Box/Box";
 import { Button, ButtonVariant } from "../Button/Button";
-import { ClickAwayListener } from "../ClickAwayListener";
-import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
+import { DeleteConfirmationBox } from "../ConfirmationBox/DeleteConfirmationBox";
+import { PrimaryConfirmationBox } from "../ConfirmationBox/PrimaryConfirmationBox";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, IdentityTypes } from "@lib/@types";
-import { DeleteIdentity } from "@src/components/business/DeleteIdentity";
 
 type IdentityOverviewProps = {
   identity: Identity;
@@ -84,32 +83,13 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
           >
             Make this my primary {type.toLowerCase()}
           </Button>
-          {primaryConfirmationBoxOpen && (
-            <ClickAwayListener
-              onClick={() => {
-                setPrimaryConfirmationBoxOpen(false);
-              }}
-            />
+          {PrimaryConfirmationBox(
+            primaryConfirmationBoxOpen,
+            preventPrimaryAnimation,
+            setPrimaryConfirmationBoxOpen,
+            value,
+            type,
           )}
-          <ConfirmationBox
-            open={primaryConfirmationBoxOpen}
-            preventAnimation={preventPrimaryAnimation}
-          >
-            <ConfirmationText>
-              You are about to replace mail@mail.com as your main address
-            </ConfirmationText>
-            <Button variant={ButtonVariant.PRIMARY}>
-              Set {value} as my main
-            </Button>
-            <Button
-              variant={ButtonVariant.SECONDARY}
-              onClick={() => {
-                setPrimaryConfirmationBoxOpen(false);
-              }}
-            >
-              Keep mail@mail.co as my primary {type.toLowerCase()}
-            </Button>
-          </ConfirmationBox>
         </>
       )}
       {!primary && (
@@ -124,34 +104,13 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
             Delete this{" "}
             {type === IdentityTypes.PHONE ? "phone number" : "email address"}
           </Button>
-          {deleteConfirmationBoxOpen && (
-            <ClickAwayListener
-              onClick={() => setDeleteConfirmationBoxOpen(false)}
-            />
+          {DeleteConfirmationBox(
+            deleteConfirmationBoxOpen,
+            preventDeleteAnimation,
+            setDeleteConfirmationBoxOpen,
+            value,
+            type,
           )}
-          <ConfirmationBox
-            open={deleteConfirmationBoxOpen}
-            preventAnimation={preventDeleteAnimation}
-          >
-            <ConfirmationText>You are about to delete {value}</ConfirmationText>
-            <DeleteIdentity type={type} value={value}>
-              {({ deleteIdentity }) => (
-                <Button variant={ButtonVariant.DANGER} onClick={deleteIdentity}>
-                  Delete this{" "}
-                  {type === IdentityTypes.PHONE
-                    ? "phone number"
-                    : "email address"}
-                </Button>
-              )}
-            </DeleteIdentity>
-            <Button
-              variant={ButtonVariant.SECONDARY}
-              onClick={() => setDeleteConfirmationBoxOpen(false)}
-            >
-              Keep{" "}
-              {type === IdentityTypes.PHONE ? "phone number" : "email address"}
-            </Button>
-          </ConfirmationBox>
         </>
       )}
     </>
@@ -173,8 +132,4 @@ const Value = styled.p`
 const Flex = styled.div`
   display: flex;
   align-items: center;
-`;
-
-export const ConfirmationText = styled.p`
-  margin: 0 0 ${({ theme }) => theme.spaces.xs};
 `;
