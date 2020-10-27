@@ -42,7 +42,7 @@ const config: Config = {
 
 function handleEnvVars(): void {
   config.connectDomain = process.env.CONNECT_ACCOUNT_DOMAIN || "";
-  config.connectTheme = process.env.CONNECT_ACCOUNT_THEME || "";
+  config.connectTheme = process.env.CONNECT_ACCOUNT_THEME || "fewlines";
   config.connectManagementUrl = process.env.CONNECT_MANAGEMENT_URL || "";
   config.connectMongoUrl = process.env.MONGO_URL || "";
   config.connectMongoDbName = process.env.MONGO_DB_NAME || "";
