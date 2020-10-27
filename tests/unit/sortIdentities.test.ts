@@ -51,6 +51,7 @@ describe("sortIdentities", () => {
           value: "0123456789",
         },
       ],
+      socialIdentities: [],
     };
 
     const call = sortIdentities(mockedResponse);
@@ -74,6 +75,7 @@ describe("sortIdentities", () => {
     const mockedSortedResponse = {
       emailIdentities: [],
       phoneIdentities: [],
+      socialIdentities: [],
     };
 
     const call = sortIdentities(mockedResponse);
@@ -112,6 +114,22 @@ describe("sortIdentities", () => {
     const mockedSortedResponse = {
       emailIdentities: [],
       phoneIdentities: [],
+      socialIdentities: [
+        {
+          id: "7f8d168a-3f65-4636-9acb-7720a212680e",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.FACEBOOK,
+          value: "test@test.test",
+        },
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: IdentityTypes.GOOGLE,
+          value: "test@test.test",
+        },
+      ],
     };
 
     const call = sortIdentities(mockedResponse);
@@ -165,6 +183,7 @@ describe("sortIdentities", () => {
         },
       ],
       phoneIdentities: [],
+      socialIdentities: [],
     };
 
     const call = sortIdentities(mockedResponse);
@@ -218,6 +237,7 @@ describe("sortIdentities", () => {
           value: "0622116655",
         },
       ],
+      socialIdentities: [],
     };
 
     const call = sortIdentities(mockedResponse);
@@ -285,6 +305,7 @@ describe("sortIdentities", () => {
           value: "0677113300",
         },
       ],
+      socialIdentities: [],
     };
 
     const call = sortIdentities(mockedResponse);
@@ -352,6 +373,7 @@ describe("sortIdentities", () => {
         },
       ],
       phoneIdentities: [],
+      socialIdentities: [],
     };
 
     const call = sortIdentities(mockedResponse);
