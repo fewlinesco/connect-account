@@ -55,6 +55,7 @@ export const LoginsOverviewPage = (): JSX.Element => {
         value: "test2@test.test",
       },
     ],
+    socialIdentities: [],
   };
 
   return (
