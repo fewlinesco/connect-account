@@ -13,10 +13,7 @@ import {
 } from "@src/components/display/fewlines/Button/Button";
 import { ClickAwayListener } from "@src/components/display/fewlines/ClickAwayListener";
 import { ConfirmationBox } from "@src/components/display/fewlines/ConfirmationBox/ConfirmationBox";
-import {
-  DeleteConfirmationBox,
-  DeleteConfirmationText,
-} from "@src/components/display/fewlines/ConfirmationBox/DeleteConfirmationBox";
+import { DeleteConfirmationText } from "@src/components/display/fewlines/ConfirmationBox/DeleteConfirmationBox";
 import { PrimaryConfirmationText } from "@src/components/display/fewlines/ConfirmationBox/PrimaryConfirmationBox";
 import {
   NavigationBreadcrumbs,
