@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    pull-request-branch-name:
+      separator: "-"
+    labels:
+      - "dependabot"
+    reviewers:
+      - "Fuzznimp"
+      - "Oluane"
+    schedule:
+      interval: "daily"
+      timezone: "Europe/Paris"
