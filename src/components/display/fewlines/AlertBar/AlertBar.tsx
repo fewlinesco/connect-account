@@ -2,18 +2,24 @@ import React from "react";
 import styled from "styled-components";
 
 import { CrossIcon } from "../Icons/CrossIcon/CrossIcon";
+import { deviceBreakpoints } from "@src/design-system/theme";
 
 export const AlertBar: React.FC<{ text: string }> = ({ text }) => {
   const [showAlertBar, setShowAlertBar] = React.useState<boolean>(true);
   return (
     <Wrapper>
       {showAlertBar && (
-        <Alert>
-          <p>{text}</p>
-          <div className="cross" onClick={() => setShowAlertBar(false)}>
-            <CrossIcon />
-          </div>
-        </Alert>
+        <>
+          <DesktopNavigationBarSimulator />
+          <ChildrenWrapperSimulator>
+            <Alert>
+              <p>{text}</p>
+              <div className="cross" onClick={() => setShowAlertBar(false)}>
+                <CrossIcon />
+              </div>
+            </Alert>
+          </ChildrenWrapperSimulator>
+        </>
       )}
     </Wrapper>
   );
@@ -22,28 +28,53 @@ export const AlertBar: React.FC<{ text: string }> = ({ text }) => {
 export default AlertBar;
 
 const Wrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  margin-left: -44rem;
   width: 100%;
+  max-width: 88rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+
+  @media ${deviceBreakpoints.m} {
+    max-width: 100%;
+    left: 0;
+    margin-left: 0;
+  }
+`;
+
+const DesktopNavigationBarSimulator = styled.div`
+  min-width: 24rem;
+  width: 30%;
+  height: 2rem;
+
+  @media ${deviceBreakpoints.m} {
+    display: none;
+  }
+`;
+
+const ChildrenWrapperSimulator = styled.div`
+  width: 60%;
+  margin: 0 auto;
+
+  @media ${deviceBreakpoints.m} {
+    width: 90%;
+  }
 `;
 
 const Alert = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: fixed;
-  width: 90%;
-  max-width: 34rem;
+  width: 100%;
+  margin: 0 auto;
   background-color: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.background};
   border-radius: ${({ theme }) => theme.radii[0]};
   padding: 1.6rem;
   z-index: 1;
-  top: 2rem;
   visibility: hidden;
   opacity: 0;
   animation: fadeinout 3s;
