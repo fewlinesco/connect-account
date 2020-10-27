@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
+import { deviceBreakpoints } from "@src/design-system/theme";
 
 interface ConfirmationBoxProps {
   open: boolean;

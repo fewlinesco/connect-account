@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { CrossIcon } from "../Icons/CrossIcon/CrossIcon";
-import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
+import { deviceBreakpoints } from "@src/design-system/theme";
 
 export const AlertBar: React.FC<{ text: string }> = ({ text }) => {
   const [showAlertBar, setShowAlertBar] = React.useState<boolean>(true);
