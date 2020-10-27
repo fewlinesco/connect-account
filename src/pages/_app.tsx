@@ -20,6 +20,7 @@ export default App;
 export const AccountApp: React.FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
+      <title>Connect Account</title>
       <GlobalStyle />
       <Layout>{children}</Layout>
     </ThemeProvider>
