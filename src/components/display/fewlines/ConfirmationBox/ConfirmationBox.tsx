@@ -1,27 +1,39 @@
 import React from "react";
 import styled from "styled-components";
 
+import { ClickAwayListener } from "../ClickAwayListener";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 interface ConfirmationBoxProps {
   open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   preventAnimation: boolean;
   children: JSX.Element;
 }
 
 export const ConfirmationBox: React.FC<ConfirmationBoxProps> = ({
   open,
+  setOpen,
   preventAnimation,
   children,
 }) => {
   return (
-    <Box open={open} preventAnimation={preventAnimation}>
-      {children}
-    </Box>
+    <>
+      {open && (
+        <ClickAwayListener
+          onClick={() => {
+            setOpen(false);
+          }}
+        />
+      )}
+      <Box open={open} preventAnimation={preventAnimation}>
+        {children}
+      </Box>
+    </>
   );
 };
 
-const Box = styled.div<ConfirmationBoxProps>`
+const Box = styled.div<Pick<ConfirmationBoxProps, "open" | "preventAnimation">>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,13 +41,10 @@ const Box = styled.div<ConfirmationBoxProps>`
   position: sticky;
   bottom: 0;
   background-color: ${({ theme }) => theme.colors.background};
-  width: 52.8rem;
 
   @media ${deviceBreakpoints.m} {
     position: fixed;
-    bottom: 0;
     left: 0;
-    width: 100%;
   }
 
   ${(props) =>
