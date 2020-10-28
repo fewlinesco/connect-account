@@ -1,7 +1,6 @@
 import React from "react";
 
 import { Button, ButtonVariant } from "../Button/Button";
-import { ClickAwayListener } from "../ClickAwayListener";
 import { Container } from "../Container";
 import { ConfirmationBox } from "./ConfirmationBox";
 import { DeleteConfirmationText } from "./DeleteConfirmationBox";
@@ -27,8 +26,11 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
       >
         Show confirmation box
       </Button>
-      {open && <ClickAwayListener onClick={() => setOpen(false)} />}
-      <ConfirmationBox open={open} preventAnimation={preventAnimation}>
+      <ConfirmationBox
+        open={open}
+        setOpen={setOpen}
+        preventAnimation={preventAnimation}
+      >
         <>
           <PrimaryConfirmationText>
             You are about to replace mail@mail.com as your main address
@@ -65,8 +67,11 @@ export const DangerConfirmationBox = (): JSX.Element => {
           Show confirmation box
         </Button>
       </div>
-      {open && <ClickAwayListener onClick={() => setOpen(false)} />}
-      <ConfirmationBox open={open} preventAnimation={preventAnimation}>
+      <ConfirmationBox
+        open={open}
+        setOpen={setOpen}
+        preventAnimation={preventAnimation}
+      >
         <>
           <DeleteConfirmationText>
             You are about to delete mail@mail.co
