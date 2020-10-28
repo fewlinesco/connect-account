@@ -7,6 +7,7 @@ export function sortIdentities(fetchedData: {
 }): SortedIdentities {
   const phoneIdentities: Identity[] = [];
   const emailIdentities: Identity[] = [];
+  const socialIdentities: Identity[] = [];
 
   if (fetchedData.data) {
     const identities: Identity[] = fetchedData.data.provider.user.identities;
@@ -29,6 +30,11 @@ export function sortIdentities(fetchedData: {
           ...identityPattern,
           type: IdentityTypes.PHONE,
         });
+      } else {
+        socialIdentities.push({
+          ...identityPattern,
+          type: IdentityTypes[identity.type],
+        });
       }
     });
   }
@@ -39,6 +45,7 @@ export function sortIdentities(fetchedData: {
 
   phoneIdentities.sort(sortPrimary);
   emailIdentities.sort(sortPrimary);
+  socialIdentities.sort(sortPrimary);
 
-  return { phoneIdentities, emailIdentities };
+  return { phoneIdentities, emailIdentities, socialIdentities };
 }

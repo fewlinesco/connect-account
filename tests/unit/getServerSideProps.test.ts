@@ -122,6 +122,7 @@ describe("getServerSideProps", () => {
           value: "0123456789",
         },
       ],
+      socialIdentities: [],
     };
 
     const sealedJWT = await seal(
