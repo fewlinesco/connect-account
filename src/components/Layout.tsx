@@ -44,7 +44,7 @@ const Main = styled.main`
   width: 100%;
   height: 100vh;
   max-width: 88rem;
-  margin: ${({ theme }) => theme.spaces.xxs} auto 0;
+  margin: 0 auto;
 `;
 
 const Flex = styled.div`

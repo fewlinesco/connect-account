@@ -26,8 +26,8 @@ const Box = styled.div<ConfirmationBoxProps>`
   flex-direction: column;
   align-items: center;
   padding: 4rem 2rem 3rem;
-  position: fixed;
-  left: 41%;
+  position: sticky;
+  bottom: 0;
   background-color: ${({ theme }) => theme.colors.background};
   width: 52.8rem;
 
@@ -40,7 +40,6 @@ const Box = styled.div<ConfirmationBoxProps>`
     props.open &&
     `
     animation: appearFromBottom 0.1s;
-    bottom: 0;
     visibility: visible;
     z-index: 3;
     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
