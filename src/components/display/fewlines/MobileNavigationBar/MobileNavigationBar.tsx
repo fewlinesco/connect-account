@@ -167,7 +167,6 @@ const LanguagesOptions = styled.div`
 
 const MenuList = styled.div`
   z-index: 2;
-  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
   background-color: ${({ theme }) => theme.colors.background};
 `;
 

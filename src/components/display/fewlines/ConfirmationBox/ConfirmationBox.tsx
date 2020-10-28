@@ -32,8 +32,10 @@ const Box = styled.div<ConfirmationBoxProps>`
   width: 52.8rem;
 
   @media ${deviceBreakpoints.m} {
-    width: 100%;
+    position: fixed;
+    bottom: 0;
     left: 0;
+    width: 100%;
   }
 
   ${(props) =>
@@ -42,7 +44,6 @@ const Box = styled.div<ConfirmationBoxProps>`
     animation: appearFromBottom 0.1s;
     visibility: visible;
     z-index: 3;
-    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
   `}
 
   ${(props) =>
@@ -61,11 +62,9 @@ const Box = styled.div<ConfirmationBoxProps>`
   @keyframes appearFromBottom {
     from {
       bottom: -250px;
-      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0);
     }
     to {
       bottom: 0;
-      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
     }
   }
 
@@ -73,12 +72,10 @@ const Box = styled.div<ConfirmationBoxProps>`
     from {
       bottom: 0;
       visibility: visible;
-      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
     }
     to {
       bottom: -250px;
       visibility: hidden;
-      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0);
     }
   }
 `;

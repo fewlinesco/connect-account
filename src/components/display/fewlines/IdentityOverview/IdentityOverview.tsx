@@ -9,6 +9,7 @@ import { DeleteConfirmationBox } from "../ConfirmationBox/DeleteConfirmationBox"
 import { PrimaryConfirmationBox } from "../ConfirmationBox/PrimaryConfirmationBox";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, IdentityTypes } from "@lib/@types";
+import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
 
 type IdentityOverviewProps = {
   identity: Identity;
@@ -130,6 +131,10 @@ const Column = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: calc(100vh - 11rem);
+
+  @media ${deviceBreakpoints.m} {
+    height: auto;
+  }
 `;
 
 const First = styled.div`

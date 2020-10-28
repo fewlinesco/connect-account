@@ -45,6 +45,10 @@ const Main = styled.main`
   height: 100vh;
   max-width: 88rem;
   margin: 0 auto;
+
+  @media ${deviceBreakpoints.m} {
+    height: auto;
+  }
 `;
 
 const Flex = styled.div`
