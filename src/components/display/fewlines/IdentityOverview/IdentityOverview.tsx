@@ -105,22 +105,20 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
         )}
       </First>
       <>
-        {primaryConfirmationBoxOpen &&
-          PrimaryConfirmationBox(
-            primaryConfirmationBoxOpen,
-            preventPrimaryAnimation,
-            setPrimaryConfirmationBoxOpen,
-            value,
-            type,
-          )}
-        {deleteConfirmationBoxOpen &&
-          DeleteConfirmationBox(
-            deleteConfirmationBoxOpen,
-            preventDeleteAnimation,
-            setDeleteConfirmationBoxOpen,
-            value,
-            type,
-          )}
+        {PrimaryConfirmationBox(
+          primaryConfirmationBoxOpen,
+          preventPrimaryAnimation,
+          setPrimaryConfirmationBoxOpen,
+          value,
+          type,
+        )}
+        {DeleteConfirmationBox(
+          deleteConfirmationBoxOpen,
+          preventDeleteAnimation,
+          setDeleteConfirmationBoxOpen,
+          value,
+          type,
+        )}
       </>
     </Column>
   );
