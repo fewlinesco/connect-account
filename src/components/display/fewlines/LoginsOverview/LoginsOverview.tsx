@@ -113,7 +113,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
         <h3>Email addresses</h3>
         <ShadowBox>
           {emailIdentities.length === 0 ? (
-            <NoIdentitiesBox>No emails yet.</NoIdentitiesBox>
+            <NoIdentitiesBox>No emails added yet.</NoIdentitiesBox>
           ) : (
             emailList.map((email: Identity) => {
               return (
