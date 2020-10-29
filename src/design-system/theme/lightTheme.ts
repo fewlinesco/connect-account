@@ -35,6 +35,7 @@ const borders = {
 
 const colors = {
   primary: "#1825aa",
+  secondary: "#1825aa",
   background: "#FFFFFF",
   black: "#03083C",
   red: "#EB5757",

@@ -19,6 +19,10 @@ export const Button = styled.button<ButtonProps>`
   margin-bottom: ${({ theme }) => theme.spaces.xxs};
   width: 100%;
 
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.secondary};
+  }
+
   ${(props) =>
     props.variant === ButtonVariant.PRIMARY &&
     `
@@ -33,6 +37,9 @@ export const Button = styled.button<ButtonProps>`
       border: 0.1rem solid ${props.theme.colors.primary};
       color: ${props.theme.colors.primary};
 
+      &:hover {
+        background: ${props.theme.colors.background};
+      }
     `};
 
   ${(props) =>
@@ -41,6 +48,10 @@ export const Button = styled.button<ButtonProps>`
       background: ${props.theme.colors.red};
       color: ${props.theme.colors.background};
       
+      &:hover {
+        background: ${props.theme.colors.red};
+      }
+
     `};
 
   ${(props) =>
@@ -49,5 +60,8 @@ export const Button = styled.button<ButtonProps>`
       background: ${props.theme.colors.background};
       color: ${props.theme.colors.red};
 
+      &:hover {
+        background: ${props.theme.colors.background};
+      }
     `};
 `;
