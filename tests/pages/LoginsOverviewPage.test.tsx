@@ -23,7 +23,7 @@ jest.mock("@src/config", () => {
 
 describe("LoginsOverviewPage", () => {
   describe("Boxedlink", () => {
-    test("it should display email and phone when there are one of each", () => {
+    test("it should display email, phone and social identities when there are one of each", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [
           {
@@ -43,6 +43,15 @@ describe("LoginsOverviewPage", () => {
             value: "test@test.test",
           },
         ],
+        socialIdentities: [
+          {
+            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: true,
+            status: "validated",
+            type: IdentityTypes.GITHUB,
+            value: "",
+          },
+        ],
       };
       const component = mount(
         <AccountApp>
@@ -50,10 +59,10 @@ describe("LoginsOverviewPage", () => {
         </AccountApp>,
       );
       const boxedLink = component.find(BoxedLink);
-      expect(boxedLink).toHaveLength(2);
+      expect(boxedLink).toHaveLength(3);
     });
 
-    test("it should display primary email and primary phone when there are many of each", () => {
+    test("it should display primary email primary phone when there are many of each", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [
           {
@@ -87,6 +96,7 @@ describe("LoginsOverviewPage", () => {
             value: "test2@test.test",
           },
         ],
+        socialIdentities: [],
       };
       const component = mount(
         <AccountApp>
@@ -109,6 +119,7 @@ describe("LoginsOverviewPage", () => {
           },
         ],
         emailIdentities: [],
+        socialIdentities: [],
       };
       const component = mount(
         <AccountApp>
@@ -133,6 +144,7 @@ describe("LoginsOverviewPage", () => {
             value: "test@test.test",
           },
         ],
+        socialIdentities: [],
       };
       const component = mount(
         <AccountApp>
@@ -150,6 +162,7 @@ describe("LoginsOverviewPage", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [],
         emailIdentities: [],
+        socialIdentities: [],
       };
       const component = mount(
         <AccountApp>
@@ -166,6 +179,7 @@ describe("LoginsOverviewPage", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [],
         emailIdentities: [],
+        socialIdentities: [],
       };
       const component = mount(
         <AccountApp>
@@ -194,6 +208,7 @@ describe("LoginsOverviewPage", () => {
         },
       ],
       emailIdentities: [],
+      socialIdentities: [],
     };
     const component = mount(
       <AccountApp>
@@ -220,6 +235,7 @@ describe("LoginsOverviewPage", () => {
           value: "test@test.test",
         },
       ],
+      socialIdentities: [],
     };
     const component = mount(
       <AccountApp>
@@ -291,6 +307,15 @@ describe("ShowMoreButton", () => {
           value: "test3@test.test",
         },
       ],
+      socialIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.GITHUB,
+          value: "",
+        },
+      ],
     };
     const component = mount(
       <AccountApp>
@@ -345,6 +370,7 @@ describe("ShowMoreButton", () => {
           value: "test2@test.test",
         },
       ],
+      socialIdentities: [],
     };
     const component = mount(
       <AccountApp>
@@ -385,6 +411,15 @@ describe("ShowMoreButton", () => {
           status: "validated",
           type: IdentityTypes.EMAIL,
           value: "test@test.test",
+        },
+      ],
+      socialIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.GITHUB,
+          value: "",
         },
       ],
     };
