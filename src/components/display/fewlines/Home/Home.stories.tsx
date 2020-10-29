@@ -8,7 +8,7 @@ export default { title: "pages/Home", component: Home };
 export const HomePage = (): JSX.Element => {
   return (
     <StoriesContainer>
-      <Home authorizeURL={"#"} />
+      <Home authorizeURL={"#"} providerName={"Fewlines"} />
     </StoriesContainer>
   );
 };
