@@ -41,7 +41,7 @@
     "@storybook/addon-essentials": "6.0.26",
     "@storybook/addon-links": "6.0.27",
     "@storybook/react": "6.0.26",
-    "@types/enzyme": "3.10.7",
+    "@types/enzyme": "3.10.8",
     "@types/enzyme-adapter-react-16": "1.0.6",
     "@types/jest": "26.0.15",
     "@types/mongodb": "3.5.31",
