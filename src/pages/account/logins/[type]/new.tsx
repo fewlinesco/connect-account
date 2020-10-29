@@ -7,8 +7,8 @@ import { AddIdentityForm } from "@src/components/display/fewlines/AddIdentityFor
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
-import { withSSRLogger } from "@src/middleware/withSSRLogger";
-import withSession from "@src/middleware/withSession";
+import { withSSRLogger } from "@src/middlewares/withSSRLogger";
+import withSession from "@src/middlewares/withSession";
 
 const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   return (
