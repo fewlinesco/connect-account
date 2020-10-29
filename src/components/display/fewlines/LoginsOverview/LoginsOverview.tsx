@@ -113,7 +113,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
         <h3>Email addresses</h3>
         <ShadowBox>
           {emailIdentities.length === 0 ? (
-            <Value>No emails</Value>
+            <NoIdentitiesBox>No emails yet.</NoIdentitiesBox>
           ) : (
             emailList.map((email: Identity) => {
               return (
@@ -158,7 +158,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
         <h3>Phone numbers</h3>
         <ShadowBox>
           {phoneIdentities.length === 0 ? (
-            <Value>No phones</Value>
+            <NoIdentitiesBox>No phone number added yet.</NoIdentitiesBox>
           ) : (
             phoneList.map((phone: Identity) => {
               return (
@@ -203,7 +203,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
         <h3>Social logins</h3>
         <ShadowBox>
           {socialIdentities.length === 0 ? (
-            <Value>No social logins</Value>
+            <NoIdentitiesBox>No social logins added yet.</NoIdentitiesBox>
           ) : (
             socialIdentities.map((identity: Identity, index) => {
               return (
@@ -250,8 +250,12 @@ const SocialIdentityName = styled.p`
   margin: 0 0 0 ${({ theme }) => theme.spaces.xxs};
 `;
 
-export const Value = styled.p`
+export const NoIdentitiesBox = styled.p`
+  display: flex;
+  align-items: center;
+  height: 7.2rem;
   margin-right: 0.5rem;
+  padding: 0 2rem;
 `;
 
 export const BoxedLink = styled(NeutralLink)<BoxedLinkProps>`
