@@ -48,7 +48,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
               Location: "/account/logins",
             });
 
-            response.end();
+            return response.end();
           } else {
             response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
               Location: `/account/logins/${type}/validation/${eventId}`,
