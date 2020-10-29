@@ -2,6 +2,35 @@ import { Identity, IdentityTypes } from "@lib/@types";
 import type { ProviderUser } from "@lib/@types/ProviderUser";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 
+function getIdentityType(type: string): IdentityTypes {
+  switch (type.toUpperCase()) {
+    case "APPLE":
+      return IdentityTypes.APPLE;
+    case "FACEBOOK":
+      return IdentityTypes.FACEBOOK;
+    case "GITHUB":
+      return IdentityTypes.GITHUB;
+    case "GOOGLE":
+      return IdentityTypes.GOOGLE;
+    case "KAKAO_TALK":
+      return IdentityTypes.KAKAO_TALK;
+    case "LINE":
+      return IdentityTypes.LINE;
+    case "NAVER":
+      return IdentityTypes.NAVER;
+    case "PAYPAL":
+      return IdentityTypes.PAYPAL;
+    case "STRAVA":
+      return IdentityTypes.STRAVA;
+    case "VKONTAKTE":
+      return IdentityTypes.VKONTAKTE;
+    case "MICROSOFT":
+      return IdentityTypes.MICROSOFT;
+    default:
+      throw new Error(`Can't deal with identity type ${type}`);
+  }
+}
+
 export function sortIdentities(fetchedData: {
   data?: { provider: ProviderUser } | null;
 }): SortedIdentities {
@@ -30,10 +59,10 @@ export function sortIdentities(fetchedData: {
           ...identityPattern,
           type: IdentityTypes.PHONE,
         });
-      } else {
+      } else if (identityType !== IdentityTypes.PROVIDER) {
         socialIdentities.push({
           ...identityPattern,
-          type: IdentityTypes[identity.type],
+          type: getIdentityType(identity.type),
         });
       }
     });
