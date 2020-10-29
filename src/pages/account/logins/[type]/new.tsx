@@ -11,8 +11,6 @@ import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
 
 const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
-  console.log(type);
-
   return (
     <Container>
       <H1>Logins</H1>
