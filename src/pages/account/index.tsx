@@ -72,7 +72,7 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
   }),
 );
 
-const WelcomeMessage = styled(H1)`
+export const WelcomeMessage = styled(H1)`
   margin-top: 2.7rem;
   margin-bottom: 5.1rem;
 `;

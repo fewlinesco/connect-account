@@ -2,15 +2,13 @@ import { mount } from "enzyme";
 import React from "react";
 
 import { SECTION_LIST_CONTENT } from "@src/components/display/fewlines/AccountOverview/AccountOverview";
-import { H1 } from "@src/components/display/fewlines/H1/H1";
-import { H2 } from "@src/components/display/fewlines/H2/H2";
 import {
   TextBox,
   SectionName,
 } from "@src/components/display/fewlines/SectionListItem/SectionListItem";
 import { ShadowBox } from "@src/components/display/fewlines/ShadowBox/ShadowBox";
 import { AccountApp } from "@src/pages/_app";
-import AccountPage from "@src/pages/account/index";
+import AccountPage, { WelcomeMessage } from "@src/pages/account/index";
 
 describe("AccountPage", () => {
   test("should display an H1 with the right text", () => {
@@ -21,9 +19,9 @@ describe("AccountPage", () => {
         <AccountPage />
       </AccountApp>,
     );
-    const h1 = component.find(H1);
-    expect(h1.text()).toEqual("Welcome to your account");
-    expect(h1).toHaveLength(1);
+    const welcomeMessage = component.find(WelcomeMessage);
+    expect(welcomeMessage.text()).toEqual("Welcome to your account");
+    expect(welcomeMessage).toHaveLength(1);
   });
 
   test("should display each account section", () => {
