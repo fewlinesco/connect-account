@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
-import { ClickAwayListener } from "../ClickAwayListener";
 import { ConfirmationBox } from "./ConfirmationBox";
 import { IdentityTypes } from "@lib/@types";
 import { DeleteIdentity } from "@src/components/business/DeleteIdentity";
@@ -15,40 +14,31 @@ export const DeleteConfirmationBox = (
   type: IdentityTypes,
 ): JSX.Element => {
   return (
-    <>
-      {deleteConfirmationBoxOpen && (
-        <ClickAwayListener
+    <ConfirmationBox
+      open={deleteConfirmationBoxOpen}
+      setOpen={setDeleteConfirmationBoxOpen}
+      preventAnimation={preventDeleteAnimation}
+    >
+      <>
+        <DeleteConfirmationText>
+          You are about to delete {value}
+        </DeleteConfirmationText>
+        <DeleteIdentity type={type} value={value}>
+          {({ deleteIdentity }) => (
+            <Button variant={ButtonVariant.DANGER} onClick={deleteIdentity}>
+              Delete this{" "}
+              {type === IdentityTypes.PHONE ? "phone number" : "email address"}
+            </Button>
+          )}
+        </DeleteIdentity>
+        <Button
+          variant={ButtonVariant.SECONDARY}
           onClick={() => setDeleteConfirmationBoxOpen(false)}
-        />
-      )}
-      <ConfirmationBox
-        open={deleteConfirmationBoxOpen}
-        preventAnimation={preventDeleteAnimation}
-      >
-        <>
-          <DeleteConfirmationText>
-            You are about to delete {value}
-          </DeleteConfirmationText>
-          <DeleteIdentity type={type} value={value}>
-            {({ deleteIdentity }) => (
-              <Button variant={ButtonVariant.DANGER} onClick={deleteIdentity}>
-                Delete this{" "}
-                {type === IdentityTypes.PHONE
-                  ? "phone number"
-                  : "email address"}
-              </Button>
-            )}
-          </DeleteIdentity>
-          <Button
-            variant={ButtonVariant.SECONDARY}
-            onClick={() => setDeleteConfirmationBoxOpen(false)}
-          >
-            Keep{" "}
-            {type === IdentityTypes.PHONE ? "phone number" : "email address"}
-          </Button>
-        </>
-      </ConfirmationBox>
-    </>
+        >
+          Keep {type === IdentityTypes.PHONE ? "phone number" : "email address"}
+        </Button>
+      </>
+    </ConfirmationBox>
   );
 };
 

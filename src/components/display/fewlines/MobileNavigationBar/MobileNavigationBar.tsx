@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 
+import { ClickAwayListener } from "../ClickAwayListener";
 import { Arrow } from "../Icons/Arrow/Arrow";
 import { BurgerIcon } from "../Icons/BurgerIcon/BurgerIcon";
 import { HomeIcon } from "../Icons/HomeIcon/HomeIcon";
@@ -31,81 +32,86 @@ export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
   const router = useRouter();
 
   return (
-    <Container>
-      {isOpen && (
-        <MenuList>
-          <ListItem
-            onClick={() => router.push("/account").then(() => setIsOpen(false))}
-          >
-            <ListItemLabel>
-              <HomeIcon />
-              <Value>Home</Value>
-            </ListItemLabel>
-            <RightChevron />
-          </ListItem>
-          <ListItem
-            onClick={() =>
-              router.push("/account/logins").then(() => setIsOpen(false))
-            }
-          >
-            <ListItemLabel>
-              <KeyIcon />
-              <Value>Logins</Value>
-            </ListItemLabel>
-            <RightChevron />
-          </ListItem>
-          <ListItem
-            onClick={() =>
-              router.push("/account/security").then(() => setIsOpen(false))
-            }
-          >
-            <ListItemLabel>
-              <LockIcon />
-              <Value>Security</Value>
-            </ListItemLabel>
-            <RightChevron />
-          </ListItem>
-        </MenuList>
-      )}
-      <Bar>
-        {isOpen ? (
-          <MenuItem
-            color="primary"
-            onClick={() =>
-              router.push("/account/locale").then(() => setIsOpen(false))
-            }
-          >
-            <Content>
-              <LanguagesOptions>
-                <WhiteWorldIcon />
-                <div>English</div>
-              </LanguagesOptions>
-              <WhiteSwitchIcon />
-            </Content>
-          </MenuItem>
-        ) : (
-          <MenuItem onClick={() => router.back()}>
-            <Content>
-              <Arrow />
-              <div>Back</div>
-            </Content>
-          </MenuItem>
+    <>
+      {isOpen && <ClickAwayListener onClick={() => setIsOpen(false)} />}
+      <Container>
+        {isOpen && (
+          <MenuList>
+            <ListItem
+              onClick={() =>
+                router.push("/account").then(() => setIsOpen(false))
+              }
+            >
+              <ListItemLabel>
+                <HomeIcon />
+                <Value>Home</Value>
+              </ListItemLabel>
+              <RightChevron />
+            </ListItem>
+            <ListItem
+              onClick={() =>
+                router.push("/account/logins").then(() => setIsOpen(false))
+              }
+            >
+              <ListItemLabel>
+                <KeyIcon />
+                <Value>Logins</Value>
+              </ListItemLabel>
+              <RightChevron />
+            </ListItem>
+            <ListItem
+              onClick={() =>
+                router.push("/account/security").then(() => setIsOpen(false))
+              }
+            >
+              <ListItemLabel>
+                <LockIcon />
+                <Value>Security</Value>
+              </ListItemLabel>
+              <RightChevron />
+            </ListItem>
+          </MenuList>
         )}
-        <MenuItem borderLeft={true} onClick={() => setIsOpen(!isOpen)}>
+        <Bar>
           {isOpen ? (
-            <Content>
-              <div>Close</div>
-              <NavBarCrossIcon />
-            </Content>
+            <MenuItem
+              color="primary"
+              onClick={() =>
+                router.push("/account/locale").then(() => setIsOpen(false))
+              }
+            >
+              <Content>
+                <LanguagesOptions>
+                  <WhiteWorldIcon />
+                  <div>English</div>
+                </LanguagesOptions>
+                <WhiteSwitchIcon />
+              </Content>
+            </MenuItem>
           ) : (
-            <Content>
-              <div>Menu</div>
-              <BurgerIcon />
-            </Content>
+            <MenuItem onClick={() => router.back()}>
+              <Content>
+                <Arrow />
+                <div>Back</div>
+              </Content>
+            </MenuItem>
           )}
-        </MenuItem>
-      </Bar>
-    </Container>
+          <MenuItem borderLeft={true} onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? (
+              <Content>
+                <div>Close</div>
+                <NavBarCrossIcon />
+              </Content>
+            ) : (
+              <Content>
+                <div>Menu</div>
+                <BurgerIcon />
+              </Content>
+            )}
+          </MenuItem>
+        </Bar>
+      </Container>
+    </>
   );
 };
 
@@ -167,7 +173,6 @@ const LanguagesOptions = styled.div`
 
 const MenuList = styled.div`
   z-index: 2;
-  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
   background-color: ${({ theme }) => theme.colors.background};
 `;
 

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
@@ -9,10 +8,9 @@ import { HomeMobileBackground } from "../Icons/HomeMobileBackground/HomeMobileBa
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-type HomeProps = { authorizeURL: string };
+type HomeProps = { authorizeURL: string; providerName: string };
 
-export const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
-  const router = useRouter();
+export const Home: React.FC<HomeProps> = ({ authorizeURL, providerName }) => {
   return (
     <>
       <HomeDesktopBackground />
@@ -22,7 +20,7 @@ export const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
           <ShadowBox>
             <Flex>
               <DescriptionText>
-                You are about to access your account from fewlines.co
+                You are about to access your account from {providerName}
               </DescriptionText>
               <Link href={authorizeURL}>
                 <a>
@@ -31,9 +29,6 @@ export const Home: React.FC<HomeProps> = ({ authorizeURL }) => {
                   </Button>
                 </a>
               </Link>
-              <BackLink onClick={() => router.push("http://fewlines.co")}>
-                Go back to fewlines.co
-              </BackLink>
             </Flex>
           </ShadowBox>
         </Container>
