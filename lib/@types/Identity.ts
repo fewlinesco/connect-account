@@ -12,6 +12,7 @@ export enum IdentityTypes {
   PROVIDER = "PROVIDER",
   STRAVA = "STRAVA",
   VKONTAKTE = "VKONTAKTE",
+  MICROSOFT = "MICROSOFT",
 }
 
 export enum IdentityStatus {
