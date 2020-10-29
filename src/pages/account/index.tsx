@@ -1,11 +1,11 @@
 import { HttpStatus } from "@fwl/web";
 import type { GetServerSideProps } from "next";
 import React from "react";
+import styled from "styled-components";
 
 import { AccountOverview } from "@src/components/display/fewlines/AccountOverview/AccountOverview";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
-import { H2 } from "@src/components/display/fewlines/H2/H2";
 import { oauth2Client, config } from "@src/config";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
@@ -16,8 +16,7 @@ import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 const AccountPage: React.FC = () => {
   return (
     <Container>
-      <H1>Welcome to your account</H1>
-      <H2>First name last name</H2>
+      <WelcomeMessage>Welcome to your account</WelcomeMessage>
       <AccountOverview />
     </Container>
   );
@@ -72,3 +71,8 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
     }
   }),
 );
+
+const WelcomeMessage = styled(H1)`
+  margin-top: 2.7rem;
+  margin-bottom: 5.1rem;
+`;
