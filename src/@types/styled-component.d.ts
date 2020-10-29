@@ -64,7 +64,7 @@ declare module "styled-components" {
     };
     colors: {
       primary: string;
-      primaryBadge: string;
+      secondary: string;
       background: string;
       black: string;
       red: string;

@@ -33,8 +33,8 @@ const borders = {
 };
 
 const colors = {
-  primary: "#1825aa",
-  primaryBadge: "#030e80",
+  primary: "#007dbc",
+  secondary: "#00689d",
   background: "#FFFFFF",
   black: "#03083C",
   red: "#EB5757",
