@@ -203,7 +203,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
         <h3>Social logins</h3>
         <ShadowBox>
           {socialIdentities.length === 0 ? (
-            <Value>No phones</Value>
+            <Value>No social logins</Value>
           ) : (
             socialIdentities.map((identity: Identity, index) => {
               return (
