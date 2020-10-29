@@ -7,6 +7,7 @@ import { AccountOverview } from "@src/components/display/fewlines/AccountOvervie
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { oauth2Client, config } from "@src/config";
+import { deviceBreakpoints } from "@src/design-system/theme";
 import { withSSRLogger } from "@src/middleware/withSSRLogger";
 import withSession from "@src/middleware/withSession";
 import { getUser } from "@src/utils/getUser";
@@ -73,6 +74,10 @@ export const getServerSideProps: GetServerSideProps = withSSRLogger(
 );
 
 export const WelcomeMessage = styled(H1)`
-  margin-top: 2.7rem;
-  margin-bottom: 5.1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 5rem;
+
+  @media ${deviceBreakpoints.m} {
+    margin-bottom: 4rem;
+  }
 `;

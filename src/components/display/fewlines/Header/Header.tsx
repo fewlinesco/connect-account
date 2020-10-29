@@ -11,7 +11,7 @@ export const Header: React.FC = () => {
     <Flex>
       <Link href="/account">
         <a>
-          <img width="90" src={theme.logo} aria-label="Fewlines logo" />
+          <img width="90" src={theme.logo} aria-label="Logo" />
         </a>
       </Link>
       <p>Account</p>
@@ -23,10 +23,6 @@ const Flex = styled.div`
   display: flex;
   align-items: center;
   margin: ${({ theme }) => `${theme.spaces.xs} ${theme.spaces.xs}`};
-
-  img {
-    cursor: pointer;
-  }
 
   p {
     display: flex;
