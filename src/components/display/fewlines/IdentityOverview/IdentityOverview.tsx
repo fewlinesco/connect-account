@@ -78,14 +78,13 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
               setPrimaryConfirmationBoxOpen(true);
             }}
           >
-            Make this my primary {type.toLowerCase()}
+            Make {identity.value} my primary {type.toLowerCase()}
           </Button>
           {PrimaryConfirmationBox(
             primaryConfirmationBoxOpen,
             preventPrimaryAnimation,
             setPrimaryConfirmationBoxOpen,
             value,
-            type,
           )}
         </>
       )}
@@ -99,7 +98,9 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
             }}
           >
             Delete this{" "}
-            {type === IdentityTypes.PHONE ? "phone number" : "email address"}
+            {type.toLocaleUpperCase() === IdentityTypes.PHONE
+              ? "phone number"
+              : "email address"}
           </Button>
           {DeleteConfirmationBox(
             deleteConfirmationBoxOpen,
