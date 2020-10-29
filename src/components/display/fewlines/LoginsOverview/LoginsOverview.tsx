@@ -208,7 +208,11 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
             socialIdentities.map((identity: Identity, index) => {
               return (
                 <div key={identity.type + index}>
-                  <BoxedLink primary={false} status={identity.status}>
+                  <BoxedLink
+                    primary={false}
+                    status={identity.status}
+                    social={true}
+                  >
                     <SocialIdentityBox>
                       {getSocialIdentityIcon(identity.type)}
                       <SocialIdentityName>
@@ -218,7 +222,6 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
                           : capitalizeFirstLetter(identity.type)}
                       </SocialIdentityName>
                     </SocialIdentityBox>
-                    <RightChevron />
                   </BoxedLink>
                   {socialIdentities.indexOf(identity) <
                     socialIdentities.length - 1 && <Separator />}
@@ -258,13 +261,20 @@ export const NoIdentitiesBox = styled.p`
   padding: 0 2rem;
 `;
 
-export const BoxedLink = styled(NeutralLink)<BoxedLinkProps>`
+export const BoxedLink = styled(NeutralLink)<
+  BoxedLinkProps & { social?: boolean }
+>`
   height: 7.2rem;
   padding: 0 ${({ theme }) => theme.spaces.xs};
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
+
+  ${(props) =>
+    !props.social &&
+    `
+      cursor: pointer;
+    `}
 
   ${(props) =>
     props.primary &&
