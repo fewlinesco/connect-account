@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -8,7 +9,11 @@ export const Header: React.FC = () => {
 
   return (
     <Flex>
-      <img width="90" src={theme.logo} aria-label="Fewlines logo" />
+      <Link href="/account">
+        <a>
+          <img width="90" src={theme.logo} aria-label="Fewlines logo" />
+        </a>
+      </Link>
       <p>Account</p>
     </Flex>
   );
@@ -18,6 +23,10 @@ const Flex = styled.div`
   display: flex;
   align-items: center;
   margin: ${({ theme }) => `${theme.spaces.xs} ${theme.spaces.xs}`};
+
+  img {
+    cursor: pointer;
+  }
 
   p {
     display: flex;

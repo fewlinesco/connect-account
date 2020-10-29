@@ -26,19 +26,6 @@ describe("AccountPage", () => {
     expect(h1).toHaveLength(1);
   });
 
-  test("should display an H2 with the right text (user's full name)", () => {
-    expect.assertions(2);
-
-    const component = mount(
-      <AccountApp>
-        <AccountPage />
-      </AccountApp>,
-    );
-    const h2 = component.find(H2);
-    expect(h2.text()).toEqual("First name last name");
-    expect(h2).toHaveLength(1);
-  });
-
   test("should display each account section", () => {
     expect.assertions(5);
 
