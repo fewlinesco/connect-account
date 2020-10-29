@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { ClickAwayListener } from "./display/fewlines/ClickAwayListener";
 import { DesktopNavigationBar } from "./display/fewlines/DesktopNavigationBar/DesktopNavigationBar";
 import { Header } from "./display/fewlines/Header/Header";
 import { MobileNavigationBar } from "./display/fewlines/MobileNavigationBar/MobileNavigationBar";
@@ -23,9 +22,6 @@ export const Layout: React.FC = ({ children }) => {
             isOpen={isMobileNavBarOpen}
             setIsOpen={setIsMobileNavbarOpen}
           />
-          {isMobileNavBarOpen && (
-            <ClickAwayListener onClick={() => setIsMobileNavbarOpen(false)} />
-          )}
         </MobileDisplayOnly>
       )}
       <Flex>
@@ -44,7 +40,11 @@ const Main = styled.main`
   width: 100%;
   height: 100vh;
   max-width: 88rem;
-  margin: ${({ theme }) => theme.spaces.xxs} auto 0;
+  margin: 0 auto;
+
+  @media ${deviceBreakpoints.m} {
+    height: auto;
+  }
 `;
 
 const Flex = styled.div`

@@ -1,48 +1,60 @@
 import React from "react";
 import styled from "styled-components";
 
+import { ClickAwayListener } from "../ClickAwayListener";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 interface ConfirmationBoxProps {
   open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   preventAnimation: boolean;
   children: JSX.Element;
 }
 
 export const ConfirmationBox: React.FC<ConfirmationBoxProps> = ({
   open,
+  setOpen,
   preventAnimation,
   children,
 }) => {
   return (
-    <Box open={open} preventAnimation={preventAnimation}>
-      {children}
-    </Box>
+    <>
+      {open && (
+        <ClickAwayListener
+          onClick={() => {
+            setOpen(false);
+          }}
+        />
+      )}
+      <Box open={open} preventAnimation={preventAnimation}>
+        {children}
+      </Box>
+    </>
   );
 };
 
-const Box = styled.div<ConfirmationBoxProps>`
+const Box = styled.div<Pick<ConfirmationBoxProps, "open" | "preventAnimation">>`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 4rem 2rem 3rem;
-  position: fixed;
-  left: 41%;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   background-color: ${({ theme }) => theme.colors.background};
-  width: 52.8rem;
+  z-index: 3;
 
   @media ${deviceBreakpoints.m} {
-    width: 100%;
+    position: fixed;
     left: 0;
+    bottom: 0;
   }
 
   ${(props) =>
     props.open &&
     `
     animation: appearFromBottom 0.1s;
-    bottom: 0;
     visibility: visible;
-    z-index: 3;
     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
   `}
 
