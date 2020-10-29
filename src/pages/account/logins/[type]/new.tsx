@@ -16,7 +16,9 @@ const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
       <H1>Logins</H1>
       <NavigationBreadcrumbs
         breadcrumbs={[
-          type === IdentityTypes.EMAIL ? "Email address" : "Phone number",
+          type.toLocaleUpperCase() === IdentityTypes.EMAIL
+            ? "Email address"
+            : "Phone number",
           "new",
         ]}
       />

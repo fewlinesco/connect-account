@@ -60,7 +60,7 @@ describe("Account Web Application update password", () => {
       await write("q");
       await focus(textBox({ placeholder: "Confirm new password" }));
       await write("qq");
-      await click("Edit password");
+      await click("Update password");
       await waitFor(
         "Your password confirmation do not match your new password.",
       );
@@ -76,7 +76,7 @@ describe("Account Web Application update password", () => {
       await focus(textBox({ placeholder: "Confirm new password" }));
       await clear(textBox({ placeholder: "Confirm new password" }));
       await write("q");
-      await click("Edit password");
+      await click("Update password");
       await waitFor("The password you enter does not meet the criteria.");
       expect(
         await text(

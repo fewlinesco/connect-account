@@ -32,7 +32,10 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
         }}
       >
         <p>
-          {type === IdentityTypes.PHONE ? "phone number" : "email address"} *
+          {type.toLocaleUpperCase() === IdentityTypes.PHONE
+            ? "phone number"
+            : "email address"}{" "}
+          *
         </p>
         <Input
           type="text"

@@ -22,7 +22,7 @@ type SecurityPageProps = {
 };
 
 const SecurityUpdatePage: React.FC<SecurityPageProps> = ({ isPasswordSet }) => {
-  const conditionalBreadcrumbItem = isPasswordSet ? "edit" : "set";
+  const conditionalBreadcrumbItem = isPasswordSet ? "update" : "set";
 
   return (
     <Container>
