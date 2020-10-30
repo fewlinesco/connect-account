@@ -4,8 +4,8 @@ import React from "react";
 
 import { Locale } from "@src/components/display/fewlines/Locale/Locale";
 import { oauth2Client, config } from "@src/config";
-import { withSSRLogger } from "@src/middleware/withSSRLogger";
-import withSession from "@src/middleware/withSession";
+import { withSSRLogger } from "@src/middlewares/withSSRLogger";
+import withSession from "@src/middlewares/withSession";
 import { getUser } from "@src/utils/getUser";
 import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";

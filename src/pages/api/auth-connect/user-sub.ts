@@ -3,8 +3,8 @@ import type { NextApiResponse } from "next";
 import type { Handler } from "next-iron-session";
 
 import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
-import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
-import withSession from "@src/middleware/withSession";
+import { withAPIPageLogger } from "@src/middlewares/withAPIPageLogger";
+import withSession from "@src/middlewares/withSession";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const handler: Handler = async (

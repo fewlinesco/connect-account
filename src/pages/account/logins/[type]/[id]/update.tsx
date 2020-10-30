@@ -12,8 +12,8 @@ import { NavigationBreadcrumbs } from "@src/components/display/fewlines/Navigati
 import { UpdateIdentityForm } from "@src/components/display/fewlines/UpdateIdentityForm/UpdateIdentityForm";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
-import { withSSRLogger } from "@src/middleware/withSSRLogger";
-import withSession from "@src/middleware/withSession";
+import { withSSRLogger } from "@src/middlewares/withSSRLogger";
+import withSession from "@src/middlewares/withSession";
 import { getUser } from "@src/utils/getUser";
 import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry from "@src/utils/sentry";
