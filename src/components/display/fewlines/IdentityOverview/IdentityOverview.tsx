@@ -71,7 +71,7 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
             setConfirmationBoxOpen(true);
           }}
         >
-          Make this my primary {type.toLowerCase()}
+          Make {value} my primary {type.toLowerCase()}
         </Button>
       )}
       {!primary && (
