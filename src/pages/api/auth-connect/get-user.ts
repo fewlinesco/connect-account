@@ -3,9 +3,9 @@ import { ObjectId } from "mongodb";
 
 import type { MongoUser } from "@lib/@types/mongo/User";
 import type { Handler } from "@src/@types/ApiPageHandler";
-import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
-import { withMongoDB } from "@src/middleware/withMongoDB";
-import withSession from "@src/middleware/withSession";
+import { withAPIPageLogger } from "@src/middlewares/withAPIPageLogger";
+import { withMongoDB } from "@src/middlewares/withMongoDB";
+import withSession from "@src/middlewares/withSession";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const handler: Handler = async (request, response) => {

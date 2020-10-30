@@ -6,9 +6,9 @@ import type { Handler } from "next-iron-session";
 import { createOrUpdatePassword } from "@lib/commands/createOrUpdatePassword";
 import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { config, oauth2Client } from "@src/config";
-import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
-import { withMongoDB } from "@src/middleware/withMongoDB";
-import withSession from "@src/middleware/withSession";
+import { withAPIPageLogger } from "@src/middlewares/withAPIPageLogger";
+import { withMongoDB } from "@src/middlewares/withMongoDB";
+import withSession from "@src/middlewares/withSession";
 import { getUser } from "@src/utils/getUser";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 

@@ -4,7 +4,7 @@ import React from "react";
 import { getProviderName } from "@lib/queries/getProviderName";
 import { Home } from "@src/components/display/fewlines/Home/Home";
 import { oauth2Client } from "@src/config";
-import { withSSRLogger } from "@src/middleware/withSSRLogger";
+import { withSSRLogger } from "@src/middlewares/withSSRLogger";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 type HomePageProps = { authorizeURL: string; providerName: string };
