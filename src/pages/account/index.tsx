@@ -7,7 +7,7 @@ import { AccountOverview } from "@src/components/display/fewlines/AccountOvervie
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { oauth2Client, config } from "@src/config";
-import { deviceBreakpoints } from "@src/design-system/theme/lightTheme";
+import { deviceBreakpoints } from "@src/design-system/theme";
 import { withSSRLogger } from "@src/middlewares/withSSRLogger";
 import withSession from "@src/middlewares/withSession";
 import { getUser } from "@src/utils/getUser";
