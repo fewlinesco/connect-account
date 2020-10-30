@@ -3,12 +3,12 @@ import { Handler } from "next-iron-session";
 
 import { sendIdentityValidationCode } from "@lib/commands/sendIdentityValidationCode";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
-import { insertTemporaryIdentity } from "@src/command/insertTemporaryIdentity";
+import { insertTemporaryIdentity } from "@src/commands/insertTemporaryIdentity";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, MongoNoDataReturned } from "@src/errors";
-import { withAPIPageLogger } from "@src/middleware/withAPIPageLogger";
-import { withMongoDB } from "@src/middleware/withMongoDB";
-import withSession from "@src/middleware/withSession";
+import { withAPIPageLogger } from "@src/middlewares/withAPIPageLogger";
+import { withMongoDB } from "@src/middlewares/withMongoDB";
+import withSession from "@src/middlewares/withSession";
 import { getUser } from "@src/utils/getUser";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 

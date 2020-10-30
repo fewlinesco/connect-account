@@ -1,10 +1,10 @@
 import { HttpStatus } from "@fwl/web";
 
-import { Handler } from "../../@types/ApiPageHandler";
-import { addIdentityToUser } from "../../command/addIdentityToUser";
-import { removeIdentityFromUser } from "../../command/removeIdentityFromUser";
-import { withAPIPageLogger } from "../../middleware/withAPIPageLogger";
-import Sentry, { addRequestScopeToSentry } from "../../utils/sentry";
+import { Handler } from "@src/@types/ApiPageHandler";
+import { addIdentityToUser } from "@src/commands/addIdentityToUser";
+import { removeIdentityFromUser } from "@src/commands/removeIdentityFromUser";
+import { withAPIPageLogger } from "@src/middlewares/withAPIPageLogger";
+import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const handler: Handler = async (request, response) => {
   addRequestScopeToSentry(request);

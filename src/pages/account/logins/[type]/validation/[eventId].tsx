@@ -9,8 +9,8 @@ import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { ValidateIdentityForm } from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
 import { OAuth2Error } from "@src/errors";
-import { withSSRLogger } from "@src/middleware/withSSRLogger";
-import withSession from "@src/middleware/withSession";
+import { withSSRLogger } from "@src/middlewares/withSSRLogger";
+import withSession from "@src/middlewares/withSession";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const ValidateIdentityPage: React.FC<{
