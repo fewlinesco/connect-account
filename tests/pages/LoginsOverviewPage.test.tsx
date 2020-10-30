@@ -6,7 +6,7 @@ import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { H2 } from "@src/components/display/fewlines/H2/H2";
-import { Value } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
+import { NoIdentitiesBox } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
 import { BoxedLink } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
 import { AccountApp } from "@src/pages/_app";
@@ -23,7 +23,7 @@ jest.mock("@src/config", () => {
 
 describe("LoginsOverviewPage", () => {
   describe("Boxedlink", () => {
-    test("it should display email and phone when there are one of each", () => {
+    test("it should display email, phone and social identities when there are one of each", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [
           {
@@ -43,6 +43,15 @@ describe("LoginsOverviewPage", () => {
             value: "test@test.test",
           },
         ],
+        socialIdentities: [
+          {
+            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: true,
+            status: "validated",
+            type: IdentityTypes.GITHUB,
+            value: "",
+          },
+        ],
       };
       const component = mount(
         <AccountApp>
@@ -50,10 +59,10 @@ describe("LoginsOverviewPage", () => {
         </AccountApp>,
       );
       const boxedLink = component.find(BoxedLink);
-      expect(boxedLink).toHaveLength(2);
+      expect(boxedLink).toHaveLength(3);
     });
 
-    test("it should display primary email and primary phone when there are many of each", () => {
+    test("it should display primary email primary phone when there are many of each", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [
           {
@@ -87,6 +96,7 @@ describe("LoginsOverviewPage", () => {
             value: "test2@test.test",
           },
         ],
+        socialIdentities: [],
       };
       const component = mount(
         <AccountApp>
@@ -109,6 +119,7 @@ describe("LoginsOverviewPage", () => {
           },
         ],
         emailIdentities: [],
+        socialIdentities: [],
       };
       const component = mount(
         <AccountApp>
@@ -116,12 +127,14 @@ describe("LoginsOverviewPage", () => {
         </AccountApp>,
       );
       const boxedLink = component.find(BoxedLink);
-      const noEmail = component.contains(<Value>No emails</Value>);
+      const noEmail = component.contains(
+        <NoIdentitiesBox>No emails added yet.</NoIdentitiesBox>,
+      );
       expect(noEmail).toEqual(true);
       expect(boxedLink).toHaveLength(1);
     });
 
-    test("it should display no phones when there are not", () => {
+    test("it should display No phone number added yet. when there are not", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [],
         emailIdentities: [
@@ -133,6 +146,7 @@ describe("LoginsOverviewPage", () => {
             value: "test@test.test",
           },
         ],
+        socialIdentities: [],
       };
       const component = mount(
         <AccountApp>
@@ -140,7 +154,9 @@ describe("LoginsOverviewPage", () => {
         </AccountApp>,
       );
       const boxedLink = component.find(BoxedLink);
-      const noPhone = component.contains(<Value>No phones</Value>);
+      const noPhone = component.contains(
+        <NoIdentitiesBox>No phone number added yet.</NoIdentitiesBox>,
+      );
 
       expect(noPhone).toEqual(true);
       expect(boxedLink).toHaveLength(1);
@@ -150,14 +166,19 @@ describe("LoginsOverviewPage", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [],
         emailIdentities: [],
+        socialIdentities: [],
       };
       const component = mount(
         <AccountApp>
           <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
         </AccountApp>,
       );
-      const noPhone = component.contains(<Value>No phones</Value>);
-      const noEmail = component.contains(<Value>No emails</Value>);
+      const noPhone = component.contains(
+        <NoIdentitiesBox>No phone number added yet.</NoIdentitiesBox>,
+      );
+      const noEmail = component.contains(
+        <NoIdentitiesBox>No emails added yet.</NoIdentitiesBox>,
+      );
       expect(noPhone).toEqual(true);
       expect(noEmail).toEqual(true);
     });
@@ -166,6 +187,7 @@ describe("LoginsOverviewPage", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [],
         emailIdentities: [],
+        socialIdentities: [],
       };
       const component = mount(
         <AccountApp>
@@ -194,6 +216,7 @@ describe("LoginsOverviewPage", () => {
         },
       ],
       emailIdentities: [],
+      socialIdentities: [],
     };
     const component = mount(
       <AccountApp>
@@ -220,6 +243,7 @@ describe("LoginsOverviewPage", () => {
           value: "test@test.test",
         },
       ],
+      socialIdentities: [],
     };
     const component = mount(
       <AccountApp>
@@ -291,6 +315,15 @@ describe("ShowMoreButton", () => {
           value: "test3@test.test",
         },
       ],
+      socialIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.GITHUB,
+          value: "",
+        },
+      ],
     };
     const component = mount(
       <AccountApp>
@@ -345,6 +378,7 @@ describe("ShowMoreButton", () => {
           value: "test2@test.test",
         },
       ],
+      socialIdentities: [],
     };
     const component = mount(
       <AccountApp>
@@ -385,6 +419,15 @@ describe("ShowMoreButton", () => {
           status: "validated",
           type: IdentityTypes.EMAIL,
           value: "test@test.test",
+        },
+      ],
+      socialIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.GITHUB,
+          value: "",
         },
       ],
     };

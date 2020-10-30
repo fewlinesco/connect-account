@@ -110,35 +110,35 @@ describe("IdentityOverviewPage", () => {
     ).toEqual(true);
   });
 
-  test("it should display the update button for a non primary identity", () => {
-    const component = mount(
-      <AccountApp>
-        <IdentityOverviewPage identity={nonPrimaryIdentity} />
-      </AccountApp>,
-    );
+  // test("it should display the update button for a non primary identity", () => {
+  //   const component = mount(
+  //     <AccountApp>
+  //       <IdentityOverviewPage identity={nonPrimaryIdentity} />
+  //     </AccountApp>,
+  //   );
 
-    const updateButton = component.contains(
-      <Button variant={ButtonVariant.PRIMARY}>
-        Update this email address
-      </Button>,
-    );
-    expect(updateButton).toEqual(true);
-  });
+  //   const updateButton = component.contains(
+  //     <Button variant={ButtonVariant.PRIMARY}>
+  //       Update this email address
+  //     </Button>,
+  //   );
+  //   expect(updateButton).toEqual(true);
+  // });
 
-  test("it should display the update button for a primary identity", () => {
-    const component = mount(
-      <AccountApp>
-        <IdentityOverviewPage identity={primaryIdentity} />
-      </AccountApp>,
-    );
+  // test("it should display the update button for a primary identity", () => {
+  //   const component = mount(
+  //     <AccountApp>
+  //       <IdentityOverviewPage identity={primaryIdentity} />
+  //     </AccountApp>,
+  //   );
 
-    const updateButton = component.contains(
-      <Button variant={ButtonVariant.PRIMARY}>
-        Update this email address
-      </Button>,
-    );
-    expect(updateButton).toEqual(true);
-  });
+  //   const updateButton = component.contains(
+  //     <Button variant={ButtonVariant.PRIMARY}>
+  //       Update this email address
+  //     </Button>,
+  //   );
+  //   expect(updateButton).toEqual(true);
+  // });
 
   test("it should display the delete button for a non primary identity", () => {
     const component = mount(
@@ -181,7 +181,9 @@ describe("IdentityOverviewPage", () => {
       .at(0)
       .text();
     expect(primaryBadge).toEqual(false);
-    expect(makeThisPrimaryButton).toEqual("Make this my primary email");
+    expect(makeThisPrimaryButton).toEqual(
+      `Make ${nonPrimaryIdentity.value} my primary email`,
+    );
   });
 
   test("it should display the primary tag if the identity is primary", () => {
@@ -251,7 +253,7 @@ describe("IdentityOverviewPage", () => {
       expect(confirmationBox).toHaveLength(0);
     });
 
-    test("the primary confirmation box shoud appear on click on 'make this my primary { type }' button", () => {
+    test("the primary confirmation box should appear on click on 'make this my primary { type }' button", () => {
       const component = mount(
         <AccountApp>
           <IdentityOverviewPage identity={nonPrimaryIdentity} />
@@ -271,7 +273,7 @@ describe("IdentityOverviewPage", () => {
 
       const confirmationText = confirmationBox.contains(
         <PrimaryConfirmationText>
-          You are about to replace mail@mail.com as your main address
+          You are about to set {nonPrimaryIdentity.value} as primary.
         </PrimaryConfirmationText>,
       );
 
@@ -298,9 +300,7 @@ describe("IdentityOverviewPage", () => {
         .find(Button)
         .find({ variant: ButtonVariant.SECONDARY });
 
-      expect(keepEmailPrimaryButton.text()).toEqual(
-        "Keep mail@mail.co as my primary email",
-      );
+      expect(keepEmailPrimaryButton.text()).toEqual("Cancel");
       keepEmailPrimaryButton.simulate("click");
 
       const confirmationBox = component

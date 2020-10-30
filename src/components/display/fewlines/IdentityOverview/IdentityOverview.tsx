@@ -35,7 +35,7 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
     boolean
   >(true);
 
-  const { id, primary, status, type, value } = identity;
+  const { primary, status, type, value } = identity;
 
   return (
     <>
@@ -45,10 +45,7 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
         </Flex>
         {primary && status === "validated" && <PrimaryBadge />}
         {status === "validated" ? (
-          <IdentityInfo>
-            <p>Added on ...</p>
-            <p>Last used to login on ...</p>
-          </IdentityInfo>
+          <React.Fragment />
         ) : (
           <AwaitingValidationBadge />
         )}
@@ -62,7 +59,7 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
           </a>
         </Link>
       )}
-      {status === "validated" && (
+      {/* {status === "validated" && (
         <Link href={`/account/logins/${type}/${id}/update`}>
           <a>
             <Button variant={ButtonVariant.PRIMARY}>
@@ -71,7 +68,7 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
             </Button>
           </a>
         </Link>
-      )}
+      )} */}
       {!primary && status === "validated" && (
         <>
           <Button
@@ -81,14 +78,13 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
               setPrimaryConfirmationBoxOpen(true);
             }}
           >
-            Make this my primary {type.toLowerCase()}
+            Make {identity.value} my primary {type.toLowerCase()}
           </Button>
           {PrimaryConfirmationBox(
             primaryConfirmationBoxOpen,
             preventPrimaryAnimation,
             setPrimaryConfirmationBoxOpen,
             value,
-            type,
           )}
         </>
       )}
@@ -102,7 +98,9 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
             }}
           >
             Delete this{" "}
-            {type === IdentityTypes.PHONE ? "phone number" : "email address"}
+            {type.toLocaleUpperCase() === IdentityTypes.PHONE
+              ? "phone number"
+              : "email address"}
           </Button>
           {DeleteConfirmationBox(
             deleteConfirmationBoxOpen,
@@ -117,16 +115,9 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
   );
 };
 
-const IdentityInfo = styled.div`
-  p {
-    font-size: ${({ theme }) => theme.fontSizes.s};
-    margin-bottom: 0.5rem;
-  }
-`;
-
 const Value = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.bold};
-  margin: 0 0 ${({ theme }) => theme.spaces.xxs} 0;
+  margin: ${({ theme }) => theme.spaces.xs} 0;
 `;
 
 const Flex = styled.div`
