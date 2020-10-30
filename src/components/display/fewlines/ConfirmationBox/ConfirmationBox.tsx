@@ -38,7 +38,7 @@ const Box = styled.div<Pick<ConfirmationBoxProps, "open" | "preventAnimation">>`
   flex-direction: column;
   align-items: center;
   padding: 4rem 2rem 3rem;
-  position: sticky;
+  position: absolute;
   bottom: 0;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.background};

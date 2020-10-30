@@ -29,29 +29,28 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
   const { primary, status, type, value } = identity;
 
   return (
-    <Column>
-      <PageContent>
-        <Box>
-          <Flex>
-            <Value>{value}</Value>
-          </Flex>
-          {primary && status === "validated" && <PrimaryBadge />}
-          {status === "validated" ? (
-            <React.Fragment />
-          ) : (
-            <AwaitingValidationBadge />
-          )}
-        </Box>
-        {status === "unvalidated" && (
-          <Link href={`/account/logins/${type}/validation`}>
-            <a>
-              <Button variant={ButtonVariant.PRIMARY}>
-                proceed to validation
-              </Button>
-            </a>
-          </Link>
+    <>
+      <Box>
+        <Flex>
+          <Value>{value}</Value>
+        </Flex>
+        {primary && status === "validated" && <PrimaryBadge />}
+        {status === "validated" ? (
+          <React.Fragment />
+        ) : (
+          <AwaitingValidationBadge />
         )}
-        {/* {status === "validated" && (
+      </Box>
+      {status === "unvalidated" && (
+        <Link href={`/account/logins/${type}/validation`}>
+          <a>
+            <Button variant={ButtonVariant.PRIMARY}>
+              proceed to validation
+            </Button>
+          </a>
+        </Link>
+      )}
+      {/* {status === "validated" && (
         <Link href={`/account/logins/${type}/${id}/update`}>
           <a>
             <Button variant={ButtonVariant.PRIMARY}>
@@ -61,40 +60,35 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
           </a>
         </Link>
       )} */}
-        {!primary && status === "validated" && (
-          <Button
-            variant={ButtonVariant.SECONDARY}
-            onClick={() => {
-              setPreventAnimation(false);
-              setConfirmationBoxContent(
-                PrimaryConfirmationBoxContent(setConfirmationBoxOpen, value),
-              );
-              setConfirmationBoxOpen(true);
-            }}
-          >
-            Make this my primary {type.toLowerCase()}
-          </Button>
-        )}
-        {!primary && (
-          <Button
-            variant={ButtonVariant.GHOST}
-            onClick={() => {
-              setPreventAnimation(false);
-              setConfirmationBoxContent(
-                DeleteConfirmationBoxContent(
-                  setConfirmationBoxOpen,
-                  value,
-                  type,
-                ),
-              );
-              setConfirmationBoxOpen(true);
-            }}
-          >
-            Delete this{" "}
-            {type === IdentityTypes.PHONE ? "phone number" : "email address"}
-          </Button>
-        )}
-      </PageContent>
+      {!primary && status === "validated" && (
+        <Button
+          variant={ButtonVariant.SECONDARY}
+          onClick={() => {
+            setPreventAnimation(false);
+            setConfirmationBoxContent(
+              PrimaryConfirmationBoxContent(setConfirmationBoxOpen, value),
+            );
+            setConfirmationBoxOpen(true);
+          }}
+        >
+          Make this my primary {type.toLowerCase()}
+        </Button>
+      )}
+      {!primary && (
+        <Button
+          variant={ButtonVariant.GHOST}
+          onClick={() => {
+            setPreventAnimation(false);
+            setConfirmationBoxContent(
+              DeleteConfirmationBoxContent(setConfirmationBoxOpen, value, type),
+            );
+            setConfirmationBoxOpen(true);
+          }}
+        >
+          Delete this{" "}
+          {type === IdentityTypes.PHONE ? "phone number" : "email address"}
+        </Button>
+      )}
       <ConfirmationBox
         open={confirmationBoxOpen}
         setOpen={setConfirmationBoxOpen}
@@ -102,20 +96,9 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
       >
         {confirmationBoxContent}
       </ConfirmationBox>
-    </Column>
+    </>
   );
 };
-
-const Column = styled.div`
-  height: calc(100% - 11rem);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-const PageContent = styled.div`
-  display: block;
-`;
 
 const Value = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.bold};
