@@ -19,12 +19,17 @@ export const DeleteConfirmationBoxContent = (
         {({ deleteIdentity }) => (
           <Button variant={ButtonVariant.DANGER} onClick={deleteIdentity}>
             Delete this{" "}
-            {type === IdentityTypes.PHONE ? "phone number" : "email address"}
+            {type.toUpperCase() === IdentityTypes.PHONE
+              ? "phone number"
+              : "email address"}
           </Button>
         )}
       </DeleteIdentity>
       <Button variant={ButtonVariant.SECONDARY} onClick={() => setOpen(false)}>
-        Keep {type === IdentityTypes.PHONE ? "phone number" : "email address"}
+        Keep{" "}
+        {type.toUpperCase() === IdentityTypes.PHONE
+          ? "phone number"
+          : "email address"}
       </Button>
     </>
   );

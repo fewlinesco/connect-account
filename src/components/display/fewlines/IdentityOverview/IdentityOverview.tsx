@@ -24,7 +24,7 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
   const [confirmationBoxContent, setConfirmationBoxContent] = React.useState<
     JSX.Element
-  >(<></>);
+  >(<React.Fragment />);
 
   const { primary, status, type, value } = identity;
 
