@@ -1,8 +1,8 @@
 import { HttpStatus } from "@fwl/web";
 
+import { removeIdentityFromUser } from "@lib/commands/removeIdentityFromUser";
 import { Handler } from "@src/@types/ApiPageHandler";
 import { addIdentityToUser } from "@src/commands/addIdentityToUser";
-import { removeIdentityFromUser } from "@src/commands/removeIdentityFromUser";
 import { withAPIPageLogger } from "@src/middlewares/withAPIPageLogger";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
