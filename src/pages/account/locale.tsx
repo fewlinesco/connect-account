@@ -2,7 +2,17 @@ import { HttpStatus } from "@fwl/web";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
+import {
+  ChildrenContainer,
+  DesktopNavigationBarWrapper,
+  Flex,
+  Main,
+  MobileDisplayOnly,
+} from "@src/components/Layout";
+import { DesktopNavigationBar } from "@src/components/display/fewlines/DesktopNavigationBar/DesktopNavigationBar";
+import { Header } from "@src/components/display/fewlines/Header/Header";
 import { Locale } from "@src/components/display/fewlines/Locale/Locale";
+import { MobileNavigationBar } from "@src/components/display/fewlines/MobileNavigationBar/MobileNavigationBar";
 import { oauth2Client, config } from "@src/config";
 import { withSSRLogger } from "@src/middlewares/withSSRLogger";
 import withSession from "@src/middlewares/withSession";
@@ -11,7 +21,22 @@ import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const LocalePage: React.FC = () => {
-  return <Locale />;
+  return (
+    <Main>
+      <MobileDisplayOnly>
+        <Header />
+        <MobileNavigationBar />
+      </MobileDisplayOnly>
+      <Flex>
+        <DesktopNavigationBarWrapper>
+          <DesktopNavigationBar />
+        </DesktopNavigationBarWrapper>
+        <ChildrenContainer>
+          <Locale />
+        </ChildrenContainer>
+      </Flex>
+    </Main>
+  );
 };
 
 export default LocalePage;

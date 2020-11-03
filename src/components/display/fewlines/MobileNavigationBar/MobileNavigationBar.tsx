@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { ClickAwayListener } from "../ClickAwayListener";
@@ -20,15 +20,8 @@ interface MenuItemProps {
   borderLeft?: boolean;
 }
 
-type MobileNavigationBarProp = {
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-};
-
-export const MobileNavigationBar: React.FC<MobileNavigationBarProp> = ({
-  isOpen,
-  setIsOpen,
-}) => {
+export const MobileNavigationBar: React.FC = () => {
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const router = useRouter();
 
   return (

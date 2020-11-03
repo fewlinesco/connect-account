@@ -4,9 +4,19 @@ import React from "react";
 
 import { isUserPasswordSet } from "@lib/queries/isUserPasswordSet";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import {
+  ChildrenContainer,
+  DesktopNavigationBarWrapper,
+  Flex,
+  Main,
+  MobileDisplayOnly,
+} from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
+import { DesktopNavigationBar } from "@src/components/display/fewlines/DesktopNavigationBar/DesktopNavigationBar";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { H2 } from "@src/components/display/fewlines/H2/H2";
+import { Header } from "@src/components/display/fewlines/Header/Header";
+import { MobileNavigationBar } from "@src/components/display/fewlines/MobileNavigationBar/MobileNavigationBar";
 import { Security } from "@src/components/display/fewlines/Security/Security";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
@@ -22,11 +32,24 @@ type SecurityPageProps = {
 
 const SecurityPage: React.FC<SecurityPageProps> = ({ isPasswordSet }) => {
   return (
-    <Container>
-      <H1>Security</H1>
-      <H2>Password, login history and more</H2>
-      <Security isPasswordSet={isPasswordSet} />
-    </Container>
+    <Main>
+      <MobileDisplayOnly>
+        <Header />
+        <MobileNavigationBar />
+      </MobileDisplayOnly>
+      <Flex>
+        <DesktopNavigationBarWrapper>
+          <DesktopNavigationBar />
+        </DesktopNavigationBarWrapper>
+        <ChildrenContainer>
+          <Container>
+            <H1>Security</H1>
+            <H2>Password, login history and more</H2>
+            <Security isPasswordSet={isPasswordSet} />
+          </Container>
+        </ChildrenContainer>
+      </Flex>
+    </Main>
   );
 };
 
