@@ -8,7 +8,7 @@ const logger = createLogger({
   service: "connect-account",
   encoder: EncoderTypeEnum.JSON,
 }).withMeta({
-  process: "apiPage",
+  process: "serverSide",
 });
 
 export function withLogger(handler: Handler): Handler {

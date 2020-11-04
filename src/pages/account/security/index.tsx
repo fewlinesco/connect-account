@@ -1,5 +1,3 @@
-import { HttpStatus } from "@fwl/web";
-import { ServerResponse } from "http";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
@@ -38,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return wrapMiddlewaresForSSR<{ type: string }>(
     context,
     [withLogger, withSentry, withMongoDB, withSession, withAuth],
-    async (request: ExtendedRequest, response: ServerResponse) => {
+    async (request: ExtendedRequest) => {
       const user = await getUser(request.headers.cookie as string);
 
       if (user) {
@@ -57,12 +55,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             isPasswordSet,
           },
         };
-      } else {
-        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-        response.setHeader("location", "/");
-        response.end();
-        return { props: {} };
       }
+
+      return { props: {} };
     },
   );
 };

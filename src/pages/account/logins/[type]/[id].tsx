@@ -1,4 +1,3 @@
-import { HttpStatus } from "@fwl/web";
 import { ServerResponse } from "http";
 import type { GetServerSideProps } from "next";
 import React from "react";
@@ -76,12 +75,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             identity,
           },
         };
-      } else {
-        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-        response.setHeader("location", "/");
-        response.end();
-        return { props: {} };
       }
+
+      return { props: {} };
     },
   );
 };
