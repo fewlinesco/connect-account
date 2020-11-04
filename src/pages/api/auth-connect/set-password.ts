@@ -48,10 +48,6 @@ const handler: Handler = async (
           response.json({ data });
         }
       });
-    } else {
-      response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-      response.setHeader("location", request.headers.referer || "/");
-      response.end();
     }
   }
 

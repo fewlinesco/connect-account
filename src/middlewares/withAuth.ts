@@ -38,6 +38,7 @@ export function withAuth(handler: Handler): Handler {
                 access_token,
                 refresh_token,
               );
+
               await oauth2Client.verifyJWT(
                 access_token,
                 config.connectJwtAlgorithm,
@@ -46,6 +47,9 @@ export function withAuth(handler: Handler): Handler {
               throw error;
             }
           });
+
+        console.log("Hellllooooooooo");
+
         return handler(request, response);
       } catch (error) {
         response.statusCode = HttpStatus.TEMPORARY_REDIRECT;

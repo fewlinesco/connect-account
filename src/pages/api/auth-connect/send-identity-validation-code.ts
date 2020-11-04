@@ -60,11 +60,6 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
           response.setHeader("Content-Type", "application/json");
           response.json({ data });
         });
-    } else {
-      response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-      response.setHeader("location", "/");
-      response.end();
-      return;
     }
   }
 

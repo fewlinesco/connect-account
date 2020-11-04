@@ -26,12 +26,17 @@ jest.mock("@src/config", () => {
       connectApplicationScopes: "",
       connectProviderUrl: "http://foo.test",
       connectDomain: "http://foo.test",
+      connectMongoUrl: process.env.MONGO_URL_TEST as string,
+      connectMongoDbName: "connect-account-test",
     },
     oauth2Client: {
       verifyJWT: async () => {
         return {
           sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
         };
+      },
+      getAuthorizationURL: async () => {
+        return "";
       },
     },
   };
@@ -102,7 +107,7 @@ describe("getServerSideProps", () => {
     );
   });
 
-  it("should get the mongo document id from the session and call management GraphQL endpoint", async () => {
+  it("should get the mongo document id from the session, fetch mongo, fetch management and return identities list", async () => {
     const mockedSortedResponse = {
       emailIdentities: [
         {
@@ -128,7 +133,7 @@ describe("getServerSideProps", () => {
     const sealedJWT = await seal(
       {
         persistent: {
-          "user-session-id": "42",
+          "user-session-id": "5fa2e906743b920faa6233d4",
           "user-sub": "4a5f8589-0d91-4a69-924a-6f227a69666d",
         },
         flash: {},

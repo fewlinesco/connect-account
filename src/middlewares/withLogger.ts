@@ -15,17 +15,23 @@ export function withLogger(handler: Handler): Handler {
   return async (request: ExtendedRequest, response: ServerResponse) => {
     const processTimeStart = process.hrtime.bigint();
 
-    const result = await handler(request, response);
+    response.once("finish", function () {
+      const processTimeEnd = process.hrtime.bigint();
 
-    const processTimeEnd = process.hrtime.bigint();
-
-    logger.log("Success", {
-      method: request.method ? request.method : "No method",
-      statusCode: request.statusCode ? request.statusCode : 0,
-      path: request.url ? request.url : "No path",
-      duration: ((processTimeEnd - processTimeStart) / BigInt(1000)).toString(),
+      logger.log("Success", {
+        duration: (
+          (processTimeEnd - processTimeStart) /
+          BigInt(1000)
+        ).toString(),
+        method: request.method ? request.method : "No method",
+        path: request.url ? request.url : "",
+        remoteaddr: request.headers["x-forwarded-for"]
+          ? request.headers["x-forwarded-for"].toString()
+          : "",
+        statusCode: response.statusCode ? response.statusCode : 0,
+      });
     });
 
-    return result;
+    return handler(request, response);
   };
 }
