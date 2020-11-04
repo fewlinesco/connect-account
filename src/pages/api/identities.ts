@@ -2,7 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import { ServerResponse } from "http";
 
 import { removeIdentityFromUser } from "@lib/commands/removeIdentityFromUser";
-import { Handler } from "@src/@types/ApiPageHandler";
+import { Handler } from "@src/@types/Handler";
 import { addIdentityToUser } from "@src/commands/addIdentityToUser";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";

@@ -1,8 +1,8 @@
 import { ServerResponse } from "http";
 import { MongoClient } from "mongodb";
 
-import { Handler } from "@src/@types/ApiPageHandler";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { Handler } from "@src/@types/Handler";
 import { config } from "@src/config";
 
 let mongoClient: MongoClient;

@@ -2,7 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import { ObjectId } from "mongodb";
 
 import type { MongoUser } from "@lib/@types/mongo/User";
-import type { Handler } from "@src/@types/ApiPageHandler";
+import type { Handler } from "@src/@types/Handler";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withMongoDB } from "@src/middlewares/withMongoDB";

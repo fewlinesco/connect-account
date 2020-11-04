@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 
-import { Handler } from "@src/@types/ApiPageHandler";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { Handler } from "@src/@types/Handler";
 
 type Middleware = (handler: Handler) => Handler;
 

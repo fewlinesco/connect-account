@@ -1,7 +1,7 @@
 import { ServerResponse } from "http";
 
-import { Handler } from "@src/@types/ApiPageHandler";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { Handler } from "@src/@types/Handler";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 export function withSentry(handler: Handler): Handler {

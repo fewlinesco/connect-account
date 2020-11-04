@@ -4,8 +4,8 @@ import { ObjectId } from "mongodb";
 
 import type { MongoUser } from "@lib/@types/mongo/User";
 import { refreshTokensFlow } from "@lib/commands/refreshTokensFlow";
-import { Handler } from "@src/@types/ApiPageHandler";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { Handler } from "@src/@types/Handler";
 import { updateAccessAndRefreshTokens } from "@src/commands/updateAccessAndRefreshTokens";
 import { oauth2Client, config } from "@src/config";
 

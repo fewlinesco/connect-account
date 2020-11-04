@@ -1,8 +1,8 @@
 import { createLogger, EncoderTypeEnum } from "@fwl/logging";
 import { ServerResponse } from "http";
 
-import { Handler } from "../@types/ApiPageHandler";
 import { ExtendedRequest } from "../@types/ExtendedRequest";
+import { Handler } from "../@types/Handler";
 
 const logger = createLogger({
   service: "connect-account",
