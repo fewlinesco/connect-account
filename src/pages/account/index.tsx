@@ -3,19 +3,10 @@ import type { GetServerSideProps } from "next";
 import React from "react";
 import styled from "styled-components";
 
-import {
-  ChildrenContainer,
-  DesktopNavigationBarWrapper,
-  Flex,
-  Main,
-  MobileDisplayOnly,
-} from "@src/components/Layout";
+import { Layout } from "@src/components/Layout";
 import { AccountOverview } from "@src/components/display/fewlines/AccountOverview/AccountOverview";
 import { Container } from "@src/components/display/fewlines/Container";
-import { DesktopNavigationBar } from "@src/components/display/fewlines/DesktopNavigationBar/DesktopNavigationBar";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
-import { Header } from "@src/components/display/fewlines/Header/Header";
-import { MobileNavigationBar } from "@src/components/display/fewlines/MobileNavigationBar/MobileNavigationBar";
 import { oauth2Client, config } from "@src/config";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { withSSRLogger } from "@src/middlewares/withSSRLogger";
@@ -26,23 +17,12 @@ import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const AccountPage: React.FC = () => {
   return (
-    <Main>
-      <MobileDisplayOnly>
-        <Header />
-        <MobileNavigationBar />
-      </MobileDisplayOnly>
-      <Flex>
-        <DesktopNavigationBarWrapper>
-          <DesktopNavigationBar />
-        </DesktopNavigationBarWrapper>
-        <ChildrenContainer>
-          <Container>
-            <WelcomeMessage>Welcome to your account</WelcomeMessage>
-            <AccountOverview />
-          </Container>
-        </ChildrenContainer>
-      </Flex>
-    </Main>
+    <Layout>
+      <Container>
+        <WelcomeMessage>Welcome to your account</WelcomeMessage>
+        <AccountOverview />
+      </Container>
+    </Layout>
   );
 };
 

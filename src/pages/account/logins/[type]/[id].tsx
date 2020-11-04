@@ -6,19 +6,10 @@ import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentity } from "@lib/queries/getIdentity";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { NoIdentityFound } from "@src/clientErrors";
-import {
-  ChildrenContainer,
-  DesktopNavigationBarWrapper,
-  Flex,
-  Main,
-  MobileDisplayOnly,
-} from "@src/components/Layout";
+import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
-import { DesktopNavigationBar } from "@src/components/display/fewlines/DesktopNavigationBar/DesktopNavigationBar";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
-import { Header } from "@src/components/display/fewlines/Header/Header";
 import { IdentityOverview } from "@src/components/display/fewlines/IdentityOverview/IdentityOverview";
-import { MobileNavigationBar } from "@src/components/display/fewlines/MobileNavigationBar/MobileNavigationBar";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
@@ -34,30 +25,19 @@ const IdentityOverviewPage: React.FC<{ identity: Identity }> = ({
   const { type } = identity;
 
   return (
-    <Main>
-      <MobileDisplayOnly>
-        <Header />
-        <MobileNavigationBar />
-      </MobileDisplayOnly>
-      <Flex>
-        <DesktopNavigationBarWrapper>
-          <DesktopNavigationBar />
-        </DesktopNavigationBarWrapper>
-        <ChildrenContainer>
-          <Container>
-            <H1>Logins</H1>
-            <NavigationBreadcrumbs
-              breadcrumbs={[
-                type.toUpperCase() === IdentityTypes.EMAIL
-                  ? "Email address"
-                  : "Phone number",
-              ]}
-            />
-            <IdentityOverview identity={identity} />
-          </Container>
-        </ChildrenContainer>
-      </Flex>
-    </Main>
+    <Layout>
+      <Container>
+        <H1>Logins</H1>
+        <NavigationBreadcrumbs
+          breadcrumbs={[
+            type.toUpperCase() === IdentityTypes.EMAIL
+              ? "Email address"
+              : "Phone number",
+          ]}
+        />
+        <IdentityOverview identity={identity} />
+      </Container>
+    </Layout>
   );
 };
 

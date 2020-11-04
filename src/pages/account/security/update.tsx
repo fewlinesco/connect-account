@@ -4,19 +4,10 @@ import React from "react";
 
 import { isUserPasswordSet } from "@lib/queries/isUserPasswordSet";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
-import {
-  ChildrenContainer,
-  DesktopNavigationBarWrapper,
-  Flex,
-  Main,
-  MobileDisplayOnly,
-} from "@src/components/Layout";
+import { Layout } from "@src/components/Layout";
 import { SetPassword } from "@src/components/business/SetPassword";
 import { Container } from "@src/components/display/fewlines/Container";
-import { DesktopNavigationBar } from "@src/components/display/fewlines/DesktopNavigationBar/DesktopNavigationBar";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
-import { Header } from "@src/components/display/fewlines/Header/Header";
-import { MobileNavigationBar } from "@src/components/display/fewlines/MobileNavigationBar/MobileNavigationBar";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { SetPasswordForm } from "@src/components/display/fewlines/SetPasswordForm/SetPasswordForm";
 import { config, oauth2Client } from "@src/config";
@@ -35,33 +26,22 @@ const SecurityUpdatePage: React.FC<SecurityPageProps> = ({ isPasswordSet }) => {
   const conditionalBreadcrumbItem = isPasswordSet ? "update" : "set";
 
   return (
-    <Main>
-      <MobileDisplayOnly>
-        <Header />
-        <MobileNavigationBar />
-      </MobileDisplayOnly>
-      <Flex>
-        <DesktopNavigationBarWrapper>
-          <DesktopNavigationBar />
-        </DesktopNavigationBarWrapper>
-        <ChildrenContainer>
-          <Container>
-            <H1>Security</H1>
-            <NavigationBreadcrumbs
-              breadcrumbs={["Password", conditionalBreadcrumbItem]}
+    <Layout>
+      <Container>
+        <H1>Security</H1>
+        <NavigationBreadcrumbs
+          breadcrumbs={["Password", conditionalBreadcrumbItem]}
+        />
+        <SetPassword>
+          {({ setPassword }) => (
+            <SetPasswordForm
+              conditionalBreadcrumbItem={conditionalBreadcrumbItem}
+              setPassword={setPassword}
             />
-            <SetPassword>
-              {({ setPassword }) => (
-                <SetPasswordForm
-                  conditionalBreadcrumbItem={conditionalBreadcrumbItem}
-                  setPassword={setPassword}
-                />
-              )}
-            </SetPassword>
-          </Container>
-        </ChildrenContainer>
-      </Flex>
-    </Main>
+          )}
+        </SetPassword>
+      </Container>
+    </Layout>
   );
 };
 

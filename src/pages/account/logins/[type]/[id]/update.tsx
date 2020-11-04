@@ -5,19 +5,10 @@ import React from "react";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentities } from "@lib/queries/getIdentities";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
-import {
-  ChildrenContainer,
-  DesktopNavigationBarWrapper,
-  Flex,
-  Main,
-  MobileDisplayOnly,
-} from "@src/components/Layout";
+import { Layout } from "@src/components/Layout";
 import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
 import { Container } from "@src/components/display/fewlines/Container";
-import { DesktopNavigationBar } from "@src/components/display/fewlines/DesktopNavigationBar/DesktopNavigationBar";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
-import { Header } from "@src/components/display/fewlines/Header/Header";
-import { MobileNavigationBar } from "@src/components/display/fewlines/MobileNavigationBar/MobileNavigationBar";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { UpdateIdentityForm } from "@src/components/display/fewlines/UpdateIdentityForm/UpdateIdentityForm";
 import { config, oauth2Client } from "@src/config";
@@ -30,38 +21,27 @@ import Sentry from "@src/utils/sentry";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   return (
-    <Main>
-      <MobileDisplayOnly>
-        <Header />
-        <MobileNavigationBar />
-      </MobileDisplayOnly>
-      <Flex>
-        <DesktopNavigationBarWrapper>
-          <DesktopNavigationBar />
-        </DesktopNavigationBarWrapper>
-        <ChildrenContainer>
-          <Container>
-            <H1>Logins</H1>
-            <NavigationBreadcrumbs
-              breadcrumbs={[
-                identity.type.toUpperCase() === IdentityTypes.EMAIL
-                  ? "Email address"
-                  : "Phone number",
-                "edit",
-              ]}
+    <Layout>
+      <Container>
+        <H1>Logins</H1>
+        <NavigationBreadcrumbs
+          breadcrumbs={[
+            identity.type.toUpperCase() === IdentityTypes.EMAIL
+              ? "Email address"
+              : "Phone number",
+            "edit",
+          ]}
+        />
+        <UpdateIdentity identity={identity}>
+          {({ updateIdentity }) => (
+            <UpdateIdentityForm
+              updateIdentity={updateIdentity}
+              currentIdentity={identity}
             />
-            <UpdateIdentity identity={identity}>
-              {({ updateIdentity }) => (
-                <UpdateIdentityForm
-                  updateIdentity={updateIdentity}
-                  currentIdentity={identity}
-                />
-              )}
-            </UpdateIdentity>
-          </Container>
-        </ChildrenContainer>
-      </Flex>
-    </Main>
+          )}
+        </UpdateIdentity>
+      </Container>
+    </Layout>
   );
 };
 

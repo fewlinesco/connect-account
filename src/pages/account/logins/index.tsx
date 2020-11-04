@@ -5,20 +5,11 @@ import React from "react";
 import { getIdentities } from "@lib/queries/getIdentities";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
-import {
-  ChildrenContainer,
-  DesktopNavigationBarWrapper,
-  Flex,
-  Main,
-  MobileDisplayOnly,
-} from "@src/components/Layout";
+import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
-import { DesktopNavigationBar } from "@src/components/display/fewlines/DesktopNavigationBar/DesktopNavigationBar";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { H2 } from "@src/components/display/fewlines/H2/H2";
-import { Header } from "@src/components/display/fewlines/Header/Header";
 import { LoginsOverview } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
-import { MobileNavigationBar } from "@src/components/display/fewlines/MobileNavigationBar/MobileNavigationBar";
 import { config, oauth2Client } from "@src/config";
 import { GraphqlErrors, OAuth2Error } from "@src/errors";
 import { withSSRLogger } from "@src/middlewares/withSSRLogger";
@@ -36,24 +27,13 @@ const LoginsOverviewPage: React.FC<LoginsOverviewPageProps> = ({
   sortedIdentities,
 }) => {
   return (
-    <Main>
-      <MobileDisplayOnly>
-        <Header />
-        <MobileNavigationBar />
-      </MobileDisplayOnly>
-      <Flex>
-        <DesktopNavigationBarWrapper>
-          <DesktopNavigationBar />
-        </DesktopNavigationBarWrapper>
-        <ChildrenContainer>
-          <Container>
-            <H1>Logins</H1>
-            <H2>Your emails, phones and social logins</H2>
-            <LoginsOverview sortedIdentities={sortedIdentities} />
-          </Container>
-        </ChildrenContainer>
-      </Flex>
-    </Main>
+    <Layout>
+      <Container>
+        <H1>Logins</H1>
+        <H2>Your emails, phones and social logins</H2>
+        <LoginsOverview sortedIdentities={sortedIdentities} />
+      </Container>
+    </Layout>
   );
 };
 
