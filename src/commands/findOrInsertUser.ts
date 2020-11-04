@@ -18,6 +18,7 @@ export async function findOrInsertUser(
   let documentId;
 
   if (user) {
+    // Workaround to fix ClickUp task https://app.clickup.com/t/9yrj2g.
     const result = await collection.updateOne(
       { _id: user._id },
       {
@@ -27,12 +28,15 @@ export async function findOrInsertUser(
         },
       },
     );
+
     if (result.modifiedCount !== 1) {
       throw new MongoInsertError("User update failed");
     }
+
     documentId = user._id.toString();
   } else {
     const insertResult = await collection.insertOne(oauthUserInfo);
+
     if (insertResult.insertedCount === 0) {
       throw new MongoInsertError("User insertion failed");
     }

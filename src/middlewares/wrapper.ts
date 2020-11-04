@@ -25,5 +25,6 @@ export async function wrapMiddlewaresForSSR<P>(
     context.req as ExtendedRequest,
     context.res,
   );
+
   return result ? result : { props: {} };
 }
