@@ -1,6 +1,7 @@
 import type { GetServerSideProps } from "next";
 import React from "react";
 
+import { Layout } from "@src/components/Layout";
 import { Locale } from "@src/components/display/fewlines/Locale/Locale";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
@@ -10,7 +11,11 @@ import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 
 const LocalePage: React.FC = () => {
-  return <Locale />;
+  return (
+    <Layout>
+      <Locale />
+    </Layout>
+  );
 };
 
 export default LocalePage;

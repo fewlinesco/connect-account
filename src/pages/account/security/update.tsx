@@ -3,6 +3,7 @@ import React from "react";
 
 import { isUserPasswordSet } from "@lib/queries/isUserPasswordSet";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { Layout } from "@src/components/Layout";
 import { SetPassword } from "@src/components/business/SetPassword";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
@@ -25,20 +26,22 @@ const SecurityUpdatePage: React.FC<SecurityPageProps> = ({ isPasswordSet }) => {
   const conditionalBreadcrumbItem = isPasswordSet ? "update" : "set";
 
   return (
-    <Container>
-      <H1>Security</H1>
-      <NavigationBreadcrumbs
-        breadcrumbs={["Password", conditionalBreadcrumbItem]}
-      />
-      <SetPassword>
-        {({ setPassword }) => (
-          <SetPasswordForm
-            conditionalBreadcrumbItem={conditionalBreadcrumbItem}
-            setPassword={setPassword}
-          />
-        )}
-      </SetPassword>
-    </Container>
+    <Layout>
+      <Container>
+        <H1>Security</H1>
+        <NavigationBreadcrumbs
+          breadcrumbs={["Password", conditionalBreadcrumbItem]}
+        />
+        <SetPassword>
+          {({ setPassword }) => (
+            <SetPasswordForm
+              conditionalBreadcrumbItem={conditionalBreadcrumbItem}
+              setPassword={setPassword}
+            />
+          )}
+        </SetPassword>
+      </Container>
+    </Layout>
   );
 };
 

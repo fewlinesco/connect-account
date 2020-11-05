@@ -3,7 +3,6 @@ import Head from "next/head";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { Layout } from "../components/Layout";
 import { GlobalStyle } from "../design-system/globals/globalStyle";
 import { theme } from "../design-system/theme";
 import "../utils/sentry";
@@ -26,7 +25,7 @@ export const AccountApp: React.FC = ({ children }) => {
         <title>Connect Account</title>
       </Head>
       <GlobalStyle />
-      <Layout>{children}</Layout>
+      {children}
     </ThemeProvider>
   );
 };
