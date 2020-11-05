@@ -2,41 +2,36 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { getProviderName } from "@lib/queries/getProviderName";
+import { Main } from "@src/components/Layout";
 import { Home } from "@src/components/display/fewlines/Home/Home";
 import { oauth2Client } from "@src/config";
-import { withSSRLogger } from "@src/middlewares/withSSRLogger";
-import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
+import { withLogger } from "@src/middlewares/withLogger";
+import { withSentry } from "@src/middlewares/withSentry";
+import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 
 type HomePageProps = { authorizeURL: string; providerName: string };
 
 const HomePage: React.FC<HomePageProps> = ({ authorizeURL, providerName }) => {
-  return <Home authorizeURL={authorizeURL} providerName={providerName} />;
+  return (
+    <Main>
+      <Home authorizeURL={authorizeURL} providerName={providerName} />
+    </Main>
+  );
 };
 
 export default HomePage;
 
-export const getServerSideProps: GetServerSideProps = withSSRLogger(
-  async (context) => {
-    addRequestScopeToSentry(context.req);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return wrapMiddlewaresForSSR(context, [withLogger, withSentry], async () => {
+    const authorizeURL = await oauth2Client.getAuthorizationURL();
 
-    try {
-      const authorizeURL = await oauth2Client.getAuthorizationURL();
+    const { data } = await getProviderName();
 
-      const { data } = await getProviderName();
-
-      return {
-        props: {
-          authorizeURL: authorizeURL.toString(),
-          providerName: data?.provider.name,
-        },
-      };
-    } catch (error) {
-      Sentry.withScope((scope) => {
-        scope.setTag("/pages/index SSR", "/pages/index SSR");
-        Sentry.captureException(error);
-      });
-    }
-
-    return { props: {} };
-  },
-);
+    return {
+      props: {
+        authorizeURL: authorizeURL.toString(),
+        providerName: data?.provider.name,
+      },
+    };
+  });
+};

@@ -3,45 +3,37 @@ import type { NextApiResponse } from "next";
 import type { Handler } from "next-iron-session";
 
 import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
-import { withAPIPageLogger } from "@src/middlewares/withAPIPageLogger";
-import withSession from "@src/middlewares/withSession";
-import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
+import { withAuth } from "@src/middlewares/withAuth";
+import { withLogger } from "@src/middlewares/withLogger";
+import { withMongoDB } from "@src/middlewares/withMongoDB";
+import { withSentry } from "@src/middlewares/withSentry";
+import { withSession } from "@src/middlewares/withSession";
+import { wrapMiddlewares } from "@src/middlewares/wrapper";
 
 const handler: Handler = async (
   request: ExtendedRequest,
   response: NextApiResponse,
 ): Promise<void> => {
-  addRequestScopeToSentry(request);
+  if (request.method === "GET") {
+    const userDocumentId = request.session.get("user-session-id");
 
-  try {
-    if (request.method === "GET") {
-      const userDocumentId = request.session.get("user-session-id");
-
-      if (userDocumentId) {
-        response.json({ userDocumentId });
-      } else {
-        response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
-          Location: request.headers.referer || "/",
-        });
-
-        return response.end();
-      }
+    if (userDocumentId) {
+      response.json({ userDocumentId });
     } else {
-      response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
+      response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
+        Location: "/",
+      });
 
       return response.end();
     }
-  } catch (error) {
-    Sentry.withScope((scope) => {
-      scope.setTag(
-        "api/auth-connect/user-document-id",
-        "api/auth-connect/user-document-id",
-      );
-      Sentry.captureException(error);
-    });
+  } else {
+    response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
 
     return response.end();
   }
 };
 
-export default withAPIPageLogger(withSession(handler));
+export default wrapMiddlewares(
+  [withLogger, withSentry, withMongoDB, withSession, withAuth],
+  handler,
+);

@@ -3,40 +3,35 @@ import type { NextApiResponse } from "next";
 import type { Handler } from "next-iron-session";
 
 import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
-import { withAPIPageLogger } from "@src/middlewares/withAPIPageLogger";
-import withSession from "@src/middlewares/withSession";
-import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
+import { withAuth } from "@src/middlewares/withAuth";
+import { withLogger } from "@src/middlewares/withLogger";
+import { withMongoDB } from "@src/middlewares/withMongoDB";
+import { withSentry } from "@src/middlewares/withSentry";
+import { withSession } from "@src/middlewares/withSession";
+import { wrapMiddlewares } from "@src/middlewares/wrapper";
 
 const handler: Handler = async (
   request: ExtendedRequest,
   response: NextApiResponse,
 ): Promise<void> => {
-  addRequestScopeToSentry(request);
+  if (request.method === "GET") {
+    const userSub = request.session.get("user-sub");
 
-  try {
-    if (request.method === "GET") {
-      const userSub = request.session.get("user-sub");
-
-      if (userSub) {
-        response.json({ userSub });
-      } else {
-        response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
-          Location: request.headers.referer || "/",
-        });
-      }
+    if (userSub) {
+      response.json({ userSub });
     } else {
-      response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
-
-      return response.end();
+      response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
+        Location: "/",
+      });
     }
-  } catch (error) {
-    Sentry.withScope((scope) => {
-      scope.setTag("api/user-sub", "api/user-sub");
-      Sentry.captureException(error);
-    });
+  } else {
+    response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
 
     return response.end();
   }
 };
 
-export default withAPIPageLogger(withSession(handler));
+export default wrapMiddlewares(
+  [withLogger, withSentry, withMongoDB, withSession, withAuth],
+  handler,
+);

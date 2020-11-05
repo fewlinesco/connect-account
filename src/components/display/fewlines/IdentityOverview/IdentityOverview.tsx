@@ -5,8 +5,9 @@ import styled from "styled-components";
 import { AwaitingValidationBadge } from "../AwaitingValidationBadge/AwaitingValidationBadge";
 import { Box } from "../Box/Box";
 import { Button, ButtonVariant } from "../Button/Button";
-import { DeleteConfirmationBox } from "../ConfirmationBox/DeleteConfirmationBox";
-import { PrimaryConfirmationBox } from "../ConfirmationBox/PrimaryConfirmationBox";
+import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
+import { DeleteConfirmationBoxContent } from "../ConfirmationBox/DeleteConfirmationBoxContent";
+import { PrimaryConfirmationBoxContent } from "../ConfirmationBox/PrimaryConfirmationBoxContent";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, IdentityTypes } from "@lib/@types";
 
@@ -17,23 +18,13 @@ type IdentityOverviewProps = {
 export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
   identity,
 }) => {
-  const [
-    deleteConfirmationBoxOpen,
-    setDeleteConfirmationBoxOpen,
-  ] = React.useState<boolean>(false);
-
-  const [
-    primaryConfirmationBoxOpen,
-    setPrimaryConfirmationBoxOpen,
-  ] = React.useState<boolean>(false);
-
-  const [preventPrimaryAnimation, setPreventPrimaryAnimation] = React.useState<
-    boolean
-  >(true);
-
-  const [preventDeleteAnimation, setPreventDeleteAnimation] = React.useState<
-    boolean
-  >(true);
+  const [confirmationBoxOpen, setConfirmationBoxOpen] = React.useState<boolean>(
+    false,
+  );
+  const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
+  const [confirmationBoxContent, setConfirmationBoxContent] = React.useState<
+    JSX.Element
+  >(<React.Fragment />);
 
   const { id, primary, status, type, value } = identity;
 
@@ -70,48 +61,41 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
         </Link>
       )} */}
       {!primary && status === "validated" && (
-        <>
-          <Button
-            variant={ButtonVariant.SECONDARY}
-            onClick={() => {
-              setPreventPrimaryAnimation(false);
-              setPrimaryConfirmationBoxOpen(true);
-            }}
-          >
-            Make {identity.value} my primary {type.toLowerCase()}
-          </Button>
-          {PrimaryConfirmationBox(
-            primaryConfirmationBoxOpen,
-            preventPrimaryAnimation,
-            setPrimaryConfirmationBoxOpen,
-            value,
-            id,
-          )}
-        </>
+        <Button
+          variant={ButtonVariant.SECONDARY}
+          onClick={() => {
+            setPreventAnimation(false);
+            setConfirmationBoxContent(
+              PrimaryConfirmationBoxContent(setConfirmationBoxOpen, value, id),
+            );
+            setConfirmationBoxOpen(true);
+          }}
+        >
+          Make {value} my primary {type.toLowerCase()}
+        </Button>
       )}
       {!primary && (
-        <>
-          <Button
-            variant={ButtonVariant.GHOST}
-            onClick={() => {
-              setPreventDeleteAnimation(false);
-              setDeleteConfirmationBoxOpen(!deleteConfirmationBoxOpen);
-            }}
-          >
-            Delete this{" "}
-            {type.toLocaleUpperCase() === IdentityTypes.PHONE
-              ? "phone number"
-              : "email address"}
-          </Button>
-          {DeleteConfirmationBox(
-            deleteConfirmationBoxOpen,
-            preventDeleteAnimation,
-            setDeleteConfirmationBoxOpen,
-            value,
-            type,
-          )}
-        </>
+        <Button
+          variant={ButtonVariant.GHOST}
+          onClick={() => {
+            setPreventAnimation(false);
+            setConfirmationBoxContent(
+              DeleteConfirmationBoxContent(setConfirmationBoxOpen, value, type),
+            );
+            setConfirmationBoxOpen(true);
+          }}
+        >
+          Delete this{" "}
+          {type === IdentityTypes.PHONE ? "phone number" : "email address"}
+        </Button>
       )}
+      <ConfirmationBox
+        open={confirmationBoxOpen}
+        setOpen={setConfirmationBoxOpen}
+        preventAnimation={preventAnimation}
+      >
+        {confirmationBoxContent}
+      </ConfirmationBox>
     </>
   );
 };
