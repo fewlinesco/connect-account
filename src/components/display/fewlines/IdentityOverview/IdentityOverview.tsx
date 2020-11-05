@@ -35,7 +35,7 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
     boolean
   >(true);
 
-  const { primary, status, type, value } = identity;
+  const { id, primary, status, type, value } = identity;
 
   return (
     <>
@@ -85,6 +85,7 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
             preventPrimaryAnimation,
             setPrimaryConfirmationBoxOpen,
             value,
+            id,
           )}
         </>
       )}

@@ -64,6 +64,7 @@ Install all the needed dependencies running the following command:
 
 ----
 brew bundle install --file Brewfile
+brew install nss # if you're using firefox (for mkcert)
 ----
 
 Create certificates:
