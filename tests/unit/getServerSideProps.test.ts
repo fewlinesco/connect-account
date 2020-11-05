@@ -10,6 +10,7 @@ import { ParsedUrlQuery } from "querystring";
 import { IdentityTypes } from "@lib/@types";
 import { ProviderUser } from "@lib/@types";
 import { config } from "@src/config";
+import { getMongoClient } from "@src/middlewares/withMongoDB";
 import { getServerSideProps } from "@src/pages/account/logins/index";
 
 enableFetchMocks();
@@ -26,12 +27,17 @@ jest.mock("@src/config", () => {
       connectApplicationScopes: "",
       connectProviderUrl: "http://foo.test",
       connectDomain: "http://foo.test",
+      connectMongoUrl: process.env.MONGO_URL_TEST as string,
+      connectMongoDbName: "connect-account-test",
     },
     oauth2Client: {
       verifyJWT: async () => {
         return {
           sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
         };
+      },
+      getAuthorizationURL: async () => {
+        return "";
       },
     },
   };
@@ -54,6 +60,10 @@ describe("getServerSideProps", () => {
   beforeEach(() => {
     mockedContext.req.headers = {};
     mockedContext.req.rawHeaders = [];
+  });
+
+  afterAll(async () => {
+    await (await getMongoClient()).close();
   });
 
   const mockedResponse: { data: { provider: ProviderUser } } = {
@@ -84,7 +94,9 @@ describe("getServerSideProps", () => {
     },
   };
 
-  it("should redirect to the login flow if there are no session", async () => {
+  it("should redirect to the login flow if there are no session", async (done) => {
+    expect.assertions(3);
+
     fetch.once(JSON.stringify(mockedResponse));
 
     const response = await getServerSideProps(mockedContext);
@@ -100,9 +112,13 @@ describe("getServerSideProps", () => {
         props: {},
       }),
     );
+
+    done();
   });
 
-  it("should get the mongo document id from the session and call management GraphQL endpoint", async () => {
+  it("should get the mongo document id from the session, fetch mongo, fetch management and return identities list", async (done) => {
+    expect.assertions(1);
+
     const mockedSortedResponse = {
       emailIdentities: [
         {
@@ -128,7 +144,7 @@ describe("getServerSideProps", () => {
     const sealedJWT = await seal(
       {
         persistent: {
-          "user-session-id": "42",
+          "user-session-id": "5fa2e906743b920faa6233d4",
           "user-sub": "4a5f8589-0d91-4a69-924a-6f227a69666d",
         },
         flash: {},
@@ -163,5 +179,7 @@ describe("getServerSideProps", () => {
         },
       }),
     );
+
+    done();
   });
 });

@@ -8,8 +8,12 @@ import { AddIdentityForm } from "@src/components/display/fewlines/AddIdentityFor
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
-import { withSSRLogger } from "@src/middlewares/withSSRLogger";
-import withSession from "@src/middlewares/withSession";
+import { withAuth } from "@src/middlewares/withAuth";
+import { withLogger } from "@src/middlewares/withLogger";
+import { withMongoDB } from "@src/middlewares/withMongoDB";
+import { withSentry } from "@src/middlewares/withSentry";
+import { withSession } from "@src/middlewares/withSession";
+import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 
 const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   return (
@@ -36,12 +40,16 @@ const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
 
 export default AddIdentityPage;
 
-export const getServerSideProps: GetServerSideProps = withSSRLogger(
-  withSession(async (context) => {
-    return {
-      props: {
-        type: context.params.type,
-      },
-    };
-  }),
-);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return wrapMiddlewaresForSSR<{ type: string }>(
+    context,
+    [withLogger, withSentry, withMongoDB, withSession, withAuth],
+    async () => {
+      return {
+        props: {
+          type: context.params?.type?.toString(),
+        },
+      };
+    },
+  );
+};

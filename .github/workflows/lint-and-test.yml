@@ -56,4 +56,4 @@ jobs:
       run: yarn install
 
     - name: test
-      run: yarn test
+      run: MONGO_URL_TEST=${{ secrets.MONGO_URL_TEST }} yarn test
