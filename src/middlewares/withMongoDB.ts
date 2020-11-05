@@ -12,7 +12,7 @@ const mongoPool = new MongoClient(config.connectMongoUrl, {
   useUnifiedTopology: true,
 });
 
-async function getMongoClient(): Promise<MongoClient> {
+export async function getMongoClient(): Promise<MongoClient> {
   if (mongoClient) {
     return Promise.resolve(mongoClient);
   }

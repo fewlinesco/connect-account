@@ -10,6 +10,7 @@ import { ParsedUrlQuery } from "querystring";
 import { IdentityTypes } from "@lib/@types";
 import { ProviderUser } from "@lib/@types";
 import { config } from "@src/config";
+import { getMongoClient } from "@src/middlewares/withMongoDB";
 import { getServerSideProps } from "@src/pages/account/logins/index";
 
 enableFetchMocks();
@@ -61,6 +62,10 @@ describe("getServerSideProps", () => {
     mockedContext.req.rawHeaders = [];
   });
 
+  afterAll(async () => {
+    await (await getMongoClient()).close();
+  });
+
   const mockedResponse: { data: { provider: ProviderUser } } = {
     data: {
       provider: {
@@ -89,7 +94,9 @@ describe("getServerSideProps", () => {
     },
   };
 
-  it("should redirect to the login flow if there are no session", async () => {
+  it("should redirect to the login flow if there are no session", async (done) => {
+    expect.assertions(3);
+
     fetch.once(JSON.stringify(mockedResponse));
 
     const response = await getServerSideProps(mockedContext);
@@ -105,9 +112,13 @@ describe("getServerSideProps", () => {
         props: {},
       }),
     );
+
+    done();
   });
 
-  it("should get the mongo document id from the session, fetch mongo, fetch management and return identities list", async () => {
+  it("should get the mongo document id from the session, fetch mongo, fetch management and return identities list", async (done) => {
+    expect.assertions(1);
+
     const mockedSortedResponse = {
       emailIdentities: [
         {
@@ -168,5 +179,7 @@ describe("getServerSideProps", () => {
         },
       }),
     );
+
+    done();
   });
 });
