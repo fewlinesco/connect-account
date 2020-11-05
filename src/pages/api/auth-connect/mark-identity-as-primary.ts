@@ -2,7 +2,12 @@ import { HttpStatus } from "@fwl/web";
 import { Handler } from "next-iron-session";
 
 import { markIdentityAsPrimary } from "@lib/commands/markIdentityAsPrimary";
-import { withAPIPageLogger } from "@src/middlewares/withAPIPageLogger";
+import { withAuth } from "@src/middlewares/withAuth";
+import { withLogger } from "@src/middlewares/withLogger";
+import { withMongoDB } from "@src/middlewares/withMongoDB";
+import { withSentry } from "@src/middlewares/withSentry";
+import { withSession } from "@src/middlewares/withSession";
+import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const handler: Handler = async (request, response) => {
@@ -32,4 +37,7 @@ const handler: Handler = async (request, response) => {
   return Promise.reject();
 };
 
-export default withAPIPageLogger(handler);
+export default wrapMiddlewares(
+  [withLogger, withSentry, withMongoDB, withSession, withAuth],
+  handler,
+);
