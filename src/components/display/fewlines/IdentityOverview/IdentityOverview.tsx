@@ -26,7 +26,7 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
     JSX.Element
   >(<React.Fragment />);
 
-  const { primary, status, type, value } = identity;
+  const { id, primary, status, type, value } = identity;
 
   return (
     <>
@@ -66,7 +66,7 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
           onClick={() => {
             setPreventAnimation(false);
             setConfirmationBoxContent(
-              PrimaryConfirmationBoxContent(setConfirmationBoxOpen, value),
+              PrimaryConfirmationBoxContent(setConfirmationBoxOpen, value, id),
             );
             setConfirmationBoxOpen(true);
           }}

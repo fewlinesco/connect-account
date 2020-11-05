@@ -2,17 +2,29 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
+import { Identity } from "@lib/@types";
+import { MarkIdentityAsPrimary } from "@src/components/business/MarkIdentityAsPrimary";
 
 export const PrimaryConfirmationBoxContent = (
   setOpen: React.Dispatch<React.SetStateAction<boolean>>,
   value: string,
+  id: Identity["id"],
 ): JSX.Element => {
   return (
     <>
       <PrimaryConfirmationText>
         You are about to set {value} as primary.
       </PrimaryConfirmationText>
-      <Button variant={ButtonVariant.PRIMARY}>Confirm</Button>
+      <MarkIdentityAsPrimary identityId={id}>
+        {({ markIdentityAsPrimaryCall }) => (
+          <Button
+            variant={ButtonVariant.PRIMARY}
+            onClick={markIdentityAsPrimaryCall}
+          >
+            Confirm
+          </Button>
+        )}
+      </MarkIdentityAsPrimary>
       <Button
         variant={ButtonVariant.SECONDARY}
         onClick={() => {
