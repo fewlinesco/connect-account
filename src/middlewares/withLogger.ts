@@ -18,7 +18,7 @@ export function withLogger(handler: Handler): Handler {
     response.once("finish", function () {
       const processTimeEnd = process.hrtime.bigint();
 
-      logger.log("Success", {
+      logger.log("", {
         duration: (
           (processTimeEnd - processTimeStart) /
           BigInt(1000)

@@ -48,8 +48,6 @@ export function withAuth(handler: Handler): Handler {
             }
           });
 
-        console.log("Hellllooooooooo");
-
         return handler(request, response);
       } catch (error) {
         response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
