@@ -8,30 +8,49 @@ const logger = createLogger({
   service: "connect-account",
   encoder: EncoderTypeEnum.JSON,
 }).withMeta({
-  process: "serverSide",
+  process: "server-side",
 });
 
 export function withLogger(handler: Handler): Handler {
   return async (request: ExtendedRequest, response: ServerResponse) => {
     const processTimeStart = process.hrtime.bigint();
 
-    response.once("finish", function () {
+    try {
+      const nextHandler = await handler(request, response);
+
       const processTimeEnd = process.hrtime.bigint();
 
-      logger.log("", {
+      logger.log("No error thrown", {
         duration: (
           (processTimeEnd - processTimeStart) /
           BigInt(1000)
         ).toString(),
-        method: request.method ? request.method : "No method",
-        path: request.url ? request.url : "",
+        method: request.method ? request.method : "Undefined method",
+        path: request.url ? request.url : "Undefined request URL",
         remoteaddr: request.headers["x-forwarded-for"]
           ? request.headers["x-forwarded-for"].toString()
           : "",
         statusCode: response.statusCode ? response.statusCode : 0,
       });
-    });
 
-    return handler(request, response);
+      return nextHandler;
+    } catch (error) {
+      const processTimeEnd = process.hrtime.bigint();
+
+      logger.log(error.message, {
+        duration: (
+          (processTimeEnd - processTimeStart) /
+          BigInt(1000)
+        ).toString(),
+        method: request.method ? request.method : "Undefined method",
+        path: request.url ? request.url : "Undefined request URL",
+        remoteaddr: request.headers["x-forwarded-for"]
+          ? request.headers["x-forwarded-for"].toString()
+          : "",
+        statusCode: response.statusCode ? response.statusCode : 0,
+      });
+
+      throw error;
+    }
   };
 }
