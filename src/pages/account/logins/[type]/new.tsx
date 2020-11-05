@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { IdentityTypes } from "@lib/@types";
+import { Layout } from "@src/components/Layout";
 import { AddIdentity } from "@src/components/business/AddIdentity";
 import { AddIdentityForm } from "@src/components/display/fewlines/AddIdentityForm/AddIdentityForm";
 import { Container } from "@src/components/display/fewlines/Container";
@@ -12,22 +13,24 @@ import withSession from "@src/middlewares/withSession";
 
 const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   return (
-    <Container>
-      <H1>Logins</H1>
-      <NavigationBreadcrumbs
-        breadcrumbs={[
-          type.toLocaleUpperCase() === IdentityTypes.EMAIL
-            ? "Email address"
-            : "Phone number",
-          "new",
-        ]}
-      />
-      <AddIdentity type={type}>
-        {({ addIdentity }) => (
-          <AddIdentityForm type={type} addIdentity={addIdentity} />
-        )}
-      </AddIdentity>
-    </Container>
+    <Layout>
+      <Container>
+        <H1>Logins</H1>
+        <NavigationBreadcrumbs
+          breadcrumbs={[
+            type.toLocaleUpperCase() === IdentityTypes.EMAIL
+              ? "Email address"
+              : "Phone number",
+            "new",
+          ]}
+        />
+        <AddIdentity type={type}>
+          {({ addIdentity }) => (
+            <AddIdentityForm type={type} addIdentity={addIdentity} />
+          )}
+        </AddIdentity>
+      </Container>
+    </Layout>
   );
 };
 

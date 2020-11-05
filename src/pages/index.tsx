@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { getProviderName } from "@lib/queries/getProviderName";
+import { Main } from "@src/components/Layout";
 import { Home } from "@src/components/display/fewlines/Home/Home";
 import { oauth2Client } from "@src/config";
 import { withSSRLogger } from "@src/middlewares/withSSRLogger";
@@ -10,7 +11,11 @@ import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 type HomePageProps = { authorizeURL: string; providerName: string };
 
 const HomePage: React.FC<HomePageProps> = ({ authorizeURL, providerName }) => {
-  return <Home authorizeURL={authorizeURL} providerName={providerName} />;
+  return (
+    <Main>
+      <Home authorizeURL={authorizeURL} providerName={providerName} />
+    </Main>
+  );
 };
 
 export default HomePage;

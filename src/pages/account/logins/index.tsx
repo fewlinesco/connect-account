@@ -5,6 +5,7 @@ import React from "react";
 import { getIdentities } from "@lib/queries/getIdentities";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { H2 } from "@src/components/display/fewlines/H2/H2";
@@ -26,11 +27,13 @@ const LoginsOverviewPage: React.FC<LoginsOverviewPageProps> = ({
   sortedIdentities,
 }) => {
   return (
-    <Container>
-      <H1>Logins</H1>
-      <H2>Your emails, phones and social logins</H2>
-      <LoginsOverview sortedIdentities={sortedIdentities} />
-    </Container>
+    <Layout>
+      <Container>
+        <H1>Logins</H1>
+        <H2>Your emails, phones and social logins</H2>
+        <LoginsOverview sortedIdentities={sortedIdentities} />
+      </Container>
+    </Layout>
   );
 };
 

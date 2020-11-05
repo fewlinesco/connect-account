@@ -5,6 +5,7 @@ import React from "react";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentities } from "@lib/queries/getIdentities";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import { Layout } from "@src/components/Layout";
 import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
@@ -20,25 +21,27 @@ import Sentry from "@src/utils/sentry";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   return (
-    <Container>
-      <H1>Logins</H1>
-      <NavigationBreadcrumbs
-        breadcrumbs={[
-          identity.type.toUpperCase() === IdentityTypes.EMAIL
-            ? "Email address"
-            : "Phone number",
-          "edit",
-        ]}
-      />
-      <UpdateIdentity identity={identity}>
-        {({ updateIdentity }) => (
-          <UpdateIdentityForm
-            updateIdentity={updateIdentity}
-            currentIdentity={identity}
-          />
-        )}
-      </UpdateIdentity>
-    </Container>
+    <Layout>
+      <Container>
+        <H1>Logins</H1>
+        <NavigationBreadcrumbs
+          breadcrumbs={[
+            identity.type.toUpperCase() === IdentityTypes.EMAIL
+              ? "Email address"
+              : "Phone number",
+            "edit",
+          ]}
+        />
+        <UpdateIdentity identity={identity}>
+          {({ updateIdentity }) => (
+            <UpdateIdentityForm
+              updateIdentity={updateIdentity}
+              currentIdentity={identity}
+            />
+          )}
+        </UpdateIdentity>
+      </Container>
+    </Layout>
   );
 };
 
