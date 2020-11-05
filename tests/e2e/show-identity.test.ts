@@ -8,6 +8,8 @@ import {
   press,
   screenshot,
   waitFor,
+  link,
+  below,
 } from "taiko";
 
 import { config } from "@src/config";
@@ -49,7 +51,7 @@ describe("Account Web Application show identity", () => {
       await waitFor("Email addresses");
       expect(await text("Email addresses").exists()).toBeTruthy();
 
-      await click(config.connectTestAccountEmail);
+      await click(link(".test", below("Email addresses")));
       await waitFor("Primary");
       expect(await text("Primary").exists()).toBeTruthy();
 
