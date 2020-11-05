@@ -17,22 +17,23 @@ export const MarkIdentityAsPrimary: React.FC<MarkIdentityAsPrimaryProps> = ({
   children,
 }) => {
   const router = useRouter();
-  async function markIdentityAsPrimaryCall(): Promise<void> {
-    try {
-      const body = {
-        identityId,
-      };
 
-      return fetchJson(
-        "/api/auth-connect/mark-identity-as-primary",
-        HttpVerbs.POST,
-        body,
-      ).then(() => {
+  async function markIdentityAsPrimaryCall(): Promise<void> {
+    const body = {
+      identityId,
+    };
+
+    return fetchJson(
+      "/api/auth-connect/mark-identity-as-primary",
+      HttpVerbs.POST,
+      body,
+    )
+      .then(() => {
         router && router.push("/account/logins");
+      })
+      .catch((error) => {
+        throw error;
       });
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   return children({
