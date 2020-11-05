@@ -3,6 +3,7 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { IdentityTypes } from "@lib/@types/Identity";
+import { Layout } from "@src/components/Layout";
 import { ValidateIdentity } from "@src/components/business/ValidateIdentity";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
@@ -18,25 +19,27 @@ const ValidateIdentityPage: React.FC<{
   eventId: string;
 }> = ({ type, eventId }) => {
   return (
-    <Container>
-      <H1>Logins</H1>
-      <NavigationBreadcrumbs
-        breadcrumbs={[
-          type.toUpperCase() === IdentityTypes.EMAIL
-            ? "Email address"
-            : "Phone number",
-          "validation",
-        ]}
-      />
-      <ValidateIdentity eventId={eventId}>
-        {({ validateIdentity }) => (
-          <ValidateIdentityForm
-            type={type}
-            validateIdentity={validateIdentity}
-          />
-        )}
-      </ValidateIdentity>
-    </Container>
+    <Layout>
+      <Container>
+        <H1>Logins</H1>
+        <NavigationBreadcrumbs
+          breadcrumbs={[
+            type.toUpperCase() === IdentityTypes.EMAIL
+              ? "Email address"
+              : "Phone number",
+            "validation",
+          ]}
+        />
+        <ValidateIdentity eventId={eventId}>
+          {({ validateIdentity }) => (
+            <ValidateIdentityForm
+              type={type}
+              validateIdentity={validateIdentity}
+            />
+          )}
+        </ValidateIdentity>
+      </Container>
+    </Layout>
   );
 };
 

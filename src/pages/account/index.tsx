@@ -3,6 +3,7 @@ import type { GetServerSideProps } from "next";
 import React from "react";
 import styled from "styled-components";
 
+import { Layout } from "@src/components/Layout";
 import { AccountOverview } from "@src/components/display/fewlines/AccountOverview/AccountOverview";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
@@ -16,10 +17,12 @@ import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const AccountPage: React.FC = () => {
   return (
-    <Container>
-      <WelcomeMessage>Welcome to your account</WelcomeMessage>
-      <AccountOverview />
-    </Container>
+    <Layout>
+      <Container>
+        <WelcomeMessage>Welcome to your account</WelcomeMessage>
+        <AccountOverview />
+      </Container>
+    </Layout>
   );
 };
 

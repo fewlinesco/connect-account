@@ -6,6 +6,7 @@ import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentity } from "@lib/queries/getIdentity";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { NoIdentityFound } from "@src/clientErrors";
+import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { IdentityOverview } from "@src/components/display/fewlines/IdentityOverview/IdentityOverview";
@@ -24,17 +25,19 @@ const IdentityOverviewPage: React.FC<{ identity: Identity }> = ({
   const { type } = identity;
 
   return (
-    <Container>
-      <H1>Logins</H1>
-      <NavigationBreadcrumbs
-        breadcrumbs={[
-          type.toUpperCase() === IdentityTypes.EMAIL
-            ? "Email address"
-            : "Phone number",
-        ]}
-      />
-      <IdentityOverview identity={identity} />
-    </Container>
+    <Layout>
+      <Container>
+        <H1>Logins</H1>
+        <NavigationBreadcrumbs
+          breadcrumbs={[
+            type.toUpperCase() === IdentityTypes.EMAIL
+              ? "Email address"
+              : "Phone number",
+          ]}
+        />
+        <IdentityOverview identity={identity} />
+      </Container>
+    </Layout>
   );
 };
 

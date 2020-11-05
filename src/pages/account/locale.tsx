@@ -2,6 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
+import { Layout } from "@src/components/Layout";
 import { Locale } from "@src/components/display/fewlines/Locale/Locale";
 import { oauth2Client, config } from "@src/config";
 import { withSSRLogger } from "@src/middlewares/withSSRLogger";
@@ -11,7 +12,11 @@ import { refreshTokens } from "@src/utils/refreshTokens";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const LocalePage: React.FC = () => {
-  return <Locale />;
+  return (
+    <Layout>
+      <Locale />
+    </Layout>
+  );
 };
 
 export default LocalePage;
