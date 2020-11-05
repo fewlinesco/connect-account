@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { Button, ButtonVariant } from "../Button/Button";
 import { Container } from "../Container";
 import { ConfirmationBox } from "./ConfirmationBox";
-import { DeleteConfirmationText } from "./DeleteConfirmationBox";
-import { PrimaryConfirmationText } from "./PrimaryConfirmationBox";
+import { DeleteConfirmationText } from "./DeleteConfirmationBoxContent";
+import { PrimaryConfirmationText } from "./PrimaryConfirmationBoxContent";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 export default {
