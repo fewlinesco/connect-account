@@ -242,6 +242,7 @@ const Flex = styled.div`
 
 const IdentitySection = styled.div`
   margin: 0 0 ${({ theme }) => theme.spaces.s} 0;
+  position: relative;
 `;
 
 const SocialIdentityBox = styled.div`
