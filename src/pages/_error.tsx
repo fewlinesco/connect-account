@@ -2,7 +2,9 @@ import * as Sentry from "@sentry/node";
 import type { NextPageContext } from "next";
 import NextError, { ErrorProps as NextErrorProps } from "next/error";
 import React from "react";
-import styled from "styled-components";
+
+import { Layout } from "@src/components/Layout";
+import { ErrorFallback } from "@src/components/display/fewlines/ErrorFallback/ErrorFallback";
 
 type ErrorPageProps = {
   error: Error;
@@ -16,7 +18,7 @@ export type ErrorProps = {
 } & NextErrorProps;
 
 const ErrorPage = (props: ErrorPageProps): JSX.Element => {
-  const { isReadyToRender, error } = props;
+  const { isReadyToRender, error, statusCode } = props;
 
   if (!isReadyToRender && error) {
     // getInitialProps is not called for top-level errors - See https://github.com/vercel/next.js/issues/8592.
@@ -24,12 +26,9 @@ const ErrorPage = (props: ErrorPageProps): JSX.Element => {
   }
 
   return (
-    <Wrapper>
-      <h2>
-        Something went wrong. We are working on getting this fixed as soon as we
-        can.
-      </h2>
-    </Wrapper>
+    <Layout>
+      <ErrorFallback statusCode={statusCode} />
+    </Layout>
   );
 };
 
@@ -75,19 +74,3 @@ ErrorPage.getInitialProps = async (
 };
 
 export default ErrorPage;
-
-const Wrapper = styled.div`
-  width: 100rem;
-  min-height: 15rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: ${({ theme }) => theme.radii[1]};
-  background-color: ${({ theme }) => theme.colors.background};
-  box-shadow: ${({ theme }) => theme.shadows.base};
-
-  p {
-    font-size: ${({ theme }) => theme.fontSizes.l};
-  }
-`;
