@@ -23,7 +23,7 @@ export const TimelineEnd: React.FC = () => {
 
 const Flex = styled.div`
   position: absolute;
-  left: -1.7rem;
+  left: -1.5rem;
   display: none;
   flex-direction: column;
   height: 100%;
