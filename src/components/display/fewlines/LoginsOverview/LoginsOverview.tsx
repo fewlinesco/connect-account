@@ -24,6 +24,7 @@ import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
 import { Timeline } from "../Timeline/Timeline";
+import { TimelineEnd } from "../TimelineEnd/TimelineEnd";
 import type { Identity } from "@lib/@types";
 import { IdentityTypes } from "@lib/@types/Identity";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
@@ -203,7 +204,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
         </Link>
       </IdentitySection>
       <IdentitySection>
-        <Timeline />
+        <TimelineEnd />
         <h3>Social logins</h3>
         <ShadowBox>
           {socialIdentities.length === 0 ? (
