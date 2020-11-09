@@ -1,10 +1,8 @@
 import { mount } from "enzyme";
 import React from "react";
 
-import {
-  Button,
-  ButtonVariant,
-} from "@src/components/display/fewlines/Button/Button";
+import { ButtonVariant } from "@src/components/display/fewlines/Button/Button";
+import { AccessButton } from "@src/components/display/fewlines/Home/Home";
 import HomePage from "@src/pages";
 import { AccountApp } from "@src/pages/_app";
 
@@ -16,11 +14,11 @@ describe("HomePage", () => {
       </AccountApp>,
     );
 
-    const accountButton = component
-      .find(Button)
+    const accountAccessButton = component
+      .find(AccessButton)
       .find({ variant: ButtonVariant.PRIMARY });
 
-    expect(accountButton).toHaveLength(1);
-    expect(accountButton.text()).toEqual("Access my account");
+    expect(accountAccessButton).toHaveLength(1);
+    expect(accountAccessButton.text()).toEqual("Access my account");
   });
 });

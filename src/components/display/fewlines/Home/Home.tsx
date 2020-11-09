@@ -82,6 +82,6 @@ export const BackLink = styled.p`
   cursor: pointer;
 `;
 
-const AccessButton = styled(Button)`
+export const AccessButton = styled(Button)`
   margin: 0;
 `;
