@@ -5,29 +5,38 @@ import { TimelineBulletPoint } from "../Icons/TimelineBulletPoint/TimelineBullet
 
 export const Timeline: React.FC = () => {
   return (
-    <>
+    <Flex>
       <BulletPointContainer>
         <TimelineBulletPoint />
       </BulletPointContainer>
-      <TimelineContainer>
+      <LineContainer>
         <Line />
-      </TimelineContainer>
-    </>
+      </LineContainer>
+    </Flex>
   );
 };
 
-const BulletPointContainer = styled.div`
-  display: inline-block;
+const Flex = styled.div`
+  position: absolute;
+  left: -1.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 0.8rem;
 `;
 
-const TimelineContainer = styled.div`
-  display: block;
+const BulletPointContainer = styled.div`
   width: 0.8rem;
-  height: 100%;
+  margin: 0 0 ${({ theme }) => theme.spaces.xxs} 0;
+`;
+
+const LineContainer = styled.div`
+  width: 0.8rem;
   margin: 0 0 0 0.4rem;
+  height: 100%;
 `;
 
 const Line = styled.div`
-  height: calc(100% + ${({ theme }) => theme.spaces.s});
+  height: calc(95% + ${({ theme }) => theme.spaces.s});
   border-left: 1px solid ${({ theme }) => theme.colors.separator};
 `;

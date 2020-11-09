@@ -23,6 +23,7 @@ import { NeutralLink } from "../NeutralLink";
 import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
+import { Timeline } from "../Timeline/Timeline";
 import type { Identity } from "@lib/@types";
 import { IdentityTypes } from "@lib/@types/Identity";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
@@ -110,6 +111,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
   return (
     <>
       <IdentitySection>
+        <Timeline />
         <h3>Email addresses</h3>
         <ShadowBox>
           {emailIdentities.length === 0 ? (
@@ -155,6 +157,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
         </Link>
       </IdentitySection>
       <IdentitySection>
+        <Timeline />
         <h3>Phone numbers</h3>
         <ShadowBox>
           {phoneIdentities.length === 0 ? (
@@ -200,6 +203,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
         </Link>
       </IdentitySection>
       <IdentitySection>
+        <Timeline />
         <h3>Social logins</h3>
         <ShadowBox>
           {socialIdentities.length === 0 ? (
