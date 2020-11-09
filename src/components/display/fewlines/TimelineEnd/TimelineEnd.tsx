@@ -13,9 +13,9 @@ export const TimelineEnd: React.FC = () => {
       <LineContainer>
         <Line />
       </LineContainer>
-      <BulletPointContainer>
+      <GhostBulletPointContainer>
         <GhostTimelineBulletPoint />
-      </BulletPointContainer>
+      </GhostBulletPointContainer>
     </Flex>
   );
 };
@@ -32,6 +32,11 @@ const Flex = styled.div`
 const BulletPointContainer = styled.div`
   width: 0.8rem;
   margin: 0 0 ${({ theme }) => theme.spaces.xxs} 0;
+`;
+
+const GhostBulletPointContainer = styled.div`
+  width: 0.8rem;
+  margin: 0 0 -1rem 0;
 `;
 
 const LineContainer = styled.div`
