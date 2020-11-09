@@ -46,4 +46,7 @@ const Wrapper = styled.div`
   p {
     font-size: ${({ theme }) => theme.fontSizes.l};
   }
+  h2 {
+    font-weight: ${({ theme }) => theme.fontWeights.semibold};
+  }
 `;
