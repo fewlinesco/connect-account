@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { TimelineBulletPoint } from "../Icons/TimelineBulletPoint/TimelineBulletPoint";
+import { deviceBreakpoints } from "@src/design-system/theme/decatTheme";
 
 export const Timeline: React.FC = () => {
   return (
@@ -18,11 +19,15 @@ export const Timeline: React.FC = () => {
 
 const Flex = styled.div`
   position: absolute;
-  left: -1.5rem;
-  display: flex;
+  left: -1.7rem;
+  display: none;
   flex-direction: column;
   height: 100%;
   width: 0.8rem;
+
+  @media ${deviceBreakpoints.m} {
+    display: flex;
+  }
 `;
 
 const BulletPointContainer = styled.div`
