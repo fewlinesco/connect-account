@@ -8,7 +8,7 @@ type ErrorFallbackProps = {
 
 export const ErrorFallback: React.FC<ErrorFallbackProps> = ({ statusCode }) => {
   return (
-    <Wrapper>
+    <Wrapper statusCode={statusCode}>
       {statusCode === 404 ? (
         <>
           <h2>We can&apos;t find the page you are looking for.</h2>
@@ -31,7 +31,7 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({ statusCode }) => {
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ statusCode: number }>`
   width: 100%;
   min-height: 15rem;
   display: flex;
@@ -43,6 +43,8 @@ const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
   box-shadow: ${({ theme }) => theme.shadows.base};
   padding: ${({ theme }) => theme.spaces.xs};
+  margin-top: ${({ statusCode, theme }) =>
+    statusCode !== 404 ? theme.spaces.s : ""};
   p {
     font-size: ${({ theme }) => theme.fontSizes.l};
   }
