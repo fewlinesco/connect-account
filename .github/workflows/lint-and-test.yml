@@ -33,6 +33,15 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    
+    services:
+      mongodb:
+        image: fewlines/mongo-with-replica-set:4.4.1
+        ports:
+          - 29705:29705
+      
+      container:
+        image:  node:14.8-buster
 
     steps:
     - uses: actions/checkout@v2
@@ -56,4 +65,8 @@ jobs:
       run: yarn install
 
     - name: test
-      run: MONGO_URL_TEST=${{ secrets.MONGO_URL_TEST }} yarn test
+      run: yarn test
+      env:
+        MONGO_URL_TEST: mongodb://mongodb:${{ job.services.mongodb.ports[29705] }}/connect-account-test?retryWrites=true&w=majority
+        CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
+        CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
