@@ -63,10 +63,18 @@ jobs:
     - name: dependencies
       if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn install
+    
+    - name: Install MongoDB
+      run: |
+        wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add -
+        echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+        apt-get update
+        apt-get install -y mongodb-org-shell
+        echo 'rs.initiate()' | mongo mongodb://mongodb:${{ job.services.mongodb.ports[29705] }}
 
     - name: test
       run: yarn test
       env:
-        MONGO_URL_TEST: mongodb://mongodb:${{ job.services.mongodb.ports[29705] }}/connect-account-test?retryWrites=true&w=majority
+        MONGO_URL_TEST: mongodb://mongodb:${{ job.services.mongodb.ports[29705] }}/connect-account-test
         CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
         CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
