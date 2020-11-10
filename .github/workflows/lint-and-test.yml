@@ -38,7 +38,7 @@ jobs:
       mongodb:
         image: fewlines/mongo-with-replica-set:4.4.1
         ports:
-          - 29705:29705
+          - 27017:27017
       
       container:
         image:  node:14.8-buster
