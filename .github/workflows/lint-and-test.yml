@@ -36,7 +36,7 @@ jobs:
     
     services:
       mongodb:
-        image: fewlines/mongo-with-replica-set:4.4.1
+        image: mongo:4.4.1
         ports:
           - 27017:27017
       
@@ -67,6 +67,6 @@ jobs:
     - name: test
       run: yarn test
       env:
-        MONGO_URL_TEST: mongodb://mongodb:${{ job.services.mongodb.ports[29705] }}/connect-account-test
+        MONGO_URL_TEST: mongodb://mongodb:${{ job.services.mongodb.ports[27017] }}/connect-account-test
         CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
         CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
