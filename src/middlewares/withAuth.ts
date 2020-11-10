@@ -15,6 +15,12 @@ export function withAuth(handler: Handler): Handler {
     response: ServerResponse,
   ): Promise<unknown> => {
     const userDocumentId = request.session.get("user-session-id");
+
+    console.log(
+      "=====================================================",
+      request.headers,
+    );
+
     const user = await request.mongoDb.collection("users").findOne<MongoUser>({
       _id: new ObjectId(userDocumentId),
     });
