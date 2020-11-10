@@ -38,7 +38,7 @@ jobs:
       mongodb:
         image: fewlines/mongo-with-replica-set:4.4.1
         ports:
-          - 27017:27017
+          - 29705:29705
       
       container:
         image:  node:14.8-buster
@@ -63,14 +63,6 @@ jobs:
     - name: dependencies
       if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn install
-    
-    - name: Install MongoDB
-      run: |
-        wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add -
-        echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
-        apt-get update
-        apt-get install -y mongodb-org-shell
-        echo 'rs.initiate()' | mongo mongodb://mongodb:${{ job.services.mongodb.ports[29705] }}
 
     - name: test
       run: yarn test
