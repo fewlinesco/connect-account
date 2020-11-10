@@ -45,7 +45,7 @@ export const ValidateIdentityForm: React.FC<{
           type="submit"
         >{`Confirm ${type.toLowerCase()}`}</Button>
       </Form>
-      <Link href="/account/logins">
+      <Link href="/account/logins" passHref>
         <NeutralLink>
           <Button variant={ButtonVariant.SECONDARY}>Discard all changes</Button>
         </NeutralLink>

@@ -54,7 +54,7 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
           type="submit"
         >{`Add ${type.toLowerCase()}`}</Button>
       </Form>
-      <Link href="/account/logins">
+      <Link href="/account/logins" passHref>
         <NeutralLink>
           <Button variant={ButtonVariant.SECONDARY}>Cancel</Button>
         </NeutralLink>

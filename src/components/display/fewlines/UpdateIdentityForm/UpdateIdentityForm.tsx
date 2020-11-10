@@ -44,7 +44,7 @@ export const UpdateIdentityForm: React.FC<{
           Update {currentIdentity.type}
         </Button>
       </Form>
-      <Link href="/account/logins">
+      <Link href="/account/logins" passHref>
         <NeutralLink>
           <Button variant={ButtonVariant.SECONDARY}>Cancel</Button>
         </NeutralLink>
