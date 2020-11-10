@@ -1,9 +1,10 @@
-import { useRouter } from "next/router";
+import Link from "next/link";
 import React from "react";
 
 import { Button, ButtonVariant } from "../Button/Button";
 import { Form } from "../Form/Form";
 import { Input } from "../Input/Input";
+import { NeutralLink } from "../NeutralLink";
 import { IdentityTypes } from "@lib/@types";
 import { InMemoryTemporaryIdentity } from "@src/@types/InMemoryTemporaryIdentity";
 
@@ -21,8 +22,6 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
     type,
     expiresAt: Date.now(),
   });
-
-  const router = useRouter();
 
   return (
     <>
@@ -55,12 +54,11 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
           type="submit"
         >{`Add ${type.toLowerCase()}`}</Button>
       </Form>
-      <Button
-        variant={ButtonVariant.SECONDARY}
-        onClick={() => router.push("/account/logins/")}
-      >
-        Cancel
-      </Button>
+      <Link href="/account/logins">
+        <NeutralLink>
+          <Button variant={ButtonVariant.SECONDARY}>Cancel</Button>
+        </NeutralLink>
+      </Link>
     </>
   );
 };

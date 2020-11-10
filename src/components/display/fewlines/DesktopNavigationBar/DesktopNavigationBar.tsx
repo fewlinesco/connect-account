@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -12,33 +12,37 @@ import { NeutralLink } from "../NeutralLink";
 import { Separator } from "../Separator/Separator";
 
 export const DesktopNavigationBar: React.FC = () => {
-  const router = useRouter();
-
   return (
     <Bar>
       <Header />
-      <ListItem onClick={() => router.push("/account")}>
-        <HomeIcon />
-        <ListLabel>Home</ListLabel>
-      </ListItem>
-      <ListItem onClick={() => router.push("/account/logins")}>
-        <KeyIcon />
-        <ListLabel>Logins</ListLabel>
-      </ListItem>
-      <ListItem>
-        <LockIcon />
-        <ListLabel onClick={() => router.push("/account/security")}>
-          Security
-        </ListLabel>
-      </ListItem>
+      <Link href="/account" passHref>
+        <ListItem>
+          <HomeIcon />
+          <ListLabel>Home</ListLabel>
+        </ListItem>
+      </Link>
+      <Link href="/account/logins" passHref>
+        <ListItem>
+          <KeyIcon />
+          <ListLabel>Logins</ListLabel>
+        </ListItem>
+      </Link>
+      <Link href="/account/security" passHref>
+        <ListItem>
+          <LockIcon />
+          <ListLabel>Security</ListLabel>
+        </ListItem>
+      </Link>
       <Separator />
-      <SwitchLanguageItem onClick={() => router.push("/account/locale")}>
-        <SwitchLanguageLabel>
-          <BlackWorldIcon />
-          <ListLabel>English</ListLabel>
-        </SwitchLanguageLabel>
-        <BlackSwitchIcon />
-      </SwitchLanguageItem>
+      <Link href="/account/locale" passHref>
+        <SwitchLanguageItem>
+          <SwitchLanguageLabel>
+            <BlackWorldIcon />
+            <ListLabel>English</ListLabel>
+          </SwitchLanguageLabel>
+          <BlackSwitchIcon />
+        </SwitchLanguageItem>
+      </Link>
     </Bar>
   );
 };
@@ -52,18 +56,16 @@ const ListItem = styled(NeutralLink)`
   align-items: center;
   padding: ${({ theme }) => theme.spaces.xs} 0 ${({ theme }) => theme.spaces.xs}
     ${({ theme }) => theme.spaces.xs};
-  cursor: pointer;
 `;
 
 const ListLabel = styled.p`
   margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
 `;
 
-const SwitchLanguageItem = styled.div`
+const SwitchLanguageItem = styled(NeutralLink)`
   display: flex;
   justify-content: space-between;
   padding: ${({ theme }) => theme.spaces.xs};
-  cursor: pointer;
 `;
 
 const SwitchLanguageLabel = styled.div`

@@ -1,10 +1,11 @@
-import { useRouter } from "next/router";
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
 import { Form } from "../Form/Form";
 import { Input } from "../Input/Input";
+import { NeutralLink } from "../NeutralLink";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { Box } from "@src/components/display/fewlines/Box/Box";
 
@@ -13,7 +14,6 @@ export const UpdateIdentityForm: React.FC<{
   currentIdentity: Identity;
 }> = ({ currentIdentity, updateIdentity }) => {
   const [identity, setIdentity] = React.useState("");
-  const router = useRouter();
   const { value } = currentIdentity;
 
   return (
@@ -44,12 +44,11 @@ export const UpdateIdentityForm: React.FC<{
           Update {currentIdentity.type}
         </Button>
       </Form>
-      <Button
-        variant={ButtonVariant.SECONDARY}
-        onClick={() => router.push("/account/logins/")}
-      >
-        Cancel
-      </Button>
+      <Link href="/account/logins">
+        <NeutralLink>
+          <Button variant={ButtonVariant.SECONDARY}>Cancel</Button>
+        </NeutralLink>
+      </Link>
     </>
   );
 };
