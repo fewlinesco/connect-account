@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -6,6 +6,7 @@ import { Box } from "../Box/Box";
 import { Button, ButtonVariant } from "../Button/Button";
 import { Form } from "../Form/Form";
 import { Input } from "../Input/Input";
+import { NeutralLink } from "../NeutralLink";
 import { IdentityTypes } from "@lib/@types/Identity";
 import { displayAlertBar } from "@src/utils/displayAlertBar";
 
@@ -14,8 +15,6 @@ export const ValidateIdentityForm: React.FC<{
   validateIdentity: (validationCode: string) => Promise<void>;
 }> = ({ type, validateIdentity }) => {
   const [validationCode, setValidationCode] = React.useState("");
-
-  const router = useRouter();
 
   return (
     <>
@@ -46,12 +45,12 @@ export const ValidateIdentityForm: React.FC<{
           type="submit"
         >{`Confirm ${type.toLowerCase()}`}</Button>
       </Form>
-      <Button
-        variant={ButtonVariant.SECONDARY}
-        onClick={() => router.push("/account/logins/")}
-      >
-        Discard all changes
-      </Button>
+      <Link href="/account/logins" passHref>
+        <NeutralLink>
+          <Button variant={ButtonVariant.SECONDARY}>Discard all changes</Button>
+        </NeutralLink>
+      </Link>
+
       <DidntReceiveCode>Didn&apos;t receive code?</DidntReceiveCode>
       <Button variant={ButtonVariant.SECONDARY}>
         Resend confirmation code

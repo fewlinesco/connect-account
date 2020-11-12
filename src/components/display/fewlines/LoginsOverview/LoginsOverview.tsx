@@ -123,6 +123,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
                     as={`/account/logins/${email.type.toLowerCase()}/${
                       email.id
                     }`}
+                    passHref
                   >
                     <BoxedLink primary={email.primary} status={email.status}>
                       <p>{email.value}</p>
@@ -146,7 +147,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
             />
           </Flex>
         )}
-        <Link href="/account/logins/email/new">
+        <Link href="/account/logins/email/new" passHref>
           <a>
             <Button variant={ButtonVariant.SECONDARY}>
               + Add new email address
@@ -168,6 +169,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
                     as={`/account/logins/${phone.type.toLowerCase()}/${
                       phone.id
                     }`}
+                    passHref
                   >
                     <BoxedLink primary={phone.primary} status={phone.status}>
                       <p>{phone.value}</p>
@@ -191,7 +193,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
             />
           </Flex>
         )}
-        <Link href="/account/logins/phone/new">
+        <Link href="/account/logins/phone/new" passHref>
           <a>
             <Button variant={ButtonVariant.SECONDARY}>
               + Add new phone number
