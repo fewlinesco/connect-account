@@ -15,7 +15,7 @@ export const Security: React.FC<SecurityProps> = ({ isPasswordSet }) => {
     <>
       <h3>Password</h3>
       <ShadowBox>
-        <Link href="/account/security/update">
+        <Link href="/account/security/update" passHref>
           <Flex>
             <TextBox>{isPasswordSet ? "Update" : "Set"} your password</TextBox>
             <RightChevron />
