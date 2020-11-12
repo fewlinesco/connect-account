@@ -28,7 +28,7 @@ jest.mock("@src/config", () => {
       connectProviderUrl: "http://foo.test",
       connectDomain: "http://foo.test",
       connectMongoUrl: process.env.MONGO_URL_TEST as string,
-      connectMongoDbName: "connect-account-test",
+      connectMongoDbName: "connectAccountTest",
     },
     oauth2Client: {
       verifyJWT: async () => {
@@ -116,7 +116,7 @@ describe("getServerSideProps", () => {
     done();
   });
 
-  it("should get the mongo document id from the session, fetch mongo, fetch management and return identities list", async (done) => {
+  it.only("should get the mongo document id from the session, fetch mongo, fetch management and return identities list", async (done) => {
     expect.assertions(1);
 
     const mockedSortedResponse = {

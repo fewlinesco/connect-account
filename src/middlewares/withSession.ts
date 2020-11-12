@@ -3,8 +3,6 @@ import { applySession, Handler } from "next-iron-session";
 
 import { config } from "../config";
 
-console.log("Session salt", config.connectAccountSessionSalt);
-
 const options = {
   password: config.connectAccountSessionSalt,
   cookieName: "connect-account-session",

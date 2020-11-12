@@ -40,11 +40,18 @@ const LoginsOverviewPage: React.FC<LoginsOverviewPageProps> = ({
 export default LoginsOverviewPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  console.log("gSSP first flag");
+
   return wrapMiddlewaresForSSR<{ sortedIdentities: SortedIdentities }>(
     context,
     [withLogger, withSentry, withMongoDB, withSession, withAuth],
     async (request: ExtendedRequest) => {
+      console.log("request cookie", request.headers.cookie);
+      console.log("context header", context.req.headers);
+
       const user = await getUser(request.headers.cookie as string);
+
+      console.log("SSR user", user);
 
       if (user) {
         const sortedIdentities = await getIdentities(user.sub).then(

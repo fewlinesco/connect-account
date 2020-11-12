@@ -70,11 +70,12 @@ jobs:
         echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
         apt-get update
         apt-get install -y mongodb-org-shell
+        echo 'db.createCollection("connectAccountTest")' | mongo mongodb://mongodb:${{ job.services.mongodb.ports[27017] }}
         echo 'db.collection.insertOne({_id: ObjectId("5fa2e906743b920faa6233d4")})' | mongo mongodb://mongodb:${{ job.services.mongodb.ports[27017] }}
 
     - name: test
       run: yarn test
       env:
-        MONGO_URL_TEST: mongodb://mongodb:${{ job.services.mongodb.ports[27017] }}/connect-account-test
+        MONGO_URL_TEST: mongodb://mongodb:${{ job.services.mongodb.ports[27017] }}/connectAccountTest
         CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
         CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}

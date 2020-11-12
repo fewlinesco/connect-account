@@ -2,6 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import { ServerResponse } from "http";
 import { ObjectId } from "mongodb";
 
+import { getMongoClient } from "./withMongoDB";
 import type { MongoUser } from "@lib/@types/mongo/User";
 import { refreshTokensFlow } from "@lib/commands/refreshTokensFlow";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
@@ -17,6 +18,12 @@ export function withAuth(handler: Handler): Handler {
     const userDocumentId = request.session.get("user-session-id");
 
     console.log("withAuth document id", userDocumentId);
+
+    console.log("mongodb driver", request.mongoDb);
+
+    const isConnected = (await getMongoClient()).isConnected();
+
+    console.log("Is driver connected", isConnected);
 
     const user = await request.mongoDb.collection("users").findOne<MongoUser>({
       _id: new ObjectId(userDocumentId),
