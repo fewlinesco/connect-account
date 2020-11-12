@@ -153,15 +153,14 @@ describe("getServerSideProps", () => {
       defaults,
     );
 
-    const x = sealedJWT.slice(0, 7) + "1" + sealedJWT.slice(7);
-
-    console.log(x);
-
     mockedContext.req.headers = {
-      cookie: `connect-account-session=${x}`,
+      cookie: `connect-account-session=${sealedJWT}`,
     };
 
-    mockedContext.req.rawHeaders = ["Cookie", `connect-account-session=${x}`];
+    mockedContext.req.rawHeaders = [
+      "Cookie",
+      `connect-account-session=${sealedJWT}`,
+    ];
 
     fetch
       .once(
