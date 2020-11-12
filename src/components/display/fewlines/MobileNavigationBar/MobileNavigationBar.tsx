@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
@@ -30,56 +31,49 @@ export const MobileNavigationBar: React.FC = () => {
       <Container>
         {isOpen && (
           <MenuList>
-            <ListItem
-              onClick={() =>
-                router.push("/account").then(() => setIsOpen(false))
-              }
-            >
-              <ListItemLabel>
-                <HomeIcon />
-                <Value>Home</Value>
-              </ListItemLabel>
-              <RightChevron />
-            </ListItem>
-            <ListItem
-              onClick={() =>
-                router.push("/account/logins").then(() => setIsOpen(false))
-              }
-            >
-              <ListItemLabel>
-                <KeyIcon />
-                <Value>Logins</Value>
-              </ListItemLabel>
-              <RightChevron />
-            </ListItem>
-            <ListItem
-              onClick={() =>
-                router.push("/account/security").then(() => setIsOpen(false))
-              }
-            >
-              <ListItemLabel>
-                <LockIcon />
-                <Value>Security</Value>
-              </ListItemLabel>
-              <RightChevron />
-            </ListItem>
+            <Link href="/account" passHref>
+              <ListItem onClick={() => setIsOpen(false)}>
+                <ListItemLabel>
+                  <HomeIcon />
+                  <Value>Home</Value>
+                </ListItemLabel>
+                <RightChevron />
+              </ListItem>
+            </Link>
+            <Link href="/account/logins" passHref>
+              <ListItem onClick={() => setIsOpen(false)}>
+                <ListItemLabel>
+                  <KeyIcon />
+                  <Value>Logins</Value>
+                </ListItemLabel>
+                <RightChevron />
+              </ListItem>
+            </Link>
+            <Link href="/account/security" passHref>
+              <ListItem onClick={() => setIsOpen(false)}>
+                <ListItemLabel>
+                  <LockIcon />
+                  <Value>Security</Value>
+                </ListItemLabel>
+                <RightChevron />
+              </ListItem>
+            </Link>
           </MenuList>
         )}
         <Bar>
           {isOpen ? (
-            <MenuItem
-              color="primary"
-              onClick={() =>
-                router.push("/account/locale").then(() => setIsOpen(false))
-              }
-            >
-              <Content>
-                <LanguagesOptions>
-                  <WhiteWorldIcon />
-                  <div>English</div>
-                </LanguagesOptions>
-                <WhiteSwitchIcon />
-              </Content>
+            <MenuItem color="primary" onClick={() => setIsOpen(false)}>
+              <Link href="/account/locale" passHref>
+                <SpecialLink>
+                  <Content>
+                    <LanguagesOptions>
+                      <WhiteWorldIcon />
+                      <div>English</div>
+                    </LanguagesOptions>
+                    <WhiteSwitchIcon />
+                  </Content>
+                </SpecialLink>
+              </Link>
             </MenuItem>
           ) : (
             <MenuItem onClick={() => router.back()}>
@@ -186,4 +180,8 @@ const ListItemLabel = styled.div`
 
 const Value = styled.p`
   margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
+`;
+
+const SpecialLink = styled(NeutralLink)`
+  color: inherit;
 `;

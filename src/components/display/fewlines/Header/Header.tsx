@@ -9,7 +9,7 @@ export const Header: React.FC = () => {
 
   return (
     <Flex>
-      <Link href="/account">
+      <Link href="/account" passHref>
         <a>
           <img width="90" src={theme.logo} aria-label="Logo" />
         </a>

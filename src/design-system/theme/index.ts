@@ -14,12 +14,12 @@ import { config } from "@src/config";
 let theme: DefaultTheme;
 let deviceBreakpoints: DeviceBreakpoints;
 
-if (config.connectTheme === "fewlines") {
-  deviceBreakpoints = fewlinesDeviceBreakpoints;
-  theme = lightTheme;
-} else {
+if (config.connectTheme === "decathlon") {
   theme = decatTheme;
   deviceBreakpoints = decatDeviceBreakpoints;
+} else {
+  theme = lightTheme;
+  deviceBreakpoints = fewlinesDeviceBreakpoints;
 }
 
 export { theme, deviceBreakpoints };

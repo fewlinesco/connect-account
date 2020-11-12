@@ -15,7 +15,7 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({ statusCode }) => {
           <p>
             It may have expired, or there could be a typo. Maybe you can find
             what you need on our{" "}
-            <Link href="/">
+            <Link href="/" passHref>
               <a>homepage</a>
             </Link>
             .

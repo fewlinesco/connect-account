@@ -22,7 +22,7 @@ export const Home: React.FC<HomeProps> = ({ authorizeURL, providerName }) => {
               <DescriptionText>
                 You are about to access your account from {providerName}
               </DescriptionText>
-              <Link href={authorizeURL}>
+              <Link href={authorizeURL} passHref>
                 <a>
                   <Button variant={ButtonVariant.PRIMARY}>
                     Access my account

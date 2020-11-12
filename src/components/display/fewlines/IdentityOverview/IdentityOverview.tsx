@@ -42,7 +42,7 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
         )}
       </Box>
       {status === "unvalidated" && (
-        <Link href={`/account/logins/${type}/validation`}>
+        <Link href={`/account/logins/${type}/validation`} passHref>
           <a>
             <Button variant={ButtonVariant.PRIMARY}>
               proceed to validation
@@ -51,7 +51,7 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
         </Link>
       )}
       {/* {status === "validated" && (
-        <Link href={`/account/logins/${type}/${id}/update`}>
+        <Link href={`/account/logins/${type}/${id}/update`} passHref>
           <a>
             <Button variant={ButtonVariant.PRIMARY}>
               Update this{" "}
