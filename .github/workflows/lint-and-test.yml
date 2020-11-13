@@ -33,13 +33,13 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    
+
     services:
       mongodb:
         image: mongo:4.4.1
         ports:
           - 27017:27017
-      
+
     container:
       image:  node:14.8-buster
 
@@ -63,19 +63,8 @@ jobs:
     - name: dependencies
       if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn install
-    
-    - name: mongo-shell
-      run: |
-        wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add -
-        echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
-        apt-get update
-        apt-get install -y mongodb-org-shell
-        echo 'db.createCollection("connectAccountTest")' | mongo mongodb://mongodb:${{ job.services.mongodb.ports[27017] }}
-        echo 'db.collection.insertOne({_id: ObjectId("5fa2e906743b920faa6233d4")})' | mongo mongodb://mongodb:${{ job.services.mongodb.ports[27017] }}
 
     - name: test
       run: yarn test
       env:
         MONGO_URL_TEST: mongodb://mongodb:${{ job.services.mongodb.ports[27017] }}/connectAccountTest
-        CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
-        CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
