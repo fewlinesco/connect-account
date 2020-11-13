@@ -12,6 +12,7 @@ export const Layout: React.FC = ({ children }) => {
       <Main>
         <MobileDisplayOnly>
           <Header />
+          <MobileNavigationBar />
         </MobileDisplayOnly>
         <Flex>
           <DesktopNavigationBarWrapper>
@@ -21,7 +22,7 @@ export const Layout: React.FC = ({ children }) => {
         </Flex>
       </Main>
       <MobileDisplayOnly>
-        <MobileNavigationBar />
+        <MobileNavigationSpaceSimulator />
       </MobileDisplayOnly>
     </Column>
   );
@@ -72,4 +73,9 @@ const MobileDisplayOnly = styled.div`
   @media ${deviceBreakpoints.m} {
     display: block;
   }
+`;
+
+const MobileNavigationSpaceSimulator = styled.div`
+  width: 100%;
+  height: 7.2rem;
 `;
