@@ -103,9 +103,6 @@ export const MobileNavigationBar: React.FC = () => {
 };
 
 const Container = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
   width: 100%;
   z-index: 2;
   display: none;

@@ -8,20 +8,30 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 
 export const Layout: React.FC = ({ children }) => {
   return (
-    <Main>
+    <Column>
+      <Main>
+        <MobileDisplayOnly>
+          <Header />
+        </MobileDisplayOnly>
+        <Flex>
+          <DesktopNavigationBarWrapper>
+            <DesktopNavigationBar />
+          </DesktopNavigationBarWrapper>
+          <ChildrenContainer>{children}</ChildrenContainer>
+        </Flex>
+      </Main>
       <MobileDisplayOnly>
-        <Header />
         <MobileNavigationBar />
       </MobileDisplayOnly>
-      <Flex>
-        <DesktopNavigationBarWrapper>
-          <DesktopNavigationBar />
-        </DesktopNavigationBarWrapper>
-        <ChildrenContainer>{children}</ChildrenContainer>
-      </Flex>
-    </Main>
+    </Column>
   );
 };
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+`;
 
 export const Main = styled.main`
   width: 100%;
@@ -30,8 +40,6 @@ export const Main = styled.main`
   margin: 0 auto;
 
   @media ${deviceBreakpoints.m} {
-    height: auto;
-    max-height: calc(100vh - 7.2rem);
     overflow: scroll;
   }
 `;
