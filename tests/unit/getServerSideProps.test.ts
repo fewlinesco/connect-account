@@ -1,5 +1,4 @@
 import { HttpStatus } from "@fwl/web";
-import { seal, defaults } from "@hapi/iron";
 import { IncomingMessage, ServerResponse } from "http";
 import fetch from "jest-fetch-mock";
 import { enableFetchMocks } from "jest-fetch-mock";
@@ -9,7 +8,6 @@ import { ParsedUrlQuery } from "querystring";
 
 import { IdentityTypes } from "@lib/@types";
 import { ProviderUser } from "@lib/@types";
-import { config } from "@src/config";
 import { getMongoClient } from "@src/middlewares/withMongoDB";
 import { getServerSideProps } from "@src/pages/account/logins/index";
 
@@ -28,7 +26,7 @@ jest.mock("@src/config", () => {
       connectProviderUrl: "http://foo.test",
       connectDomain: "http://foo.test",
       connectMongoUrl: process.env.MONGO_URL_TEST as string,
-      connectMongoDbName: "connectAccountTest",
+      connectMongoDbName: "connect-account-test",
     },
     oauth2Client: {
       verifyJWT: async () => {
