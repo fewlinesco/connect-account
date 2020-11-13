@@ -1,5 +1,4 @@
 import { HttpStatus } from "@fwl/web";
-import { seal, defaults } from "@hapi/iron";
 import { IncomingMessage, ServerResponse } from "http";
 import fetch from "jest-fetch-mock";
 import { enableFetchMocks } from "jest-fetch-mock";
@@ -9,7 +8,6 @@ import { ParsedUrlQuery } from "querystring";
 
 import { IdentityTypes } from "@lib/@types";
 import { ProviderUser } from "@lib/@types";
-import { config } from "@src/config";
 import { getMongoClient } from "@src/middlewares/withMongoDB";
 import { getServerSideProps } from "@src/pages/account/logins/index";
 
@@ -110,73 +108,6 @@ describe("getServerSideProps", () => {
     expect(response).toEqual(
       expect.objectContaining({
         props: {},
-      }),
-    );
-
-    done();
-  });
-
-  it("should get the mongo document id from the session, fetch mongo, fetch management and return identities list", async (done) => {
-    expect.assertions(1);
-
-    const mockedSortedResponse = {
-      emailIdentities: [
-        {
-          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-          primary: true,
-          status: "validated",
-          type: IdentityTypes.EMAIL,
-          value: "test@test.test",
-        },
-      ],
-      phoneIdentities: [
-        {
-          id: "7f8d168a-3f65-4636-9acb-7720a212680e",
-          primary: true,
-          status: "validated",
-          type: IdentityTypes.PHONE,
-          value: "0123456789",
-        },
-      ],
-      socialIdentities: [],
-    };
-
-    const sealedJWT = await seal(
-      {
-        persistent: {
-          "user-session-id": "5fa2e906743b920faa6233d4",
-          "user-sub": "4a5f8589-0d91-4a69-924a-6f227a69666d",
-        },
-        flash: {},
-      },
-      config.connectAccountSessionSalt,
-      defaults,
-    );
-
-    mockedContext.req.headers = {
-      cookie: `connect-account-session=${sealedJWT}`,
-    };
-
-    mockedContext.req.rawHeaders = [
-      "Cookie",
-      `connect-account-session=${sealedJWT}`,
-    ];
-
-    fetch
-      .once(
-        JSON.stringify({
-          user: { sub: "299d268e-3e19-4486-9be7-29c539d241ac" },
-        }),
-      )
-      .once(JSON.stringify(mockedResponse));
-
-    const response = await getServerSideProps(mockedContext);
-
-    expect(response).toEqual(
-      expect.objectContaining({
-        props: {
-          sortedIdentities: mockedSortedResponse,
-        },
       }),
     );
 
