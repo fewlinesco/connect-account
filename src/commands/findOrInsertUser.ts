@@ -24,7 +24,7 @@ export async function findOrInsertUser(
       {
         $set: {
           accessToken: oauthUserInfo.accessToken,
-          refreshToken: oauthUserInfo.refreshToken,
+          refresh_token: oauthUserInfo.refresh_token,
         },
       },
     );

@@ -3,7 +3,8 @@ import { ObjectId } from "mongodb";
 export type oAuth2UserInfo = {
   sub: string;
   accessToken: string;
-  refreshToken: string;
+  refresh_token: string;
+  id_token?: string;
 };
 
 export type TemporaryIdentity = {
@@ -17,7 +18,8 @@ export type MongoUser = {
   _id: ObjectId;
   sub: string;
   accessToken: string;
-  refreshToken: string;
+  refresh_token: string;
+  id_token?: string;
   locale?: string;
   temporaryIdentities?: TemporaryIdentity[];
 };
