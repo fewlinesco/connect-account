@@ -24,9 +24,9 @@ export const Home: React.FC<HomeProps> = ({ authorizeURL, providerName }) => {
               </DescriptionText>
               <Link href={authorizeURL} passHref>
                 <a>
-                  <Button variant={ButtonVariant.PRIMARY}>
+                  <AccessButton variant={ButtonVariant.PRIMARY}>
                     Access my account
-                  </Button>
+                  </AccessButton>
                 </a>
               </Link>
             </Flex>
@@ -66,12 +66,12 @@ const Flex = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: ${({ theme }) => theme.spaces.xs} ${({ theme }) => theme.spaces.s};
+  padding: ${({ theme }) => theme.spaces.s};
 `;
 
 const DescriptionText = styled.p`
   text-align: center;
-  margin: ${({ theme }) => theme.spaces.xs} 0;
+  margin: 0 0 ${({ theme }) => theme.spaces.xs} 0;
   font-weight: ${({ theme }) => theme.fontWeights.semibold};
 `;
 
@@ -80,4 +80,8 @@ export const BackLink = styled.p`
   margin: ${({ theme }) => theme.spaces.xs} 0;
   color: ${({ theme }) => theme.colors.primary};
   cursor: pointer;
+`;
+
+export const AccessButton = styled(Button)`
+  margin: 0;
 `;
