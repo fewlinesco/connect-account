@@ -31,6 +31,8 @@ export const Main = styled.main`
 
   @media ${deviceBreakpoints.m} {
     height: auto;
+    max-height: calc(100vh - 7.2rem);
+    overflow: scroll;
   }
 `;
 
