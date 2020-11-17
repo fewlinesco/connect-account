@@ -4,12 +4,12 @@ import { oauth2Client, config } from "@src/config";
 import { fetchJson } from "@src/utils/fetchJson";
 
 export async function refreshTokensFlow(
-  refreshToken: string,
+  refresh_token: string,
 ): Promise<RefreshTokenResponse> {
   const payload = {
     client_id: oauth2Client.clientID,
     client_secret: oauth2Client.clientSecret,
-    refresh_token: refreshToken,
+    refresh_token,
     grant_type: "refresh_token",
     scope: oauth2Client.scopes.join(" "),
   };

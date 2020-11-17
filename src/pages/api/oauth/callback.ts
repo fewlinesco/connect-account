@@ -17,25 +17,31 @@ const handler: Handler = async (
   response: NextApiResponse,
 ): Promise<void> => {
   if (request.method === "GET") {
-    const tokens = await oauth2Client.getTokensFromAuthorizationCode(
+    const {
+      access_token,
+      refresh_token,
+      id_token,
+    } = await oauth2Client.getTokensFromAuthorizationCode(
       request.query.code as string,
     );
 
     const decodedAccessToken = await oauth2Client.verifyJWT<AccessToken>(
-      tokens.access_token,
+      access_token,
       config.connectJwtAlgorithm,
     );
 
     const oauthUserInfo = {
       sub: decodedAccessToken.sub,
-      accessToken: tokens.access_token,
-      refreshToken: tokens.refresh_token,
+      accessToken: access_token,
+      refresh_token,
+      id_token,
     };
 
     const documentId = await findOrInsertUser(oauthUserInfo, request.mongoDb);
 
     request.session.set("user-session-id", documentId);
     request.session.set("user-sub", decodedAccessToken.sub);
+    request.session.set("user-session", { access_token });
 
     await request.session.save();
 

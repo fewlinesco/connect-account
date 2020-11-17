@@ -1,8 +1,6 @@
 import { HttpStatus } from "@fwl/web";
 import { ServerResponse } from "http";
-import { ObjectId } from "mongodb";
 
-import type { MongoUser } from "@lib/@types/mongo/User";
 import { refreshTokensFlow } from "@lib/commands/refreshTokensFlow";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { Handler } from "@src/@types/Handler";
@@ -15,16 +13,13 @@ export function withAuth(handler: Handler): Handler {
     response: ServerResponse,
   ): Promise<unknown> => {
     const userDocumentId = request.session.get("user-session-id");
-
-    const user = await request.mongoDb.collection("users").findOne<MongoUser>({
-      _id: new ObjectId(userDocumentId),
-    });
+    const user = request.session.get("user-session");
 
     if (user) {
       try {
         await oauth2Client
           .verifyJWT<{ sub: string }>(
-            user.accessToken,
+            user.access_token,
             config.connectJwtAlgorithm,
           )
           .catch(async (error) => {
