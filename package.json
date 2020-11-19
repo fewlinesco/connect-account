@@ -13,7 +13,8 @@
     "test:e2e": "jest --testPathPattern=e2e --runInBand",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "db:create-users-table": "ts-node ./src/commands/create_users_table.ts"
+    "db:create-users-table": "ts-node ./src/commands/create_users_table.ts",
+    "db:put-user": "ts-node ./src/commands/putUserToDB.ts"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "1.0.0-rc.6",

@@ -1,11 +1,6 @@
-import { DynamoDBClient, CreateTableCommand } from "@aws-sdk/client-dynamodb";
+import { CreateTableCommand } from "@aws-sdk/client-dynamodb";
 
-import { config } from "../config";
-
-const dynamoDbClient = new DynamoDBClient({
-  region: config.dynamoDbRegion,
-  endpoint: config.dynamoDbEndpoint,
-});
+import { dynamoDbClient } from "@src/dbClient";
 
 const usersTableSchema = {
   TableName: "users",
@@ -22,9 +17,9 @@ async function createUsersTable(): Promise<void> {
     const usersTable = new CreateTableCommand(usersTableSchema);
     const data = await dynamoDbClient.send(usersTable);
 
-    console.log("Table created:", data.TableDescription?.TableName);
+    console.log("`users` table created:", data.TableDescription?.TableName);
   } catch (error) {
-    console.log("Error:", error);
+    console.log("Error while creating `users` table:", error);
   }
 }
 
