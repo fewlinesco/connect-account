@@ -162,8 +162,11 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 | `CONNECT_ACCOUNT_SESSION_SALT`
 | The password used to seal or access the cookie session. It needs to be at least 32 characters long.
 
-| `CONNECT_ACCOUNT_DOMAIN`
-| URL of the account web application.
+| `CONNECT_ACCOUNT_HOSTNAME`
+| Hostname of the account web application. If you are hosting the application with Vercel, the `VERCEL_URL` will be used.
+
+| `CONNECT_ACCOUNT_THEME`
+| Styling theme that will be used. Default: `fewlines`.
 
 | `MONGO_URL`
 | URL of the MongoDB cluster.
@@ -191,9 +194,6 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 
 | `CONNECT_OPEN_ID_CONFIGURATION_URL`
 | URL used for the `@fwl/oauth2` package to fetch the OpenID configuration.
-
-| `CONNECT_REDIRECT_URI`
-| URL used by Connect to redirect to you app during the OAuth2 authentification flow.
 
 | `CONNECT_AUDIENCE`
 | Name of the Application that identifies the recipients that the JWT is intended for.
