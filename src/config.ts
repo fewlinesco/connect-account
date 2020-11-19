@@ -42,7 +42,7 @@ const config: Config = {
 
 function handleEnvVars(): void {
   const appHostname =
-    process.env.VERCEL_URL || process.env.CONNECT_ACCOUNT_HOSTNAME || "";
+    process.env.VERCEL_URL || process.env.CONNECT_ACCOUNT_HOSTNAME;
 
   config.connectAccountURL = appHostname ? `https://${appHostname}` : "";
   config.connectAccountTheme = process.env.CONNECT_ACCOUNT_THEME || "fewlines";
