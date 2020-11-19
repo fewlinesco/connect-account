@@ -4,6 +4,8 @@ type Config = {
   connectDomain: string;
   connectTheme: string;
   connectManagementUrl: string;
+  dynamoDbRegion: string;
+  dynamoDbEndpoint: string;
   connectMongoUrl: string;
   connectMongoDbName: string;
   connectManagementApiKey: string;
@@ -24,6 +26,8 @@ const config: Config = {
   connectDomain: "",
   connectTheme: "",
   connectManagementUrl: "",
+  dynamoDbRegion: "",
+  dynamoDbEndpoint: "",
   connectMongoUrl: "",
   connectMongoDbName: "",
   connectManagementApiKey: "",
@@ -44,6 +48,8 @@ function handleEnvVars(): void {
   config.connectDomain = process.env.CONNECT_ACCOUNT_DOMAIN || "";
   config.connectTheme = process.env.CONNECT_ACCOUNT_THEME || "fewlines";
   config.connectManagementUrl = process.env.CONNECT_MANAGEMENT_URL || "";
+  config.dynamoDbRegion = process.env.DYNAMODB_REGION || "";
+  config.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";
   config.connectMongoUrl = process.env.MONGO_URL || "";
   config.connectMongoDbName = process.env.MONGO_DB_NAME || "";
   config.connectManagementApiKey = process.env.CONNECT_MANAGEMENT_API_KEY || "";
