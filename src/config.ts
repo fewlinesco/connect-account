@@ -41,7 +41,11 @@ const config: Config = {
 };
 
 function handleEnvVars(): void {
-  config.connectDomain = process.env.CONNECT_ACCOUNT_DOMAIN || "";
+  const domainURL = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : process.env.CONNECT_ACCOUNT_DOMAIN;
+
+  config.connectDomain = domainURL || "";
   config.connectTheme = process.env.CONNECT_ACCOUNT_THEME || "fewlines";
   config.connectManagementUrl = process.env.CONNECT_MANAGEMENT_URL || "";
   config.connectMongoUrl = process.env.MONGO_URL || "";
@@ -58,7 +62,9 @@ function handleEnvVars(): void {
     process.env.CONNECT_ACCOUNT_SESSION_SALT || "";
   config.connectOpenIdConfigurationUrl =
     process.env.CONNECT_OPEN_ID_CONFIGURATION_URL || "";
-  config.connectRedirectUri = process.env.CONNECT_REDIRECT_URI || "";
+  config.connectRedirectUri = domainURL
+    ? `${domainURL}/api/oauth/callback`
+    : "";
   config.connectAudience = process.env.CONNECT_AUDIENCE || "";
   config.connectJwtAlgorithm = process.env.CONNECT_JWT_ALGORITHM || "";
   config.connectTestAccountEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL || "";
