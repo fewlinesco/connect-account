@@ -1,0 +1,55 @@
+name: CI e2e
+
+on:
+  deployment_status:
+    
+jobs:
+  e2e-tests: 
+    runs-on: ubuntu-latest
+
+    container:
+      image:  node:14.8-buster
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
+    - uses: actions/cache@v2
+      id: yarn-cache
+      with:
+        path: |
+          ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          **/node_modules
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+    
+    - name: dependencies
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
+      run: yarn install
+
+    - name: TS script running
+      env:
+        GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
+        CONNECT_ACCOUNT_TEST_APP_REDIRECT_URIS: ${{secrets.CONNECT_ACCOUNT_TEST_APP_REDIRECT_URIS}}
+        CONNECT_ACCOUNT_TEST_APP_ID: ${{secrets.CONNECT_ACCOUNT_TEST_APP_ID}}
+        CONNECT_ACCOUNT_TEST_APP_NAME: ${{secrets.CONNECT_ACCOUNT_TEST_APP_NAME}}
+        CONNECT_ACCOUNT_TEST_APP_DESC: ${{secrets.CONNECT_ACCOUNT_TEST_APP_DESC}}
+        CONNECT_ACCOUNT_TEST_APP_DEF_HOMEPAGE: ${{secrets.CONNECT_ACCOUNT_TEST_APP_DEF_HOMEPAGE}}
+      run: yarn e2e-fetch
+    # - name: Dump job context
+    #   env:
+    #     JOB_CONTEXT: ${{ toJson(job) }}
+    #   run: echo "$JOB_CONTEXT"
+    # - name: Dump steps context
+    #   env:
+    #     STEPS_CONTEXT: ${{ toJson(steps) }}
+    #   run: echo "$STEPS_CONTEXT"
+    # - name: Dump runner context
+    #   env:
+    #       RUNNER_CONTEXT: ${{ toJson(runner) }}
+    #   run: echo "$RUNNER_CONTEXT"
+    
