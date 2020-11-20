@@ -1,6 +1,6 @@
 import { DeleteTableCommand } from "@aws-sdk/client-dynamodb";
 
-import { dynamoDbClient } from "@src/dbClient";
+import { dynamoDbClient } from "../dbClient";
 
 async function deleteUsersTable(): Promise<void> {
   try {
@@ -8,9 +8,10 @@ async function deleteUsersTable(): Promise<void> {
       TableName: "users",
     });
     const data = await dynamoDbClient.send(deleteUsersTableCommand);
-    console.log("`users` table deleted:", data.TableDescription?.TableName);
+
+    console.log("Table deleted:\n", data.TableDescription?.TableName);
   } catch (error) {
-    console.log("Error while deleting `users` table:", error);
+    console.log("Error while deleting `users` table:\n", error);
   }
 }
 

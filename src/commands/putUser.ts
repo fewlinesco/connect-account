@@ -8,7 +8,7 @@ export type DbUser = {
   };
 };
 
-export async function putUserToDB(Item: DbUser): Promise<void> {
+export async function putUser(Item: DbUser): Promise<void> {
   try {
     const params = {
       TableName: "users",
@@ -19,14 +19,8 @@ export async function putUserToDB(Item: DbUser): Promise<void> {
 
     const data = await dynamoDbClient.send(itemCommand);
 
-    console.log("Put command succeed. Data:", data);
+    console.log("Put command succeed.\nData sent back:", data);
   } catch (error) {
     console.error("Put command failed:", error);
   }
 }
-
-const Item = {
-  sub: { S: "foo" },
-};
-
-putUserToDB(Item);
