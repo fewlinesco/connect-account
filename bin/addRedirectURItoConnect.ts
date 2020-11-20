@@ -1,4 +1,6 @@
-import fetch from "node-fetch";
+import fetch from "cross-fetch";
+
+import { getApplication } from "../lib/queries/getApplication";
 
 const addingRedirectURIToConnect = async (): Promise<any> => {
   try {
@@ -19,13 +21,18 @@ const addingRedirectURIToConnect = async (): Promise<any> => {
     const vercelDeploymentUrl = await fetch(deploymentStatusesUrl)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (data[0].state === "success") {
           return data[0].target_url;
         }
       });
 
     console.log("vercelDeploymentUrl: " + vercelDeploymentUrl);
+
+    const testApp = await getApplication(
+      process.env.CONNECT_ACCOUNT_TEST_APP_ID as string,
+    );
+
+    console.log(testApp);
   } catch (error) {
     console.log(error);
   }
