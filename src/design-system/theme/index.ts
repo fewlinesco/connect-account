@@ -14,7 +14,7 @@ import { config } from "@src/config";
 let theme: DefaultTheme;
 let deviceBreakpoints: DeviceBreakpoints;
 
-if (config.connectTheme === "decathlon") {
+if (config.connectAccountTheme === "decathlon") {
   theme = decatTheme;
   deviceBreakpoints = decatDeviceBreakpoints;
 } else {

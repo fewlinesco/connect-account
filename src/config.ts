@@ -1,8 +1,8 @@
 import OAuth2Client, { OAuth2ClientConstructor } from "@fwl/oauth2";
 
 type Config = {
-  connectDomain: string;
-  connectTheme: string;
+  connectAccountURL: string;
+  connectAccountTheme: string;
   connectManagementUrl: string;
   connectMongoUrl: string;
   connectMongoDbName: string;
@@ -13,7 +13,7 @@ type Config = {
   connectApplicationScopes: string;
   connectAccountSessionSalt: string;
   connectOpenIdConfigurationUrl: string;
-  connectRedirectUri: string;
+  connectAccountRedirectURI: string;
   connectAudience: string;
   connectJwtAlgorithm: string;
   connectTestAccountEmail: string;
@@ -21,8 +21,8 @@ type Config = {
 };
 
 const config: Config = {
-  connectDomain: "",
-  connectTheme: "",
+  connectAccountURL: "",
+  connectAccountTheme: "",
   connectManagementUrl: "",
   connectMongoUrl: "",
   connectMongoDbName: "",
@@ -33,7 +33,7 @@ const config: Config = {
   connectApplicationScopes: "",
   connectAccountSessionSalt: "",
   connectOpenIdConfigurationUrl: "",
-  connectRedirectUri: "",
+  connectAccountRedirectURI: "",
   connectAudience: "",
   connectJwtAlgorithm: "",
   connectTestAccountEmail: "",
@@ -41,8 +41,11 @@ const config: Config = {
 };
 
 function handleEnvVars(): void {
-  config.connectDomain = process.env.CONNECT_ACCOUNT_DOMAIN || "";
-  config.connectTheme = process.env.CONNECT_ACCOUNT_THEME || "fewlines";
+  const appHostname =
+    process.env.VERCEL_URL || process.env.CONNECT_ACCOUNT_HOSTNAME;
+
+  config.connectAccountURL = appHostname ? `https://${appHostname}` : "";
+  config.connectAccountTheme = process.env.CONNECT_ACCOUNT_THEME || "fewlines";
   config.connectManagementUrl = process.env.CONNECT_MANAGEMENT_URL || "";
   config.connectMongoUrl = process.env.MONGO_URL || "";
   config.connectMongoDbName = process.env.MONGO_DB_NAME || "";
@@ -58,7 +61,9 @@ function handleEnvVars(): void {
     process.env.CONNECT_ACCOUNT_SESSION_SALT || "";
   config.connectOpenIdConfigurationUrl =
     process.env.CONNECT_OPEN_ID_CONFIGURATION_URL || "";
-  config.connectRedirectUri = process.env.CONNECT_REDIRECT_URI || "";
+  config.connectAccountRedirectURI = appHostname
+    ? `https://${appHostname}/api/oauth/callback`
+    : "";
   config.connectAudience = process.env.CONNECT_AUDIENCE || "";
   config.connectJwtAlgorithm = process.env.CONNECT_JWT_ALGORITHM || "";
   config.connectTestAccountEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL || "";
@@ -72,7 +77,7 @@ const oauth2ClientConstructorProps: OAuth2ClientConstructor = {
   openIDConfigurationURL: config.connectOpenIdConfigurationUrl,
   clientID: config.connectApplicationClientId,
   clientSecret: config.connectApplicationClientSecret,
-  redirectURI: config.connectRedirectUri,
+  redirectURI: config.connectAccountRedirectURI,
   audience: config.connectAudience,
   scopes: config.connectApplicationScopes.split(" "),
 };
