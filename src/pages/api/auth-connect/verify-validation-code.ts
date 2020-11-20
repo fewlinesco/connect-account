@@ -39,7 +39,10 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
           };
 
           const route = "/api/identities";
-          const absoluteURL = new URL(route, config.connectDomain).toString();
+          const absoluteURL = new URL(
+            route,
+            config.connectAccountURL,
+          ).toString();
 
           await fetchJson(absoluteURL, HttpVerbs.POST, body);
 
