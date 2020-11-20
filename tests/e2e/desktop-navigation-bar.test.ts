@@ -6,14 +6,12 @@ import {
   click,
   screenshot,
   waitFor,
-  write,
-  press,
 } from "taiko";
 
-import { config } from "@src/config";
+import { authToConnect } from "./utils/authToConnect";
 
 describe("DesktopNavigationBar", () => {
-  jest.setTimeout(20000);
+  jest.setTimeout(60000);
 
   beforeAll(async () => {
     await openBrowser({ args: ["--window-size=1440,1000"], headless: true });
@@ -28,20 +26,8 @@ describe("DesktopNavigationBar", () => {
 
     try {
       await goto("http://localhost:29703");
-      await waitFor("Access my account");
-      expect(await text("Access my account").exists()).toBeTruthy();
 
-      await click("Access my account");
-      await waitFor("Email");
-      expect(await text("Email").exists()).toBeTruthy();
-
-      await write(config.connectTestAccountEmail);
-      await press("Enter");
-      await waitFor("Password");
-      expect(await text("Password").exists()).toBeTruthy();
-
-      await write(config.connectTestAccountPassword);
-      await press("Enter");
+      await authToConnect();
 
       await waitFor("Logins");
       expect(await text("Logins").exists()).toBeTruthy();

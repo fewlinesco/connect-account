@@ -4,18 +4,16 @@ import {
   goto,
   text,
   click,
-  write,
-  press,
   screenshot,
   waitFor,
   link,
   below,
 } from "taiko";
 
-import { config } from "@src/config";
+import { authToConnect } from "./utils/authToConnect";
 
 describe("Account Web Application show identity", () => {
-  jest.setTimeout(20000);
+  jest.setTimeout(60000);
 
   beforeAll(async () => {
     await openBrowser({ args: ["--window-size=1440,1000"], headless: true });
@@ -30,20 +28,9 @@ describe("Account Web Application show identity", () => {
 
     try {
       await goto("http://localhost:29703");
-      await waitFor("Access my account");
-      expect(await text("Access my account").exists()).toBeTruthy();
 
-      await click("Access my account");
-      await waitFor("Email");
-      expect(await text("Email").exists()).toBeTruthy();
+      await authToConnect();
 
-      await write(config.connectTestAccountEmail);
-      await press("Enter");
-      await waitFor("Password");
-      expect(await text("Password").exists()).toBeTruthy();
-
-      await write(config.connectTestAccountPassword);
-      await press("Enter");
       await waitFor("LOGINS");
       expect(await text("LOGINS").exists()).toBeTruthy();
 

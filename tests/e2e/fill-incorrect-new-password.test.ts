@@ -5,7 +5,6 @@ import {
   text,
   click,
   write,
-  press,
   screenshot,
   waitFor,
   focus,
@@ -13,7 +12,7 @@ import {
   clear,
 } from "taiko";
 
-import { config } from "@src/config";
+import { authToConnect } from "./utils/authToConnect";
 
 describe("Account Web Application update password", () => {
   jest.setTimeout(60000);
@@ -31,20 +30,9 @@ describe("Account Web Application update password", () => {
 
     try {
       await goto("http://localhost:29703");
-      await waitFor("Access my account");
-      expect(await text("Access my account").exists()).toBeTruthy();
 
-      await click("Access my account");
-      await waitFor("Email");
-      expect(await text("Email").exists()).toBeTruthy();
+      await authToConnect();
 
-      await write(config.connectTestAccountEmail);
-      await press("Enter");
-      await waitFor("Password");
-      expect(await text("Password").exists()).toBeTruthy();
-
-      await write(config.connectTestAccountPassword);
-      await press("Enter");
       await waitFor("SECURITY");
       expect(await text("SECURITY").exists()).toBeTruthy();
 

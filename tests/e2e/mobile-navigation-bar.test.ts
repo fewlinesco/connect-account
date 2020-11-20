@@ -6,14 +6,12 @@ import {
   click,
   screenshot,
   waitFor,
-  write,
-  press,
 } from "taiko";
 
-import { config } from "@src/config";
+import { authToConnect } from "./utils/authToConnect";
 
 describe("Log in with a smart phone, open and close the navigation bar", () => {
-  jest.setTimeout(20000);
+  jest.setTimeout(60000);
 
   beforeAll(async () => {
     await openBrowser({ args: ["--window-size=400,800"], headless: true });
@@ -24,22 +22,12 @@ describe("Log in with a smart phone, open and close the navigation bar", () => {
   });
 
   test("Launch the browser with a smartphone, open and close the navigation bar", async (done) => {
+    expect.assertions(7);
+
     try {
       await goto("http://localhost:29703");
-      await waitFor("Access my account");
-      expect(await text("Access my account").exists()).toBeTruthy();
 
-      await click("Access my account");
-      await waitFor("Email");
-      expect(await text("Email").exists()).toBeTruthy();
-
-      await write(config.connectTestAccountEmail);
-      await press("Enter");
-      await waitFor("Password");
-      expect(await text("Password").exists()).toBeTruthy();
-
-      await write(config.connectTestAccountPassword);
-      await press("Enter");
+      await authToConnect();
 
       await waitFor("Menu");
       expect(await text("Menu").exists()).toBeTruthy();
