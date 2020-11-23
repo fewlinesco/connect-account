@@ -3,7 +3,7 @@ import { Db } from "mongodb";
 import { oAuth2UserInfo, MongoUser } from "@lib/@types/mongo/User";
 import { MongoInsertError } from "@src/errors";
 
-export async function findOrInsertUser(
+export async function findOrInsertUser_deprecated(
   oauthUserInfo: oAuth2UserInfo,
   mongoDb: Db,
 ): Promise<string> {

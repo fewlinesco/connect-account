@@ -4,7 +4,8 @@ import { Handler } from "next-iron-session";
 
 import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
-import { findOrInsertUser } from "@src/commands/findOrInsertUser";
+import { findOrInsertUser_deprecated } from "@src/commands/findOrInsertUser_deprecated";
+import { getAndPutUser } from "@src/commands/getAndPutUser";
 import { oauth2Client, config } from "@src/config";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withMongoDB } from "@src/middlewares/withMongoDB";
@@ -30,14 +31,25 @@ const handler: Handler = async (
       config.connectJwtAlgorithm,
     );
 
-    const oauthUserInfo = {
+    const oauthUserInfo_deprecated = {
       sub: decodedAccessToken.sub,
       accessToken: access_token,
       refresh_token,
       id_token,
     };
 
-    const documentId = await findOrInsertUser(oauthUserInfo, request.mongoDb);
+    const documentId = await findOrInsertUser_deprecated(
+      oauthUserInfo_deprecated,
+      request.mongoDb,
+    );
+
+    const oauthUserInfo = {
+      sub: decodedAccessToken.sub,
+      refresh_token,
+      id_token,
+    };
+
+    await getAndPutUser(oauthUserInfo);
 
     request.session.set("user-session-id", documentId);
     request.session.set("user-sub", decodedAccessToken.sub);
