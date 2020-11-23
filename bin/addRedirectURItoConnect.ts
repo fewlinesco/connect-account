@@ -1,5 +1,6 @@
 import { updateApplication } from "../lib/commands/updateApplication";
 import { getApplication } from "../lib/queries/getApplication";
+import { config } from "../src/config";
 
 const addingRedirectURIToConnect = async (): Promise<any> => {
   try {
@@ -14,23 +15,23 @@ const addingRedirectURIToConnect = async (): Promise<any> => {
     const vercelDeployment = githubActionsContext.deployment_status;
 
     if (vercelDeployment.state === "success") {
-      const testApp = await getApplication(
-        process.env.CONNECT_ACCOUNT_TEST_APP_ID as string,
-      ).then((results) => {
-        if (results.errors) {
-          throw results.errors;
-        }
+      const testApp = await getApplication(config.connectAccountTestAppId).then(
+        (results) => {
+          if (results.errors) {
+            throw results.errors;
+          }
 
-        if (!results.data) {
-          throw new Error("app not found");
-        }
+          if (!results.data) {
+            throw new Error("app not found");
+          }
 
-        return results.data.provider.application;
-      });
+          return results.data.provider.application;
+        },
+      );
 
       testApp.redirectUris.push(vercelDeployment.target_url);
 
-      const updatedApp = await updateApplication(testApp).then((results) => {
+      await updateApplication(testApp).then((results) => {
         if (results.errors) {
           throw results.errors;
         }

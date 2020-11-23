@@ -20,6 +20,7 @@ type Config = {
   connectJwtAlgorithm: string;
   connectTestAccountEmail: string;
   connectTestAccountPassword: string;
+  connectAccountTestAppId: string;
 };
 
 const config: Config = {
@@ -42,6 +43,7 @@ const config: Config = {
   connectJwtAlgorithm: "",
   connectTestAccountEmail: "",
   connectTestAccountPassword: "",
+  connectAccountTestAppId: "",
 };
 
 function handleEnvVars(): void {
@@ -75,6 +77,8 @@ function handleEnvVars(): void {
   config.connectTestAccountEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL || "";
   config.connectTestAccountPassword =
     process.env.CONNECT_TEST_ACCOUNT_PASSWORD || "";
+  config.connectAccountTestAppId =
+    process.env.CONNECT_ACCOUNT_TEST_APP_ID || "";
 }
 
 handleEnvVars();
