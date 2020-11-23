@@ -29,9 +29,12 @@ const addingRedirectURIToConnect = async (): Promise<any> => {
         },
       );
 
-      testApp.redirectUris.push(vercelDeployment.target_url);
+      const updatedTestApp = {
+        ...testApp,
+        redirectUris: [...testApp.redirectUris, vercelDeployment.target_url],
+      };
 
-      await updateApplication(testApp).then((results) => {
+      await updateApplication(updatedTestApp).then((results) => {
         if (results.errors) {
           throw results.errors;
         }
