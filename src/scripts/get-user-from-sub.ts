@@ -1,4 +1,5 @@
 import { GetItemCommand } from "@aws-sdk/client-dynamodb";
+import { unmarshall } from "@aws-sdk/util-dynamodb";
 
 import { dynamoDbClient } from "../dbClient";
 
@@ -23,6 +24,9 @@ async function getUserFromSub(): Promise<void> {
         const data = await dynamoDbClient.send(new GetItemCommand(getItem));
 
         console.log("User:\n", data);
+
+        const { Item } = data;
+        Item && console.log("User data:\n", unmarshall(Item));
       } else {
         throw new Error(errors.tooManyArgs);
       }

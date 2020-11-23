@@ -422,6 +422,13 @@
     "@aws-sdk/is-array-buffer" "1.0.0-rc.3"
     tslib "^1.8.0"
 
+"@aws-sdk/util-dynamodb@^1.0.0-rc.7":
+  version "1.0.0-rc.7"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/util-dynamodb/-/util-dynamodb-1.0.0-rc.7.tgz#28cf2166fe316a60da47cc186c7cac1ecefcdb36"
+  integrity sha512-QAvrP35ZcuuRNFkcOmhyCdKbNEMj0XrQZz+Jf/ej8pc7DZtKwhsiwU1tym0RdvBiy9swrHNokn1Ukz/Jortp4w==
+  dependencies:
+    tslib "^1.8.0"
+
 "@aws-sdk/util-hex-encoding@1.0.0-rc.3":
   version "1.0.0-rc.3"
   resolved "https://registry.yarnpkg.com/@aws-sdk/util-hex-encoding/-/util-hex-encoding-1.0.0-rc.3.tgz#4229f2495f3a5ef32c8c7ada7ab14bd6f983d269"
@@ -15998,7 +16005,7 @@ table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
-taiko@^1.0.28:
+taiko@1.0.28:
   version "1.0.28"
   resolved "https://registry.yarnpkg.com/taiko/-/taiko-1.0.28.tgz#cb5d1e7d85f7a0b37691d87f9f5afa9474652e7a"
   integrity sha512-il4qbMyEF1q7zqWP4FgP3LxMHIFOSuKiqjeM+QI7UEtB8nUobRVQ0ZLiZhoPMRd8qo7kfvdPG2AamPFD3t4A6g==

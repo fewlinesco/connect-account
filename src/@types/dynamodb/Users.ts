@@ -5,8 +5,8 @@ export type OAuth2UserInfo = {
 };
 
 export type TemporaryIdentity = {
-  eventId: string;
+  event_id: string;
   value: string;
   type: string;
-  expiresAt: number;
+  expires_at: number;
 };

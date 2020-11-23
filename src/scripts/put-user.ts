@@ -1,24 +1,13 @@
 import { PutItemCommand } from "@aws-sdk/client-dynamodb";
+import { marshall, NativeAttributeValue } from "@aws-sdk/util-dynamodb";
 
 import { dynamoDbClient } from "../dbClient";
 
-type DbUser = {
-  sub: {
-    S: string;
-  };
-  refresh_token: {
-    S: string;
-  };
-};
-
-type DbUserWithIdToken = {
-  id_token: {
-    S: string;
-  };
-} & DbUser;
-
-export async function putUser(Item: DbUser | DbUserWithIdToken): Promise<void> {
+export async function putUser(userData: {
+  [key: string]: NativeAttributeValue;
+}): Promise<void> {
   try {
+    const Item = marshall(userData);
     const params = {
       TableName: "users",
       Item,
@@ -35,10 +24,20 @@ export async function putUser(Item: DbUser | DbUserWithIdToken): Promise<void> {
 }
 
 const Item = {
-  sub: {
-    S: "foo",
-  },
-  refresh_token: { S: "bar" },
+  sub: "sub",
+  refresh_token: "refresh_token",
+  id_token: "id_token",
+  temporary_identities: [
+    {
+      event_id: "event_id",
+
+      value: "value",
+
+      type: "type",
+
+      expires_at: 42,
+    },
+  ],
 };
 
 putUser(Item);

@@ -49,6 +49,8 @@ const handler: Handler = async (
       id_token,
     };
 
+    console.log(oauthUserInfo);
+
     await getAndPutUser(oauthUserInfo);
 
     request.session.set("user-session-id", documentId);
