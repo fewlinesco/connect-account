@@ -15,6 +15,7 @@
     "build-storybook": "build-storybook",
     "db:create-users-table": "ts-node ./src/scripts/create_users_table.ts",
     "db:delete-users-table": "ts-node ./src/scripts/delete_users_table.ts",
+    "db:put-user": "ts-node ./src/scripts/put_user.ts",
     "db:get-user-from-sub": "ts-node ./src/scripts/get_user_from_sub.ts"
   },
   "dependencies": {
