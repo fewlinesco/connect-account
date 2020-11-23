@@ -2,12 +2,13 @@ import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
 import { fetchManagement } from "../../src/utils/fetchManagement";
-import type { Application } from "@lib/@types/Application";
+import type { ProviderApplication } from "@lib/@types/Application";
 
 const GET_APPLICATION_QUERY = gql`
-  query getUserIdentityQuery($id: String!) {
+  query getApplicationQuery($id: String!) {
     provider {
       application(filters: { id: $id }) {
+        id
         defaultHomePage
         redirectUris
         name
@@ -19,13 +20,13 @@ const GET_APPLICATION_QUERY = gql`
 
 export async function getApplication(
   id: string,
-): Promise<FetchResult<{ provider: Application }>> {
+): Promise<FetchResult<{ provider: ProviderApplication }>> {
   const operation = {
     query: GET_APPLICATION_QUERY,
     variables: { id },
   };
 
   return fetchManagement(operation) as FetchResult<{
-    provider: Application;
+    provider: ProviderApplication;
   }>;
 }

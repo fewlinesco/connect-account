@@ -31,25 +31,12 @@ jobs:
       if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn install
 
-    - name: TS script running
+    - name: adding Vercel URL to Application's redirect uris
       env:
         GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
-        CONNECT_ACCOUNT_TEST_APP_REDIRECT_URIS: ${{secrets.CONNECT_ACCOUNT_TEST_APP_REDIRECT_URIS}}
-        CONNECT_ACCOUNT_TEST_APP_ID: ${{secrets.CONNECT_ACCOUNT_TEST_APP_ID}}
-        CONNECT_ACCOUNT_TEST_APP_NAME: ${{secrets.CONNECT_ACCOUNT_TEST_APP_NAME}}
-        CONNECT_ACCOUNT_TEST_APP_DESC: ${{secrets.CONNECT_ACCOUNT_TEST_APP_DESC}}
-        CONNECT_ACCOUNT_TEST_APP_DEF_HOMEPAGE: ${{secrets.CONNECT_ACCOUNT_TEST_APP_DEF_HOMEPAGE}}
+        CONNECT_ACCOUNT_TEST_APP_ID: ${{ secrets.CONNECT_ACCOUNT_TEST_APP_ID }}
+        CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
+        CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
       run: yarn e2e-fetch
-    # - name: Dump job context
-    #   env:
-    #     JOB_CONTEXT: ${{ toJson(job) }}
-    #   run: echo "$JOB_CONTEXT"
-    # - name: Dump steps context
-    #   env:
-    #     STEPS_CONTEXT: ${{ toJson(steps) }}
-    #   run: echo "$STEPS_CONTEXT"
-    # - name: Dump runner context
-    #   env:
-    #       RUNNER_CONTEXT: ${{ toJson(runner) }}
-    #   run: echo "$RUNNER_CONTEXT"
+
     

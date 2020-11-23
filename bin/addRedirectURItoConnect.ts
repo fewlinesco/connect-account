@@ -1,38 +1,47 @@
-import fetch from "cross-fetch";
-
+import { updateApplication } from "../lib/commands/updateApplication";
 import { getApplication } from "../lib/queries/getApplication";
 
 const addingRedirectURIToConnect = async (): Promise<any> => {
   try {
     if (process.env.GITHUB_CONTEXT_EVENT === undefined)
-      throw new Error("githubContextEvent undefined");
+      throw new Error("githubContextEvent is undefined");
 
     const githubActionsContext = JSON.parse(process.env.GITHUB_CONTEXT_EVENT);
 
-    if (githubActionsContext.deployment_status.deployment_url === undefined)
-      throw new Error("deploymentUrl undefined");
+    if (githubActionsContext.deployment_status === undefined)
+      throw new Error("deploymentStatus is undefined");
 
-    const deploymentUrl = githubActionsContext.deployment_status.deployment_url;
+    const vercelDeployment = githubActionsContext.deployment_status;
 
-    const deploymentStatusesUrl = await fetch(deploymentUrl)
-      .then((response) => response.json())
-      .then((data) => data.statuses_url);
-
-    const vercelDeploymentUrl = await fetch(deploymentStatusesUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data[0].state === "success") {
-          return data[0].target_url;
+    if (vercelDeployment.state === "success") {
+      const testApp = await getApplication(
+        process.env.CONNECT_ACCOUNT_TEST_APP_ID as string,
+      ).then((results) => {
+        if (results.errors) {
+          throw results.errors;
         }
+
+        if (!results.data) {
+          throw new Error("app not found");
+        }
+
+        return results.data.provider.application;
       });
 
-    console.log("vercelDeploymentUrl: " + vercelDeploymentUrl);
+      testApp.redirectUris.push(vercelDeployment.target_url);
 
-    const testApp = await getApplication(
-      process.env.CONNECT_ACCOUNT_TEST_APP_ID as string,
-    );
+      const updatedApp = await updateApplication(testApp).then((results) => {
+        if (results.errors) {
+          throw results.errors;
+        }
 
-    console.log(testApp);
+        if (!results.data) {
+          throw new Error("update error");
+        }
+
+        return results.data;
+      });
+    }
   } catch (error) {
     console.log(error);
   }
