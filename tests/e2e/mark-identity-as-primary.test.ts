@@ -4,8 +4,6 @@ import {
   goto,
   text,
   click,
-  write,
-  press,
   screenshot,
   waitFor,
   link,
@@ -13,7 +11,7 @@ import {
   above,
 } from "taiko";
 
-import { config } from "@src/config";
+import { authToConnect } from "./utils/authToConnect";
 
 describe("Marking another identity as the primary one on connect account", () => {
   jest.setTimeout(60000);
@@ -31,19 +29,8 @@ describe("Marking another identity as the primary one on connect account", () =>
 
     try {
       await goto("http://localhost:29703");
-      await waitFor("Access my account");
-      expect(await text("Access my account").exists()).toBeTruthy();
-      await click("Access my account");
 
-      await waitFor("Email");
-      expect(await text("Email").exists()).toBeTruthy();
-      await write(config.connectTestAccountEmail);
-      await press("Enter");
-
-      await waitFor("Password");
-      expect(await text("Password").exists()).toBeTruthy();
-      await write(config.connectTestAccountPassword);
-      await press("Enter");
+      await authToConnect();
 
       await waitFor("LOGINS");
       expect(await text("LOGINS").exists()).toBeTruthy();

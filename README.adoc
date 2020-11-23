@@ -56,25 +56,37 @@ Source the file to get variables defined your environnement:
 source .env_vars
 ----
 
-== HTTPS certificates
+The application also needs couple external tools to work properly:
+- hivemind
+- docker
+- docker-compose
+- nginx
+- mkcert
 
-You might need using HTTPS certificates on your localhost to make your navigator allowing cookies writing. It uses an `nginx` proxy which listens on port 29704 and redirects with the certificate on port 29703
-
-Install all the needed dependencies running the following command:
-
+To install them on MacOS, you can run the following:
+[source, shell]
 ----
 brew bundle install --file Brewfile
-brew install nss # if you're using firefox (for mkcert)
 ----
 
-Create certificates:
+== HTTPS certificates
+
+To allow TLS locally, we are using a `nginx` proxy. The proxy listens port 29704, and redirects — with the certificates — on port 29703.
+
+You might need the HTTPS certificates on your localhost to allow cookies writing.
+
+If you are using Firefox as your web browser, you'll need `nss` alongside `mkcert`.
+----
+brew install nss
+----
+
+To generate certificates:
 ----
 mkdir certs
 (cd certs; mkcert connect-account.local)
 ----
 
-Add the local FQDN in /etc/hosts
-
+Then, add the local FQDN in `/etc/hosts`:
 ----
 echo "127.0.0.1 connect-account.local" | sudo tee -a /etc/hosts
 echo "::1 connect-account.local" | sudo tee -a /etc/hosts
@@ -85,21 +97,18 @@ echo "::1 connect-account.local" | sudo tee -a /etc/hosts
 [source, shell]
 ----
 hivemind
-
-# or, if you're working with a local version of Connect
-NODE_TLS_REJECT_UNAUTHORIZED=0 yarn dev
 ----
 
-Acces your application on URL: `https://connect-account.local:29704`
+Access your application on URL: `https://connect-account.local:29704`.
 
-If you want to build and start the app, you should run the following:
+If you want to build and start the application, you should run the following:
 
 [source, shell]
 ----
 yarn build && yarn start -p $CONNECT_ACCOUNT_PORT
 ----
 
-The `yarn start` port is not manually set, as it is used by Vercel for building the app.
+The `yarn start` port is not manually set, as it is used by Vercel for running the application.
 
 === Testing
 
@@ -162,14 +171,23 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 | `CONNECT_ACCOUNT_SESSION_SALT`
 | The password used to seal or access the cookie session. It needs to be at least 32 characters long.
 
-| `CONNECT_ACCOUNT_DOMAIN`
-| URL of the account web application.
+| `CONNECT_ACCOUNT_HOSTNAME`
+| Hostname of the account web application. If you are hosting the application with Vercel, the `VERCEL_URL` will be used.
+
+| `CONNECT_ACCOUNT_THEME`
+| Styling theme that will be used. Default: `fewlines`.
 
 | `MONGO_URL`
 | URL of the MongoDB cluster.
 
 | `MONGO_DB_NAME`
 | Name of the MongoDB database.
+
+| `DYNAMODB_REGION`
+| Region of the AWS cluster.
+
+| `DYNAMODB_ENDPOINT`
+| URL of the AWS cluster where your DynamoDB instance run from.
 
 | `CONNECT_MANAGEMENT_URL`
 | URL used to fetch identities from the management GraphQL endpoint.
@@ -191,9 +209,6 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 
 | `CONNECT_OPEN_ID_CONFIGURATION_URL`
 | URL used for the `@fwl/oauth2` package to fetch the OpenID configuration.
-
-| `CONNECT_REDIRECT_URI`
-| URL used by Connect to redirect to you app during the OAuth2 authentification flow.
 
 | `CONNECT_AUDIENCE`
 | Name of the Application that identifies the recipients that the JWT is intended for.
