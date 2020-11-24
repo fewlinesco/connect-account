@@ -1,10 +1,11 @@
 import { PutItemCommand, PutItemCommandOutput } from "@aws-sdk/client-dynamodb";
-import { marshall } from "@aws-sdk/util-dynamodb";
+import { marshall, NativeAttributeValue } from "@aws-sdk/util-dynamodb";
 
-import { DbUser } from "@src/@types/dynamodb/Users";
 import { dynamoDbClient } from "@src/dbClient";
 
-export async function putUser(Item: DbUser): Promise<PutItemCommandOutput> {
+export async function putUser(Item: {
+  [key: string]: NativeAttributeValue;
+}): Promise<PutItemCommandOutput> {
   try {
     const params = {
       TableName: "users",

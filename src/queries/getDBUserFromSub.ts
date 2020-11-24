@@ -1,10 +1,10 @@
-import { GetItemCommand, GetItemCommandOutput } from "@aws-sdk/client-dynamodb";
+import { GetItemCommand } from "@aws-sdk/client-dynamodb";
 
 import { dynamoDbClient } from "@src/dbClient";
 
 export async function getDBUserFromSub(
   sub: string,
-): Promise<GetItemCommandOutput> {
+): Promise<Record<string, unknown> | undefined> {
   try {
     const getItem = {
       TableName: "users",
@@ -13,7 +13,9 @@ export async function getDBUserFromSub(
       },
     };
 
-    return dynamoDbClient.send(new GetItemCommand(getItem));
+    const { Item } = await dynamoDbClient.send(new GetItemCommand(getItem));
+
+    return Item;
   } catch (error) {
     console.log("Error while getting the user:\n");
     throw error;
