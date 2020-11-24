@@ -1,6 +1,7 @@
 import { execute, makePromise, GraphQLRequest, FetchResult } from "apollo-link";
 import { setContext } from "apollo-link-context";
 import { HttpLink } from "apollo-link-http";
+import fetch from "cross-fetch";
 
 import { config } from "../config";
 
