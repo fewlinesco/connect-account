@@ -87,7 +87,9 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
           }}
         >
           Delete this{" "}
-          {type === IdentityTypes.PHONE ? "phone number" : "email address"}
+          {type.toUpperCase() === IdentityTypes.PHONE
+            ? "phone number"
+            : "email address"}
         </Button>
       )}
       <ConfirmationBox

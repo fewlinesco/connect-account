@@ -28,8 +28,7 @@ const LoginsOverviewPage: React.FC<LoginsOverviewPageProps> = ({
   return (
     <Layout>
       <Container>
-        {Cookie.get("message") &&
-          displayAlertBar(JSON.stringify(Cookie.get("message")))}
+        {Cookie.get("message") && displayAlertBar(Cookie.get("message"))}
         <h1>Logins</h1>
         <h3>Your emails, phones and social logins</h3>
         <LoginsOverview sortedIdentities={sortedIdentities} />

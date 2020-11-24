@@ -176,6 +176,32 @@ describe("IdentityOverviewPage", () => {
     expect(deleteButton).toHaveLength(0);
   });
 
+  test("the delete button's text should be relevant for emails", () => {
+    const component = mount(
+      <AccountApp>
+        <IdentityOverviewPage identity={nonPrimaryIdentity} />
+      </AccountApp>,
+    );
+
+    const deleteButton = component
+      .find(Button)
+      .find({ variant: ButtonVariant.GHOST });
+    expect(deleteButton.text()).toEqual("Delete this email address");
+  });
+
+  test("the delete button's text should be relevant for phones", () => {
+    const component = mount(
+      <AccountApp>
+        <IdentityOverviewPage identity={phoneIdentity} />
+      </AccountApp>,
+    );
+
+    const deleteButton = component
+      .find(Button)
+      .find({ variant: ButtonVariant.GHOST });
+    expect(deleteButton.text()).toEqual("Delete this phone number");
+  });
+
   test("it should not display the primary badge if the identity is not primary", () => {
     const component = mount(
       <AccountApp>

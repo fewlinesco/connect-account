@@ -2,8 +2,8 @@ import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import React from "react";
 
-import type { IdentityTypes } from "@lib/@types";
-import { HttpVerbs } from "@src/@types/core/HttpVerbs";
+import { IdentityTypes } from "@lib/@types";
+import { HttpVerbs } from "@src/@types/HttpVerbs";
 import { useCookies } from "@src/hooks/useCookies";
 import { fetchJson } from "@src/utils/fetchJson";
 import { getIdentityType } from "@src/utils/getIdentityType";
@@ -36,10 +36,16 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
     value: value,
   };
 
+  const deleteMessage = `${
+    type.toUpperCase() === IdentityTypes.EMAIL
+      ? "Email address"
+      : "Phone number"
+  } has been deleted`;
+
   const deleteIdentity = async (): Promise<void> => {
     return fetchJson("/api/delete-identity", HttpVerbs.DELETE, requestData)
       .then(() => {
-        Cookie.set("message", JSON.parse(`${type} has been deleted`));
+        Cookie.set("message", deleteMessage);
       })
       .then(() => {
         router && router.push("/account/logins");
@@ -50,7 +56,6 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
         }, 3000);
       })
       .catch((error: Error) => {
-        Cookie.set("message", "an error occured");
         throw error;
       });
   };
