@@ -3,7 +3,6 @@ import { ServerResponse } from "http";
 
 import { removeIdentityFromUser } from "@lib/commands/removeIdentityFromUser";
 import { Handler } from "@src/@types/Handler";
-import { addIdentityToUser } from "@src/commands/addIdentityToUser";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withMongoDB } from "@src/middlewares/withMongoDB";
@@ -14,15 +13,7 @@ import { wrapMiddlewares } from "@src/middlewares/wrapper";
 const handler: Handler = async (request, response: ServerResponse) => {
   const { userId, type, value } = request.body;
 
-  if (request.method === "POST") {
-    return addIdentityToUser({ userId, type, value }).then((data) => {
-      response.statusCode = HttpStatus.OK;
-
-      response.setHeader("Content-Type", "application/json");
-
-      response.end(JSON.stringify({ data }));
-    });
-  } else if (request.method === "DELETE") {
+  if (request.method === "DELETE") {
     return removeIdentityFromUser({ userId, type, value }).then((data) => {
       response.statusCode = HttpStatus.ACCEPTED;
 
