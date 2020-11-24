@@ -1,3 +1,4 @@
+import Cookie from "js-cookie";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
@@ -14,6 +15,7 @@ import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
+import { displayAlertBar } from "@src/utils/displayAlertBar";
 import { sortIdentities } from "@src/utils/sortIdentities";
 
 type LoginsOverviewPageProps = {
@@ -26,6 +28,8 @@ const LoginsOverviewPage: React.FC<LoginsOverviewPageProps> = ({
   return (
     <Layout>
       <Container>
+        {Cookie.get("message") &&
+          displayAlertBar(JSON.stringify(Cookie.get("message")))}
         <h1>Logins</h1>
         <h3>Your emails, phones and social logins</h3>
         <LoginsOverview sortedIdentities={sortedIdentities} />

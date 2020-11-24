@@ -1,3 +1,4 @@
+import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -38,9 +39,18 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
   const deleteIdentity = async (): Promise<void> => {
     return fetchJson("/api/delete-identity", HttpVerbs.DELETE, requestData)
       .then(() => {
+        Cookie.set("message", JSON.parse(`${type} has been deleted`));
+      })
+      .then(() => {
         router && router.push("/account/logins");
       })
+      .then(() => {
+        setTimeout(() => {
+          Cookie.remove("message");
+        }, 3000);
+      })
       .catch((error: Error) => {
+        Cookie.set("message", "an error occured");
         throw error;
       });
   };
