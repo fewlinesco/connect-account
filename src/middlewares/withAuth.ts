@@ -7,6 +7,7 @@ import { refreshTokensFlow } from "@lib/commands/refreshTokensFlow";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { Handler } from "@src/@types/Handler";
 import { updateAccessAndRefreshTokens } from "@src/commands/updateAccessAndRefreshTokens";
+import { updateAccessAndRefreshTokens_deprecated } from "@src/commands/updateAccessAndRefreshTokens_deprecated";
 import { oauth2Client, config } from "@src/config";
 
 export function withAuth(handler: Handler): Handler {
@@ -34,16 +35,17 @@ export function withAuth(handler: Handler): Handler {
                 user.refresh_token,
               );
 
-              await updateAccessAndRefreshTokens(
+              const { sub } = await oauth2Client.verifyJWT<{
+                sub: string;
+              }>(userSession.access_token, config.connectJwtAlgorithm);
+
+              await updateAccessAndRefreshTokens(sub, refresh_token);
+
+              await updateAccessAndRefreshTokens_deprecated(
                 request.mongoDb,
                 userDocumentId,
                 access_token,
                 refresh_token,
-              );
-
-              await oauth2Client.verifyJWT(
-                access_token,
-                config.connectJwtAlgorithm,
               );
             } else {
               throw error;

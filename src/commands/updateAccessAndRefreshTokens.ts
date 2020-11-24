@@ -1,21 +1,8 @@
-import { Db, ObjectId } from "mongodb";
-
-import { MongoUpdateError } from "@src/errors";
+import { getAndPutUser } from "./getAndPutUser";
 
 export async function updateAccessAndRefreshTokens(
-  mongoDb: Db,
-  userDocumentId: string,
-  accessToken: string,
-  refreshToken: string,
+  sub: string,
+  refresh_token: string,
 ): Promise<void> {
-  const { result } = await mongoDb
-    .collection("users")
-    .updateOne(
-      { _id: new ObjectId(userDocumentId) },
-      { $set: { accessToken, refreshToken } },
-    );
-
-  if (result.n === 0) {
-    throw new MongoUpdateError("Mongo update failed");
-  }
+  await getAndPutUser({ sub, refresh_token });
 }
