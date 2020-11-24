@@ -1,7 +1,7 @@
 import { PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, NativeAttributeValue } from "@aws-sdk/util-dynamodb";
 
-import { dynamoDbClient } from "../dbClient";
+import { dynamoDbClient } from "../../src/dbClient";
 
 export async function putUser(userData: {
   [key: string]: NativeAttributeValue;

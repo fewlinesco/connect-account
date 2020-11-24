@@ -422,7 +422,7 @@
     "@aws-sdk/is-array-buffer" "1.0.0-rc.3"
     tslib "^1.8.0"
 
-"@aws-sdk/util-dynamodb@^1.0.0-rc.7":
+"@aws-sdk/util-dynamodb@1.0.0-rc.7":
   version "1.0.0-rc.7"
   resolved "https://registry.yarnpkg.com/@aws-sdk/util-dynamodb/-/util-dynamodb-1.0.0-rc.7.tgz#28cf2166fe316a60da47cc186c7cac1ecefcdb36"
   integrity sha512-QAvrP35ZcuuRNFkcOmhyCdKbNEMj0XrQZz+Jf/ej8pc7DZtKwhsiwU1tym0RdvBiy9swrHNokn1Ukz/Jortp4w==

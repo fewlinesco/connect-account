@@ -15,18 +15,16 @@ export async function getAndPutUser({
     const user = {
       sub,
       refresh_token,
-      id_token,
     };
 
-    return putUser(user);
+    return id_token ? putUser({ ...user, id_token }) : putUser(user);
   }
 
   const user = {
     ...inDBUser,
     sub,
     refresh_token,
-    id_token,
   };
 
-  return putUser(user);
+  return id_token ? putUser({ ...user, id_token }) : putUser(user);
 }

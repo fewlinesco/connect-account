@@ -1,6 +1,6 @@
 import { CreateTableCommand } from "@aws-sdk/client-dynamodb";
 
-import { dynamoDbClient } from "../dbClient";
+import { dynamoDbClient } from "../../src/dbClient";
 
 const usersTableSchema = {
   TableName: "users",

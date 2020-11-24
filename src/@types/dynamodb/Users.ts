@@ -1,7 +1,7 @@
 export type OAuth2UserInfo = {
   sub: string;
   refresh_token: string;
-  id_token: string;
+  id_token?: string;
 };
 
 export type TemporaryIdentity = {

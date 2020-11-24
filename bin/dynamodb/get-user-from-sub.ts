@@ -1,7 +1,7 @@
 import { GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 
-import { dynamoDbClient } from "../dbClient";
+import { dynamoDbClient } from "../../src/dbClient";
 
 const errors = {
   emptyArgs: "Please provide the `sub` of the user you are looking for.",
