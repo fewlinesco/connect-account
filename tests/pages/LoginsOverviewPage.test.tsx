@@ -1,15 +1,20 @@
 import { mount } from "enzyme";
-import Link from "next/link";
 import React from "react";
 
 import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
+import AlertBar from "@src/components/display/fewlines/AlertBar/AlertBar";
 import { NoIdentitiesBox } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
 import { BoxedLink } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
 import { NeutralLink } from "@src/components/display/fewlines/NeutralLink";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
 import { AccountApp } from "@src/pages/_app";
 import LoginsOverviewPage from "@src/pages/account/logins";
+
+Object.defineProperty(window.document, "cookie", {
+  writable: true,
+  value: "message=Email address has been deleted",
+});
 
 jest.mock("@src/config", () => {
   return {
@@ -32,6 +37,46 @@ jest.mock("@src/dbClient", () => {
 
 describe("LoginsOverviewPage", () => {
   describe("Boxedlink", () => {
+    test("it should display the AlertBar since there is a message in the cookies", () => {
+      const mockedSortedResponse: SortedIdentities = {
+        phoneIdentities: [
+          {
+            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: true,
+            status: "validated",
+            type: IdentityTypes.PHONE,
+            value: "0622116655",
+          },
+        ],
+        emailIdentities: [
+          {
+            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: true,
+            status: "validated",
+            type: IdentityTypes.EMAIL,
+            value: "test@test.test",
+          },
+        ],
+        socialIdentities: [
+          {
+            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: true,
+            status: "validated",
+            type: IdentityTypes.GITHUB,
+            value: "",
+          },
+        ],
+      };
+      const component = mount(
+        <AccountApp>
+          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+        </AccountApp>,
+      );
+      const alertBar = component.find(AlertBar);
+      expect(alertBar).toHaveLength(1);
+      expect(alertBar.text()).toEqual("Email address has been deleted");
+    });
+
     test("it should display email, phone and social identities when there are one of each", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [
