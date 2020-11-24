@@ -2,6 +2,10 @@ import { IdentityTypes } from "@lib/@types";
 
 export function getIdentityType(type: string): IdentityTypes {
   switch (type.toUpperCase()) {
+    case "EMAIL":
+      return IdentityTypes.EMAIL;
+    case "PHONE":
+      return IdentityTypes.PHONE;
     case "APPLE":
       return IdentityTypes.APPLE;
     case "FACEBOOK":

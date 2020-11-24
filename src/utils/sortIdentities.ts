@@ -20,18 +20,18 @@ export function sortIdentities(fetchedData: {
         status: identity.status,
         value: identity.value,
       };
-      const identityType = identity.type.toUpperCase();
-      if (identityType === IdentityTypes.EMAIL) {
+
+      if (getIdentityType(identity.type) === IdentityTypes.EMAIL) {
         emailIdentities.push({
           ...identityPattern,
           type: IdentityTypes.EMAIL,
         });
-      } else if (identityType === IdentityTypes.PHONE) {
+      } else if (getIdentityType(identity.type) === IdentityTypes.PHONE) {
         phoneIdentities.push({
           ...identityPattern,
           type: IdentityTypes.PHONE,
         });
-      } else if (identityType !== IdentityTypes.PROVIDER) {
+      } else if (getIdentityType(identity.type) !== IdentityTypes.PROVIDER) {
         socialIdentities.push({
           ...identityPattern,
           type: getIdentityType(identity.type),
