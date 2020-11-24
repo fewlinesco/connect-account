@@ -4,8 +4,7 @@ import { Handler } from "next-iron-session";
 import { checkVerificationCode } from "@lib/queries/checkVerificationCode";
 import { getTemporaryIdentities } from "@lib/queries/getTemporaryIdentities";
 import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
-import { HttpVerbs } from "@src/@types/HttpVerbs";
-import { config } from "@src/config";
+import { addIdentityToUser } from "@src/commands/addIdentityToUser";
 import { MongoNoDataReturned, TemporaryIdentityExpired } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
@@ -13,7 +12,7 @@ import { withMongoDB } from "@src/middlewares/withMongoDB";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
-import { fetchJson } from "@src/utils/fetchJson";
+import { getIdentityType } from "@src/utils/getIdentityType";
 
 const handler: Handler = async (request: ExtendedRequest, response) => {
   if (request.method === "POST") {
@@ -34,17 +33,11 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
         if (data && data.checkVerificationCode.status === "VALID") {
           const body = {
             userId: user[0].sub,
-            type: type.toUpperCase(),
+            type: getIdentityType(type),
             value,
           };
 
-          const route = "/api/identities";
-          const absoluteURL = new URL(
-            route,
-            config.connectAccountURL,
-          ).toString();
-
-          await fetchJson(absoluteURL, HttpVerbs.POST, body);
+          await addIdentityToUser(body);
 
           response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
             Location: "/account/logins",

@@ -442,11 +442,15 @@ describe("IdentityOverviewPage", () => {
       expect(confirmDeleteButton.text()).toEqual("Delete this email address");
       confirmDeleteButton.simulate("click");
 
-      expect(fetchMethod).toHaveBeenCalledWith("/api/identities", "DELETE", {
-        type: "EMAIL",
-        userId: undefined,
-        value: "test@test.test",
-      });
+      expect(fetchMethod).toHaveBeenCalledWith(
+        "/api/delete-identity",
+        "DELETE",
+        {
+          type: "EMAIL",
+          userId: undefined,
+          value: "test@test.test",
+        },
+      );
     });
   });
 });

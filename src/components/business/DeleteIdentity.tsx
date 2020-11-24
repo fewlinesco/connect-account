@@ -5,6 +5,7 @@ import type { IdentityTypes } from "@lib/@types";
 import { HttpVerbs } from "@src/@types/HttpVerbs";
 import { useCookies } from "@src/hooks/useCookies";
 import { fetchJson } from "@src/utils/fetchJson";
+import { getIdentityType } from "@src/utils/getIdentityType";
 
 interface DeleteIdentityProps {
   type: IdentityTypes;
@@ -30,12 +31,12 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
 
   const requestData = {
     userId: data.userSub,
-    type: type.toUpperCase(),
+    type: getIdentityType(type),
     value: value,
   };
 
   const deleteIdentity = async (): Promise<void> => {
-    return fetchJson("/api/identities", HttpVerbs.DELETE, requestData)
+    return fetchJson("/api/delete-identity", HttpVerbs.DELETE, requestData)
       .then(() => {
         router && router.push("/account/logins");
       })
