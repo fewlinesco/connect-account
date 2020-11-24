@@ -30,11 +30,8 @@ const Item = {
   temporary_identities: [
     {
       event_id: "event_id",
-
       value: "value",
-
       type: "type",
-
       expires_at: 42,
     },
   ],

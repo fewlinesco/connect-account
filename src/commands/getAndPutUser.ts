@@ -1,8 +1,13 @@
 import { PutItemCommandOutput } from "@aws-sdk/client-dynamodb";
 
 import { putUser } from "./putUser";
-import { OAuth2UserInfo } from "@src/@types/dynamodb/Users";
 import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
+
+type OAuth2UserInfo = {
+  sub: string;
+  refresh_token: string;
+  id_token?: string;
+};
 
 export async function getAndPutUser({
   sub,

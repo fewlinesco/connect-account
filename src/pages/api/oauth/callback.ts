@@ -43,13 +43,13 @@ const handler: Handler = async (
       request.mongoDb,
     );
 
-    const oauthUserInfo = {
+    const oAuth2UserInfo = {
       sub: decodedAccessToken.sub,
       refresh_token,
       id_token,
     };
 
-    await getAndPutUser(oauthUserInfo);
+    await getAndPutUser(oAuth2UserInfo);
 
     request.session.set("user-session-id", documentId);
     request.session.set("user-sub", decodedAccessToken.sub);
