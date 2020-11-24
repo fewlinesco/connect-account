@@ -145,7 +145,7 @@ describe("UpdateIdentityPage", () => {
     const fetchMethod = jest
       .spyOn(fetchJson, "fetchJson")
       .mockImplementationOnce(async () => {
-        return fetch("/api/identities", {
+        return fetch("/api/delete-identity", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -158,7 +158,7 @@ describe("UpdateIdentityPage", () => {
         })
           .then((response) => {
             expect(fetchMethod).toHaveBeenCalledWith(
-              "/api/identities",
+              "/api/delete-identity",
               "DELETE",
               {
                 type: "EMAIL",

@@ -233,7 +233,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "yarn lint && yarn test && yarn test:e2e && yarn build"
+      "pre-push": "yarn lint && yarn test:e2e && yarn build"
     }
   }
 }
