@@ -37,13 +37,11 @@ jobs:
         CONNECT_ACCOUNT_TEST_APP_ID: ${{ secrets.CONNECT_ACCOUNT_TEST_APP_ID }}
         CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
         CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
-      run: yarn e2e-addRedirectUri
+      run: yarn e2e-add-redirect-uri
 
     - name: removing Vercel URL to Application's redirect uris
       env:
         CONNECT_ACCOUNT_TEST_APP_ID: ${{ secrets.CONNECT_ACCOUNT_TEST_APP_ID }}
         CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
         CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
-      run: yarn e2e-removeRedirectUri
-
-    
+      run: yarn e2e-remove-redirect-uri

@@ -2,7 +2,7 @@ import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
 import { fetchManagement } from "../../src/utils/fetchManagement";
-import type { ProviderApplication } from "@lib/@types/Application";
+import type { ProviderApplication } from "../@types/Application";
 
 const GET_APPLICATION_QUERY = gql`
   query getApplicationQuery($id: String!) {

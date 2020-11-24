@@ -15998,7 +15998,7 @@ table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
-taiko@^1.0.28:
+taiko@1.0.28:
   version "1.0.28"
   resolved "https://registry.yarnpkg.com/taiko/-/taiko-1.0.28.tgz#cb5d1e7d85f7a0b37691d87f9f5afa9474652e7a"
   integrity sha512-il4qbMyEF1q7zqWP4FgP3LxMHIFOSuKiqjeM+QI7UEtB8nUobRVQ0ZLiZhoPMRd8qo7kfvdPG2AamPFD3t4A6g==

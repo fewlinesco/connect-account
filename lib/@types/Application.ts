@@ -6,14 +6,6 @@ export type Application = {
   redirectUris: string[];
 };
 
-export type ApplicationInput = {
-  id: string;
-  description: string;
-  name: string;
-  redirectUris: string[];
-  defaultHomePage: string;
-};
-
 export type ProviderApplication = {
   application: Application;
 };

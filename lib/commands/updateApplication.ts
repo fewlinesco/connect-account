@@ -2,7 +2,7 @@ import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
 import { fetchManagement } from "../../src/utils/fetchManagement";
-import { ApplicationInput } from "@lib/@types/Application";
+import { Application } from "../@types/Application";
 
 const UPDATE_APPLICATION_MUTATION = gql`
   mutation updateApplication(
@@ -21,6 +21,7 @@ const UPDATE_APPLICATION_MUTATION = gql`
         defaultHomePage: $defaultHomePage
       }
     ) {
+      id
       description
       redirectUris
       name
@@ -30,12 +31,14 @@ const UPDATE_APPLICATION_MUTATION = gql`
 `;
 
 export async function updateApplication(
-  command: ApplicationInput,
+  command: Application,
 ): Promise<FetchResult> {
   const operation = {
     query: UPDATE_APPLICATION_MUTATION,
     variables: command,
   };
 
-  return fetchManagement(operation) as FetchResult;
+  return fetchManagement(operation) as FetchResult<{
+    updateApplication: Application;
+  }>;
 }
