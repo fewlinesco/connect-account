@@ -205,7 +205,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
           </a>
         </Link>
       </IdentitySection>
-      <IdentitySection>
+      <LastIdentitySection>
         <TimelineEnd />
         <h3>Social logins</h3>
         <ShadowBox>
@@ -237,7 +237,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
             })
           )}
         </ShadowBox>
-      </IdentitySection>
+      </LastIdentitySection>
     </Container>
   );
 };
@@ -252,8 +252,12 @@ const Flex = styled.div`
 `;
 
 const IdentitySection = styled.div`
-  margin: 0 0 ${({ theme }) => theme.spaces.s} 0;
+  padding: 0 0 ${({ theme }) => theme.spaces.s} 0;
   position: relative;
+`;
+
+const LastIdentitySection = styled(IdentitySection)`
+  padding: 0;
 `;
 
 const SocialIdentityBox = styled.div`
