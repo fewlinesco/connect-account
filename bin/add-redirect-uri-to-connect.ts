@@ -20,7 +20,9 @@ async function addRedirectURIToConnect(): Promise<void> {
 
   const vercelDeployment = githubActionsContext.deployment_status;
 
-  if (vercelDeployment.state === "success") {
+  const deploymentStates = ["success", "pending", "in_progress", "queued"];
+
+  if (deploymentStates.includes(vercelDeployment.state)) {
     const testApp = await getApplication(
       process.env.CONNECT_ACCOUNT_TEST_APP_ID,
     ).then(({ errors, data }) => {
@@ -35,20 +37,25 @@ async function addRedirectURIToConnect(): Promise<void> {
       return data.provider.application;
     });
 
-    const updatedTestApp = {
-      ...testApp,
-      redirectUris: [...testApp.redirectUris, vercelDeployment.target_url],
-    };
+    if (
+      !vercelDeployment.target_url.includes("storybook") &&
+      !testApp.redirectUris.includes(vercelDeployment.target_url)
+    ) {
+      const updatedTestApp = {
+        ...testApp,
+        redirectUris: [...testApp.redirectUris, vercelDeployment.target_url],
+      };
 
-    await updateApplication(updatedTestApp).then(({ errors, data }) => {
-      if (errors) {
-        throw errors;
-      }
+      await updateApplication(updatedTestApp).then(({ errors, data }) => {
+        if (errors) {
+          throw errors;
+        }
 
-      if (!data) {
-        throw new Error("update error");
-      }
-    });
+        if (!data) {
+          throw new Error("update error");
+        }
+      });
+    }
   }
 }
 
