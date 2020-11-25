@@ -41,7 +41,7 @@ const BulletPointContainer = styled.div`
 
 const GhostBulletPointContainer = styled.div`
   width: 0.8rem;
-  margin: 0 0 -1rem 0;
+  margin: -1rem 0 -0.2rem 0;
 `;
 
 const LineContainer = styled.div`
