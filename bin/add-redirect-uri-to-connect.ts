@@ -37,13 +37,16 @@ async function addRedirectURIToConnect(): Promise<void> {
       return data.provider.application;
     });
 
+    const vercelDeploymentUrl =
+      vercelDeployment.target_url + "/api/oauth/callback";
+
     if (
       !vercelDeployment.target_url.includes("storybook") &&
-      !testApp.redirectUris.includes(vercelDeployment.target_url)
+      !testApp.redirectUris.includes(vercelDeploymentUrl)
     ) {
       const updatedTestApp = {
         ...testApp,
-        redirectUris: [...testApp.redirectUris, vercelDeployment.target_url],
+        redirectUris: [...testApp.redirectUris, vercelDeploymentUrl],
       };
 
       await updateApplication(updatedTestApp).then(({ errors, data }) => {
