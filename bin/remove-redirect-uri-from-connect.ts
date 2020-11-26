@@ -1,4 +1,4 @@
-import { updateApplication } from "../lib/commands/updateApplication";
+//import { updateApplication } from "../lib/commands/updateApplication";
 import { getApplication } from "../lib/queries/getApplication";
 
 async function removeRedirectURIFromConnect(): Promise<void> {
@@ -22,20 +22,22 @@ async function removeRedirectURIFromConnect(): Promise<void> {
     return data.provider.application;
   });
 
-  const initialStateTestApp = {
-    ...testApp,
-    redirectUris: testApp.redirectUris.filter((uri) => !uri.includes("vercel")),
-  };
+  console.log(testApp);
 
-  await updateApplication(initialStateTestApp).then(({ errors, data }) => {
-    if (errors) {
-      throw errors;
-    }
+  // const initialStateTestApp = {
+  //   ...testApp,
+  //   redirectUris: testApp.redirectUris.filter((uri) => !uri.includes("vercel")),
+  // };
 
-    if (!data) {
-      throw new Error("update error");
-    }
-  });
+  // await updateApplication(initialStateTestApp).then(({ errors, data }) => {
+  //   if (errors) {
+  //     throw errors;
+  //   }
+
+  //   if (!data) {
+  //     throw new Error("update error");
+  //   }
+  // });
 }
 
 removeRedirectURIFromConnect();
