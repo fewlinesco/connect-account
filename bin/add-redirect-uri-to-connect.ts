@@ -58,6 +58,7 @@ async function addRedirectURIToConnect(): Promise<void> {
           throw new Error("update error");
         }
       });
+      console.log(vercelDeploymentUrl);
     }
   }
 }
