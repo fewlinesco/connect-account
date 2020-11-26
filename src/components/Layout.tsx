@@ -31,7 +31,6 @@ export const Main = styled.main`
 
   @media ${deviceBreakpoints.m} {
     height: auto;
-    margin: 0 0 7.2rem 0;
   }
 `;
 

@@ -42,6 +42,6 @@ const LineContainer = styled.div`
 `;
 
 const Line = styled.div`
-  height: calc(95% + ${({ theme }) => theme.spaces.s});
+  height: calc(100% - 0.6rem);
   border-left: 1px solid ${({ theme }) => theme.colors.separator};
 `;
