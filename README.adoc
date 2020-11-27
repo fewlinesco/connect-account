@@ -9,7 +9,7 @@ Connect Account is an open source app, which aims at providing all the business 
 
 image::./doc/oauth2-flow-diagram.svg[OAuth2 flow diagram]
 
-For more information, check the Authorization code flow https://developers.fewlines.co/guides/authorization_code_flow/overview/[documentation].
+For more information, check the Authorization code flow https://developers.fewlines.co/guides/authorization_code_flow/overview/[documentation]
 
 === Identity commands and queries
 
