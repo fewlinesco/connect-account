@@ -14,7 +14,14 @@ describe("DesktopNavigationBar", () => {
   jest.setTimeout(60000);
 
   beforeAll(async () => {
-    await openBrowser({ args: ["--window-size=1440,1000"], headless: true });
+    await openBrowser({
+      args: [
+        "--window-size=1440,1000",
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+      ],
+      headless: true,
+    });
   });
 
   afterAll(async () => {
@@ -24,8 +31,16 @@ describe("DesktopNavigationBar", () => {
   test("Log in with a desktop computer, use the navbar to go to the logins page and go back to home page", async (done) => {
     expect.assertions(6);
 
+    if (process.env.CONNECT_ACCOUNT_TEST_URL === undefined) {
+      throw new Error(
+        "CONNECT_ACCOUNT_TEST_URL environment variable is undefined",
+      );
+    }
+
+    console.log(process.env.CONNECT_ACCOUNT_TEST_URL);
+
     try {
-      await goto("http://localhost:29703");
+      await goto(process.env.CONNECT_ACCOUNT_TEST_URL);
 
       await authToConnect();
 

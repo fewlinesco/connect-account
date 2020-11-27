@@ -17,7 +17,14 @@ describe("Marking another identity as the primary one on connect account", () =>
   jest.setTimeout(60000);
 
   beforeAll(async () => {
-    await openBrowser({ args: ["--window-size=1440,1000"], headless: true });
+    await openBrowser({
+      args: [
+        "--window-size=1440,1000",
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+      ],
+      headless: true,
+    });
   });
 
   afterAll(async () => {
@@ -27,8 +34,14 @@ describe("Marking another identity as the primary one on connect account", () =>
   test("should correctly mark another identity to primary status and going back to logins overview page", async (done) => {
     expect.assertions(9);
 
+    if (process.env.CONNECT_ACCOUNT_TEST_URL === undefined) {
+      throw new Error(
+        "CONNECT_ACCOUNT_TEST_URL environment variable is undefined",
+      );
+    }
+
     try {
-      await goto("http://localhost:29703");
+      await goto(process.env.CONNECT_ACCOUNT_TEST_URL);
 
       await authToConnect();
 

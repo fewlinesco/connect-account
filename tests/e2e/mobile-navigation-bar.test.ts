@@ -14,7 +14,14 @@ describe("Log in with a smart phone, open and close the navigation bar", () => {
   jest.setTimeout(60000);
 
   beforeAll(async () => {
-    await openBrowser({ args: ["--window-size=400,800"], headless: true });
+    await openBrowser({
+      args: [
+        "--window-size=1440,1000",
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+      ],
+      headless: true,
+    });
   });
 
   afterAll(async () => {
@@ -24,8 +31,14 @@ describe("Log in with a smart phone, open and close the navigation bar", () => {
   test("Launch the browser with a smartphone, open and close the navigation bar", async (done) => {
     expect.assertions(7);
 
+    if (process.env.CONNECT_ACCOUNT_TEST_URL === undefined) {
+      throw new Error(
+        "CONNECT_ACCOUNT_TEST_URL environment variable is undefined",
+      );
+    }
+
     try {
-      await goto("http://localhost:29703");
+      await goto(process.env.CONNECT_ACCOUNT_TEST_URL);
 
       await authToConnect();
 

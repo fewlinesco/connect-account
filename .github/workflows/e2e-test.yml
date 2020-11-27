@@ -7,11 +7,21 @@ jobs:
   e2e-tests: 
     runs-on: ubuntu-latest
 
-    container:
-      image:  node:14.8-buster
+    # container:
+    #   image:  node:14.8-buster
 
+    # services:
+    #   taiko:
+    #     image: fewlines/taiko:0.1.0
+    #     volumes:
+    #       - /tests/e2e:/app/tests
+    
     steps:
     - uses: actions/checkout@v2
+
+    - uses: actions/setup-node@v2-beta
+      with:
+        node-version: '14'
 
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
@@ -38,3 +48,14 @@ jobs:
         CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
         CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
       run: yarn e2e-add-redirect-uri
+    
+    - name: lauching taiko e2e tests
+      if: github.event.deployment_status.state == 'success'
+      env: 
+        GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
+        CONNECT_ACCOUNT_TEST_EMAIL: ${{ secrets.CONNECT_ACCOUNT_TEST_EMAIL }}
+        CONNECT_ACCOUNT_TEST_PASSWORD: ${{ secrets.CONNECT_ACCOUNT_TEST_PASSWORD }}
+        CONNECT_ACCOUNT_TEST_URL: ${{ github.event.deployment_status.target_url }}
+      run: |
+        docker run fewlines/taiko:0.1.0 --volume /tests/e2e:/app/tests:ro yarn jest --runInBand
+        echo ls
