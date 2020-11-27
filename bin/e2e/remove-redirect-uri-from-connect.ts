@@ -1,5 +1,5 @@
-import { updateApplication } from "../lib/commands/updateApplication";
-import { getApplication } from "../lib/queries/getApplication";
+import { updateApplication } from "../../lib/commands/updateApplication";
+import { getApplication } from "../../lib/queries/getApplication";
 
 async function removeRedirectURIFromConnect(): Promise<void> {
   if (process.env.CONNECT_ACCOUNT_TEST_APP_ID === undefined) {
