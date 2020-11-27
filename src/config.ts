@@ -4,6 +4,7 @@ type Config = {
   connectAccountURL: string;
   connectAccountTheme: string;
   connectManagementUrl: string;
+  dynamoRegion: string;
   dynamoDbEndpoint: string;
   dynamoAccessKeyID: string;
   dynamoSecretAccessKey: string;
@@ -28,6 +29,7 @@ const config: Config = {
   connectAccountURL: "",
   connectAccountTheme: "",
   connectManagementUrl: "",
+  dynamoRegion: "",
   dynamoDbEndpoint: "",
   dynamoAccessKeyID: "",
   dynamoSecretAccessKey: "",
@@ -55,6 +57,7 @@ function handleEnvVars(): void {
   config.connectAccountURL = appHostname ? `https://${appHostname}` : "";
   config.connectAccountTheme = process.env.CONNECT_ACCOUNT_THEME || "fewlines";
   config.connectManagementUrl = process.env.CONNECT_MANAGEMENT_URL || "";
+  config.dynamoRegion = process.env.DYNAMODB_REGION || "";
   config.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";
   config.dynamoAccessKeyID = process.env.DYNAMODB_ACCESS_KEY_ID || "";
   config.dynamoSecretAccessKey = process.env.DYNAMODB_SECRET_ACCESS_KEY || "";
