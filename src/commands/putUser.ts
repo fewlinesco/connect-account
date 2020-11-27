@@ -4,20 +4,15 @@ import { marshall, NativeAttributeValue } from "@aws-sdk/util-dynamodb";
 import { config } from "@src/config";
 import { dynamoDbClient } from "@src/dbClient";
 
-export async function putUser(Item: {
+export async function putUser(userData: {
   [key: string]: NativeAttributeValue;
 }): Promise<PutItemCommandOutput> {
-  try {
-    const params = {
-      TableName: config.dynamoTableName,
-      Item: marshall(Item),
-    };
+  const params = {
+    TableName: config.dynamoTableName,
+    Item: marshall(userData),
+  };
 
-    const itemCommand = new PutItemCommand(params);
+  const itemCommand = new PutItemCommand(params);
 
-    return dynamoDbClient.send(itemCommand);
-  } catch (error) {
-    console.log("Put command failed:\n");
-    throw error;
-  }
+  return dynamoDbClient.send(itemCommand);
 }
