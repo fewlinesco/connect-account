@@ -37,7 +37,7 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
   };
 
   const deleteMessage = `${
-    type.toUpperCase() === IdentityTypes.EMAIL
+    getIdentityType(type) === IdentityTypes.EMAIL
       ? "Email address"
       : "Phone number"
   } has been deleted`;

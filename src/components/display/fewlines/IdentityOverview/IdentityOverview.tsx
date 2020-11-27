@@ -10,6 +10,7 @@ import { DeleteConfirmationBoxContent } from "../ConfirmationBox/DeleteConfirmat
 import { PrimaryConfirmationBoxContent } from "../ConfirmationBox/PrimaryConfirmationBoxContent";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, IdentityTypes } from "@lib/@types";
+import { getIdentityType } from "@src/utils/getIdentityType";
 
 type IdentityOverviewProps = {
   identity: Identity;
@@ -87,7 +88,7 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
           }}
         >
           Delete this{" "}
-          {type.toUpperCase() === IdentityTypes.PHONE
+          {getIdentityType(type) === IdentityTypes.PHONE
             ? "phone number"
             : "email address"}
         </Button>
