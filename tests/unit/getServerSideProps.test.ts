@@ -41,6 +41,16 @@ jest.mock("@src/config", () => {
   };
 });
 
+jest.mock("@src/dbClient", () => {
+  return {
+    dynamoDbClient: {
+      send: () => {
+        return;
+      },
+    },
+  };
+});
+
 const mockedRequest = new IncomingMessage(new Socket());
 
 const mockedContext: GetServerSidePropsContext<ParsedUrlQuery> = {
