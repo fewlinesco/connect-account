@@ -5,8 +5,6 @@ import { isUserPasswordSet } from "@lib/queries/isUserPasswordSet";
 import { ExtendedRequest } from "@src/@types/ExtendedRequest";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
-import { H1 } from "@src/components/display/fewlines/H1/H1";
-import { H2 } from "@src/components/display/fewlines/H2/H2";
 import { Security } from "@src/components/display/fewlines/Security/Security";
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
@@ -25,8 +23,8 @@ const SecurityPage: React.FC<SecurityPageProps> = ({ isPasswordSet }) => {
   return (
     <Layout>
       <Container>
-        <H1>Security</H1>
-        <H2>Password, login history and more</H2>
+        <h1>Security</h1>
+        <h2>Password, login history and more</h2>
         <Security isPasswordSet={isPasswordSet} />
       </Container>
     </Layout>
