@@ -4,10 +4,10 @@ type Config = {
   connectAccountURL: string;
   connectAccountTheme: string;
   connectManagementUrl: string;
-  dynamoDbRegion: string;
   dynamoDbEndpoint: string;
   dynamoAccessKeyID: string;
   dynamoSecretAccessKey: string;
+  dynamoTableName: string;
   connectMongoUrl: string;
   connectMongoDbName: string;
   connectManagementApiKey: string;
@@ -28,10 +28,10 @@ const config: Config = {
   connectAccountURL: "",
   connectAccountTheme: "",
   connectManagementUrl: "",
-  dynamoDbRegion: "",
   dynamoDbEndpoint: "",
   dynamoAccessKeyID: "",
   dynamoSecretAccessKey: "",
+  dynamoTableName: "",
   connectMongoUrl: "",
   connectMongoDbName: "",
   connectManagementApiKey: "",
@@ -55,10 +55,10 @@ function handleEnvVars(): void {
   config.connectAccountURL = appHostname ? `https://${appHostname}` : "";
   config.connectAccountTheme = process.env.CONNECT_ACCOUNT_THEME || "fewlines";
   config.connectManagementUrl = process.env.CONNECT_MANAGEMENT_URL || "";
-  config.dynamoDbRegion = process.env.DYNAMODB_REGION || "";
   config.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";
   config.dynamoAccessKeyID = process.env.DYNAMODB_ACCESS_KEY_ID || "";
   config.dynamoSecretAccessKey = process.env.DYNAMODB_SECRET_ACCESS_KEY || "";
+  config.dynamoTableName = process.env.DYNAMODB_TABLE_NAME || "";
   config.connectMongoUrl = process.env.MONGO_URL || "";
   config.connectMongoDbName = process.env.MONGO_DB_NAME || "";
   config.connectManagementApiKey = process.env.CONNECT_MANAGEMENT_API_KEY || "";

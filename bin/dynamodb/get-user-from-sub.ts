@@ -2,6 +2,7 @@ import { GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 
 import { dynamoDbClient } from "../../src/dbClient";
+import { config } from "@src/config";
 
 const errors = {
   emptyArgs: "Please provide the `sub` of the user you are looking for.",
@@ -16,7 +17,7 @@ async function getUserFromSub(): Promise<void> {
     if (args.length > 0) {
       if (args.length === 1) {
         const getItem = {
-          TableName: "users",
+          TableName: config.dynamoTableName,
           Key: {
             sub: { S: args[0] },
           },

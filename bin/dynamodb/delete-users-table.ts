@@ -1,11 +1,12 @@
 import { DeleteTableCommand } from "@aws-sdk/client-dynamodb";
 
 import { dynamoDbClient } from "../../src/dbClient";
+import { config } from "@src/config";
 
 async function deleteUsersTable(): Promise<void> {
   try {
     const deleteUsersTableCommand = new DeleteTableCommand({
-      TableName: "users",
+      TableName: config.dynamoTableName,
     });
     const data = await dynamoDbClient.send(deleteUsersTableCommand);
 

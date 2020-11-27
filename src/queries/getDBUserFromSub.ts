@@ -1,5 +1,6 @@
 import { GetItemCommand } from "@aws-sdk/client-dynamodb";
 
+import { config } from "@src/config";
 import { dynamoDbClient } from "@src/dbClient";
 
 export async function getDBUserFromSub(
@@ -7,7 +8,7 @@ export async function getDBUserFromSub(
 ): Promise<Record<string, unknown> | undefined> {
   try {
     const getItem = {
-      TableName: "users",
+      TableName: config.dynamoTableName,
       Key: {
         sub: { S: sub },
       },
