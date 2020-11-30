@@ -4,11 +4,9 @@ import { Handler } from "next-iron-session";
 
 import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import type { AccessToken } from "@src/@types/oAuth2/OAuth2Tokens";
-import { findOrInsertUser_deprecated } from "@src/commands/findOrInsertUser_deprecated";
 import { getAndPutUser } from "@src/commands/getAndPutUser";
 import { oauth2Client, config } from "@src/config";
 import { withLogger } from "@src/middlewares/withLogger";
-import { withMongoDB } from "@src/middlewares/withMongoDB";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
@@ -21,26 +19,13 @@ const handler: Handler = async (
     const {
       access_token,
       refresh_token,
-      id_token,
     } = await oauth2Client.getTokensFromAuthorizationCode(
-      request.query.code as string,
+      `${request.query.code}`,
     );
 
     const decodedAccessToken = await oauth2Client.verifyJWT<AccessToken>(
       access_token,
       config.connectJwtAlgorithm,
-    );
-
-    const oauthUserInfo_deprecated = {
-      sub: decodedAccessToken.sub,
-      accessToken: access_token,
-      refresh_token,
-      id_token,
-    };
-
-    const documentId = await findOrInsertUser_deprecated(
-      oauthUserInfo_deprecated,
-      request.mongoDb,
     );
 
     const oAuth2UserInfo = {
@@ -50,7 +35,6 @@ const handler: Handler = async (
 
     await getAndPutUser(oAuth2UserInfo);
 
-    request.session.set("user-session-id", documentId);
     request.session.set("user-session", {
       access_token,
       sub: decodedAccessToken.sub,
@@ -70,7 +54,4 @@ const handler: Handler = async (
   }
 };
 
-export default wrapMiddlewares(
-  [withLogger, withSentry, withMongoDB, withSession],
-  handler,
-);
+export default wrapMiddlewares([withLogger, withSentry, withSession], handler);
