@@ -15,12 +15,6 @@ export function OAuth2Error(error?: OAuth2Errors): WebError {
   });
 }
 
-export class MongoUpdateError extends Error {}
-
-export class MongoInsertError extends Error {}
-
-export class MongoNoDataReturned extends Error {}
-
 export class GraphqlError extends Error {
   parentError: GraphqlErrors;
 

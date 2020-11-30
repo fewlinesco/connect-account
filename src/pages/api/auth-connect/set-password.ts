@@ -4,13 +4,13 @@ import type { NextApiResponse } from "next";
 import type { Handler } from "next-iron-session";
 
 import { createOrUpdatePassword } from "@lib/commands/createOrUpdatePassword";
+import { UserCookie } from "@src/@types/UserCookie";
 import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
-import { getUser } from "@src/utils/getUser";
 
 const handler: Handler = async (
   request: ExtendedRequest,
@@ -19,12 +19,12 @@ const handler: Handler = async (
   if (request.method === "POST") {
     const { passwordInput } = request.body;
 
-    const user = await getUser(request.headers["cookie"] as string);
+    const userSession = request.session.get<UserCookie>("user-session");
 
-    if (user) {
+    if (userSession) {
       return createOrUpdatePassword({
         cleartextPassword: passwordInput,
-        userId: user.sub,
+        userId: userSession.sub,
       }).then(({ data, errors }) => {
         if (errors) {
           response.setHeader("Content-Type", "application/json");

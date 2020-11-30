@@ -4,6 +4,7 @@ import React from "react";
 
 import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentity } from "@lib/queries/getIdentity";
+import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { NoIdentityFound } from "@src/clientErrors";
 import { Layout } from "@src/components/Layout";
@@ -17,7 +18,6 @@ import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
-import { getUser } from "@src/utils/getUser";
 
 const IdentityOverviewPage: React.FC<{ identity: Identity }> = ({
   identity,
@@ -54,11 +54,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return;
       }
 
-      const user = await getUser(request.headers.cookie as string);
+      const userSession = request.session.get<UserCookie>("user-session");
 
-      if (user) {
+      if (userSession) {
         const identity = await getIdentity(
-          user.sub,
+          userSession.sub,
           context.params.id.toString(),
         ).then((result) => {
           if (result.errors) {

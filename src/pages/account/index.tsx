@@ -31,7 +31,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     withLogger,
     withSentry,
     withSession,
-
     withAuth,
   ]);
 };

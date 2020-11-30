@@ -4,6 +4,7 @@ import React from "react";
 
 import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentities } from "@lib/queries/getIdentities";
+import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Layout } from "@src/components/Layout";
 import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
@@ -17,7 +18,6 @@ import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
-import { getUser } from "@src/utils/getUser";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   return (
@@ -58,11 +58,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return;
       }
       const userId = context.params.id.toString();
+      const userSession = request.session.get<UserCookie>("user-session");
 
-      const user = await getUser(request.headers.cookie as string);
-
-      if (user) {
-        const identity = await getIdentities(user.sub).then((result) => {
+      if (userSession) {
+        const identity = await getIdentities(userSession.sub).then((result) => {
           if (result.errors) {
             throw new GraphqlErrors(result.errors);
           }
