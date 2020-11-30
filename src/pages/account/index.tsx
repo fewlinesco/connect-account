@@ -9,7 +9,6 @@ import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
-import { withMongoDB } from "@src/middlewares/withMongoDB";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
@@ -32,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     withLogger,
     withSentry,
     withSession,
-    withMongoDB,
+
     withAuth,
   ]);
 };

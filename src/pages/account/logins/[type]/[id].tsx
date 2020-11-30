@@ -14,7 +14,6 @@ import { NavigationBreadcrumbs } from "@src/components/display/fewlines/Navigati
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
-import { withMongoDB } from "@src/middlewares/withMongoDB";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
@@ -47,7 +46,7 @@ export default IdentityOverviewPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return wrapMiddlewaresForSSR<{ type: string }>(
     context,
-    [withLogger, withSentry, withMongoDB, withSession, withAuth],
+    [withLogger, withSentry, withSession, withAuth],
     async (request: ExtendedRequest, response: ServerResponse) => {
       if (!context?.params?.id) {
         response.statusCode = 400;

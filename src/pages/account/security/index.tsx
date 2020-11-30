@@ -11,7 +11,6 @@ import { Security } from "@src/components/display/fewlines/Security/Security";
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
-import { withMongoDB } from "@src/middlewares/withMongoDB";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
@@ -38,7 +37,7 @@ export default SecurityPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return wrapMiddlewaresForSSR<{ type: string }>(
     context,
-    [withLogger, withSentry, withMongoDB, withSession, withAuth],
+    [withLogger, withSentry, withSession, withAuth],
     async (request: ExtendedRequest) => {
       const user = await getUser(request.headers.cookie as string);
 
