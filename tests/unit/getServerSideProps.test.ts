@@ -8,7 +8,6 @@ import { ParsedUrlQuery } from "querystring";
 
 import { IdentityTypes } from "@lib/@types";
 import { ProviderUser } from "@lib/@types";
-import { getMongoClient } from "@src/middlewares/withMongoDB";
 import { getServerSideProps } from "@src/pages/account/logins/index";
 
 enableFetchMocks();
@@ -25,8 +24,6 @@ jest.mock("@src/config", () => {
       connectApplicationScopes: "",
       connectProviderUrl: "http://foo.test",
       connectAccountURL: "http://foo.test",
-      connectMongoUrl: process.env.MONGO_URL_TEST as string,
-      connectMongoDbName: "connect-account-test",
     },
     oauth2Client: {
       verifyJWT: async () => {
@@ -68,10 +65,6 @@ describe("getServerSideProps", () => {
   beforeEach(() => {
     mockedContext.req.headers = {};
     mockedContext.req.rawHeaders = [];
-  });
-
-  afterAll(async () => {
-    await (await getMongoClient()).close();
   });
 
   const mockedResponse: { data: { provider: ProviderUser } } = {

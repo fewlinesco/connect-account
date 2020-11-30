@@ -177,12 +177,6 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 | `CONNECT_ACCOUNT_THEME`
 | Styling theme that will be used. Default: `fewlines`.
 
-| `MONGO_URL`
-| URL of the MongoDB cluster.
-
-| `MONGO_DB_NAME`
-| Name of the MongoDB database.
-
 | `DYNAMODB_REGION`
 | Region of the AWS cluster.
 
@@ -411,31 +405,11 @@ export const SvgIcon: React.FC = () => {
 
 == Database
 
-We chose to use https://www.mongodb.com/[MongoDB], deployed in the cloud through https://www.mongodb.com/cloud/atlas[MongoDB Atlas].
-
-> Note that in the future, we aim to provide the liberty of the database used. This will be achieve through a config file, and the `@fwl/account-sdk` package.
-
-```
-users:
-_id
-sub
-accessToken
-refreshToken
-locale
-temporaryIdentities: {
-  [
-    eventId
-    value
-    type
-  ]
-}
-```
+TODO
 
 == Session
 
-The session is kept in the cookies through https://github.com/vvo/next-iron-session[next-iron-session]. The value stored is the MongoDB user document id, which is used to authorization.
-
-> Note that in the future, we will store the session id present in the database.
+TODO
 
 == Storybook
 

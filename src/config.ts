@@ -9,8 +9,6 @@ type Config = {
   dynamoAccessKeyID: string;
   dynamoSecretAccessKey: string;
   dynamoTableName: string;
-  connectMongoUrl: string;
-  connectMongoDbName: string;
   connectManagementApiKey: string;
   connectProviderUrl: string;
   connectApplicationClientId: string;
@@ -34,8 +32,6 @@ const config: Config = {
   dynamoAccessKeyID: "",
   dynamoSecretAccessKey: "",
   dynamoTableName: "",
-  connectMongoUrl: "",
-  connectMongoDbName: "",
   connectManagementApiKey: "",
   connectProviderUrl: "",
   connectApplicationClientId: "",
@@ -62,8 +58,6 @@ function handleEnvVars(): void {
   config.dynamoAccessKeyID = process.env.DYNAMODB_ACCESS_KEY_ID || "";
   config.dynamoSecretAccessKey = process.env.DYNAMODB_SECRET_ACCESS_KEY || "";
   config.dynamoTableName = process.env.DYNAMODB_TABLE_NAME || "";
-  config.connectMongoUrl = process.env.MONGO_URL || "";
-  config.connectMongoDbName = process.env.MONGO_DB_NAME || "";
   config.connectManagementApiKey = process.env.CONNECT_MANAGEMENT_API_KEY || "";
   config.connectProviderUrl = process.env.CONNECT_PROVIDER_URL || "";
   config.connectApplicationClientId =
