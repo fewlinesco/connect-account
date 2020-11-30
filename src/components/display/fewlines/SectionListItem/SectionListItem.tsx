@@ -19,7 +19,11 @@ export const SectionListItem: React.FC<SectionListItemProps> = ({
 
   return (
     <ShadowBox>
-      <Link href={`/account/${sectionName.toLocaleLowerCase()}`} passHref>
+      <Link
+        href={`/account/${sectionName.toLocaleLowerCase()}`}
+        passHref
+        prefetch
+      >
         <Flex>
           {icon}
           <TextBox>
