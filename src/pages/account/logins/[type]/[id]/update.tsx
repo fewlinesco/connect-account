@@ -7,11 +7,9 @@ import { getIdentities } from "@lib/queries/getIdentities";
 import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Layout } from "@src/components/Layout";
-import { UpdateIdentity } from "@src/components/business/UpdateIdentity";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
-import { UpdateIdentityForm } from "@src/components/display/fewlines/UpdateIdentityForm/UpdateIdentityForm";
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
@@ -32,14 +30,14 @@ const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
             "edit",
           ]}
         />
-        <UpdateIdentity identity={identity}>
+        {/* <UpdateIdentity identity={identity}>
           {({ updateIdentity }) => (
             <UpdateIdentityForm
               updateIdentity={updateIdentity}
               currentIdentity={identity}
             />
           )}
-        </UpdateIdentity>
+        </UpdateIdentity> */}
       </Container>
     </Layout>
   );
