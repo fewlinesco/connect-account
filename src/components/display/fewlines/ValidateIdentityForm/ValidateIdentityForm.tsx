@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -45,11 +44,10 @@ export const ValidateIdentityForm: React.FC<{
           type="submit"
         >{`Confirm ${type.toLowerCase()}`}</Button>
       </Form>
-      <Link href="/account/logins" passHref>
-        <NeutralLink>
-          <Button variant={ButtonVariant.SECONDARY}>Discard all changes</Button>
-        </NeutralLink>
-      </Link>
+
+      <NeutralLink href="/account/logins">
+        <Button variant={ButtonVariant.SECONDARY}>Discard all changes</Button>
+      </NeutralLink>
 
       <DidntReceiveCode>Didn&apos;t receive code?</DidntReceiveCode>
       <Button variant={ButtonVariant.SECONDARY}>

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -121,18 +120,21 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
             emailList.map((email: Identity) => {
               return (
                 <div key={email.value}>
-                  <Link
-                    href="/account/logins/[type]/[id]"
-                    as={`/account/logins/${email.type.toLowerCase()}/${
-                      email.id
-                    }`}
-                    passHref
+                  <BoxedLink
+                    primary={email.primary}
+                    status={email.status}
+                    href={{
+                      pathname: "/account/logins/[type]/[id]",
+                      query: {
+                        type: email.type.toLowerCase(),
+                        id: email.id,
+                      },
+                    }}
                   >
-                    <BoxedLink primary={email.primary} status={email.status}>
-                      <p>{email.value}</p>
-                      <RightChevron />
-                    </BoxedLink>
-                  </Link>
+                    <p>{email.value}</p>
+                    <RightChevron />
+                  </BoxedLink>
+
                   {emailList.indexOf(email) < emailList.length - 1 && (
                     <Separator />
                   )}
@@ -150,13 +152,11 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
             />
           </Flex>
         )}
-        <Link href="/account/logins/email/new" passHref>
-          <a>
-            <Button variant={ButtonVariant.SECONDARY}>
-              + Add new email address
-            </Button>
-          </a>
-        </Link>
+        <NeutralLink href="/account/logins/email/new">
+          <Button variant={ButtonVariant.SECONDARY}>
+            + Add new email address
+          </Button>
+        </NeutralLink>
       </IdentitySection>
       <IdentitySection>
         <Timeline />
@@ -168,18 +168,21 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
             phoneList.map((phone: Identity) => {
               return (
                 <div key={phone.value}>
-                  <Link
-                    href="/account/logins/[type]/[id]"
-                    as={`/account/logins/${phone.type.toLowerCase()}/${
-                      phone.id
-                    }`}
-                    passHref
+                  <BoxedLink
+                    primary={phone.primary}
+                    status={phone.status}
+                    href={{
+                      pathname: "/account/logins/[type]/[id]",
+                      query: {
+                        type: phone.type.toLowerCase(),
+                        id: phone.id,
+                      },
+                    }}
                   >
-                    <BoxedLink primary={phone.primary} status={phone.status}>
-                      <p>{phone.value}</p>
-                      <RightChevron />
-                    </BoxedLink>
-                  </Link>
+                    <p>{phone.value}</p>
+                    <RightChevron />
+                  </BoxedLink>
+
                   {phoneList.indexOf(phone) < phoneList.length - 1 && (
                     <Separator />
                   )}
@@ -197,13 +200,11 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
             />
           </Flex>
         )}
-        <Link href="/account/logins/phone/new" passHref>
-          <a>
-            <Button variant={ButtonVariant.SECONDARY}>
-              + Add new phone number
-            </Button>
-          </a>
-        </Link>
+        <NeutralLink href="/account/logins/phone/new">
+          <Button variant={ButtonVariant.SECONDARY}>
+            + Add new phone number
+          </Button>
+        </NeutralLink>
       </IdentitySection>
       <LastIdentitySection>
         <TimelineEnd />
@@ -219,6 +220,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
                     primary={false}
                     status={identity.status}
                     social={true}
+                    href="#"
                   >
                     <SocialIdentityBox>
                       {getSocialIdentityIcon(identity.type)}
@@ -287,9 +289,9 @@ export const BoxedLink = styled(NeutralLink)<
   justify-content: space-between;
 
   ${(props) =>
-    !props.social &&
+    props.social &&
     `
-      cursor: pointer;
+      cursor: default;
     `}
 
   ${(props) =>
