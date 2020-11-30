@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import type { IdentityTypes } from "@lib/@types";
-import { HttpVerbs } from "@src/@types/HttpVerbs";
-import { InMemoryTemporaryIdentity } from "@src/@types/InMemoryTemporaryIdentity";
+import { InMemoryTemporaryIdentity } from "@src/@types/TemporaryIdentity";
+import { HttpVerbs } from "@src/@types/core/HttpVerbs";
 import { ErrorSendingValidationCode } from "@src/clientErrors";
 import { fetchJson } from "@src/utils/fetchJson";
 

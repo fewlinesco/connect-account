@@ -10,6 +10,16 @@ import { ShadowBox } from "@src/components/display/fewlines/ShadowBox/ShadowBox"
 import { AccountApp } from "@src/pages/_app";
 import AccountPage, { WelcomeMessage } from "@src/pages/account/index";
 
+jest.mock("@src/dbClient", () => {
+  return {
+    dynamoDbClient: {
+      send: () => {
+        return;
+      },
+    },
+  };
+});
+
 describe("AccountPage", () => {
   test("should display an H1 with the right text", () => {
     expect.assertions(2);

@@ -8,9 +8,3 @@ export type {
   SendIdentityVerificationCodeInput,
   SendIdentityValidationCodeResult,
 } from "./VerificationCode";
-export type { CommandResult } from "./mongo/Commands";
-export type {
-  oAuth2UserInfo,
-  TemporaryIdentity,
-  MongoUser,
-} from "./mongo/User";

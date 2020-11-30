@@ -2,12 +2,11 @@ import { HttpStatus } from "@fwl/web";
 import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
-import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
-import { findOrInsertUser } from "@src/commands/findOrInsertUser";
+import { getAndPutUser } from "@src/commands/getAndPutUser";
 import { oauth2Client, config } from "@src/config";
 import { withLogger } from "@src/middlewares/withLogger";
-import { withMongoDB } from "@src/middlewares/withMongoDB";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
@@ -20,9 +19,8 @@ const handler: Handler = async (
     const {
       access_token,
       refresh_token,
-      id_token,
     } = await oauth2Client.getTokensFromAuthorizationCode(
-      request.query.code as string,
+      `${request.query.code}`,
     );
 
     const decodedAccessToken = await oauth2Client.verifyJWT<AccessToken>(
@@ -30,18 +28,17 @@ const handler: Handler = async (
       config.connectJwtAlgorithm,
     );
 
-    const oauthUserInfo = {
+    const oAuth2UserInfo = {
       sub: decodedAccessToken.sub,
-      accessToken: access_token,
       refresh_token,
-      id_token,
     };
 
-    const documentId = await findOrInsertUser(oauthUserInfo, request.mongoDb);
+    await getAndPutUser(oAuth2UserInfo);
 
-    request.session.set("user-session-id", documentId);
-    request.session.set("user-sub", decodedAccessToken.sub);
-    request.session.set("user-session", { access_token });
+    request.session.set("user-session", {
+      access_token,
+      sub: decodedAccessToken.sub,
+    });
 
     await request.session.save();
 
@@ -57,7 +54,4 @@ const handler: Handler = async (
   }
 };
 
-export default wrapMiddlewares(
-  [withLogger, withSentry, withMongoDB, withSession],
-  handler,
-);
+export default wrapMiddlewares([withLogger, withSentry, withSession], handler);

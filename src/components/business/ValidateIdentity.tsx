@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 
-import { HttpVerbs } from "@src/@types/HttpVerbs";
+import { HttpVerbs } from "@src/@types/core/HttpVerbs";
 import { ErrorVerifyingValidationCode } from "@src/clientErrors";
 import { fetchJson } from "@src/utils/fetchJson";
 

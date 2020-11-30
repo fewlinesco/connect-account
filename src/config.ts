@@ -4,10 +4,11 @@ type Config = {
   connectAccountURL: string;
   connectAccountTheme: string;
   connectManagementUrl: string;
-  dynamoDbRegion: string;
+  dynamoRegion: string;
   dynamoDbEndpoint: string;
-  connectMongoUrl: string;
-  connectMongoDbName: string;
+  dynamoAccessKeyID: string;
+  dynamoSecretAccessKey: string;
+  dynamoTableName: string;
   connectManagementApiKey: string;
   connectProviderUrl: string;
   connectApplicationClientId: string;
@@ -26,10 +27,11 @@ const config: Config = {
   connectAccountURL: "",
   connectAccountTheme: "",
   connectManagementUrl: "",
-  dynamoDbRegion: "",
+  dynamoRegion: "",
   dynamoDbEndpoint: "",
-  connectMongoUrl: "",
-  connectMongoDbName: "",
+  dynamoAccessKeyID: "",
+  dynamoSecretAccessKey: "",
+  dynamoTableName: "",
   connectManagementApiKey: "",
   connectProviderUrl: "",
   connectApplicationClientId: "",
@@ -51,10 +53,11 @@ function handleEnvVars(): void {
   config.connectAccountURL = appHostname ? `https://${appHostname}` : "";
   config.connectAccountTheme = process.env.CONNECT_ACCOUNT_THEME || "fewlines";
   config.connectManagementUrl = process.env.CONNECT_MANAGEMENT_URL || "";
-  config.dynamoDbRegion = process.env.DYNAMODB_REGION || "";
+  config.dynamoRegion = process.env.DYNAMODB_REGION || "";
   config.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";
-  config.connectMongoUrl = process.env.MONGO_URL || "";
-  config.connectMongoDbName = process.env.MONGO_DB_NAME || "";
+  config.dynamoAccessKeyID = process.env.DYNAMODB_ACCESS_KEY_ID || "";
+  config.dynamoSecretAccessKey = process.env.DYNAMODB_SECRET_ACCESS_KEY || "";
+  config.dynamoTableName = process.env.DYNAMODB_TABLE_NAME || "";
   config.connectManagementApiKey = process.env.CONNECT_MANAGEMENT_API_KEY || "";
   config.connectProviderUrl = process.env.CONNECT_PROVIDER_URL || "";
   config.connectApplicationClientId =
@@ -86,6 +89,23 @@ const oauth2ClientConstructorProps: OAuth2ClientConstructor = {
   redirectURI: config.connectAccountRedirectURI,
   audience: config.connectAudience,
   scopes: config.connectApplicationScopes.split(" "),
+  fetch: (url: string, options: any) => {
+    if (url === config.connectOpenIdConfigurationUrl) {
+      return Promise.resolve({
+        json: () =>
+          Promise.resolve({
+            authorization_endpoint:
+              "https://fewlines.connect.prod.fewlines.tech/oauth/authorize",
+            jwks_uri:
+              "https://fewlines.connect.prod.fewlines.tech/.well-known/jwks.json",
+            scopes_supported: ["openid", "profile", "email", "phone"],
+            token_endpoint:
+              "https://fewlines.connect.prod.fewlines.tech/oauth/token",
+          }),
+      });
+    }
+    return fetch(url, options);
+  },
 };
 
 const oauth2Client = new OAuth2Client(oauth2ClientConstructorProps);

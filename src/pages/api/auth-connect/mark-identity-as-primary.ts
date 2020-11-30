@@ -4,7 +4,6 @@ import { Handler } from "next-iron-session";
 import { markIdentityAsPrimary } from "@lib/commands/markIdentityAsPrimary";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
-import { withMongoDB } from "@src/middlewares/withMongoDB";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
@@ -38,6 +37,6 @@ const handler: Handler = async (request, response) => {
 };
 
 export default wrapMiddlewares(
-  [withLogger, withSentry, withMongoDB, withSession, withAuth],
+  [withLogger, withSentry, withSession, withAuth],
   handler,
 );

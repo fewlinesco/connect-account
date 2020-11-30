@@ -1,21 +1,24 @@
-import { Db } from "mongodb";
+import { PutItemCommandOutput } from "@aws-sdk/client-dynamodb";
 
-import { CommandResult } from "@lib/@types/mongo/Commands";
-import { MongoUser, TemporaryIdentity } from "@lib/@types/mongo/User";
+import { putUser } from "./putUser";
+import { TemporaryIdentity } from "@src/@types/TemporaryIdentity";
+import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
 
 export async function insertTemporaryIdentity(
   sub: string,
   temporaryIdentity: TemporaryIdentity,
-  mongoDb: Db,
-): Promise<CommandResult> {
-  mongoDb.collection("users").createIndex({ sub: 1 });
+): Promise<PutItemCommandOutput> {
+  const user = await getDBUserFromSub(sub);
 
-  const { result } = await mongoDb.collection<MongoUser>("users").updateOne(
-    { sub },
-    {
-      $push: { temporaryIdentities: temporaryIdentity },
-    },
-  );
+  if (user) {
+    const updatedUser = {
+      ...user,
+      temporary_identities: [...user.temporary_identities, temporaryIdentity],
+    };
 
-  return result;
+    return putUser(updatedUser);
+  }
+
+  // TODO: better deal with this error
+  throw new Error("User not found");
 }
