@@ -1,52 +1,54 @@
 import { HttpStatus } from "@fwl/web";
 import { ServerResponse } from "http";
-import { ObjectId } from "mongodb";
 
-import { MongoUser } from "@lib/@types";
 import { refreshTokensFlow } from "@lib/commands/refreshTokensFlow";
-import { ExtendedRequest } from "@src/@types/ExtendedRequest";
-import { Handler } from "@src/@types/Handler";
-import { updateAccessAndRefreshTokens } from "@src/commands/updateAccessAndRefreshTokens";
-import { updateAccessAndRefreshTokens_deprecated } from "@src/commands/updateAccessAndRefreshTokens_deprecated";
+import { DynamoUser } from "@src/@types/DynamoUser";
+import { UserCookie } from "@src/@types/UserCookie";
+import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
+import { Handler } from "@src/@types/core/Handler";
+import { AccessToken } from "@src/@types/oAuth2/OAuth2Tokens";
+import { getAndPutUser } from "@src/commands/getAndPutUser";
 import { oauth2Client, config } from "@src/config";
+import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
 
 export function withAuth(handler: Handler): Handler {
   return async (
     request: ExtendedRequest,
     response: ServerResponse,
   ): Promise<unknown> => {
-    const userDocumentId = request.session.get("user-session-id");
-    const userSession = request.session.get("user-session");
+    const userSession = request.session.get<UserCookie | undefined>(
+      "user-session",
+    );
 
-    const user = await request.mongoDb.collection("users").findOne<MongoUser>({
-      _id: new ObjectId(userDocumentId),
-    });
-
-    if (userSession && user) {
+    if (userSession) {
       try {
+        const { access_token: currentAccessToken, sub } = userSession;
+        const user = await getDBUserFromSub(sub);
+
         await oauth2Client
-          .verifyJWT<{ sub: string }>(
-            userSession.access_token,
+          .verifyJWT<AccessToken>(
+            currentAccessToken,
             config.connectJwtAlgorithm,
           )
           .catch(async (error) => {
             if (error.name === "TokenExpiredError") {
-              const { refresh_token, access_token } = await refreshTokensFlow(
-                user.refresh_token,
-              );
+              if (user) {
+                const { refresh_token, access_token } = await refreshTokensFlow(
+                  user.refresh_token as string,
+                );
 
-              const { sub } = await oauth2Client.verifyJWT<{
-                sub: string;
-              }>(userSession.access_token, config.connectJwtAlgorithm);
+                const { sub } = await oauth2Client.verifyJWT<AccessToken>(
+                  userSession.access_token,
+                  config.connectJwtAlgorithm,
+                );
 
-              await updateAccessAndRefreshTokens(sub, refresh_token);
+                // Update access_token
+                // request.session
 
-              await updateAccessAndRefreshTokens_deprecated(
-                request.mongoDb,
-                userDocumentId,
-                access_token,
-                refresh_token,
-              );
+                await getAndPutUser({ sub, refresh_token }, user as DynamoUser);
+              } else {
+                throw new Error("No user found");
+              }
             } else {
               throw error;
             }

@@ -4,7 +4,7 @@ import React from "react";
 
 import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentity } from "@lib/queries/getIdentity";
-import { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { NoIdentityFound } from "@src/clientErrors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";

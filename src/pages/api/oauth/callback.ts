@@ -2,8 +2,8 @@ import { HttpStatus } from "@fwl/web";
 import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
-import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
-import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
+import type { AccessToken } from "@src/@types/oAuth2/OAuth2Tokens";
 import { findOrInsertUser_deprecated } from "@src/commands/findOrInsertUser_deprecated";
 import { getAndPutUser } from "@src/commands/getAndPutUser";
 import { oauth2Client, config } from "@src/config";
@@ -52,8 +52,10 @@ const handler: Handler = async (
     await getAndPutUser(oAuth2UserInfo);
 
     request.session.set("user-session-id", documentId);
-    request.session.set("user-sub", decodedAccessToken.sub);
-    request.session.set("user-session", { access_token });
+    request.session.set("user-session", {
+      access_token,
+      sub: decodedAccessToken.sub,
+    });
 
     await request.session.save();
 

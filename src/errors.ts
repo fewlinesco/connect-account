@@ -1,7 +1,7 @@
 import { HttpStatus, WebError, WebErrorMessages } from "@fwl/web";
 import { GraphQLError } from "graphql";
 
-import type { OAuth2Errors } from "./@types/OAuth2Errors";
+import type { OAuth2Errors } from "./@types/oAuth2/OAuth2Errors";
 
 const Errors: WebErrorMessages = {
   OAUTH2_ERROR: { code: 503001, message: "OAuth2Client Error" },

@@ -2,7 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import { Handler } from "next-iron-session";
 
 import { sendIdentityValidationCode } from "@lib/commands/sendIdentityValidationCode";
-import { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { insertTemporaryIdentity } from "@src/commands/insertTemporaryIdentity";
 import { GraphqlErrors, MongoNoDataReturned } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";

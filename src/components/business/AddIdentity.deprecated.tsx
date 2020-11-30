@@ -1,7 +1,7 @@
 import React from "react";
 
 import type { IdentityTypes } from "@lib/@types";
-import { HttpVerbs } from "@src/@types/HttpVerbs";
+import { HttpVerbs } from "@src/@types/core/HttpVerbs";
 import { useCookies } from "@src/hooks/useCookies";
 import { fetchJson } from "@src/utils/fetchJson";
 

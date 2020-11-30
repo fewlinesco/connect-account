@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { Identity } from "@lib/@types";
-import { HttpVerbs } from "@src/@types/HttpVerbs";
+import { HttpVerbs } from "@src/@types/core/HttpVerbs";
 import { fetchJson } from "@src/utils/fetchJson";
 
 interface MarkIdentityAsPrimaryProps {

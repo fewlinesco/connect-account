@@ -2,7 +2,7 @@ import type { GetServerSideProps } from "next";
 import React from "react";
 
 import { isUserPasswordSet } from "@lib/queries/isUserPasswordSet";
-import { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { H1 } from "@src/components/display/fewlines/H1/H1";

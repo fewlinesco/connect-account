@@ -3,7 +3,7 @@ import { Handler } from "next-iron-session";
 
 import { checkVerificationCode } from "@lib/queries/checkVerificationCode";
 import { getTemporaryIdentities } from "@lib/queries/getTemporaryIdentities";
-import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { addIdentityToUser } from "@src/commands/addIdentityToUser";
 import { MongoNoDataReturned, TemporaryIdentityExpired } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";

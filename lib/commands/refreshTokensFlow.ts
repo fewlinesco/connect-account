@@ -1,5 +1,5 @@
-import { HttpVerbs } from "@src/@types/HttpVerbs";
-import { RefreshTokenResponse } from "@src/@types/oauth2/OAuth2Tokens";
+import { HttpVerbs } from "@src/@types/core/HttpVerbs";
+import { RefreshTokenResponse } from "@src/@types/oAuth2/OAuth2Tokens";
 import { oauth2Client, config } from "@src/config";
 import { fetchJson } from "@src/utils/fetchJson";
 

@@ -4,7 +4,7 @@ import type { NextApiResponse } from "next";
 import type { Handler } from "next-iron-session";
 
 import { createOrUpdatePassword } from "@lib/commands/createOrUpdatePassword";
-import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withMongoDB } from "@src/middlewares/withMongoDB";

@@ -1,6 +1,7 @@
 import { PutItemCommandOutput } from "@aws-sdk/client-dynamodb";
 
 import { putUser } from "./putUser";
+import { DynamoUser } from "@src/@types/DynamoUser";
 import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
 
 type OAuth2UserInfo = {
@@ -9,12 +10,14 @@ type OAuth2UserInfo = {
   id_token?: string;
 };
 
-export async function getAndPutUser({
-  sub,
-  refresh_token,
-  id_token,
-}: OAuth2UserInfo): Promise<PutItemCommandOutput> {
-  const inDBUser = await getDBUserFromSub(sub);
+// TODO: Handle id_token in user
+export async function getAndPutUser(
+  { sub, refresh_token, id_token }: OAuth2UserInfo,
+  currentUserData?: DynamoUser,
+): Promise<PutItemCommandOutput> {
+  const inDBUser = currentUserData
+    ? currentUserData
+    : await getDBUserFromSub(sub);
 
   if (!inDBUser) {
     const user = {
