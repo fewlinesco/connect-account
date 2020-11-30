@@ -13,7 +13,7 @@ import LoginsOverviewPage from "@src/pages/account/logins";
 
 Object.defineProperty(window.document, "cookie", {
   writable: true,
-  value: "message=Email address has been deleted",
+  value: "flashMessage=Email address has been deleted",
 });
 
 jest.mock("@src/config", () => {

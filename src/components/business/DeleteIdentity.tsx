@@ -45,15 +45,10 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
   const deleteIdentity = async (): Promise<void> => {
     return fetchJson("/api/delete-identity", HttpVerbs.DELETE, requestData)
       .then(() => {
-        Cookie.set("message", deleteMessage);
+        Cookie.set("flashMessage", deleteMessage);
       })
       .then(() => {
         router && router.push("/account/logins");
-      })
-      .then(() => {
-        setTimeout(() => {
-          Cookie.remove("message");
-        }, 3000);
       })
       .catch((error: Error) => {
         throw error;
