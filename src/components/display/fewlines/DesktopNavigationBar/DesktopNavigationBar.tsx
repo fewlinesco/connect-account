@@ -15,26 +15,26 @@ export const DesktopNavigationBar: React.FC = () => {
   return (
     <Bar>
       <Header />
-      <Link href="/account" passHref prefetch>
+      <Link href="/account" passHref>
         <ListItem>
           <HomeIcon />
           <ListLabel>Home</ListLabel>
         </ListItem>
       </Link>
-      <Link href="/account/logins" passHref prefetch>
+      <Link href="/account/logins" passHref>
         <ListItem>
           <KeyIcon />
           <ListLabel>Logins</ListLabel>
         </ListItem>
       </Link>
-      <Link href="/account/security" passHref prefetch>
+      <Link href="/account/security" passHref>
         <ListItem>
           <LockIcon />
           <ListLabel>Security</ListLabel>
         </ListItem>
       </Link>
       <Separator />
-      <Link href="/account/locale" passHref prefetch>
+      <Link href="/account/locale" passHref>
         <SwitchLanguageItem>
           <SwitchLanguageLabel>
             <BlackWorldIcon />
