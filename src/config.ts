@@ -95,12 +95,10 @@ const oauth2ClientConstructorProps: OAuth2ClientConstructor = {
         json: () =>
           Promise.resolve({
             authorization_endpoint:
-              "https://fewlines.connect.prod.fewlines.tech/oauth/authorize",
-            jwks_uri:
-              "https://fewlines.connect.prod.fewlines.tech/.well-known/jwks.json",
+              "https://connect.decathlon.com/oauth/authorize",
+            jwks_uri: "https://connect.decathlon.com/.well-known/jwks.json",
             scopes_supported: ["openid", "profile", "email", "phone"],
-            token_endpoint:
-              "https://fewlines.connect.prod.fewlines.tech/oauth/token",
+            token_endpoint: "https://connect.decathlon.com/oauth/token",
           }),
       });
     }
