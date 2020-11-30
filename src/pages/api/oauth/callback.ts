@@ -3,7 +3,7 @@ import { NextApiResponse } from "next";
 import { Handler } from "next-iron-session";
 
 import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
-import type { AccessToken } from "@src/@types/oAuth2/OAuth2Tokens";
+import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { getAndPutUser } from "@src/commands/getAndPutUser";
 import { oauth2Client, config } from "@src/config";
 import { withLogger } from "@src/middlewares/withLogger";

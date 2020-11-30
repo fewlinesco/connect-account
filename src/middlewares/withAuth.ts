@@ -5,7 +5,7 @@ import { refreshTokensFlow } from "@lib/commands/refreshTokensFlow";
 import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Handler } from "@src/@types/core/Handler";
-import { AccessToken } from "@src/@types/oAuth2/OAuth2Tokens";
+import { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { getAndPutUser } from "@src/commands/getAndPutUser";
 import { oauth2Client, config } from "@src/config";
 import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
