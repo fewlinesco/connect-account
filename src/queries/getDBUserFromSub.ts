@@ -1,8 +1,8 @@
 import { GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 
-import { TemporaryIdentity } from "@lib/@types";
 import { DynamoUser } from "@src/@types/DynamoUser";
+import { TemporaryIdentity } from "@src/@types/TemporaryIdentity";
 import { config } from "@src/config";
 import { dynamoDbClient } from "@src/dbClient";
 
