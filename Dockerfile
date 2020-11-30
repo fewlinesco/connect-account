@@ -11,7 +11,7 @@ RUN yarn install
 
 COPY . .
 
-RUN NEXT_TELEMETRY_DISABLED=1 yarn build 
+RUN NEXT_TELEMETRY_DISABLED=1 DYNAMODB_REGION="eu-west-3" yarn build 
 
 FROM node:14.8.0-alpine
 
