@@ -28,6 +28,8 @@ export function getIdentityType(type: string): IdentityTypes {
       return IdentityTypes.VKONTAKTE;
     case "MICROSOFT":
       return IdentityTypes.MICROSOFT;
+    case "PROVIDER":
+      return IdentityTypes.PROVIDER;
     default:
       throw new Error(`Can't deal with identity type ${type}`);
   }
