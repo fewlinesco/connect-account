@@ -51,7 +51,7 @@ function handleEnvVars(): void {
     process.env.VERCEL_URL || process.env.CONNECT_ACCOUNT_HOSTNAME;
 
   config.connectAccountURL = appHostname ? `https://${appHostname}` : "";
-  config.connectAccountTheme = process.env.CONNECT_ACCOUNT_THEME || "fewlines";
+  config.connectAccountTheme = process.env.CONNECT_ACCOUNT_THEME || "decathlon";
   config.connectManagementUrl = process.env.CONNECT_MANAGEMENT_URL || "";
   config.dynamoRegion = process.env.DYNAMODB_REGION || "";
   config.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";
