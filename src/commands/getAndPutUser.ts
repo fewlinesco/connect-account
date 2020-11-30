@@ -10,9 +10,8 @@ type OAuth2UserInfo = {
   id_token?: string;
 };
 
-// TODO: Handle id_token in user
 export async function getAndPutUser(
-  { sub, refresh_token, id_token }: OAuth2UserInfo,
+  { sub, refresh_token }: OAuth2UserInfo,
   currentUserData?: DynamoUser,
 ): Promise<PutItemCommandOutput> {
   const inDBUser = currentUserData
@@ -25,7 +24,7 @@ export async function getAndPutUser(
       refresh_token,
     };
 
-    return id_token ? putUser({ ...user, id_token }) : putUser(user);
+    return putUser(user);
   }
 
   const user = {
@@ -34,5 +33,5 @@ export async function getAndPutUser(
     refresh_token,
   };
 
-  return id_token ? putUser({ ...user, id_token }) : putUser(user);
+  return putUser(user);
 }

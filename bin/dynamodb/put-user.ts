@@ -27,7 +27,6 @@ export async function putUser(userData: {
 const Item = {
   sub: "sub",
   refresh_token: "refresh_token",
-  id_token: "id_token",
   temporary_identities: [
     {
       event_id: "event_id",

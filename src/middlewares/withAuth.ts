@@ -2,7 +2,6 @@ import { HttpStatus } from "@fwl/web";
 import { ServerResponse } from "http";
 
 import { refreshTokensFlow } from "@lib/commands/refreshTokensFlow";
-import { DynamoUser } from "@src/@types/DynamoUser";
 import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Handler } from "@src/@types/core/Handler";
@@ -23,7 +22,6 @@ export function withAuth(handler: Handler): Handler {
     if (userSession) {
       try {
         const { access_token: currentAccessToken, sub } = userSession;
-        const user = await getDBUserFromSub(sub);
 
         await oauth2Client
           .verifyJWT<AccessToken>(
@@ -32,20 +30,24 @@ export function withAuth(handler: Handler): Handler {
           )
           .catch(async (error) => {
             if (error.name === "TokenExpiredError") {
+              const user = await getDBUserFromSub(sub);
+
               if (user) {
                 const { refresh_token, access_token } = await refreshTokensFlow(
-                  user.refresh_token as string,
+                  user.refresh_token,
                 );
 
                 const { sub } = await oauth2Client.verifyJWT<AccessToken>(
-                  userSession.access_token,
+                  access_token,
                   config.connectJwtAlgorithm,
                 );
 
-                // Update access_token
-                // request.session
+                request.session.set<UserCookie>("user-session", {
+                  access_token,
+                  sub,
+                });
 
-                await getAndPutUser({ sub, refresh_token }, user as DynamoUser);
+                await getAndPutUser({ sub, refresh_token }, user);
               } else {
                 throw new Error("No user found");
               }

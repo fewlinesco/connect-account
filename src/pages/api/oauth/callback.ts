@@ -46,7 +46,6 @@ const handler: Handler = async (
     const oAuth2UserInfo = {
       sub: decodedAccessToken.sub,
       refresh_token,
-      id_token,
     };
 
     await getAndPutUser(oAuth2UserInfo);

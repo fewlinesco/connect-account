@@ -1,12 +1,14 @@
 import { GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 
+import { TemporaryIdentity } from "@lib/@types";
+import { DynamoUser } from "@src/@types/DynamoUser";
 import { config } from "@src/config";
 import { dynamoDbClient } from "@src/dbClient";
 
 export async function getDBUserFromSub(
   sub: string,
-): Promise<Record<string, unknown> | null> {
+): Promise<DynamoUser | null> {
   try {
     const getItem = {
       TableName: config.dynamoTableName,
@@ -18,7 +20,14 @@ export async function getDBUserFromSub(
     const { Item } = await dynamoDbClient.send(new GetItemCommand(getItem));
 
     if (Item) {
-      return unmarshall(Item);
+      const { sub, refresh_token, temporary_identities } = unmarshall(Item);
+      return {
+        sub: sub as string,
+        refresh_token: refresh_token as string,
+        temporary_identities: temporary_identities
+          ? (temporary_identities as TemporaryIdentity[])
+          : [],
+      };
     }
 
     return null;
