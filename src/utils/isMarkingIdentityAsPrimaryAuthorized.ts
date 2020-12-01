@@ -5,7 +5,6 @@ export async function isMarkingIdentityAsPrimaryAuthorized(
   identityId: string,
 ): Promise<boolean> {
   const managementResponse = await getIdentities(sub);
-  console.log(managementResponse);
 
   const identities = managementResponse.data?.provider.user.identities;
 
