@@ -2,7 +2,6 @@ import { HttpStatus } from "@fwl/web";
 import { Handler } from "next-iron-session";
 
 import { markIdentityAsPrimary } from "@lib/commands/markIdentityAsPrimary";
-import { getIdentities } from "@lib/queries/getIdentities";
 import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { withAuth } from "@src/middlewares/withAuth";
@@ -10,6 +9,7 @@ import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
+import { isMarkingIdentityAsPrimaryAuthorized } from "@src/utils/isMarkingIdentityAsPrimaryAuthorized";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 const handler: Handler = async (request: ExtendedRequest, response) => {
@@ -22,12 +22,11 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
       const userCookie = request.session.get<UserCookie>(
         "user-session",
       ) as UserCookie;
-      const managementResponse = await getIdentities(userCookie.sub);
-      const identities = managementResponse.data?.provider.user.identities;
 
-      const isAuthorized = identities
-        ? identities.some((identity) => identity.id === identityId)
-        : false;
+      const isAuthorized = await isMarkingIdentityAsPrimaryAuthorized(
+        userCookie.sub,
+        identityId,
+      );
 
       if (isAuthorized) {
         return markIdentityAsPrimary(identityId).then((data) => {
@@ -37,7 +36,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
         });
       }
 
-      response.statusCode = HttpStatus.FORBIDDEN;
+      response.statusCode = HttpStatus.BAD_REQUEST;
       return response.end();
     }
   } catch (error) {
