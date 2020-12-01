@@ -4,7 +4,8 @@ import React from "react";
 
 import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentity } from "@lib/queries/getIdentity";
-import { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { UserCookie } from "@src/@types/UserCookie";
+import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { NoIdentityFound } from "@src/clientErrors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
@@ -13,11 +14,9 @@ import { NavigationBreadcrumbs } from "@src/components/display/fewlines/Navigati
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
-import { withMongoDB } from "@src/middlewares/withMongoDB";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
-import { getUser } from "@src/utils/getUser";
 
 const IdentityOverviewPage: React.FC<{ identity: Identity }> = ({
   identity,
@@ -46,7 +45,7 @@ export default IdentityOverviewPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return wrapMiddlewaresForSSR<{ type: string }>(
     context,
-    [withLogger, withSentry, withMongoDB, withSession, withAuth],
+    [withLogger, withSentry, withSession, withAuth],
     async (request: ExtendedRequest, response: ServerResponse) => {
       if (!context?.params?.id) {
         response.statusCode = 400;
@@ -54,11 +53,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return;
       }
 
-      const user = await getUser(request.headers.cookie as string);
+      const userSession = request.session.get<UserCookie>("user-session");
 
-      if (user) {
+      if (userSession) {
         const identity = await getIdentity(
-          user.sub,
+          userSession.sub,
           context.params.id.toString(),
         ).then((result) => {
           if (result.errors) {

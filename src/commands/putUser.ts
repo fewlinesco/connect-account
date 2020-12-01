@@ -1,26 +1,18 @@
-import { PutItemCommand } from "@aws-sdk/client-dynamodb";
+import { PutItemCommand, PutItemCommandOutput } from "@aws-sdk/client-dynamodb";
+import { marshall, NativeAttributeValue } from "@aws-sdk/util-dynamodb";
 
-import { dynamoDbClient } from "../dbClient";
+import { config } from "@src/config";
+import { dynamoDbClient } from "@src/dbClient";
 
-export type DbUser = {
-  sub: {
-    S: string;
+export async function putUser(userData: {
+  [key: string]: NativeAttributeValue;
+}): Promise<PutItemCommandOutput> {
+  const params = {
+    TableName: config.dynamoTableName,
+    Item: marshall(userData),
   };
-};
 
-export async function putUser(Item: DbUser): Promise<void> {
-  try {
-    const params = {
-      TableName: "users",
-      Item,
-    };
+  const itemCommand = new PutItemCommand(params);
 
-    const itemCommand = new PutItemCommand(params);
-
-    const data = await dynamoDbClient.send(itemCommand);
-
-    console.log("Put command succeed.\nData sent back:", data);
-  } catch (error) {
-    console.error("Put command failed:", error);
-  }
+  return dynamoDbClient.send(itemCommand);
 }

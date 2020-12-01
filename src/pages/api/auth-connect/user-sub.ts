@@ -2,10 +2,10 @@ import { HttpStatus } from "@fwl/web";
 import type { NextApiResponse } from "next";
 import type { Handler } from "next-iron-session";
 
-import type { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { UserCookie } from "@src/@types/UserCookie";
+import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
-import { withMongoDB } from "@src/middlewares/withMongoDB";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
@@ -15,10 +15,10 @@ const handler: Handler = async (
   response: NextApiResponse,
 ): Promise<void> => {
   if (request.method === "GET") {
-    const userSub = request.session.get("user-sub");
+    const userSession = request.session.get<UserCookie>("user-session");
 
-    if (userSub) {
-      response.json({ userSub });
+    if (userSession) {
+      response.json({ userSub: userSession.sub });
     } else {
       response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
         Location: "/",
@@ -32,6 +32,6 @@ const handler: Handler = async (
 };
 
 export default wrapMiddlewares(
-  [withLogger, withSentry, withMongoDB, withSession, withAuth],
+  [withLogger, withSentry, withSession, withAuth],
   handler,
 );

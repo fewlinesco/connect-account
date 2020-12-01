@@ -36,6 +36,16 @@ jest.mock("@src/config", () => {
   };
 });
 
+jest.mock("@src/dbClient", () => {
+  return {
+    dynamoDbClient: {
+      send: () => {
+        return;
+      },
+    },
+  };
+});
+
 (useCookies as any).mockImplementation(() => {
   return {
     data: {

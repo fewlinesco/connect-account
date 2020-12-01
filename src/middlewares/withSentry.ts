@@ -1,7 +1,7 @@
 import { ServerResponse } from "http";
 
-import { ExtendedRequest } from "@src/@types/ExtendedRequest";
-import { Handler } from "@src/@types/Handler";
+import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
+import { Handler } from "@src/@types/core/Handler";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 export function withSentry(handler: Handler): Handler {
