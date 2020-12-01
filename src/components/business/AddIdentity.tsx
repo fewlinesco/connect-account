@@ -32,6 +32,10 @@ export const AddIdentity: React.FC<AddIdentityProps> = ({ type, children }) => {
         body,
       ).then((response) => {
         if (response.status >= 400) {
+          if (response.statusText === "identity_already_validated") {
+            return "Identity already used";
+          }
+
           throw new ErrorSendingValidationCode();
         }
 
