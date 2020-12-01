@@ -25,7 +25,9 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
       const managementResponse = await getIdentities(userCookie.sub);
       const identities = managementResponse.data?.provider.user.identities;
 
-      const isAuthorized = identities ? identities.includes(identityId) : false;
+      const isAuthorized = identities
+        ? identities.some((identity) => identity.id === identityId)
+        : false;
 
       if (isAuthorized) {
         return markIdentityAsPrimary(identityId).then((data) => {
@@ -36,7 +38,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
       }
 
       response.statusCode = HttpStatus.FORBIDDEN;
-      response.end();
+      return response.end();
     }
   } catch (error) {
     Sentry.withScope((scope) => {
