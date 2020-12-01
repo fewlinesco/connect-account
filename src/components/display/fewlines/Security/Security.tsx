@@ -13,7 +13,7 @@ type SecurityProps = {
 export const Security: React.FC<SecurityProps> = ({ isPasswordSet }) => {
   return (
     <>
-      <h3>Password</h3>
+      <h2>Password</h2>
       <ShadowBox>
         <Link href="/account/security/update" passHref>
           <Flex>

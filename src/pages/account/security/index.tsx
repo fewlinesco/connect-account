@@ -23,7 +23,7 @@ const SecurityPage: React.FC<SecurityPageProps> = ({ isPasswordSet }) => {
     <Layout>
       <Container>
         <h1>Security</h1>
-        <h2>Password, login history and more</h2>
+        <h3>Password, login history and more</h3>
         <Security isPasswordSet={isPasswordSet} />
       </Container>
     </Layout>
