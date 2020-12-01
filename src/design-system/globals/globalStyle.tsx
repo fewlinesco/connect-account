@@ -45,14 +45,14 @@ export const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
 		padding: 2.4rem 0 ${({ theme }) => theme.spaces.xxs};
 	}
 	h2 {
-		font-size: ${({ theme }) => theme.fontSizes.s};
-		font-weight: ${({ theme }) => theme.fontWeights.normal};
-		color: ${({ theme }) => theme.colors.breadcrumbs};
-		margin: 0 0 ${({ theme }) => theme.spaces.s} 0;
+		font-size: ${({ theme }) => theme.fontSizes.h2};
+		margin: 0 0 ${({ theme }) => theme.spaces.xxs} 0;
 	}
 	h3 {
 		font-size: ${({ theme }) => theme.fontSizes.h3};
-		margin: 0 0 ${({ theme }) => theme.spaces.xxs} 0;
+		font-weight: ${({ theme }) => theme.fontWeights.normal};
+		color: ${({ theme }) => theme.colors.breadcrumbs};
+		margin: 0 0 ${({ theme }) => theme.spaces.s} 0;
 	}
 
 	p {

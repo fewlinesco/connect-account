@@ -27,7 +27,7 @@ const LoginsOverviewPage: React.FC<LoginsOverviewPageProps> = ({
     <Layout>
       <Container>
         <h1>Logins</h1>
-        <h2>Your emails, phones and social logins</h2>
+        <h3>Your emails, phones and social logins</h3>
         <LoginsOverview sortedIdentities={sortedIdentities} />
       </Container>
     </Layout>

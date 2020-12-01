@@ -113,7 +113,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
     <Container>
       <IdentitySection>
         <Timeline />
-        <h3>Email addresses</h3>
+        <h2>Email addresses</h2>
         <ShadowBox>
           {emailIdentities.length === 0 ? (
             <NoIdentitiesBox>No emails added yet.</NoIdentitiesBox>
@@ -160,7 +160,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
       </IdentitySection>
       <IdentitySection>
         <Timeline />
-        <h3>Phone numbers</h3>
+        <h2>Phone numbers</h2>
         <ShadowBox>
           {phoneIdentities.length === 0 ? (
             <NoIdentitiesBox>No phone number added yet.</NoIdentitiesBox>
@@ -207,7 +207,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
       </IdentitySection>
       <LastIdentitySection>
         <TimelineEnd />
-        <h3>Social logins</h3>
+        <h2>Social logins</h2>
         <ShadowBox>
           {socialIdentities.length === 0 ? (
             <NoIdentitiesBox>No social logins added yet.</NoIdentitiesBox>
