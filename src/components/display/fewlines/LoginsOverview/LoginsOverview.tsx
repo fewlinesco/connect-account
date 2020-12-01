@@ -32,8 +32,6 @@ type LoginsOverviewProps = {
   sortedIdentities: SortedIdentities;
 };
 
-type BoxedLinkProps = Pick<Identity, "primary" | "status">;
-
 export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
   sortedIdentities,
 }) => {
@@ -279,9 +277,11 @@ export const NoIdentitiesBox = styled.p`
   padding: 0 2rem;
 `;
 
-export const BoxedLink = styled(NeutralLink)<
-  BoxedLinkProps & { social?: boolean }
->`
+type BoxedLinkProps = Pick<Identity, "primary" | "status"> & {
+  social?: boolean;
+};
+
+export const BoxedLink = styled(NeutralLink)<BoxedLinkProps>`
   height: 7.2rem;
   padding: 0 ${({ theme }) => theme.spaces.xs};
   display: flex;
