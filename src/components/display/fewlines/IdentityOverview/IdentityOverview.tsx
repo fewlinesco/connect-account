@@ -22,9 +22,10 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
     false,
   );
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
-  const [confirmationBoxContent, setConfirmationBoxContent] = React.useState<
-    JSX.Element
-  >(<React.Fragment />);
+  const [
+    confirmationBoxContent,
+    setConfirmationBoxContent,
+  ] = React.useState<JSX.Element>(<React.Fragment />);
 
   const { id, primary, status, type, value } = identity;
 
