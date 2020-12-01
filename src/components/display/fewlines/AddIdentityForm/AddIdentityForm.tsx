@@ -5,7 +5,7 @@ import { Form } from "../Form/Form";
 import { Input } from "../Input/Input";
 import { NeutralLink } from "../NeutralLink";
 import { IdentityTypes } from "@lib/@types";
-import { InMemoryTemporaryIdentity } from "@src/@types/InMemoryTemporaryIdentity";
+import { InMemoryTemporaryIdentity } from "@src/@types/TemporaryIdentity";
 
 type AddIdentityFormProps = {
   type: IdentityTypes;

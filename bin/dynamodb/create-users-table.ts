@@ -1,9 +1,10 @@
 import { CreateTableCommand } from "@aws-sdk/client-dynamodb";
 
-import { dynamoDbClient } from "../dbClient";
+import { config } from "../../src/config";
+import { dynamoDbClient } from "../../src/dbClient";
 
 const usersTableSchema = {
-  TableName: "users",
+  TableName: config.dynamoTableName,
   KeySchema: [{ AttributeName: "sub", KeyType: "HASH" }],
   AttributeDefinitions: [{ AttributeName: "sub", AttributeType: "S" }],
   ProvisionedThroughput: {

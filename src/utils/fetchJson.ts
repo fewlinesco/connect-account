@@ -1,4 +1,4 @@
-import type { Method } from "@src/@types/Method";
+import type { Method } from "@src/@types/core/Method";
 
 export function fetchJson(
   endpoint: string,

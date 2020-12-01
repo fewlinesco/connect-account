@@ -22,6 +22,16 @@ jest.mock("@src/config", () => {
   };
 });
 
+jest.mock("@src/dbClient", () => {
+  return {
+    dynamoDbClient: {
+      send: () => {
+        return;
+      },
+    },
+  };
+});
+
 describe("LoginsOverviewPage", () => {
   describe("Boxedlink", () => {
     test("it should display email, phone and social identities when there are one of each", () => {

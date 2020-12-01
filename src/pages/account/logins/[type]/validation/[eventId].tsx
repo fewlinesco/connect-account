@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { IdentityTypes } from "@lib/@types/Identity";
-import { ExtendedRequest } from "@src/@types/ExtendedRequest";
+import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Layout } from "@src/components/Layout";
 import { ValidateIdentity } from "@src/components/business/ValidateIdentity";
 import { Container } from "@src/components/display/fewlines/Container";
@@ -12,7 +12,6 @@ import { NavigationBreadcrumbs } from "@src/components/display/fewlines/Navigati
 import { ValidateIdentityForm } from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
-import { withMongoDB } from "@src/middlewares/withMongoDB";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
@@ -51,7 +50,7 @@ export default ValidateIdentityPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return wrapMiddlewaresForSSR<{ type: string }>(
     context,
-    [withLogger, withSentry, withMongoDB, withSession, withAuth],
+    [withLogger, withSentry, withSession, withAuth],
     async (request: ExtendedRequest, response: ServerResponse) => {
       if (!context?.params?.type) {
         response.statusCode = 400;

@@ -16,6 +16,16 @@ jest.mock("@src/config", () => {
   };
 });
 
+jest.mock("@src/dbClient", () => {
+  return {
+    dynamoDbClient: {
+      send: () => {
+        return;
+      },
+    },
+  };
+});
+
 describe("LocalePage", () => {
   test("it shoud render an input", () => {
     const component = mount(
