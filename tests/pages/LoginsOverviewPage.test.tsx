@@ -1,3 +1,5 @@
+jest.mock("@src/utils/getFlashMessage");
+
 import { mount } from "enzyme";
 import React from "react";
 
@@ -10,11 +12,7 @@ import { NeutralLink } from "@src/components/display/fewlines/NeutralLink";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
 import { AccountApp } from "@src/pages/_app";
 import LoginsOverviewPage from "@src/pages/account/logins";
-
-Object.defineProperty(window.document, "cookie", {
-  writable: true,
-  value: "flashMessage=Email address has been deleted",
-});
+import { getFlashMessage } from "@src/utils/getFlashMessage";
 
 jest.mock("@src/config", () => {
   return {
@@ -33,6 +31,10 @@ jest.mock("@src/dbClient", () => {
       },
     },
   };
+});
+
+(getFlashMessage as any).mockImplementation(() => {
+  return "Email address has been deleted";
 });
 
 describe("LoginsOverviewPage", () => {
