@@ -204,11 +204,11 @@ describe("LoginsOverviewPage", () => {
       );
 
       const h1 = component.contains(<h1>Logins</h1>);
-      const h2 = component.contains(
-        <h2>Your emails, phones and social logins</h2>,
+      const h3 = component.contains(
+        <h3>Your emails, phones and social logins</h3>,
       );
       expect(h1).toBe(true);
-      expect(h2).toBe(true);
+      expect(h3).toBe(true);
     });
   });
 
