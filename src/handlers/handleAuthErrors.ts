@@ -1,4 +1,3 @@
-// import { ResourceNotFoundException } from "@aws-sdk/client-dynamodb";
 import { HttpStatus } from "@fwl/web";
 import { ServerResponse } from "http";
 
@@ -18,7 +17,7 @@ export async function handleAuthErrors(
 ): Promise<void> {
   if (error.name === "TokenExpiredError") {
     const user = await getDBUserFromSub(sub);
-
+    console.log({ user });
     if (user) {
       const { refresh_token, access_token } = await refreshTokensFlow(
         user.refresh_token,
