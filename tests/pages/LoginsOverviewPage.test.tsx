@@ -8,6 +8,7 @@ import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { H2 } from "@src/components/display/fewlines/H2/H2";
 import { NoIdentitiesBox } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
 import { BoxedLink } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
+import { NeutralLink } from "@src/components/display/fewlines/NeutralLink";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
 import { AccountApp } from "@src/pages/_app";
 import LoginsOverviewPage from "@src/pages/account/logins";
@@ -234,8 +235,8 @@ describe("LoginsOverviewPage", () => {
       </AccountApp>,
     );
 
-    const link = component.find(Link).find({
-      as: "/account/logins/phone/8f79dcc1-530b-4982-878d-33f0def6a7cf",
+    const link = component.find(NeutralLink).find("a").find({
+      href: "/account/logins/phone/8f79dcc1-530b-4982-878d-33f0def6a7cf",
     });
 
     expect(link).toHaveLength(1);
@@ -261,8 +262,8 @@ describe("LoginsOverviewPage", () => {
       </AccountApp>,
     );
 
-    const link = component.find(Link).find({
-      as: "/account/logins/email/8f79dcc1-530b-4982-878d-33f0def6a7cf",
+    const link = component.find(NeutralLink).find("a").find({
+      href: "/account/logins/email/8f79dcc1-530b-4982-878d-33f0def6a7cf",
     });
 
     expect(link).toHaveLength(1);

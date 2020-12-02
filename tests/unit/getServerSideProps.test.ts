@@ -1,7 +1,6 @@
 import { HttpStatus } from "@fwl/web";
 import { IncomingMessage, ServerResponse } from "http";
-import fetch from "jest-fetch-mock";
-import { enableFetchMocks } from "jest-fetch-mock";
+import fetch, { enableFetchMocks } from "jest-fetch-mock";
 import { Socket } from "net";
 import { GetServerSidePropsContext } from "next";
 import { ParsedUrlQuery } from "querystring";
