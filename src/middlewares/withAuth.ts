@@ -19,6 +19,8 @@ export function withAuth(handler: Handler): Handler {
     );
 
     if (userSession) {
+      console.log(userSession);
+
       const { access_token: currentAccessToken, sub } = userSession;
 
       try {
