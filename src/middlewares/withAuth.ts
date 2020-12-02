@@ -6,8 +6,8 @@ import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Handler } from "@src/@types/core/Handler";
 import { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { oauth2Client, config } from "@src/config";
+import { handleAuthErrors } from "@src/handlers/handleAuthErrors";
 import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
-import { handleAuthErrors } from "@src/utils/handleAuthErrors";
 
 export function withAuth(handler: Handler): Handler {
   return async (
