@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -15,18 +14,16 @@ export const Security: React.FC<SecurityProps> = ({ isPasswordSet }) => {
     <>
       <h3>Password</h3>
       <ShadowBox>
-        <Link href="/account/security/update" passHref>
-          <Flex>
-            <TextBox>{isPasswordSet ? "Update" : "Set"} your password</TextBox>
-            <RightChevron />
-          </Flex>
-        </Link>
+        <SecurityLink href="/account/security/update">
+          <TextBox>{isPasswordSet ? "Update" : "Set"} your password</TextBox>
+          <RightChevron />
+        </SecurityLink>
       </ShadowBox>
     </>
   );
 };
 
-const Flex = styled(NeutralLink)`
+const SecurityLink = styled(NeutralLink)`
   display: flex;
   justify-content: space-between;
   align-items: center;
