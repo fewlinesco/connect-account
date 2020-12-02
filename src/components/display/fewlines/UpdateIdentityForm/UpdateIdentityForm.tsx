@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -44,11 +43,10 @@ export const UpdateIdentityForm: React.FC<{
           Update {currentIdentity.type}
         </Button>
       </Form>
-      <Link href="/account/logins" passHref>
-        <NeutralLink>
-          <Button variant={ButtonVariant.SECONDARY}>Cancel</Button>
-        </NeutralLink>
-      </Link>
+
+      <NeutralLink href="/account/logins">
+        <Button variant={ButtonVariant.SECONDARY}>Cancel</Button>
+      </NeutralLink>
     </>
   );
 };

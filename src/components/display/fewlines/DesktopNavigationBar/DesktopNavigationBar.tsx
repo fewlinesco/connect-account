@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -15,34 +14,26 @@ export const DesktopNavigationBar: React.FC = () => {
   return (
     <Bar>
       <Header />
-      <Link href="/account" passHref>
-        <ListItem>
-          <HomeIcon />
-          <ListLabel>Home</ListLabel>
-        </ListItem>
-      </Link>
-      <Link href="/account/logins" passHref>
-        <ListItem>
-          <KeyIcon />
-          <ListLabel>Logins</ListLabel>
-        </ListItem>
-      </Link>
-      <Link href="/account/security" passHref>
-        <ListItem>
-          <LockIcon />
-          <ListLabel>Security</ListLabel>
-        </ListItem>
-      </Link>
+      <ListItem href="/account">
+        <HomeIcon />
+        <ListLabel>Home</ListLabel>
+      </ListItem>
+      <ListItem href="/account/logins">
+        <KeyIcon />
+        <ListLabel>Logins</ListLabel>
+      </ListItem>
+      <ListItem href="/account/security">
+        <LockIcon />
+        <ListLabel>Security</ListLabel>
+      </ListItem>
       <Separator />
-      <Link href="/account/locale" passHref>
-        <SwitchLanguageItem>
-          <SwitchLanguageLabel>
-            <BlackWorldIcon />
-            <ListLabel>English</ListLabel>
-          </SwitchLanguageLabel>
-          <BlackSwitchIcon />
-        </SwitchLanguageItem>
-      </Link>
+      <SwitchLanguageItem href="/account/locale">
+        <SwitchLanguageLabel>
+          <BlackWorldIcon />
+          <ListLabel>English</ListLabel>
+        </SwitchLanguageLabel>
+        <BlackSwitchIcon />
+      </SwitchLanguageItem>
     </Bar>
   );
 };
