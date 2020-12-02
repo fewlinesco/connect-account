@@ -2,27 +2,42 @@ import { HttpStatus } from "@fwl/web";
 import { Handler } from "next-iron-session";
 
 import { markIdentityAsPrimary } from "@lib/commands/markIdentityAsPrimary";
+import { UserCookie } from "@src/@types/UserCookie";
+import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
+import { isMarkingIdentityAsPrimaryAuthorized } from "@src/utils/isMarkingIdentityAsPrimaryAuthorized";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
-const handler: Handler = async (request, response) => {
+const handler: Handler = async (request: ExtendedRequest, response) => {
   addRequestScopeToSentry(request);
 
   try {
     if (request.method === "POST") {
       const { identityId } = request.body;
 
-      return markIdentityAsPrimary(identityId).then((data) => {
-        response.statusCode = HttpStatus.OK;
+      const userCookie = request.session.get<UserCookie>(
+        "user-session",
+      ) as UserCookie;
 
-        response.setHeader("Content-type", "application/json");
+      const isAuthorized = await isMarkingIdentityAsPrimaryAuthorized(
+        userCookie.sub,
+        identityId,
+      );
 
-        response.json({ data });
-      });
+      if (isAuthorized) {
+        return markIdentityAsPrimary(identityId).then((data) => {
+          response.statusCode = HttpStatus.OK;
+          response.setHeader("Content-type", "application/json");
+          response.json({ data });
+        });
+      }
+
+      response.statusCode = HttpStatus.BAD_REQUEST;
+      return response.end();
     }
   } catch (error) {
     Sentry.withScope((scope) => {
@@ -33,7 +48,8 @@ const handler: Handler = async (request, response) => {
 
   response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
 
-  return Promise.reject();
+  // TODO: better deal with this error
+  return Promise.reject(new Error("Method not allowed"));
 };
 
 export default wrapMiddlewares(
