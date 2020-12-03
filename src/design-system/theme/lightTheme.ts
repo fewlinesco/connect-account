@@ -77,8 +77,8 @@ const fontSizes = {
   l: "2rem",
   paragraph: "1.6rem",
   h1: "2.2rem",
-  h2: "2rem",
-  h3: "1.8rem",
+  h2: "1.8rem",
+  h3: "1.4rem",
 };
 
 const letterSpacing = {

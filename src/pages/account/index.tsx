@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { Layout } from "@src/components/Layout";
 import { AccountOverview } from "@src/components/display/fewlines/AccountOverview/AccountOverview";
 import { Container } from "@src/components/display/fewlines/Container";
-import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
@@ -35,7 +34,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   ]);
 };
 
-export const WelcomeMessage = styled(H1)`
+export const WelcomeMessage = styled.h1`
   margin-top: 0.5rem;
   margin-bottom: 5rem;
 
