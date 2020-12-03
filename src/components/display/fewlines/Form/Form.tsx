@@ -2,12 +2,17 @@ import React from "react";
 import styled from "styled-components";
 
 type FormProps = {
+  formID?: string;
   onSubmit: (event?: React.FormEvent<HTMLFormElement>) => Promise<void>;
   children: React.ReactNode | React.ReactNode[];
 };
 
-export const Form: React.FC<FormProps> = ({ onSubmit, children }) => {
+export const Form: React.FC<FormProps> = ({ formID, onSubmit, children }) => {
   const [isNotSubmitted, setIsNotSubmitted] = React.useState(true);
+
+  React.useEffect(() => {
+    setIsNotSubmitted(true);
+  }, [formID]);
 
   return (
     <StyledForm
