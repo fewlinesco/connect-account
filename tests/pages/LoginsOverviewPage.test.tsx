@@ -4,8 +4,6 @@ import React from "react";
 
 import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
-import { H1 } from "@src/components/display/fewlines/H1/H1";
-import { H2 } from "@src/components/display/fewlines/H2/H2";
 import { NoIdentitiesBox } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
 import { BoxedLink } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
 import { NeutralLink } from "@src/components/display/fewlines/NeutralLink";
@@ -206,12 +204,12 @@ describe("LoginsOverviewPage", () => {
         </AccountApp>,
       );
 
-      const h1 = component.find(H1);
-      const h2 = component.find(H2);
-      expect(h1).toHaveLength(1);
-      expect(h1.text()).toEqual("Logins");
-      expect(h2).toHaveLength(1);
-      expect(h2.text()).toEqual("Your emails, phones and social logins");
+      const h1 = component.contains(<h1>Logins</h1>);
+      const h3 = component.contains(
+        <h3>Your emails, phones and social logins</h3>,
+      );
+      expect(h1).toBe(true);
+      expect(h3).toBe(true);
     });
   });
 
