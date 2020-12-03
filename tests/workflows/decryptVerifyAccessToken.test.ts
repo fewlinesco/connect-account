@@ -1,33 +1,40 @@
-import { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { oauth2Client } from "@src/config";
 import { decryptVerifyAccessToken } from "@src/workflows/decryptVerifyAccessToken";
 
-describe("decryptVerifyAccessToken", () => {
-  jest.mock("@src/config.ts", () => {
-    return {
-      config: {
-        connectJwePrivateKey: "foo-bar",
-        connectJwtAlgorithm: "RS256",
-        connectIsAccessTokenSigned: "true",
-      },
-    };
-  });
+const mockedExpirationDate = Date.now() + 300;
 
-  const expirationDate = Date.now() + 300;
-
-  const mockVerifyJWT = jest
-    .spyOn(oauth2Client, "verifyJWT")
-    .mockImplementation(
-      async (): Promise<AccessToken> => {
+jest.mock("@src/config.ts", () => {
+  return {
+    config: {
+      connectJwePrivateKey: "foo-bar",
+      connectJwtAlgorithm: "RS256",
+      connectIsAccessTokenSigned: "false",
+    },
+    oauth2Client: {
+      verifyJWT: async () => {
         return {
           aud: ["connect-account"],
-          exp: expirationDate,
+          exp: mockedExpirationDate,
           iss: "foo",
           scope: "phone email",
           sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
         };
       },
-    );
+      decryptJWE: async () => {
+        return {
+          aud: ["connect-account"],
+          exp: mockedExpirationDate,
+          iss: "foo",
+          scope: "phone email",
+          sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
+        };
+      },
+    },
+  };
+});
+
+describe("decryptVerifyAccessToken", () => {
+  const mockVerifyJWT = jest.spyOn(oauth2Client, "verifyJWT");
   const mockDecryptJWE = jest.spyOn(oauth2Client, "decryptJWE");
 
   test("should return a verified access token if provided a JWS", async (done) => {
@@ -35,7 +42,7 @@ describe("decryptVerifyAccessToken", () => {
 
     const expectedAccessToken = {
       aud: ["connect-account"],
-      exp: expirationDate,
+      exp: mockedExpirationDate,
       iss: "foo",
       scope: "phone email",
       sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
@@ -49,6 +56,29 @@ describe("decryptVerifyAccessToken", () => {
     expect(mockVerifyJWT).toHaveBeenCalled();
     expect(mockDecryptJWE).not.toHaveBeenCalled();
     expect(verifiedToken).toMatchObject(expectedAccessToken);
+
+    done();
+  });
+
+  test("should return a decoded access token if provided a non-signed JWE", async (done) => {
+    expect.assertions(3);
+
+    const expectedAccessToken = {
+      aud: ["connect-account"],
+      exp: mockedExpirationDate,
+      iss: "foo",
+      scope: "phone email",
+      sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
+    };
+
+    const nonSignedJWE =
+      "eyJhbGciOiJSU0EtT0FFUC0yNTYiLCJlbmMiOiJBMTI4R0NNIn0.w4eo3k66Kr20CVrUQYDCgIR9ZFTFmbdtHvCGEGEYqQt3xJKo1zDT8nrkApHBTWgpg09BrvToBcHYhpZSCV9dbMSzjPWvjNlQTr5f7lOQ4Q34MQaCmH3LWr5toCYGl9iXJLolpW-r9vQNuwJIoYIinycXYJMCMgT72miKbHC66qJf1YoOgOqC9fc8E4V79fYuAaLmalEncqJHTn_u67e5qEZNqRrgFlxd4b9IPhMuRmaP3OICvtSFBIuFH64gVke6ckOwK-mGIIA-qQzwgkZrWnddmIMWKhSR7CwtXzKY46alHJrN1pvaAHBVqHCKi3JtBL_sCtpVZXHfCmhBqWcW2A.vxelVyonD7vTWBYX.yz7wOYxlwTRGeuABqlQ110Sw28nFsHjBig9kwyGFz4D6fqjrY_6mM2fYBZDbPuviumQifJ3vDvilV4dkIXJ9csSEgLlaLOK043kpT2T-2_XFnxdG7sfBHRimsg_ag889OjdZiGT4hMK-K_0lyZ8dOTHgcRMpLApX_s8Cog.kxPk7co7dttJ9l9ZrKxV9g";
+
+    const decodedToken = await decryptVerifyAccessToken(nonSignedJWE);
+
+    expect(mockVerifyJWT).not.toHaveBeenCalled();
+    expect(mockDecryptJWE).toHaveBeenCalled();
+    expect(decodedToken).toMatchObject(expectedAccessToken);
 
     done();
   });
