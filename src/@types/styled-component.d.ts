@@ -66,6 +66,7 @@ declare module "styled-components" {
       primary: string;
       secondary: string;
       background: string;
+      shadowBox: string;
       black: string;
       red: string;
       lightGrey: string;

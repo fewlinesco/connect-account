@@ -37,6 +37,7 @@ const colors = {
   primary: "#1825aa",
   secondary: "#1825aa",
   background: "#FFFFFF",
+  shadowBox: "#E7F3F9",
   black: "#03083C",
   red: "#EB5757",
   lightGrey: "#8b90a0",
