@@ -6,7 +6,6 @@ import { Layout } from "@src/components/Layout";
 import { AddIdentity } from "@src/components/business/AddIdentity";
 import { AddIdentityForm } from "@src/components/display/fewlines/AddIdentityForm/AddIdentityForm";
 import { Container } from "@src/components/display/fewlines/Container";
-import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
@@ -18,7 +17,7 @@ const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   return (
     <Layout>
       <Container>
-        <H1>Logins</H1>
+        <h1>Logins</h1>
         <NavigationBreadcrumbs
           breadcrumbs={[
             type.toLocaleUpperCase() === IdentityTypes.EMAIL
