@@ -15,7 +15,6 @@ import {
   PhoneNumberInputValueShouldBeANumber,
 } from "@src/clientErrors";
 import { getIdentityType } from "@src/utils/getIdentityType";
-import { getInputFormType } from "@src/utils/getInputFormType";
 
 type AddIdentityFormProps = {
   type: IdentityTypes;
