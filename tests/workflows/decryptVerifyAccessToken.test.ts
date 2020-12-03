@@ -1,6 +1,6 @@
 import { oauth2Client, config } from "@src/config";
 import {
-  ConnectIsAccessTokenSignedMustBeBoolean,
+  EnvVar_IsAccessTokenSigned_MustBeABoolean,
   UnhandledTokenType,
 } from "@src/errors";
 import { decryptVerifyAccessToken } from "@src/workflows/decryptVerifyAccessToken";
@@ -33,7 +33,7 @@ describe("decryptVerifyAccessToken", () => {
       ...config,
       connectJwePrivateKey: "foo-bar",
       connectJwtAlgorithm: "RS256",
-      connectIsAccessTokenSigned: "true",
+      isAccessTokenSigned: "true",
     });
 
     (oauth2Client.verifyJWT as any).mockImplementation(() => {
@@ -73,7 +73,7 @@ describe("decryptVerifyAccessToken", () => {
       ...config,
       connectJwePrivateKey: "foo-bar",
       connectJwtAlgorithm: "RS256",
-      connectIsAccessTokenSigned: "false",
+      isAccessTokenSigned: "false",
     });
 
     (oauth2Client.decryptJWE as any).mockImplementation(() => {
@@ -113,7 +113,7 @@ describe("decryptVerifyAccessToken", () => {
       ...config,
       connectJwePrivateKey: "foo-bar",
       connectJwtAlgorithm: "RS256",
-      connectIsAccessTokenSigned: "true",
+      isAccessTokenSigned: "true",
     });
 
     (oauth2Client.verifyJWT as any).mockImplementation(() => {
@@ -166,22 +166,24 @@ describe("decryptVerifyAccessToken", () => {
     done();
   });
 
-  test("should throw instance of ConnectIsAccessTokenSignedMustBeBoolean error if connectIsAccessTokenSigned env var isn't a boolean", async (done) => {
+  test("should throw instance of EnvVar_IsAccessTokenSigned_MustBeABoolean error if isAccessTokenSigned env var isn't a boolean", async (done) => {
     expect.assertions(2);
 
     mockConfigGetter.mockReturnValue({
       ...config,
       connectJwePrivateKey: "foo-bar",
       connectJwtAlgorithm: "RS256",
-      connectIsAccessTokenSigned: "2",
+      isAccessTokenSigned: "2",
     });
 
     const signedJWE =
       "eyJhbGciOiJSU0EtT0FFUC0yNTYiLCJlbmMiOiJBMTI4R0NNIn0.w4eo3k66Kr20CVrUQYDCgIR9ZFTFmbdtHvCGEGEYqQt3xJKo1zDT8nrkApHBTWgpg09BrvToBcHYhpZSCV9dbMSzjPWvjNlQTr5f7lOQ4Q34MQaCmH3LWr5toCYGl9iXJLolpW-r9vQNuwJIoYIinycXYJMCMgT72miKbHC66qJf1YoOgOqC9fc8E4V79fYuAaLmalEncqJHTn_u67e5qEZNqRrgFlxd4b9IPhMuRmaP3OICvtSFBIuFH64gVke6ckOwK-mGIIA-qQzwgkZrWnddmIMWKhSR7CwtXzKY46alHJrN1pvaAHBVqHCKi3JtBL_sCtpVZXHfCmhBqWcW2A.vxelVyonD7vTWBYX.yz7wOYxlwTRGeuABqlQ110Sw28nFsHjBig9kwyGFz4D6fqjrY_6mM2fYBZDbPuviumQifJ3vDvilV4dkIXJ9csSEgLlaLOK043kpT2T-2_XFnxdG7sfBHRimsg_ag889OjdZiGT4hMK-K_0lyZ8dOTHgcRMpLApX_s8Cog.kxPk7co7dttJ9l9ZrKxV9g";
 
     await decryptVerifyAccessToken(signedJWE).catch((error) => {
-      expect(error).toBeInstanceOf(ConnectIsAccessTokenSignedMustBeBoolean);
-      expect(error.message).toEqual("ConnectIsAccessTokenSignedMustBeBoolean");
+      expect(error).toBeInstanceOf(EnvVar_IsAccessTokenSigned_MustBeABoolean);
+      expect(error.message).toEqual(
+        "EnvVar_IsAccessTokenSigned_MustBeABoolean",
+      );
     });
 
     done();

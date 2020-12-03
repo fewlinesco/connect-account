@@ -212,8 +212,10 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 
 | `CONNECT_JWE_PRIVATE_KEY`
 | The PEM formatted private key used to decrypt the JWE access token.
+| (i.e. "-----BEGIN RSA PRIVATE KEY-----\nqewnjfb...\n..")
 
-| `CONNECT_IS_ACCESS_TOKEN_SIGNED`
+
+| `IS_ACCESS_TOKEN_SIGNED`
 | A boolean value that indicates if the JWE access token is signed or not.
 
 | `NEXT_PUBLIC_SENTRY_DSN`

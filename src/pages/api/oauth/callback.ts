@@ -23,10 +23,10 @@ const handler: Handler = async (
       `${request.query.code}`,
     );
 
-    const decodedToken = await decryptVerifyAccessToken(access_token);
+    const decodedAccessToken = await decryptVerifyAccessToken(access_token);
 
     const oAuth2UserInfo = {
-      sub: decodedToken.sub,
+      sub: decodedAccessToken.sub,
       refresh_token,
     };
 
@@ -34,7 +34,7 @@ const handler: Handler = async (
 
     request.session.set("user-session", {
       access_token,
-      sub: decodedToken.sub,
+      sub: decodedAccessToken.sub,
     });
 
     await request.session.save();
