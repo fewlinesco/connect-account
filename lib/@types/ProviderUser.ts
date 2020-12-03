@@ -1,4 +1,4 @@
-import { Identity } from "@lib/@types";
+import { Identity, IdentityInput } from "@lib/@types";
 
 export type ProviderUser = {
   id: string;
@@ -25,4 +25,13 @@ export type User = {
 export type CreateOrUpdatePasswordInput = {
   cleartextPassword: string;
   userId: string;
+};
+
+export type CreateUserWithIdentitiesInput = {
+  identities: IdentityInput[];
+  localeCode?: string;
+};
+
+export type deleteUserStatus = {
+  status: string;
 };
