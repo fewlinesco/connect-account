@@ -5,10 +5,9 @@ import { refreshTokensFlow } from "@lib/commands/refreshTokensFlow";
 import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Handler } from "@src/@types/core/Handler";
-import { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { getAndPutUser } from "@src/commands/getAndPutUser";
-import { oauth2Client, config } from "@src/config";
 import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
+import { decryptVerifyAccessToken } from "@src/workflows/decryptVerifyAccessToken";
 
 export function withAuth(handler: Handler): Handler {
   return async (
@@ -23,12 +22,8 @@ export function withAuth(handler: Handler): Handler {
       try {
         const { access_token: currentAccessToken, sub } = userSession;
 
-        await oauth2Client
-          .verifyJWT<AccessToken>(
-            currentAccessToken,
-            config.connectJwtAlgorithm,
-          )
-          .catch(async (error) => {
+        await decryptVerifyAccessToken(currentAccessToken).catch(
+          async (error) => {
             if (error.name === "TokenExpiredError") {
               const user = await getDBUserFromSub(sub);
 
@@ -37,10 +32,7 @@ export function withAuth(handler: Handler): Handler {
                   user.refresh_token,
                 );
 
-                const { sub } = await oauth2Client.verifyJWT<AccessToken>(
-                  access_token,
-                  config.connectJwtAlgorithm,
-                );
+                const { sub } = await decryptVerifyAccessToken(access_token);
 
                 request.session.set<UserCookie>("user-session", {
                   access_token,
@@ -54,7 +46,8 @@ export function withAuth(handler: Handler): Handler {
             } else {
               throw error;
             }
-          });
+          },
+        );
 
         return handler(request, response);
       } catch (error) {

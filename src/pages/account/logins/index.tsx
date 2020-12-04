@@ -7,8 +7,6 @@ import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
-import { H1 } from "@src/components/display/fewlines/H1/H1";
-import { H2 } from "@src/components/display/fewlines/H2/H2";
 import { LoginsOverview } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
@@ -28,8 +26,8 @@ const LoginsOverviewPage: React.FC<LoginsOverviewPageProps> = ({
   return (
     <Layout>
       <Container>
-        <H1>Logins</H1>
-        <H2>Your emails, phones and social logins</H2>
+        <h1>Logins</h1>
+        <h3>Your emails, phones and social logins</h3>
         <LoginsOverview sortedIdentities={sortedIdentities} />
       </Container>
     </Layout>

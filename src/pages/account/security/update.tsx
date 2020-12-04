@@ -7,7 +7,6 @@ import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Layout } from "@src/components/Layout";
 import { SetPassword } from "@src/components/business/SetPassword";
 import { Container } from "@src/components/display/fewlines/Container";
-import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { SetPasswordForm } from "@src/components/display/fewlines/SetPasswordForm/SetPasswordForm";
 import { GraphqlErrors } from "@src/errors";
@@ -27,7 +26,7 @@ const SecurityUpdatePage: React.FC<SecurityPageProps> = ({ isPasswordSet }) => {
   return (
     <Layout>
       <Container>
-        <H1>Security</H1>
+        <h1>Security</h1>
         <NavigationBreadcrumbs
           breadcrumbs={["Password", conditionalBreadcrumbItem]}
         />
