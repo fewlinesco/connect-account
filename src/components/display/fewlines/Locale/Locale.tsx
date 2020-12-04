@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import { H1 } from "../H1/H1";
 import { MagnifyingGlass } from "../Icons/MagnifyingGlas/MagnifyingGlass";
 import { Input } from "../Input/Input";
 import { RadioButton } from "../RadioButton/RadioButton";
@@ -12,7 +11,7 @@ export const Locale: React.FC = () => {
   return (
     <>
       <Container>
-        <H1>Switch Language</H1>
+        <h1>Switch Language</h1>
         <div className="search-input">
           <Input />
           <div className="magnifying-glass">

@@ -1,8 +1,7 @@
 jest.mock("@src/hooks/useCookies");
 
 import { mount } from "enzyme";
-import fetch from "jest-fetch-mock";
-import { enableFetchMocks } from "jest-fetch-mock";
+import fetch, { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 
 import { IdentityTypes, Identity } from "@lib/@types";
