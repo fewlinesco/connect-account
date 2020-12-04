@@ -30,4 +30,14 @@ export class GraphqlErrors extends Error {
   }
 }
 
-export class TemporaryIdentityExpired extends Error {}
+export class TemporaryIdentityExpired extends Error {
+  readonly message = "TemporaryIdentityExpired";
+}
+
+export class UnhandledTokenType extends Error {
+  readonly message = "UnhandledTokenType";
+}
+
+export class EnvVar_IsAccessTokenSigned_MustBeABoolean extends Error {
+  readonly message = "EnvVar_IsAccessTokenSigned_MustBeABoolean";
+}

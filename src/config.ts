@@ -19,6 +19,8 @@ type Config = {
   connectAccountRedirectURI: string;
   connectAudience: string;
   connectJwtAlgorithm: string;
+  connectJwePrivateKey: string;
+  isAccessTokenSigned: string;
   connectTestAccountEmail: string;
   connectTestAccountPassword: string;
 };
@@ -42,6 +44,8 @@ const config: Config = {
   connectAccountRedirectURI: "",
   connectAudience: "",
   connectJwtAlgorithm: "",
+  connectJwePrivateKey: "",
+  isAccessTokenSigned: "",
   connectTestAccountEmail: "",
   connectTestAccountPassword: "",
 };
@@ -75,6 +79,8 @@ function handleEnvVars(): void {
     : "";
   config.connectAudience = process.env.CONNECT_AUDIENCE || "";
   config.connectJwtAlgorithm = process.env.CONNECT_JWT_ALGORITHM || "";
+  config.connectJwePrivateKey = process.env.CONNECT_JWE_PRIVATE_KEY || "";
+  config.isAccessTokenSigned = process.env.IS_ACCESS_TOKEN_SIGNED || "";
   config.connectTestAccountEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL || "";
   config.connectTestAccountPassword =
     process.env.CONNECT_TEST_ACCOUNT_PASSWORD || "";
