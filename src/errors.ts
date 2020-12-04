@@ -38,6 +38,6 @@ export class UnhandledTokenType extends Error {
   readonly message = "UnhandledTokenType";
 }
 
-export class EnvVar_IsAccessTokenSigned_MustBeABoolean extends Error {
-  readonly message = "EnvVar_IsAccessTokenSigned_MustBeABoolean";
+export class EnvVar_IsJweSigned_MustBeABoolean extends Error {
+  readonly message = "EnvVar_IsJweSigned_MustBeABoolean";
 }

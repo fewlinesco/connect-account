@@ -1,7 +1,7 @@
 import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { oauth2Client, config } from "@src/config";
 import {
-  EnvVar_IsAccessTokenSigned_MustBeABoolean,
+  EnvVar_IsJweSigned_MustBeABoolean,
   UnhandledTokenType,
 } from "@src/errors";
 
@@ -16,10 +16,10 @@ export async function decryptVerifyAccessToken(
       config.connectJwtAlgorithm,
     );
   } else if (tokenPartsCount === 5) {
-    const isAccessTokenSigned = JSON.parse(config.isAccessTokenSigned);
+    const isAccessTokenSigned = JSON.parse(config.isJweSigned);
 
     if (typeof isAccessTokenSigned !== "boolean") {
-      throw new EnvVar_IsAccessTokenSigned_MustBeABoolean();
+      throw new EnvVar_IsJweSigned_MustBeABoolean();
     }
 
     const decodedToken = await oauth2Client.decryptJWE<AccessToken | string>(
