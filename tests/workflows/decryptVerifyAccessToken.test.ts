@@ -31,7 +31,7 @@ describe("decryptVerifyAccessToken", () => {
 
     mockConfigGetter.mockReturnValue({
       ...config,
-      connectJwePrivateKey: "foo-bar",
+      accountJwePrivateKey: "foo-bar",
       connectJwtAlgorithm: "RS256",
       isJweSigned: "true",
     });
@@ -71,7 +71,7 @@ describe("decryptVerifyAccessToken", () => {
 
     mockConfigGetter.mockReturnValue({
       ...config,
-      connectJwePrivateKey: "foo-bar",
+      accountJwePrivateKey: "foo-bar",
       connectJwtAlgorithm: "RS256",
       isJweSigned: "false",
     });
@@ -111,7 +111,7 @@ describe("decryptVerifyAccessToken", () => {
 
     mockConfigGetter.mockReturnValue({
       ...config,
-      connectJwePrivateKey: "foo-bar",
+      accountJwePrivateKey: "foo-bar",
       connectJwtAlgorithm: "RS256",
       isJweSigned: "true",
     });
@@ -171,7 +171,7 @@ describe("decryptVerifyAccessToken", () => {
 
     mockConfigGetter.mockReturnValue({
       ...config,
-      connectJwePrivateKey: "foo-bar",
+      accountJwePrivateKey: "foo-bar",
       connectJwtAlgorithm: "RS256",
       isJweSigned: "2",
     });

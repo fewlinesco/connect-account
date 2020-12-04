@@ -24,7 +24,7 @@ export async function decryptVerifyAccessToken(
 
     const decodedToken = await oauth2Client.decryptJWE<AccessToken | string>(
       accessToken,
-      config.connectJwePrivateKey,
+      config.accountJwePrivateKey,
       isAccessTokenSigned,
     );
 
