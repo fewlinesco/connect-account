@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
@@ -31,49 +30,42 @@ export const MobileNavigationBar: React.FC = () => {
       <Container>
         {isOpen && (
           <MenuList>
-            <Link href="/account" passHref>
-              <ListItem onClick={() => setIsOpen(false)}>
-                <ListItemLabel>
-                  <HomeIcon />
-                  <Value>Home</Value>
-                </ListItemLabel>
-                <RightChevron />
-              </ListItem>
-            </Link>
-            <Link href="/account/logins" passHref>
-              <ListItem onClick={() => setIsOpen(false)}>
-                <ListItemLabel>
-                  <KeyIcon />
-                  <Value>Logins</Value>
-                </ListItemLabel>
-                <RightChevron />
-              </ListItem>
-            </Link>
-            <Link href="/account/security" passHref>
-              <ListItem onClick={() => setIsOpen(false)}>
-                <ListItemLabel>
-                  <LockIcon />
-                  <Value>Security</Value>
-                </ListItemLabel>
-                <RightChevron />
-              </ListItem>
-            </Link>
+            <ListItem href="/account" onClick={() => setIsOpen(false)}>
+              <ListItemLabel>
+                <HomeIcon />
+                <Value>Home</Value>
+              </ListItemLabel>
+              <RightChevron />
+            </ListItem>
+
+            <ListItem href="/account/logins" onClick={() => setIsOpen(false)}>
+              <ListItemLabel>
+                <KeyIcon />
+                <Value>Logins</Value>
+              </ListItemLabel>
+              <RightChevron />
+            </ListItem>
+            <ListItem href="/account/security" onClick={() => setIsOpen(false)}>
+              <ListItemLabel>
+                <LockIcon />
+                <Value>Security</Value>
+              </ListItemLabel>
+              <RightChevron />
+            </ListItem>
           </MenuList>
         )}
         <Bar>
           {isOpen ? (
             <MenuItem color="primary" onClick={() => setIsOpen(false)}>
-              <Link href="/account/locale" passHref>
-                <SpecialLink>
-                  <Content>
-                    <LanguagesOptions>
-                      <WhiteWorldIcon />
-                      <div>English</div>
-                    </LanguagesOptions>
-                    <WhiteSwitchIcon />
-                  </Content>
-                </SpecialLink>
-              </Link>
+              <SpecialLink href="/account/locale">
+                <Content>
+                  <LanguagesOptions>
+                    <WhiteWorldIcon />
+                    <div>English</div>
+                  </LanguagesOptions>
+                  <WhiteSwitchIcon />
+                </Content>
+              </SpecialLink>
             </MenuItem>
           ) : (
             <MenuItem onClick={() => router.back()}>
@@ -183,5 +175,7 @@ const Value = styled.p`
 `;
 
 const SpecialLink = styled(NeutralLink)`
-  color: inherit;
+  & div {
+    color: ${({ theme }) => theme.colors.background};
+  }
 `;

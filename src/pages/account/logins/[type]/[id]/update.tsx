@@ -8,7 +8,6 @@ import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
-import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
@@ -21,7 +20,7 @@ const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   return (
     <Layout>
       <Container>
-        <H1>Logins</H1>
+        <h1>Logins</h1>
         <NavigationBreadcrumbs
           breadcrumbs={[
             identity.type.toUpperCase() === IdentityTypes.EMAIL

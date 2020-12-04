@@ -7,7 +7,6 @@ import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Layout } from "@src/components/Layout";
 import { ValidateIdentity } from "@src/components/business/ValidateIdentity";
 import { Container } from "@src/components/display/fewlines/Container";
-import { H1 } from "@src/components/display/fewlines/H1/H1";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { ValidateIdentityForm } from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
 import { withAuth } from "@src/middlewares/withAuth";
@@ -23,7 +22,7 @@ const ValidateIdentityPage: React.FC<{
   return (
     <Layout>
       <Container>
-        <H1>Logins</H1>
+        <h1>Logins</h1>
         <NavigationBreadcrumbs
           breadcrumbs={[
             type.toUpperCase() === IdentityTypes.EMAIL

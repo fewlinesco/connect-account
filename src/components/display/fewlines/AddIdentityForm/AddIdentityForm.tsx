@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
@@ -81,11 +80,10 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
           type="submit"
         >{`Add ${type.toLowerCase()}`}</Button>
       </Form>
-      <Link href="/account/logins" passHref>
-        <NeutralLink>
-          <Button variant={ButtonVariant.SECONDARY}>Cancel</Button>
-        </NeutralLink>
-      </Link>
+
+      <NeutralLink href="/account/logins">
+        <Button variant={ButtonVariant.SECONDARY}>Cancel</Button>
+      </NeutralLink>
     </>
   );
 };
