@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Button, ButtonVariant } from "../Button/Button";
 import { AppleIcon } from "../Icons/AppleIcon/AppleIcon";
 import { DecathlonIcon } from "../Icons/DecathlonIcon/DecathlonIcon";
 import { FacebookIcon } from "../Icons/FacebookIcon/FacebookIcon";
@@ -12,14 +11,12 @@ import { LineIcon } from "../Icons/LineIcon/LineIcon";
 import { MicrosoftIcon } from "../Icons/MicrosoftIcon/MicrosoftIcon";
 import { NaverIcon } from "../Icons/NaverIcon/NaverIcon";
 import { PaypalIcon } from "../Icons/PaypalIcon/PaypalIcon";
-import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import { StravaIcon } from "../Icons/StravaIcon/StravaIcon";
 import { VKontakteIcon } from "../Icons/VKontakteIcon/VKontakteIcon";
+import { IdentitySection } from "../IdentitySection/IdentitySection";
 import { NeutralLink } from "../NeutralLink";
 import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
-import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
-import { Timeline } from "../Timeline/Timeline";
 import { TimelineEnd } from "../TimelineEnd/TimelineEnd";
 import type { Identity } from "@lib/@types";
 import { IdentityTypes } from "@lib/@types/Identity";
@@ -36,13 +33,6 @@ type LoginsOverviewProps = {
 export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
   sortedIdentities,
 }) => {
-  const [hideSecondaryEmails, setHideSecondaryEmails] = React.useState<boolean>(
-    true,
-  );
-  const [hideSecondaryPhones, setHideSecondaryPhones] = React.useState<boolean>(
-    true,
-  );
-
   const SOCIAL_IDENTITIES_ICONS = {
     APPLE: <AppleIcon />,
     FACEBOOK: <FacebookIcon />,
@@ -89,126 +79,35 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
     }
   };
 
-  let emailList: Identity[];
-  let phoneList: Identity[];
-
-  hideSecondaryEmails
-    ? (emailList = sortedIdentities.emailIdentities.filter(
-        (identity) => identity.primary,
-      ))
-    : (emailList = sortedIdentities.emailIdentities);
-
-  hideSecondaryPhones
-    ? (phoneList = sortedIdentities.phoneIdentities.filter(
-        (identity) => identity.primary,
-      ))
-    : (phoneList = sortedIdentities.phoneIdentities);
-
   const {
     emailIdentities,
     phoneIdentities,
     socialIdentities,
   } = sortedIdentities;
 
+  const IDENTITY_SECTION_CONTENT = {
+    EMAIL: {
+      title: "Email Addresses",
+      identitiesList: emailIdentities,
+      noIdentityMessage: "No email added yet.",
+      addNewIdentityMessage: "add new email address",
+    },
+    PHONE: {
+      title: "Phone numbers",
+      identitiesList: phoneIdentities,
+      noIdentityMessage: "No phone number added yet.",
+      addNewIdentityMessage: "add new phone number",
+    },
+  };
+
   return (
     <Container>
-      <IdentitySection>
-        <Timeline />
-        <h2>Email addresses</h2>
-        <ShadowBox>
-          {emailIdentities.length === 0 ? (
-            <NoIdentitiesBox>No emails added yet.</NoIdentitiesBox>
-          ) : (
-            emailList.map((email: Identity) => {
-              return (
-                <div key={email.value}>
-                  <BoxedLink
-                    primary={email.primary}
-                    status={email.status}
-                    href={{
-                      pathname: "/account/logins/[type]/[id]",
-                      query: {
-                        type: email.type.toLowerCase(),
-                        id: email.id,
-                      },
-                    }}
-                  >
-                    <p>{email.value}</p>
-                    <RightChevron />
-                  </BoxedLink>
-
-                  {emailList.indexOf(email) < emailList.length - 1 && (
-                    <Separator />
-                  )}
-                </div>
-              );
-            })
-          )}
-        </ShadowBox>
-        {emailIdentities.length > 1 && (
-          <Flex>
-            <ShowMoreButton
-              hide={hideSecondaryEmails}
-              quantity={emailIdentities.length - 1}
-              setHideSecondary={setHideSecondaryEmails}
-            />
-          </Flex>
-        )}
-        <NeutralLink href="/account/logins/email/new">
-          <Button variant={ButtonVariant.SECONDARY}>
-            + Add new email address
-          </Button>
-        </NeutralLink>
-      </IdentitySection>
-      <IdentitySection>
-        <Timeline />
-        <h2>Phone numbers</h2>
-        <ShadowBox>
-          {phoneIdentities.length === 0 ? (
-            <NoIdentitiesBox>No phone number added yet.</NoIdentitiesBox>
-          ) : (
-            phoneList.map((phone: Identity) => {
-              return (
-                <div key={phone.value}>
-                  <BoxedLink
-                    primary={phone.primary}
-                    status={phone.status}
-                    href={{
-                      pathname: "/account/logins/[type]/[id]",
-                      query: {
-                        type: phone.type.toLowerCase(),
-                        id: phone.id,
-                      },
-                    }}
-                  >
-                    <p>{phone.value}</p>
-                    <RightChevron />
-                  </BoxedLink>
-
-                  {phoneList.indexOf(phone) < phoneList.length - 1 && (
-                    <Separator />
-                  )}
-                </div>
-              );
-            })
-          )}
-        </ShadowBox>
-        {phoneIdentities.length > 1 && (
-          <Flex>
-            <ShowMoreButton
-              hide={hideSecondaryPhones}
-              quantity={phoneIdentities.length - 1}
-              setHideSecondary={setHideSecondaryPhones}
-            />
-          </Flex>
-        )}
-        <NeutralLink href="/account/logins/phone/new">
-          <Button variant={ButtonVariant.SECONDARY}>
-            + Add new phone number
-          </Button>
-        </NeutralLink>
-      </IdentitySection>
-      <LastIdentitySection>
+      {Object.entries(IDENTITY_SECTION_CONTENT).map(
+        ([sectionName, content]) => {
+          return <IdentitySection key={sectionName} content={content} />;
+        },
+      )}
+      <LastIdentitySections>
         <TimelineEnd />
         <h2>Social logins</h2>
         <ShadowBox>
@@ -241,7 +140,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
             })
           )}
         </ShadowBox>
-      </LastIdentitySection>
+      </LastIdentitySections>
     </Container>
   );
 };
@@ -250,17 +149,12 @@ const Container = styled.div`
   margin: 0 0 10rem 0;
 `;
 
-const Flex = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const IdentitySection = styled.div`
+const IdentitySections = styled.div`
   padding: 0 0 ${({ theme }) => theme.spaces.s} 0;
   position: relative;
 `;
 
-const LastIdentitySection = styled(IdentitySection)`
+const LastIdentitySections = styled(IdentitySections)`
   padding: 0;
 `;
 
