@@ -18,6 +18,12 @@ export type SingleIdentityProviderUser = {
   };
 };
 
+export type ProviderUserId = {
+  user: {
+    id: string;
+  };
+};
+
 export type User = {
   id: string;
 };
@@ -32,6 +38,10 @@ export type CreateUserWithIdentitiesInput = {
   localeCode?: string;
 };
 
-export type deleteUserStatus = {
+export type DeleteUserInput = {
+  userId: string;
+};
+
+export type DeleteUserStatus = {
   status: string;
 };
