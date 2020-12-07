@@ -1,5 +1,3 @@
-jest.mock("@src/hooks/useCookies");
-
 import { mount } from "enzyme";
 import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
@@ -14,7 +12,6 @@ import {
   Breadcrumbs,
 } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { ValidateIdentityForm } from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
-import { useCookies } from "@src/hooks/useCookies";
 import { AccountApp } from "@src/pages/_app";
 import ValidateIdentityPage from "@src/pages/account/logins/[type]/validation/[eventId]";
 import * as fetchJson from "@src/utils/fetchJson";
@@ -40,11 +37,15 @@ jest.mock("@src/dbClient", () => {
   };
 });
 
-(useCookies as any).mockImplementation(() => {
+jest.mock("@src/hooks/useCookies", () => {
   return {
-    data: {
-      userSub: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
-    },
+    useCookies: jest.fn().mockImplementation(() => {
+      return {
+        data: {
+          userDocumentId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
+        },
+      };
+    }),
   };
 });
 
