@@ -37,7 +37,7 @@ jobs:
         CONNECT_ACCOUNT_TEST_APP_ID: ${{ secrets.CONNECT_ACCOUNT_TEST_APP_ID }}
         CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
         CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
-      run: yarn e2e-add-redirect-uri
+      run: yarn e2e:add-redirect-uri
 
     - name: creating test user
       env:
@@ -46,7 +46,7 @@ jobs:
         CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
         CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
         CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
-      run: yarn e2e-create-test-user
+      run: yarn e2e:create-test-user
 
     - name: removing test user
       env:
@@ -54,4 +54,4 @@ jobs:
         CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
         CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
         CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
-      run: yarn e2e-remove-test-user
+      run: yarn e2e:remove-test-user

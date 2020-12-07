@@ -27,13 +27,9 @@ async function removeTestUser(): Promise<void> {
 
   if (!githubDeploymentStatus.environment.includes("storybook")) {
     if (githubDeploymentStatus.state === "success") {
-      console.log("SHA: ", githubActionsContext.deployment.sha);
-
       const testUserEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL.split(
         "@",
       ).join("_" + githubActionsContext.deployment.sha + "@");
-
-      console.log(testUserEmail);
 
       const testUserId = await getUserFiltersByProvider({
         value: testUserEmail,
@@ -48,8 +44,6 @@ async function removeTestUser(): Promise<void> {
         }
         return data.provider.user.id;
       });
-
-      console.log(testUserId);
 
       await deleteUser({ userId: testUserId }).then(({ data, errors }) => {
         if (errors) {

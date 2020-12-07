@@ -33,8 +33,6 @@ async function createTestUser(): Promise<void> {
 
   if (!githubDeploymentStatus.environment.includes("storybook")) {
     if (githubDeploymentStatus.state === "success") {
-      console.log("SHA: ", githubActionsContext.deployment.sha);
-
       const userIdentitiesInput = [
         {
           status: IdentityStatus.VALIDATED,
@@ -67,8 +65,6 @@ async function createTestUser(): Promise<void> {
         return data.createUserWithIdentities.id;
       });
 
-      console.log(userId);
-
       await createOrUpdatePassword({
         cleartextPassword: process.env.CONNECT_TEST_ACCOUNT_PASSWORD.trim(),
         userId,
@@ -80,7 +76,6 @@ async function createTestUser(): Promise<void> {
         if (!data) {
           throw new Error("Password error");
         }
-        return data;
       });
     }
   }
