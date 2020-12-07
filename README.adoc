@@ -210,6 +210,13 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 | `CONNECT_JWT_ALGORITHM`
 | Represents the kind of user authorized information and actions that an Application is able to access on another Application.
 
+| `ACCOUNT_JWE_PRIVATE_KEY`
+| The PEM formatted private key used to decrypt the JWE access token.
+| (i.e. "-----BEGIN RSA PRIVATE KEY-----\nqewnjfb...\n..")
+
+| `IS_JWE_SIGNED`
+| A boolean value that indicates if the JWE access token is signed or not.
+
 | `NEXT_PUBLIC_SENTRY_DSN`
 | Data Source Name representing the configuration required by the Sentry SDKs.
 |===
@@ -254,6 +261,7 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 - *pages/*: NextJS router.
 - *queries/*: Read (i.e. `GET`) database actions.
 - *utils/*: Small snippets/functions used multiple times throughout the application
+- *workflows/*: workflows used in multiples places.
 - *config.ts*: Entry point used to verify env vars sourcing, and prevent the app to run if forgotten.
 
 === tests/

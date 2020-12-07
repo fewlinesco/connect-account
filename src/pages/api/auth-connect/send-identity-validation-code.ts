@@ -11,55 +11,66 @@ import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
+import { getIdentityType } from "@src/utils/getIdentityType";
 
 const handler: Handler = async (request: ExtendedRequest, response) => {
   if (request.method === "POST") {
     const { callbackUrl, identityInput } = request.body;
-
     const userSession = request.session.get<UserCookie>("user-session");
 
     if (userSession) {
       const identity = {
-        type: identityInput.type.toUpperCase(),
+        type: getIdentityType(identityInput.type),
         value: identityInput.value,
       };
 
-      return sendIdentityValidationCode({
+      const { data, errors } = await sendIdentityValidationCode({
         callbackUrl,
         identity,
         localeCodeOverride: "en-EN",
         userId: userSession.sub,
-      })
-        .then(async ({ errors, data }) => {
-          if (errors) {
-            throw new GraphqlErrors(errors);
-          }
+      });
 
-          if (!data) {
-            throw new Error("Management query failed");
-          }
+      if (errors) {
+        if ((errors[0] as any).code === "identity_already_validated") {
+          response.statusCode = HttpStatus.BAD_REQUEST;
+          response.statusMessage = (errors[0] as any).code;
+          return response.end();
+        }
 
-          const temporaryIdentity = {
-            eventId: data.sendIdentityValidationCode.eventId,
-            value: identityInput.value,
-            type: identityInput.type,
-            expiresAt: identityInput.expiresAt,
-          };
+        if ((errors[0] as any).errors.identity_value === "can't be blank") {
+          response.statusCode = HttpStatus.BAD_REQUEST;
+          response.statusMessage = (errors[0] as any).errors.identity_value;
+          return response.end();
+        }
 
-          await insertTemporaryIdentity(userSession.sub, temporaryIdentity);
+        throw new GraphqlErrors(errors);
+      } else if (!data) {
+        throw new Error("Management query failed");
+      } else {
+        const temporaryIdentity = {
+          eventId: data.sendIdentityValidationCode.eventId,
+          value: identityInput.value,
+          type: identityInput.type,
+          expiresAt: identityInput.expiresAt,
+        };
 
-          return data.sendIdentityValidationCode.eventId;
-        })
-        .then((data) => {
-          response.statusCode = HttpStatus.OK;
-          response.setHeader("Content-Type", "application/json");
-          response.json({ data });
-        });
+        await insertTemporaryIdentity(userSession.sub, temporaryIdentity);
+
+        response.statusCode = HttpStatus.OK;
+        response.setHeader("Content-Type", "application/json");
+        response.json({ data: data.sendIdentityValidationCode.eventId });
+        return;
+      }
     }
+
+    response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+    response.setHeader("location", "/");
+    response.end();
+    return;
   }
 
   response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
-
   return Promise.reject();
 };
 
