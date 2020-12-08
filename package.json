@@ -17,8 +17,10 @@
     "db:create-users-table": "ts-node bin/dynamodb/create-users-table.ts",
     "db:delete-users-table": "ts-node bin/dynamodb/delete-users-table.ts",
     "db:get-user-from-sub": "ts-node bin/dynamodb/get-user-from-sub.ts",
-    "e2e-add-redirect-uri": "ts-node bin/e2e/add-redirect-uri-to-connect.ts",
-    "e2e-remove-redirect-uri": "ts-node bin/e2e/remove-redirect-uri-from-connect.ts"
+    "e2e:add-redirect-uri": "ts-node bin/e2e/add-redirect-uri-to-connect.ts",
+    "e2e:remove-redirect-uri": "ts-node bin/e2e/remove-redirect-uri-from-connect.ts",
+    "e2e:create-test-user": "ts-node bin/e2e/create-test-user.ts",
+    "e2e:remove-test-user": "ts-node bin/e2e/remove-test-user.ts"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "1.0.0-rc.7",
