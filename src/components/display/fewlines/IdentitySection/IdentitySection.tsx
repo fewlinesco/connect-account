@@ -15,12 +15,12 @@ import { PaypalIcon } from "../Icons/PaypalIcon/PaypalIcon";
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import { StravaIcon } from "../Icons/StravaIcon/StravaIcon";
 import { VKontakteIcon } from "../Icons/VKontakteIcon/VKontakteIcon";
-import { BoxedLink, NoIdentitiesBox } from "../LoginsOverview/LoginsOverview";
 import { NeutralLink } from "../NeutralLink";
 import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
 import { Timeline } from "../Timeline/Timeline";
+import { TimelineEnd } from "../TimelineEnd/TimelineEnd";
 import { Identity, IdentityTypes } from "@lib/@types";
 import {
   formatSpecialSocialIdentities,
@@ -29,6 +29,7 @@ import {
 import { getIdentityType } from "@src/utils/getIdentityType";
 
 type IdentitySectionProps = {
+  lastOfTheList: boolean;
   content: {
     title: string;
     identityType: IdentityTypes;
@@ -139,6 +140,7 @@ const displaySocialLoginsList = (
 };
 
 export const IdentitySection: React.FC<IdentitySectionProps> = ({
+  lastOfTheList,
   content,
 }) => {
   const [
@@ -155,8 +157,8 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
     : (displayedList = content.identitiesList);
 
   return (
-    <Section>
-      <Timeline />
+    <Section lastOfTheList={lastOfTheList}>
+      {lastOfTheList ? <TimelineEnd /> : <Timeline />}
       <h2>{content.title}</h2>
       <ShadowBox>
         {content.identitiesList.length === 0 ? (
@@ -199,9 +201,19 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
   );
 };
 
-const Section = styled.div`
+type SectionProps = {
+  lastOfTheList: boolean;
+};
+
+const Section = styled.div<SectionProps>`
   padding: 0 0 ${({ theme }) => theme.spaces.s} 0;
   position: relative;
+
+  ${(props) =>
+    props.lastOfTheList &&
+    `
+      padding: 0;
+    `}
 `;
 
 const Flex = styled.div`
@@ -216,4 +228,42 @@ const SocialIdentityBox = styled.div`
 
 const SocialIdentityName = styled.p`
   margin: 0 0 0 ${({ theme }) => theme.spaces.xxs};
+`;
+
+export const NoIdentitiesBox = styled.p`
+  display: flex;
+  align-items: center;
+  height: 7.2rem;
+  margin-right: 0.5rem;
+  padding: 0 2rem;
+`;
+
+type BoxedLinkProps = Pick<Identity, "primary" | "status"> & {
+  social?: boolean;
+};
+
+export const BoxedLink = styled(NeutralLink)<BoxedLinkProps>`
+  height: 7.2rem;
+  padding: 0 ${({ theme }) => theme.spaces.xs};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  ${(props) =>
+    props.social &&
+    `
+      cursor: default;
+    `}
+
+  ${(props) =>
+    props.primary &&
+    `
+      font-weight: ${props.theme.fontWeights.semibold};
+    `}
+
+  ${(props) =>
+    props.status === "unvalidated" &&
+    `
+      color: ${props.theme.colors.lightGrey};
+    `};
 `;
