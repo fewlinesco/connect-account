@@ -164,7 +164,7 @@ describe("LoginsOverviewPage", () => {
       expect(boxedLink).toHaveLength(2);
     });
 
-    test("it should display no emails when there are not", () => {
+    test("it should display no email if there is none", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [
           {
@@ -185,13 +185,13 @@ describe("LoginsOverviewPage", () => {
       );
       const boxedLink = component.find(BoxedLink);
       const noEmail = component.contains(
-        <NoIdentitiesBox>No emails added yet.</NoIdentitiesBox>,
+        <NoIdentitiesBox>No email added yet.</NoIdentitiesBox>,
       );
       expect(noEmail).toEqual(true);
       expect(boxedLink).toHaveLength(1);
     });
 
-    test("it should display No phone number added yet. when there are not", () => {
+    test("it should display No phone number added yet. if there is none", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [],
         emailIdentities: [
@@ -234,7 +234,7 @@ describe("LoginsOverviewPage", () => {
         <NoIdentitiesBox>No phone number added yet.</NoIdentitiesBox>,
       );
       const noEmail = component.contains(
-        <NoIdentitiesBox>No emails added yet.</NoIdentitiesBox>,
+        <NoIdentitiesBox>No email added yet.</NoIdentitiesBox>,
       );
       expect(noPhone).toEqual(true);
       expect(noEmail).toEqual(true);
