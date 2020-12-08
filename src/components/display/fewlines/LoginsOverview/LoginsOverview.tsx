@@ -35,7 +35,6 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
     },
     SOCIAL_LOGINS: {
       title: "Social logins",
-      identityType: IdentityTypes.GITHUB,
       identitiesList: socialIdentities,
       noIdentityMessage: "No social logins added yet.",
     },

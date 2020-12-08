@@ -26,13 +26,12 @@ import {
   formatSpecialSocialIdentities,
   capitalizeFirstLetter,
 } from "@src/utils/format";
-import { getIdentityType } from "@src/utils/getIdentityType";
 
 type IdentitySectionProps = {
   lastOfTheList: boolean;
   content: {
     title: string;
-    identityType: IdentityTypes;
+    identityType?: IdentityTypes;
     identitiesList: Identity[];
     noIdentityMessage: string;
     addNewIdentityMessage?: string;
@@ -173,17 +172,13 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
           <NoIdentitiesBox>{noIdentityMessage}</NoIdentitiesBox>
         ) : (
           displayedList.map((identity: Identity, index) =>
-            [IdentityTypes.EMAIL, IdentityTypes.PHONE].includes(
-              getIdentityType(identityType),
-            )
+            identityType
               ? displayIdentityList(identity, index, displayedList.length - 1)
               : displaySocialLoginsList(identity, index, displayedList),
           )
         )}
       </ShadowBox>
-      {[IdentityTypes.EMAIL, IdentityTypes.PHONE].includes(
-        getIdentityType(identityType),
-      ) && (
+      {identityType && (
         <>
           {identitiesList.length > 1 && (
             <Flex>
