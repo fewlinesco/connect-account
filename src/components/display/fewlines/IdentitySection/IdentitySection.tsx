@@ -21,6 +21,32 @@ type IdentitySectionProps = {
   };
 };
 
+function displayIdentityList(
+  identity: Identity,
+  index: number,
+  listLength: number,
+): JSX.Element {
+  return (
+    <div key={identity.type + index}>
+      <BoxedLink
+        primary={identity.primary}
+        status={identity.status}
+        href={{
+          pathname: "/account/logins/[type]/[id]",
+          query: {
+            type: identity.type.toLowerCase(),
+            id: identity.id,
+          },
+        }}
+      >
+        <p>{identity.value}</p>
+        <RightChevron />
+      </BoxedLink>
+      {index < listLength && <Separator />}
+    </div>
+  );
+}
+
 export const IdentitySection: React.FC<IdentitySectionProps> = ({
   content,
 }) => {
@@ -45,29 +71,9 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
         {content.identitiesList.length === 0 ? (
           <NoIdentitiesBox>{content.noIdentityMessage}</NoIdentitiesBox>
         ) : (
-          displayedList.map((identity: Identity, index) => {
-            return (
-              <div key={identity.type + index}>
-                <BoxedLink
-                  primary={identity.primary}
-                  status={identity.status}
-                  href={{
-                    pathname: "/account/logins/[type]/[id]",
-                    query: {
-                      type: identity.type.toLowerCase(),
-                      id: identity.id,
-                    },
-                  }}
-                >
-                  <p>{identity.value}</p>
-                  <RightChevron />
-                </BoxedLink>
-                {displayedList.indexOf(identity) < displayedList.length - 1 && (
-                  <Separator />
-                )}
-              </div>
-            );
-          })
+          displayedList.map((identity: Identity, index) =>
+            displayIdentityList(identity, index, displayedList.length - 1),
+          )
         )}
       </ShadowBox>
       {content.identitiesList.length > 1 && (
