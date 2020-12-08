@@ -1,7 +1,8 @@
+import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import React from "react";
 
-import type { IdentityTypes } from "@lib/@types";
+import { IdentityTypes } from "@lib/@types";
 import { HttpVerbs } from "@src/@types/core/HttpVerbs";
 import { useCookies } from "@src/hooks/useCookies";
 import { fetchJson } from "@src/utils/fetchJson";
@@ -35,8 +36,17 @@ export const DeleteIdentity: React.FC<DeleteIdentityProps> = ({
     value: value,
   };
 
+  const deleteMessage = `${
+    getIdentityType(type) === IdentityTypes.EMAIL
+      ? "Email address"
+      : "Phone number"
+  } has been deleted`;
+
   const deleteIdentity = async (): Promise<void> => {
     return fetchJson("/api/delete-identity", HttpVerbs.DELETE, requestData)
+      .then(() => {
+        Cookie.set("flashMessage", deleteMessage);
+      })
       .then(() => {
         router && router.push("/account/logins");
       })
