@@ -147,14 +147,6 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
     setHideSecondaryIdentities,
   ] = React.useState<boolean>(true);
 
-  let displayedList: Identity[];
-
-  hideSecondaryIdentities
-    ? (displayedList = content.identitiesList.filter(
-        (identity) => identity.primary,
-      ))
-    : (displayedList = content.identitiesList);
-
   const {
     title,
     identityType,
@@ -162,6 +154,12 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
     noIdentityMessage,
     addNewIdentityMessage,
   } = content;
+
+  let displayedList: Identity[] = identitiesList;
+
+  identityType &&
+    hideSecondaryIdentities &&
+    (displayedList = identitiesList.filter((identity) => identity.primary));
 
   return (
     <Section lastOfTheList={lastOfTheList}>
