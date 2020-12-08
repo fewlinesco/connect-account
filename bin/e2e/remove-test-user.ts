@@ -1,6 +1,5 @@
-import { IdentityTypes } from "../../lib/@types";
 import { deleteUser } from "../../lib/commands/deleteUser";
-import { getUserFiltersByProvider } from "../../lib/queries/getUserFiltersByProvider";
+import { getUserIDFromIdentityValue } from "../../lib/queries/getUserIDFromIdentityValue";
 
 async function removeTestUser(): Promise<void> {
   if (process.env.GITHUB_CONTEXT_EVENT === undefined) {
@@ -31,9 +30,8 @@ async function removeTestUser(): Promise<void> {
         "@",
       ).join("_" + githubActionsContext.deployment.sha + "@");
 
-      const testUserId = await getUserFiltersByProvider({
+      const testUserId = await getUserIDFromIdentityValue({
         value: testUserEmail,
-        type: IdentityTypes.EMAIL,
       }).then(({ data, errors }) => {
         if (errors) {
           throw errors;
@@ -42,6 +40,7 @@ async function removeTestUser(): Promise<void> {
         if (!data) {
           throw new Error("User not found.");
         }
+
         return data.provider.user.id;
       });
 

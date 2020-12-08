@@ -2,10 +2,10 @@ import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
 import { fetchManagement } from "../../src/utils/fetchManagement";
-import type { IdentityInput } from "../@types/Identity";
+import type { IdentityValueInput } from "../@types/Identity";
 import type { ProviderUserId } from "../@types/ProviderUser";
 
-const GET_USER_FILTERS_BY_PROVIDER_QUERY = gql`
+const GET_USER_ID_FROM_IDENTITY_VALUE_QUERY = gql`
   query getUser($identities: IdentityInput!) {
     provider {
       user(filters: { identities: $identities }) {
@@ -15,11 +15,11 @@ const GET_USER_FILTERS_BY_PROVIDER_QUERY = gql`
   }
 `;
 
-export async function getUserFiltersByProvider(
-  identities: IdentityInput,
+export async function getUserIDFromIdentityValue(
+  identities: IdentityValueInput,
 ): Promise<FetchResult<{ provider: ProviderUserId }>> {
   const operation = {
-    query: GET_USER_FILTERS_BY_PROVIDER_QUERY,
+    query: GET_USER_ID_FROM_IDENTITY_VALUE_QUERY,
     variables: { identities },
   };
 

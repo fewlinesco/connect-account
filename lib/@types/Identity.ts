@@ -33,3 +33,7 @@ export type Identity = {
   type: IdentityTypes;
   value: string;
 };
+
+export type IdentityValueInput = {
+  value: string;
+};

@@ -35,7 +35,7 @@ export type CreateOrUpdatePasswordInput = {
 
 export type CreateUserWithIdentitiesInput = {
   identities: IdentityInput[];
-  localeCode?: string;
+  localeCode: string;
 };
 
 export type DeleteUserInput = {

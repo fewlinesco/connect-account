@@ -51,4 +51,4 @@ jobs:
       env:
         CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
       run: yarn e2e:remove-test-user
-      
+

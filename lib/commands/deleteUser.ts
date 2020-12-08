@@ -2,7 +2,7 @@ import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
 import { fetchManagement } from "../../src/utils/fetchManagement";
-import { DeleteUserInput, DeleteUserStatus } from "../@types/ProviderUser";
+import type { DeleteUserInput, DeleteUserStatus } from "../@types/ProviderUser";
 
 const DELETE_USER_MUTATION = gql`
   mutation deleteUser($userId: String!) {
