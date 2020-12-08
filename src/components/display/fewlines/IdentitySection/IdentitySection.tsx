@@ -156,17 +156,25 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
       ))
     : (displayedList = content.identitiesList);
 
+  const {
+    title,
+    identityType,
+    identitiesList,
+    noIdentityMessage,
+    addNewIdentityMessage,
+  } = content;
+
   return (
     <Section lastOfTheList={lastOfTheList}>
       {lastOfTheList ? <TimelineEnd /> : <Timeline />}
-      <h2>{content.title}</h2>
+      <h2>{title}</h2>
       <ShadowBox>
-        {content.identitiesList.length === 0 ? (
-          <NoIdentitiesBox>{content.noIdentityMessage}</NoIdentitiesBox>
+        {identitiesList.length === 0 ? (
+          <NoIdentitiesBox>{noIdentityMessage}</NoIdentitiesBox>
         ) : (
           displayedList.map((identity: Identity, index) =>
             [IdentityTypes.EMAIL, IdentityTypes.PHONE].includes(
-              getIdentityType(content.identityType),
+              getIdentityType(identityType),
             )
               ? displayIdentityList(identity, index, displayedList.length - 1)
               : displaySocialLoginsList(identity, index, displayedList),
@@ -174,23 +182,23 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
         )}
       </ShadowBox>
       {[IdentityTypes.EMAIL, IdentityTypes.PHONE].includes(
-        getIdentityType(content.identityType),
+        getIdentityType(identityType),
       ) && (
         <>
-          {content.identitiesList.length > 1 && (
+          {identitiesList.length > 1 && (
             <Flex>
               <ShowMoreButton
                 hide={hideSecondaryIdentities}
-                quantity={content.identitiesList.length - 1}
+                quantity={identitiesList.length - 1}
                 setHideSecondary={setHideSecondaryIdentities}
               />
             </Flex>
           )}
           <NeutralLink
-            href={`/account/logins/${content.identityType.toLowerCase()}/new`}
+            href={`/account/logins/${identityType.toLowerCase()}/new`}
           >
             <Button variant={ButtonVariant.SECONDARY}>
-              {`+ ${content.addNewIdentityMessage}`}
+              {`+ ${addNewIdentityMessage}`}
             </Button>
           </NeutralLink>
         </>
