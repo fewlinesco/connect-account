@@ -173,29 +173,27 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
           )
         )}
       </ShadowBox>
-
-      {[IdentityTypes.EMAIL, IdentityTypes.PHONE].includes(
-        getIdentityType(content.identityType),
-      ) &&
-        content.identitiesList.length > 1 && (
-          <Flex>
-            <ShowMoreButton
-              hide={hideSecondaryIdentities}
-              quantity={content.identitiesList.length - 1}
-              setHideSecondary={setHideSecondaryIdentities}
-            />
-          </Flex>
-        )}
       {[IdentityTypes.EMAIL, IdentityTypes.PHONE].includes(
         getIdentityType(content.identityType),
       ) && (
-        <NeutralLink
-          href={`/account/logins/${content.identityType.toLowerCase()}/new`}
-        >
-          <Button variant={ButtonVariant.SECONDARY}>
-            {`+ ${content.addNewIdentityMessage}`}
-          </Button>
-        </NeutralLink>
+        <>
+          {content.identitiesList.length > 1 && (
+            <Flex>
+              <ShowMoreButton
+                hide={hideSecondaryIdentities}
+                quantity={content.identitiesList.length - 1}
+                setHideSecondary={setHideSecondaryIdentities}
+              />
+            </Flex>
+          )}
+          <NeutralLink
+            href={`/account/logins/${content.identityType.toLowerCase()}/new`}
+          >
+            <Button variant={ButtonVariant.SECONDARY}>
+              {`+ ${content.addNewIdentityMessage}`}
+            </Button>
+          </NeutralLink>
+        </>
       )}
     </Section>
   );
