@@ -32,3 +32,12 @@ export class PhoneNumberInputValueShouldBeANumber extends Error {
     this.message = message;
   }
 }
+
+export class UnhandledIdentityType extends Error {
+  readonly message: string;
+
+  constructor(message: string) {
+    super();
+    this.message = message;
+  }
+}

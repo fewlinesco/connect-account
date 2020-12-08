@@ -1,4 +1,5 @@
 import { IdentityTypes } from "@lib/@types";
+import { UnhandledIdentityType } from "@src/clientErrors";
 
 export function getIdentityType(type: string): IdentityTypes {
   switch (type.toUpperCase()) {
@@ -30,7 +31,9 @@ export function getIdentityType(type: string): IdentityTypes {
       return IdentityTypes.MICROSOFT;
     case "PROVIDER":
       return IdentityTypes.PROVIDER;
+    case "DECATHLON":
+      return IdentityTypes.DECATHLON;
     default:
-      throw new Error(`Can't deal with identity type ${type}`);
+      throw new UnhandledIdentityType(`Can't deal with identity type ${type}`);
   }
 }
