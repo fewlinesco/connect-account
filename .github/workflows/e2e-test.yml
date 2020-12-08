@@ -10,6 +10,11 @@ jobs:
     container:
       image:  node:14.8-buster
 
+    env:
+      GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
+      CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
+      CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
+
     steps:
     - uses: actions/checkout@v2
 
@@ -33,8 +38,17 @@ jobs:
 
     - name: adding Vercel URL to Application's redirect uris
       env:
-        GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
         CONNECT_ACCOUNT_TEST_APP_ID: ${{ secrets.CONNECT_ACCOUNT_TEST_APP_ID }}
-        CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
-        CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
-      run: yarn e2e-add-redirect-uri
+      run: yarn e2e:add-redirect-uri
+
+    - name: creating test user
+      env:
+        CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
+        CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
+      run: yarn e2e:create-test-user
+
+    - name: removing test user
+      env:
+        CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
+      run: yarn e2e:remove-test-user
+
