@@ -45,9 +45,9 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
         {content.identitiesList.length === 0 ? (
           <NoIdentitiesBox>{content.noIdentityMessage}</NoIdentitiesBox>
         ) : (
-          displayedList.map((identity: Identity) => {
+          displayedList.map((identity: Identity, index) => {
             return (
-              <div key={identity.id}>
+              <div key={identity.type + index}>
                 <BoxedLink
                   primary={identity.primary}
                   status={identity.status}
