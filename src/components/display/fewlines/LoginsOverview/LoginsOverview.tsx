@@ -88,12 +88,14 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
   const IDENTITY_SECTION_CONTENT = {
     EMAIL: {
       title: "Email Addresses",
+      identityType: IdentityTypes.EMAIL,
       identitiesList: emailIdentities,
       noIdentityMessage: "No email added yet.",
       addNewIdentityMessage: "add new email address",
     },
     PHONE: {
       title: "Phone numbers",
+      identityType: IdentityTypes.PHONE,
       identitiesList: phoneIdentities,
       noIdentityMessage: "No phone number added yet.",
       addNewIdentityMessage: "add new phone number",

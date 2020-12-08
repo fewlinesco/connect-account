@@ -9,11 +9,12 @@ import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
 import { Timeline } from "../Timeline/Timeline";
-import { Identity } from "@lib/@types";
+import { Identity, IdentityTypes } from "@lib/@types";
 
 type IdentitySectionProps = {
   content: {
     title: string;
+    identityType: IdentityTypes;
     identitiesList: Identity[];
     noIdentityMessage: string;
     addNewIdentityMessage: string;
@@ -78,9 +79,11 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
           />
         </Flex>
       )}
-      <NeutralLink href={`/account/logins/${content.title}/new`}>
+      <NeutralLink
+        href={`/account/logins/${content.identityType.toLowerCase()}/new`}
+      >
         <Button variant={ButtonVariant.SECONDARY}>
-          {content.addNewIdentityMessage}
+          {`+ ${content.addNewIdentityMessage}`}
         </Button>
       </NeutralLink>
     </Section>
