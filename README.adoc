@@ -322,9 +322,15 @@ export const Bar: React.FC<BarProps> = ({ foo }) => { return <div>{ foo }</div>}
 
 If you are not familiar with TypeScript generic types, please take a look at the https://www.typescriptlang.org/docs/handbook/generics.html[documentation].
 
+== Components
+
 === Next's links
 
 Next's `Link` component requires its child to be an anchor tag. To lighten the JSX, we made a custom component called `NeutralLink` that provides the anchor tag.
+
+=== Social Identities
+
+When adding a new supported Social Identity to the application, remember to add the corresponding icon as SVG.
 
 == Style
 
