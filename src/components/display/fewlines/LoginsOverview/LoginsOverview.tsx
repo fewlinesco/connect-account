@@ -1,12 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import {
-  formatSpecialSocialIdentities,
-  capitalizeFirstLetter,
-} from "../../../../utils/format";
 import { Button, ButtonVariant } from "../Button/Button";
 import { AppleIcon } from "../Icons/AppleIcon/AppleIcon";
+import { DecathlonIcon } from "../Icons/DecathlonIcon/DecathlonIcon";
 import { FacebookIcon } from "../Icons/FacebookIcon/FacebookIcon";
 import { GithubIcon } from "../Icons/GithubIcon/GithubIcon";
 import { GoogleIcon } from "../Icons/GoogleIcon/GoogleIcon";
@@ -27,6 +24,10 @@ import { TimelineEnd } from "../TimelineEnd/TimelineEnd";
 import type { Identity } from "@lib/@types";
 import { IdentityTypes } from "@lib/@types/Identity";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
+import {
+  formatSpecialSocialIdentities,
+  capitalizeFirstLetter,
+} from "@src/utils/format";
 
 type LoginsOverviewProps = {
   sortedIdentities: SortedIdentities;
@@ -54,6 +55,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
     STRAVA: <StravaIcon />,
     VKONTAKTE: <VKontakteIcon />,
     MICROSOFT: <MicrosoftIcon />,
+    DECATHLON: <DecathlonIcon />,
   };
 
   const getSocialIdentityIcon = (type: IdentityTypes): JSX.Element => {
@@ -80,6 +82,8 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
         return SOCIAL_IDENTITIES_ICONS.VKONTAKTE;
       case IdentityTypes["MICROSOFT"]:
         return SOCIAL_IDENTITIES_ICONS.MICROSOFT;
+      case IdentityTypes["DECATHLON"]:
+        return SOCIAL_IDENTITIES_ICONS.DECATHLON;
       default:
         return <React.Fragment />;
     }

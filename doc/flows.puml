@@ -8,7 +8,6 @@
 ' ===========================================================
 
 @startuml
-
 skinparam NoteBackgroundColor #fff
 skinparam NoteBorderColor #000
 
@@ -33,7 +32,7 @@ skinparam roundcorner 5
 
 actor User                         as user
 participant "Account Web Client"   as account
-database MongoDB                   as mongo
+database DynamoDB                   as dynamo
 participant "Connect"              as connect
 
 user -> account : Wants to login
@@ -44,8 +43,8 @@ account -> connect : Fetch OpenID configuration
 note left
 The **@fwl/oauth2** package mainly provides
 an abstraction for the OAuth2 flow, and a
-secure way to verify JWT for **HS256** and
-**RS256** algorithms
+secure way to decrypt/verify **JWE** or 
+**JWS** for **HS256** and **RS256** algorithms.
 end note
 connect -> account : Send back OpenID configuration and stores it in-memory
 
@@ -55,13 +54,12 @@ account -> connect : Redirect to **authorize_url**
 note left
 The **authorize_url** is built with
 the **client_id**, **response_type**,
-**redirect_uri** and **scope**
+**redirect_uri** and **scope**.
 end note
 connect -> connect : User logs in and accepts scopes
 connect -> account : Send back the **authorization_code** using the **redirect_uri**
-account -> connect : Send the payload
+account -> connect : Send the **payload**
 note left
-**payload**
 - client_id
 - client_secret
 - grant_type
@@ -69,18 +67,27 @@ note left
 - authorization_code
 end note
 connect -> account : Send back **access_token** + **refresh_token** + **id_token**
-account -> mongo : Insert user in DB
+account -> dynamo : Insert **user data** in DB
+note left
+- sub (hash key)
+- refresh_token
+end note
+account -> account : Initialize **UserCookie**
+note left
+- sub
+- access_token
+end note
 
 == access_token verification ==
 
 account -> connect : Fetch **JWKS**
 note left
-This is the flow for the RS256 flow, which
-most providers uses.In the case of HS256,
+This is the flow for the **RS256 JWE**, which
+most providers uses. In the case of **HS256**,
 all it takes is the **client_secret**.
 end note
 connect -> account : Send back **JWKS** which are stored in memory
-account -> account : verify new **access_token**
+account -> account : decrypt and verify received **access_token**
 
 == Refreshing the access_token ==
 
@@ -88,20 +95,25 @@ account -> connect : Send **refresh_token**
 note left
 The **access_token** has a validity period of one hour. To smooth 
 the user experience, we are using a **refresh_token**, a one time
-use without expiration date. To refresh the user authorization.
+use token without expiration date. To refresh the user authorization.
 end note
 connect -> account : Send back a new **refresh_token** and **access_token**
-account -> mongo : Update User tokens
-
+note left
+- client_id
+- client_secret
+- refresh_token
+- grant_type: "refresh_token"
+- scope
+end note
+account -> dynamo : Update **refresh_token**
+account -> account : Update **access_token** in **UserCookie**
 @enduml
-
 
 ' =============================================================================
 ' ======================= Identity commands and queries =======================
 ' =============================================================================
 
 @startuml
-
 skinparam NoteBackgroundColor #fff
 skinparam NoteBorderColor #000
 
@@ -126,52 +138,58 @@ skinparam roundcorner 5
 
 actor User                         as user
 participant "Account Web Client"   as account
-database MongoDB                   as mongo
+database DynamoDB                   as dynamo
 participant "Connect"              as connect
 
-== Add new identity ==
+== Add new Identity ==
 
-user -> account : Input identity value
+user -> account : Input Identity value
 activate account
-account -> mongo : Insert temporary identity with the **insertTemporaryIdentity** command
+account -> connect : Trigger the **sendIdentityValidationCode** query
 note left
-The command is called with the **user sub**,
-the **temporary identity** and a **DB client**.
+- callbackUrl
+- identity
+- localeOverride
+- userId
 end note
-account -> connect : Trigger the sendIdentityValidationCode query
+connect -> account : Returns **callbackUrl**, **eventId**, **localeCode** and **nounce**
+account -> dynamo : Insert **TemporaryIdentity** with the **insertTemporaryIdentity** command
 note left
-The query takes a **callbackUrl**, the **identity**
-the **localeOverride** and the **userId**.
+- eventId
+- value
+- type
+- expiresAt
 end note
 user -> account : Input verification code
-account -> connect : Trigger the checkVerificationCode query
+account -> connect : Trigger the **checkVerificationCode** query
 note left
-The query is called with the **verification code**
- and the **event id**
+- verification code
+- event id
 end note
-account -> mongo : Query back temporary identity and verify expiration date
+account -> dynamo : Query back **TemporaryIdentity** and **verify** expiration date
 account -> connect : Trigger the **addIdentityToUser** mutation
 note left
-The mutation is called with the **user_id**,
-identity **value** and **type**.
+- user_id
+- value
+- type
 end note
-account -> mongo : Delete temporary identity
+account -> dynamo : Delete **TemporaryIdentity**
 deactivate account
 
-== Delete identity ==
+== Delete Identity ==
 
-account -> connect : Run **removeIdentityFromUser** mutation.
+account -> connect : Trigger **removeIdentityFromUser** mutation
 note left
-The mutation is called with the **user_id**,
-identity **value** and **type**.
+- user_id
+- value
+- type
 end note
 
-== Update identity ==
+== Update Identity ==
 
 note over user, connect
-The update identity flow is a mix between the two above, starting with the add identity, and delete is the first sequence succeed.
+The update Identity flow is a mix between the two above, starting with the add Identity, and delete Identity if the first sequence succeed.
 end note
-
 @enduml
 
 
