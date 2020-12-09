@@ -39,9 +39,9 @@ const displayStandardIdentityList = (
 export const EmailIdentitySection = (): JSX.Element => {
   return (
     <IdentitySection
+      sectionName={"EMAIL"}
       content={{
         title: "Email Addresses",
-        identityType: IdentityTypes.EMAIL,
         identitiesList: [
           {
             id: "hello",
@@ -54,6 +54,7 @@ export const EmailIdentitySection = (): JSX.Element => {
         displayListMethod: displayStandardIdentityList,
         noIdentityMessage: "No email added yet.",
         addNewIdentityMessage: "add new email address",
+        hideSecondaryByDefault: true,
       }}
       lastOfTheList={false}
     />

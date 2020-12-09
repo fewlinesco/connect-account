@@ -135,25 +135,26 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
   const IDENTITY_SECTION_CONTENT = {
     EMAIL: {
       title: "Email addresses",
-      identityType: IdentityTypes.EMAIL,
       identitiesList: emailIdentities,
       displayListMethod: displayStandardIdentityList,
       noIdentityMessage: "No email added yet.",
       addNewIdentityMessage: "add new email address",
+      hideSecondaryByDefault: true,
     },
     PHONE: {
       title: "Phone numbers",
-      identityType: IdentityTypes.PHONE,
       identitiesList: phoneIdentities,
       displayListMethod: displayStandardIdentityList,
       noIdentityMessage: "No phone number added yet.",
       addNewIdentityMessage: "add new phone number",
+      hideSecondaryByDefault: true,
     },
     SOCIAL_LOGINS: {
       title: "Social logins",
       identitiesList: socialIdentities,
       displayListMethod: displaySocialLoginsList,
       noIdentityMessage: "No social logins added yet.",
+      hideSecondaryByDefault: false,
     },
   };
 
@@ -167,6 +168,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
         return (
           <IdentitySection
             key={sectionName}
+            sectionName={sectionName}
             content={content}
             lastOfTheList={lastOfTheList}
           />

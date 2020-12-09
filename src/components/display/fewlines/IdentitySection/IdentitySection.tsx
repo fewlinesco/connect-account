@@ -7,13 +7,13 @@ import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
 import { Timeline } from "../Timeline/Timeline";
 import { TimelineEnd } from "../TimelineEnd/TimelineEnd";
-import { Identity, IdentityTypes } from "@lib/@types";
+import { Identity } from "@lib/@types";
 
 type IdentitySectionProps = {
+  sectionName: string;
   lastOfTheList: boolean;
   content: {
     title: string;
-    identityType?: IdentityTypes;
     identitiesList: Identity[];
     displayListMethod: (
       identity: Identity,
@@ -22,10 +22,12 @@ type IdentitySectionProps = {
     ) => JSX.Element;
     noIdentityMessage: string;
     addNewIdentityMessage?: string;
+    hideSecondaryByDefault: boolean;
   };
 };
 
 export const IdentitySection: React.FC<IdentitySectionProps> = ({
+  sectionName,
   lastOfTheList,
   content,
 }) => {
@@ -36,16 +38,16 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
 
   const {
     title,
-    identityType,
     identitiesList,
     displayListMethod,
     noIdentityMessage,
     addNewIdentityMessage,
+    hideSecondaryByDefault,
   } = content;
 
   let displayedList: Identity[] = identitiesList;
 
-  identityType &&
+  hideSecondaryByDefault &&
     hideSecondaryIdentities &&
     (displayedList = identitiesList.filter((identity) => identity.primary));
 
@@ -62,7 +64,7 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
           )
         )}
       </ShadowBox>
-      {identityType && (
+      {hideSecondaryByDefault && (
         <>
           {identitiesList.length > 1 && (
             <Flex>
@@ -73,14 +75,14 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
               />
             </Flex>
           )}
-          <NeutralLink
-            href={`/account/logins/${identityType.toLowerCase()}/new`}
-          >
-            <Button variant={ButtonVariant.SECONDARY}>
-              {`+ ${addNewIdentityMessage}`}
-            </Button>
-          </NeutralLink>
         </>
+      )}
+      {addNewIdentityMessage && (
+        <NeutralLink href={`/account/logins/${sectionName.toLowerCase()}/new`}>
+          <Button variant={ButtonVariant.SECONDARY}>
+            {`+ ${addNewIdentityMessage}`}
+          </Button>
+        </NeutralLink>
       )}
     </Section>
   );
