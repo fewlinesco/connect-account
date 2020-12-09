@@ -211,8 +211,7 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 | Represents the kind of user authorized information and actions that an Application is able to access on another Application.
 
 | `ACCOUNT_JWE_PRIVATE_KEY`
-| The PEM formatted private key used to decrypt the JWE access token.
-| (i.e. "-----BEGIN RSA PRIVATE KEY-----\nqewnjfb...\n..")
+| The PEM formatted private key used to decrypt the JWE access token. (i.e. "-----BEGIN RSA PRIVATE KEY-----\nqewnjfb...\n..")
 
 | `IS_JWE_SIGNED`
 | A boolean value that indicates if the JWE access token is signed or not.
