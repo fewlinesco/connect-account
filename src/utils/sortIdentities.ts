@@ -14,28 +14,35 @@ export function sortIdentities(fetchedData: {
     const identities: Identity[] = fetchedData.data.provider.user.identities;
 
     identities.forEach((identity) => {
-      const identityPattern = {
-        id: identity.id,
-        primary: identity.primary,
-        status: identity.status,
-        value: identity.value,
-      };
+      try {
+        const identityPattern = {
+          id: identity.id,
+          primary: identity.primary,
+          status: identity.status,
+          value: identity.value,
+        };
 
-      if (getIdentityType(identity.type) === IdentityTypes.EMAIL) {
-        emailIdentities.push({
-          ...identityPattern,
-          type: IdentityTypes.EMAIL,
-        });
-      } else if (getIdentityType(identity.type) === IdentityTypes.PHONE) {
-        phoneIdentities.push({
-          ...identityPattern,
-          type: IdentityTypes.PHONE,
-        });
-      } else if (getIdentityType(identity.type) !== IdentityTypes.PROVIDER) {
-        socialIdentities.push({
-          ...identityPattern,
-          type: getIdentityType(identity.type),
-        });
+        if (getIdentityType(identity.type) === IdentityTypes.EMAIL) {
+          emailIdentities.push({
+            ...identityPattern,
+            type: IdentityTypes.EMAIL,
+          });
+        } else if (getIdentityType(identity.type) === IdentityTypes.PHONE) {
+          phoneIdentities.push({
+            ...identityPattern,
+            type: IdentityTypes.PHONE,
+          });
+        } else if (getIdentityType(identity.type) !== IdentityTypes.PROVIDER) {
+          socialIdentities.push({
+            ...identityPattern,
+            type: getIdentityType(identity.type),
+          });
+        }
+      } catch (error) {
+        // if type unknown ID
+        // return
+
+        throw error;
       }
     });
   }

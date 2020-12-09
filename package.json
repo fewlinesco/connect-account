@@ -45,7 +45,7 @@
     "@babel/core": "7.12.9",
     "@babel/plugin-transform-react-jsx": "7.12.7",
     "@fewlines/eslint-config": "3.0.0",
-    "@hapi/iron": "6.0.0",
+    "@hapi/iron": "^6.0.0",
     "@storybook/addon-actions": "6.1.7",
     "@storybook/addon-essentials": "6.1.7",
     "@storybook/addon-links": "6.1.7",
