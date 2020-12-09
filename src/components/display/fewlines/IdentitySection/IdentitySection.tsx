@@ -116,7 +116,7 @@ export const NoIdentitiesBox = styled.p`
   padding: 0 2rem;
 `;
 
-type BoxedLinkProps = Pick<Identity, "primary" | "status"> & {
+type BoxedLinkProps = {
   social?: boolean;
 };
 
@@ -132,16 +132,4 @@ export const BoxedLink = styled(NeutralLink)<BoxedLinkProps>`
     `
       cursor: default;
     `}
-
-  ${(props) =>
-    props.primary &&
-    `
-      font-weight: ${props.theme.fontWeights.semibold};
-    `}
-
-  ${(props) =>
-    props.status === "unvalidated" &&
-    `
-      color: ${props.theme.colors.lightGrey};
-    `};
 `;

@@ -77,8 +77,6 @@ const displayStandardIdentityList = (
   return (
     <div key={identity.type + index}>
       <BoxedLink
-        primary={identity.primary}
-        status={identity.status}
         href={{
           pathname: "/account/logins/[type]/[id]",
           query: {
@@ -87,7 +85,9 @@ const displayStandardIdentityList = (
           },
         }}
       >
-        <p>{identity.value}</p>
+        <IdentityValue primary={identity.primary} status={identity.status}>
+          {identity.value}
+        </IdentityValue>
         <RightChevron />
       </BoxedLink>
       {index < listLength && <Separator />}
@@ -102,12 +102,7 @@ const displaySocialLoginsList = (
 ): JSX.Element => {
   return (
     <div key={identity.type + index}>
-      <BoxedLink
-        primary={false}
-        status={identity.status}
-        social={true}
-        href="#"
-      >
+      <BoxedLink social={true} href="#">
         <SocialIdentityBox>
           {getSocialIdentityIcon(identity.type)}
           <SocialIdentityName>
@@ -189,4 +184,18 @@ const SocialIdentityBox = styled.div`
 
 const SocialIdentityName = styled.p`
   margin: 0 0 0 ${({ theme }) => theme.spaces.xxs};
+`;
+
+export const IdentityValue = styled.p<Pick<Identity, "primary" | "status">>`
+  ${(props) =>
+    props.primary &&
+    `
+      font-weight: ${props.theme.fontWeights.semibold};
+    `}
+
+  ${(props) =>
+    props.status === "unvalidated" &&
+    `
+      color: ${props.theme.colors.lightGrey};
+    `};
 `;

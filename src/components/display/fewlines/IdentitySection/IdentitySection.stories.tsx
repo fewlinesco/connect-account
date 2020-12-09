@@ -1,6 +1,7 @@
 import React from "react";
 
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
+import { IdentityValue } from "../LoginsOverview/LoginsOverview";
 import { Separator } from "../Separator/Separator";
 import { BoxedLink, IdentitySection } from "./IdentitySection";
 import { Identity, IdentityTypes } from "@lib/@types";
@@ -18,8 +19,6 @@ const displayStandardIdentityList = (
   return (
     <div key={identity.type + index}>
       <BoxedLink
-        primary={identity.primary}
-        status={identity.status}
         href={{
           pathname: "/account/logins/[type]/[id]",
           query: {
@@ -28,7 +27,9 @@ const displayStandardIdentityList = (
           },
         }}
       >
-        <p>{identity.value}</p>
+        <IdentityValue primary={identity.primary} status={identity.status}>
+          {identity.value}
+        </IdentityValue>
         <RightChevron />
       </BoxedLink>
       {index < listLength && <Separator />}
