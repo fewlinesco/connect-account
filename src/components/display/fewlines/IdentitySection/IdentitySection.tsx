@@ -61,6 +61,7 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
           displayedList.map((identity: Identity, index) => (
             <div key={identity.type + index}>
               <BoxedLink
+                disableClick={disableClick}
                 href={
                   disableClick
                     ? "#"
@@ -133,7 +134,7 @@ export const NoIdentitiesBox = styled.p`
 `;
 
 type BoxedLinkProps = {
-  social?: boolean;
+  disableClick?: boolean;
 };
 
 export const BoxedLink = styled(NeutralLink)<BoxedLinkProps>`
@@ -144,7 +145,7 @@ export const BoxedLink = styled(NeutralLink)<BoxedLinkProps>`
   justify-content: space-between;
 
   ${(props) =>
-    props.social &&
+    props.disableClick &&
     `
       cursor: default;
     `}
