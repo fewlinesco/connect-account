@@ -2,30 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
-import { AppleIcon } from "../Icons/AppleIcon/AppleIcon";
-import { DecathlonIcon } from "../Icons/DecathlonIcon/DecathlonIcon";
-import { FacebookIcon } from "../Icons/FacebookIcon/FacebookIcon";
-import { GithubIcon } from "../Icons/GithubIcon/GithubIcon";
-import { GoogleIcon } from "../Icons/GoogleIcon/GoogleIcon";
-import { KakaoTalkIcon } from "../Icons/KakaoTalkIcon/KakaoTalkIcon";
-import { LineIcon } from "../Icons/LineIcon/LineIcon";
-import { MicrosoftIcon } from "../Icons/MicrosoftIcon/MicrosoftIcon";
-import { NaverIcon } from "../Icons/NaverIcon/NaverIcon";
-import { PaypalIcon } from "../Icons/PaypalIcon/PaypalIcon";
-import { RightChevron } from "../Icons/RightChevron/RightChevron";
-import { StravaIcon } from "../Icons/StravaIcon/StravaIcon";
-import { VKontakteIcon } from "../Icons/VKontakteIcon/VKontakteIcon";
 import { NeutralLink } from "../NeutralLink";
-import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
 import { Timeline } from "../Timeline/Timeline";
 import { TimelineEnd } from "../TimelineEnd/TimelineEnd";
 import { Identity, IdentityTypes } from "@lib/@types";
-import {
-  formatSpecialSocialIdentities,
-  capitalizeFirstLetter,
-} from "@src/utils/format";
 
 type IdentitySectionProps = {
   lastOfTheList: boolean;
@@ -33,109 +15,14 @@ type IdentitySectionProps = {
     title: string;
     identityType?: IdentityTypes;
     identitiesList: Identity[];
+    displayListMethod: (
+      identity: Identity,
+      index: number,
+      listLength: number,
+    ) => JSX.Element;
     noIdentityMessage: string;
     addNewIdentityMessage?: string;
   };
-};
-
-const SOCIAL_IDENTITIES_ICONS = {
-  APPLE: <AppleIcon />,
-  FACEBOOK: <FacebookIcon />,
-  GITHUB: <GithubIcon />,
-  GOOGLE: <GoogleIcon />,
-  KAKAO_TALK: <KakaoTalkIcon />,
-  LINE: <LineIcon />,
-  NAVER: <NaverIcon />,
-  PAYPAL: <PaypalIcon />,
-  STRAVA: <StravaIcon />,
-  VKONTAKTE: <VKontakteIcon />,
-  MICROSOFT: <MicrosoftIcon />,
-  DECATHLON: <DecathlonIcon />,
-};
-
-const getSocialIdentityIcon = (type: IdentityTypes): JSX.Element => {
-  switch (type) {
-    case IdentityTypes["APPLE"]:
-      return SOCIAL_IDENTITIES_ICONS.APPLE;
-    case IdentityTypes["FACEBOOK"]:
-      return SOCIAL_IDENTITIES_ICONS.FACEBOOK;
-    case IdentityTypes["GITHUB"]:
-      return SOCIAL_IDENTITIES_ICONS.GITHUB;
-    case IdentityTypes["GOOGLE"]:
-      return SOCIAL_IDENTITIES_ICONS.GOOGLE;
-    case IdentityTypes["KAKAO_TALK"]:
-      return SOCIAL_IDENTITIES_ICONS.KAKAO_TALK;
-    case IdentityTypes["LINE"]:
-      return SOCIAL_IDENTITIES_ICONS.LINE;
-    case IdentityTypes["NAVER"]:
-      return SOCIAL_IDENTITIES_ICONS.NAVER;
-    case IdentityTypes["PAYPAL"]:
-      return SOCIAL_IDENTITIES_ICONS.PAYPAL;
-    case IdentityTypes["STRAVA"]:
-      return SOCIAL_IDENTITIES_ICONS.STRAVA;
-    case IdentityTypes["VKONTAKTE"]:
-      return SOCIAL_IDENTITIES_ICONS.VKONTAKTE;
-    case IdentityTypes["MICROSOFT"]:
-      return SOCIAL_IDENTITIES_ICONS.MICROSOFT;
-    case IdentityTypes["DECATHLON"]:
-      return SOCIAL_IDENTITIES_ICONS.DECATHLON;
-    default:
-      return <React.Fragment />;
-  }
-};
-
-const displayIdentityList = (
-  identity: Identity,
-  index: number,
-  listLength: number,
-): JSX.Element => {
-  return (
-    <div key={identity.type + index}>
-      <BoxedLink
-        primary={identity.primary}
-        status={identity.status}
-        href={{
-          pathname: "/account/logins/[type]/[id]",
-          query: {
-            type: identity.type.toLowerCase(),
-            id: identity.id,
-          },
-        }}
-      >
-        <p>{identity.value}</p>
-        <RightChevron />
-      </BoxedLink>
-      {index < listLength && <Separator />}
-    </div>
-  );
-};
-
-const displaySocialLoginsList = (
-  identity: Identity,
-  index: number,
-  socialIdentities: Identity[],
-): JSX.Element => {
-  return (
-    <div key={identity.type + index}>
-      <BoxedLink
-        primary={false}
-        status={identity.status}
-        social={true}
-        href="#"
-      >
-        <SocialIdentityBox>
-          {getSocialIdentityIcon(identity.type)}
-          <SocialIdentityName>
-            {identity.type === IdentityTypes.KAKAO_TALK ||
-            identity.type === IdentityTypes.VKONTAKTE
-              ? formatSpecialSocialIdentities(identity.type)
-              : capitalizeFirstLetter(identity.type)}
-          </SocialIdentityName>
-        </SocialIdentityBox>
-      </BoxedLink>
-      {index < socialIdentities.length - 1 && <Separator />}
-    </div>
-  );
 };
 
 export const IdentitySection: React.FC<IdentitySectionProps> = ({
@@ -151,6 +38,7 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
     title,
     identityType,
     identitiesList,
+    displayListMethod,
     noIdentityMessage,
     addNewIdentityMessage,
   } = content;
@@ -170,9 +58,7 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
           <NoIdentitiesBox>{noIdentityMessage}</NoIdentitiesBox>
         ) : (
           displayedList.map((identity: Identity, index) =>
-            identityType
-              ? displayIdentityList(identity, index, displayedList.length - 1)
-              : displaySocialLoginsList(identity, index, displayedList),
+            displayListMethod(identity, index, displayedList.length - 1),
           )
         )}
       </ShadowBox>
@@ -218,15 +104,6 @@ const Section = styled.div<SectionProps>`
 const Flex = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-const SocialIdentityBox = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const SocialIdentityName = styled.p`
-  margin: 0 0 0 ${({ theme }) => theme.spaces.xxs};
 `;
 
 export const NoIdentitiesBox = styled.p`
