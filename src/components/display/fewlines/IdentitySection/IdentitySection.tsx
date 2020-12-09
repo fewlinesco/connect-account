@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
 import { NeutralLink } from "../NeutralLink";
+import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
 import { Timeline } from "../Timeline/Timeline";
@@ -15,11 +16,8 @@ type IdentitySectionProps = {
   content: {
     title: string;
     identitiesList: Identity[];
-    displayListMethod: (
-      identity: Identity,
-      index: number,
-      listLength: number,
-    ) => JSX.Element;
+    displayListMethod: (identity: Identity) => JSX.Element;
+    disableClick: boolean;
     noIdentityMessage: string;
     addNewIdentityMessage?: string;
     hideSecondaryByDefault: boolean;
@@ -40,6 +38,7 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
     title,
     identitiesList,
     displayListMethod,
+    disableClick,
     noIdentityMessage,
     addNewIdentityMessage,
     hideSecondaryByDefault,
@@ -59,9 +58,26 @@ export const IdentitySection: React.FC<IdentitySectionProps> = ({
         {identitiesList.length === 0 ? (
           <NoIdentitiesBox>{noIdentityMessage}</NoIdentitiesBox>
         ) : (
-          displayedList.map((identity: Identity, index) =>
-            displayListMethod(identity, index, displayedList.length - 1),
-          )
+          displayedList.map((identity: Identity, index) => (
+            <div key={identity.type + index}>
+              <BoxedLink
+                href={
+                  disableClick
+                    ? "#"
+                    : {
+                        pathname: "/account/logins/[type]/[id]",
+                        query: {
+                          type: identity.type.toLowerCase(),
+                          id: identity.id,
+                        },
+                      }
+                }
+              >
+                {displayListMethod(identity)}
+              </BoxedLink>
+              {index < displayedList.length - 1 && <Separator />}
+            </div>
+          ))
         )}
       </ShadowBox>
       {hideSecondaryByDefault && (

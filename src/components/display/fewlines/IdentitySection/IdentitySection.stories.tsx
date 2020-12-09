@@ -2,8 +2,7 @@ import React from "react";
 
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import { IdentityValue } from "../LoginsOverview/LoginsOverview";
-import { Separator } from "../Separator/Separator";
-import { BoxedLink, IdentitySection } from "./IdentitySection";
+import { IdentitySection } from "./IdentitySection";
 import { Identity, IdentityTypes } from "@lib/@types";
 
 export default {
@@ -11,29 +10,14 @@ export default {
   component: IdentitySection,
 };
 
-const displayStandardIdentityList = (
-  identity: Identity,
-  index: number,
-  listLength: number,
-): JSX.Element => {
+const displayStandardIdentityList = (identity: Identity): JSX.Element => {
   return (
-    <div key={identity.type + index}>
-      <BoxedLink
-        href={{
-          pathname: "/account/logins/[type]/[id]",
-          query: {
-            type: identity.type.toLowerCase(),
-            id: identity.id,
-          },
-        }}
-      >
-        <IdentityValue primary={identity.primary} status={identity.status}>
-          {identity.value}
-        </IdentityValue>
-        <RightChevron />
-      </BoxedLink>
-      {index < listLength && <Separator />}
-    </div>
+    <>
+      <IdentityValue primary={identity.primary} status={identity.status}>
+        {identity.value}
+      </IdentityValue>
+      <RightChevron />
+    </>
   );
 };
 
@@ -53,6 +37,7 @@ export const EmailIdentitySection = (): JSX.Element => {
           },
         ],
         displayListMethod: displayStandardIdentityList,
+        disableClick: false,
         noIdentityMessage: "No email added yet.",
         addNewIdentityMessage: "add new email address",
         hideSecondaryByDefault: true,

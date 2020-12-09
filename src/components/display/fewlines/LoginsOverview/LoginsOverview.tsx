@@ -13,8 +13,7 @@ import { PaypalIcon } from "../Icons/PaypalIcon/PaypalIcon";
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import { StravaIcon } from "../Icons/StravaIcon/StravaIcon";
 import { VKontakteIcon } from "../Icons/VKontakteIcon/VKontakteIcon";
-import { BoxedLink, IdentitySection } from "../IdentitySection/IdentitySection";
-import { Separator } from "../Separator/Separator";
+import { IdentitySection } from "../IdentitySection/IdentitySection";
 import { Identity, IdentityTypes } from "@lib/@types/Identity";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 import {
@@ -69,52 +68,28 @@ const getSocialIdentityIcon = (type: IdentityTypes): JSX.Element => {
   }
 };
 
-const displayStandardIdentityList = (
-  identity: Identity,
-  index: number,
-  listLength: number,
-): JSX.Element => {
+const displayStandardIdentityList = (identity: Identity): JSX.Element => {
   return (
-    <div key={identity.type + index}>
-      <BoxedLink
-        href={{
-          pathname: "/account/logins/[type]/[id]",
-          query: {
-            type: identity.type.toLowerCase(),
-            id: identity.id,
-          },
-        }}
-      >
-        <IdentityValue primary={identity.primary} status={identity.status}>
-          {identity.value}
-        </IdentityValue>
-        <RightChevron />
-      </BoxedLink>
-      {index < listLength && <Separator />}
-    </div>
+    <>
+      <IdentityValue primary={identity.primary} status={identity.status}>
+        {identity.value}
+      </IdentityValue>
+      <RightChevron />
+    </>
   );
 };
 
-const displaySocialLoginsList = (
-  identity: Identity,
-  index: number,
-  listLength: number,
-): JSX.Element => {
+const displaySocialLoginsList = (identity: Identity): JSX.Element => {
   return (
-    <div key={identity.type + index}>
-      <BoxedLink social={true} href="#">
-        <SocialIdentityBox>
-          {getSocialIdentityIcon(identity.type)}
-          <SocialIdentityName>
-            {identity.type === IdentityTypes.KAKAO_TALK ||
-            identity.type === IdentityTypes.VKONTAKTE
-              ? formatSpecialSocialIdentities(identity.type)
-              : capitalizeFirstLetter(identity.type)}
-          </SocialIdentityName>
-        </SocialIdentityBox>
-      </BoxedLink>
-      {index < listLength - 1 && <Separator />}
-    </div>
+    <SocialIdentityBox>
+      {getSocialIdentityIcon(identity.type)}
+      <SocialIdentityName>
+        {identity.type === IdentityTypes.KAKAO_TALK ||
+        identity.type === IdentityTypes.VKONTAKTE
+          ? formatSpecialSocialIdentities(identity.type)
+          : capitalizeFirstLetter(identity.type)}
+      </SocialIdentityName>
+    </SocialIdentityBox>
   );
 };
 
@@ -132,6 +107,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
       title: "Email addresses",
       identitiesList: emailIdentities,
       displayListMethod: displayStandardIdentityList,
+      disableClick: false,
       noIdentityMessage: "No email added yet.",
       addNewIdentityMessage: "add new email address",
       hideSecondaryByDefault: true,
@@ -140,6 +116,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
       title: "Phone numbers",
       identitiesList: phoneIdentities,
       displayListMethod: displayStandardIdentityList,
+      disableClick: false,
       noIdentityMessage: "No phone number added yet.",
       addNewIdentityMessage: "add new phone number",
       hideSecondaryByDefault: true,
@@ -148,6 +125,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
       title: "Social logins",
       identitiesList: socialIdentities,
       displayListMethod: displaySocialLoginsList,
+      disableClick: true,
       noIdentityMessage: "No social logins added yet.",
       hideSecondaryByDefault: false,
     },
