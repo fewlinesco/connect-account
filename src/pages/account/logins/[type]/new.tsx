@@ -1,3 +1,4 @@
+import { HttpStatus } from "@fwl/web";
 import { GetServerSideProps } from "next";
 import React from "react";
 
@@ -43,6 +44,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     context,
     [withLogger, withSentry, withSession, withAuth],
     async () => {
+      if (context.params?.type?.toString() !== ("email" || "phone")) {
+        context.res.statusCode = HttpStatus.NOT_FOUND;
+        context.res.end();
+
+        return {
+          props: {},
+        };
+      }
+
       return {
         props: {
           type: context.params?.type?.toString(),
