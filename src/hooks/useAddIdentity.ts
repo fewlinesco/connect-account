@@ -4,31 +4,25 @@ import React from "react";
 import { IdentityTypes } from "@lib/@types";
 import { InMemoryTemporaryIdentity } from "@src/@types/TemporaryIdentity";
 import { HttpVerbs } from "@src/@types/core/HttpVerbs";
-import {
-  ErrorSendingValidationCode,
-  IdentityAlreadyUsed,
-  IdentityInputValueCantBeBlank,
-  PhoneNumberInputValueShouldBeANumber,
-} from "@src/clientErrors";
+import { ErrorSendingValidationCode } from "@src/clientErrors";
 import { fetchJson } from "@src/utils/fetchJson";
 import { getIdentityType } from "@src/utils/getIdentityType";
 
-interface AddIdentityProps {
-  type: IdentityTypes;
-  children: (props: {
-    addIdentity: (identity: InMemoryTemporaryIdentity) => Promise<void>;
-  }) => JSX.Element;
-}
+type UseAddIdentity = {
+  errorMessage: string | null;
+  addIdentity: (identity: InMemoryTemporaryIdentity) => Promise<void>;
+};
 
-export const AddIdentity: React.FC<AddIdentityProps> = ({ type, children }) => {
+export function useAddIdentity(): UseAddIdentity {
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const router = useRouter();
 
   async function addIdentity(
-    identity: InMemoryTemporaryIdentity,
+    newIdentity: InMemoryTemporaryIdentity,
   ): Promise<void> {
     const body = {
       callbackUrl: "/",
-      identityInput: identity,
+      newIdentity,
     };
 
     return fetchJson(
@@ -38,28 +32,24 @@ export const AddIdentity: React.FC<AddIdentityProps> = ({ type, children }) => {
     ).then(async (response) => {
       if (response.status >= 400) {
         if (response.statusText === "identity_already_validated") {
-          throw new IdentityAlreadyUsed(
+          return setErrorMessage(
             "Identity has already been validated by a user",
           );
         }
 
         if (response.statusText === "can't be blank") {
-          throw new IdentityInputValueCantBeBlank(
-            "Identity value can't be blank",
-          );
+          return setErrorMessage("Identity value can't be blank");
         }
 
         throw new ErrorSendingValidationCode();
       }
 
-      if (getIdentityType(type) === IdentityTypes.PHONE) {
+      if (getIdentityType(newIdentity.type) === IdentityTypes.PHONE) {
         try {
-          JSON.parse(identity.value);
+          JSON.parse(newIdentity.value);
         } catch (error) {
           if (error instanceof SyntaxError) {
-            throw new PhoneNumberInputValueShouldBeANumber(
-              "Phone identity value should be a number",
-            );
+            return setErrorMessage("Phone identity value should be a number");
           }
 
           throw error;
@@ -69,11 +59,11 @@ export const AddIdentity: React.FC<AddIdentityProps> = ({ type, children }) => {
       const eventId = await response.json();
 
       router &&
-        router.push(`/account/logins/${type}/validation/${eventId.data}`);
+        router.push(
+          `/account/logins/${newIdentity.type}/validation/${eventId.data}`,
+        );
     });
   }
 
-  return children({
-    addIdentity,
-  });
-};
+  return { errorMessage, addIdentity };
+}

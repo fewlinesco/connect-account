@@ -15,13 +15,13 @@ import { getIdentityType } from "@src/utils/getIdentityType";
 
 const handler: Handler = async (request: ExtendedRequest, response) => {
   if (request.method === "POST") {
-    const { callbackUrl, identityInput } = request.body;
+    const { callbackUrl, newIdentity } = request.body;
     const userSession = request.session.get<UserCookie>("user-session");
 
     if (userSession) {
       const identity = {
-        type: getIdentityType(identityInput.type),
-        value: identityInput.value,
+        type: getIdentityType(newIdentity.type),
+        value: newIdentity.value,
       };
 
       const { data, errors } = await sendIdentityValidationCode({
@@ -50,9 +50,9 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
       } else {
         const temporaryIdentity = {
           eventId: data.sendIdentityValidationCode.eventId,
-          value: identityInput.value,
-          type: identityInput.type,
-          expiresAt: identityInput.expiresAt,
+          value: newIdentity.value,
+          type: newIdentity.type,
+          expiresAt: newIdentity.expiresAt,
         };
 
         await insertTemporaryIdentity(userSession.sub, temporaryIdentity);

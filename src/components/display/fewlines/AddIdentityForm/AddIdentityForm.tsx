@@ -8,48 +8,32 @@ import { Input } from "../Input/Input";
 import { NeutralLink } from "../NeutralLink";
 import { IdentityTypes } from "@lib/@types";
 import { InMemoryTemporaryIdentity } from "@src/@types/TemporaryIdentity";
-import {
-  IdentityAlreadyUsed,
-  IdentityInputValueCantBeBlank,
-  PhoneNumberInputValueShouldBeANumber,
-} from "@src/clientErrors";
+import { useAddIdentity } from "@src/hooks/useAddIdentity";
 import { getIdentityType } from "@src/utils/getIdentityType";
 
 type AddIdentityFormProps = {
   type: IdentityTypes;
-  addIdentity: (identity: InMemoryTemporaryIdentity) => Promise<void>;
 };
 
-export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
-  type,
-  addIdentity,
-}) => {
+export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({ type }) => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
-  const [flashMessage, setFlashMessage] = React.useState<string>("");
   const [identity, setIdentity] = React.useState<InMemoryTemporaryIdentity>({
     value: "",
     type,
     expiresAt: Date.now(),
   });
 
+  const { errorMessage, addIdentity } = useAddIdentity();
+
   return (
     <>
-      {flashMessage ? <WrongInputError>{flashMessage}.</WrongInputError> : null}
+      {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
       <Form
         formID={formID}
         onSubmit={async () => {
-          await addIdentity(identity).catch((error) => {
-            if (error instanceof IdentityAlreadyUsed) {
+          await addIdentity(identity).then(() => {
+            if (errorMessage) {
               setFormID(uuidv4());
-              setFlashMessage(error.message);
-            } else if (error instanceof IdentityInputValueCantBeBlank) {
-              setFormID(uuidv4());
-              setFlashMessage(error.message);
-            } else if (error instanceof PhoneNumberInputValueShouldBeANumber) {
-              setFormID(uuidv4());
-              setFlashMessage(error.message);
-            } else {
-              throw error;
             }
           });
         }}
