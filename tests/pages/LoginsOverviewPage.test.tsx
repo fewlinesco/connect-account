@@ -4,6 +4,10 @@ import React from "react";
 import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 import AlertBar from "@src/components/display/fewlines/AlertBar/AlertBar";
+import {
+  Button,
+  ButtonVariant,
+} from "@src/components/display/fewlines/Button/Button";
 import { NoIdentitiesBox } from "@src/components/display/fewlines/IdentitySection/IdentitySection";
 import { BoxedLink } from "@src/components/display/fewlines/IdentitySection/IdentitySection";
 import { NeutralLink } from "@src/components/display/fewlines/NeutralLink";
@@ -40,7 +44,7 @@ jest.mock("@src/utils/getFlashMessage", () => {
 
 describe("LoginsOverviewPage", () => {
   describe("Boxedlink", () => {
-    test("it should display the AlertBar since there is a message in the cookies", () => {
+    test("it should display the AlertBar since there is a flash message in the cookies", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [
           {
@@ -80,7 +84,7 @@ describe("LoginsOverviewPage", () => {
       expect(alertBar.text()).toEqual("Email address has been deleted");
     });
 
-    test("it should display email, phone and social identities when there are one of each", () => {
+    test("it should display email, phone and social identities if there are one of each", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [
           {
@@ -119,7 +123,7 @@ describe("LoginsOverviewPage", () => {
       expect(boxedLink).toHaveLength(3);
     });
 
-    test("it should display primary email primary phone when there are many of each", () => {
+    test("it should display primary email primary phone but all social logins if there are many of each", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [
           {
@@ -153,7 +157,22 @@ describe("LoginsOverviewPage", () => {
             value: "test2@test.test",
           },
         ],
-        socialIdentities: [],
+        socialIdentities: [
+          {
+            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: true,
+            status: "validated",
+            type: IdentityTypes.GITHUB,
+            value: "",
+          },
+          {
+            id: "8u76dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: false,
+            status: "validated",
+            type: IdentityTypes.FACEBOOK,
+            value: "",
+          },
+        ],
       };
       const component = mount(
         <AccountApp>
@@ -161,10 +180,10 @@ describe("LoginsOverviewPage", () => {
         </AccountApp>,
       );
       const boxedLink = component.find(BoxedLink);
-      expect(boxedLink).toHaveLength(2);
+      expect(boxedLink).toHaveLength(4);
     });
 
-    test("it should display no email if there is none", () => {
+    test("it should display the no email message if there is none", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [
           {
@@ -187,11 +206,15 @@ describe("LoginsOverviewPage", () => {
       const noEmail = component.contains(
         <NoIdentitiesBox>No email added yet.</NoIdentitiesBox>,
       );
+      const noPhone = component.contains(
+        <NoIdentitiesBox>No phone number added yet.</NoIdentitiesBox>,
+      );
       expect(noEmail).toEqual(true);
+      expect(noPhone).toEqual(false);
       expect(boxedLink).toHaveLength(1);
     });
 
-    test("it should display No phone number added yet. if there is none", () => {
+    test("it should display the no phone number message if there is none", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [],
         emailIdentities: [
@@ -214,12 +237,15 @@ describe("LoginsOverviewPage", () => {
       const noPhone = component.contains(
         <NoIdentitiesBox>No phone number added yet.</NoIdentitiesBox>,
       );
-
+      const noEmail = component.contains(
+        <NoIdentitiesBox>No email added yet.</NoIdentitiesBox>,
+      );
       expect(noPhone).toEqual(true);
+      expect(noEmail).toEqual(false);
       expect(boxedLink).toHaveLength(1);
     });
 
-    test("it should display no emails and no phones where there are neither", () => {
+    test("it should display no emails and no phones if there are neither", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [],
         emailIdentities: [],
@@ -313,6 +339,31 @@ describe("LoginsOverviewPage", () => {
     });
 
     expect(link).toHaveLength(1);
+  });
+
+  describe("AddNewIdentityButton", () => {
+    test("there must be the button for emails, phones but not social logins", () => {
+      const mockedSortedResponse: SortedIdentities = {
+        phoneIdentities: [],
+        emailIdentities: [],
+        socialIdentities: [],
+      };
+      const component = mount(
+        <AccountApp>
+          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+        </AccountApp>,
+      );
+      const addNewIdentityButton = component
+        .find(Button)
+        .find({ variant: ButtonVariant.SECONDARY });
+      expect(addNewIdentityButton).toHaveLength(2);
+      expect(addNewIdentityButton.at(0).text()).toEqual(
+        "+ add new email address",
+      );
+      expect(addNewIdentityButton.at(1).text()).toEqual(
+        "+ add new phone number",
+      );
+    });
   });
 });
 
@@ -484,6 +535,36 @@ describe("ShowMoreButton", () => {
           primary: true,
           status: "validated",
           type: IdentityTypes.GITHUB,
+          value: "",
+        },
+      ],
+    };
+    const component = mount(
+      <AccountApp>
+        <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+      </AccountApp>,
+    );
+    const showMoreButton = component.find(ShowMoreButton);
+    expect(showMoreButton).toHaveLength(0);
+  });
+
+  test("the button should not appear for social logins even if the list > 1 ", () => {
+    const mockedSortedResponse: SortedIdentities = {
+      phoneIdentities: [],
+      emailIdentities: [],
+      socialIdentities: [
+        {
+          id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: true,
+          status: "validated",
+          type: IdentityTypes.GITHUB,
+          value: "",
+        },
+        {
+          id: "8u76dcc1-530b-4982-878d-33f0def6a7cf",
+          primary: false,
+          status: "validated",
+          type: IdentityTypes.FACEBOOK,
           value: "",
         },
       ],
