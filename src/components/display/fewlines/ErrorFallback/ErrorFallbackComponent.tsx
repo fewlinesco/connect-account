@@ -38,22 +38,12 @@ const Wrapper = styled.div<{ statusCode: number }>`
   min-height: 15rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  text-align: center;
   border-radius: ${({ theme }) => theme.radii[1]};
   background-color: ${({ theme }) => theme.colors.background};
   box-shadow: ${({ theme }) => theme.shadows.base};
   padding: ${({ theme }) => theme.spaces.xs};
   margin-top: ${({ statusCode, theme }) =>
     statusCode !== 404 ? theme.spaces.s : ""};
-
-  h1 {
-    margin-bottom: 3rem;
-    padding: 0;
-  }
-
-  p {
-    font-size: ${({ theme }) => theme.fontSizes.l};
-  }
 `;
