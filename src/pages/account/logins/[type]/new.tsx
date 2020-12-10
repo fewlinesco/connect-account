@@ -44,7 +44,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     context,
     [withLogger, withSentry, withSession, withAuth],
     async () => {
-      if (context.params?.type?.toString() !== ("email" || "phone")) {
+      if (!context?.params?.type) {
+        context.res.statusCode = 400;
+        context.res.end();
+        return;
+      }
+
+      if (!["email", "phone"].includes(context.params.type.toString())) {
         return {
           notFound: true,
         };

@@ -13,7 +13,7 @@ describe("ErrorFallback component", () => {
       </AccountApp>,
     );
 
-    const title = component.find("h2");
+    const title = component.find("h1");
     expect(title).toHaveLength(1);
     expect(title.text()).toStrictEqual(
       "We can't find the page you are looking for.",
