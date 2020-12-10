@@ -1,7 +1,7 @@
 import { mount } from "enzyme";
 import React from "react";
 
-import { ErrorFallback } from "@src/components/display/fewlines/ErrorFallback/ErrorFallback";
+import { ErrorFallbackComponent } from "@src/components/display/fewlines/ErrorFallback/ErrorFallbackComponent";
 import { AccountApp } from "@src/pages/_app";
 
 describe("ErrorFallback component", () => {
@@ -9,7 +9,7 @@ describe("ErrorFallback component", () => {
     expect.assertions(4);
     const component = mount(
       <AccountApp>
-        <ErrorFallback statusCode={404} />
+        <ErrorFallbackComponent statusCode={404} />
       </AccountApp>,
     );
 
@@ -28,7 +28,7 @@ describe("ErrorFallback component", () => {
     expect.assertions(2);
     const component = mount(
       <AccountApp>
-        <ErrorFallback statusCode={500} />
+        <ErrorFallbackComponent statusCode={500} />
       </AccountApp>,
     );
 

@@ -1,17 +1,17 @@
 import React from "react";
 
 import { Container } from "../Container";
-import { ErrorFallback } from "./ErrorFallback";
+import { ErrorFallbackComponent } from "./ErrorFallbackComponent";
 
 export default {
-  title: "components/Error fallback component",
-  component: ErrorFallback,
+  title: "components/Error Fallback Component",
+  component: ErrorFallbackComponent,
 };
 
 export const StandardErrorFallback = (): JSX.Element => {
   return (
     <Container>
-      <ErrorFallback statusCode={504} />
+      <ErrorFallbackComponent statusCode={504} />
     </Container>
   );
 };
