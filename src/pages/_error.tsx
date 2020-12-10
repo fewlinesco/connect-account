@@ -4,9 +4,9 @@ import NextError, { ErrorProps as NextErrorProps } from "next/error";
 import React from "react";
 
 import { Layout } from "@src/components/Layout";
-import { ErrorFallback } from "@src/components/display/fewlines/ErrorFallback/ErrorFallback";
+import { ErrorFallbackComponent } from "@src/components/display/fewlines/ErrorFallback/ErrorFallbackComponent";
 
-type ErrorPageProps = {
+type CustomErrorComponentProps = {
   error: Error;
   statusCode: number;
   isReadyToRender: boolean;
@@ -17,7 +17,9 @@ export type ErrorProps = {
   isReadyToRender: boolean;
 } & NextErrorProps;
 
-const ErrorPage = (props: ErrorPageProps): JSX.Element => {
+const CustomErrorComponent = (
+  props: CustomErrorComponentProps,
+): JSX.Element => {
   const { isReadyToRender, error, statusCode } = props;
 
   if (!isReadyToRender && error) {
@@ -27,12 +29,12 @@ const ErrorPage = (props: ErrorPageProps): JSX.Element => {
 
   return (
     <Layout>
-      <ErrorFallback statusCode={statusCode} />
+      <ErrorFallbackComponent statusCode={statusCode} />
     </Layout>
   );
 };
 
-ErrorPage.getInitialProps = async (
+CustomErrorComponent.getInitialProps = async (
   props: NextPageContext,
 ): Promise<ErrorProps> => {
   const { res, err, asPath } = props;
@@ -73,4 +75,4 @@ ErrorPage.getInitialProps = async (
   return errorInitialProps;
 };
 
-export default ErrorPage;
+export default CustomErrorComponent;
