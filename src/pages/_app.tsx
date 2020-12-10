@@ -3,9 +3,9 @@ import Head from "next/head";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { GlobalStyle } from "../design-system/globals/globalStyle";
-import { theme } from "../design-system/theme";
-import "../utils/sentry";
+import { GlobalStyle } from "@src/design-system/globals/globalStyle";
+import { theme } from "@src/design-system/theme";
+import "@src/utils/sentry";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (

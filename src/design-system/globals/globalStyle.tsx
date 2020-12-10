@@ -44,10 +44,12 @@ export const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
 		font-size: ${({ theme }) => theme.fontSizes.h1};
 		padding: 2.4rem 0 ${({ theme }) => theme.spaces.xxs};
 	}
+
 	h2 {
 		font-size: ${({ theme }) => theme.fontSizes.h2};
 		margin: 0 0 ${({ theme }) => theme.spaces.xxs} 0;
 	}
+	
 	h3 {
 		font-size: ${({ theme }) => theme.fontSizes.h3};
 		font-weight: ${({ theme }) => theme.fontWeights.normal};

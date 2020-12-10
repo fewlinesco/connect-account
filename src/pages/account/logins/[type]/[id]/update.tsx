@@ -6,6 +6,7 @@ import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentities } from "@lib/queries/getIdentities";
 import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
+import { NoIdentityFound, NoUserFound } from "@src/clientErrors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
@@ -54,21 +55,32 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         response.end();
         return;
       }
-      const userId = context.params.id.toString();
+
+      const identityId = context.params.id.toString();
       const userSession = request.session.get<UserCookie>("user-session");
 
       if (userSession) {
-        const identity = await getIdentities(userSession.sub).then((result) => {
-          if (result.errors) {
-            throw new GraphqlErrors(result.errors);
-          }
+        const identity = await getIdentities(userSession.sub).then(
+          ({ errors, data }) => {
+            if (errors) {
+              throw new GraphqlErrors(errors);
+            }
 
-          const res = result.data?.provider.user.identities.filter(
-            (id) => id.id === userId,
-          )[0];
+            if (!data) {
+              throw new NoIdentityFound();
+            }
 
-          return res;
-        });
+            return data.provider.user.identities.filter(
+              (userIdentity) => userIdentity.id === identityId,
+            )[0];
+          },
+        );
+
+        if (!identity) {
+          return {
+            notFound: true,
+          };
+        }
 
         return {
           props: {
@@ -76,7 +88,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           },
         };
       } else {
-        throw new Error("No User found");
+        throw new NoUserFound();
       }
     },
   );
