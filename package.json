@@ -8,7 +8,7 @@
     "dev": "next dev -p $CONNECT_ACCOUNT_PORT",
     "build": "next build",
     "lint": "eslint \"{src,pages}/**/*.{js,ts,jsx,tsx}\"",
-    "start": "next start -p $CONNECT_ACCOUNT_PORT",
+    "start": "next start",
     "test": "jest --testPathIgnorePatterns=e2e",
     "test:e2e": "jest --testPathPattern=e2e --runInBand",
     "storybook": "start-storybook -p 6006",
