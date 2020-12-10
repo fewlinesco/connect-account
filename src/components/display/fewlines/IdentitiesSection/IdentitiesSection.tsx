@@ -10,7 +10,7 @@ import { Timeline } from "../Timeline/Timeline";
 import { TimelineEnd } from "../TimelineEnd/TimelineEnd";
 import { Identity } from "@lib/@types";
 
-type IdentitySectionProps = {
+type IdentitieSectionProps = {
   sectionName: string;
   lastOfTheList: boolean;
   content: {
@@ -24,7 +24,7 @@ type IdentitySectionProps = {
   };
 };
 
-export const IdentitySection: React.FC<IdentitySectionProps> = ({
+export const IdentitiesSection: React.FC<IdentitieSectionProps> = ({
   sectionName,
   lastOfTheList,
   content,

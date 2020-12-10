@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { IdentitySection } from "../IdentitySection/IdentitySection";
+import { IdentitiesSection } from "../IdentitiesSection/IdentitiesSection";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 import { displayIdentity } from "@src/utils/displayIdentity";
 import { displaySocialLogins } from "@src/utils/displaySocialLogins";
@@ -19,7 +19,7 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
     socialIdentities,
   } = sortedIdentities;
 
-  const IDENTITY_SECTION_CONTENT = {
+  const IDENTITIES_SECTION_CONTENT = {
     EMAIL: {
       title: "Email addresses",
       identitiesList: emailIdentities,
@@ -48,15 +48,15 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
     },
   };
 
-  const identitySectionList = Object.entries(IDENTITY_SECTION_CONTENT);
+  const identitiesSectionList = Object.entries(IDENTITIES_SECTION_CONTENT);
 
   return (
     <Container>
-      {identitySectionList.map(([sectionName, content], index) => {
-        const lastOfTheList = index === identitySectionList.length - 1;
+      {identitiesSectionList.map(([sectionName, content], index) => {
+        const lastOfTheList = index === identitiesSectionList.length - 1;
 
         return (
-          <IdentitySection
+          <IdentitiesSection
             key={sectionName}
             sectionName={sectionName}
             content={content}

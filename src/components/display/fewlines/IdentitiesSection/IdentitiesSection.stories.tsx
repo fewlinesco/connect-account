@@ -1,17 +1,17 @@
 import React from "react";
 
 import { StoriesContainer } from "../StoriesContainer";
-import { IdentitySection } from "./IdentitySection";
+import { IdentitiesSection } from "./IdentitiesSection";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { displayIdentity } from "@src/utils/displayIdentity";
 import { displaySocialLogins } from "@src/utils/displaySocialLogins";
 
 export default {
   title: "components/Identity Section",
-  component: IdentitySection,
+  component: IdentitiesSection,
 };
 
-export const EmailIdentitySection = (): JSX.Element => {
+export const EmailIdentitiesSection = (): JSX.Element => {
   const emailIdentities: Identity[] = [
     {
       id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -29,7 +29,7 @@ export const EmailIdentitySection = (): JSX.Element => {
     },
   ];
 
-  const IDENTITY_SECTION_CONTENT = {
+  const IDENTITIES_SECTION_CONTENT = {
     EMAIL: {
       title: "Email addresses",
       identitiesList: emailIdentities,
@@ -41,13 +41,13 @@ export const EmailIdentitySection = (): JSX.Element => {
     },
   };
 
-  const identitySectionList = Object.entries(IDENTITY_SECTION_CONTENT);
+  const identitiesSectionList = Object.entries(IDENTITIES_SECTION_CONTENT);
 
   return (
     <StoriesContainer>
-      {identitySectionList.map(([sectionName, content]) => {
+      {identitiesSectionList.map(([sectionName, content]) => {
         return (
-          <IdentitySection
+          <IdentitiesSection
             key={sectionName}
             sectionName={sectionName}
             content={content}
@@ -59,7 +59,7 @@ export const EmailIdentitySection = (): JSX.Element => {
   );
 };
 
-export const PhoneIdentitySection = (): JSX.Element => {
+export const PhoneIdentitiesSection = (): JSX.Element => {
   const phoneIdentities: Identity[] = [
     {
       id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -77,7 +77,7 @@ export const PhoneIdentitySection = (): JSX.Element => {
     },
   ];
 
-  const IDENTITY_SECTION_CONTENT = {
+  const IDENTITIES_SECTION_CONTENT = {
     PHONE: {
       title: "Phone numbers",
       identitiesList: phoneIdentities,
@@ -89,13 +89,13 @@ export const PhoneIdentitySection = (): JSX.Element => {
     },
   };
 
-  const identitySectionList = Object.entries(IDENTITY_SECTION_CONTENT);
+  const identitiesSectionList = Object.entries(IDENTITIES_SECTION_CONTENT);
 
   return (
     <StoriesContainer>
-      {identitySectionList.map(([sectionName, content]) => {
+      {identitiesSectionList.map(([sectionName, content]) => {
         return (
-          <IdentitySection
+          <IdentitiesSection
             key={sectionName}
             sectionName={sectionName}
             content={content}
@@ -107,7 +107,7 @@ export const PhoneIdentitySection = (): JSX.Element => {
   );
 };
 
-export const SocialLoginsIdentitySection = (): JSX.Element => {
+export const SocialLoginsIdentitiesSection = (): JSX.Element => {
   const socialIdentities: Identity[] = [
     {
       id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -125,7 +125,7 @@ export const SocialLoginsIdentitySection = (): JSX.Element => {
     },
   ];
 
-  const IDENTITY_SECTION_CONTENT = {
+  const IDENTITIES_SECTION_CONTENT = {
     SOCIAL_LOGINS: {
       title: "Social logins",
       identitiesList: socialIdentities,
@@ -136,13 +136,13 @@ export const SocialLoginsIdentitySection = (): JSX.Element => {
     },
   };
 
-  const identitySectionList = Object.entries(IDENTITY_SECTION_CONTENT);
+  const identitiesSectionList = Object.entries(IDENTITIES_SECTION_CONTENT);
 
   return (
     <StoriesContainer>
-      {identitySectionList.map(([sectionName, content]) => {
+      {identitiesSectionList.map(([sectionName, content]) => {
         return (
-          <IdentitySection
+          <IdentitiesSection
             key={sectionName}
             sectionName={sectionName}
             content={content}
