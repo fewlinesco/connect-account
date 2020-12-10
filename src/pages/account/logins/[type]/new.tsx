@@ -12,6 +12,7 @@ import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
+import { getIdentityType } from "@src/utils/getIdentityType";
 
 const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   return (
@@ -20,7 +21,7 @@ const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
         <h1>Logins</h1>
         <NavigationBreadcrumbs
           breadcrumbs={[
-            type.toLocaleUpperCase() === IdentityTypes.EMAIL
+            getIdentityType(type) === IdentityTypes.EMAIL
               ? "Email address"
               : "Phone number",
             "new",
