@@ -211,8 +211,7 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 | Represents the kind of user authorized information and actions that an Application is able to access on another Application.
 
 | `ACCOUNT_JWE_PRIVATE_KEY`
-| The PEM formatted private key used to decrypt the JWE access token.
-| (i.e. "-----BEGIN RSA PRIVATE KEY-----\nqewnjfb...\n..")
+| The PEM formatted private key used to decrypt the JWE access token. (i.e. "-----BEGIN RSA PRIVATE KEY-----\nqewnjfb...\n..")
 
 | `IS_JWE_SIGNED`
 | A boolean value that indicates if the JWE access token is signed or not.
@@ -323,9 +322,15 @@ export const Bar: React.FC<BarProps> = ({ foo }) => { return <div>{ foo }</div>}
 
 If you are not familiar with TypeScript generic types, please take a look at the https://www.typescriptlang.org/docs/handbook/generics.html[documentation].
 
+== Components
+
 === Next's links
 
 Next's `Link` component requires its child to be an anchor tag. To lighten the JSX, we made a custom component called `NeutralLink` that provides the anchor tag.
+
+=== Social Identities
+
+When adding a new supported Social Identity to the application, remember to add the corresponding icon as SVG.
 
 == Style
 
