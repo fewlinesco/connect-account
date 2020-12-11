@@ -1,6 +1,7 @@
 import { HttpStatus } from "@fwl/web";
 import { Handler } from "next-iron-session";
 
+import { markIdentityAsPrimary } from "@lib/commands/markIdentityAsPrimary";
 import { checkVerificationCode } from "@lib/queries/checkVerificationCode";
 import { UserCookie } from "@src/@types/UserCookie";
 import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
@@ -32,7 +33,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
       if (temporaryIdentity && temporaryIdentity.expiresAt < Date.now()) {
         const { data } = await checkVerificationCode(validationCode, eventId);
 
-        const { value, type } = temporaryIdentity;
+        const { value, type, primary } = temporaryIdentity;
 
         if (data && data.checkVerificationCode.status === "VALID") {
           const body = {
@@ -41,7 +42,12 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
             value,
           };
 
-          await addIdentityToUser(body);
+          const newIdentity = await addIdentityToUser(body);
+
+          if (primary) {
+            const { id: identityId } = newIdentity?.data?.addIdentityToUser;
+            await markIdentityAsPrimary(identityId);
+          }
 
           response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
             Location: "/account/logins",
