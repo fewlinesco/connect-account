@@ -30,6 +30,7 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
     value: "",
     type,
     expiresAt: Date.now(),
+    primary: false,
   });
 
   return (
@@ -72,9 +73,23 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
               value: event.target.value,
               type,
               expiresAt: Date.now() + 300,
+              primary: identity.primary,
             });
           }}
         />
+        <Flex>
+          <Input
+            type="checkbox"
+            onChange={() => {
+              setIdentity({
+                ...identity,
+                primary: !identity.primary,
+              });
+            }}
+          />
+          <p>Marking this identity as my primary one</p>
+        </Flex>
+
         <Button
           variant={ButtonVariant.PRIMARY}
           type="submit"
@@ -92,4 +107,11 @@ const WrongInputError = styled.p`
   color: ${({ theme }) => theme.colors.red};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   margin-bottom: 3rem;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin-bottom: ${({ theme }) => theme.spaces.xs};
 `;
