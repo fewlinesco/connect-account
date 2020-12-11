@@ -2,6 +2,7 @@ import React from "react";
 
 import { IdentityTypes } from "@lib/@types/Identity";
 import { AppleIcon } from "@src/components/display/fewlines/Icons/AppleIcon/AppleIcon";
+import { DecathlonIcon } from "@src/components/display/fewlines/Icons/DecathlonIcon/DecathlonIcon";
 import { FacebookIcon } from "@src/components/display/fewlines/Icons/FacebookIcon/FacebookIcon";
 import { GithubIcon } from "@src/components/display/fewlines/Icons/GithubIcon/GithubIcon";
 import { GoogleIcon } from "@src/components/display/fewlines/Icons/GoogleIcon/GoogleIcon";
@@ -25,6 +26,7 @@ const SOCIAL_IDENTITIES_ICONS = {
   STRAVA: <StravaIcon />,
   VKONTAKTE: <VKontakteIcon />,
   MICROSOFT: <MicrosoftIcon />,
+  DECATHLON: <DecathlonIcon />,
 };
 
 export const getSocialIdentityIcon = (type: IdentityTypes): JSX.Element => {
@@ -51,6 +53,8 @@ export const getSocialIdentityIcon = (type: IdentityTypes): JSX.Element => {
       return SOCIAL_IDENTITIES_ICONS.VKONTAKTE;
     case IdentityTypes["MICROSOFT"]:
       return SOCIAL_IDENTITIES_ICONS.MICROSOFT;
+    case IdentityTypes["DECATHLON"]:
+      return SOCIAL_IDENTITIES_ICONS.DECATHLON;
     default:
       return <React.Fragment />;
   }
