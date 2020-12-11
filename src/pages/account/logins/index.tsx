@@ -14,6 +14,8 @@ import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
+import { displayAlertBar } from "@src/utils/displayAlertBar";
+import { getFlashMessage } from "@src/utils/getFlashMessage";
 import { sortIdentities } from "@src/utils/sortIdentities";
 
 type LoginsOverviewPageProps = {
@@ -23,9 +25,12 @@ type LoginsOverviewPageProps = {
 const LoginsOverviewPage: React.FC<LoginsOverviewPageProps> = ({
   sortedIdentities,
 }) => {
+  const alert = getFlashMessage();
+
   return (
     <Layout>
       <Container>
+        {alert && displayAlertBar(alert)}
         <h1>Logins</h1>
         <h3>Your emails, phones and social logins</h3>
         <LoginsOverview sortedIdentities={sortedIdentities} />

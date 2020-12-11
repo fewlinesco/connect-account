@@ -2,6 +2,7 @@ import { getIdentityType } from "./getIdentityType";
 import { Identity, IdentityTypes } from "@lib/@types";
 import type { ProviderUser } from "@lib/@types/ProviderUser";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
+import { UnhandledIdentityType } from "@src/clientErrors";
 
 export function sortIdentities(fetchedData: {
   data?: { provider: ProviderUser } | null;
@@ -39,10 +40,11 @@ export function sortIdentities(fetchedData: {
           });
         }
       } catch (error) {
-        // if type unknown ID
-        // return
-
-        throw error;
+        if (error instanceof UnhandledIdentityType) {
+          return;
+        } else {
+          throw error;
+        }
       }
     });
   }

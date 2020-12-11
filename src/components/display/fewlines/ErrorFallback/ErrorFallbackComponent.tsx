@@ -2,16 +2,18 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-type ErrorFallbackProps = {
+type ErrorFallbackComponentProps = {
   statusCode: number;
 };
 
-export const ErrorFallback: React.FC<ErrorFallbackProps> = ({ statusCode }) => {
+export const ErrorFallbackComponent: React.FC<ErrorFallbackComponentProps> = ({
+  statusCode,
+}) => {
   return (
     <Wrapper statusCode={statusCode}>
       {statusCode === 404 ? (
         <>
-          <h2>We can&apos;t find the page you are looking for.</h2>
+          <h1>We can&apos;t find the page you are looking for.</h1>
           <p>
             It may have expired, or there could be a typo. Maybe you can find
             what you need on our{" "}
@@ -36,19 +38,12 @@ const Wrapper = styled.div<{ statusCode: number }>`
   min-height: 15rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  text-align: center;
   border-radius: ${({ theme }) => theme.radii[1]};
   background-color: ${({ theme }) => theme.colors.background};
   box-shadow: ${({ theme }) => theme.shadows.base};
   padding: ${({ theme }) => theme.spaces.xs};
   margin-top: ${({ statusCode, theme }) =>
     statusCode !== 404 ? theme.spaces.s : ""};
-  p {
-    font-size: ${({ theme }) => theme.fontSizes.l};
-  }
-  h2 {
-    font-weight: ${({ theme }) => theme.fontWeights.semibold};
-  }
 `;

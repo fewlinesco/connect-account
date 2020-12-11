@@ -4,7 +4,9 @@ export class ErrorVerifyingValidationCode extends Error {}
 
 export class ErrorSettingPassword extends Error {}
 
-export class NoIdentityFound extends Error {}
+export class NoIdentityFound extends Error {
+  readonly message = "No Identity Found";
+}
 
 export class IdentityAlreadyUsed extends Error {
   readonly message: string;
@@ -31,4 +33,17 @@ export class PhoneNumberInputValueShouldBeANumber extends Error {
     super();
     this.message = message;
   }
+}
+
+export class UnhandledIdentityType extends Error {
+  readonly message: string;
+
+  constructor(message: string) {
+    super();
+    this.message = message;
+  }
+}
+
+export class NoUserFound extends Error {
+  readonly message = "No User found";
 }

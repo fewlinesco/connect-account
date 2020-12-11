@@ -1,5 +1,3 @@
-jest.mock("@src/hooks/useCookies");
-
 import { mount } from "enzyme";
 import fetch, { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
@@ -19,7 +17,6 @@ import {
   Breadcrumbs,
 } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { PrimaryBadge } from "@src/components/display/fewlines/PrimaryBadge/PrimaryBadge";
-import { useCookies } from "@src/hooks/useCookies";
 import { AccountApp } from "@src/pages/_app";
 import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
 import * as fetchJson from "@src/utils/fetchJson";
@@ -45,11 +42,15 @@ jest.mock("@src/dbClient", () => {
   };
 });
 
-(useCookies as any).mockImplementation(() => {
+jest.mock("@src/hooks/useCookies", () => {
   return {
-    data: {
-      userDocumentId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
-    },
+    useCookies: jest.fn().mockImplementation(() => {
+      return {
+        data: {
+          userDocumentId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
+        },
+      };
+    }),
   };
 });
 
@@ -174,6 +175,32 @@ describe("IdentityOverviewPage", () => {
       .find(Button)
       .find({ variant: ButtonVariant.GHOST });
     expect(deleteButton).toHaveLength(0);
+  });
+
+  test("the delete button's text should be relevant for emails", () => {
+    const component = mount(
+      <AccountApp>
+        <IdentityOverviewPage identity={nonPrimaryIdentity} />
+      </AccountApp>,
+    );
+
+    const deleteButton = component
+      .find(Button)
+      .find({ variant: ButtonVariant.GHOST });
+    expect(deleteButton.text()).toEqual("Delete this email address");
+  });
+
+  test("the delete button's text should be relevant for phones", () => {
+    const component = mount(
+      <AccountApp>
+        <IdentityOverviewPage identity={phoneIdentity} />
+      </AccountApp>,
+    );
+
+    const deleteButton = component
+      .find(Button)
+      .find({ variant: ButtonVariant.GHOST });
+    expect(deleteButton.text()).toEqual("Delete this phone number");
   });
 
   test("it should not display the primary badge if the identity is not primary", () => {

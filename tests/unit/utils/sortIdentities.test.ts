@@ -462,4 +462,45 @@ describe("sortIdentities", () => {
     const call = sortIdentities(mockedResponse);
     expect(call).toStrictEqual(mockedSortedResponse);
   });
+
+  it("should not throw error if it is an instance of UnhandledIdentityType error when given an unknown identity type", () => {
+    const mockedResponse: { data: { provider: ProviderUser } } = {
+      data: {
+        provider: {
+          id: "4a5f8589-0d91-4a69-924a-6f227a69666d",
+          name: "Mocked Provider",
+          user: {
+            id: "299d268e-3e19-4486-9be7-29c539d241ac",
+            identities: [
+              {
+                id: "7f8d168a-3f65-4636-9acb-7720a212680e",
+                primary: false,
+                status: "validated",
+                type: IdentityTypes.FACEBOOK,
+                value: "test@test.test",
+              },
+              {
+                id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+                primary: true,
+                status: "validated",
+                type: IdentityTypes.GOOGLE,
+                value: "test@test.test",
+              },
+              {
+                id: "5z8d168a-3f65-4636-9acb-7720a212543r",
+                primary: false,
+                status: "validated",
+                type: "gitlab" as IdentityTypes,
+                value: "test@test.test",
+              },
+            ],
+          },
+        },
+      },
+    };
+
+    const mockedSortedIdentities = sortIdentities(mockedResponse);
+
+    expect(mockedSortedIdentities.socialIdentities).toHaveLength(2);
+  });
 });

@@ -1,18 +1,19 @@
 export enum IdentityTypes {
   APPLE = "APPLE",
+  DECATHLON = "DECATHLON",
   EMAIL = "EMAIL",
   FACEBOOK = "FACEBOOK",
   GITHUB = "GITHUB",
   GOOGLE = "GOOGLE",
   KAKAO_TALK = "KAKAO_TALK",
   LINE = "LINE",
+  MICROSOFT = "MICROSOFT",
   NAVER = "NAVER",
   PAYPAL = "PAYPAL",
   PHONE = "PHONE",
   PROVIDER = "PROVIDER",
   STRAVA = "STRAVA",
   VKONTAKTE = "VKONTAKTE",
-  MICROSOFT = "MICROSOFT",
 }
 
 export enum IdentityStatus {
@@ -31,5 +32,9 @@ export type Identity = {
   primary: boolean;
   status: "validated" | "unvalidated";
   type: IdentityTypes;
+  value: string;
+};
+
+export type IdentityValueInput = {
   value: string;
 };

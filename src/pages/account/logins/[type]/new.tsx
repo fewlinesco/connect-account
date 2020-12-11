@@ -12,6 +12,7 @@ import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
+import { getIdentityType } from "@src/utils/getIdentityType";
 
 const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   return (
@@ -20,7 +21,7 @@ const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
         <h1>Logins</h1>
         <NavigationBreadcrumbs
           breadcrumbs={[
-            type.toLocaleUpperCase() === IdentityTypes.EMAIL
+            getIdentityType(type) === IdentityTypes.EMAIL
               ? "Email address"
               : "Phone number",
             "new",
@@ -43,6 +44,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     context,
     [withLogger, withSentry, withSession, withAuth],
     async () => {
+      if (!context?.params?.type) {
+        context.res.statusCode = 400;
+        context.res.end();
+        return;
+      }
+
+      if (!["email", "phone"].includes(context.params.type.toString())) {
+        return {
+          notFound: true,
+        };
+      }
+
       return {
         props: {
           type: context.params?.type?.toString(),
