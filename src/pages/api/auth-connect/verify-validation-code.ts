@@ -5,8 +5,9 @@ import { markIdentityAsPrimary } from "@lib/commands/markIdentityAsPrimary";
 import { checkVerificationCode } from "@lib/queries/checkVerificationCode";
 import { UserCookie } from "@src/@types/UserCookie";
 import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
+import { NoIdentityAdded } from "@src/clientErrors";
 import { addIdentityToUser } from "@src/commands/addIdentityToUser";
-import { TemporaryIdentityExpired } from "@src/errors";
+import { GraphqlErrors, TemporaryIdentityExpired } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
@@ -42,11 +43,26 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
             value,
           };
 
-          const newIdentity = await addIdentityToUser(body);
+          const identityId = await addIdentityToUser(body).then(
+            ({ errors, data }) => {
+              if (errors) {
+                throw new GraphqlErrors(errors);
+              }
+
+              if (!data) {
+                throw new NoIdentityAdded();
+              }
+
+              return data.addIdentityToUser.id;
+            },
+          );
 
           if (primary) {
-            const { id: identityId } = newIdentity?.data?.addIdentityToUser;
-            await markIdentityAsPrimary(identityId);
+            await markIdentityAsPrimary(identityId).then(({ errors }) => {
+              if (errors) {
+                throw new GraphqlErrors(errors);
+              }
+            });
           }
 
           response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {

@@ -114,4 +114,5 @@ const WrongInputError = styled.p`
 const Label = styled.label`
   display: block;
   margin-bottom: ${({ theme }) => theme.spaces.xs};
+  cursor: pointer;
 `;
