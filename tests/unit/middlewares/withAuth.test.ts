@@ -19,12 +19,6 @@ import * as decryptVerifyAccessToken from "@src/workflows/decryptVerifyAccessTok
 
 enableFetchMocks();
 
-const mockFunctionCalls = {
-  getDBUserFromSub: 0,
-  refreshTokensFlow: 0,
-  verifyJWT: 0,
-};
-
 const spiedOnDecryptVerifyAccessToken = jest
   .spyOn(decryptVerifyAccessToken, "decryptVerifyAccessToken")
   .mockImplementation(async () => {
@@ -56,18 +50,7 @@ const spiedOnGetAndPutUser = jest
     return;
   });
 
-jest.mock("@lib/commands/refreshTokensFlow.ts", () => {
-  return {
-    refreshTokensFlow: () => {
-      mockFunctionCalls.refreshTokensFlow += 1;
-
-      return {
-        refresh_token: "new_refresh_token",
-        access_token: "new_access_token",
-      };
-    },
-  };
-});
+let mockedVerifyJWTCall = 0;
 
 jest.mock("@src/config", () => {
   return {
@@ -85,10 +68,10 @@ jest.mock("@src/config", () => {
     },
     oauth2Client: {
       verifyJWT: async () => {
-        mockFunctionCalls.verifyJWT = +1;
+        mockedVerifyJWTCall = +1;
 
         return {
-          sub: "8b1e8a9c-2092-4bcf-b1c5-9d36b3e43640",
+          sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
         };
       },
     },
@@ -101,7 +84,7 @@ async function sealJWS(access_token: string, salt?: string): Promise<string> {
       persistent: {
         "user-session": {
           access_token,
-          sub: "8b1e8a9c-2092-4bcf-b1c5-9d36b3e43640",
+          sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
         },
       },
       flash: {},
@@ -173,14 +156,8 @@ describe("withAuth", () => {
     jest.clearAllMocks();
   });
 
-  beforeEach(() => {
-    mockFunctionCalls.getDBUserFromSub = 0;
-    mockFunctionCalls.refreshTokensFlow = 0;
-    mockFunctionCalls.verifyJWT = 0;
-  });
-
   test("should redirect to the login flow if no UserCookie is provided", async (done) => {
-    expect.assertions(2);
+    expect.assertions(3);
 
     const access_token = generateHS256JWS();
     const sealedJWS = await sealJWS(
@@ -200,13 +177,14 @@ describe("withAuth", () => {
 
     expect(mockedResponse.statusCode).toEqual(HttpStatus.TEMPORARY_REDIRECT);
     expect(spiedOnDecryptVerifyAccessToken).not.toHaveBeenCalled();
+    expect(mockedVerifyJWTCall).toEqual(1);
 
     done();
   });
 
   describe("Refresh tokens", () => {
-    test.only("should redirect to the login flow if a `TokenExpiredError` exception is thrown and no user is provided", async (done) => {
-      expect.assertions(6);
+    test("should redirect to the login flow if a `TokenExpiredError` exception is thrown and no user is provided", async (done) => {
+      expect.assertions(7);
 
       const access_token = generateHS256JWS({
         ...defaultPayload,
@@ -240,6 +218,7 @@ describe("withAuth", () => {
       expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();
       expect(spiedOnGetDBUserFromSub).toHaveBeenCalled();
       expect(spiedOnRefreshTokensFlow).not.toHaveBeenCalled();
+      expect(mockedVerifyJWTCall).toEqual(1);
       expect(spiedOnGetAndPutUser).not.toHaveBeenCalled();
       expect(mockedResponse.statusCode).toEqual(HttpStatus.TEMPORARY_REDIRECT);
       expect(mockedResponse.getHeader("location")).toBe("/");
@@ -247,7 +226,7 @@ describe("withAuth", () => {
       done();
     });
 
-    test("should refresh the user tokens if a `TokenExpiredError` exception is thrown and a user is provided, and should not redirect", async (done) => {
+    test.only("should refresh the user tokens if a `TokenExpiredError` exception is thrown and a user is provided, and should not redirect", async (done) => {
       expect.assertions(5);
 
       const access_token = generateHS256JWS({
@@ -274,15 +253,6 @@ describe("withAuth", () => {
         mockedHandler,
       );
       await withAuthCallback(mockedExtendedRequest, mockedResponse);
-      // .catch(
-      //   () => {
-      //     expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();
-      //     expect(spiedOnGetDBUserFromSub).toHaveBeenCalled();
-      //     expect(spiedOnRefreshTokensFlow).toHaveBeenCalled();
-      //     expect(spiedOnGetAndPutUser).toHaveBeenCalled();
-      //     expect(mockedResponse.statusCode).toEqual(HttpStatus.OK);
-      //   },
-      // );
 
       expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();
       expect(spiedOnGetDBUserFromSub).toHaveBeenCalled();

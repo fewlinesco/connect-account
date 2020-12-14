@@ -20,8 +20,6 @@ export function withAuth(handler: Handler): Handler {
       "user-session",
     );
 
-    console.log(userCookie);
-
     if (userCookie) {
       const { access_token: currentAccessToken, sub } = userCookie;
 
@@ -35,8 +33,6 @@ export function withAuth(handler: Handler): Handler {
                 user.refresh_token,
               );
 
-              console.log(refresh_token, access_token);
-
               const { sub } = await oauth2Client.verifyJWT<AccessToken>(
                 access_token,
                 config.connectJwtAlgorithm,
@@ -47,11 +43,7 @@ export function withAuth(handler: Handler): Handler {
                 sub,
               });
 
-              console.log("FLAG");
-
               await getAndPutUser({ sub, refresh_token }, user);
-
-              console.log("FLAG 2");
 
               response.statusCode = HttpStatus.OK;
               response.end();
