@@ -77,9 +77,11 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
             });
           }}
         />
-        <Flex>
+
+        <Label>
           <Input
             type="checkbox"
+            name="primary"
             onChange={() => {
               setIdentity({
                 ...identity,
@@ -87,8 +89,8 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
               });
             }}
           />
-          <p>Marking this identity as my primary one</p>
-        </Flex>
+          Mark this identity as my primary one
+        </Label>
 
         <Button
           variant={ButtonVariant.PRIMARY}
@@ -109,9 +111,7 @@ const WrongInputError = styled.p`
   margin-bottom: 3rem;
 `;
 
-const Flex = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: left;
+const Label = styled.label`
+  display: block;
   margin-bottom: ${({ theme }) => theme.spaces.xs};
 `;
