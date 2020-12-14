@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Container } from "../Container";
+import { StoriesContainer } from "../StoriesContainer";
 import { ShadowBox } from "./ShadowBox";
 
 export default {
@@ -10,8 +10,8 @@ export default {
 
 export const StandardShadowBox = (): JSX.Element => {
   return (
-    <Container>
+    <StoriesContainer>
       <ShadowBox>emailaddress@mail.test</ShadowBox>
-    </Container>
+    </StoriesContainer>
   );
 };

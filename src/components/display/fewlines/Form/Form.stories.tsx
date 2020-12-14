@@ -1,8 +1,8 @@
 import React from "react";
 
 import { Button, ButtonVariant } from "../Button/Button";
-import { Container } from "../Container";
 import { Input } from "../Input/Input";
+import { StoriesContainer } from "../StoriesContainer";
 import { Form } from "./Form";
 
 export default { title: "components/Form", component: Form };
@@ -11,7 +11,7 @@ export const StandardForm = (): JSX.Element => {
   const [numberOfSubmit, setNumberOfSubmit] = React.useState(0);
 
   return (
-    <Container>
+    <StoriesContainer>
       <Form
         onSubmit={async () => {
           setNumberOfSubmit(numberOfSubmit + 1);
@@ -23,6 +23,6 @@ export const StandardForm = (): JSX.Element => {
         </Button>
       </Form>
       <p>Number of submits: {numberOfSubmit}</p>
-    </Container>
+    </StoriesContainer>
   );
 };
