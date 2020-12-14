@@ -13,4 +13,11 @@ export const Input = styled.input`
     color: ${({ theme }) => theme.colors.lightGrey};
     font-size: ${({ theme }) => theme.fontSizes.s};
   }
+
+  &[type="checkbox"] {
+    width: 18px;
+    height: 1.6rem;
+    margin: 0 ${({ theme }) => theme.spaces.xxs} 0 0;
+    cursor: pointer;
+  }
 `;

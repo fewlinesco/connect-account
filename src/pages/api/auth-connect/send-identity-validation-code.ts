@@ -53,6 +53,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
           value: identityInput.value,
           type: identityInput.type,
           expiresAt: identityInput.expiresAt,
+          primary: identityInput.primary,
         };
 
         await insertTemporaryIdentity(userSession.sub, temporaryIdentity);
