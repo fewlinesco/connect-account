@@ -16,12 +16,14 @@ export function withAuth(handler: Handler): Handler {
     request: ExtendedRequest,
     response: ServerResponse,
   ): Promise<unknown> => {
-    const userSession = request.session.get<UserCookie | undefined>(
+    const userCookie = request.session.get<UserCookie | undefined>(
       "user-session",
     );
 
-    if (userSession) {
-      const { access_token: currentAccessToken, sub } = userSession;
+    console.log(userCookie);
+
+    if (userCookie) {
+      const { access_token: currentAccessToken, sub } = userCookie;
 
       await decryptVerifyAccessToken(currentAccessToken).catch(
         async (error) => {
@@ -33,6 +35,8 @@ export function withAuth(handler: Handler): Handler {
                 user.refresh_token,
               );
 
+              console.log(refresh_token, access_token);
+
               const { sub } = await oauth2Client.verifyJWT<AccessToken>(
                 access_token,
                 config.connectJwtAlgorithm,
@@ -43,7 +47,11 @@ export function withAuth(handler: Handler): Handler {
                 sub,
               });
 
-              getAndPutUser({ sub, refresh_token }, user);
+              console.log("FLAG");
+
+              await getAndPutUser({ sub, refresh_token }, user);
+
+              console.log("FLAG 2");
 
               response.statusCode = HttpStatus.OK;
               response.end();

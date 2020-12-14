@@ -1769,13 +1769,13 @@
   dependencies:
     logfmt "1.3.2"
 
-"@fwl/oauth2@0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@fwl/oauth2/-/oauth2-0.1.4.tgz#f2168a93ac700c87beecce4c93a7f11e6d44ded5"
-  integrity sha512-ZgsGXMqrY0kWxqYOb7ROkOSBwfYjt2t2ua/JnVPB49w6G/QMaBGG/dSkmhXLC2sbGsAlakyS+Dp4J21+3XDkww==
+"@fwl/oauth2@0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@fwl/oauth2/-/oauth2-0.1.8.tgz#747fda4eb453b216412addc391da2bd56394c6e3"
+  integrity sha512-dRx0xvNITMbuvNgtLfP7JZa6K69dTRh1zM106r2EAYn+5VT6YKLBnUA39c00n26CVhSbVeERHv4XRPzpHIgmaw==
   dependencies:
     jsonwebtoken "8.5.1"
-    node-fetch "2.6.0"
+    node-fetch "2.6.1"
     node-jose "2.0.0"
 
 "@fwl/tracing@0.2.1":
@@ -1842,7 +1842,7 @@
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.1.0.tgz#6c9eafc78c1529248f8f4d92b0799a712b6052c6"
   integrity sha512-i9YbZPN3QgfighY/1X1Pu118VUz2Fmmhd6b2n0/O8YVgGGfw0FbUYoA97k7FkpGJ+pLCFEDLUmAPPV4D1kpeFw==
 
-"@hapi/iron@^6.0.0":
+"@hapi/iron@6.0.0", "@hapi/iron@^6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@hapi/iron/-/iron-6.0.0.tgz#ca3f9136cda655bdd6028de0045da0de3d14436f"
   integrity sha512-zvGvWDufiTGpTJPG1Y/McN8UqWBu0k/xs/7l++HVU535NLHXsHhy54cfEMdW7EjwKfbBfM9Xy25FmTiobb7Hvw==

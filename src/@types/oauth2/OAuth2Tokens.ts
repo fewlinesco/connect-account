@@ -1,5 +1,5 @@
 export type AccessToken = {
-  aud: string[];
+  aud: string | string[];
   exp: number;
   iss: string;
   scope: string;
