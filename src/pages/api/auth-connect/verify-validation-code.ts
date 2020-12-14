@@ -5,7 +5,11 @@ import { markIdentityAsPrimary } from "@lib/commands/markIdentityAsPrimary";
 import { checkVerificationCode } from "@lib/queries/checkVerificationCode";
 import { UserCookie } from "@src/@types/UserCookie";
 import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
-import { NoIdentityAdded } from "@src/clientErrors";
+import {
+  NoDataReturned,
+  NoIdentityAdded,
+  NoUserFound,
+} from "@src/clientErrors";
 import { addIdentityToUser } from "@src/commands/addIdentityToUser";
 import { GraphqlErrors, TemporaryIdentityExpired } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
@@ -32,11 +36,24 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
       );
 
       if (temporaryIdentity && temporaryIdentity.expiresAt < Date.now()) {
-        const { data } = await checkVerificationCode(validationCode, eventId);
+        const checkVerificationCodeResult = await checkVerificationCode(
+          validationCode,
+          eventId,
+        ).then(({ errors, data }) => {
+          if (errors) {
+            throw new GraphqlErrors(errors);
+          }
+
+          if (!data) {
+            throw new NoDataReturned();
+          }
+
+          return data.checkVerificationCode;
+        });
 
         const { value, type, primary } = temporaryIdentity;
 
-        if (data && data.checkVerificationCode.status === "VALID") {
+        if (checkVerificationCodeResult.status === "VALID") {
           const body = {
             userId: userSession.sub,
             type: getIdentityType(type),
@@ -79,8 +96,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
         throw new TemporaryIdentityExpired();
       }
     } else {
-      // TODO: Improve error.
-      throw new Error("No user");
+      throw new NoUserFound();
     }
   }
 

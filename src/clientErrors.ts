@@ -51,3 +51,7 @@ export class UnhandledIdentityType extends Error {
 export class NoUserFound extends Error {
   readonly message = "No User found";
 }
+
+export class NoDataReturned extends Error {
+  readonly message = "No Data Returned";
+}
