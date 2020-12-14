@@ -227,7 +227,7 @@ describe("withAuth", () => {
     });
 
     test.only("should refresh the user tokens if a `TokenExpiredError` exception is thrown and a user is provided, and should not redirect", async (done) => {
-      expect.assertions(5);
+      expect.assertions(6);
 
       const access_token = generateHS256JWS({
         ...defaultPayload,
@@ -239,6 +239,8 @@ describe("withAuth", () => {
       const { mockedExtendedRequest, mockedResponse } = mockedReqAndRes(
         sealedJWS,
       );
+
+      mockedExtendedRequest.headers.referer = "referer/url";
 
       spiedOnDecryptVerifyAccessToken.mockImplementationOnce(async () => {
         class TokenExpiredError extends Error {
@@ -259,6 +261,7 @@ describe("withAuth", () => {
       expect(spiedOnRefreshTokensFlow).toHaveBeenCalled();
       expect(spiedOnGetAndPutUser).toHaveBeenCalled();
       expect(mockedResponse.statusCode).toEqual(HttpStatus.OK);
+      expect(mockedResponse.getHeader("location")).toBe("referer/url");
 
       done();
     });

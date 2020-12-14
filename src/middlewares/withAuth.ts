@@ -20,6 +20,8 @@ export function withAuth(handler: Handler): Handler {
       "user-session",
     );
 
+    console.log(request.headers.referer);
+
     if (userCookie) {
       const { access_token: currentAccessToken, sub } = userCookie;
 
@@ -45,7 +47,11 @@ export function withAuth(handler: Handler): Handler {
 
               await getAndPutUser({ sub, refresh_token }, user);
 
+              console.log("I'm being refreshed yo");
+
               response.statusCode = HttpStatus.OK;
+              response.setHeader("location", request.headers.referer || "");
+
               response.end();
               return;
             } else {
