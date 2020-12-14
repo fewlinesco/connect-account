@@ -11,6 +11,7 @@ import {
   NoUserFound,
 } from "@src/clientErrors";
 import { addIdentityToUser } from "@src/commands/addIdentityToUser";
+import { removeTemporaryIdentity } from "@src/commands/removeTemporaryIdentity";
 import { GraphqlErrors, TemporaryIdentityExpired } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
@@ -81,6 +82,8 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
               }
             });
           }
+
+          await removeTemporaryIdentity(userSession.sub, temporaryIdentity);
 
           response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
             Location: "/account/logins",
