@@ -90,9 +90,20 @@ describe("AddIdentityPage", () => {
       </AccountApp>,
     );
 
-    const addIdentityInput = component.find(Form).find(Input);
+    const addIdentityInput = component
+      .find(Form)
+      .find(Input)
+      .find('[type="email"]')
+      .hostNodes();
     expect(addIdentityInput).toHaveLength(1);
     expect(addIdentityInput.props().placeholder).toEqual("Enter your email");
+
+    const markAsPrimaryCheckbox = component
+      .find(Form)
+      .find(Input)
+      .find('[type="checkbox"]')
+      .hostNodes();
+    expect(markAsPrimaryCheckbox).toHaveLength(1);
 
     const addButton = component
       .find(Form)
@@ -116,9 +127,20 @@ describe("AddIdentityPage", () => {
       </AccountApp>,
     );
 
-    const addIdentityInput = component.find(Form).find(Input);
+    const addIdentityInput = component
+      .find(Form)
+      .find(Input)
+      .find('[type="text"]')
+      .hostNodes();
     expect(addIdentityInput).toHaveLength(1);
     expect(addIdentityInput.props().placeholder).toEqual("Enter your phone");
+
+    const markAsPrimaryCheckbox = component
+      .find(Form)
+      .find(Input)
+      .find('[type="checkbox"]')
+      .hostNodes();
+    expect(markAsPrimaryCheckbox).toHaveLength(1);
 
     const addButton = component
       .find(Form)
@@ -144,7 +166,10 @@ describe("AddIdentityPage", () => {
       </AccountApp>,
     );
 
-    const newIdentityInput = component.find(Input);
+    const newIdentityInput = component
+      .find(Input)
+      .find('[type="email"]')
+      .hostNodes();
 
     newIdentityInput.simulate("change", {
       target: { value: "test3@test.test " },
@@ -163,6 +188,7 @@ describe("AddIdentityPage", () => {
         callbackUrl: "/",
         identityInput: {
           expiresAt: 1572393600000 + 300,
+          primary: false,
           type: IdentityTypes.EMAIL,
           value: "test3@test.test ",
         },
