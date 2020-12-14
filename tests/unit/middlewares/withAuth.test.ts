@@ -2,8 +2,6 @@ import { defaultPayload, generateHS256JWS } from "@fwl/oauth2";
 import { HttpStatus } from "@fwl/web";
 import { seal, defaults } from "@hapi/iron";
 import { IncomingMessage, ServerResponse } from "http";
-import fetch from "jest-fetch-mock";
-import { enableFetchMocks } from "jest-fetch-mock";
 import { Socket } from "net";
 
 import * as refreshTokensFlow from "@lib/commands/refreshTokensFlow";
@@ -16,8 +14,6 @@ import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import * as getDBUserFromSub from "@src/queries/getDBUserFromSub.ts";
 import * as decryptVerifyAccessToken from "@src/workflows/decryptVerifyAccessToken";
-
-enableFetchMocks();
 
 const spiedOnDecryptVerifyAccessToken = jest
   .spyOn(decryptVerifyAccessToken, "decryptVerifyAccessToken")
@@ -89,7 +85,7 @@ async function sealJWS(access_token: string, salt?: string): Promise<string> {
       },
       flash: {},
     },
-    salt ? salt : config.connectAccountSessionSalt,
+    salt || config.connectAccountSessionSalt,
     defaults,
   );
 }
@@ -148,10 +144,6 @@ const mockedHandler: Handler = async (
 };
 
 describe("withAuth", () => {
-  beforeEach(() => {
-    fetch.resetMocks();
-  });
-
   beforeEach(() => {
     jest.clearAllMocks();
   });

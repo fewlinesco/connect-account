@@ -8,6 +8,10 @@ export class NoIdentityFound extends Error {
   readonly message = "No Identity Found";
 }
 
+export class NoIdentityAdded extends Error {
+  readonly message = "No Identity Added";
+}
+
 export class IdentityAlreadyUsed extends Error {
   readonly message: string;
 
