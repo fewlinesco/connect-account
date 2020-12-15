@@ -187,7 +187,7 @@ describe("AddIdentityPage", () => {
       {
         callbackUrl: "/",
         identityInput: {
-          expiresAt: 1572393600000 + 300,
+          expiresAt: 1572393600000 + 300000,
           primary: false,
           type: IdentityTypes.EMAIL,
           value: "test3@test.test ",
