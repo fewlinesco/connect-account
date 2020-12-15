@@ -1,5 +1,5 @@
 import { getIdentities } from "@lib/queries/getIdentities";
-import { NoIdentityFound } from "@src/clientErrors";
+import { NoDataReturned, NoIdentityFound } from "@src/clientErrors";
 import { GraphqlErrors } from "@src/errors";
 
 export async function isMarkingIdentityAsPrimaryAuthorized(
@@ -12,10 +12,16 @@ export async function isMarkingIdentityAsPrimaryAuthorized(
     }
 
     if (!data) {
+      throw new NoDataReturned();
+    }
+
+    const identities = data.provider.user.identities;
+
+    if (!identities) {
       throw new NoIdentityFound();
     }
 
-    return data.provider.user.identities;
+    return identities;
   });
 
   return identities

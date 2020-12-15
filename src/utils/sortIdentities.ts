@@ -1,6 +1,5 @@
 import { getIdentityType } from "./getIdentityType";
 import { Identity, IdentityTypes } from "@lib/@types";
-import type { ProviderUser } from "@lib/@types/ProviderUser";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 import { UnhandledIdentityType } from "@src/clientErrors";
 
@@ -8,14 +7,10 @@ function sortPrimaryIdentity(a: Identity, b: Identity): number {
   return a.primary === b.primary ? 0 : a.primary ? -1 : 1;
 }
 
-export function sortIdentities(data: {
-  provider: ProviderUser;
-}): SortedIdentities {
+export function sortIdentities(identities: Identity[]): SortedIdentities {
   const phoneIdentities: Identity[] = [];
   const emailIdentities: Identity[] = [];
   const socialIdentities: Identity[] = [];
-
-  const identities: Identity[] = data.provider.user.identities;
 
   identities.forEach((identity) => {
     try {

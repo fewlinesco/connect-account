@@ -6,7 +6,11 @@ import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentities } from "@lib/queries/getIdentities";
 import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
-import { NoIdentityFound, NoUserFound } from "@src/clientErrors";
+import {
+  NoDataReturned,
+  NoIdentityFound,
+  NoUserFound,
+} from "@src/clientErrors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
@@ -67,10 +71,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             }
 
             if (!data) {
+              throw new NoDataReturned();
+            }
+
+            const identities = data.provider.user.identities;
+
+            if (!identities) {
               throw new NoIdentityFound();
             }
 
-            return data.provider.user.identities.filter(
+            return identities.filter(
               (userIdentity) => userIdentity.id === identityId,
             )[0];
           },

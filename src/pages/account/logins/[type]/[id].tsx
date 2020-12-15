@@ -6,7 +6,7 @@ import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentity } from "@lib/queries/getIdentity";
 import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
-import { NoIdentityFound } from "@src/clientErrors";
+import { NoDataReturned, NoIdentityFound } from "@src/clientErrors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { IdentityOverview } from "@src/components/display/fewlines/IdentityOverview/IdentityOverview";
@@ -59,16 +59,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         const identity = await getIdentity(
           userSession.sub,
           context.params.id.toString(),
-        ).then((result) => {
-          if (result.errors) {
-            throw new GraphqlErrors(result.errors);
+        ).then(({ errors, data }) => {
+          if (errors) {
+            throw new GraphqlErrors(errors);
           }
 
-          if (result.data && !result.data.provider.user.identity) {
+          if (!data) {
+            throw new NoDataReturned();
+          }
+
+          if (!data.provider.user.identity) {
             throw new NoIdentityFound();
           }
 
-          return result.data?.provider.user.identity;
+          return data.provider.user.identity;
         });
 
         return {

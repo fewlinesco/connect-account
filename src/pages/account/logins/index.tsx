@@ -5,7 +5,7 @@ import { getIdentities } from "@lib/queries/getIdentities";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
-import { NoDataReturned } from "@src/clientErrors";
+import { NoDataReturned, NoIdentityFound } from "@src/clientErrors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { LoginsOverview } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
@@ -60,7 +60,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
               throw new NoDataReturned();
             }
 
-            return sortIdentities(data);
+            const identities = data.provider.user.identities;
+
+            if (!identities) {
+              throw new NoIdentityFound();
+            }
+
+            return sortIdentities(identities);
           },
         );
 
