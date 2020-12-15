@@ -45,8 +45,6 @@ export function withAuth(handler: Handler): Handler {
 
               await getAndPutUser({ sub, refresh_token }, user);
 
-              console.log("I'm being refreshed yo");
-
               response.statusCode = HttpStatus.OK;
               response.setHeader("location", request.headers.referer || "");
               response.end();

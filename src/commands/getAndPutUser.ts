@@ -32,6 +32,6 @@ export async function getAndPutUser(
     refresh_token,
   };
 
-  putUser(user);
+  await putUser(user);
   return;
 }
