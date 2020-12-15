@@ -36,7 +36,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
         (temporaryIdentity) => temporaryIdentity.eventId === eventId,
       );
 
-      if (temporaryIdentity && temporaryIdentity.expiresAt < Date.now()) {
+      if (temporaryIdentity && temporaryIdentity.expiresAt > Date.now()) {
         const checkVerificationCodeResult = await checkVerificationCode(
           validationCode,
           eventId,
