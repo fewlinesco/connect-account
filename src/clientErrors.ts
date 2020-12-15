@@ -55,3 +55,7 @@ export class NoUserFound extends Error {
 export class NoDataReturned extends Error {
   readonly message = "No Data Returned";
 }
+
+export class NoProviderNameFound extends Error {
+  readonly message = "No Provider Name Found";
+}

@@ -1,45 +1,33 @@
-import { IdentityTypes } from "@lib/@types";
-import { ProviderUser } from "@lib/@types";
+import { Identity, IdentityTypes } from "@lib/@types";
 import { sortIdentities } from "@src/utils/sortIdentities";
 
 describe("sortIdentities", () => {
   it("should sort identities properly", () => {
-    const mockedResponse: { data: { provider: ProviderUser } } = {
-      data: {
-        provider: {
-          id: "4a5f8589-0d91-4a69-924a-6f227a69666d",
-          name: "Mocked Provider",
-          user: {
-            id: "299d268e-3e19-4486-9be7-29c539d241ac",
-            identities: [
-              {
-                id: "7f8d168a-3f65-4636-9acb-7720a212680e",
-                primary: true,
-                status: "validated",
-                type: IdentityTypes.PHONE,
-                value: "0123456789",
-              },
-              {
-                id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-                primary: true,
-                status: "validated",
-                type: IdentityTypes.EMAIL,
-                value: "test@test.test",
-              },
-              {
-                id: "5z8d168a-3f65-4636-9acb-7720a212543r",
-                primary: false,
-                status: "validated",
-                type: IdentityTypes.GITHUB,
-                value: "test@test.test",
-              },
-            ],
-          },
-        },
+    const mockedIdentities: Identity[] = [
+      {
+        id: "7f8d168a-3f65-4636-9acb-7720a212680e",
+        primary: true,
+        status: "validated",
+        type: IdentityTypes.PHONE,
+        value: "0123456789",
       },
-    };
+      {
+        id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+        primary: true,
+        status: "validated",
+        type: IdentityTypes.EMAIL,
+        value: "test@test.test",
+      },
+      {
+        id: "5z8d168a-3f65-4636-9acb-7720a212543r",
+        primary: false,
+        status: "validated",
+        type: IdentityTypes.GITHUB,
+        value: "test@test.test",
+      },
+    ];
 
-    const mockedSortedResponse = {
+    const mockedSortedIdentities = {
       emailIdentities: [
         {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -69,64 +57,42 @@ describe("sortIdentities", () => {
       ],
     };
 
-    const call = sortIdentities(mockedResponse);
-    expect(call).toStrictEqual(mockedSortedResponse);
+    const sortedIdentities = sortIdentities(mockedIdentities);
+    expect(sortedIdentities).toStrictEqual(mockedSortedIdentities);
   });
 
   it("should render properly if it receives empty arrays", () => {
-    const mockedResponse: { data: { provider: ProviderUser } } = {
-      data: {
-        provider: {
-          id: "4a5f8589-0d91-4a69-924a-6f227a69666d",
-          name: "Mocked Provider",
-          user: {
-            id: "299d268e-3e19-4486-9be7-29c539d241ac",
-            identities: [],
-          },
-        },
-      },
-    };
+    const mockedIdentities: Identity[] = [];
 
-    const mockedSortedResponse = {
+    const mockedSortedIdentities = {
       emailIdentities: [],
       phoneIdentities: [],
       socialIdentities: [],
     };
 
-    const call = sortIdentities(mockedResponse);
-    expect(call).toStrictEqual(mockedSortedResponse);
+    const sortedIdentities = sortIdentities(mockedIdentities);
+    expect(sortedIdentities).toStrictEqual(mockedSortedIdentities);
   });
 
   it("should render properly if it receives only social logins", () => {
-    const mockedResponse: { data: { provider: ProviderUser } } = {
-      data: {
-        provider: {
-          id: "4a5f8589-0d91-4a69-924a-6f227a69666d",
-          name: "Mocked Provider",
-          user: {
-            id: "299d268e-3e19-4486-9be7-29c539d241ac",
-            identities: [
-              {
-                id: "7f8d168a-3f65-4636-9acb-7720a212680e",
-                primary: true,
-                status: "validated",
-                type: IdentityTypes.FACEBOOK,
-                value: "test@test.test",
-              },
-              {
-                id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-                primary: false,
-                status: "validated",
-                type: IdentityTypes.GOOGLE,
-                value: "test@test.test",
-              },
-            ],
-          },
-        },
+    const mockedIdentities: Identity[] = [
+      {
+        id: "7f8d168a-3f65-4636-9acb-7720a212680e",
+        primary: true,
+        status: "validated",
+        type: IdentityTypes.FACEBOOK,
+        value: "test@test.test",
       },
-    };
+      {
+        id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+        primary: false,
+        status: "validated",
+        type: IdentityTypes.GOOGLE,
+        value: "test@test.test",
+      },
+    ];
 
-    const mockedSortedResponse = {
+    const mockedSortedIdentities = {
       emailIdentities: [],
       phoneIdentities: [],
       socialIdentities: [
@@ -147,40 +113,29 @@ describe("sortIdentities", () => {
       ],
     };
 
-    const call = sortIdentities(mockedResponse);
-    expect(call).toStrictEqual(mockedSortedResponse);
+    const sortedIdentities = sortIdentities(mockedIdentities);
+    expect(sortedIdentities).toStrictEqual(mockedSortedIdentities);
   });
 
   it("should render properly if it receives only email", () => {
-    const mockedResponse: { data: { provider: ProviderUser } } = {
-      data: {
-        provider: {
-          id: "4a5f8589-0d91-4a69-924a-6f227a69666d",
-          name: "Mocked Provider",
-          user: {
-            id: "299d268e-3e19-4486-9be7-29c539d241ac",
-            identities: [
-              {
-                id: "7f8d168a-3f65-4636-9acb-7720a212680e",
-                primary: true,
-                status: "validated",
-                type: IdentityTypes.EMAIL,
-                value: "test@fewlines.local",
-              },
-              {
-                id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-                primary: false,
-                status: "validated",
-                type: IdentityTypes.EMAIL,
-                value: "test@test.test",
-              },
-            ],
-          },
-        },
+    const mockedIdentities: Identity[] = [
+      {
+        id: "7f8d168a-3f65-4636-9acb-7720a212680e",
+        primary: true,
+        status: "validated",
+        type: IdentityTypes.EMAIL,
+        value: "test@fewlines.local",
       },
-    };
+      {
+        id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+        primary: false,
+        status: "validated",
+        type: IdentityTypes.EMAIL,
+        value: "test@test.test",
+      },
+    ];
 
-    const mockedSortedResponse = {
+    const mockedSortedIdentities = {
       emailIdentities: [
         {
           id: "7f8d168a-3f65-4636-9acb-7720a212680e",
@@ -201,40 +156,29 @@ describe("sortIdentities", () => {
       socialIdentities: [],
     };
 
-    const call = sortIdentities(mockedResponse);
-    expect(call).toStrictEqual(mockedSortedResponse);
+    const sortedIdentities = sortIdentities(mockedIdentities);
+    expect(sortedIdentities).toStrictEqual(mockedSortedIdentities);
   });
 
   it("should render properly if it receive only phone", () => {
-    const mockedResponse: { data: { provider: ProviderUser } } = {
-      data: {
-        provider: {
-          id: "4a5f8589-0d91-4a69-924a-6f227a69666d",
-          name: "Mocked Provider",
-          user: {
-            id: "299d268e-3e19-4486-9be7-29c539d241ac",
-            identities: [
-              {
-                id: "7f8d168a-3f65-4636-9acb-7720a212680e",
-                primary: true,
-                status: "validated",
-                type: IdentityTypes.PHONE,
-                value: "0123456789",
-              },
-              {
-                id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-                primary: false,
-                status: "validated",
-                type: IdentityTypes.PHONE,
-                value: "0622116655",
-              },
-            ],
-          },
-        },
+    const mockedIdentities: Identity[] = [
+      {
+        id: "7f8d168a-3f65-4636-9acb-7720a212680e",
+        primary: true,
+        status: "validated",
+        type: IdentityTypes.PHONE,
+        value: "0123456789",
       },
-    };
+      {
+        id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+        primary: false,
+        status: "validated",
+        type: IdentityTypes.PHONE,
+        value: "0622116655",
+      },
+    ];
 
-    const mockedSortedResponse = {
+    const mockedSortedIdentities = {
       emailIdentities: [],
       phoneIdentities: [
         {
@@ -255,47 +199,36 @@ describe("sortIdentities", () => {
       socialIdentities: [],
     };
 
-    const call = sortIdentities(mockedResponse);
-    expect(call).toStrictEqual(mockedSortedResponse);
+    const sortedIdentities = sortIdentities(mockedIdentities);
+    expect(sortedIdentities).toStrictEqual(mockedSortedIdentities);
   });
 
   test("it should put the primary phone at the top of the list", () => {
-    const mockedResponse: { data: { provider: ProviderUser } } = {
-      data: {
-        provider: {
-          id: "4a5f8589-0d91-4a69-924a-6f227a69666d",
-          name: "Mocked Provider",
-          user: {
-            id: "299d268e-3e19-4486-9be7-29c539d241ac",
-            identities: [
-              {
-                id: "7f8d168a-3f65-4636-9acb-7720a212680e",
-                primary: false,
-                status: "validated",
-                type: IdentityTypes.PHONE,
-                value: "0123456789",
-              },
-              {
-                id: "hut67cc1-530b-4982-878d-33f0def6a7cf",
-                primary: true,
-                status: "validated",
-                type: IdentityTypes.PHONE,
-                value: "0677113322",
-              },
-              {
-                id: "ftardcc1-530b-4982-878d-33f0def6a7cf",
-                primary: false,
-                status: "validated",
-                type: IdentityTypes.PHONE,
-                value: "0677113300",
-              },
-            ],
-          },
-        },
+    const mockedIdentities: Identity[] = [
+      {
+        id: "7f8d168a-3f65-4636-9acb-7720a212680e",
+        primary: false,
+        status: "validated",
+        type: IdentityTypes.PHONE,
+        value: "0123456789",
       },
-    };
+      {
+        id: "hut67cc1-530b-4982-878d-33f0def6a7cf",
+        primary: true,
+        status: "validated",
+        type: IdentityTypes.PHONE,
+        value: "0677113322",
+      },
+      {
+        id: "ftardcc1-530b-4982-878d-33f0def6a7cf",
+        primary: false,
+        status: "validated",
+        type: IdentityTypes.PHONE,
+        value: "0677113300",
+      },
+    ];
 
-    const mockedSortedResponse = {
+    const mockedSortedIdentities = {
       emailIdentities: [],
       phoneIdentities: [
         {
@@ -323,47 +256,36 @@ describe("sortIdentities", () => {
       socialIdentities: [],
     };
 
-    const call = sortIdentities(mockedResponse);
-    expect(call).toStrictEqual(mockedSortedResponse);
+    const sortedIdentities = sortIdentities(mockedIdentities);
+    expect(sortedIdentities).toStrictEqual(mockedSortedIdentities);
   });
 
   test("it should put the primary email at the top of the list", () => {
-    const mockedResponse: { data: { provider: ProviderUser } } = {
-      data: {
-        provider: {
-          id: "4a5f8589-0d91-4a69-924a-6f227a69666d",
-          name: "Mocked Provider",
-          user: {
-            id: "299d268e-3e19-4486-9be7-29c539d241ac",
-            identities: [
-              {
-                id: "611ed68a-3f65-4636-9acb-7720a212680e",
-                primary: false,
-                status: "validated",
-                type: IdentityTypes.EMAIL,
-                value: "test@test.test",
-              },
-              {
-                id: "0optncc1-530b-4982-878d-33f0def6a7cf",
-                primary: false,
-                status: "validated",
-                type: IdentityTypes.EMAIL,
-                value: "test2@test.test",
-              },
-              {
-                id: "ghhg5cc1-530b-4982-878d-33f0def6a7cf",
-                primary: true,
-                status: "validated",
-                type: IdentityTypes.EMAIL,
-                value: "test3@test.test",
-              },
-            ],
-          },
-        },
+    const mockedIdentities: Identity[] = [
+      {
+        id: "611ed68a-3f65-4636-9acb-7720a212680e",
+        primary: false,
+        status: "validated",
+        type: IdentityTypes.EMAIL,
+        value: "test@test.test",
       },
-    };
+      {
+        id: "0optncc1-530b-4982-878d-33f0def6a7cf",
+        primary: false,
+        status: "validated",
+        type: IdentityTypes.EMAIL,
+        value: "test2@test.test",
+      },
+      {
+        id: "ghhg5cc1-530b-4982-878d-33f0def6a7cf",
+        primary: true,
+        status: "validated",
+        type: IdentityTypes.EMAIL,
+        value: "test3@test.test",
+      },
+    ];
 
-    const mockedSortedResponse = {
+    const mockedSortedIdentities = {
       emailIdentities: [
         {
           id: "ghhg5cc1-530b-4982-878d-33f0def6a7cf",
@@ -391,47 +313,36 @@ describe("sortIdentities", () => {
       socialIdentities: [],
     };
 
-    const call = sortIdentities(mockedResponse);
-    expect(call).toStrictEqual(mockedSortedResponse);
+    const sortedIdentities = sortIdentities(mockedIdentities);
+    expect(sortedIdentities).toStrictEqual(mockedSortedIdentities);
   });
 
   it("should put the primary social login at the top of the list", () => {
-    const mockedResponse: { data: { provider: ProviderUser } } = {
-      data: {
-        provider: {
-          id: "4a5f8589-0d91-4a69-924a-6f227a69666d",
-          name: "Mocked Provider",
-          user: {
-            id: "299d268e-3e19-4486-9be7-29c539d241ac",
-            identities: [
-              {
-                id: "7f8d168a-3f65-4636-9acb-7720a212680e",
-                primary: false,
-                status: "validated",
-                type: IdentityTypes.FACEBOOK,
-                value: "test@test.test",
-              },
-              {
-                id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-                primary: true,
-                status: "validated",
-                type: IdentityTypes.GOOGLE,
-                value: "test@test.test",
-              },
-              {
-                id: "5z8d168a-3f65-4636-9acb-7720a212543r",
-                primary: false,
-                status: "validated",
-                type: IdentityTypes.GITHUB,
-                value: "test@test.test",
-              },
-            ],
-          },
-        },
+    const mockedIdentities: Identity[] = [
+      {
+        id: "7f8d168a-3f65-4636-9acb-7720a212680e",
+        primary: false,
+        status: "validated",
+        type: IdentityTypes.FACEBOOK,
+        value: "test@test.test",
       },
-    };
+      {
+        id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+        primary: true,
+        status: "validated",
+        type: IdentityTypes.GOOGLE,
+        value: "test@test.test",
+      },
+      {
+        id: "5z8d168a-3f65-4636-9acb-7720a212543r",
+        primary: false,
+        status: "validated",
+        type: IdentityTypes.GITHUB,
+        value: "test@test.test",
+      },
+    ];
 
-    const mockedSortedResponse = {
+    const mockedSortedIdentities = {
       emailIdentities: [],
       phoneIdentities: [],
       socialIdentities: [
@@ -459,47 +370,36 @@ describe("sortIdentities", () => {
       ],
     };
 
-    const call = sortIdentities(mockedResponse);
-    expect(call).toStrictEqual(mockedSortedResponse);
+    const sortedIdentities = sortIdentities(mockedIdentities);
+    expect(sortedIdentities).toStrictEqual(mockedSortedIdentities);
   });
 
   it("should not throw error if it is an instance of UnhandledIdentityType error when given an unknown identity type", () => {
-    const mockedResponse: { data: { provider: ProviderUser } } = {
-      data: {
-        provider: {
-          id: "4a5f8589-0d91-4a69-924a-6f227a69666d",
-          name: "Mocked Provider",
-          user: {
-            id: "299d268e-3e19-4486-9be7-29c539d241ac",
-            identities: [
-              {
-                id: "7f8d168a-3f65-4636-9acb-7720a212680e",
-                primary: false,
-                status: "validated",
-                type: IdentityTypes.FACEBOOK,
-                value: "test@test.test",
-              },
-              {
-                id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-                primary: true,
-                status: "validated",
-                type: IdentityTypes.GOOGLE,
-                value: "test@test.test",
-              },
-              {
-                id: "5z8d168a-3f65-4636-9acb-7720a212543r",
-                primary: false,
-                status: "validated",
-                type: "gitlab" as IdentityTypes,
-                value: "test@test.test",
-              },
-            ],
-          },
-        },
+    const mockedIdentities: Identity[] = [
+      {
+        id: "7f8d168a-3f65-4636-9acb-7720a212680e",
+        primary: false,
+        status: "validated",
+        type: IdentityTypes.FACEBOOK,
+        value: "test@test.test",
       },
-    };
+      {
+        id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+        primary: true,
+        status: "validated",
+        type: IdentityTypes.GOOGLE,
+        value: "test@test.test",
+      },
+      {
+        id: "5z8d168a-3f65-4636-9acb-7720a212543r",
+        primary: false,
+        status: "validated",
+        type: "gitlab" as IdentityTypes,
+        value: "test@test.test",
+      },
+    ];
 
-    const mockedSortedIdentities = sortIdentities(mockedResponse);
+    const mockedSortedIdentities = sortIdentities(mockedIdentities);
 
     expect(mockedSortedIdentities.socialIdentities).toHaveLength(2);
   });

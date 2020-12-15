@@ -1,6 +1,7 @@
 import { HttpStatus } from "@fwl/web";
 import { Handler } from "next-iron-session";
 
+import { addIdentityToUser } from "@lib/commands/addIdentityToUser";
 import { markIdentityAsPrimary } from "@lib/commands/markIdentityAsPrimary";
 import { checkVerificationCode } from "@lib/queries/checkVerificationCode";
 import { UserCookie } from "@src/@types/UserCookie";
@@ -10,7 +11,6 @@ import {
   NoIdentityAdded,
   NoUserFound,
 } from "@src/clientErrors";
-import { addIdentityToUser } from "@src/commands/addIdentityToUser";
 import { removeTemporaryIdentity } from "@src/commands/removeTemporaryIdentity";
 import { GraphqlErrors, TemporaryIdentityExpired } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";

@@ -27,23 +27,25 @@ const handler: Handler = async (
         userId: userSession.sub,
       }).then(({ data, errors }) => {
         if (errors) {
-          response.setHeader("Content-Type", "application/json");
-
           const restrictionRulesError = ((errors as unknown) as GraphQLError &
             { code?: string }[]).find(
             (error) => error.code === "password_does_not_meet_requirements",
           );
 
           if (restrictionRulesError) {
+            response.setHeader("Content-Type", "application/json");
             response.statusCode = HttpStatus.UNPROCESSABLE_ENTITY;
             response.json({ restrictionRulesError });
           } else {
             response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             response.end();
           }
+        } else if (!data) {
+          response.statusCode = HttpStatus.NOT_FOUND;
+          response.end();
         } else {
-          response.statusCode = HttpStatus.OK;
           response.setHeader("Content-Type", "application/json");
+          response.statusCode = HttpStatus.OK;
           response.json({ data });
         }
       });
