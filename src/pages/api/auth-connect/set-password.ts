@@ -33,6 +33,7 @@ const handler: Handler = async (
           );
 
           if (restrictionRulesError) {
+            response.setHeader("Content-Type", "application/json");
             response.statusCode = HttpStatus.UNPROCESSABLE_ENTITY;
             response.json({ restrictionRulesError });
           } else {
