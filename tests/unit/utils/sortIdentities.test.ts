@@ -222,7 +222,7 @@ describe("sortIdentities", () => {
       {
         id: "ftardcc1-530b-4982-878d-33f0def6a7cf",
         primary: false,
-        status: "validated",
+        status: "unvalidated",
         type: IdentityTypes.PHONE,
         value: "0677113300",
       },
@@ -272,7 +272,7 @@ describe("sortIdentities", () => {
       {
         id: "0optncc1-530b-4982-878d-33f0def6a7cf",
         primary: false,
-        status: "validated",
+        status: "unvalidated",
         type: IdentityTypes.EMAIL,
         value: "test2@test.test",
       },
@@ -322,7 +322,7 @@ describe("sortIdentities", () => {
       {
         id: "7f8d168a-3f65-4636-9acb-7720a212680e",
         primary: false,
-        status: "validated",
+        status: "unvalidated",
         type: IdentityTypes.FACEBOOK,
         value: "test@test.test",
       },
