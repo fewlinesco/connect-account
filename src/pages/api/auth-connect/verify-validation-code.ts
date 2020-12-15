@@ -96,6 +96,9 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
           });
         }
       } else {
+        if (temporaryIdentity) {
+          await removeTemporaryIdentity(userSession.sub, temporaryIdentity);
+        }
         throw new TemporaryIdentityExpired();
       }
     } else {
