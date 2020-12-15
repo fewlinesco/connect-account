@@ -12,15 +12,11 @@ import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
 import { Identity } from "@lib/@types";
+import { IdentitiesSectionContent } from "@src/@types/identitiesSectionContent";
 
 type StandardIdentitiesSectionProps = {
   sectionName: string;
-  content: {
-    title: string;
-    noIdentityMessage: string;
-    addNewIdentityMessage?: string;
-    identitiesList: Identity[];
-  };
+  content: IdentitiesSectionContent;
 };
 
 export const StandardIdentitiesSection: React.FC<StandardIdentitiesSectionProps> = ({
