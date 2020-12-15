@@ -197,7 +197,15 @@ describe("LoginsOverviewPage", () => {
           },
         ],
         emailIdentities: [],
-        socialIdentities: [],
+        socialIdentities: [
+          {
+            id: "8u76dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: false,
+            status: "validated",
+            type: IdentityTypes.FACEBOOK,
+            value: "",
+          },
+        ],
       };
       const component = mount(
         <AccountApp>
@@ -211,14 +219,69 @@ describe("LoginsOverviewPage", () => {
       const noPhone = component.contains(
         <NoIdentitiesBox>No phone number added yet.</NoIdentitiesBox>,
       );
+      const noSocialLogins = component.contains(
+        <NoIdentitiesBox>No social logins added yet.</NoIdentitiesBox>,
+      );
       expect(noEmail).toEqual(true);
       expect(noPhone).toEqual(false);
-      expect(boxedLink).toHaveLength(1);
+      expect(noSocialLogins).toEqual(false);
+      expect(boxedLink).toHaveLength(2);
     });
 
     test("it should display the no phone number message if there is none", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [],
+        emailIdentities: [
+          {
+            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: true,
+            status: "validated",
+            type: IdentityTypes.EMAIL,
+            value: "test@test.test",
+          },
+        ],
+        socialIdentities: [
+          {
+            id: "8u76dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: false,
+            status: "validated",
+            type: IdentityTypes.FACEBOOK,
+            value: "",
+          },
+        ],
+      };
+      const component = mount(
+        <AccountApp>
+          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+        </AccountApp>,
+      );
+      const boxedLink = component.find(BoxedLink);
+      const noPhone = component.contains(
+        <NoIdentitiesBox>No phone number added yet.</NoIdentitiesBox>,
+      );
+      const noEmail = component.contains(
+        <NoIdentitiesBox>No email added yet.</NoIdentitiesBox>,
+      );
+      const noSocialLogins = component.contains(
+        <NoIdentitiesBox>No social logins added yet.</NoIdentitiesBox>,
+      );
+      expect(noPhone).toEqual(true);
+      expect(noEmail).toEqual(false);
+      expect(noSocialLogins).toEqual(false);
+      expect(boxedLink).toHaveLength(2);
+    });
+
+    test("it should display the no social logins message if there is none", () => {
+      const mockedSortedResponse: SortedIdentities = {
+        phoneIdentities: [
+          {
+            id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+            primary: true,
+            status: "validated",
+            type: IdentityTypes.PHONE,
+            value: "0622116655",
+          },
+        ],
         emailIdentities: [
           {
             id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -236,18 +299,22 @@ describe("LoginsOverviewPage", () => {
         </AccountApp>,
       );
       const boxedLink = component.find(BoxedLink);
+      const noSocialLogins = component.contains(
+        <NoIdentitiesBox>No social logins added yet.</NoIdentitiesBox>,
+      );
       const noPhone = component.contains(
         <NoIdentitiesBox>No phone number added yet.</NoIdentitiesBox>,
       );
       const noEmail = component.contains(
         <NoIdentitiesBox>No email added yet.</NoIdentitiesBox>,
       );
-      expect(noPhone).toEqual(true);
+      expect(noSocialLogins).toEqual(true);
+      expect(noPhone).toEqual(false);
       expect(noEmail).toEqual(false);
-      expect(boxedLink).toHaveLength(1);
+      expect(boxedLink).toHaveLength(2);
     });
 
-    test("it should display no emails and no phones if there are neither", () => {
+    test("it should display no emails and no phones and no social logins if there are neither", () => {
       const mockedSortedResponse: SortedIdentities = {
         phoneIdentities: [],
         emailIdentities: [],
@@ -264,6 +331,10 @@ describe("LoginsOverviewPage", () => {
       const noEmail = component.contains(
         <NoIdentitiesBox>No email added yet.</NoIdentitiesBox>,
       );
+      const noSocialLogins = component.contains(
+        <NoIdentitiesBox>No social logins added yet.</NoIdentitiesBox>,
+      );
+      expect(noSocialLogins).toEqual(true);
       expect(noPhone).toEqual(true);
       expect(noEmail).toEqual(true);
     });
