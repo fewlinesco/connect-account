@@ -1,27 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Button, ButtonVariant } from "../Button/Button";
 import { NeutralLink } from "../NeutralLink";
-import { Separator } from "../Separator/Separator";
-import { ShadowBox } from "../ShadowBox/ShadowBox";
-import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
+import { SocialIdentitiesSection } from "../SocialIdentitiesSection/SocialIdentitiesSection";
+import { StandardIdentitiesSection } from "../StandardIdentitiesSection/StandardIdentitiesSection";
 import { Timeline } from "../Timeline/Timeline";
 import { TimelineEnd } from "../TimelineEnd/TimelineEnd";
-import { Identity } from "@lib/@types";
+import { IdentitiesSectionContent } from "@src/@types/identitiesSectionContent";
 
 type IdentitiesSectionProps = {
   sectionName: string;
   lastOfTheList: boolean;
-  content: {
-    title: string;
-    identitiesList: Identity[];
-    displayListMethod: (identity: Identity) => JSX.Element;
-    disableClick: boolean;
-    noIdentityMessage: string;
-    addNewIdentityMessage?: string;
-    hideSecondaryByDefault: boolean;
-  };
+  content: IdentitiesSectionContent;
 };
 
 export const IdentitiesSection: React.FC<IdentitiesSectionProps> = ({
@@ -29,77 +19,16 @@ export const IdentitiesSection: React.FC<IdentitiesSectionProps> = ({
   lastOfTheList,
   content,
 }) => {
-  const [
-    hideSecondaryIdentities,
-    setHideSecondaryIdentities,
-  ] = React.useState<boolean>(true);
-
-  const {
-    title,
-    identitiesList,
-    displayListMethod,
-    disableClick,
-    noIdentityMessage,
-    addNewIdentityMessage,
-    hideSecondaryByDefault,
-  } = content;
-
-  let displayedList: Identity[] = identitiesList;
-
-  hideSecondaryByDefault &&
-    hideSecondaryIdentities &&
-    (displayedList = identitiesList.filter((identity) => identity.primary));
-
   return (
     <Section lastOfTheList={lastOfTheList}>
       {lastOfTheList ? <TimelineEnd /> : <Timeline />}
-      <h2>{title}</h2>
-      <ShadowBox>
-        {identitiesList.length === 0 ? (
-          <NoIdentitiesBox>{noIdentityMessage}</NoIdentitiesBox>
-        ) : (
-          displayedList.map((identity: Identity, index) => (
-            <div key={identity.type + index}>
-              <BoxedLink
-                disableClick={disableClick}
-                href={
-                  disableClick
-                    ? "#"
-                    : {
-                        pathname: "/account/logins/[type]/[id]",
-                        query: {
-                          type: identity.type.toLowerCase(),
-                          id: identity.id,
-                        },
-                      }
-                }
-              >
-                {displayListMethod(identity)}
-              </BoxedLink>
-              {index < displayedList.length - 1 && <Separator />}
-            </div>
-          ))
-        )}
-      </ShadowBox>
-      {hideSecondaryByDefault && (
-        <>
-          {identitiesList.length > 1 && (
-            <Flex>
-              <ShowMoreButton
-                hide={hideSecondaryIdentities}
-                quantity={identitiesList.length - 1}
-                setHideSecondary={setHideSecondaryIdentities}
-              />
-            </Flex>
-          )}
-        </>
-      )}
-      {addNewIdentityMessage && (
-        <NeutralLink href={`/account/logins/${sectionName.toLowerCase()}/new`}>
-          <Button variant={ButtonVariant.SECONDARY}>
-            {`+ ${addNewIdentityMessage}`}
-          </Button>
-        </NeutralLink>
+      {sectionName !== "SOCIAL_LOGINS" ? (
+        <StandardIdentitiesSection
+          sectionName={sectionName}
+          content={content}
+        />
+      ) : (
+        <SocialIdentitiesSection content={content} />
       )}
     </Section>
   );
@@ -118,11 +47,6 @@ const Section = styled.div<SectionProps>`
     `
       padding: 0;
     `}
-`;
-
-const Flex = styled.div`
-  display: flex;
-  justify-content: center;
 `;
 
 export const NoIdentitiesBox = styled.p`
@@ -147,6 +71,6 @@ export const BoxedLink = styled(NeutralLink)<BoxedLinkProps>`
   ${(props) =>
     props.disableClick &&
     `
-      cursor: default;
-    `}
+        cursor: default;
+      `}
 `;

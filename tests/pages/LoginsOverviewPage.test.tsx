@@ -8,8 +8,10 @@ import {
   Button,
   ButtonVariant,
 } from "@src/components/display/fewlines/Button/Button";
-import { NoIdentitiesBox } from "@src/components/display/fewlines/IdentitiesSection/IdentitiesSection";
-import { BoxedLink } from "@src/components/display/fewlines/IdentitiesSection/IdentitiesSection";
+import {
+  BoxedLink,
+  NoIdentitiesBox,
+} from "@src/components/display/fewlines/IdentitiesSection/IdentitiesSection";
 import { NeutralLink } from "@src/components/display/fewlines/NeutralLink";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
 import { AccountApp } from "@src/pages/_app";

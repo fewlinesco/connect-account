@@ -3,8 +3,6 @@ import React from "react";
 import { StoriesContainer } from "../StoriesContainer";
 import { IdentitiesSection } from "./IdentitiesSection";
 import { Identity, IdentityTypes } from "@lib/@types";
-import { displayIdentity } from "@src/utils/displayIdentity";
-import { displaySocialLogins } from "@src/utils/displaySocialLogins";
 
 export default {
   title: "components/Identity Section",
@@ -32,12 +30,9 @@ export const EmailIdentitiesSection = (): JSX.Element => {
   const IDENTITIES_SECTION_CONTENT = {
     EMAIL: {
       title: "Email addresses",
-      identitiesList: emailIdentities,
-      displayListMethod: displayIdentity,
-      disableClick: false,
       noIdentityMessage: "No email added yet.",
       addNewIdentityMessage: "add new email address",
-      hideSecondaryByDefault: true,
+      identitiesList: emailIdentities,
     },
   };
 
@@ -80,12 +75,9 @@ export const PhoneIdentitiesSection = (): JSX.Element => {
   const IDENTITIES_SECTION_CONTENT = {
     PHONE: {
       title: "Phone numbers",
-      identitiesList: phoneIdentities,
-      displayListMethod: displayIdentity,
-      disableClick: false,
       noIdentityMessage: "No phone number added yet.",
       addNewIdentityMessage: "add new phone number",
-      hideSecondaryByDefault: true,
+      identitiesList: phoneIdentities,
     },
   };
 
@@ -128,11 +120,8 @@ export const SocialLoginsIdentitiesSection = (): JSX.Element => {
   const IDENTITIES_SECTION_CONTENT = {
     SOCIAL_LOGINS: {
       title: "Social logins",
-      identitiesList: socialIdentities,
-      displayListMethod: displaySocialLogins,
-      disableClick: true,
       noIdentityMessage: "No social logins added yet.",
-      hideSecondaryByDefault: false,
+      identitiesList: socialIdentities,
     },
   };
 

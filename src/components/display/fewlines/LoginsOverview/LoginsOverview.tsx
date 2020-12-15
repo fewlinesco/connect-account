@@ -3,8 +3,6 @@ import styled from "styled-components";
 
 import { IdentitiesSection } from "../IdentitiesSection/IdentitiesSection";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
-import { displayIdentity } from "@src/utils/displayIdentity";
-import { displaySocialLogins } from "@src/utils/displaySocialLogins";
 
 type LoginsOverviewProps = {
   sortedIdentities: SortedIdentities;
@@ -22,29 +20,20 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
   const IDENTITIES_SECTION_CONTENT = {
     EMAIL: {
       title: "Email addresses",
-      identitiesList: emailIdentities,
-      displayListMethod: displayIdentity,
-      disableClick: false,
       noIdentityMessage: "No email added yet.",
       addNewIdentityMessage: "add new email address",
-      hideSecondaryByDefault: true,
+      identitiesList: emailIdentities,
     },
     PHONE: {
       title: "Phone numbers",
-      identitiesList: phoneIdentities,
-      displayListMethod: displayIdentity,
-      disableClick: false,
       noIdentityMessage: "No phone number added yet.",
       addNewIdentityMessage: "add new phone number",
-      hideSecondaryByDefault: true,
+      identitiesList: phoneIdentities,
     },
     SOCIAL_LOGINS: {
       title: "Social logins",
-      identitiesList: socialIdentities,
-      displayListMethod: displaySocialLogins,
-      disableClick: true,
       noIdentityMessage: "No social logins added yet.",
-      hideSecondaryByDefault: false,
+      identitiesList: socialIdentities,
     },
   };
 
