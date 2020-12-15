@@ -72,7 +72,7 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
             setIdentity({
               value: event.target.value,
               type,
-              expiresAt: Date.now() + 300,
+              expiresAt: Date.now() + 300000,
               primary: identity.primary,
             });
           }}

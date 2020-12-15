@@ -179,7 +179,7 @@ describe("withAuth", () => {
 
       const access_token = generateHS256JWS({
         ...defaultPayload,
-        exp: Date.now() - 3600,
+        exp: Date.now() - 3600000,
       });
 
       const sealedJWS = await sealJWS(access_token);
@@ -222,7 +222,7 @@ describe("withAuth", () => {
 
       const access_token = generateHS256JWS({
         ...defaultPayload,
-        exp: Date.now() - 3600,
+        exp: Date.now() - 3600000,
       });
 
       const sealedJWS = await sealJWS(access_token);
