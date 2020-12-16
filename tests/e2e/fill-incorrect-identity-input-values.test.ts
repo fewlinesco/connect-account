@@ -11,7 +11,7 @@ import {
   textBox,
 } from "taiko";
 
-import { authToConnect } from "./utils/authToConnect";
+import { authenticateToConnect } from "./utils/authenticateToConnect";
 import { config } from "@src/config";
 
 describe("Account Web Application update password", () => {
@@ -29,9 +29,7 @@ describe("Account Web Application update password", () => {
     expect.assertions(9);
 
     try {
-      await goto(config.connectAccountURL);
-
-      await authToConnect();
+      await authenticateToConnect();
 
       await waitFor("LOGINS");
       expect(await text("LOGINS").exists()).toBeTruthy();
