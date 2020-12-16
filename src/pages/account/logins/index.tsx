@@ -5,6 +5,7 @@ import { getIdentities } from "@lib/queries/getIdentities";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
+import { NoDataReturned, NoIdentityFound } from "@src/clientErrors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { LoginsOverview } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
@@ -46,16 +47,26 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     context,
     [withLogger, withSentry, withSession, withAuth],
     async (request: ExtendedRequest) => {
-      const userSession = request.session.get<UserCookie>("user-session");
+      const userCookie = request.session.get<UserCookie>("user-cookie");
 
-      if (userSession) {
-        const sortedIdentities = await getIdentities(userSession.sub).then(
-          (result) => {
-            if (result.errors) {
-              throw new GraphqlErrors(result.errors);
+      if (userCookie) {
+        const sortedIdentities = await getIdentities(userCookie.sub).then(
+          ({ errors, data }) => {
+            if (errors) {
+              throw new GraphqlErrors(errors);
             }
 
-            return sortIdentities(result);
+            if (!data) {
+              throw new NoDataReturned();
+            }
+
+            const identities = data.provider.user.identities;
+
+            if (!identities) {
+              throw new NoIdentityFound();
+            }
+
+            return sortIdentities(identities);
           },
         );
 

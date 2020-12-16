@@ -6,7 +6,11 @@ import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentities } from "@lib/queries/getIdentities";
 import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
-import { NoIdentityFound, NoUserFound } from "@src/clientErrors";
+import {
+  NoDataReturned,
+  NoIdentityFound,
+  NoUserFound,
+} from "@src/clientErrors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
@@ -57,20 +61,26 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       }
 
       const identityId = context.params.id.toString();
-      const userSession = request.session.get<UserCookie>("user-session");
+      const userCookie = request.session.get<UserCookie>("user-cookie");
 
-      if (userSession) {
-        const identity = await getIdentities(userSession.sub).then(
+      if (userCookie) {
+        const identity = await getIdentities(userCookie.sub).then(
           ({ errors, data }) => {
             if (errors) {
               throw new GraphqlErrors(errors);
             }
 
             if (!data) {
+              throw new NoDataReturned();
+            }
+
+            const identities = data.provider.user.identities;
+
+            if (!identities) {
               throw new NoIdentityFound();
             }
 
-            return data.provider.user.identities.filter(
+            return identities.filter(
               (userIdentity) => userIdentity.id === identityId,
             )[0];
           },

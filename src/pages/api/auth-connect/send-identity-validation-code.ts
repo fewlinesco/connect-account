@@ -16,9 +16,10 @@ import { getIdentityType } from "@src/utils/getIdentityType";
 const handler: Handler = async (request: ExtendedRequest, response) => {
   if (request.method === "POST") {
     const { callbackUrl, identityInput } = request.body;
-    const userSession = request.session.get<UserCookie>("user-session");
 
-    if (userSession) {
+    const userCookie = request.session.get<UserCookie>("user-cookie");
+
+    if (userCookie) {
       const identity = {
         type: getIdentityType(identityInput.type),
         value: identityInput.value,
@@ -28,20 +29,22 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
         callbackUrl,
         identity,
         localeCodeOverride: "en-EN",
-        userId: userSession.sub,
+        userId: userCookie.sub,
       });
 
       if (errors) {
         if ((errors[0] as any).code === "identity_already_validated") {
           response.statusCode = HttpStatus.BAD_REQUEST;
           response.statusMessage = (errors[0] as any).code;
-          return response.end();
+          response.end();
+          return;
         }
 
         if ((errors[0] as any).errors.identity_value === "can't be blank") {
           response.statusCode = HttpStatus.BAD_REQUEST;
           response.statusMessage = (errors[0] as any).errors.identity_value;
-          return response.end();
+          response.end();
+          return;
         }
 
         throw new GraphqlErrors(errors);
@@ -53,9 +56,10 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
           value: identityInput.value,
           type: identityInput.type,
           expiresAt: identityInput.expiresAt,
+          primary: identityInput.primary,
         };
 
-        await insertTemporaryIdentity(userSession.sub, temporaryIdentity);
+        await insertTemporaryIdentity(userCookie.sub, temporaryIdentity);
 
         response.statusCode = HttpStatus.OK;
         response.setHeader("Content-Type", "application/json");

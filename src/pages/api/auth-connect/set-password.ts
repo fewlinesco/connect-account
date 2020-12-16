@@ -19,31 +19,33 @@ const handler: Handler = async (
   if (request.method === "POST") {
     const { passwordInput } = request.body;
 
-    const userSession = request.session.get<UserCookie>("user-session");
+    const userCookie = request.session.get<UserCookie>("user-cookie");
 
-    if (userSession) {
+    if (userCookie) {
       return createOrUpdatePassword({
         cleartextPassword: passwordInput,
-        userId: userSession.sub,
+        userId: userCookie.sub,
       }).then(({ data, errors }) => {
         if (errors) {
-          response.setHeader("Content-Type", "application/json");
-
           const restrictionRulesError = ((errors as unknown) as GraphQLError &
             { code?: string }[]).find(
             (error) => error.code === "password_does_not_meet_requirements",
           );
 
           if (restrictionRulesError) {
+            response.setHeader("Content-Type", "application/json");
             response.statusCode = HttpStatus.UNPROCESSABLE_ENTITY;
             response.json({ restrictionRulesError });
           } else {
             response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             response.end();
           }
+        } else if (!data) {
+          response.statusCode = HttpStatus.NOT_FOUND;
+          response.end();
         } else {
-          response.statusCode = HttpStatus.OK;
           response.setHeader("Content-Type", "application/json");
+          response.statusCode = HttpStatus.OK;
           response.json({ data });
         }
       });

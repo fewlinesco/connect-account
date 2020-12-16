@@ -1,5 +1,3 @@
-import { PutItemCommandOutput } from "@aws-sdk/client-dynamodb";
-
 import { putUser } from "./putUser";
 import { DynamoUser } from "@src/@types/DynamoUser";
 import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
@@ -13,7 +11,7 @@ type OAuth2UserInfo = {
 export async function getAndPutUser(
   { sub, refresh_token }: OAuth2UserInfo,
   currentUserData?: DynamoUser,
-): Promise<PutItemCommandOutput> {
+): Promise<void> {
   const inDBUser = currentUserData
     ? currentUserData
     : await getDBUserFromSub(sub);
@@ -24,7 +22,8 @@ export async function getAndPutUser(
       refresh_token,
     };
 
-    return putUser(user);
+    putUser(user);
+    return;
   }
 
   const user = {
@@ -33,5 +32,6 @@ export async function getAndPutUser(
     refresh_token,
   };
 
-  return putUser(user);
+  await putUser(user);
+  return;
 }

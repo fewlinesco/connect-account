@@ -4,6 +4,7 @@ import React from "react";
 import { isUserPasswordSet } from "@lib/queries/isUserPasswordSet";
 import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
+import { NoDataReturned } from "@src/clientErrors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { Security } from "@src/components/display/fewlines/Security/Security";
@@ -37,16 +38,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     context,
     [withLogger, withSentry, withSession, withAuth],
     async (request: ExtendedRequest) => {
-      const userSession = request.session.get<UserCookie>("user-session");
+      const userCookie = request.session.get<UserCookie>("user-cookie");
 
-      if (userSession) {
-        const isPasswordSet = await isUserPasswordSet(userSession.sub).then(
-          (result) => {
-            if (result.errors) {
-              throw new GraphqlErrors(result.errors);
+      if (userCookie) {
+        const isPasswordSet = await isUserPasswordSet(userCookie.sub).then(
+          ({ errors, data }) => {
+            if (errors) {
+              throw new GraphqlErrors(errors);
             }
 
-            return result;
+            if (!data) {
+              throw new NoDataReturned();
+            }
+
+            return data.provider.user.passwords.available;
           },
         );
 

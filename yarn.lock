@@ -1769,13 +1769,13 @@
   dependencies:
     logfmt "1.3.2"
 
-"@fwl/oauth2@0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@fwl/oauth2/-/oauth2-0.1.4.tgz#f2168a93ac700c87beecce4c93a7f11e6d44ded5"
-  integrity sha512-ZgsGXMqrY0kWxqYOb7ROkOSBwfYjt2t2ua/JnVPB49w6G/QMaBGG/dSkmhXLC2sbGsAlakyS+Dp4J21+3XDkww==
+"@fwl/oauth2@0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@fwl/oauth2/-/oauth2-0.1.8.tgz#747fda4eb453b216412addc391da2bd56394c6e3"
+  integrity sha512-dRx0xvNITMbuvNgtLfP7JZa6K69dTRh1zM106r2EAYn+5VT6YKLBnUA39c00n26CVhSbVeERHv4XRPzpHIgmaw==
   dependencies:
     jsonwebtoken "8.5.1"
-    node-fetch "2.6.0"
+    node-fetch "2.6.1"
     node-jose "2.0.0"
 
 "@fwl/tracing@0.2.1":

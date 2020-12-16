@@ -8,6 +8,10 @@ export class NoIdentityFound extends Error {
   readonly message = "No Identity Found";
 }
 
+export class NoIdentityAdded extends Error {
+  readonly message = "No Identity Added";
+}
+
 export class IdentityAlreadyUsed extends Error {
   readonly message: string;
 
@@ -46,4 +50,12 @@ export class UnhandledIdentityType extends Error {
 
 export class NoUserFound extends Error {
   readonly message = "No User found";
+}
+
+export class NoDataReturned extends Error {
+  readonly message = "No Data Returned";
+}
+
+export class NoProviderNameFound extends Error {
+  readonly message = "No Provider Name Found";
 }

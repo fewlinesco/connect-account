@@ -32,7 +32,7 @@ const handler: Handler = async (
 
     await getAndPutUser(oAuth2UserInfo);
 
-    request.session.set("user-session", {
+    request.session.set("user-cookie", {
       access_token,
       sub: decodedAccessToken.sub,
     });
