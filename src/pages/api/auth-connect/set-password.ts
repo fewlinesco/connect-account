@@ -19,7 +19,7 @@ const handler: Handler = async (
   if (request.method === "POST") {
     const { passwordInput } = request.body;
 
-    const userSession = request.session.get<UserCookie>("user-session");
+    const userSession = request.session.get<UserCookie>("user-cookie");
 
     if (userSession) {
       return createOrUpdatePassword({

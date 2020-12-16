@@ -16,7 +16,7 @@ import { getIdentityType } from "@src/utils/getIdentityType";
 const handler: Handler = async (request: ExtendedRequest, response) => {
   if (request.method === "POST") {
     const { callbackUrl, identityInput } = request.body;
-    const userSession = request.session.get<UserCookie>("user-session");
+    const userSession = request.session.get<UserCookie>("user-cookie");
 
     if (userSession) {
       const identity = {

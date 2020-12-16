@@ -15,7 +15,7 @@ const handler: Handler = async (
   response: NextApiResponse,
 ): Promise<void> => {
   if (request.method === "GET") {
-    const userSession = request.session.get<UserCookie>("user-session");
+    const userSession = request.session.get<UserCookie>("user-cookie");
 
     if (userSession) {
       response.json({ userSub: userSession.sub });

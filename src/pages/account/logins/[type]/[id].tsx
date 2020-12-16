@@ -53,7 +53,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return;
       }
 
-      const userSession = request.session.get<UserCookie>("user-session");
+      const userSession = request.session.get<UserCookie>("user-cookie");
 
       if (userSession) {
         const identity = await getIdentity(

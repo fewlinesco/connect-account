@@ -78,7 +78,7 @@ async function sealJWS(access_token: string, salt?: string): Promise<string> {
   return seal(
     {
       persistent: {
-        "user-session": {
+        "user-cookie": {
           access_token,
           sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
         },
@@ -126,11 +126,11 @@ function mockedReqAndRes(
   });
 
   mockedExtendedRequest.headers = {
-    cookie: `connect-account-session=${sealedJWE}`,
+    cookie: `connect-account-cookie=${sealedJWE}`,
   };
   mockedExtendedRequest.rawHeaders = [
     "Cookie",
-    `connect-account-session=${sealedJWE}`,
+    `connect-account-cookie=${sealedJWE}`,
   ];
 
   return { mockedExtendedRequest, mockedResponse };

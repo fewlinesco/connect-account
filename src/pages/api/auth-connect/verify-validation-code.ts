@@ -26,7 +26,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
     const { validationCode, eventId } = request.body;
 
     const userSession = request.session.get<UserCookie>(
-      "user-session",
+      "user-cookie",
     ) as UserCookie;
 
     const user = await getDBUserFromSub(userSession.sub);

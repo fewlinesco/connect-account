@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     context,
     [withLogger, withSentry, withSession, withAuth],
     async (request: ExtendedRequest) => {
-      const userSession = request.session.get<UserCookie>("user-session");
+      const userSession = request.session.get<UserCookie>("user-cookie");
 
       if (userSession) {
         const isPasswordSet = await isUserPasswordSet(userSession.sub).then(
