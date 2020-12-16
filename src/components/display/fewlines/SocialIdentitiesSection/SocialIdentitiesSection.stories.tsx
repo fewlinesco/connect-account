@@ -33,8 +33,8 @@ export const StandardSocialIdentitiesSection = (): JSX.Element => {
         content={{
           title: "Social logins",
           noIdentityMessage: "No social logins added yet.",
-          identitiesList: socialIdentities,
         }}
+        identitiesList={socialIdentities}
       />
     </StoriesContainer>
   );

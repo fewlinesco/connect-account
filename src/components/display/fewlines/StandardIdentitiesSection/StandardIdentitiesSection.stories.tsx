@@ -35,8 +35,8 @@ export const EmailIdentitiesSection = (): JSX.Element => {
           title: "Email addresses",
           noIdentityMessage: "No email added yet.",
           addNewIdentityMessage: "add new email address",
-          identitiesList: emailIdentities,
         }}
+        identitiesList={emailIdentities}
       />
     </StoriesContainer>
   );
@@ -68,8 +68,8 @@ export const PhoneIdentitiesSection = (): JSX.Element => {
           title: "Phone numbers",
           noIdentityMessage: "No phone number added yet.",
           addNewIdentityMessage: "add new phone number",
-          identitiesList: phoneIdentities,
         }}
+        identitiesList={phoneIdentities}
       />
     </StoriesContainer>
   );

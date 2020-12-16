@@ -9,6 +9,23 @@ export default {
   component: IdentitiesSection,
 };
 
+const IDENTITIES_SECTION_CONTENT = {
+  EMAIL: {
+    title: "Email addresses",
+    noIdentityMessage: "No email added yet.",
+    addNewIdentityMessage: "add new email address",
+  },
+  SOCIAL_LOGINS: {
+    title: "Social logins",
+    noIdentityMessage: "No social logins added yet.",
+  },
+  PHONE: {
+    title: "Phone numbers",
+    noIdentityMessage: "No phone number added yet.",
+    addNewIdentityMessage: "add new phone number",
+  },
+};
+
 export const AllIdentitiesSection = (): JSX.Element => {
   const emailIdentities: Identity[] = [
     {
@@ -61,37 +78,36 @@ export const AllIdentitiesSection = (): JSX.Element => {
     },
   ];
 
-  const IDENTITIES_SECTION_CONTENT = {
-    EMAIL: {
-      title: "Email addresses",
-      noIdentityMessage: "No email added yet.",
-      addNewIdentityMessage: "add new email address",
-      identitiesList: emailIdentities,
-    },
-    SOCIAL_LOGINS: {
-      title: "Social logins",
-      noIdentityMessage: "No social logins added yet.",
-      identitiesList: socialIdentities,
-    },
-    PHONE: {
-      title: "Phone numbers",
-      noIdentityMessage: "No phone number added yet.",
-      addNewIdentityMessage: "add new phone number",
-      identitiesList: phoneIdentities,
-    },
-  };
-
   const identitiesSectionList = Object.entries(IDENTITIES_SECTION_CONTENT);
 
   return (
     <StoriesContainer>
-      {identitiesSectionList.map(([sectionName, content]) => {
+      {identitiesSectionList.map(([sectionName, content], index) => {
+        const lastOfTheList = index === identitiesSectionList.length - 1;
+        let identitiesList: Identity[] = [];
+
+        switch (sectionName) {
+          case "EMAIL":
+            identitiesList = emailIdentities;
+            break;
+          case "PHONE":
+            identitiesList = phoneIdentities;
+            break;
+          case "SOCIAL_LOGINS":
+            identitiesList = socialIdentities;
+            break;
+          default:
+            null;
+            break;
+        }
+
         return (
           <IdentitiesSection
             key={sectionName}
             sectionName={sectionName}
             content={content}
-            lastOfTheList={false}
+            identitiesList={identitiesList}
+            lastOfTheList={lastOfTheList}
           />
         );
       })}
