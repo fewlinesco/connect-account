@@ -1,7 +1,6 @@
 import {
   openBrowser,
   closeBrowser,
-  goto,
   text,
   click,
   write,
@@ -12,7 +11,7 @@ import {
   clear,
 } from "taiko";
 
-import { authToConnect } from "./utils/authToConnect";
+import { authenticateToConnect } from "./utils/authenticateToConnect";
 
 describe("Account Web Application update password", () => {
   jest.setTimeout(60000);
@@ -29,9 +28,7 @@ describe("Account Web Application update password", () => {
     expect.assertions(11);
 
     try {
-      await goto("http://localhost:29703");
-
-      await authToConnect();
+      await authenticateToConnect();
 
       await waitFor("SECURITY");
       expect(await text("SECURITY").exists()).toBeTruthy();
