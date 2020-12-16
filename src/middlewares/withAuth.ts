@@ -17,7 +17,7 @@ export function withAuth(handler: Handler): Handler {
     response: ServerResponse,
   ): Promise<unknown> => {
     const userCookie = request.session.get<UserCookie | undefined>(
-      "user-session",
+      "user-cookie",
     );
 
     if (userCookie) {
@@ -38,7 +38,7 @@ export function withAuth(handler: Handler): Handler {
                 config.connectJwtAlgorithm,
               );
 
-              request.session.set<UserCookie>("user-session", {
+              request.session.set<UserCookie>("user-cookie", {
                 access_token,
                 sub,
               });

@@ -50,10 +50,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     context,
     [withLogger, withSentry, withSession, withAuth],
     async (request: ExtendedRequest) => {
-      const userSession = request.session.get<UserCookie>("user-session");
+      const userCookie = request.session.get<UserCookie>("user-cookie");
 
-      if (userSession) {
-        const isPasswordSet = await isUserPasswordSet(userSession.sub).then(
+      if (userCookie) {
+        const isPasswordSet = await isUserPasswordSet(userCookie.sub).then(
           (result) => {
             if (result.errors) {
               throw new GraphqlErrors(result.errors);
