@@ -1,7 +1,6 @@
 import {
   openBrowser,
   closeBrowser,
-  goto,
   text,
   click,
   screenshot,
@@ -10,7 +9,7 @@ import {
   below,
 } from "taiko";
 
-import { authToConnect } from "./utils/authToConnect";
+import { authenticateToConnect } from "./utils/authenticateToConnect";
 
 describe("Account Web Application show identity", () => {
   jest.setTimeout(60000);
@@ -27,9 +26,7 @@ describe("Account Web Application show identity", () => {
     expect.assertions(6);
 
     try {
-      await goto("http://localhost:29703");
-
-      await authToConnect();
+      await authenticateToConnect();
 
       await waitFor("LOGINS");
       expect(await text("LOGINS").exists()).toBeTruthy();

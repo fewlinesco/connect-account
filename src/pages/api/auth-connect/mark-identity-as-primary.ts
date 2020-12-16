@@ -20,7 +20,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
       const { identityId } = request.body;
 
       const userCookie = request.session.get<UserCookie>(
-        "user-session",
+        "user-cookie",
       ) as UserCookie;
 
       const isAuthorized = await isMarkingIdentityAsPrimaryAuthorized(

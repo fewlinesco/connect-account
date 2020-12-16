@@ -1,9 +1,11 @@
-import { text, click, screenshot, waitFor, write, press } from "taiko";
+import { text, click, screenshot, waitFor, write, press, goto } from "taiko";
 
 import { config } from "@src/config";
 
-export async function authToConnect(): Promise<void> {
+export async function authenticateToConnect(): Promise<void> {
   try {
+    await goto(config.connectAccountURL);
+
     await waitFor("Access my account");
     expect(await text("Access my account").exists()).toBeTruthy();
     await click("Access my account");
@@ -16,10 +18,10 @@ export async function authToConnect(): Promise<void> {
     await waitFor("Password");
     expect(await text("Password").exists()).toBeTruthy();
     await write(config.connectTestAccountPassword);
-    await press("Enter");
+    await press("Enter", { navigationTimeout: 60000 });
   } catch (error) {
     await screenshot({
-      path: "tests/e2e/screenshots/auth-to-connect.png",
+      path: "tests/e2e/screenshots/authenticate-to-connect.png",
     });
 
     throw error;

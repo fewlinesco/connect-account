@@ -19,12 +19,12 @@ const handler: Handler = async (
   if (request.method === "POST") {
     const { passwordInput } = request.body;
 
-    const userSession = request.session.get<UserCookie>("user-session");
+    const userCookie = request.session.get<UserCookie>("user-cookie");
 
-    if (userSession) {
+    if (userCookie) {
       return createOrUpdatePassword({
         cleartextPassword: passwordInput,
-        userId: userSession.sub,
+        userId: userCookie.sub,
       }).then(({ data, errors }) => {
         if (errors) {
           const restrictionRulesError = ((errors as unknown) as GraphQLError &

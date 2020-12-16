@@ -1,14 +1,13 @@
 import {
   openBrowser,
   closeBrowser,
-  goto,
   text,
   click,
   screenshot,
   waitFor,
 } from "taiko";
 
-import { authToConnect } from "./utils/authToConnect";
+import { authenticateToConnect } from "./utils/authenticateToConnect";
 
 describe("DesktopNavigationBar", () => {
   jest.setTimeout(60000);
@@ -25,9 +24,7 @@ describe("DesktopNavigationBar", () => {
     expect.assertions(6);
 
     try {
-      await goto("http://localhost:29703");
-
-      await authToConnect();
+      await authenticateToConnect();
 
       await waitFor("Logins");
       expect(await text("Logins").exists()).toBeTruthy();
