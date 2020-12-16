@@ -17,12 +17,14 @@ import { getSocialIdentityIcon } from "@src/utils/getSocialIdentitiesIcon";
 
 type SocialIdentitiesSectionProps = {
   content: IdentitiesSectionContent;
+  identitiesList: Identity[];
 };
 
 export const SocialIdentitiesSection: React.FC<SocialIdentitiesSectionProps> = ({
   content,
+  identitiesList,
 }) => {
-  const { title, identitiesList, noIdentityMessage } = content;
+  const { title, noIdentityMessage } = content;
 
   return (
     <>

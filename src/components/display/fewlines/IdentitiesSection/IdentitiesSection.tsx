@@ -6,18 +6,21 @@ import { SocialIdentitiesSection } from "../SocialIdentitiesSection/SocialIdenti
 import { StandardIdentitiesSection } from "../StandardIdentitiesSection/StandardIdentitiesSection";
 import { Timeline } from "../Timeline/Timeline";
 import { TimelineEnd } from "../TimelineEnd/TimelineEnd";
+import { Identity } from "@lib/@types";
 import { IdentitiesSectionContent } from "@src/@types/identitiesSectionContent";
 
 type IdentitiesSectionProps = {
   sectionName: string;
   lastOfTheList: boolean;
   content: IdentitiesSectionContent;
+  identitiesList: Identity[];
 };
 
 export const IdentitiesSection: React.FC<IdentitiesSectionProps> = ({
   sectionName,
   lastOfTheList,
   content,
+  identitiesList,
 }) => {
   return (
     <Section lastOfTheList={lastOfTheList}>
@@ -26,9 +29,13 @@ export const IdentitiesSection: React.FC<IdentitiesSectionProps> = ({
         <StandardIdentitiesSection
           sectionName={sectionName}
           content={content}
+          identitiesList={identitiesList}
         />
       ) : (
-        <SocialIdentitiesSection content={content} />
+        <SocialIdentitiesSection
+          content={content}
+          identitiesList={identitiesList}
+        />
       )}
     </Section>
   );

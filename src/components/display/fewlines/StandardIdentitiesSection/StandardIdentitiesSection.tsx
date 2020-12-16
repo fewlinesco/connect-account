@@ -17,23 +17,20 @@ import { IdentitiesSectionContent } from "@src/@types/identitiesSectionContent";
 type StandardIdentitiesSectionProps = {
   sectionName: string;
   content: IdentitiesSectionContent;
+  identitiesList: Identity[];
 };
 
 export const StandardIdentitiesSection: React.FC<StandardIdentitiesSectionProps> = ({
   sectionName,
   content,
+  identitiesList,
 }) => {
   const [
     hideSecondaryIdentities,
     setHideSecondaryIdentities,
   ] = React.useState<boolean>(true);
 
-  const {
-    title,
-    identitiesList,
-    noIdentityMessage,
-    addNewIdentityMessage,
-  } = content;
+  const { title, noIdentityMessage, addNewIdentityMessage } = content;
 
   let displayedList: Identity[] = identitiesList;
 
