@@ -25,11 +25,11 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
   if (request.method === "POST") {
     const { validationCode, eventId } = request.body;
 
-    const userSession = request.session.get<UserCookie>(
+    const userCookie = request.session.get<UserCookie>(
       "user-cookie",
     ) as UserCookie;
 
-    const user = await getDBUserFromSub(userSession.sub);
+    const user = await getDBUserFromSub(userCookie.sub);
 
     if (user) {
       const temporaryIdentity = user.temporary_identities.find(
@@ -56,7 +56,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
 
         if (checkVerificationCodeResult.status === "VALID") {
           const body = {
-            userId: userSession.sub,
+            userId: userCookie.sub,
             type: getIdentityType(type),
             value,
           };
@@ -83,7 +83,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
             });
           }
 
-          await removeTemporaryIdentity(userSession.sub, temporaryIdentity);
+          await removeTemporaryIdentity(userCookie.sub, temporaryIdentity);
 
           response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
             Location: "/account/logins",
@@ -97,7 +97,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
         }
       } else {
         if (temporaryIdentity) {
-          await removeTemporaryIdentity(userSession.sub, temporaryIdentity);
+          await removeTemporaryIdentity(userCookie.sub, temporaryIdentity);
         }
 
         throw new TemporaryIdentityExpired();

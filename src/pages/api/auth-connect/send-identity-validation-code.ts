@@ -16,9 +16,10 @@ import { getIdentityType } from "@src/utils/getIdentityType";
 const handler: Handler = async (request: ExtendedRequest, response) => {
   if (request.method === "POST") {
     const { callbackUrl, identityInput } = request.body;
-    const userSession = request.session.get<UserCookie>("user-cookie");
 
-    if (userSession) {
+    const userCookie = request.session.get<UserCookie>("user-cookie");
+
+    if (userCookie) {
       const identity = {
         type: getIdentityType(identityInput.type),
         value: identityInput.value,
@@ -28,7 +29,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
         callbackUrl,
         identity,
         localeCodeOverride: "en-EN",
-        userId: userSession.sub,
+        userId: userCookie.sub,
       });
 
       if (errors) {
@@ -58,7 +59,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
           primary: identityInput.primary,
         };
 
-        await insertTemporaryIdentity(userSession.sub, temporaryIdentity);
+        await insertTemporaryIdentity(userCookie.sub, temporaryIdentity);
 
         response.statusCode = HttpStatus.OK;
         response.setHeader("Content-Type", "application/json");

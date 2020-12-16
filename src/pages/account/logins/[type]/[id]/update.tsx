@@ -61,10 +61,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       }
 
       const identityId = context.params.id.toString();
-      const userSession = request.session.get<UserCookie>("user-cookie");
+      const userCookie = request.session.get<UserCookie>("user-cookie");
 
-      if (userSession) {
-        const identity = await getIdentities(userSession.sub).then(
+      if (userCookie) {
+        const identity = await getIdentities(userCookie.sub).then(
           ({ errors, data }) => {
             if (errors) {
               throw new GraphqlErrors(errors);

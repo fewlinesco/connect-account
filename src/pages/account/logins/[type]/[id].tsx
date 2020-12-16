@@ -53,11 +53,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return;
       }
 
-      const userSession = request.session.get<UserCookie>("user-cookie");
+      const userCookie = request.session.get<UserCookie>("user-cookie");
 
-      if (userSession) {
+      if (userCookie) {
         const identity = await getIdentity(
-          userSession.sub,
+          userCookie.sub,
           context.params.id.toString(),
         ).then(({ errors, data }) => {
           if (errors) {

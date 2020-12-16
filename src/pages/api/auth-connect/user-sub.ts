@@ -15,10 +15,10 @@ const handler: Handler = async (
   response: NextApiResponse,
 ): Promise<void> => {
   if (request.method === "GET") {
-    const userSession = request.session.get<UserCookie>("user-cookie");
+    const userCookie = request.session.get<UserCookie>("user-cookie");
 
-    if (userSession) {
-      response.json({ userSub: userSession.sub });
+    if (userCookie) {
+      response.json({ userSub: userCookie.sub });
     } else {
       response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
         Location: "/",
