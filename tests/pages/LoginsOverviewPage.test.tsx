@@ -47,7 +47,7 @@ jest.mock("@src/utils/getFlashMessage", () => {
 describe("LoginsOverviewPage", () => {
   describe("Boxedlink", () => {
     test("it should display the AlertBar since there is a flash message in the cookies", () => {
-      const mockedSortedResponse: SortedIdentities = {
+      const mockedSortedIdentities: SortedIdentities = {
         phoneIdentities: [
           {
             id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -78,7 +78,7 @@ describe("LoginsOverviewPage", () => {
       };
       const component = mount(
         <AccountApp>
-          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+          <LoginsOverviewPage sortedIdentities={mockedSortedIdentities} />
         </AccountApp>,
       );
       const alertBar = component.find(AlertBar);
@@ -87,7 +87,7 @@ describe("LoginsOverviewPage", () => {
     });
 
     test("it should display email, phone and social identities if there are one of each", () => {
-      const mockedSortedResponse: SortedIdentities = {
+      const mockedSortedIdentities: SortedIdentities = {
         phoneIdentities: [
           {
             id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -118,7 +118,7 @@ describe("LoginsOverviewPage", () => {
       };
       const component = mount(
         <AccountApp>
-          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+          <LoginsOverviewPage sortedIdentities={mockedSortedIdentities} />
         </AccountApp>,
       );
       const boxedLink = component.find(BoxedLink);
@@ -126,7 +126,7 @@ describe("LoginsOverviewPage", () => {
     });
 
     test("it should display primary email primary phone but all social logins if there are many of each", () => {
-      const mockedSortedResponse: SortedIdentities = {
+      const mockedSortedIdentities: SortedIdentities = {
         phoneIdentities: [
           {
             id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -178,7 +178,7 @@ describe("LoginsOverviewPage", () => {
       };
       const component = mount(
         <AccountApp>
-          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+          <LoginsOverviewPage sortedIdentities={mockedSortedIdentities} />
         </AccountApp>,
       );
       const boxedLink = component.find(BoxedLink);
@@ -186,7 +186,7 @@ describe("LoginsOverviewPage", () => {
     });
 
     test("it should display the no email message if there is none", () => {
-      const mockedSortedResponse: SortedIdentities = {
+      const mockedSortedIdentities: SortedIdentities = {
         phoneIdentities: [
           {
             id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -209,7 +209,7 @@ describe("LoginsOverviewPage", () => {
       };
       const component = mount(
         <AccountApp>
-          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+          <LoginsOverviewPage sortedIdentities={mockedSortedIdentities} />
         </AccountApp>,
       );
       const boxedLink = component.find(BoxedLink);
@@ -229,7 +229,7 @@ describe("LoginsOverviewPage", () => {
     });
 
     test("it should display the no phone number message if there is none", () => {
-      const mockedSortedResponse: SortedIdentities = {
+      const mockedSortedIdentities: SortedIdentities = {
         phoneIdentities: [],
         emailIdentities: [
           {
@@ -252,7 +252,7 @@ describe("LoginsOverviewPage", () => {
       };
       const component = mount(
         <AccountApp>
-          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+          <LoginsOverviewPage sortedIdentities={mockedSortedIdentities} />
         </AccountApp>,
       );
       const boxedLink = component.find(BoxedLink);
@@ -272,7 +272,7 @@ describe("LoginsOverviewPage", () => {
     });
 
     test("it should display the no social logins message if there is none", () => {
-      const mockedSortedResponse: SortedIdentities = {
+      const mockedSortedIdentities: SortedIdentities = {
         phoneIdentities: [
           {
             id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -295,7 +295,7 @@ describe("LoginsOverviewPage", () => {
       };
       const component = mount(
         <AccountApp>
-          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+          <LoginsOverviewPage sortedIdentities={mockedSortedIdentities} />
         </AccountApp>,
       );
       const boxedLink = component.find(BoxedLink);
@@ -315,14 +315,14 @@ describe("LoginsOverviewPage", () => {
     });
 
     test("it should display no emails and no phones and no social logins if there are neither", () => {
-      const mockedSortedResponse: SortedIdentities = {
+      const mockedSortedIdentities: SortedIdentities = {
         phoneIdentities: [],
         emailIdentities: [],
         socialIdentities: [],
       };
       const component = mount(
         <AccountApp>
-          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+          <LoginsOverviewPage sortedIdentities={mockedSortedIdentities} />
         </AccountApp>,
       );
       const noPhone = component.contains(
@@ -340,14 +340,14 @@ describe("LoginsOverviewPage", () => {
     });
 
     test("it should display navigation breadcrumbs", () => {
-      const mockedSortedResponse: SortedIdentities = {
+      const mockedSortedIdentities: SortedIdentities = {
         phoneIdentities: [],
         emailIdentities: [],
         socialIdentities: [],
       };
       const component = mount(
         <AccountApp>
-          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+          <LoginsOverviewPage sortedIdentities={mockedSortedIdentities} />
         </AccountApp>,
       );
 
@@ -361,7 +361,7 @@ describe("LoginsOverviewPage", () => {
   });
 
   test("it should redirect to phone page on click", () => {
-    const mockedSortedResponse: SortedIdentities = {
+    const mockedSortedIdentities: SortedIdentities = {
       phoneIdentities: [
         {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -376,7 +376,7 @@ describe("LoginsOverviewPage", () => {
     };
     const component = mount(
       <AccountApp>
-        <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+        <LoginsOverviewPage sortedIdentities={mockedSortedIdentities} />
       </AccountApp>,
     );
 
@@ -388,7 +388,7 @@ describe("LoginsOverviewPage", () => {
   });
 
   test("it should redirect to email page on click", () => {
-    const mockedSortedResponse: SortedIdentities = {
+    const mockedSortedIdentities: SortedIdentities = {
       phoneIdentities: [],
       emailIdentities: [
         {
@@ -403,7 +403,7 @@ describe("LoginsOverviewPage", () => {
     };
     const component = mount(
       <AccountApp>
-        <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+        <LoginsOverviewPage sortedIdentities={mockedSortedIdentities} />
       </AccountApp>,
     );
 
@@ -416,14 +416,14 @@ describe("LoginsOverviewPage", () => {
 
   describe("AddNewIdentityButton", () => {
     test("there must be the button for emails, phones but not social logins", () => {
-      const mockedSortedResponse: SortedIdentities = {
+      const mockedSortedIdentities: SortedIdentities = {
         phoneIdentities: [],
         emailIdentities: [],
         socialIdentities: [],
       };
       const component = mount(
         <AccountApp>
-          <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+          <LoginsOverviewPage sortedIdentities={mockedSortedIdentities} />
         </AccountApp>,
       );
       const addNewIdentityButton = component
@@ -442,7 +442,7 @@ describe("LoginsOverviewPage", () => {
 
 describe("ShowMoreButton", () => {
   test("the button's text should be relevant", () => {
-    const mockedSortedResponse: SortedIdentities = {
+    const mockedSortedIdentities: SortedIdentities = {
       phoneIdentities: [
         {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -508,7 +508,7 @@ describe("ShowMoreButton", () => {
     };
     const component = mount(
       <AccountApp>
-        <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+        <LoginsOverviewPage sortedIdentities={mockedSortedIdentities} />
       </AccountApp>,
     );
 
@@ -526,7 +526,7 @@ describe("ShowMoreButton", () => {
   });
 
   test("the button should show/hide identities", () => {
-    const mockedSortedResponse: SortedIdentities = {
+    const mockedSortedIdentities: SortedIdentities = {
       phoneIdentities: [
         {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -563,7 +563,7 @@ describe("ShowMoreButton", () => {
     };
     const component = mount(
       <AccountApp>
-        <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+        <LoginsOverviewPage sortedIdentities={mockedSortedIdentities} />
       </AccountApp>,
     );
     const boxedLink = component.find(BoxedLink);
@@ -583,7 +583,7 @@ describe("ShowMoreButton", () => {
   });
 
   test("the button should not appear if the corresponding identity list < 2", () => {
-    const mockedSortedResponse: SortedIdentities = {
+    const mockedSortedIdentities: SortedIdentities = {
       phoneIdentities: [
         {
           id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -614,7 +614,7 @@ describe("ShowMoreButton", () => {
     };
     const component = mount(
       <AccountApp>
-        <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+        <LoginsOverviewPage sortedIdentities={mockedSortedIdentities} />
       </AccountApp>,
     );
     const showMoreButton = component.find(ShowMoreButton);
@@ -622,7 +622,7 @@ describe("ShowMoreButton", () => {
   });
 
   test("the button should not appear for social logins even if the list > 1 ", () => {
-    const mockedSortedResponse: SortedIdentities = {
+    const mockedSortedIdentities: SortedIdentities = {
       phoneIdentities: [],
       emailIdentities: [],
       socialIdentities: [
@@ -644,7 +644,7 @@ describe("ShowMoreButton", () => {
     };
     const component = mount(
       <AccountApp>
-        <LoginsOverviewPage sortedIdentities={mockedSortedResponse} />
+        <LoginsOverviewPage sortedIdentities={mockedSortedIdentities} />
       </AccountApp>,
     );
     const showMoreButton = component.find(ShowMoreButton);
