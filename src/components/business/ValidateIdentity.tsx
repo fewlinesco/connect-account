@@ -2,7 +2,10 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { HttpVerbs } from "@src/@types/core/HttpVerbs";
-import { ErrorVerifyingValidationCode } from "@src/clientErrors";
+import {
+  InvalidValidationCode,
+  TemporaryIdentityExpired,
+} from "@src/clientErrors";
 import { fetchJson } from "@src/utils/fetchJson";
 
 interface ValidateIdentity {
@@ -19,23 +22,25 @@ export const ValidateIdentity: React.FC<ValidateIdentity> = ({
   const router = useRouter();
 
   async function validateIdentity(validationCode: string): Promise<void> {
-    try {
-      const response = await fetchJson(
-        "/api/auth-connect/verify-validation-code",
-        HttpVerbs.POST,
-        { validationCode, eventId },
-      );
-
+    return await fetchJson(
+      "/api/auth-connect/verify-validation-code",
+      HttpVerbs.POST,
+      { validationCode, eventId },
+    ).then(async (response) => {
       if (response.status >= 400) {
-        throw new ErrorVerifyingValidationCode();
+        if (response.statusText === "INVALID") {
+          throw new InvalidValidationCode("Invalid validation code");
+        }
+
+        if (response.statusText === "Temporary Identity Expired") {
+          throw new TemporaryIdentityExpired();
+        }
       }
 
       const path = new URL(response.url).pathname;
 
       router && router.push(path);
-    } catch (error) {
-      router && router.push("/account/logins/email/new");
-    }
+    });
   }
 
   return children({
