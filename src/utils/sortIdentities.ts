@@ -7,7 +7,7 @@ function sortPrimaryIdentity(a: Identity, b: Identity): number {
   return a.primary === b.primary ? 0 : a.primary ? -1 : 1;
 }
 
-function sortStatus(a: Identity, b: Identity): number {
+function sortIdentitiyStatus(a: Identity, b: Identity): number {
   return a.status === b.status ? 0 : a.status === "validated" ? -1 : 1;
 }
 
@@ -50,9 +50,9 @@ export function sortIdentities(identities: Identity[]): SortedIdentities {
     }
   });
 
-  phoneIdentities.sort(sortStatus).sort(sortPrimaryIdentity);
-  emailIdentities.sort(sortStatus).sort(sortPrimaryIdentity);
-  socialIdentities.sort(sortStatus).sort(sortPrimaryIdentity);
+  phoneIdentities.sort(sortIdentitiyStatus).sort(sortPrimaryIdentity);
+  emailIdentities.sort(sortIdentitiyStatus).sort(sortPrimaryIdentity);
+  socialIdentities.sort(sortIdentitiyStatus).sort(sortPrimaryIdentity);
 
   return { phoneIdentities, emailIdentities, socialIdentities };
 }
