@@ -47,10 +47,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     context,
     [withLogger, withSentry, withSession, withAuth],
     async (request: ExtendedRequest) => {
-      const userSession = request.session.get<UserCookie>("user-session");
+      const userCookie = request.session.get<UserCookie>("user-cookie");
 
-      if (userSession) {
-        const sortedIdentities = await getIdentities(userSession.sub).then(
+      if (userCookie) {
+        const sortedIdentities = await getIdentities(userCookie.sub).then(
           ({ errors, data }) => {
             if (errors) {
               throw new GraphqlErrors(errors);

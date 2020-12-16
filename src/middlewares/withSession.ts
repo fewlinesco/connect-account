@@ -5,7 +5,7 @@ import { config } from "../config";
 
 const options = {
   password: config.connectAccountSessionSalt,
-  cookieName: "connect-account-session",
+  cookieName: "connect-account-cookie",
   cookieOptions: {
     // Allows the use of session in non-https environments like.
     secure: process.env.NODE_ENV === "production" ? true : false,
