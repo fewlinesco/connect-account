@@ -1,10 +1,10 @@
-name: CI e2e
+name: CI e2e test - Vercel
 
 on:
   deployment_status:
     
 jobs:
-  e2e-tests: 
+  e2e-tests-vercel: 
     runs-on: ubuntu-latest
 
     container:
@@ -12,8 +12,6 @@ jobs:
 
     env:
       GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
-      CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
-      CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
 
     steps:
     - uses: actions/checkout@v2
@@ -39,16 +37,22 @@ jobs:
     - name: adding Vercel URL to Application's redirect uris
       env:
         CONNECT_ACCOUNT_TEST_APP_ID: ${{ secrets.CONNECT_ACCOUNT_TEST_APP_ID }}
-      run: yarn e2e:add-redirect-uri
+        CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
+        CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
+      run: yarn e2e:add-vercel-redirect-uri
 
     - name: creating test user
       env:
         CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
         CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
+        CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
+        CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
       run: yarn e2e:create-test-user
 
     - name: removing test user
       env:
         CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
+        CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
+        CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
       run: yarn e2e:remove-test-user
 
