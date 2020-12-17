@@ -9,10 +9,11 @@ import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import {
   NoDataReturned,
   NoIdentityAdded,
+  NoTemporaryIdentity,
   NoUserFound,
 } from "@src/clientErrors";
 import { removeTemporaryIdentity } from "@src/commands/removeTemporaryIdentity";
-import { GraphqlErrors, TemporaryIdentityExpired } from "@src/errors";
+import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
@@ -36,71 +37,81 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
         (temporaryIdentity) => temporaryIdentity.eventId === eventId,
       );
 
-      if (temporaryIdentity && temporaryIdentity.expiresAt > Date.now()) {
-        const checkVerificationCodeResult = await checkVerificationCode(
-          validationCode,
-          eventId,
-        ).then(({ errors, data }) => {
-          if (errors) {
-            throw new GraphqlErrors(errors);
-          }
+      if (temporaryIdentity) {
+        if (temporaryIdentity.expiresAt > Date.now()) {
+          const checkVerificationCodeResult = await checkVerificationCode(
+            validationCode,
+            eventId,
+          ).then(({ errors, data }) => {
+            if (errors) {
+              throw new GraphqlErrors(errors);
+            }
 
-          if (!data) {
-            throw new NoDataReturned();
-          }
+            if (!data) {
+              throw new NoDataReturned();
+            }
 
-          return data.checkVerificationCode;
-        });
+            return data.checkVerificationCode;
+          });
 
-        const { value, type, primary } = temporaryIdentity;
+          const { value, type, primary } = temporaryIdentity;
 
-        if (checkVerificationCodeResult.status === "VALID") {
-          const body = {
-            userId: userCookie.sub,
-            type: getIdentityType(type),
-            value,
-          };
+          if (checkVerificationCodeResult.status === "VALID") {
+            const body = {
+              userId: userCookie.sub,
+              type: getIdentityType(type),
+              value,
+            };
 
-          const identityId = await addIdentityToUser(body).then(
-            ({ errors, data }) => {
-              if (errors) {
-                throw new GraphqlErrors(errors);
-              }
+            const identityId = await addIdentityToUser(body).then(
+              ({ errors, data }) => {
+                if (errors) {
+                  throw new GraphqlErrors(errors);
+                }
 
-              if (!data) {
-                throw new NoIdentityAdded();
-              }
+                if (!data) {
+                  throw new NoIdentityAdded();
+                }
 
-              return data.addIdentityToUser.id;
-            },
-          );
+                return data.addIdentityToUser.id;
+              },
+            );
 
-          if (primary) {
-            await markIdentityAsPrimary(identityId).then(({ errors }) => {
-              if (errors) {
-                throw new GraphqlErrors(errors);
-              }
+            if (primary) {
+              await markIdentityAsPrimary(identityId).then(({ errors }) => {
+                if (errors) {
+                  throw new GraphqlErrors(errors);
+                }
+              });
+            }
+
+            await removeTemporaryIdentity(userCookie.sub, temporaryIdentity);
+
+            response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
+              Location: "/account/logins",
+            });
+
+            return response.end();
+          } else if (checkVerificationCodeResult.status === "INVALID") {
+            response.statusCode = HttpStatus.BAD_REQUEST;
+            response.statusMessage = checkVerificationCodeResult.status;
+            response.end();
+            return;
+          } else {
+            response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
+              Location: `/account/logins/${type}/validation/${eventId}`,
             });
           }
-
+        } else {
           await removeTemporaryIdentity(userCookie.sub, temporaryIdentity);
 
-          response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
-            Location: "/account/logins",
-          });
-
-          return response.end();
-        } else {
-          response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
-            Location: `/account/logins/${type}/validation/${eventId}`,
-          });
+          response.statusCode = HttpStatus.BAD_REQUEST;
+          response.statusMessage = "Temporary Identity Expired";
+          response.end();
+          return;
         }
       } else {
-        if (temporaryIdentity) {
-          await removeTemporaryIdentity(userCookie.sub, temporaryIdentity);
-        }
-
-        throw new TemporaryIdentityExpired();
+        throw new NoTemporaryIdentity();
       }
     } else {
       throw new NoUserFound();
