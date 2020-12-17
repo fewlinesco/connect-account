@@ -98,7 +98,6 @@ export const AllIdentitiesSection = (): JSX.Element => {
             break;
           default:
             null;
-            break;
         }
 
         return (
