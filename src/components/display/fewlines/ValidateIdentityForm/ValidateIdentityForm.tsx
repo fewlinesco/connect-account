@@ -33,7 +33,8 @@ export const ValidateIdentityForm: React.FC<{
           await validateIdentity(validationCode).catch((error) => {
             if (error instanceof InvalidValidationCode) {
               setFormID(uuidv4());
-              setFlashMessage(error.message);
+              console.log("FORM", error);
+              setFlashMessage(error ? error.message : "what");
             } else if (error instanceof TemporaryIdentityExpired) {
               router && router.push("/account/logins/email/new");
             } else {

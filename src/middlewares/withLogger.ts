@@ -1,4 +1,5 @@
 import { createLogger, EncoderTypeEnum } from "@fwl/logging";
+import { log } from "console";
 import { ServerResponse } from "http";
 
 import { ExtendedRequest } from "../@types/core/ExtendedRequest";
@@ -36,8 +37,8 @@ export function withLogger(handler: Handler): Handler {
       return nextHandler;
     } catch (error) {
       const processTimeEnd = process.hrtime.bigint();
-
-      logger.log(error.message || "error undefined", {
+      console.log("LOGGER", error);
+      logger.log(error ? error.message : "error undefined", {
         duration: (
           (processTimeEnd - processTimeStart) /
           BigInt(1000)
