@@ -1,21 +1,21 @@
 import { updateApplication } from "../../lib/commands/updateApplication";
 import { getApplication } from "../../lib/queries/getApplication";
 
-async function addRedirectURIToConnect(): Promise<void> {
+async function addVercelRedirectURIToConnect(): Promise<void> {
   if (process.env.GITHUB_CONTEXT_EVENT === undefined) {
     throw new Error("GITHUB_CONTEXT_EVENT environment variable is undefined");
   }
 
   const githubActionsContext = JSON.parse(process.env.GITHUB_CONTEXT_EVENT);
 
-  if (githubActionsContext.deployment_status === undefined) {
-    throw new Error("deployment_status is undefined");
-  }
-
   if (process.env.CONNECT_ACCOUNT_TEST_APP_ID === undefined) {
     throw new Error(
       "CONNECT_ACCOUNT_TEST_APP_ID environment variable is undefined",
     );
+  }
+
+  if (githubActionsContext.deployment_status === undefined) {
+    throw new Error("deployment_status is undefined");
   }
 
   const githubDeploymentStatus = githubActionsContext.deployment_status;
@@ -61,4 +61,4 @@ async function addRedirectURIToConnect(): Promise<void> {
   }
 }
 
-addRedirectURIToConnect();
+addVercelRedirectURIToConnect();
