@@ -30,10 +30,6 @@ export class GraphqlErrors extends Error {
   }
 }
 
-export class TemporaryIdentityExpired extends Error {
-  readonly message = "TemporaryIdentityExpired";
-}
-
 export class UnhandledTokenType extends Error {
   readonly message = "UnhandledTokenType";
 }

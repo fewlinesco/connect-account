@@ -4,14 +4,6 @@ export class ErrorVerifyingValidationCode extends Error {}
 
 export class ErrorSettingPassword extends Error {}
 
-export class NoIdentityFound extends Error {
-  readonly message = "No Identity Found";
-}
-
-export class NoIdentityAdded extends Error {
-  readonly message = "No Identity Added";
-}
-
 export class IdentityAlreadyUsed extends Error {
   readonly message: string;
 
@@ -48,6 +40,15 @@ export class UnhandledIdentityType extends Error {
   }
 }
 
+export class InvalidValidationCode extends Error {
+  readonly message: string;
+
+  constructor(message: string) {
+    super();
+    this.message = message;
+  }
+}
+
 export class NoUserFound extends Error {
   readonly message = "No User found";
 }
@@ -58,4 +59,20 @@ export class NoDataReturned extends Error {
 
 export class NoProviderNameFound extends Error {
   readonly message = "No Provider Name Found";
+}
+
+export class NoIdentityFound extends Error {
+  readonly message = "No Identity Found";
+}
+
+export class NoIdentityAdded extends Error {
+  readonly message = "No Identity Added";
+}
+
+export class NoTemporaryIdentity extends Error {
+  readonly message = "No Temporary Identity";
+}
+
+export class TemporaryIdentityExpired extends Error {
+  readonly message = "Temporary Identity Expired";
 }
