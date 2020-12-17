@@ -55,7 +55,6 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
             break;
           default:
             null;
-            break;
         }
 
         return (
