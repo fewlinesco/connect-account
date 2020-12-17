@@ -50,6 +50,8 @@ async function createTestUser(): Promise<void> {
         },
       ];
 
+      console.log("sha: ", githubActionsContext.deployment.sha);
+
       const userId = await createUserWithIdentities({
         identities: userIdentitiesInput,
         localeCode: "en-US",
