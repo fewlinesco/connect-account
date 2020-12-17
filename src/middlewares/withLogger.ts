@@ -37,7 +37,7 @@ export function withLogger(handler: Handler): Handler {
     } catch (error) {
       const processTimeEnd = process.hrtime.bigint();
 
-      logger.log(error.message, {
+      logger.log(error.message || "error undefined", {
         duration: (
           (processTimeEnd - processTimeStart) /
           BigInt(1000)
