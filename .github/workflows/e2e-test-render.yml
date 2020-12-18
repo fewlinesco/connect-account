@@ -2,6 +2,7 @@ name: CI e2e test - Render
 
 on:
   pull_request:
+    types: [opened, reopened, closed]
     
 jobs:
   e2e-tests-render: 
@@ -40,3 +41,10 @@ jobs:
         CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
         CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
       run: yarn e2e:add-render-redirect-uri
+
+    - name: removing Render PR preview URL from Application's redirect uris
+      env:
+        CONNECT_ACCOUNT_TEST_APP_ID: ${{ secrets.CONNECT_ACCOUNT_TEST_APP_ID }}
+        CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
+        CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
+      run: yarn e2e:remove-render-redirect-uri
