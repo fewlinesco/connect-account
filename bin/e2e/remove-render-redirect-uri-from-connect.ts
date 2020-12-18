@@ -20,8 +20,6 @@ async function removeRenderRedirectURIFromConnect(): Promise<void> {
     );
   }
 
-  console.log(githubActionsContext);
-
   if (githubActionsContext.action === "closed") {
     const testApp = await getApplication(
       process.env.CONNECT_ACCOUNT_TEST_APP_ID,
@@ -36,8 +34,6 @@ async function removeRenderRedirectURIFromConnect(): Promise<void> {
 
       return data.provider.application;
     });
-
-    console.log("dont pass here");
 
     const renderDeploymentUrl =
       "https://connect-account-pr-" +
