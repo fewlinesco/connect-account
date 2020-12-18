@@ -2,6 +2,7 @@ name: CI e2e test - Render
 
 on:
   pull_request:
+    types: [opened, reopened, closed]
     
 jobs:
   e2e-tests-render: 
