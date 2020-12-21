@@ -12,7 +12,7 @@ import { NavBarCrossIcon } from "../Icons/NavBarCrossIcon/NavBarCrossIcon";
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import { WhiteSwitchIcon } from "../Icons/SwitchIcon/WhiteSwitchIcon/WhiteSwitchIcon";
 import { WhiteWorldIcon } from "../Icons/WorldIcon/WhiteWorldIcon/WhiteWorldIcon";
-import { NeutralLink } from "../NeutralLink";
+import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 interface MenuItemProps {

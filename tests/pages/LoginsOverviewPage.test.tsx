@@ -12,7 +12,7 @@ import {
   BoxedLink,
   NoIdentitiesBox,
 } from "@src/components/display/fewlines/IdentitiesSection/IdentitiesSection";
-import { NeutralLink } from "@src/components/display/fewlines/NeutralLink";
+import { NeutralLink } from "@src/components/display/fewlines/NeutralLink/NeutralLink";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
 import { AccountApp } from "@src/pages/_app";
 import LoginsOverviewPage from "@src/pages/account/logins";

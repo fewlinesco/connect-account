@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Button, ButtonVariant } from "../Button/Button";
 import { HomeDesktopBackground } from "../Icons/HomeDesktopBackground/HomeDesktopBackground";
 import { HomeMobileBackground } from "../Icons/HomeMobileBackground/HomeMobileBackground";
-import { NeutralLink } from "../NeutralLink";
+import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { deviceBreakpoints } from "@src/design-system/theme";
 

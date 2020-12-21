@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Button, ButtonVariant } from "../Button/Button";
 import { Form } from "../Form/Form";
 import { Input } from "../Input/Input";
-import { NeutralLink } from "../NeutralLink";
+import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { IdentityTypes } from "@lib/@types";
 import { InMemoryTemporaryIdentity } from "@src/@types/TemporaryIdentity";
 import {

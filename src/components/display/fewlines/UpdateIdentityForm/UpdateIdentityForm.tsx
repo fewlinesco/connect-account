@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Button, ButtonVariant } from "../Button/Button";
 import { Form } from "../Form/Form";
 import { Input } from "../Input/Input";
-import { NeutralLink } from "../NeutralLink";
+import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { Box } from "@src/components/display/fewlines/Box/Box";
 

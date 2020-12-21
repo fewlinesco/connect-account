@@ -7,7 +7,7 @@ import { Button, ButtonVariant } from "../Button/Button";
 import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
 import { DeleteConfirmationBoxContent } from "../ConfirmationBox/DeleteConfirmationBoxContent";
 import { PrimaryConfirmationBoxContent } from "../ConfirmationBox/PrimaryConfirmationBoxContent";
-import { NeutralLink } from "../NeutralLink";
+import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentityType } from "@src/utils/getIdentityType";
