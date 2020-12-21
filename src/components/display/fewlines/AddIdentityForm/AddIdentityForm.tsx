@@ -98,7 +98,7 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
         >{`Add ${type.toLowerCase()}`}</Button>
       </Form>
 
-      <NeutralLink href="/account/logins">
+      <NeutralLink href="/account/logins" tabIndex={-1}>
         <Button variant={ButtonVariant.SECONDARY}>Cancel</Button>
       </NeutralLink>
     </>
