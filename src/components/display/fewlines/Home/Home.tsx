@@ -1,10 +1,10 @@
-import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
 import { HomeDesktopBackground } from "../Icons/HomeDesktopBackground/HomeDesktopBackground";
 import { HomeMobileBackground } from "../Icons/HomeMobileBackground/HomeMobileBackground";
+import { NeutralLink } from "../NeutralLink";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
@@ -22,13 +22,11 @@ export const Home: React.FC<HomeProps> = ({ authorizeURL, providerName }) => {
               <DescriptionText>
                 You are about to access your account from {providerName}
               </DescriptionText>
-              <Link href={authorizeURL} passHref>
-                <a>
-                  <AccessButton variant={ButtonVariant.PRIMARY}>
-                    Access my account
-                  </AccessButton>
-                </a>
-              </Link>
+              <NeutralLink href={authorizeURL} tabIndex={-1}>
+                <AccessButton variant={ButtonVariant.PRIMARY}>
+                  Access my account
+                </AccessButton>
+              </NeutralLink>
             </Flex>
           </ShadowBox>
         </Container>

@@ -1,7 +1,7 @@
-import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
+import { NeutralLink } from "../NeutralLink";
 import { useTheme } from "@src/design-system/theme/useTheme";
 
 export const Header: React.FC = () => {
@@ -9,11 +9,9 @@ export const Header: React.FC = () => {
 
   return (
     <Flex>
-      <Link href="/account" passHref>
-        <a>
-          <img width="90" src={theme.logo} aria-label="Logo" />
-        </a>
-      </Link>
+      <NeutralLink href="/account" tabIndex={-1}>
+        <img width="90" src={theme.logo} aria-label="Logo" />
+      </NeutralLink>
       <p>Account</p>
     </Flex>
   );
