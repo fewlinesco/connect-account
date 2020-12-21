@@ -37,13 +37,16 @@ export const AddIdentity: React.FC<AddIdentityProps> = ({ type, children }) => {
       body,
     ).then(async (response) => {
       if (response.status >= 400) {
-        if (response.statusText === "identity_already_validated") {
+        console.log(response);
+        const { error } = await response.json();
+
+        if (error === "identity_already_validated") {
           throw new IdentityAlreadyUsed(
             "Identity has already been validated by a user",
           );
         }
 
-        if (response.statusText === "can't be blank") {
+        if (error === "can't be blank") {
           throw new IdentityInputValueCantBeBlank(
             "Identity value can't be blank",
           );
