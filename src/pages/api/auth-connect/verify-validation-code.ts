@@ -94,8 +94,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
             return response.end();
           } else if (checkVerificationCodeResult.status === "INVALID") {
             response.statusCode = HttpStatus.BAD_REQUEST;
-            response.statusMessage = checkVerificationCodeResult.status;
-            response.end();
+            response.json({ error: checkVerificationCodeResult.status });
             return;
           } else {
             response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
@@ -106,8 +105,7 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
           await removeTemporaryIdentity(userCookie.sub, temporaryIdentity);
 
           response.statusCode = HttpStatus.BAD_REQUEST;
-          response.statusMessage = "Temporary Identity Expired";
-          response.end();
+          response.json({ error: "Temporary Identity Expired" });
           return;
         }
       } else {
