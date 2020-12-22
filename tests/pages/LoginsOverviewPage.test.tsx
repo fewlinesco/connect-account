@@ -4,10 +4,8 @@ import React from "react";
 import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/SortedIdentities";
 import AlertBar from "@src/components/display/fewlines/AlertBar/AlertBar";
-import {
-  Button,
-  ButtonVariant,
-} from "@src/components/display/fewlines/Button/Button";
+import { ButtonVariant } from "@src/components/display/fewlines/Button/Button";
+import { FakeButton } from "@src/components/display/fewlines/FakeButton/FakeButton";
 import {
   BoxedLink,
   NoIdentitiesBox,
@@ -427,8 +425,8 @@ describe("LoginsOverviewPage", () => {
         </AccountApp>,
       );
       const addNewIdentityButton = component
-        .find(Button)
-        .find({ variant: ButtonVariant.SECONDARY });
+        .find(FakeButton)
+        .find({ variant: ButtonVariant.SECONDARY, as: "div" });
       expect(addNewIdentityButton).toHaveLength(2);
       expect(addNewIdentityButton.at(0).text()).toEqual(
         "+ add new email address",

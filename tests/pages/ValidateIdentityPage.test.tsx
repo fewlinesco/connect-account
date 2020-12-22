@@ -5,6 +5,7 @@ import React from "react";
 import { IdentityTypes } from "@lib/@types/Identity";
 import AlertBar from "@src/components/display/fewlines/AlertBar/AlertBar";
 import { Button } from "@src/components/display/fewlines/Button/Button";
+import { FakeButton } from "@src/components/display/fewlines/FakeButton/FakeButton";
 import { Form } from "@src/components/display/fewlines/Form/Form";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
@@ -98,11 +99,13 @@ describe("ValidateIdentityPage", () => {
 
     const buttons = component.find(Button);
 
+    const fakeButton = component.find(FakeButton);
+
     expect(validationCodeInput).toHaveLength(1);
-    expect(buttons).toHaveLength(3);
+    expect(buttons).toHaveLength(2);
     expect(buttons.at(0).text()).toEqual("Confirm email");
-    expect(buttons.at(1).text()).toEqual("Discard all changes");
-    expect(buttons.at(2).text()).toEqual("Resend confirmation code");
+    expect(buttons.at(1).text()).toEqual("Resend confirmation code");
+    expect(fakeButton.text()).toEqual("Discard all changes");
   });
 
   test("it should display properly an input and 3 buttons for phones", () => {
@@ -119,11 +122,13 @@ describe("ValidateIdentityPage", () => {
 
     const buttons = component.find(Button);
 
+    const fakeButton = component.find(FakeButton);
+
     expect(validationCodeInput).toHaveLength(1);
-    expect(buttons).toHaveLength(3);
+    expect(buttons).toHaveLength(2);
     expect(buttons.at(0).text()).toEqual("Confirm phone");
-    expect(buttons.at(1).text()).toEqual("Discard all changes");
-    expect(buttons.at(2).text()).toEqual("Resend confirmation code");
+    expect(buttons.at(1).text()).toEqual("Resend confirmation code");
+    expect(fakeButton.text()).toEqual("Discard all changes");
   });
 
   test("it should display an alert bar with the correct message for phones", () => {

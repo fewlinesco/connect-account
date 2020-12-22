@@ -80,7 +80,3 @@ export const BackLink = styled.p`
   color: ${({ theme }) => theme.colors.primary};
   cursor: pointer;
 `;
-
-// export const AccessButton = styled(FakeButton)`
-//   margin: 0;
-// `;
