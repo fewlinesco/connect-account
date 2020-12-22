@@ -3,25 +3,20 @@
     "description": "Connect Account Management Application",
     "scripts": {},
     "env": {
-        "ACCOUNT_JWE_PRIVATE_KEY": "CHANGEME",
         "CONNECT_ACCOUNT_HOSTNAME": "CHANGEME",
         "CONNECT_ACCOUNT_SESSION_SALT": {
             "generator": "secret"
         },
         "CONNECT_APPLICATION_CLIENT_ID": "26bD6UeZZLFGmwuKNJoaJQ==",
-        "CONNECT_APPLICATION_CLIENT_SECRET": "CHANGEME",
         "CONNECT_APPLICATION_SCOPES": "email phone openid",
         "CONNECT_AUDIENCE": "connect-account",
         "CONNECT_JWT_ALGORITHM": "RS256",
-        "CONNECT_MANAGEMENT_API_KEY": "CHANGEME",
         "CONNECT_MANAGEMENT_URL": "https://management.connect.review.fewlines.tech/graphql",
         "CONNECT_OPEN_ID_CONFIGURATION_URL": "https://fewlines.connect.prod.fewlines.tech/.well-known/openid-configuration",
         "CONNECT_PROVIDER_URL": "https://fewlines.connect.prod.fewlines.tech",
         "CONNECT_REDIRECT_URI": "https://account.fewlines.tech/api/oauth/callback",
-        "DYNAMODB_ACCESS_KEY_ID": "AKIA3YI44EMUASKX3JGX",
         "DYNAMODB_ENDPOINT": "https://dynamodb.eu-west-3.amazonaws.com",
         "DYNAMODB_REGION": "eu-west-3",
-        "DYNAMODB_SECRET_ACCESS_KEY": "CHANGEME",
         "DYNAMODB_TABLE_NAME": "fewlines-connect-account-review",
         "IS_JWE_SIGNED": "true",
         "NEXT_PUBLIC_SENTRY_DSN": "https://6baf0213093a428d9e9ec7ae0979868c@o287463.ingest.sentry.io/5387583"
