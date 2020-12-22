@@ -35,15 +35,13 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
       if (errors) {
         if ((errors[0] as any).code === "identity_already_validated") {
           response.statusCode = HttpStatus.BAD_REQUEST;
-          response.statusMessage = (errors[0] as any).code;
-          response.end();
+          response.json({ error: (errors[0] as any).code });
           return;
         }
 
         if ((errors[0] as any).errors.identity_value === "can't be blank") {
           response.statusCode = HttpStatus.BAD_REQUEST;
-          response.statusMessage = (errors[0] as any).errors.identity_value;
-          response.end();
+          response.json({ error: (errors[0] as any).errors.identity_value });
           return;
         }
 

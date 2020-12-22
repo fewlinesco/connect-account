@@ -28,11 +28,12 @@ export const ValidateIdentity: React.FC<ValidateIdentity> = ({
       { validationCode, eventId },
     ).then(async (response) => {
       if (response.status >= 400) {
-        if (response.statusText === "INVALID") {
+        const { error } = await response.json();
+        if (error === "INVALID") {
           throw new InvalidValidationCode("Invalid validation code");
         }
 
-        if (response.statusText === "Temporary Identity Expired") {
+        if (error === "Temporary Identity Expired") {
           throw new TemporaryIdentityExpired();
         }
       }
