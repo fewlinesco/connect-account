@@ -1,0 +1,17 @@
+{
+    "name": "Fewlines Connect Account",
+    "description": "Connect Account Management Application",
+    "scripts": {},
+    "env": {},
+    "formation": {
+        "web": {
+            "quantity": 1
+        }
+    },
+    "addons": [],
+    "buildpacks": [
+        {
+            "url": "heroku/nodejs"
+        }
+    ]
+}
