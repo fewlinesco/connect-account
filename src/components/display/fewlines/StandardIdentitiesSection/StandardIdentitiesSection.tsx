@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Button, ButtonVariant } from "../Button/Button";
+import { ButtonVariant } from "../Button/Button";
+import { FakeButton } from "../FakeButton/FakeButton";
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import {
   BoxedLink,
@@ -81,9 +82,9 @@ export const StandardIdentitiesSection: React.FC<StandardIdentitiesSectionProps>
         </Flex>
       )}
       <NeutralLink href={`/account/logins/${sectionName.toLowerCase()}/new`}>
-        <Button variant={ButtonVariant.SECONDARY}>
+        <FakeButton variant={ButtonVariant.SECONDARY}>
           {`+ ${addNewIdentityMessage}`}
-        </Button>
+        </FakeButton>
       </NeutralLink>
     </>
   );

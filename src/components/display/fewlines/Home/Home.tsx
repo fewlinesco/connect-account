@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Button, ButtonVariant } from "../Button/Button";
+import { ButtonVariant } from "../Button/Button";
+import { FakeButton } from "../FakeButton/FakeButton";
 import { HomeDesktopBackground } from "../Icons/HomeDesktopBackground/HomeDesktopBackground";
 import { HomeMobileBackground } from "../Icons/HomeMobileBackground/HomeMobileBackground";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
@@ -23,9 +24,9 @@ export const Home: React.FC<HomeProps> = ({ authorizeURL, providerName }) => {
                 You are about to access your account from {providerName}
               </DescriptionText>
               <NeutralLink href={authorizeURL}>
-                <AccessButton variant={ButtonVariant.PRIMARY}>
+                <FakeButton variant={ButtonVariant.PRIMARY}>
                   Access my account
-                </AccessButton>
+                </FakeButton>
               </NeutralLink>
             </Flex>
           </ShadowBox>
@@ -80,6 +81,6 @@ export const BackLink = styled.p`
   cursor: pointer;
 `;
 
-export const AccessButton = styled(Button)`
-  margin: 0;
-`;
+// export const AccessButton = styled(FakeButton)`
+//   margin: 0;
+// `;

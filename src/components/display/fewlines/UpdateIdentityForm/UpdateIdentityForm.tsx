@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
+import { FakeButton } from "../FakeButton/FakeButton";
 import { Form } from "../Form/Form";
 import { Input } from "../Input/Input";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
@@ -45,7 +46,7 @@ export const UpdateIdentityForm: React.FC<{
       </Form>
 
       <NeutralLink href="/account/logins">
-        <Button variant={ButtonVariant.SECONDARY}>Cancel</Button>
+        <FakeButton variant={ButtonVariant.SECONDARY}>Cancel</FakeButton>
       </NeutralLink>
     </>
   );
