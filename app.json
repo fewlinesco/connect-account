@@ -2,7 +2,12 @@
     "name": "Fewlines Connect Account",
     "description": "Connect Account Management Application",
     "scripts": {},
-    "env": {},
+    "env": {
+        "DYNAMODB_REGION": {
+            "description": "The AWS region for DynamoDB.",
+            "value": "eu-west-3"
+        }
+    },
     "formation": {
         "web": {
             "quantity": 1
