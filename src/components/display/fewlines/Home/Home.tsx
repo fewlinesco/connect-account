@@ -22,7 +22,7 @@ export const Home: React.FC<HomeProps> = ({ authorizeURL, providerName }) => {
               <DescriptionText>
                 You are about to access your account from {providerName}
               </DescriptionText>
-              <NeutralLink href={authorizeURL} tabIndex={-1}>
+              <NeutralLink href={authorizeURL}>
                 <AccessButton variant={ButtonVariant.PRIMARY}>
                   Access my account
                 </AccessButton>

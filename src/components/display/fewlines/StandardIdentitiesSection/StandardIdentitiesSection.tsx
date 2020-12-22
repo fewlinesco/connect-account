@@ -80,10 +80,7 @@ export const StandardIdentitiesSection: React.FC<StandardIdentitiesSectionProps>
           />
         </Flex>
       )}
-      <NeutralLink
-        href={`/account/logins/${sectionName.toLowerCase()}/new`}
-        tabIndex={-1}
-      >
+      <NeutralLink href={`/account/logins/${sectionName.toLowerCase()}/new`}>
         <Button variant={ButtonVariant.SECONDARY}>
           {`+ ${addNewIdentityMessage}`}
         </Button>

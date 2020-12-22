@@ -9,7 +9,7 @@ export const Header: React.FC = () => {
 
   return (
     <Flex>
-      <NeutralLink href="/account" tabIndex={-1}>
+      <NeutralLink href="/account">
         <img width="90" src={theme.logo} aria-label="Logo" />
       </NeutralLink>
       <p>Account</p>

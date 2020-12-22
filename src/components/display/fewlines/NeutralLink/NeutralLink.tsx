@@ -5,7 +5,6 @@ import style from "styled-components";
 interface ExtendedLinkProps extends LinkProps {
   className?: string;
   onClick?: () => void;
-  tabIndex?: number;
 }
 
 export const NeutralLink: React.FC<ExtendedLinkProps> = ({
@@ -14,15 +13,10 @@ export const NeutralLink: React.FC<ExtendedLinkProps> = ({
   className,
   onClick,
   children,
-  tabIndex,
 }) => {
   return (
     <Link href={href} as={as} passHref>
-      <NeutralAnchor
-        className={className}
-        onClick={onClick}
-        tabIndex={tabIndex}
-      >
+      <NeutralAnchor className={className} onClick={onClick}>
         {children}
       </NeutralAnchor>
     </Link>
