@@ -47,6 +47,7 @@ Get required environment variables by copying `.env.sample` and if necessary tun
 [source, shell]
 ----
 cp .env_vars.sample .env_vars
+ln -s Procfile.dev Procfile
 ----
 
 Source the file to get variables defined your environnement:
