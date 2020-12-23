@@ -3,7 +3,6 @@
     "description": "Connect Account Management Application",
     "scripts": {},
     "env": {
-        "CONNECT_ACCOUNT_HOSTNAME": "CHANGEME",
         "CONNECT_ACCOUNT_SESSION_SALT": {
             "generator": "secret"
         },
