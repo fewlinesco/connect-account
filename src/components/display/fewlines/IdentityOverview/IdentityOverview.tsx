@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -8,6 +7,8 @@ import { Button, ButtonVariant } from "../Button/Button";
 import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
 import { DeleteConfirmationBoxContent } from "../ConfirmationBox/DeleteConfirmationBoxContent";
 import { PrimaryConfirmationBoxContent } from "../ConfirmationBox/PrimaryConfirmationBoxContent";
+import { FakeButton } from "../FakeButton/FakeButton";
+import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentityType } from "@src/utils/getIdentityType";
@@ -44,24 +45,12 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
         )}
       </Box>
       {status === "unvalidated" && (
-        <Link href={`/account/logins/${type}/validation`} passHref>
-          <a>
-            <Button variant={ButtonVariant.PRIMARY}>
-              proceed to validation
-            </Button>
-          </a>
-        </Link>
+        <NeutralLink href={`/account/logins/${type}/validation`}>
+          <FakeButton variant={ButtonVariant.PRIMARY}>
+            proceed to validation
+          </FakeButton>
+        </NeutralLink>
       )}
-      {/* {status === "validated" && (
-        <Link href={`/account/logins/${type}/${id}/update`} passHref>
-          <a>
-            <Button variant={ButtonVariant.PRIMARY}>
-              Update this{" "}
-              {type === IdentityTypes.PHONE ? "phone number" : "email address"}
-            </Button>
-          </a>
-        </Link>
-      )} */}
       {!primary && status === "validated" && (
         <Button
           variant={ButtonVariant.SECONDARY}

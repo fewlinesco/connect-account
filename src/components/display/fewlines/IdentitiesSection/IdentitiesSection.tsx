@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { NeutralLink } from "../NeutralLink";
+import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { SocialIdentitiesSection } from "../SocialIdentitiesSection/SocialIdentitiesSection";
 import { StandardIdentitiesSection } from "../StandardIdentitiesSection/StandardIdentitiesSection";
 import { Timeline } from "../Timeline/Timeline";

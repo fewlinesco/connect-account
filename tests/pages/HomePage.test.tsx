@@ -2,7 +2,7 @@ import { mount } from "enzyme";
 import React from "react";
 
 import { ButtonVariant } from "@src/components/display/fewlines/Button/Button";
-import { AccessButton } from "@src/components/display/fewlines/Home/Home";
+import { FakeButton } from "@src/components/display/fewlines/FakeButton/FakeButton";
 import HomePage from "@src/pages";
 import { AccountApp } from "@src/pages/_app";
 
@@ -15,8 +15,8 @@ describe("HomePage", () => {
     );
 
     const accountAccessButton = component
-      .find(AccessButton)
-      .find({ variant: ButtonVariant.PRIMARY });
+      .find(FakeButton)
+      .find({ variant: ButtonVariant.PRIMARY, as: "div" });
 
     expect(accountAccessButton).toHaveLength(1);
     expect(accountAccessButton.text()).toEqual("Access my account");

@@ -12,6 +12,7 @@ import { ClickAwayListener } from "@src/components/display/fewlines/ClickAwayLis
 import { ConfirmationBox } from "@src/components/display/fewlines/ConfirmationBox/ConfirmationBox";
 import { DeleteConfirmationText } from "@src/components/display/fewlines/ConfirmationBox/DeleteConfirmationBoxContent";
 import { PrimaryConfirmationText } from "@src/components/display/fewlines/ConfirmationBox/PrimaryConfirmationBoxContent";
+import { FakeButton } from "@src/components/display/fewlines/FakeButton/FakeButton";
 import {
   NavigationBreadcrumbs,
   Breadcrumbs,
@@ -254,7 +255,9 @@ describe("IdentityOverviewPage", () => {
       <AwaitingValidationBadge />,
     );
     const validationButton = component.contains(
-      <Button variant={ButtonVariant.PRIMARY}>proceed to validation</Button>,
+      <FakeButton variant={ButtonVariant.PRIMARY}>
+        proceed to validation
+      </FakeButton>,
     );
     expect(validationButton).toEqual(true);
     expect(awaitingValidationBadge).toEqual(true);
