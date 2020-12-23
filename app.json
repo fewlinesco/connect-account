@@ -19,7 +19,8 @@
         "DYNAMODB_REGION": "eu-west-3",
         "DYNAMODB_TABLE_NAME": "fewlines-connect-account-review",
         "IS_JWE_SIGNED": "true",
-        "NEXT_PUBLIC_SENTRY_DSN": "https://6baf0213093a428d9e9ec7ae0979868c@o287463.ingest.sentry.io/5387583"
+        "NEXT_PUBLIC_SENTRY_DSN": "https://6baf0213093a428d9e9ec7ae0979868c@o287463.ingest.sentry.io/5387583",
+        "NEXT_TELEMETRY_DISABLED": "true"
     },
     "formation": {
         "web": {
