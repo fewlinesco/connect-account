@@ -51,14 +51,6 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
           </FakeButton>
         </NeutralLink>
       )}
-      {/* {status === "validated" && (
-        <NeutralLink href={`/account/logins/${type}/${id}/update`}>
-            <FakeButton variant={ButtonVariant.PRIMARY}>
-              Update this{" "}
-              {type === IdentityTypes.PHONE ? "phone number" : "email address"}
-            </FakeButton>
-        </NeutralLink>
-      )} */}
       {!primary && status === "validated" && (
         <Button
           variant={ButtonVariant.SECONDARY}
