@@ -25,6 +25,7 @@
         "review": {
           "env": {
             "NODE_ENV": "development", 
+            "CONNECT_ACCOUNT_TEST_APP_ID": "a61fa55c-da40-4e84-aef8-71f33bbbb12b",
             "CONNECT_ACCOUNT_SESSION_SALT": {
                 "generator": "secret"
             },

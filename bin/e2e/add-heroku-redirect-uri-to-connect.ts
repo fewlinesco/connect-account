@@ -29,7 +29,8 @@ async function addHerokuRedirectURIToConnect(): Promise<void> {
   const herokuDeploymentUrl =
     "https://" +
     process.env.HEROKU_APP_NAME +
-    ".herokuapp.com/api/oauth/callback";
+    ".herokuapp.com" +
+    "/api/oauth/callback";
 
   const updatedTestApp = {
     ...testApp,
