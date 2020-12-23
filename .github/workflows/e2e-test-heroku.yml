@@ -34,13 +34,6 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install
 
-      - name: adding Heroku URL to Application's redirect uris
-        env:
-          CONNECT_ACCOUNT_TEST_APP_ID: ${{ secrets.CONNECT_ACCOUNT_TEST_APP_ID }}
-          CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
-          CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
-        run: yarn e2e:add-heroku-redirect-uri
-
       - name: creating test user
         env:
           CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}

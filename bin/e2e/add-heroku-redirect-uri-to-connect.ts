@@ -2,63 +2,49 @@ import { updateApplication } from "../../lib/commands/updateApplication";
 import { getApplication } from "../../lib/queries/getApplication";
 
 async function addHerokuRedirectURIToConnect(): Promise<void> {
-  if (process.env.GITHUB_CONTEXT_EVENT === undefined) {
-    throw new Error("GITHUB_CONTEXT_EVENT environment variable is undefined");
-  }
-
-  const githubActionsContext = JSON.parse(process.env.GITHUB_CONTEXT_EVENT);
-
   if (process.env.CONNECT_ACCOUNT_TEST_APP_ID === undefined) {
     throw new Error(
       "CONNECT_ACCOUNT_TEST_APP_ID environment variable is undefined",
     );
   }
 
-  if (githubActionsContext.deployment_status === undefined) {
-    throw new Error("deployment_status is undefined");
+  if (process.env.HEROKU_APP_NAME === undefined) {
+    throw new Error("HEROKU_APP_NAME environment variable is undefined");
   }
 
-  const githubDeploymentStatus = githubActionsContext.deployment_status;
-
-  const deploymentStates = ["success", "pending", "in_progress", "queued"];
-
-  if (!githubDeploymentStatus.environment.includes("storybook")) {
-    if (deploymentStates.includes(githubDeploymentStatus.state)) {
-      const testApp = await getApplication(
-        process.env.CONNECT_ACCOUNT_TEST_APP_ID,
-      ).then(({ errors, data }) => {
-        if (errors) {
-          throw errors;
-        }
-
-        if (!data) {
-          throw new Error("Connect Application not found");
-        }
-
-        return data.provider.application;
-      });
-
-      const herokuDeploymentUrl =
-        githubDeploymentStatus.target_url + "/api/oauth/callback";
-
-      if (!testApp.redirectUris.includes(herokuDeploymentUrl)) {
-        const updatedTestApp = {
-          ...testApp,
-          redirectUris: [...testApp.redirectUris, herokuDeploymentUrl],
-        };
-
-        await updateApplication(updatedTestApp).then(({ errors, data }) => {
-          if (errors) {
-            throw errors;
-          }
-
-          if (!data) {
-            throw new Error("update error");
-          }
-        });
-      }
+  const testApp = await getApplication(
+    process.env.CONNECT_ACCOUNT_TEST_APP_ID,
+  ).then(({ errors, data }) => {
+    if (errors) {
+      throw errors;
     }
-  }
+
+    if (!data) {
+      throw new Error("Connect Application not found");
+    }
+
+    return data.provider.application;
+  });
+
+  const herokuDeploymentUrl =
+    "https://" +
+    process.env.HEROKU_APP_NAME +
+    ".herokuapp.com/api/oauth/callback";
+
+  const updatedTestApp = {
+    ...testApp,
+    redirectUris: [...testApp.redirectUris, herokuDeploymentUrl],
+  };
+
+  await updateApplication(updatedTestApp).then(({ errors, data }) => {
+    if (errors) {
+      throw errors;
+    }
+
+    if (!data) {
+      throw new Error("update error");
+    }
+  });
 }
 
 addHerokuRedirectURIToConnect();
