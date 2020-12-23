@@ -105,10 +105,8 @@ If you want to build and start the application, you should run the following:
 
 [source, shell]
 ----
-yarn build && yarn start -p $CONNECT_ACCOUNT_PORT
+yarn build && yarn start [-p 29703]
 ----
-
-The `yarn start` port is not manually set, as it is used by Vercel for running the application.
 
 === Testing
 
@@ -158,7 +156,7 @@ if you want to automatically fix linting issues.
 
 === Pre-push trigger
 
-We are using `Husky` to trigger the linting, testing and building of the app before pushing the code to GitHub to prevent unnecessary `Vercel` build.
+We are using `Husky` to trigger the linting, testing and building of the app before pushing the code to GitHub to prevent unnecessary `Heroku` build.
 
 == Environment variables
 
@@ -172,7 +170,7 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 | The password used to seal or access the cookie session. It needs to be at least 32 characters long.
 
 | `CONNECT_ACCOUNT_HOSTNAME`
-| Hostname of the account web application. If you are hosting the application with Vercel, the `VERCEL_URL` will be used.
+| Hostname of the account web application. This is not needed on `Heroku` for review environments.
 
 | `CONNECT_ACCOUNT_THEME`
 | Styling theme that will be used. Default: `fewlines`.
@@ -271,7 +269,6 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 - *package.json*: We use this file, as much as possible as a centralized config file for various packages, like `ESLint`, `Jest` or `Husky`.
 - *tsconfig.json*: TypeScript compiler options.
 - *next.config.js*: Extended webpack compiler config used by NextJS.
-- *vercel.json*: Vercel deployment file.
 - *.tool-version*: Asdf config file.
 - *.env_vars.sample*: Environment variables template file. You will need to copy this file, remove the `.sample` part, and add the correct values.
 - *.gitignore*: GitHub config file used to prevent the pushing of certain files.
