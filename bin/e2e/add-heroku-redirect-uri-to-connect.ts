@@ -1,7 +1,7 @@
 import { updateApplication } from "../../lib/commands/updateApplication";
 import { getApplication } from "../../lib/queries/getApplication";
 
-async function addVercelRedirectURIToConnect(): Promise<void> {
+async function addHerokuRedirectURIToConnect(): Promise<void> {
   if (process.env.GITHUB_CONTEXT_EVENT === undefined) {
     throw new Error("GITHUB_CONTEXT_EVENT environment variable is undefined");
   }
@@ -38,13 +38,13 @@ async function addVercelRedirectURIToConnect(): Promise<void> {
         return data.provider.application;
       });
 
-      const vercelDeploymentUrl =
+      const herokuDeploymentUrl =
         githubDeploymentStatus.target_url + "/api/oauth/callback";
 
-      if (!testApp.redirectUris.includes(vercelDeploymentUrl)) {
+      if (!testApp.redirectUris.includes(herokuDeploymentUrl)) {
         const updatedTestApp = {
           ...testApp,
-          redirectUris: [...testApp.redirectUris, vercelDeploymentUrl],
+          redirectUris: [...testApp.redirectUris, herokuDeploymentUrl],
         };
 
         await updateApplication(updatedTestApp).then(({ errors, data }) => {
@@ -61,4 +61,4 @@ async function addVercelRedirectURIToConnect(): Promise<void> {
   }
 }
 
-addVercelRedirectURIToConnect();
+addHerokuRedirectURIToConnect();
