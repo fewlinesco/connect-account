@@ -24,7 +24,7 @@ skinparam roundcorner 5
 
 actor User                         as user
 participant "Account Web Client"   as account
-database DynamoDB                   as dynamo
+database DynamoDB                  as dynamo
 participant "Connect"              as connect
 
 user -> account : Wants to login

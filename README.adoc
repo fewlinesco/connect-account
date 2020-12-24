@@ -468,3 +468,9 @@ https://github.com/puppeteer/puppeteer[Puppeteer]
 We are using https://docs.sentry.io/[Sentry] to monitor production's exceptions raised.
 
 A custom utility function, called `addRequestScopeToSentry`, is provided to format the data used for the report.
+
+== Documentation
+
+We are using https://plantuml.com/[PlantUML] to make the sequences diagram. You can compose your diagram using their http://www.plantuml.com/plantuml/uml/RP312i8m343FwrSK_85Tl6yAdeRu2wLBfMnBPfhYGVntOVJGnVNwtcj2kYIE9I-pILF4rR5Rx9q4BivFJwQCuvLcOdlgjwSjuX6u66tRceedU6L03_PZcfwPtfNMz5w8_-jcY066YA1HHTHY9NmubkZZwb1qkuSw3o7iX1kXL6rPzMXgGJgmnvVvrhVPVlB426pFndI0Orxc7m00[Online Server] (we've added our custom PlantUML style to the following link). When done, click on **View as SVG**, download the SVG and add it in `doc/`.
+
+If you want to update an existing diagram, you will find the PlantUML code used at the end of the SVG, commented.
