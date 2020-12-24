@@ -1,0 +1,78 @@
+@startuml
+skinparam NoteBackgroundColor #fff
+skinparam NoteBorderColor #000
+
+skinparam sequence {
+	ArrowColor #000
+	ActorBorderColor #000
+
+	LifeLineBorderColor #000
+	LifeLineBackgroundColor #000
+
+	ParticipantBorderColor #000
+	ParticipantBackgroundColor #fff
+	ParticipantFontColor #000
+
+	ActorBackgroundColor #000
+	ActorFontColor #000
+
+  NoteBorderColor #000
+}
+
+skinparam roundcorner 5
+
+actor User                         as user
+participant "Account Web Client"   as account
+database DynamoDB                  as dynamo
+participant "Connect"              as connect
+
+== Add new Identity ==
+
+user -> account : Input Identity value
+activate account
+account -> connect : Trigger the **sendIdentityValidationCode** query
+note left
+- callbackUrl
+- identity
+- localeOverride
+- userId
+end note
+connect -> account : Returns **callbackUrl**, **eventId**, **localeCode** and **nounce**
+account -> dynamo : Insert **TemporaryIdentity** with the **insertTemporaryIdentity** command
+note left
+- eventId
+- value
+- type
+- expiresAt
+end note
+user -> account : Input verification code
+account -> connect : Trigger the **checkVerificationCode** query
+note left
+- verification code
+- event id
+end note
+account -> dynamo : Query back **TemporaryIdentity** and **verify** expiration date
+account -> connect : Trigger the **addIdentityToUser** mutation
+note left
+- user_id
+- value
+- type
+end note
+account -> dynamo : Delete **TemporaryIdentity**
+deactivate account
+
+== Delete Identity ==
+
+account -> connect : Trigger **removeIdentityFromUser** mutation
+note left
+- user_id
+- value
+- type
+end note
+
+== Update Identity ==
+
+note over user, connect
+The update Identity flow is a mix between the two above, starting with the add Identity, and delete Identity if the first sequence succeed.
+end note
+@enduml
