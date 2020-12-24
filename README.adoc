@@ -7,13 +7,13 @@ Connect Account is an open source app, which aims at providing all the business 
 
 === Connect authentication flow
 
-[.background-color.white]image::./doc/oauth2-flow-diagram.svg[Embedded,300,opts=inline]
+image::./doc/oauth2-flow-diagram.svg[OAuth2 flow diagram]
 
 For more information, check the Authorization code flow https://developers.fewlines.co/guides/authorization_code_flow/overview/[documentation].
 
 === Identity commands and queries
 
-image::./doc/identity-action-flow.svg[Identity action flow]
+image::./doc/identity-action-flow-new.svg[Identity action flow]
 
 == Working with the Account web application
 
@@ -474,3 +474,5 @@ A custom utility function, called `addRequestScopeToSentry`, is provided to form
 We are using https://plantuml.com/[PlantUML] to make the sequences diagram. You can compose your diagram using their http://www.plantuml.com/plantuml/uml/RP312i8m343FwrSK_85Tl6yAdeRu2wLBfMnBPfhYGVntOVJGnVNwtcj2kYIE9I-pILF4rR5Rx9q4BivFJwQCuvLcOdlgjwSjuX6u66tRceedU6L03_PZcfwPtfNMz5w8_-jcY066YA1HHTHY9NmubkZZwb1qkuSw3o7iX1kXL6rPzMXgGJgmnvVvrhVPVlB426pFndI0Orxc7m00[Online Server] (we've added our custom PlantUML style to the following link). When done, click on **View as SVG**, download the SVG and add it in `doc/`.
 
 If you want to update an existing diagram, you will find the PlantUML code used at the end of the SVG, commented.
+
+> ⚠️ For some reasons, adding `skinparam ackgroundColor #fff` is not working right now. To add a white background to the produced SVG, and make the diagram readable for people using dark mode, don't forget to add `background-color:white;` to the `style` attribute in the `svg` tag, located at the top level of the SVG.
