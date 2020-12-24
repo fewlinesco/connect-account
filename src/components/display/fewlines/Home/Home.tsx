@@ -1,10 +1,11 @@
-import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { Button, ButtonVariant } from "../Button/Button";
+import { ButtonVariant } from "../Button/Button";
+import { FakeButton } from "../FakeButton/FakeButton";
 import { HomeDesktopBackground } from "../Icons/HomeDesktopBackground/HomeDesktopBackground";
 import { HomeMobileBackground } from "../Icons/HomeMobileBackground/HomeMobileBackground";
+import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
@@ -22,13 +23,11 @@ export const Home: React.FC<HomeProps> = ({ authorizeURL, providerName }) => {
               <DescriptionText>
                 You are about to access your account from {providerName}
               </DescriptionText>
-              <Link href={authorizeURL} passHref>
-                <a>
-                  <AccessButton variant={ButtonVariant.PRIMARY}>
-                    Access my account
-                  </AccessButton>
-                </a>
-              </Link>
+              <NeutralLink href={authorizeURL}>
+                <FakeButton variant={ButtonVariant.PRIMARY}>
+                  Access my account
+                </FakeButton>
+              </NeutralLink>
             </Flex>
           </ShadowBox>
         </Container>
@@ -80,8 +79,4 @@ export const BackLink = styled.p`
   margin: ${({ theme }) => theme.spaces.xs} 0;
   color: ${({ theme }) => theme.colors.primary};
   cursor: pointer;
-`;
-
-export const AccessButton = styled(Button)`
-  margin: 0;
 `;

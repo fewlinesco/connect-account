@@ -7,6 +7,7 @@ import {
   Button,
   ButtonVariant,
 } from "@src/components/display/fewlines/Button/Button";
+import { FakeButton } from "@src/components/display/fewlines/FakeButton/FakeButton";
 import { Form } from "@src/components/display/fewlines/Form/Form";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
@@ -111,8 +112,8 @@ describe("AddIdentityPage", () => {
       .find({ variant: ButtonVariant.PRIMARY });
 
     const cancelButton = component
-      .find(Button)
-      .find({ variant: ButtonVariant.SECONDARY });
+      .find(FakeButton)
+      .find({ variant: ButtonVariant.SECONDARY, as: "div" });
 
     expect(addButton).toHaveLength(1);
     expect(addButton.text()).toEqual("Add email");
@@ -148,8 +149,8 @@ describe("AddIdentityPage", () => {
       .find({ variant: ButtonVariant.PRIMARY });
 
     const cancelButton = component
-      .find(Button)
-      .find({ variant: ButtonVariant.SECONDARY });
+      .find(FakeButton)
+      .find({ variant: ButtonVariant.SECONDARY, as: "div" });
 
     expect(addButton).toHaveLength(1);
     expect(addButton.text()).toEqual("Add phone");

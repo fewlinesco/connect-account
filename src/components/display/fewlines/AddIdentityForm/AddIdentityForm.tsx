@@ -3,9 +3,10 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import { Button, ButtonVariant } from "../Button/Button";
+import { FakeButton } from "../FakeButton/FakeButton";
 import { Form } from "../Form/Form";
 import { Input } from "../Input/Input";
-import { NeutralLink } from "../NeutralLink";
+import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { IdentityTypes } from "@lib/@types";
 import { InMemoryTemporaryIdentity } from "@src/@types/TemporaryIdentity";
 import {
@@ -99,7 +100,7 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
       </Form>
 
       <NeutralLink href="/account/logins">
-        <Button variant={ButtonVariant.SECONDARY}>Cancel</Button>
+        <FakeButton variant={ButtonVariant.SECONDARY}>Cancel</FakeButton>
       </NeutralLink>
     </>
   );
