@@ -17,7 +17,7 @@
     "db:create-users-table": "ts-node bin/dynamodb/create-users-table.ts",
     "db:delete-users-table": "ts-node bin/dynamodb/delete-users-table.ts",
     "db:get-user-from-sub": "ts-node bin/dynamodb/get-user-from-sub.ts",
-    "e2e:add-heroku-redirect-uri": "ts-node bin/e2e/add-heroku-redirect-uri-to-connect.ts",
+    "e2e:add-heroku-redirect-uri": "node bin/e2e/add-heroku-redirect-uri-to-connect.ts",
     "e2e:create-test-user": "ts-node bin/e2e/create-test-user.ts",
     "e2e:remove-test-user": "ts-node bin/e2e/remove-test-user.ts"
   },
@@ -159,6 +159,16 @@
       "@fewlines/eslint-config/react",
       "@fewlines/eslint-config/typescript",
       "@fewlines/eslint-config/react-typescript"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "*.js"
+        ],
+        "rules": {
+          "@typescript-eslint/explicit-function-return-type": "off"
+        }
+      }
     ],
     "rules": {
       "@typescript-eslint/camelcase": "off",
