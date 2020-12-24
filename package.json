@@ -4,6 +4,9 @@
   "author": "Fewlines",
   "private": true,
   "repository": "git@github.com:fewlinesco/connect-account.git",
+  "cacheDirectories": [
+    ".next/cache",
+  ],
   "scripts": {
     "dev": "next dev -p $CONNECT_ACCOUNT_PORT",
     "build": "next build",
