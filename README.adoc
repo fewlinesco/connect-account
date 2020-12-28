@@ -15,9 +15,9 @@ For more information, check the Authorization code flow https://developers.fewli
 
 image::./doc/identity-action-flow.jpg[Identity action flow]
 
-=== Set of Update user password
+=== Set or Update user password
 
-image::./doc/set-or-update-password-flow.jpg[Set of Update user password]
+image::./doc/set-or-update-password-flow.jpg[Set or Update user password]
 
 == Working with the Account web application
 
