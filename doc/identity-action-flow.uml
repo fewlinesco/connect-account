@@ -29,7 +29,6 @@ participant "Connect"              as connect
 == Add new Identity ==
 
 user -> account : Input Identity value
-activate account
 account -> connect : Trigger the **sendIdentityValidationCode** query
 note left
 - callbackUrl
@@ -59,7 +58,6 @@ note left
 - type
 end note
 account -> dynamo : Delete **TemporaryIdentity**
-deactivate account
 
 == Delete Identity ==
 

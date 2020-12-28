@@ -15,6 +15,10 @@ For more information, check the Authorization code flow https://developers.fewli
 
 image::./doc/identity-action-flow.jpg[Identity action flow]
 
+=== Set of Update user password
+
+image::./doc/set-or-update-password-flow.jpg[Set of Update user password]
+
 == Working with the Account web application
 
 You will most likely need to *fork* the repository to add your custom frontend components, to change the layout, or add your branding and design-system.
