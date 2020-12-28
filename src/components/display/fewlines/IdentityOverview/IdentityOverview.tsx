@@ -15,10 +15,12 @@ import { getIdentityType } from "@src/utils/getIdentityType";
 
 type IdentityOverviewProps = {
   identity: Identity;
+  userId: string;
 };
 
 export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
   identity,
+  userId,
 }) => {
   const [confirmationBoxOpen, setConfirmationBoxOpen] = React.useState<boolean>(
     false,
@@ -71,7 +73,12 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
           onClick={() => {
             setPreventAnimation(false);
             setConfirmationBoxContent(
-              DeleteConfirmationBoxContent(setConfirmationBoxOpen, value, type),
+              <DeleteConfirmationBoxContent
+                setOpen={setConfirmationBoxOpen}
+                value={value}
+                type={type}
+                userId={userId}
+              />,
             );
             setConfirmationBoxOpen(true);
           }}
