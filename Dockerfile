@@ -1,4 +1,4 @@
-FROM node:14.8.0 AS build
+FROM node:14.15.1 AS build
 
 ENV NODE_ENV=development
 
@@ -13,7 +13,7 @@ COPY . .
 
 RUN NEXT_TELEMETRY_DISABLED=1 DYNAMODB_REGION="eu-west-3" yarn build 
 
-FROM node:14.8.0-alpine
+FROM node:14.15.1-alpine
 
 WORKDIR /app
 

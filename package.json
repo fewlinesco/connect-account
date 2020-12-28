@@ -4,11 +4,14 @@
   "author": "Fewlines",
   "private": true,
   "repository": "git@github.com:fewlinesco/connect-account.git",
+  "cacheDirectories": [
+    ".next/cache"
+  ],
   "scripts": {
     "dev": "next dev -p $CONNECT_ACCOUNT_PORT",
     "build": "next build",
     "lint": "eslint \"{src,pages}/**/*.{js,ts,jsx,tsx}\"",
-    "start": "next start",
+    "start": "next start -p $PORT",
     "test": "jest --testPathIgnorePatterns=e2e",
     "test:e2e": "jest --testPathPattern=e2e --runInBand",
     "storybook": "start-storybook -p 6006",
@@ -17,9 +20,7 @@
     "db:create-users-table": "ts-node bin/dynamodb/create-users-table.ts",
     "db:delete-users-table": "ts-node bin/dynamodb/delete-users-table.ts",
     "db:get-user-from-sub": "ts-node bin/dynamodb/get-user-from-sub.ts",
-    "e2e:add-vercel-redirect-uri": "ts-node bin/e2e/add-vercel-redirect-uri-to-connect.ts",
-    "e2e:add-render-redirect-uri": "ts-node bin/e2e/add-render-redirect-uri-to-connect.ts",
-    "e2e:remove-render-redirect-uri": "ts-node bin/e2e/remove-render-redirect-uri-from-connect.ts",
+    "e2e:add-heroku-redirect-uri": "node bin/e2e/add-heroku-redirect-uri-to-connect.mjs",
     "e2e:create-test-user": "ts-node bin/e2e/create-test-user.ts",
     "e2e:remove-test-user": "ts-node bin/e2e/remove-test-user.ts"
   },
@@ -43,6 +44,7 @@
     "react-dom": "16.14.0",
     "styled-components": "5.2.1",
     "swr": "0.3.9",
+    "ts-node": "9.0.0",
     "uuid": "8.3.1"
   },
   "devDependencies": {
@@ -83,10 +85,13 @@
     "prettier": "2.2.0",
     "taiko": "1.0.28",
     "ts-jest": "26.4.4",
-    "ts-node": "9.0.0",
     "tsconfig-paths-webpack-plugin": "3.3.0",
     "typescript": "4.1.2",
     "url-loader": "4.1.1"
+  },
+  "engines": {
+    "node": "14.15.1",
+    "yarn": "1.22.5"
   },
   "babel": {
     "env": {
@@ -157,6 +162,16 @@
       "@fewlines/eslint-config/react",
       "@fewlines/eslint-config/typescript",
       "@fewlines/eslint-config/react-typescript"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "*.js"
+        ],
+        "rules": {
+          "@typescript-eslint/explicit-function-return-type": "off"
+        }
+      }
     ],
     "rules": {
       "@typescript-eslint/camelcase": "off",
