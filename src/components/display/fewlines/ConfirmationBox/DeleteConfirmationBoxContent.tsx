@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
 import { IdentityTypes } from "@lib/@types";
-//import { DeleteIdentity } from "@src/components/business/DeleteIdentity";
 import { HttpVerbs } from "@src/@types/core/HttpVerbs";
 import { fetchJson } from "@src/utils/fetchJson";
 import { getIdentityType } from "@src/utils/getIdentityType";
@@ -38,7 +37,7 @@ export const deleteIdentity = async (
     .then(() => {
       Cookie.set("flashMessage", deleteMessage);
     })
-    .catch((error: Error) => {
+    .catch((error) => {
       throw error;
     });
 };
