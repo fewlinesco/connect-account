@@ -7,13 +7,17 @@ Connect Account is an open source app, which aims at providing all the business 
 
 === Connect authentication flow
 
-image::./doc/oauth2-flow-diagram.svg[OAuth2 flow diagram]
+image::./doc/oauth2-flow-diagram.jpg[OAuth2 flow diagram]
 
 For more information, check the Authorization code flow https://developers.fewlines.co/guides/authorization_code_flow/overview/[documentation].
 
 === Identity commands and queries
 
-image::./doc/identity-action-flow.svg[Identity action flow]
+image::./doc/identity-action-flow.jpg[Identity action flow]
+
+=== Set or Update user password
+
+image::./doc/set-or-update-password-flow.jpg[Set or Update user password]
 
 == Working with the Account web application
 
@@ -466,3 +470,15 @@ https://github.com/puppeteer/puppeteer[Puppeteer]
 We are using https://docs.sentry.io/[Sentry] to monitor production's exceptions raised.
 
 A custom utility function, called `addRequestScopeToSentry`, is provided to format the data used for the report.
+
+== Documentation
+
+=== Diagrams
+
+We are using https://plantuml.com/[PlantUML] to make the sequences diagram.
+
+To compile your PlantUML code, you can run the following:
+
+----
+cat name-of-the-file.uml | docker run  --rm -i fewlines/developers-portal-diagram-generator plantuml -Djava.awt.headless=true -p -tjpg > name-of-the-file.jpg
+----
