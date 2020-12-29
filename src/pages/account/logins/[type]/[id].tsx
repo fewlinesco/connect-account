@@ -18,9 +18,10 @@ import { withSentry } from "@src/middlewares/withSentry";
 import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 
-const IdentityOverviewPage: React.FC<{ identity: Identity }> = ({
-  identity,
-}) => {
+const IdentityOverviewPage: React.FC<{
+  identity: Identity;
+  userId: string;
+}> = ({ identity, userId }) => {
   const { type } = identity;
 
   return (
@@ -34,7 +35,7 @@ const IdentityOverviewPage: React.FC<{ identity: Identity }> = ({
               : "Phone number",
           ]}
         />
-        <IdentityOverview identity={identity} />
+        <IdentityOverview identity={identity} userId={userId} />
       </Container>
     </Layout>
   );
@@ -78,6 +79,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return {
           props: {
             identity,
+            userId: userCookie.sub,
           },
         };
       }

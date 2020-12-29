@@ -20,7 +20,6 @@ import {
 import { PrimaryBadge } from "@src/components/display/fewlines/PrimaryBadge/PrimaryBadge";
 import { AccountApp } from "@src/pages/_app";
 import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
-import * as fetchJson from "@src/utils/fetchJson";
 
 enableFetchMocks();
 
@@ -43,22 +42,12 @@ jest.mock("@src/dbClient", () => {
   };
 });
 
-jest.mock("@src/hooks/useCookies", () => {
-  return {
-    useCookies: jest.fn().mockImplementation(() => {
-      return {
-        data: {
-          userDocumentId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
-        },
-      };
-    }),
-  };
-});
-
 describe("IdentityOverviewPage", () => {
   beforeEach(() => {
     fetch.resetMocks();
   });
+
+  const userId = "ac3f358d-d2c9-487e-8387-2e6866b853c9";
 
   const nonPrimaryIdentity: Identity = {
     id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -95,7 +84,7 @@ describe("IdentityOverviewPage", () => {
   test("it should display navigation breadcrumbs properly for emails", () => {
     const component = mount(
       <AccountApp>
-        <IdentityOverviewPage identity={nonPrimaryIdentity} />
+        <IdentityOverviewPage identity={nonPrimaryIdentity} userId={userId} />
       </AccountApp>,
     );
 
@@ -110,7 +99,7 @@ describe("IdentityOverviewPage", () => {
   test("it should display navigation breadcrumbs properly for phones", () => {
     const component = mount(
       <AccountApp>
-        <IdentityOverviewPage identity={phoneIdentity} />
+        <IdentityOverviewPage identity={phoneIdentity} userId={userId} />
       </AccountApp>,
     );
 
@@ -154,7 +143,7 @@ describe("IdentityOverviewPage", () => {
   test("it should display the delete button for a non primary identity", () => {
     const component = mount(
       <AccountApp>
-        <IdentityOverviewPage identity={nonPrimaryIdentity} />
+        <IdentityOverviewPage identity={nonPrimaryIdentity} userId={userId} />
       </AccountApp>,
     );
 
@@ -168,7 +157,7 @@ describe("IdentityOverviewPage", () => {
   test("it should not display the delete button for a primary identity", () => {
     const component = mount(
       <AccountApp>
-        <IdentityOverviewPage identity={primaryIdentity} />
+        <IdentityOverviewPage identity={primaryIdentity} userId={userId} />
       </AccountApp>,
     );
 
@@ -181,7 +170,7 @@ describe("IdentityOverviewPage", () => {
   test("the delete button's text should be relevant for emails", () => {
     const component = mount(
       <AccountApp>
-        <IdentityOverviewPage identity={nonPrimaryIdentity} />
+        <IdentityOverviewPage identity={nonPrimaryIdentity} userId={userId} />
       </AccountApp>,
     );
 
@@ -194,7 +183,7 @@ describe("IdentityOverviewPage", () => {
   test("the delete button's text should be relevant for phones", () => {
     const component = mount(
       <AccountApp>
-        <IdentityOverviewPage identity={phoneIdentity} />
+        <IdentityOverviewPage identity={phoneIdentity} userId={userId} />
       </AccountApp>,
     );
 
@@ -207,7 +196,7 @@ describe("IdentityOverviewPage", () => {
   test("it should not display the primary badge if the identity is not primary", () => {
     const component = mount(
       <AccountApp>
-        <IdentityOverviewPage identity={nonPrimaryIdentity} />
+        <IdentityOverviewPage identity={nonPrimaryIdentity} userId={userId} />
       </AccountApp>,
     );
 
@@ -226,7 +215,7 @@ describe("IdentityOverviewPage", () => {
   test("it should display the primary tag if the identity is primary", () => {
     const component = mount(
       <AccountApp>
-        <IdentityOverviewPage identity={primaryIdentity} />
+        <IdentityOverviewPage identity={primaryIdentity} userId={userId} />
       </AccountApp>,
     );
 
@@ -247,7 +236,7 @@ describe("IdentityOverviewPage", () => {
   test("it should display the validation button and the awaiting validation tag if the identity is not validated", () => {
     const component = mount(
       <AccountApp>
-        <IdentityOverviewPage identity={nonValidatedIdentity} />
+        <IdentityOverviewPage identity={nonValidatedIdentity} userId={userId} />
       </AccountApp>,
     );
 
@@ -266,7 +255,7 @@ describe("IdentityOverviewPage", () => {
   test("it should not display the make this identity primary button if the identity is not validated", () => {
     const component = mount(
       <AccountApp>
-        <IdentityOverviewPage identity={nonValidatedIdentity} />
+        <IdentityOverviewPage identity={nonValidatedIdentity} userId={userId} />
       </AccountApp>,
     );
 
@@ -282,7 +271,7 @@ describe("IdentityOverviewPage", () => {
     test("no confirmation box should be displayed at the page's render", () => {
       const component = mount(
         <AccountApp>
-          <IdentityOverviewPage identity={nonPrimaryIdentity} />
+          <IdentityOverviewPage identity={nonPrimaryIdentity} userId={userId} />
         </AccountApp>,
       );
 
@@ -295,7 +284,7 @@ describe("IdentityOverviewPage", () => {
     test("the primary confirmation box should appear on click on 'make this my primary { type }' button", () => {
       const component = mount(
         <AccountApp>
-          <IdentityOverviewPage identity={nonPrimaryIdentity} />
+          <IdentityOverviewPage identity={nonPrimaryIdentity} userId={userId} />
         </AccountApp>,
       );
 
@@ -323,7 +312,7 @@ describe("IdentityOverviewPage", () => {
     test("we should be able to close the confirmation box by clicking on 'keep { value } as my primary { type }' button", () => {
       const component = mount(
         <AccountApp>
-          <IdentityOverviewPage identity={nonPrimaryIdentity} />
+          <IdentityOverviewPage identity={nonPrimaryIdentity} userId={userId} />
         </AccountApp>,
       );
 
@@ -353,7 +342,7 @@ describe("IdentityOverviewPage", () => {
     test("we should be able to close the confirmation box by clicking on the ClickAwayListener", () => {
       const component = mount(
         <AccountApp>
-          <IdentityOverviewPage identity={nonPrimaryIdentity} />
+          <IdentityOverviewPage identity={nonPrimaryIdentity} userId={userId} />
         </AccountApp>,
       );
 
@@ -378,7 +367,7 @@ describe("IdentityOverviewPage", () => {
     test("the delete confirmation box shoud appear on click on 'delete this { type }' button", () => {
       const component = mount(
         <AccountApp>
-          <IdentityOverviewPage identity={nonPrimaryIdentity} />
+          <IdentityOverviewPage identity={nonPrimaryIdentity} userId={userId} />
         </AccountApp>,
       );
 
@@ -406,7 +395,7 @@ describe("IdentityOverviewPage", () => {
     test("we should be able to close the confirmation box by clicking on 'keep { type }' button", () => {
       const component = mount(
         <AccountApp>
-          <IdentityOverviewPage identity={nonPrimaryIdentity} />
+          <IdentityOverviewPage identity={nonPrimaryIdentity} userId={userId} />
         </AccountApp>,
       );
 
@@ -436,7 +425,7 @@ describe("IdentityOverviewPage", () => {
     test("we should be able to close the confirmation box by clicking on the ClickAwayListener", () => {
       const component = mount(
         <AccountApp>
-          <IdentityOverviewPage identity={nonPrimaryIdentity} />
+          <IdentityOverviewPage identity={nonPrimaryIdentity} userId={userId} />
         </AccountApp>,
       );
 
@@ -456,40 +445,6 @@ describe("IdentityOverviewPage", () => {
         .hostNodes();
 
       expect(confirmationBox).toHaveLength(0);
-    });
-
-    test("clicking on the delete button should delete the identity", () => {
-      const component = mount(
-        <AccountApp>
-          <IdentityOverviewPage identity={nonPrimaryIdentity} />
-        </AccountApp>,
-      );
-
-      const fetchMethod = jest.spyOn(fetchJson, "fetchJson");
-
-      const deleteButton = component
-        .find(Button)
-        .find({ variant: ButtonVariant.GHOST })
-        .at(0);
-      deleteButton.simulate("click");
-
-      const confirmDeleteButton = component
-        .find(ConfirmationBox)
-        .find(Button)
-        .find({ variant: ButtonVariant.DANGER });
-
-      expect(confirmDeleteButton.text()).toEqual("Delete this email address");
-      confirmDeleteButton.simulate("click");
-
-      expect(fetchMethod).toHaveBeenCalledWith(
-        "/api/delete-identity",
-        "DELETE",
-        {
-          type: "EMAIL",
-          userId: undefined,
-          value: "test@test.test",
-        },
-      );
     });
   });
 });
