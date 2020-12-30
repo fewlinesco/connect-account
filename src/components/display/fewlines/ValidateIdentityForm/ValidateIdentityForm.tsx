@@ -10,16 +10,45 @@ import { Form } from "../Form/Form";
 import { Input } from "../Input/Input";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { IdentityTypes } from "@lib/@types/Identity";
+import { HttpVerbs } from "@src/@types/core/HttpVerbs";
 import {
   InvalidValidationCode,
   TemporaryIdentityExpired,
 } from "@src/clientErrors";
 import { displayAlertBar } from "@src/utils/displayAlertBar";
+import { fetchJson } from "@src/utils/fetchJson";
+
+export async function validateIdentity(
+  validationCode: string,
+  eventId: string,
+): Promise<string> {
+  return await fetchJson(
+    "/api/auth-connect/verify-validation-code",
+    HttpVerbs.POST,
+    { validationCode, eventId },
+  ).then(async (response) => {
+    if (response.status >= 400) {
+      const { error } = await response.json();
+
+      if (error === "INVALID") {
+        throw new InvalidValidationCode("Invalid validation code");
+      }
+
+      if (error === "Temporary Identity Expired") {
+        throw new TemporaryIdentityExpired();
+      }
+    }
+
+    const path = new URL(response.url).pathname;
+
+    return path;
+  });
+}
 
 export const ValidateIdentityForm: React.FC<{
   type: IdentityTypes;
-  validateIdentity: (validationCode: string) => Promise<void>;
-}> = ({ type, validateIdentity }) => {
+  eventId: string;
+}> = ({ type, eventId }) => {
   const [validationCode, setValidationCode] = React.useState<string>("");
   const [flashMessage, setFlashMessage] = React.useState<string>("");
   const [formID, setFormID] = React.useState<string>(uuidv4());
@@ -31,22 +60,26 @@ export const ValidateIdentityForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
-          await validateIdentity(validationCode).catch((error) => {
-            if (error instanceof InvalidValidationCode) {
-              setFormID(uuidv4());
-              setFlashMessage(error.message);
-            } else if (error instanceof TemporaryIdentityExpired) {
-              router && router.push("/account/logins/email/new");
-            } else {
-              throw error;
-            }
-          });
+          await validateIdentity(validationCode, eventId)
+            .then((path) => {
+              router && router.push(path);
+            })
+            .catch((error) => {
+              if (error instanceof InvalidValidationCode) {
+                setFormID(uuidv4());
+                setFlashMessage(error.message);
+              } else if (error instanceof TemporaryIdentityExpired) {
+                router && router.push("/account/logins/email/new");
+              } else {
+                throw error;
+              }
+            });
         }}
       >
         {displayAlertBar(
           type.toUpperCase() === IdentityTypes.EMAIL
             ? "Confirmation email has been sent"
-            : "confirmation SMS has been sent",
+            : "Confirmation SMS has been sent",
         )}
 
         <Box>
