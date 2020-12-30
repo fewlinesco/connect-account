@@ -5,8 +5,8 @@ import {
   InvalidValidationCode,
   TemporaryIdentityExpired,
 } from "@src/clientErrors";
-import { validateIdentity } from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
 import * as fetchJson from "@src/utils/fetchJson";
+import { validateIdentity } from "@src/workflows/validateIdentity";
 
 enableFetchMocks();
 
