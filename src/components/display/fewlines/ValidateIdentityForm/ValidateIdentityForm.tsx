@@ -22,11 +22,10 @@ export async function validateIdentity(
   validationCode: string,
   eventId: string,
 ): Promise<string> {
-  return await fetchJson(
-    "/api/auth-connect/verify-validation-code",
-    HttpVerbs.POST,
-    { validationCode, eventId },
-  ).then(async (response) => {
+  return fetchJson("/api/auth-connect/verify-validation-code", HttpVerbs.POST, {
+    validationCode,
+    eventId,
+  }).then(async (response) => {
     if (response.status >= 400) {
       const { error } = await response.json();
 
