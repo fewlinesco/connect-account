@@ -59,7 +59,11 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
           onClick={() => {
             setPreventAnimation(false);
             setConfirmationBoxContent(
-              PrimaryConfirmationBoxContent(setConfirmationBoxOpen, value, id),
+              <PrimaryConfirmationBoxContent
+                setOpen={setConfirmationBoxOpen}
+                value={value}
+                id={id}
+              />,
             );
             setConfirmationBoxOpen(true);
           }}
