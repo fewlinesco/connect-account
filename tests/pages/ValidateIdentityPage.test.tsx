@@ -6,16 +6,13 @@ import { IdentityTypes } from "@lib/@types/Identity";
 import AlertBar from "@src/components/display/fewlines/AlertBar/AlertBar";
 import { Button } from "@src/components/display/fewlines/Button/Button";
 import { FakeButton } from "@src/components/display/fewlines/FakeButton/FakeButton";
-import { Form } from "@src/components/display/fewlines/Form/Form";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
   NavigationBreadcrumbs,
   Breadcrumbs,
 } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
-import { ValidateIdentityForm } from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
 import { AccountApp } from "@src/pages/_app";
 import ValidateIdentityPage from "@src/pages/account/logins/[type]/validation/[eventId]";
-import * as fetchJson from "@src/utils/fetchJson";
 
 enableFetchMocks();
 
@@ -35,18 +32,6 @@ jest.mock("@src/dbClient", () => {
         return;
       },
     },
-  };
-});
-
-jest.mock("@src/hooks/useCookies", () => {
-  return {
-    useCookies: jest.fn().mockImplementation(() => {
-      return {
-        data: {
-          userDocumentId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
-        },
-      };
-    }),
   };
 });
 
@@ -85,7 +70,7 @@ describe("ValidateIdentityPage", () => {
     ).toEqual(true);
   });
 
-  test("it should display an input ans 3 buttons for emails", () => {
+  test("it should display an input and 3 buttons for emails", () => {
     const component = mount(
       <AccountApp>
         <ValidateIdentityPage type={IdentityTypes.EMAIL} eventId={eventId} />
@@ -141,7 +126,7 @@ describe("ValidateIdentityPage", () => {
     const alertBar = component.find(AlertBar);
 
     expect(alertBar).toHaveLength(1);
-    expect(alertBar.text()).toEqual("confirmation SMS has been sent");
+    expect(alertBar.text()).toEqual("Confirmation SMS has been sent");
   });
 
   test("it should display an alert bar with the correct message for emails", () => {
@@ -155,38 +140,5 @@ describe("ValidateIdentityPage", () => {
 
     expect(alertBar).toHaveLength(1);
     expect(alertBar.text()).toEqual("Confirmation email has been sent");
-  });
-
-  test("it should call `send-identity-validation-code` API page on submit", () => {
-    const component = mount(
-      <AccountApp>
-        <ValidateIdentityPage type={IdentityTypes.EMAIL} eventId={eventId} />
-      </AccountApp>,
-    );
-
-    const verifyIdentityInput = component
-      .find(ValidateIdentityForm)
-      .find(Input);
-
-    const validationCode = "42";
-
-    verifyIdentityInput.simulate("change", {
-      target: { value: validationCode },
-    });
-
-    const form = component.find(ValidateIdentityForm).find(Form);
-
-    const fetchJsonMethod = jest.spyOn(fetchJson, "fetchJson");
-
-    form.simulate("submit");
-
-    expect(fetchJsonMethod).toHaveBeenCalledWith(
-      "/api/auth-connect/verify-validation-code",
-      "POST",
-      {
-        validationCode,
-        eventId,
-      },
-    );
   });
 });

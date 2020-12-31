@@ -5,7 +5,6 @@ import React from "react";
 import { IdentityTypes } from "@lib/@types/Identity";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Layout } from "@src/components/Layout";
-import { ValidateIdentity } from "@src/components/business/ValidateIdentity";
 import { Container } from "@src/components/display/fewlines/Container";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { ValidateIdentityForm } from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
@@ -31,14 +30,7 @@ const ValidateIdentityPage: React.FC<{
             "validation",
           ]}
         />
-        <ValidateIdentity eventId={eventId}>
-          {({ validateIdentity }) => (
-            <ValidateIdentityForm
-              type={type}
-              validateIdentity={validateIdentity}
-            />
-          )}
-        </ValidateIdentity>
+        <ValidateIdentityForm type={type} eventId={eventId} />
       </Container>
     </Layout>
   );

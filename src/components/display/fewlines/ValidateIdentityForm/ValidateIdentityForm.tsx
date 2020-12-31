@@ -15,11 +15,12 @@ import {
   TemporaryIdentityExpired,
 } from "@src/clientErrors";
 import { displayAlertBar } from "@src/utils/displayAlertBar";
+import { validateIdentity } from "@src/workflows/validateIdentity";
 
 export const ValidateIdentityForm: React.FC<{
   type: IdentityTypes;
-  validateIdentity: (validationCode: string) => Promise<void>;
-}> = ({ type, validateIdentity }) => {
+  eventId: string;
+}> = ({ type, eventId }) => {
   const [validationCode, setValidationCode] = React.useState<string>("");
   const [flashMessage, setFlashMessage] = React.useState<string>("");
   const [formID, setFormID] = React.useState<string>(uuidv4());
@@ -31,22 +32,26 @@ export const ValidateIdentityForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
-          await validateIdentity(validationCode).catch((error) => {
-            if (error instanceof InvalidValidationCode) {
-              setFormID(uuidv4());
-              setFlashMessage(error.message);
-            } else if (error instanceof TemporaryIdentityExpired) {
-              router && router.push("/account/logins/email/new");
-            } else {
-              throw error;
-            }
-          });
+          await validateIdentity(validationCode, eventId)
+            .then((path) => {
+              router && router.push(path);
+            })
+            .catch((error) => {
+              if (error instanceof InvalidValidationCode) {
+                setFormID(uuidv4());
+                setFlashMessage(error.message);
+              } else if (error instanceof TemporaryIdentityExpired) {
+                router && router.push("/account/logins/email/new");
+              } else {
+                throw error;
+              }
+            });
         }}
       >
         {displayAlertBar(
           type.toUpperCase() === IdentityTypes.EMAIL
             ? "Confirmation email has been sent"
-            : "confirmation SMS has been sent",
+            : "Confirmation SMS has been sent",
         )}
 
         <Box>
