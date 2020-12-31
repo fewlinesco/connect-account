@@ -21,6 +21,7 @@
     "db:delete-users-table": "ts-node bin/dynamodb/delete-users-table.ts",
     "db:get-user-from-sub": "ts-node bin/dynamodb/get-user-from-sub.ts",
     "e2e:add-heroku-redirect-uri": "node bin/e2e/add-heroku-redirect-uri-to-connect.mjs",
+    "e2e:remove-heroku-redirect-uri": "node bin/e2e/remove-heroku-redirect-uri-from-connect.mjs",
     "e2e:create-test-user": "ts-node bin/e2e/create-test-user.ts",
     "e2e:remove-test-user": "ts-node bin/e2e/remove-test-user.ts"
   },
@@ -44,7 +45,6 @@
     "react-dom": "16.14.0",
     "styled-components": "5.2.1",
     "swr": "0.3.9",
-    "ts-node": "9.0.0",
     "uuid": "8.3.1"
   },
   "devDependencies": {
@@ -85,6 +85,7 @@
     "prettier": "2.2.0",
     "taiko": "1.0.28",
     "ts-jest": "26.4.4",
+    "ts-node": "9.0.0",
     "tsconfig-paths-webpack-plugin": "3.3.0",
     "typescript": "4.1.2",
     "url-loader": "4.1.1"
@@ -166,7 +167,8 @@
     "overrides": [
       {
         "files": [
-          "*.js"
+          "*.js",
+          "*.mjs"
         ],
         "rules": {
           "@typescript-eslint/explicit-function-return-type": "off"
