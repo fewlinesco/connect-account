@@ -4,8 +4,9 @@ import styled from "styled-components";
 import { Button, ButtonVariant } from "../Button/Button";
 import { Container } from "../Container";
 import { ConfirmationBox } from "./ConfirmationBox";
-import { DeleteConfirmationText } from "./DeleteConfirmationBoxContent";
-import { PrimaryConfirmationText } from "./PrimaryConfirmationBoxContent";
+import { DeleteConfirmationBoxContent } from "./DeleteConfirmationBoxContent";
+import { PrimaryConfirmationBoxContent } from "./PrimaryConfirmationBoxContent";
+import { IdentityTypes } from "@lib/@types";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 export default {
@@ -13,9 +14,19 @@ export default {
   component: ConfirmationBox,
 };
 
+const identity = {
+  type: IdentityTypes.EMAIL,
+  value: "test@fewlines.test",
+  id: "1234567890",
+};
+
 export const PrimaryConfirmationBox = (): JSX.Element => {
   const [open, setOpen] = React.useState<boolean>(false);
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
+  const [
+    confirmationBoxContent,
+    setConfirmationBoxContent,
+  ] = React.useState<JSX.Element>(<React.Fragment />);
 
   return (
     <ConfirmationStoryContainer>
@@ -24,6 +35,13 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
         onClick={() => {
           setPreventAnimation(false);
           setOpen(!open);
+          setConfirmationBoxContent(
+            <PrimaryConfirmationBoxContent
+              setOpen={setOpen}
+              value={identity.value}
+              id={identity.id}
+            />,
+          );
         }}
       >
         Show confirmation box
@@ -33,20 +51,7 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
         setOpen={setOpen}
         preventAnimation={preventAnimation}
       >
-        <>
-          <PrimaryConfirmationText>
-            You are about to replace mail@mail.com as your main address
-          </PrimaryConfirmationText>
-          <Button variant={ButtonVariant.PRIMARY}>
-            Set mail2@mail.com as my main
-          </Button>
-          <Button
-            onClick={() => setOpen(false)}
-            variant={ButtonVariant.SECONDARY}
-          >
-            Keep mail@mail.co as my primary email
-          </Button>
-        </>
+        {confirmationBoxContent}
       </ConfirmationBox>
     </ConfirmationStoryContainer>
   );
@@ -55,6 +60,12 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
 export const DangerConfirmationBox = (): JSX.Element => {
   const [open, setOpen] = React.useState<boolean>(false);
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
+  const [
+    confirmationBoxContent,
+    setConfirmationBoxContent,
+  ] = React.useState<JSX.Element>(<React.Fragment />);
+
+  const userId = "12345-67890-e1234-ad67890-az12345";
 
   return (
     <ConfirmationStoryContainer>
@@ -64,6 +75,14 @@ export const DangerConfirmationBox = (): JSX.Element => {
           onClick={() => {
             setPreventAnimation(false);
             setOpen(!open);
+            setConfirmationBoxContent(
+              <DeleteConfirmationBoxContent
+                setOpen={setOpen}
+                value={identity.value}
+                type={identity.type}
+                userId={userId}
+              />,
+            );
           }}
         >
           Show confirmation box
@@ -74,20 +93,7 @@ export const DangerConfirmationBox = (): JSX.Element => {
         setOpen={setOpen}
         preventAnimation={preventAnimation}
       >
-        <>
-          <DeleteConfirmationText>
-            You are about to delete mail@mail.co
-          </DeleteConfirmationText>
-          <Button variant={ButtonVariant.DANGER}>
-            Delete this email address
-          </Button>
-          <Button
-            onClick={() => setOpen(false)}
-            variant={ButtonVariant.SECONDARY}
-          >
-            Keep email address
-          </Button>
-        </>
+        {confirmationBoxContent}
       </ConfirmationBox>
     </ConfirmationStoryContainer>
   );

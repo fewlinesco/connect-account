@@ -1,30 +1,41 @@
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
 import { Identity } from "@lib/@types";
-import { MarkIdentityAsPrimary } from "@src/components/business/MarkIdentityAsPrimary";
+import { markIdentityAsPrimaryCall } from "@src/workflows/markIdentityAsPrimary";
 
-export const PrimaryConfirmationBoxContent = (
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>,
-  value: string,
-  id: Identity["id"],
-): JSX.Element => {
+interface PrimaryConfirmationBoxContentProps {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  value: string;
+  id: Identity["id"];
+}
+
+export const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxContentProps> = ({
+  setOpen,
+  value,
+  id,
+}) => {
+  const router = useRouter();
+
   return (
     <>
       <PrimaryConfirmationText>
         You are about to set {value} as primary.
       </PrimaryConfirmationText>
-      <MarkIdentityAsPrimary identityId={id}>
-        {({ markIdentityAsPrimaryCall }) => (
-          <Button
-            variant={ButtonVariant.PRIMARY}
-            onClick={markIdentityAsPrimaryCall}
-          >
-            Confirm
-          </Button>
-        )}
-      </MarkIdentityAsPrimary>
+
+      <Button
+        variant={ButtonVariant.PRIMARY}
+        onClick={async () =>
+          await markIdentityAsPrimaryCall(id).then(() => {
+            router && router.push("/account/logins");
+          })
+        }
+      >
+        Confirm
+      </Button>
+
       <Button
         variant={ButtonVariant.SECONDARY}
         onClick={() => {
