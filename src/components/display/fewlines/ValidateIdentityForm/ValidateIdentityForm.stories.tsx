@@ -3,7 +3,6 @@ import React from "react";
 import { StoriesContainer } from "../StoriesContainer";
 import { ValidateIdentityForm } from "./ValidateIdentityForm";
 import { IdentityTypes } from "@lib/@types/Identity";
-import { ValidateIdentity } from "@src/components/business/ValidateIdentity";
 
 export default {
   title: "pages/Validate Identity Form",
@@ -13,14 +12,7 @@ export default {
 export const ValidateEmailForm = (): JSX.Element => {
   return (
     <StoriesContainer>
-      <ValidateIdentity eventId={"1234"}>
-        {({ validateIdentity }) => (
-          <ValidateIdentityForm
-            type={IdentityTypes.EMAIL}
-            validateIdentity={validateIdentity}
-          />
-        )}
-      </ValidateIdentity>
+      <ValidateIdentityForm type={IdentityTypes.EMAIL} eventId={"1234"} />
     </StoriesContainer>
   );
 };
@@ -28,14 +20,7 @@ export const ValidateEmailForm = (): JSX.Element => {
 export const ValidatePhoneForm = (): JSX.Element => {
   return (
     <StoriesContainer>
-      <ValidateIdentity eventId={"1234"}>
-        {({ validateIdentity }) => (
-          <ValidateIdentityForm
-            type={IdentityTypes.PHONE}
-            validateIdentity={validateIdentity}
-          />
-        )}
-      </ValidateIdentity>
+      <ValidateIdentityForm type={IdentityTypes.PHONE} eventId={"1234"} />
     </StoriesContainer>
   );
 };
