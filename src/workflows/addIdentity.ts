@@ -11,11 +11,11 @@ import { fetchJson } from "@src/utils/fetchJson";
 import { getIdentityType } from "@src/utils/getIdentityType";
 
 export async function addIdentity(
-  newIdentity: InMemoryTemporaryIdentity,
+  identityInput: InMemoryTemporaryIdentity,
 ): Promise<string> {
   const body = {
     callbackUrl: "/",
-    newIdentity,
+    identityInput,
   };
 
   return fetchJson(
@@ -41,9 +41,9 @@ export async function addIdentity(
       throw new ErrorSendingValidationCode();
     }
 
-    if (getIdentityType(newIdentity.type) === IdentityTypes.PHONE) {
+    if (getIdentityType(identityInput.type) === IdentityTypes.PHONE) {
       try {
-        JSON.parse(newIdentity.value);
+        JSON.parse(identityInput.value);
       } catch (error) {
         if (error instanceof SyntaxError) {
           throw new PhoneNumberInputValueShouldBeANumber(
