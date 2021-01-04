@@ -5,7 +5,6 @@ import { isUserPasswordSet } from "@lib/queries/isUserPasswordSet";
 import { UserCookie } from "@src/@types/UserCookie";
 import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Layout } from "@src/components/Layout";
-import { SetPassword } from "@src/components/business/SetPassword";
 import { Container } from "@src/components/display/fewlines/Container";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { SetPasswordForm } from "@src/components/display/fewlines/SetPasswordForm/SetPasswordForm";
@@ -30,14 +29,9 @@ const SecurityUpdatePage: React.FC<SecurityPageProps> = ({ isPasswordSet }) => {
         <NavigationBreadcrumbs
           breadcrumbs={["Password", conditionalBreadcrumbItem]}
         />
-        <SetPassword>
-          {({ setPassword }) => (
-            <SetPasswordForm
-              conditionalBreadcrumbItem={conditionalBreadcrumbItem}
-              setPassword={setPassword}
-            />
-          )}
-        </SetPassword>
+        <SetPasswordForm
+          conditionalBreadcrumbItem={conditionalBreadcrumbItem}
+        />
       </Container>
     </Layout>
   );

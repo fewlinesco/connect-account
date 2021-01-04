@@ -5,22 +5,20 @@ import styled from "styled-components";
 import { StyledForm } from "../Form/Form";
 import { PasswordRulesErrorList } from "../PasswordRulesErrorList/PasswordRulesErrorList";
 import type { SetPasswordErrorRules } from "@lib/@types/Password";
-import { SetPasswordOutput } from "@src/components/business/SetPassword";
 import {
   Button,
   ButtonVariant,
 } from "@src/components/display/fewlines/Button/Button";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import { capitalizeFirstLetter } from "@src/utils/format";
+import { setPassword } from "@src/workflows/setPassword";
 
 type SetPasswordFormProps = {
   conditionalBreadcrumbItem: string;
-  setPassword: (passwordInput: string) => Promise<SetPasswordOutput>;
 };
 
 export const SetPasswordForm: React.FC<SetPasswordFormProps> = ({
   conditionalBreadcrumbItem,
-  setPassword,
 }) => {
   const [isNotSubmitted, setIsNotSubmitted] = React.useState(true);
 
