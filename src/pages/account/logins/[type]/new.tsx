@@ -3,7 +3,6 @@ import React from "react";
 
 import { IdentityTypes } from "@lib/@types";
 import { Layout } from "@src/components/Layout";
-import { AddIdentity } from "@src/components/business/AddIdentity";
 import { AddIdentityForm } from "@src/components/display/fewlines/AddIdentityForm/AddIdentityForm";
 import { Container } from "@src/components/display/fewlines/Container";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
@@ -27,11 +26,7 @@ const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
             "new",
           ]}
         />
-        <AddIdentity type={type}>
-          {({ addIdentity }) => (
-            <AddIdentityForm type={type} addIdentity={addIdentity} />
-          )}
-        </AddIdentity>
+        <AddIdentityForm type={type} />
       </Container>
     </Layout>
   );
