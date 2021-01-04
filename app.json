@@ -25,7 +25,8 @@
   "environments": {
     "review": {
       "scripts": {
-        "postdeploy": "yarn e2e:add-heroku-redirect-uri"
+        "postdeploy": "yarn e2e:add-heroku-redirect-uri",
+        "pr-predestroy": "yarn e2e:remove-heroku-redirect-uri"
       }
     }
   },
