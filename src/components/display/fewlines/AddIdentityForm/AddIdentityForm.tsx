@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
@@ -15,18 +16,15 @@ import {
   PhoneNumberInputValueShouldBeANumber,
 } from "@src/clientErrors";
 import { getIdentityType } from "@src/utils/getIdentityType";
+import { addIdentity } from "@src/workflows/addIdentity";
 
 type AddIdentityFormProps = {
   type: IdentityTypes;
-  addIdentity: (identity: InMemoryTemporaryIdentity) => Promise<void>;
 };
 
-export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
-  type,
-  addIdentity,
-}) => {
+export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({ type }) => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
-  const [flashMessage, setFlashMessage] = React.useState<string>("");
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const [identity, setIdentity] = React.useState<InMemoryTemporaryIdentity>({
     value: "",
     type,
@@ -34,26 +32,35 @@ export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({
     primary: false,
   });
 
+  const router = useRouter();
+
   return (
     <>
-      {flashMessage ? <WrongInputError>{flashMessage}.</WrongInputError> : null}
+      {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
       <Form
         formID={formID}
         onSubmit={async () => {
-          await addIdentity(identity).catch((error) => {
-            if (error instanceof IdentityAlreadyUsed) {
-              setFormID(uuidv4());
-              setFlashMessage(error.message);
-            } else if (error instanceof IdentityInputValueCantBeBlank) {
-              setFormID(uuidv4());
-              setFlashMessage(error.message);
-            } else if (error instanceof PhoneNumberInputValueShouldBeANumber) {
-              setFormID(uuidv4());
-              setFlashMessage(error.message);
-            } else {
-              throw error;
-            }
-          });
+          await addIdentity(identity)
+            .then(async (eventId) => {
+              router &&
+                router.push(`/account/logins/${type}/validation/${eventId}`);
+            })
+            .catch((error) => {
+              if (error instanceof IdentityAlreadyUsed) {
+                setFormID(uuidv4());
+                setErrorMessage(error.message);
+              } else if (error instanceof IdentityInputValueCantBeBlank) {
+                setFormID(uuidv4());
+                setErrorMessage(error.message);
+              } else if (
+                error instanceof PhoneNumberInputValueShouldBeANumber
+              ) {
+                setFormID(uuidv4());
+                setErrorMessage(error.message);
+              } else {
+                throw error;
+              }
+            });
         }}
       >
         <p>

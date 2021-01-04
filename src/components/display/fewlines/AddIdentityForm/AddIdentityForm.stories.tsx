@@ -3,7 +3,6 @@ import React from "react";
 import { StoriesContainer } from "../StoriesContainer";
 import { AddIdentityForm } from "./AddIdentityForm";
 import { IdentityTypes } from "@lib/@types";
-import { AddIdentity } from "@src/components/business/AddIdentity";
 
 export default {
   title: "pages/Add Identity Form",
@@ -13,14 +12,7 @@ export default {
 export const AddEmailForm = (): JSX.Element => {
   return (
     <StoriesContainer>
-      <AddIdentity type={IdentityTypes.EMAIL}>
-        {({ addIdentity }) => (
-          <AddIdentityForm
-            type={IdentityTypes.EMAIL}
-            addIdentity={addIdentity}
-          />
-        )}
-      </AddIdentity>
+      <AddIdentityForm type={IdentityTypes.EMAIL} />
     </StoriesContainer>
   );
 };
@@ -28,14 +20,7 @@ export const AddEmailForm = (): JSX.Element => {
 export const AddPhoneForm = (): JSX.Element => {
   return (
     <StoriesContainer>
-      <AddIdentity type={IdentityTypes.PHONE}>
-        {({ addIdentity }) => (
-          <AddIdentityForm
-            type={IdentityTypes.PHONE}
-            addIdentity={addIdentity}
-          />
-        )}
-      </AddIdentity>
+      <AddIdentityForm type={IdentityTypes.PHONE} />
     </StoriesContainer>
   );
 };
