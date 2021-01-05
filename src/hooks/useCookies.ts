@@ -1,18 +1,21 @@
 import useSWR from "swr";
 
+import { UserCookie } from "@src/@types/UserCookie";
+
 type CookiesValue = {
-  data?: {
-    userSub: string;
-  };
+  data?: UserCookie;
   error?: Error;
 };
 
-export function useCookies(): CookiesValue {
-  const { data, error } = useSWR("/api/auth-connect/user-sub", async (url) => {
-    return fetch(url).then((response) => {
-      return response.json();
-    });
-  });
+export function useUserCookie(): CookiesValue {
+  const { data, error } = useSWR(
+    "/api/auth-connect/user-cookie",
+    async (url) => {
+      return fetch(url).then((response) => {
+        return response.json();
+      });
+    },
+  );
 
   return { data, error };
 }
