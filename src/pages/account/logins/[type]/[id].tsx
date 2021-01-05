@@ -15,7 +15,6 @@ import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 
 const IdentityOverviewPage: React.FC<{
@@ -46,7 +45,7 @@ export default IdentityOverviewPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return wrapMiddlewaresForSSR<{ type: string }>(
     context,
-    [withLogger, withSentry, withSession, withAuth],
+    [withLogger, withSentry, withAuth],
     async (request: ExtendedRequest, response: ServerResponse) => {
       if (!context?.params?.id) {
         response.statusCode = 400;

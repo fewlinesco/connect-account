@@ -11,7 +11,6 @@ import { ValidateIdentityForm } from "@src/components/display/fewlines/ValidateI
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 
 const ValidateIdentityPage: React.FC<{
@@ -41,7 +40,7 @@ export default ValidateIdentityPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return wrapMiddlewaresForSSR<{ type: string }>(
     context,
-    [withLogger, withSentry, withSession, withAuth],
+    [withLogger, withSentry, withAuth],
     async (request: ExtendedRequest, response: ServerResponse) => {
       if (!context?.params?.type) {
         response.statusCode = 400;

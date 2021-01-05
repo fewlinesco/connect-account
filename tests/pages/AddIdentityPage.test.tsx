@@ -39,18 +39,6 @@ jest.mock("@src/dbClient", () => {
   };
 });
 
-jest.mock("@src/hooks/useCookies", () => {
-  return {
-    useCookies: jest.fn().mockImplementation(() => {
-      return {
-        data: {
-          userDocumentId: "ac3f358d-d2c9-487e-8387-2e6866b853c9",
-        },
-      };
-    }),
-  };
-});
-
 describe("AddIdentityPage", () => {
   test("it should display navigation breadcrumbs properly for emails", () => {
     const component = mount(

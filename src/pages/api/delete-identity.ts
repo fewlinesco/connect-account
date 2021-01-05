@@ -1,15 +1,13 @@
 import { HttpStatus } from "@fwl/web";
-import { ServerResponse } from "http";
 
 import { removeIdentityFromUser } from "@lib/commands/removeIdentityFromUser";
 import { Handler } from "@src/@types/core/Handler";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
 
-const handler: Handler = async (request, response: ServerResponse) => {
+const handler: Handler = async (request, response) => {
   const { userId, type, value } = request.body;
 
   if (request.method === "DELETE") {
@@ -28,7 +26,4 @@ const handler: Handler = async (request, response: ServerResponse) => {
   return Promise.reject();
 };
 
-export default wrapMiddlewares(
-  [withLogger, withSentry, withSession, withAuth],
-  handler,
-);
+export default wrapMiddlewares([withLogger, withSentry, withAuth], handler);

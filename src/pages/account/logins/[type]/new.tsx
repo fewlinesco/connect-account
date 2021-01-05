@@ -9,7 +9,6 @@ import { NavigationBreadcrumbs } from "@src/components/display/fewlines/Navigati
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 import { getIdentityType } from "@src/utils/getIdentityType";
 
@@ -37,7 +36,7 @@ export default AddIdentityPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return wrapMiddlewaresForSSR<{ type: string }>(
     context,
-    [withLogger, withSentry, withSession, withAuth],
+    [withLogger, withSentry, withAuth],
     async () => {
       if (!context?.params?.type) {
         context.res.statusCode = 400;

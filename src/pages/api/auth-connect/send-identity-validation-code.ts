@@ -1,19 +1,17 @@
 import { HttpStatus } from "@fwl/web";
-import { Handler } from "next-iron-session";
 
 import { sendIdentityValidationCode } from "@lib/commands/sendIdentityValidationCode";
 import { UserCookie } from "@src/@types/UserCookie";
-import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
+import { Handler } from "@src/@types/core/Handler";
 import { insertTemporaryIdentity } from "@src/commands/insertTemporaryIdentity";
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import { getIdentityType } from "@src/utils/getIdentityType";
 
-const handler: Handler = async (request: ExtendedRequest, response) => {
+const handler: Handler = async (request, response) => {
   if (request.method === "POST") {
     const { callbackUrl, identityInput } = request.body;
 

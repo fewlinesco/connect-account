@@ -1,9 +1,9 @@
 import { HttpStatus } from "@fwl/web";
 import { ServerResponse } from "http";
+import { NextApiRequest } from "next";
 
 import { refreshTokensFlow } from "@lib/commands/refreshTokensFlow";
 import { UserCookie } from "@src/@types/UserCookie";
-import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Handler } from "@src/@types/core/Handler";
 import { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { getAndPutUser } from "@src/commands/getAndPutUser";
@@ -13,12 +13,12 @@ import { decryptVerifyAccessToken } from "@src/workflows/decryptVerifyAccessToke
 
 export function withAuth(handler: Handler): Handler {
   return async (
-    request: ExtendedRequest,
+    request: NextApiRequest,
     response: ServerResponse,
   ): Promise<unknown> => {
-    const userCookie = request.session.get<UserCookie | undefined>(
-      "user-cookie",
-    );
+    // const userCookie = request.session.get<UserCookie | undefined>(
+    //   "user-cookie",
+    // );
 
     if (userCookie) {
       const { access_token: currentAccessToken, sub } = userCookie;
@@ -38,10 +38,10 @@ export function withAuth(handler: Handler): Handler {
                 config.connectJwtAlgorithm,
               );
 
-              request.session.set<UserCookie>("user-cookie", {
-                access_token,
-                sub,
-              });
+              // request.session.set<UserCookie>("user-cookie", {
+              //   access_token,
+              //   sub,
+              // });
 
               await getAndPutUser({ sub, refresh_token }, user);
 

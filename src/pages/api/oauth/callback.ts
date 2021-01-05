@@ -1,20 +1,14 @@
 import { HttpStatus } from "@fwl/web";
-import { NextApiResponse } from "next";
-import { Handler } from "next-iron-session";
 
-import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
+import { Handler } from "@src/@types/core/Handler";
 import { getAndPutUser } from "@src/commands/getAndPutUser";
 import { oauth2Client } from "@src/config";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import { decryptVerifyAccessToken } from "@src/workflows/decryptVerifyAccessToken";
 
-const handler: Handler = async (
-  request: ExtendedRequest,
-  response: NextApiResponse,
-): Promise<void> => {
+const handler: Handler = async (request, response): Promise<void> => {
   if (request.method === "GET") {
     const {
       access_token,
@@ -51,4 +45,4 @@ const handler: Handler = async (
   }
 };
 
-export default wrapMiddlewares([withLogger, withSentry, withSession], handler);
+export default wrapMiddlewares([withLogger, withSentry], handler);

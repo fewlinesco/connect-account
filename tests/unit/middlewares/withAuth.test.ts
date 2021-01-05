@@ -10,7 +10,6 @@ import { Handler } from "@src/@types/core/Handler";
 import * as getAndPutUser from "@src/commands/getAndPutUser";
 import { config, oauth2Client } from "@src/config";
 import { withAuth } from "@src/middlewares/withAuth";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import * as getDBUserFromSub from "@src/queries/getDBUserFromSub.ts";
 import * as decryptVerifyAccessToken from "@src/workflows/decryptVerifyAccessToken";
@@ -99,26 +98,7 @@ function mockedReqAndRes(
   const mockedRequest = new IncomingMessage(new Socket());
   const mockedResponse = new ServerResponse(mockedRequest);
 
-  const mockedSession = {
-    set: () => {
-      return;
-    },
-    get: () => {
-      return undefined;
-    },
-    unset: () => {
-      return;
-    },
-    destroy: () => {
-      return;
-    },
-    save: async () => {
-      return;
-    },
-  };
-
   const mockedExtendedRequest = Object.assign(mockedRequest, {
-    session: mockedSession,
     query: {},
     cookies: {},
     body: null,

@@ -1,11 +1,10 @@
 import { HttpStatus } from "@fwl/web";
-import { Handler } from "next-iron-session";
 
 import { addIdentityToUser } from "@lib/commands/addIdentityToUser";
 import { markIdentityAsPrimary } from "@lib/commands/markIdentityAsPrimary";
 import { checkVerificationCode } from "@lib/queries/checkVerificationCode";
 import { UserCookie } from "@src/@types/UserCookie";
-import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
+import { Handler } from "@src/@types/core/Handler";
 import {
   NoDataReturned,
   NoIdentityAdded,
@@ -17,12 +16,11 @@ import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
 import { getIdentityType } from "@src/utils/getIdentityType";
 
-const handler: Handler = async (request: ExtendedRequest, response) => {
+const handler: Handler = async (request, response) => {
   if (request.method === "POST") {
     const { validationCode, eventId } = request.body;
 
