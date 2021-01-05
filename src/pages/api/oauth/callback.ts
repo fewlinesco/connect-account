@@ -31,17 +31,17 @@ const handler: Handler = async (request, response): Promise<void> => {
       sub: decodedAccessToken.sub,
     });
 
-    await request.session.save();
-
     response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
       Location: "/account",
     });
 
     response.end();
+    return;
   } else {
     response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
 
-    return response.end();
+    response.end();
+    return;
   }
 };
 
