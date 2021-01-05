@@ -57,6 +57,8 @@
     "@storybook/addon-links": "6.1.7",
     "@storybook/react": "6.1.7",
     "@types/cookies": "0.7.6",
+    "@testing-library/jest-dom": "5.11.8",
+    "@testing-library/react": "11.2.2",
     "@types/enzyme": "3.10.8",
     "@types/enzyme-adapter-react-16": "1.0.6",
     "@types/jest": "26.0.15",
@@ -253,7 +255,8 @@
       "@lib/(.*)": "<rootDir>/lib/$1"
     },
     "setupFilesAfterEnv": [
-      "./tests/config/enzyme-config.ts"
+      "./tests/config/enzyme-config.ts",
+      "@testing-library/jest-dom/extend-expect"
     ]
   },
   "husky": {
