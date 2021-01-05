@@ -19,14 +19,18 @@ import { withSentry } from "@src/middlewares/withSentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
 import { getIdentityType } from "@src/utils/getIdentityType";
+import { getServerSideCookies } from "@src/utils/serverSideCookies";
 
 const handler: Handler = async (request, response) => {
   if (request.method === "POST") {
     const { validationCode, eventId } = request.body;
 
-    const userCookie = request.session.get<UserCookie>(
+    const userCookie = (await getServerSideCookies<UserCookie>(
+      request,
+      response,
       "user-cookie",
-    ) as UserCookie;
+      true,
+    )) as UserCookie;
 
     const user = await getDBUserFromSub(userCookie.sub);
 
@@ -119,7 +123,4 @@ const handler: Handler = async (request, response) => {
   return Promise.reject();
 };
 
-export default wrapMiddlewares(
-  [withLogger, withSentry, withSession, withAuth],
-  handler,
-);
+export default wrapMiddlewares([withLogger, withSentry, withAuth], handler);

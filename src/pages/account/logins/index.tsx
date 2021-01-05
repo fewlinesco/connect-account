@@ -4,7 +4,6 @@ import React from "react";
 import { getIdentities } from "@lib/queries/getIdentities";
 import type { SortedIdentities } from "@src/@types/SortedIdentities";
 import { UserCookie } from "@src/@types/UserCookie";
-import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { NoDataReturned, NoIdentityFound } from "@src/clientErrors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
@@ -16,6 +15,7 @@ import { withSentry } from "@src/middlewares/withSentry";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 import { displayAlertBar } from "@src/utils/displayAlertBar";
 import { getFlashMessage } from "@src/utils/getFlashMessage";
+import { getServerSideCookies } from "@src/utils/serverSideCookies";
 import { sortIdentities } from "@src/utils/sortIdentities";
 
 type LoginsOverviewPageProps = {
@@ -45,8 +45,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return wrapMiddlewaresForSSR<{ sortedIdentities: SortedIdentities }>(
     context,
     [withLogger, withSentry, withAuth],
-    async (request: ExtendedRequest) => {
-      const userCookie = request.session.get<UserCookie>("user-cookie");
+    async (request, response) => {
+      const userCookie = await getServerSideCookies<UserCookie>(
+        request,
+        response,
+        "user-cookie",
+        true,
+      );
 
       if (userCookie) {
         const sortedIdentities = await getIdentities(userCookie.sub).then(

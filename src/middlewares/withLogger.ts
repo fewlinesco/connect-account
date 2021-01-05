@@ -1,7 +1,5 @@
 import { createLogger, EncoderTypeEnum } from "@fwl/logging";
-import { ServerResponse } from "http";
 
-import { ExtendedRequest } from "../@types/core/ExtendedRequest";
 import { Handler } from "../@types/core/Handler";
 
 const logger = createLogger({
@@ -12,7 +10,7 @@ const logger = createLogger({
 });
 
 export function withLogger(handler: Handler): Handler {
-  return async (request: ExtendedRequest, response: ServerResponse) => {
+  return async (request, response) => {
     const processTimeStart = process.hrtime.bigint();
 
     try {

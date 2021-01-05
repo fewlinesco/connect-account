@@ -8,41 +8,54 @@ export async function setServerSideCookies(
   request: IncomingMessage,
   response: ServerResponse,
   cookieName: string,
-  cookieValue: string,
-  shouldCookieBeSealed: boolean,
+  cookieValue: unknown,
+  options: { shouldCookieBeSealed: boolean } & Cookies.SetOption,
 ): Promise<void> {
   const cookies = new Cookies(request, response);
+  const { shouldCookieBeSealed, ...setOptions } = options;
 
   if (shouldCookieBeSealed) {
     const sealedCookieValue = await seal(
-      cookieValue,
+      JSON.stringify(cookieValue),
       config.connectAccountSessionSalt,
       defaults,
     );
 
-    cookies.set(cookieName, sealedCookieValue);
+    cookies.set(cookieName, sealedCookieValue, setOptions);
   } else {
-    cookies.set(cookieName, cookieValue);
+    cookies.set(cookieName, JSON.stringify(cookieValue), setOptions);
   }
 }
 
-export async function getServerSideCookies(
+export async function getServerSideCookies<T = unknown>(
   request: IncomingMessage,
   response: ServerResponse,
   cookieName: string,
   isCookieSealed: boolean,
-): Promise<string | undefined> {
+): Promise<T | undefined> {
   const cookies = new Cookies(request, response);
 
   if (isCookieSealed) {
     const sealedCookie = cookies.get(cookieName);
 
     if (sealedCookie) {
-      return unseal(sealedCookie, config.connectAccountSessionSalt);
+      const unsealedCookie = await unseal(
+        sealedCookie,
+        config.connectAccountSessionSalt,
+      );
+      return JSON.parse(unsealedCookie);
     } else {
       return undefined;
     }
   } else {
-    return cookies.get(cookieName);
+    const cookie = cookies.get(cookieName);
+
+    if (cookie) {
+      return JSON.parse(cookie);
+    } else {
+      return undefined;
+    }
   }
 }
+
+// http only ? to remove explicit boolean

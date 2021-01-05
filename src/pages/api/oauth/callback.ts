@@ -6,6 +6,7 @@ import { oauth2Client } from "@src/config";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
+import { setServerSideCookies } from "@src/utils/serverSideCookies";
 import { decryptVerifyAccessToken } from "@src/workflows/decryptVerifyAccessToken";
 
 const handler: Handler = async (request, response): Promise<void> => {
@@ -26,10 +27,21 @@ const handler: Handler = async (request, response): Promise<void> => {
 
     await getAndPutUser(oAuth2UserInfo);
 
-    request.session.set("user-cookie", {
-      access_token,
-      sub: decodedAccessToken.sub,
-    });
+    await setServerSideCookies(
+      request,
+      response,
+      "user-cookie",
+      {
+        access_token,
+        sub: decodedAccessToken.sub,
+      },
+      {
+        shouldCookieBeSealed: true,
+        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        secure: true,
+      },
+    );
 
     response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
       Location: "/account",

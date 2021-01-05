@@ -3,7 +3,6 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { IdentityTypes } from "@lib/@types/Identity";
-import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
@@ -41,7 +40,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return wrapMiddlewaresForSSR<{ type: string }>(
     context,
     [withLogger, withSentry, withAuth],
-    async (request: ExtendedRequest, response: ServerResponse) => {
+    async (_request, response: ServerResponse) => {
       if (!context?.params?.type) {
         response.statusCode = 400;
         response.end();

@@ -1,6 +1,10 @@
-import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
+import {
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+  NextApiRequest,
+  NextApiResponse,
+} from "next";
 
-import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Handler } from "@src/@types/core/Handler";
 
 type Middleware = (handler: Handler) => Handler;
@@ -22,8 +26,8 @@ export async function wrapMiddlewaresForSSR<P>(
   handler: Handler = () => Promise.resolve(),
 ): Promise<GetServerSidePropsResult<P>> {
   const result = await wrapMiddlewares(middlewares, handler)(
-    context.req as ExtendedRequest,
-    context.res,
+    context.req as NextApiRequest,
+    context.res as NextApiResponse,
   );
 
   return result ? result : { props: {} };

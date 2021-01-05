@@ -1,241 +1,242 @@
-import { defaultPayload, generateHS256JWS } from "@fwl/oauth2";
-import { HttpStatus } from "@fwl/web";
-import { seal, defaults } from "@hapi/iron";
-import { IncomingMessage, ServerResponse } from "http";
-import { Socket } from "net";
+export {};
 
-import * as refreshTokensFlow from "@lib/commands/refreshTokensFlow";
-import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
-import { Handler } from "@src/@types/core/Handler";
-import * as getAndPutUser from "@src/commands/getAndPutUser";
-import { config, oauth2Client } from "@src/config";
-import { withAuth } from "@src/middlewares/withAuth";
-import { wrapMiddlewares } from "@src/middlewares/wrapper";
-import * as getDBUserFromSub from "@src/queries/getDBUserFromSub.ts";
-import * as decryptVerifyAccessToken from "@src/workflows/decryptVerifyAccessToken";
+// import { defaultPayload, generateHS256JWS } from "@fwl/oauth2";
+// import { HttpStatus } from "@fwl/web";
+// import { seal, defaults } from "@hapi/iron";
+// import { IncomingMessage, ServerResponse } from "http";
+// import { Socket } from "net";
 
-jest.mock("@src/config", () => {
-  const configFile = jest.requireActual("@src/config");
+// import * as refreshTokensFlow from "@lib/commands/refreshTokensFlow";
+// import { Handler } from "@src/@types/core/Handler";
+// import * as getAndPutUser from "@src/commands/getAndPutUser";
+// import { config, oauth2Client } from "@src/config";
+// import { withAuth } from "@src/middlewares/withAuth";
+// import { wrapMiddlewares } from "@src/middlewares/wrapper";
+// import * as getDBUserFromSub from "@src/queries/getDBUserFromSub.ts";
+// import * as decryptVerifyAccessToken from "@src/workflows/decryptVerifyAccessToken";
 
-  return {
-    config: {
-      connectAccountSessionSalt: "#*b+x3ZXE3-h[E+Q5YC5`jr~y%CA~R-[",
-      connectOpenIdConfigurationUrl: "",
-      connectApplicationClientId: "",
-      connectApplicationClientSecret: "c9ab0fdc-b2dc-47ad-933b-87cf1b180ab5",
-      connectAccountRedirectUri: "",
-      connectAudience: "",
-      connectApplicationScopes: "",
-      connectProviderUrl: "http://foo.test",
-      connectAccountURL: "http://foo.test",
-      dynamoRegion: "eu-west-3",
-    },
-    oauth2Client: configFile.oauth2Client,
-  };
-});
+// jest.mock("@src/config", () => {
+//   const configFile = jest.requireActual("@src/config");
 
-const spiedOnVerifyJWT = jest
-  .spyOn(oauth2Client, "verifyJWT")
-  .mockImplementation(async () => {
-    return {
-      sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
-    };
-  });
+//   return {
+//     config: {
+//       connectAccountSessionSalt: "#*b+x3ZXE3-h[E+Q5YC5`jr~y%CA~R-[",
+//       connectOpenIdConfigurationUrl: "",
+//       connectApplicationClientId: "",
+//       connectApplicationClientSecret: "c9ab0fdc-b2dc-47ad-933b-87cf1b180ab5",
+//       connectAccountRedirectUri: "",
+//       connectAudience: "",
+//       connectApplicationScopes: "",
+//       connectProviderUrl: "http://foo.test",
+//       connectAccountURL: "http://foo.test",
+//       dynamoRegion: "eu-west-3",
+//     },
+//     oauth2Client: configFile.oauth2Client,
+//   };
+// });
 
-const spiedOnDecryptVerifyAccessToken = jest
-  .spyOn(decryptVerifyAccessToken, "decryptVerifyAccessToken")
-  .mockImplementation(async () => {
-    return defaultPayload;
-  });
+// const spiedOnVerifyJWT = jest
+//   .spyOn(oauth2Client, "verifyJWT")
+//   .mockImplementation(async () => {
+//     return {
+//       sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
+//     };
+//   });
 
-const spiedOnGetDBUserFromSub = jest
-  .spyOn(getDBUserFromSub, "getDBUserFromSub")
-  .mockImplementation(async () => {
-    return {
-      sub: defaultPayload.sub,
-      refresh_token: "refresh_token",
-      temporary_identities: [],
-    };
-  });
+// const spiedOnDecryptVerifyAccessToken = jest
+//   .spyOn(decryptVerifyAccessToken, "decryptVerifyAccessToken")
+//   .mockImplementation(async () => {
+//     return defaultPayload;
+//   });
 
-const spiedOnRefreshTokensFlow = jest
-  .spyOn(refreshTokensFlow, "refreshTokensFlow")
-  .mockImplementation(async () => {
-    return {
-      refresh_token: "new_refresh_token",
-      access_token: "new_access_token",
-    };
-  });
+// const spiedOnGetDBUserFromSub = jest
+//   .spyOn(getDBUserFromSub, "getDBUserFromSub")
+//   .mockImplementation(async () => {
+//     return {
+//       sub: defaultPayload.sub,
+//       refresh_token: "refresh_token",
+//       temporary_identities: [],
+//     };
+//   });
 
-const spiedOnGetAndPutUser = jest
-  .spyOn(getAndPutUser, "getAndPutUser")
-  .mockImplementation(async () => {
-    return;
-  });
+// const spiedOnRefreshTokensFlow = jest
+//   .spyOn(refreshTokensFlow, "refreshTokensFlow")
+//   .mockImplementation(async () => {
+//     return {
+//       refresh_token: "new_refresh_token",
+//       access_token: "new_access_token",
+//     };
+//   });
 
-async function sealJWS(access_token: string, salt?: string): Promise<string> {
-  return seal(
-    {
-      persistent: {
-        "user-cookie": {
-          access_token,
-          sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
-        },
-      },
-      flash: {},
-    },
-    salt || config.connectAccountSessionSalt,
-    defaults,
-  );
-}
+// const spiedOnGetAndPutUser = jest
+//   .spyOn(getAndPutUser, "getAndPutUser")
+//   .mockImplementation(async () => {
+//     return;
+//   });
 
-function mockedReqAndRes(
-  sealedJWE: string,
-): {
-  mockedExtendedRequest: ExtendedRequest;
-  mockedResponse: ServerResponse;
-} {
-  const mockedRequest = new IncomingMessage(new Socket());
-  const mockedResponse = new ServerResponse(mockedRequest);
+// async function sealJWS(access_token: string, salt?: string): Promise<string> {
+//   return seal(
+//     {
+//       persistent: {
+//         "user-cookie": {
+//           access_token,
+//           sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
+//         },
+//       },
+//       flash: {},
+//     },
+//     salt || config.connectAccountSessionSalt,
+//     defaults,
+//   );
+// }
 
-  const mockedExtendedRequest = Object.assign(mockedRequest, {
-    query: {},
-    cookies: {},
-    body: null,
-    env: {},
-  });
+// function mockedReqAndRes(
+//   sealedJWE: string,
+// ): {
+//   mockedExtendedRequest: ExtendedRequest;
+//   mockedResponse: ServerResponse;
+// } {
+//   const mockedRequest = new IncomingMessage(new Socket());
+//   const mockedResponse = new ServerResponse(mockedRequest);
 
-  mockedExtendedRequest.headers = {
-    cookie: `connect-account-cookie=${sealedJWE}`,
-  };
-  mockedExtendedRequest.rawHeaders = [
-    "Cookie",
-    `connect-account-cookie=${sealedJWE}`,
-  ];
+//   const mockedExtendedRequest = Object.assign(mockedRequest, {
+//     query: {},
+//     cookies: {},
+//     body: null,
+//     env: {},
+//   });
 
-  return { mockedExtendedRequest, mockedResponse };
-}
+//   mockedExtendedRequest.headers = {
+//     cookie: `connect-account-cookie=${sealedJWE}`,
+//   };
+//   mockedExtendedRequest.rawHeaders = [
+//     "Cookie",
+//     `connect-account-cookie=${sealedJWE}`,
+//   ];
 
-const mockedHandler: Handler = async (
-  _mockedExtendedRequest,
-  _mockedResponse,
-) => {
-  return _mockedResponse.end();
-};
+//   return { mockedExtendedRequest, mockedResponse };
+// }
 
-describe("withAuth", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+// const mockedHandler: Handler = async (
+//   _mockedExtendedRequest,
+//   _mockedResponse,
+// ) => {
+//   return _mockedResponse.end();
+// };
 
-  test("should redirect to the login flow if no UserCookie is provided", async (done) => {
-    expect.assertions(2);
+// describe("withAuth", () => {
+//   beforeEach(() => {
+//     jest.clearAllMocks();
+//   });
 
-    const access_token = generateHS256JWS();
-    const sealedJWS = await sealJWS(
-      access_token,
-      "thisIsAWrongSaltToMakeUserCookieUndefined",
-    );
+//   test("should redirect to the login flow if no UserCookie is provided", async (done) => {
+//     expect.assertions(2);
 
-    const { mockedExtendedRequest, mockedResponse } = mockedReqAndRes(
-      sealedJWS,
-    );
+//     const access_token = generateHS256JWS();
+//     const sealedJWS = await sealJWS(
+//       access_token,
+//       "thisIsAWrongSaltToMakeUserCookieUndefined",
+//     );
 
-    const withAuthCallback = wrapMiddlewares(
-      [withSession, withAuth],
-      mockedHandler,
-    );
-    await withAuthCallback(mockedExtendedRequest, mockedResponse);
+//     const { mockedExtendedRequest, mockedResponse } = mockedReqAndRes(
+//       sealedJWS,
+//     );
 
-    expect(mockedResponse.statusCode).toEqual(HttpStatus.TEMPORARY_REDIRECT);
-    expect(spiedOnDecryptVerifyAccessToken).not.toHaveBeenCalled();
+//     const withAuthCallback = wrapMiddlewares(
+//       [withSession, withAuth],
+//       mockedHandler,
+//     );
+//     await withAuthCallback(mockedExtendedRequest, mockedResponse);
 
-    done();
-  });
+//     expect(mockedResponse.statusCode).toEqual(HttpStatus.TEMPORARY_REDIRECT);
+//     expect(spiedOnDecryptVerifyAccessToken).not.toHaveBeenCalled();
 
-  describe("Refresh tokens", () => {
-    test("should redirect to the login flow if a `TokenExpiredError` exception is thrown and no user is provided", async (done) => {
-      expect.assertions(7);
+//     done();
+//   });
 
-      const access_token = generateHS256JWS({
-        ...defaultPayload,
-        exp: Date.now() - 3600000,
-      });
+//   describe("Refresh tokens", () => {
+//     test("should redirect to the login flow if a `TokenExpiredError` exception is thrown and no user is provided", async (done) => {
+//       expect.assertions(7);
 
-      const sealedJWS = await sealJWS(access_token);
+//       const access_token = generateHS256JWS({
+//         ...defaultPayload,
+//         exp: Date.now() - 3600000,
+//       });
 
-      const { mockedExtendedRequest, mockedResponse } = mockedReqAndRes(
-        sealedJWS,
-      );
+//       const sealedJWS = await sealJWS(access_token);
 
-      spiedOnDecryptVerifyAccessToken.mockImplementationOnce(async () => {
-        class TokenExpiredError extends Error {
-          name = "TokenExpiredError";
-        }
+//       const { mockedExtendedRequest, mockedResponse } = mockedReqAndRes(
+//         sealedJWS,
+//       );
 
-        throw new TokenExpiredError();
-      });
+//       spiedOnDecryptVerifyAccessToken.mockImplementationOnce(async () => {
+//         class TokenExpiredError extends Error {
+//           name = "TokenExpiredError";
+//         }
 
-      spiedOnGetDBUserFromSub.mockImplementationOnce(async () => {
-        return null;
-      });
+//         throw new TokenExpiredError();
+//       });
 
-      const withAuthCallback = wrapMiddlewares(
-        [withSession, withAuth],
-        mockedHandler,
-      );
-      await withAuthCallback(mockedExtendedRequest, mockedResponse);
+//       spiedOnGetDBUserFromSub.mockImplementationOnce(async () => {
+//         return null;
+//       });
 
-      expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();
-      expect(spiedOnGetDBUserFromSub).toHaveBeenCalled();
-      expect(spiedOnRefreshTokensFlow).not.toHaveBeenCalled();
-      expect(spiedOnVerifyJWT).not.toHaveBeenCalled();
-      expect(spiedOnGetAndPutUser).not.toHaveBeenCalled();
-      expect(mockedResponse.statusCode).toEqual(HttpStatus.TEMPORARY_REDIRECT);
-      expect(mockedResponse.getHeader("location")).toBe("/");
+//       const withAuthCallback = wrapMiddlewares(
+//         [withSession, withAuth],
+//         mockedHandler,
+//       );
+//       await withAuthCallback(mockedExtendedRequest, mockedResponse);
 
-      done();
-    });
+//       expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();
+//       expect(spiedOnGetDBUserFromSub).toHaveBeenCalled();
+//       expect(spiedOnRefreshTokensFlow).not.toHaveBeenCalled();
+//       expect(spiedOnVerifyJWT).not.toHaveBeenCalled();
+//       expect(spiedOnGetAndPutUser).not.toHaveBeenCalled();
+//       expect(mockedResponse.statusCode).toEqual(HttpStatus.TEMPORARY_REDIRECT);
+//       expect(mockedResponse.getHeader("location")).toBe("/");
 
-    test("should refresh the user tokens if a `TokenExpiredError` exception is thrown and a user is provided, and should not redirect", async (done) => {
-      expect.assertions(7);
+//       done();
+//     });
 
-      const access_token = generateHS256JWS({
-        ...defaultPayload,
-        exp: Date.now() - 3600000,
-      });
+//     test("should refresh the user tokens if a `TokenExpiredError` exception is thrown and a user is provided, and should not redirect", async (done) => {
+//       expect.assertions(7);
 
-      const sealedJWS = await sealJWS(access_token);
+//       const access_token = generateHS256JWS({
+//         ...defaultPayload,
+//         exp: Date.now() - 3600000,
+//       });
 
-      const { mockedExtendedRequest, mockedResponse } = mockedReqAndRes(
-        sealedJWS,
-      );
+//       const sealedJWS = await sealJWS(access_token);
 
-      mockedExtendedRequest.headers.referer = "referer/url";
+//       const { mockedExtendedRequest, mockedResponse } = mockedReqAndRes(
+//         sealedJWS,
+//       );
 
-      spiedOnDecryptVerifyAccessToken.mockImplementationOnce(async () => {
-        class TokenExpiredError extends Error {
-          name = "TokenExpiredError";
-        }
+//       mockedExtendedRequest.headers.referer = "referer/url";
 
-        throw new TokenExpiredError();
-      });
+//       spiedOnDecryptVerifyAccessToken.mockImplementationOnce(async () => {
+//         class TokenExpiredError extends Error {
+//           name = "TokenExpiredError";
+//         }
 
-      const withAuthCallback = wrapMiddlewares(
-        [withSession, withAuth],
-        mockedHandler,
-      );
-      await withAuthCallback(mockedExtendedRequest, mockedResponse);
+//         throw new TokenExpiredError();
+//       });
 
-      expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();
-      expect(spiedOnGetDBUserFromSub).toHaveBeenCalled();
-      expect(spiedOnRefreshTokensFlow).toHaveBeenCalled();
-      expect(spiedOnVerifyJWT).toHaveBeenCalled();
-      expect(spiedOnGetAndPutUser).toHaveBeenCalled();
-      expect(mockedResponse.statusCode).toEqual(HttpStatus.OK);
-      expect(mockedResponse.getHeader("location")).toBe("referer/url");
+//       const withAuthCallback = wrapMiddlewares(
+//         [withSession, withAuth],
+//         mockedHandler,
+//       );
+//       await withAuthCallback(mockedExtendedRequest, mockedResponse);
 
-      done();
-    });
-  });
-});
+//       expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();
+//       expect(spiedOnGetDBUserFromSub).toHaveBeenCalled();
+//       expect(spiedOnRefreshTokensFlow).toHaveBeenCalled();
+//       expect(spiedOnVerifyJWT).toHaveBeenCalled();
+//       expect(spiedOnGetAndPutUser).toHaveBeenCalled();
+//       expect(mockedResponse.statusCode).toEqual(HttpStatus.OK);
+//       expect(mockedResponse.getHeader("location")).toBe("referer/url");
+
+//       done();
+//     });
+//   });
+// });

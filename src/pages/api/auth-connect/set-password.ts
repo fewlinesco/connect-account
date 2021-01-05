@@ -8,12 +8,18 @@ import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
+import { getServerSideCookies } from "@src/utils/serverSideCookies";
 
 const handler: Handler = async (request, response) => {
   if (request.method === "POST") {
     const { passwordInput } = request.body;
 
-    const userCookie = request.session.get<UserCookie>("user-cookie");
+    const userCookie = await getServerSideCookies<UserCookie>(
+      request,
+      response,
+      "user-cookie",
+      true,
+    );
 
     if (userCookie) {
       return createOrUpdatePassword({
@@ -51,7 +57,4 @@ const handler: Handler = async (request, response) => {
   return Promise.reject();
 };
 
-export default wrapMiddlewares(
-  [withLogger, withSentry, withSession, withAuth],
-  handler,
-);
+export default wrapMiddlewares([withLogger, withSentry, withAuth], handler);

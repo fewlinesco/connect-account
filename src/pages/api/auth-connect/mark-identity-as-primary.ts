@@ -9,8 +9,7 @@ import { withSentry } from "@src/middlewares/withSentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import { isMarkingIdentityAsPrimaryAuthorized } from "@src/utils/isMarkingIdentityAsPrimaryAuthorized";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
-
-// type Handler = (req: any, res: any) => any;
+import { getServerSideCookies } from "@src/utils/serverSideCookies";
 
 const handler: Handler = async (request, response) => {
   addRequestScopeToSentry(request);
@@ -19,9 +18,12 @@ const handler: Handler = async (request, response) => {
     if (request.method === "POST") {
       const { identityId } = request.body;
 
-      const userCookie = request.session.get<UserCookie>(
+      const userCookie = (await getServerSideCookies<UserCookie>(
+        request,
+        response,
         "user-cookie",
-      ) as UserCookie;
+        true,
+      )) as UserCookie;
 
       const isAuthorized = await isMarkingIdentityAsPrimaryAuthorized(
         userCookie.sub,

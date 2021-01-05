@@ -3,7 +3,6 @@ import React from "react";
 
 import { isUserPasswordSet } from "@lib/queries/isUserPasswordSet";
 import { UserCookie } from "@src/@types/UserCookie";
-import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
@@ -13,6 +12,7 @@ import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
+import { getServerSideCookies } from "@src/utils/serverSideCookies";
 
 type SecurityPageProps = {
   isPasswordSet: boolean;
@@ -42,8 +42,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return wrapMiddlewaresForSSR<{ type: string }>(
     context,
     [withLogger, withSentry, withAuth],
-    async (request: ExtendedRequest) => {
-      const userCookie = request.session.get<UserCookie>("user-cookie");
+    async (request, response) => {
+      const userCookie = await getServerSideCookies<UserCookie>(
+        request,
+        response,
+        "user-cookie",
+        true,
+      );
 
       if (userCookie) {
         const isPasswordSet = await isUserPasswordSet(userCookie.sub).then(
