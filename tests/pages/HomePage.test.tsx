@@ -1,24 +1,15 @@
-import { mount } from "enzyme";
 import React from "react";
 
-import { ButtonVariant } from "@src/components/display/fewlines/Button/Button";
-import { FakeButton } from "@src/components/display/fewlines/FakeButton/FakeButton";
+import { cleanup, render, screen } from "../config/testing-library-config";
 import HomePage from "@src/pages";
-import { AccountApp } from "@src/pages/_app";
 
 describe("HomePage", () => {
-  test("it should display a button which redirects to Connect", () => {
-    const component = mount(
-      <AccountApp>
-        <HomePage authorizeURL="#" providerName="Fewlines" />
-      </AccountApp>,
-    );
+  afterEach(() => cleanup());
+  it("should display a description text with provider name and an access link", () => {
+    render(<HomePage authorizeURL="/" providerName="Fewlines" />);
 
-    const accountAccessButton = component
-      .find(FakeButton)
-      .find({ variant: ButtonVariant.PRIMARY, as: "div" });
-
-    expect(accountAccessButton).toHaveLength(1);
-    expect(accountAccessButton.text()).toEqual("Access my account");
+    expect(screen.getByText(/Fewlines/i)).toBeTruthy();
+    expect(screen.getByRole("link")).toBeInTheDocument();
+    expect(screen.getByRole("link")).toHaveAttribute("href", "/");
   });
 });
