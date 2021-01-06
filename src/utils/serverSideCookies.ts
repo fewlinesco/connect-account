@@ -33,11 +33,6 @@ export async function getServerSideCookies<T = unknown>(
   cookieName: string,
   isCookieSealed: boolean,
 ): Promise<T | undefined> {
-  console.log({
-    cookieName,
-    isCookieSealed,
-  });
-
   const cookies = new Cookies(request, response);
 
   if (isCookieSealed) {
