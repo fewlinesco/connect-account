@@ -1,144 +1,129 @@
-import { mount } from "enzyme";
-import { enableFetchMocks } from "jest-fetch-mock";
+import userEvent from "@testing-library/user-event";
 import React from "react";
 
+import { render, screen } from "../config/testing-library-config";
 import { IdentityTypes } from "@lib/@types/Identity";
-import AlertBar from "@src/components/display/fewlines/AlertBar/AlertBar";
-import { Button } from "@src/components/display/fewlines/Button/Button";
-import { FakeButton } from "@src/components/display/fewlines/FakeButton/FakeButton";
-import { Input } from "@src/components/display/fewlines/Input/Input";
-import {
-  NavigationBreadcrumbs,
-  Breadcrumbs,
-} from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
-import { AccountApp } from "@src/pages/_app";
 import ValidateIdentityPage from "@src/pages/account/logins/[type]/validation/[eventId]";
 
-enableFetchMocks();
+const eventId = "foo";
 
-jest.mock("@src/config", () => {
-  return {
-    config: {
-      connectApplicationClientSecret: "foo-bar",
-      connectAccountSessionSalt: ".*b+x3ZXE3-h[E+Q5YC5`jr~y%CA~R-[",
-    },
-  };
-});
-
-jest.mock("@src/dbClient", () => {
-  return {
-    dynamoDbClient: {
-      send: () => {
-        return;
-      },
-    },
-  };
-});
+const alertBarMessages = {
+  email: "Confirmation email has been sent",
+  phone: "Confirmation SMS has been sent",
+};
 
 describe("ValidateIdentityPage", () => {
-  const eventId = "foo";
+  describe("Identity type : EMAIL", () => {
+    it("should display proper email alert message", async () => {
+      render(
+        <ValidateIdentityPage type={IdentityTypes.EMAIL} eventId={eventId} />,
+      );
 
-  test("it should display navigation breadcrumbs properly for emails", () => {
-    const component = mount(
-      <AccountApp>
-        <ValidateIdentityPage type={IdentityTypes.EMAIL} eventId={eventId} />
-      </AccountApp>,
-    );
+      expect.assertions(3);
 
-    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
-    expect(navigationBreadCrumbs).toHaveLength(1);
-    expect(
-      navigationBreadCrumbs.contains(
-        <Breadcrumbs>Email address | validation</Breadcrumbs>,
-      ),
-    ).toEqual(true);
+      expect(
+        await screen.findByText(alertBarMessages.email),
+      ).toBeInTheDocument();
+
+      expect(await screen.findByTitle("Closing cross")).toBeInTheDocument();
+      userEvent.click(screen.getByTitle("Closing cross"));
+
+      expect(
+        screen.queryByText(alertBarMessages.email),
+      ).not.toBeInTheDocument();
+    });
+
+    it("should render proper email form elements ", () => {
+      render(
+        <ValidateIdentityPage type={IdentityTypes.EMAIL} eventId={eventId} />,
+      );
+
+      const validationCodeInput = screen.getByRole("textbox");
+      expect(validationCodeInput).toBeVisible();
+      userEvent.type(validationCodeInput, "424242");
+      expect(validationCodeInput).toHaveDisplayValue("424242");
+
+      expect(
+        screen.getByRole("button", { name: "Confirm email" }),
+      ).toBeInTheDocument();
+
+      expect(
+        screen.getByRole("link", { name: "Discard all changes" }),
+      ).toBeInTheDocument();
+
+      expect(
+        screen.getByRole("link", { name: "Discard all changes" }),
+      ).toHaveAttribute("href", "/account/logins");
+
+      expect(
+        screen.getByRole("button", { name: "Resend confirmation code" }),
+      ).toBeInTheDocument();
+    });
+
+    it("should render proper email breadcrumbs", () => {
+      render(
+        <ValidateIdentityPage type={IdentityTypes.EMAIL} eventId={eventId} />,
+      );
+
+      expect(
+        screen.getByText("Email address | validation"),
+      ).toBeInTheDocument();
+    });
   });
 
-  test("it should display navigation breadcrumbs properly for phones", () => {
-    const component = mount(
-      <AccountApp>
-        <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />
-      </AccountApp>,
-    );
+  describe("Identity type : PHONE", () => {
+    it("should display proper phone alert message", async () => {
+      render(
+        <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />,
+      );
 
-    const navigationBreadCrumbs = component.find(NavigationBreadcrumbs);
-    expect(navigationBreadCrumbs).toHaveLength(1);
-    expect(
-      navigationBreadCrumbs.contains(
-        <Breadcrumbs>Phone number | validation</Breadcrumbs>,
-      ),
-    ).toEqual(true);
-  });
+      expect.assertions(3);
 
-  test("it should display an input and 3 buttons for emails", () => {
-    const component = mount(
-      <AccountApp>
-        <ValidateIdentityPage type={IdentityTypes.EMAIL} eventId={eventId} />
-      </AccountApp>,
-    );
+      expect(
+        await screen.findByText(alertBarMessages.phone),
+      ).toBeInTheDocument();
 
-    const validationCodeInput = component
-      .find(Input)
-      .find({ placeholder: "012345" })
-      .hostNodes();
+      expect(await screen.findByTitle("Closing cross")).toBeInTheDocument();
+      userEvent.click(screen.getByTitle("Closing cross"));
 
-    const buttons = component.find(Button);
+      expect(
+        screen.queryByText(alertBarMessages.phone),
+      ).not.toBeInTheDocument();
+    });
 
-    const fakeButton = component.find(FakeButton);
+    it("should render proper phone form elements ", () => {
+      render(
+        <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />,
+      );
 
-    expect(validationCodeInput).toHaveLength(1);
-    expect(buttons).toHaveLength(2);
-    expect(buttons.at(0).text()).toEqual("Confirm email");
-    expect(buttons.at(1).text()).toEqual("Resend confirmation code");
-    expect(fakeButton.text()).toEqual("Discard all changes");
-  });
+      const validationCodeInput = screen.getByRole("textbox");
+      expect(validationCodeInput).toBeVisible();
+      userEvent.type(validationCodeInput, "424242");
+      expect(validationCodeInput).toHaveDisplayValue("424242");
 
-  test("it should display properly an input and 3 buttons for phones", () => {
-    const component = mount(
-      <AccountApp>
-        <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />
-      </AccountApp>,
-    );
+      expect(
+        screen.getByRole("button", { name: "Confirm phone" }),
+      ).toBeInTheDocument();
 
-    const validationCodeInput = component
-      .find(Input)
-      .find({ placeholder: "012345" })
-      .hostNodes();
+      expect(
+        screen.getByRole("link", { name: "Discard all changes" }),
+      ).toBeInTheDocument();
 
-    const buttons = component.find(Button);
+      expect(
+        screen.getByRole("link", { name: "Discard all changes" }),
+      ).toHaveAttribute("href", "/account/logins");
 
-    const fakeButton = component.find(FakeButton);
+      expect(
+        screen.getByRole("button", { name: "Resend confirmation code" }),
+      ).toBeInTheDocument();
+    });
 
-    expect(validationCodeInput).toHaveLength(1);
-    expect(buttons).toHaveLength(2);
-    expect(buttons.at(0).text()).toEqual("Confirm phone");
-    expect(buttons.at(1).text()).toEqual("Resend confirmation code");
-    expect(fakeButton.text()).toEqual("Discard all changes");
-  });
+    it("should render proper phone breadcrumbs", () => {
+      render(
+        <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />,
+      );
 
-  test("it should display an alert bar with the correct message for phones", () => {
-    const component = mount(
-      <AccountApp>
-        <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />
-      </AccountApp>,
-    );
-
-    const alertBar = component.find(AlertBar);
-
-    expect(alertBar).toHaveLength(1);
-    expect(alertBar.text()).toEqual("Confirmation SMS has been sent");
-  });
-
-  test("it should display an alert bar with the correct message for emails", () => {
-    const component = mount(
-      <AccountApp>
-        <ValidateIdentityPage type={IdentityTypes.EMAIL} eventId={eventId} />
-      </AccountApp>,
-    );
-
-    const alertBar = component.find(AlertBar);
-
-    expect(alertBar).toHaveLength(1);
-    expect(alertBar.text()).toEqual("Confirmation email has been sent");
+      expect(screen.getByText("Phone number | validation")).toBeInTheDocument();
+    });
   });
 });
