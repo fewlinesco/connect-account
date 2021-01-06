@@ -33,6 +33,11 @@ export async function getServerSideCookies<T = unknown>(
   cookieName: string,
   isCookieSealed: boolean,
 ): Promise<T | undefined> {
+  console.log({
+    cookieName,
+    isCookieSealed,
+  });
+
   const cookies = new Cookies(request, response);
 
   if (isCookieSealed) {
@@ -42,6 +47,7 @@ export async function getServerSideCookies<T = unknown>(
       const unsealedCookie = await unseal(
         sealedCookie,
         config.connectAccountSessionSalt,
+        defaults,
       );
       return JSON.parse(unsealedCookie);
     } else {

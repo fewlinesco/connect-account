@@ -27,6 +27,8 @@ const handler: Handler = async (request, response): Promise<void> => {
 
     await getAndPutUser(oAuth2UserInfo);
 
+    console.log();
+
     await setServerSideCookies(
       request,
       response,
@@ -38,8 +40,8 @@ const handler: Handler = async (request, response): Promise<void> => {
       {
         shouldCookieBeSealed: true,
         maxAge: 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        secure: true,
+        // httpOnly: true,
+        // secure: true,
       },
     );
 
