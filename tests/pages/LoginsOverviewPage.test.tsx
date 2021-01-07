@@ -81,7 +81,7 @@ describe("LoginsOverviewPage", () => {
       );
       const alertBar = component.find(AlertBar);
       expect(alertBar).toHaveLength(1);
-      expect(alertBar.text()).toEqual("Email address has been deleted");
+      expect(alertBar.text()).toContain("Email address has been deleted");
     });
 
     test("it should display email, phone and social identities if there are one of each", () => {
