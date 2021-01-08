@@ -13,9 +13,9 @@ import {
 } from "@src/clientErrors";
 import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
 import { GraphqlErrors } from "@src/errors";
-import { withAuth } from "@src/middlewares/withAuth";
-import { withLogger } from "@src/middlewares/withLogger";
-import { withSentry } from "@src/middlewares/withSentry";
+import { withAuth } from "@src/middlewares/with-auth";
+import { withLogger } from "@src/middlewares/with-logger";
+import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
 import { getIdentityType } from "@src/utils/getIdentityType";

@@ -6,9 +6,9 @@ import { Layout } from "@src/components/Layout";
 import { AccountOverview } from "@src/components/display/fewlines/AccountOverview/AccountOverview";
 import { Container } from "@src/components/display/fewlines/Container";
 import { deviceBreakpoints } from "@src/design-system/theme";
-import { withAuth } from "@src/middlewares/withAuth";
-import { withLogger } from "@src/middlewares/withLogger";
-import { withSentry } from "@src/middlewares/withSentry";
+import { withAuth } from "@src/middlewares/with-auth";
+import { withLogger } from "@src/middlewares/with-logger";
+import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 
 const AccountPage: React.FC = () => {

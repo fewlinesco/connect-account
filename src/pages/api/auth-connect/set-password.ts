@@ -4,9 +4,9 @@ import { GraphQLError } from "graphql";
 import { createOrUpdatePassword } from "@lib/commands/create-or-update-password";
 import { Handler } from "@src/@types/core/Handler";
 import { UserCookie } from "@src/@types/user-cookie";
-import { withAuth } from "@src/middlewares/withAuth";
-import { withLogger } from "@src/middlewares/withLogger";
-import { withSentry } from "@src/middlewares/withSentry";
+import { withAuth } from "@src/middlewares/with-auth";
+import { withLogger } from "@src/middlewares/with-logger";
+import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import { getServerSideCookies } from "@src/utils/serverSideCookies";
 

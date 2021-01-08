@@ -9,7 +9,7 @@ import * as refreshTokensFlow from "@lib/commands/refresh-tokens-flow";
 import { Handler } from "@src/@types/core/Handler";
 import * as getAndPutUser from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
-import { withAuth } from "@src/middlewares/withAuth";
+import { withAuth } from "@src/middlewares/with-auth";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import * as getDBUserFromSub from "@src/queries/getDBUserFromSub.ts";
 import * as decryptVerifyAccessToken from "@src/workflows/decryptVerifyAccessToken";

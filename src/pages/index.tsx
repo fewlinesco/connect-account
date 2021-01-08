@@ -7,8 +7,8 @@ import { Main } from "@src/components/Layout";
 import { Home } from "@src/components/display/fewlines/Home/Home";
 import { oauth2Client } from "@src/config";
 import { GraphqlErrors } from "@src/errors";
-import { withLogger } from "@src/middlewares/withLogger";
-import { withSentry } from "@src/middlewares/withSentry";
+import { withLogger } from "@src/middlewares/with-logger";
+import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 
 type HomePageProps = { authorizeURL: string; providerName: string };
