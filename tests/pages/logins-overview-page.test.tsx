@@ -3,15 +3,15 @@ import React from "react";
 
 import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/sorted-identities";
+import AlertBar from "@src/components/alert-bar/alert-bar";
 import { ButtonVariant } from "@src/components/button/button";
-import AlertBar from "@src/components/display/fewlines/AlertBar/AlertBar";
-import { FakeButton } from "@src/components/display/fewlines/FakeButton/FakeButton";
 import {
   BoxedLink,
   NoIdentitiesBox,
 } from "@src/components/display/fewlines/IdentitiesSection/IdentitiesSection";
 import { NeutralLink } from "@src/components/display/fewlines/NeutralLink/NeutralLink";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
+import { FakeButton } from "@src/components/fake-button/fake-button";
 import { AccountApp } from "@src/pages/_app";
 import LoginsOverviewPage from "@src/pages/account/logins";
 

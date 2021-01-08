@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Security } from "./Security";
+import { Security } from "./security";
 
 export default { title: "pages/Security", component: Security };
 

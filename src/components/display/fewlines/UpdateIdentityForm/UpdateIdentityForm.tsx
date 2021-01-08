@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../../../button/button";
+import { FakeButton } from "../../../fake-button/fake-button";
 import { Form } from "../../../form/form";
-import { FakeButton } from "../FakeButton/FakeButton";
-import { Input } from "../Input/Input";
+import { Input } from "../../../input/input";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { Box } from "@src/components/box/box";

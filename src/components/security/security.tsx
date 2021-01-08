@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import { RightChevron } from "../Icons/RightChevron/RightChevron";
-import { NeutralLink } from "../NeutralLink/NeutralLink";
-import { ShadowBox } from "../ShadowBox/ShadowBox";
+import { RightChevron } from "../display/fewlines/Icons/RightChevron/RightChevron";
+import { NeutralLink } from "../display/fewlines/NeutralLink/NeutralLink";
+import { ShadowBox } from "../display/fewlines/ShadowBox/ShadowBox";
 
 type SecurityProps = {
   isPasswordSet: boolean;

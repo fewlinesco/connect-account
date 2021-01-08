@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
+import { Separator } from "../../../separator/separator";
 import {
   BoxedLink,
   NoIdentitiesBox,
 } from "../IdentitiesSection/IdentitiesSection";
-import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { IdentitiesSectionContent } from "@src/@types/identities-section-content";

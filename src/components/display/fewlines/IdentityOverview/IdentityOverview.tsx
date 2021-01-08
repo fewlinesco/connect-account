@@ -3,11 +3,11 @@ import styled from "styled-components";
 
 import { Box } from "../../../box/box";
 import { Button, ButtonVariant } from "../../../button/button";
+import { FakeButton } from "../../../fake-button/fake-button";
 import { AwaitingValidationBadge } from "../AwaitingValidationBadge/AwaitingValidationBadge";
 import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
 import { DeleteConfirmationBoxContent } from "../ConfirmationBox/DeleteConfirmationBoxContent";
 import { PrimaryConfirmationBoxContent } from "../ConfirmationBox/PrimaryConfirmationBoxContent";
-import { FakeButton } from "../FakeButton/FakeButton";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, IdentityTypes } from "@lib/@types";

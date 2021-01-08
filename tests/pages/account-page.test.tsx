@@ -1,7 +1,7 @@
 import { mount } from "enzyme";
 import React from "react";
 
-import { SECTION_LIST_CONTENT } from "@src/components/display/fewlines/AccountOverview/AccountOverview";
+import { SECTION_LIST_CONTENT } from "@src/components/account-overview/account-overview";
 import {
   TextBox,
   SectionName,

@@ -2,7 +2,7 @@ import type { GetServerSideProps } from "next";
 import React from "react";
 
 import { Layout } from "@src/components/Layout";
-import { Locale } from "@src/components/display/fewlines/Locale/Locale";
+import { Locale } from "@src/components/locale/locale";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";

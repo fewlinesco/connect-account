@@ -5,9 +5,9 @@ import { v4 as uuidv4 } from "uuid";
 
 import { Box } from "../../../box/box";
 import { Button, ButtonVariant } from "../../../button/button";
+import { FakeButton } from "../../../fake-button/fake-button";
 import { Form } from "../../../form/form";
-import { FakeButton } from "../FakeButton/FakeButton";
-import { Input } from "../Input/Input";
+import { Input } from "../../../input/input";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { IdentityTypes } from "@lib/@types/Identity";
 import {

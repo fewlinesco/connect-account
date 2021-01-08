@@ -3,11 +3,11 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
-import { Button, ButtonVariant } from "../../../button/button";
-import { Form } from "../../../form/form";
-import { FakeButton } from "../FakeButton/FakeButton";
-import { Input } from "../Input/Input";
-import { NeutralLink } from "../NeutralLink/NeutralLink";
+import { Button, ButtonVariant } from "../button/button";
+import { NeutralLink } from "../display/fewlines/NeutralLink/NeutralLink";
+import { FakeButton } from "../fake-button/fake-button";
+import { Form } from "../form/form";
+import { Input } from "../input/input";
 import { IdentityTypes } from "@lib/@types";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import {

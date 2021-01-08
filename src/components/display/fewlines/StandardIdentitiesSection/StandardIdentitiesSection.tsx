@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 import { ButtonVariant } from "../../../button/button";
-import { FakeButton } from "../FakeButton/FakeButton";
+import { FakeButton } from "../../../fake-button/fake-button";
+import { Separator } from "../../../separator/separator";
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import {
   BoxedLink,
   NoIdentitiesBox,
 } from "../IdentitiesSection/IdentitiesSection";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
-import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
 import { Identity } from "@lib/@types";

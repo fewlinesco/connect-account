@@ -6,7 +6,7 @@ import { StyledForm } from "../../../form/form";
 import { PasswordRulesErrorList } from "../PasswordRulesErrorList/PasswordRulesErrorList";
 import type { SetPasswordErrorRules } from "@lib/@types/Password";
 import { Button, ButtonVariant } from "@src/components/button/button";
-import { Input } from "@src/components/display/fewlines/Input/Input";
+import { Input } from "@src/components/input/input";
 import { capitalizeFirstLetter } from "@src/utils/format";
 import { setPassword } from "@src/workflows/set-password";
 

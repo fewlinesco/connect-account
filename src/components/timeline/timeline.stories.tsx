@@ -1,7 +1,7 @@
 import React from "react";
 
-import { StoriesContainer } from "../StoriesContainer";
-import { Timeline } from "./Timeline";
+import { StoriesContainer } from "../display/fewlines/StoriesContainer";
+import { Timeline } from "./timeline";
 
 export default {
   title: "components/Timeline",

@@ -2,7 +2,7 @@ import { mount } from "enzyme";
 import React from "react";
 
 import { Button, ButtonVariant } from "../button/button";
-import { Input } from "../display/fewlines/Input/Input";
+import { Input } from "../input/input";
 import { Form } from "./form";
 import { AccountApp } from "@src/pages/_app";
 

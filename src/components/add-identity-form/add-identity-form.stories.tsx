@@ -1,7 +1,7 @@
 import React from "react";
 
-import { StoriesContainer } from "../StoriesContainer";
-import { AddIdentityForm } from "./AddIdentityForm";
+import { StoriesContainer } from "../display/fewlines/StoriesContainer";
+import { AddIdentityForm } from "./add-identity-form";
 import { IdentityTypes } from "@lib/@types";
 
 export default {

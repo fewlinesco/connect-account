@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { CrossIcon } from "../Icons/CrossIcon/CrossIcon";
+import { CrossIcon } from "../display/fewlines/Icons/CrossIcon/CrossIcon";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 export const AlertBar: React.FC<{ text: string }> = ({ text }) => {

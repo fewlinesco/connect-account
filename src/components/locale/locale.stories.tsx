@@ -1,7 +1,7 @@
 import React from "react";
 
-import { StoriesContainer } from "../StoriesContainer";
-import { Locale } from "./Locale";
+import { StoriesContainer } from "../display/fewlines/StoriesContainer";
+import { Locale } from "./locale";
 
 export default { title: "pages/Locale", component: Locale };
 

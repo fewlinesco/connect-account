@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { NeutralLink } from "../NeutralLink/NeutralLink";
+import { NeutralLink } from "../display/fewlines/NeutralLink/NeutralLink";
 import { useTheme } from "@src/design-system/theme/use-theme";
 
 export const Header: React.FC = () => {

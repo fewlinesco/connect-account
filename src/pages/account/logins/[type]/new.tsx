@@ -3,7 +3,7 @@ import React from "react";
 
 import { IdentityTypes } from "@lib/@types";
 import { Layout } from "@src/components/Layout";
-import { AddIdentityForm } from "@src/components/display/fewlines/AddIdentityForm/AddIdentityForm";
+import { AddIdentityForm } from "@src/components/add-identity-form/add-identity-form";
 import { Container } from "@src/components/display/fewlines/Container";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { withAuth } from "@src/middlewares/with-auth";

@@ -1,8 +1,8 @@
 import React from "react";
 
 import { Button, ButtonVariant } from "../button/button";
-import { Input } from "../display/fewlines/Input/Input";
 import { StoriesContainer } from "../display/fewlines/StoriesContainer";
+import { Input } from "../input/input";
 import { Form } from "./form";
 
 export default { title: "components/Form", component: Form };

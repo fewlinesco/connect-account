@@ -6,7 +6,7 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { NoDataReturned } from "@src/client-errors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
-import { Security } from "@src/components/display/fewlines/Security/Security";
+import { Security } from "@src/components/security/security";
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";

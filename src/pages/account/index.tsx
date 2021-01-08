@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Layout } from "@src/components/Layout";
-import { AccountOverview } from "@src/components/display/fewlines/AccountOverview/AccountOverview";
+import { AccountOverview } from "@src/components/account-overview/account-overview";
 import { Container } from "@src/components/display/fewlines/Container";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { withAuth } from "@src/middlewares/with-auth";

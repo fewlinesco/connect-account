@@ -1,8 +1,8 @@
 import React from "react";
 
-import { LoginsIcon } from "../Icons/LoginsIcon/LoginsIcon";
-import { SecurityIcon } from "../Icons/SecurityIcon/SecurityIcon";
-import { SectionListItem } from "../SectionListItem/SectionListItem";
+import { LoginsIcon } from "../display/fewlines/Icons/LoginsIcon/LoginsIcon";
+import { SecurityIcon } from "../display/fewlines/Icons/SecurityIcon/SecurityIcon";
+import { SectionListItem } from "../display/fewlines/SectionListItem/SectionListItem";
 
 export const SECTION_LIST_CONTENT = {
   LOGINS: {

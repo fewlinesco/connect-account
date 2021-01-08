@@ -1,7 +1,7 @@
 import React from "react";
 
-import { StoriesContainer } from "../StoriesContainer";
-import { Input } from "./Input";
+import { StoriesContainer } from "../display/fewlines/StoriesContainer";
+import { Input } from "./input";
 
 export default { title: "components/Input", component: Input };
 
