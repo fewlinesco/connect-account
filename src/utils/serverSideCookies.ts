@@ -1,18 +1,16 @@
 import { seal, defaults, unseal } from "@hapi/iron";
-import Cookies from "cookies";
+import cookie from "cookie";
 import { IncomingMessage, ServerResponse } from "http";
 
 import { config } from "@src/config";
 
 export async function setServerSideCookies(
-  request: IncomingMessage,
   response: ServerResponse,
   cookieName: string,
-  cookieValue: unknown,
-  options: { shouldCookieBeSealed: boolean } & Cookies.SetOption,
+  cookieValue: string | Record<string, unknown>,
+  options: { shouldCookieBeSealed: boolean } & cookie.CookieSerializeOptions,
 ): Promise<void> {
-  const cookies = new Cookies(request, response);
-  const { shouldCookieBeSealed, ...setOptions } = options;
+  const { shouldCookieBeSealed, ...setCookieOptions } = options;
 
   if (shouldCookieBeSealed) {
     const sealedCookieValue = await seal(
@@ -21,42 +19,43 @@ export async function setServerSideCookies(
       defaults,
     );
 
-    cookies.set(cookieName, sealedCookieValue, setOptions);
+    response.setHeader(
+      "Set-Cookie",
+      cookie.serialize(cookieName, sealedCookieValue, setCookieOptions),
+    );
   } else {
-    cookies.set(cookieName, JSON.stringify(cookieValue), setOptions);
+    response.setHeader(
+      "Set-Cookie",
+      cookie.serialize(
+        cookieName,
+        JSON.stringify(cookieValue),
+        setCookieOptions,
+      ),
+    );
   }
 }
 
 export async function getServerSideCookies<T = unknown>(
   request: IncomingMessage,
-  response: ServerResponse,
   cookieName: string,
   isCookieSealed: boolean,
 ): Promise<T | undefined> {
-  const cookies = new Cookies(request, response);
+  const cookies = cookie.parse(request.headers.cookie || "");
+  const targetedCookie = cookies[cookieName];
+
+  if (!targetedCookie) {
+    return undefined;
+  }
 
   if (isCookieSealed) {
-    const sealedCookie = cookies.get(cookieName);
+    const unsealedCookie = await unseal(
+      targetedCookie,
+      config.connectAccountSessionSalt,
+      defaults,
+    );
 
-    if (sealedCookie) {
-      const unsealedCookie = await unseal(
-        sealedCookie,
-        config.connectAccountSessionSalt,
-        defaults,
-      );
-      return JSON.parse(unsealedCookie);
-    } else {
-      return undefined;
-    }
-  } else {
-    const cookie = cookies.get(cookieName);
-
-    if (cookie) {
-      return JSON.parse(cookie);
-    } else {
-      return undefined;
-    }
+    return JSON.parse(unsealedCookie);
   }
-}
 
-// http only ? to remove explicit boolean
+  return JSON.parse(targetedCookie);
+}

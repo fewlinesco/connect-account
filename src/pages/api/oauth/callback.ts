@@ -28,7 +28,6 @@ const handler: Handler = async (request, response): Promise<void> => {
     await getAndPutUser(oAuth2UserInfo);
 
     await setServerSideCookies(
-      request,
       response,
       "user-cookie",
       {
@@ -37,7 +36,9 @@ const handler: Handler = async (request, response): Promise<void> => {
       },
       {
         shouldCookieBeSealed: true,
-        maxAge: 24 * 60 * 60 * 1000,
+        maxAge: 24 * 60 * 60,
+        path: "/",
+        httpOnly: true,
         secure: true,
       },
     );
@@ -50,7 +51,6 @@ const handler: Handler = async (request, response): Promise<void> => {
     return;
   } else {
     response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
-
     response.end();
     return;
   }

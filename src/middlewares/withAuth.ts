@@ -21,7 +21,6 @@ export function withAuth(handler: Handler): Handler {
   ): Promise<unknown> => {
     const userCookie = await getServerSideCookies<UserCookie>(
       request,
-      response,
       "user-cookie",
       true,
     );
@@ -45,7 +44,6 @@ export function withAuth(handler: Handler): Handler {
               );
 
               await setServerSideCookies(
-                request,
                 response,
                 "user-cookie",
                 {
@@ -54,7 +52,9 @@ export function withAuth(handler: Handler): Handler {
                 },
                 {
                   shouldCookieBeSealed: true,
-                  maxAge: 24 * 60 * 60 * 1000,
+                  maxAge: 24 * 60 * 60,
+                  path: "/",
+                  httpOnly: true,
                   secure: true,
                 },
               );
