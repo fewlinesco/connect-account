@@ -3,9 +3,9 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
-import { Button, ButtonVariant } from "../Button/Button";
+import { Button, ButtonVariant } from "../../../button/button";
+import { Form } from "../../../form/form";
 import { FakeButton } from "../FakeButton/FakeButton";
-import { Form } from "../Form/Form";
 import { Input } from "../Input/Input";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { IdentityTypes } from "@lib/@types";

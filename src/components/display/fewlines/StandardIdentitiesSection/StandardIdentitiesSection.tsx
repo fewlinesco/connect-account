@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { ButtonVariant } from "../Button/Button";
+import { ButtonVariant } from "../../../button/button";
 import { FakeButton } from "../FakeButton/FakeButton";
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import {

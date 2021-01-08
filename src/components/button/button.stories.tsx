@@ -1,7 +1,7 @@
 import React from "react";
 
-import { StoriesContainer } from "../StoriesContainer";
-import { Button, ButtonVariant } from "./Button";
+import { StoriesContainer } from "../display/fewlines/StoriesContainer";
+import { Button, ButtonVariant } from "./button";
 
 export default { title: "components/Button", component: Button };
 

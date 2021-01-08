@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Button, ButtonVariant } from "../Button/Button";
+import { Button, ButtonVariant } from "../../../button/button";
+import { Form } from "../../../form/form";
 import { FakeButton } from "../FakeButton/FakeButton";
-import { Form } from "../Form/Form";
 import { Input } from "../Input/Input";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { Identity, IdentityTypes } from "@lib/@types";
-import { Box } from "@src/components/display/fewlines/Box/Box";
+import { Box } from "@src/components/box/box";
 
 export const UpdateIdentityForm: React.FC<{
   updateIdentity: (newValue: string) => Promise<void>;

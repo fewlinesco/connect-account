@@ -2,13 +2,10 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { StyledForm } from "../Form/Form";
+import { StyledForm } from "../../../form/form";
 import { PasswordRulesErrorList } from "../PasswordRulesErrorList/PasswordRulesErrorList";
 import type { SetPasswordErrorRules } from "@lib/@types/Password";
-import {
-  Button,
-  ButtonVariant,
-} from "@src/components/display/fewlines/Button/Button";
+import { Button, ButtonVariant } from "@src/components/button/button";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import { capitalizeFirstLetter } from "@src/utils/format";
 import { setPassword } from "@src/workflows/set-password";

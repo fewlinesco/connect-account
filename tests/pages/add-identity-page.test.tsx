@@ -3,17 +3,14 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 
 import { IdentityTypes } from "@lib/@types";
-import {
-  Button,
-  ButtonVariant,
-} from "@src/components/display/fewlines/Button/Button";
+import { Button, ButtonVariant } from "@src/components/button/button";
 import { FakeButton } from "@src/components/display/fewlines/FakeButton/FakeButton";
-import { Form } from "@src/components/display/fewlines/Form/Form";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import {
   NavigationBreadcrumbs,
   Breadcrumbs,
 } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
+import { Form } from "@src/components/form/form";
 import { AccountApp } from "@src/pages/_app";
 import AddIdentityPage from "@src/pages/account/logins/[type]/new";
 import * as fetchJson from "@src/utils/fetch-json";

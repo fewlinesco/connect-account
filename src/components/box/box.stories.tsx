@@ -1,7 +1,7 @@
 import React from "react";
 
-import { StoriesContainer } from "../StoriesContainer";
-import { Box } from "./Box";
+import { StoriesContainer } from "../display/fewlines/StoriesContainer";
+import { Box } from "./box";
 
 export default { title: "components/Box", component: Box };
 

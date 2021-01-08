@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
+import { Box } from "../../../box/box";
+import { Button, ButtonVariant } from "../../../button/button";
 import { AwaitingValidationBadge } from "../AwaitingValidationBadge/AwaitingValidationBadge";
-import { Box } from "../Box/Box";
-import { Button, ButtonVariant } from "../Button/Button";
 import { ConfirmationBox } from "../ConfirmationBox/ConfirmationBox";
 import { DeleteConfirmationBoxContent } from "../ConfirmationBox/DeleteConfirmationBoxContent";
 import { PrimaryConfirmationBoxContent } from "../ConfirmationBox/PrimaryConfirmationBoxContent";

@@ -1,9 +1,9 @@
 import { mount } from "enzyme";
 import React from "react";
 
-import { Button, ButtonVariant } from "../Button/Button";
-import { Input } from "../Input/Input";
-import { Form } from "./Form";
+import { Button, ButtonVariant } from "../button/button";
+import { Input } from "../display/fewlines/Input/Input";
+import { Form } from "./form";
 import { AccountApp } from "@src/pages/_app";
 
 describe("Form", () => {

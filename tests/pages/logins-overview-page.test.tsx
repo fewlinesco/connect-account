@@ -3,8 +3,8 @@ import React from "react";
 
 import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/sorted-identities";
+import { ButtonVariant } from "@src/components/button/button";
 import AlertBar from "@src/components/display/fewlines/AlertBar/AlertBar";
-import { ButtonVariant } from "@src/components/display/fewlines/Button/Button";
 import { FakeButton } from "@src/components/display/fewlines/FakeButton/FakeButton";
 import {
   BoxedLink,

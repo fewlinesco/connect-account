@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { Button, ButtonVariant } from "../Button/Button";
+import { Button, ButtonVariant } from "../../../button/button";
 import { IdentityTypes } from "@lib/@types";
 import { getIdentityType } from "@src/utils/get-identity-type";
 import { deleteIdentity } from "@src/workflows/delete-identity";
