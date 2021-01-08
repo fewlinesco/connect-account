@@ -3,7 +3,7 @@ import { HttpStatus } from "@fwl/web";
 import { sendIdentityValidationCode } from "@lib/commands/send-identity-validation-code";
 import { Handler } from "@src/@types/core/Handler";
 import { UserCookie } from "@src/@types/user-cookie";
-import { insertTemporaryIdentity } from "@src/commands/insertTemporaryIdentity";
+import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";

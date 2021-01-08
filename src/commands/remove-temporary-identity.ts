@@ -1,4 +1,4 @@
-import { putUser } from "./putUser";
+import { putUser } from "./put-user";
 import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { NoUserFound } from "@src/clientErrors";
 import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";

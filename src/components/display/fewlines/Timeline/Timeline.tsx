@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { TimelineBulletPoint } from "../Icons/TimelineBulletPoint/TimelineBulletPoint";
-import { deviceBreakpoints } from "@src/design-system/theme/decatTheme";
+import { deviceBreakpoints } from "@src/design-system/theme/decat-theme";
 
 export const Timeline: React.FC = () => {
   return (

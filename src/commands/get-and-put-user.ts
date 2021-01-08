@@ -1,4 +1,4 @@
-import { putUser } from "./putUser";
+import { putUser } from "./put-user";
 import { DynamoUser } from "@src/@types/dynamo-user";
 import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
 

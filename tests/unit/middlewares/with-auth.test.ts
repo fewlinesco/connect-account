@@ -7,7 +7,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import * as refreshTokensFlow from "@lib/commands/refresh-tokens-flow";
 import { Handler } from "@src/@types/core/Handler";
-import * as getAndPutUser from "@src/commands/getAndPutUser";
+import * as getAndPutUser from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
 import { withAuth } from "@src/middlewares/withAuth";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";

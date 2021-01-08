@@ -3,12 +3,12 @@ import { DefaultTheme } from "styled-components";
 import {
   decatTheme,
   deviceBreakpoints as decatDeviceBreakpoints,
-} from "./decatTheme";
+} from "./decat-theme";
 import {
   lightTheme,
   deviceBreakpoints as fewlinesDeviceBreakpoints,
   DeviceBreakpoints,
-} from "./lightTheme";
+} from "./light-theme";
 import { config } from "@src/config";
 
 let theme: DefaultTheme;

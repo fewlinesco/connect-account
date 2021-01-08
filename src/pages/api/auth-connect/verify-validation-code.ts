@@ -11,7 +11,7 @@ import {
   NoTemporaryIdentity,
   NoUserFound,
 } from "@src/clientErrors";
-import { removeTemporaryIdentity } from "@src/commands/removeTemporaryIdentity";
+import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";

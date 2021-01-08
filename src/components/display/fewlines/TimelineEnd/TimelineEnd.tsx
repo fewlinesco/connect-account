@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { GhostTimelineBulletPoint } from "../Icons/GhostTimelineBulletPoint/GhostTimelineBulletPoint";
 import { TimelineBulletPoint } from "../Icons/TimelineBulletPoint/TimelineBulletPoint";
-import { deviceBreakpoints } from "@src/design-system/theme/decatTheme";
+import { deviceBreakpoints } from "@src/design-system/theme/decat-theme";
 
 export const TimelineEnd: React.FC = () => {
   return (
