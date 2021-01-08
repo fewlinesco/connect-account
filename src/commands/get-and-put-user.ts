@@ -1,6 +1,6 @@
 import { putUser } from "./put-user";
 import { DynamoUser } from "@src/@types/dynamo-user";
-import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
+import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 
 type OAuth2UserInfo = {
   sub: string;

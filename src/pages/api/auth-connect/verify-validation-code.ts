@@ -17,7 +17,7 @@ import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
-import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
+import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import { getIdentityType } from "@src/utils/getIdentityType";
 import { getServerSideCookies } from "@src/utils/serverSideCookies";
 

@@ -7,7 +7,7 @@ import { AccessToken } from "@src/@types/oauth2/oauth2-tokens";
 import { UserCookie } from "@src/@types/user-cookie";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
-import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
+import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import {
   getServerSideCookies,
   setServerSideCookies,

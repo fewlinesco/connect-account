@@ -11,7 +11,7 @@ import * as getAndPutUser from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
 import { withAuth } from "@src/middlewares/with-auth";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
-import * as getDBUserFromSub from "@src/queries/getDBUserFromSub.ts";
+import * as getDBUserFromSub from "@src/queries/get-db-user-from-sub";
 import * as decryptVerifyAccessToken from "@src/workflows/decryptVerifyAccessToken";
 
 jest.mock("@src/config", () => {
