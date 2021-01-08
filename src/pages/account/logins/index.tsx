@@ -45,10 +45,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return wrapMiddlewaresForSSR<{ sortedIdentities: SortedIdentities }>(
     context,
     [withLogger, withSentry, withAuth],
-    async (request, response) => {
+    async (request) => {
       const userCookie = await getServerSideCookies<UserCookie>(
         request,
-        response,
         "user-cookie",
         true,
       );

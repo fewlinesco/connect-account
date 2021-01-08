@@ -16,7 +16,6 @@ const handler: Handler = async (request, response) => {
 
     const userCookie = await getServerSideCookies<UserCookie>(
       request,
-      response,
       "user-cookie",
       true,
     );

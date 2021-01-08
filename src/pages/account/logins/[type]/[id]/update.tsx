@@ -62,7 +62,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
       const userCookie = await getServerSideCookies<UserCookie>(
         request,
-        response,
         "user-cookie",
         true,
       );
