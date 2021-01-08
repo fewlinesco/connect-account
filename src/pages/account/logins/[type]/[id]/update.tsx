@@ -60,11 +60,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
       const identityId = context.params.id.toString();
 
-      const userCookie = await getServerSideCookies<UserCookie>(
-        request,
-        "user-cookie",
-        true,
-      );
+      const userCookie = await getServerSideCookies<UserCookie>(request, {
+        cookieName: "user-cookie",
+        isCookieSealed: true,
+      });
 
       if (userCookie) {
         const identity = await getIdentities(userCookie.sub).then(

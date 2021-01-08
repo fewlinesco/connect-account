@@ -37,9 +37,12 @@ export async function setServerSideCookies(
 
 export async function getServerSideCookies<T = unknown>(
   request: IncomingMessage,
-  cookieName: string,
-  isCookieSealed: boolean,
+  cookieParams: {
+    cookieName: string;
+    isCookieSealed: boolean;
+  },
 ): Promise<T | undefined> {
+  const { cookieName, isCookieSealed } = cookieParams;
   const cookies = cookie.parse(request.headers.cookie || "");
   const targetedCookie = cookies[cookieName];
 

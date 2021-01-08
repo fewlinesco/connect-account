@@ -25,11 +25,10 @@ const handler: Handler = async (request, response) => {
   if (request.method === "POST") {
     const { validationCode, eventId } = request.body;
 
-    const userCookie = (await getServerSideCookies<UserCookie>(
-      request,
-      "user-cookie",
-      true,
-    )) as UserCookie;
+    const userCookie = (await getServerSideCookies<UserCookie>(request, {
+      cookieName: "user-cookie",
+      isCookieSealed: true,
+    })) as UserCookie;
 
     const user = await getDBUserFromSub(userCookie.sub);
 

@@ -16,11 +16,10 @@ const handler: Handler = async (request, response) => {
   if (request.method === "POST") {
     const { callbackUrl, identityInput } = request.body;
 
-    const userCookie = await getServerSideCookies<UserCookie>(
-      request,
-      "user-cookie",
-      true,
-    );
+    const userCookie = await getServerSideCookies<UserCookie>(request, {
+      cookieName: "user-cookie",
+      isCookieSealed: true,
+    });
 
     if (userCookie) {
       const identity = {

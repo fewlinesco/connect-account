@@ -18,27 +18,33 @@ const handler: Handler = async (request, response) => {
     if (request.method === "POST") {
       const { identityId } = request.body;
 
-      const userCookie = (await getServerSideCookies<UserCookie>(
-        request,
-        "user-cookie",
-        true,
-      )) as UserCookie;
+      const userCookie = await getServerSideCookies<UserCookie>(request, {
+        cookieName: "user-cookie",
+        isCookieSealed: true,
+      });
 
-      const isAuthorized = await isMarkingIdentityAsPrimaryAuthorized(
-        userCookie.sub,
-        identityId,
-      );
+      if (userCookie) {
+        const isAuthorized = await isMarkingIdentityAsPrimaryAuthorized(
+          userCookie.sub,
+          identityId,
+        );
 
-      if (isAuthorized) {
-        return markIdentityAsPrimary(identityId).then((data) => {
-          response.statusCode = HttpStatus.OK;
-          response.setHeader("Content-type", "application/json");
-          response.json({ data });
-        });
+        if (isAuthorized) {
+          return markIdentityAsPrimary(identityId).then((data) => {
+            response.statusCode = HttpStatus.OK;
+            response.setHeader("Content-type", "application/json");
+            response.json({ data });
+          });
+        }
+
+        response.statusCode = HttpStatus.BAD_REQUEST;
+        return response.end();
+      } else {
+        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+        response.setHeader("location", "/");
+        response.end();
+        return;
       }
-
-      response.statusCode = HttpStatus.BAD_REQUEST;
-      return response.end();
     }
   } catch (error) {
     Sentry.withScope((scope) => {

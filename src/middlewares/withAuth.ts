@@ -19,11 +19,10 @@ export function withAuth(handler: Handler): Handler {
     request: NextApiRequest,
     response: NextApiResponse,
   ): Promise<unknown> => {
-    const userCookie = await getServerSideCookies<UserCookie>(
-      request,
-      "user-cookie",
-      true,
-    );
+    const userCookie = await getServerSideCookies<UserCookie>(request, {
+      cookieName: "user-cookie",
+      isCookieSealed: true,
+    });
 
     if (userCookie) {
       const { access_token: currentAccessToken, sub } = userCookie;

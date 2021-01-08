@@ -46,11 +46,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     context,
     [withLogger, withSentry, withAuth],
     async (request) => {
-      const userCookie = await getServerSideCookies<UserCookie>(
-        request,
-        "user-cookie",
-        true,
-      );
+      const userCookie = await getServerSideCookies<UserCookie>(request, {
+        cookieName: "user-cookie",
+        isCookieSealed: true,
+      });
 
       if (userCookie) {
         const sortedIdentities = await getIdentities(userCookie.sub).then(
