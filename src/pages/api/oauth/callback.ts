@@ -6,7 +6,7 @@ import { oauth2Client } from "@src/config";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
-import { setServerSideCookies } from "@src/utils/serverSideCookies";
+import { setServerSideCookies } from "@src/utils/server-side-cookies";
 import { decryptVerifyAccessToken } from "@src/workflows/decryptVerifyAccessToken";
 
 const handler: Handler = async (request, response): Promise<void> => {

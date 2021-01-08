@@ -3,7 +3,7 @@ import {
   InvalidValidationCode,
   TemporaryIdentityExpired,
 } from "@src/clientErrors";
-import { fetchJson } from "@src/utils/fetchJson";
+import { fetchJson } from "@src/utils/fetch-json";
 
 export async function validateIdentity(
   validationCode: string,

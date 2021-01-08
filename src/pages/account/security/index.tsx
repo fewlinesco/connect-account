@@ -12,7 +12,7 @@ import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
-import { getServerSideCookies } from "@src/utils/serverSideCookies";
+import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 type SecurityPageProps = {
   isPasswordSet: boolean;

@@ -13,7 +13,7 @@ import {
   capitalizeFirstLetter,
   formatSpecialSocialIdentities,
 } from "@src/utils/format";
-import { getSocialIdentityIcon } from "@src/utils/getSocialIdentitiesIcon";
+import { getSocialIdentityIcon } from "@src/utils/get-social-identities-icon";
 
 type SocialIdentitiesSectionProps = {
   content: IdentitiesSectionContent;

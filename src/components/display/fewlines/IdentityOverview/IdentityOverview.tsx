@@ -11,7 +11,7 @@ import { FakeButton } from "../FakeButton/FakeButton";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { PrimaryBadge } from "../PrimaryBadge/PrimaryBadge";
 import { Identity, IdentityTypes } from "@lib/@types";
-import { getIdentityType } from "@src/utils/getIdentityType";
+import { getIdentityType } from "@src/utils/get-identity-type";
 
 type IdentityOverviewProps = {
   identity: Identity;

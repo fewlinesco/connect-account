@@ -1,5 +1,5 @@
 import { IdentityTypes, ProviderUser } from "@lib/@types";
-import { isMarkingIdentityAsPrimaryAuthorized } from "@src/utils/isMarkingIdentityAsPrimaryAuthorized";
+import { isMarkingIdentityAsPrimaryAuthorized } from "@src/utils/is-marking-identity-as-primary-authorized";
 
 const userSub = "c396885b-18c7-43d6-ba4b-1b8fe4f7b66b";
 const mockedResponse: { data: { provider: ProviderUser } } = {

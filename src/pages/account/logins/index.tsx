@@ -13,10 +13,10 @@ import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
-import { displayAlertBar } from "@src/utils/displayAlertBar";
-import { getFlashMessage } from "@src/utils/getFlashMessage";
-import { getServerSideCookies } from "@src/utils/serverSideCookies";
-import { sortIdentities } from "@src/utils/sortIdentities";
+import { displayAlertBar } from "@src/utils/display-alert-bar";
+import { getFlashMessage } from "@src/utils/get-flash-message";
+import { getServerSideCookies } from "@src/utils/server-side-cookies";
+import { sortIdentities } from "@src/utils/sort-identities";
 
 type LoginsOverviewPageProps = {
   sortedIdentities: SortedIdentities;

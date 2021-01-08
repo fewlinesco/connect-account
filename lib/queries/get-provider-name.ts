@@ -1,7 +1,7 @@
 import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
-import { fetchManagement } from "@src/utils/fetchManagement";
+import { fetchManagement } from "@src/utils/fetch-management";
 
 const GET_PROVIDER_NAME_QUERY = gql`
   query getProviderName {

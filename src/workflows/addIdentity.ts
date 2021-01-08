@@ -7,8 +7,8 @@ import {
   IdentityInputValueCantBeBlank,
   PhoneNumberInputValueShouldBeANumber,
 } from "@src/clientErrors";
-import { fetchJson } from "@src/utils/fetchJson";
-import { getIdentityType } from "@src/utils/getIdentityType";
+import { fetchJson } from "@src/utils/fetch-json";
+import { getIdentityType } from "@src/utils/get-identity-type";
 
 export async function addIdentity(
   identityInput: InMemoryTemporaryIdentity,

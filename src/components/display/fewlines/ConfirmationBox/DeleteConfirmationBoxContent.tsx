@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
 import { IdentityTypes } from "@lib/@types";
-import { getIdentityType } from "@src/utils/getIdentityType";
+import { getIdentityType } from "@src/utils/get-identity-type";
 import { deleteIdentity } from "@src/workflows/deleteIdentity";
 
 interface DeleteIdentityProps {

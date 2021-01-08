@@ -1,5 +1,5 @@
 import { Identity, IdentityTypes } from "@lib/@types";
-import { sortIdentities } from "@src/utils/sortIdentities";
+import { sortIdentities } from "@src/utils/sort-identities";
 
 describe("sortIdentities", () => {
   it("should render properly with 1 entry arrays", () => {

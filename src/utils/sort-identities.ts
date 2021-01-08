@@ -1,4 +1,4 @@
-import { getIdentityType } from "./getIdentityType";
+import { getIdentityType } from "./get-identity-type";
 import { Identity, IdentityTypes } from "@lib/@types";
 import type { SortedIdentities } from "@src/@types/sorted-identities";
 import { UnhandledIdentityType } from "@src/clientErrors";
@@ -7,7 +7,7 @@ function sortPrimaryIdentity(a: Identity, b: Identity): number {
   return a.primary === b.primary ? 0 : a.primary ? -1 : 1;
 }
 
-function sortIdentitiyStatus(a: Identity, b: Identity): number {
+function sortIdentityStatus(a: Identity, b: Identity): number {
   return a.status === b.status ? 0 : a.status === "validated" ? -1 : 1;
 }
 
@@ -50,9 +50,9 @@ export function sortIdentities(identities: Identity[]): SortedIdentities {
     }
   });
 
-  phoneIdentities.sort(sortIdentitiyStatus).sort(sortPrimaryIdentity);
-  emailIdentities.sort(sortIdentitiyStatus).sort(sortPrimaryIdentity);
-  socialIdentities.sort(sortIdentitiyStatus).sort(sortPrimaryIdentity);
+  phoneIdentities.sort(sortIdentityStatus).sort(sortPrimaryIdentity);
+  emailIdentities.sort(sortIdentityStatus).sort(sortPrimaryIdentity);
+  socialIdentities.sort(sortIdentityStatus).sort(sortPrimaryIdentity);
 
   return { phoneIdentities, emailIdentities, socialIdentities };
 }

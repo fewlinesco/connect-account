@@ -15,7 +15,7 @@ import {
   IdentityInputValueCantBeBlank,
   PhoneNumberInputValueShouldBeANumber,
 } from "@src/clientErrors";
-import { getIdentityType } from "@src/utils/getIdentityType";
+import { getIdentityType } from "@src/utils/get-identity-type";
 import { addIdentity } from "@src/workflows/addIdentity";
 
 type AddIdentityFormProps = {

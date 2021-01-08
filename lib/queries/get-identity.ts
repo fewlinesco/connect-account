@@ -2,7 +2,7 @@ import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
 import type { SingleIdentityProviderUser } from "@lib/@types/provider-user";
-import { fetchManagement } from "@src/utils/fetchManagement";
+import { fetchManagement } from "@src/utils/fetch-management";
 
 const GET_USER_IDENTITY_QUERY = gql`
   query getUserIdentityQuery($userId: String!, $id: String!) {

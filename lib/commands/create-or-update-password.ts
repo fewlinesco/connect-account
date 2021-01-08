@@ -1,7 +1,7 @@
 import type { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
-import { fetchManagement } from "../../src/utils/fetchManagement";
+import { fetchManagement } from "../../src/utils/fetch-management";
 import { CreateOrUpdatePasswordInput, User } from "../@types/provider-user";
 
 export type CreateOrUpdatePassword = Promise<

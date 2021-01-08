@@ -16,7 +16,7 @@ import {
 } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
 import { AccountApp } from "@src/pages/_app";
 import AddIdentityPage from "@src/pages/account/logins/[type]/new";
-import * as fetchJson from "@src/utils/fetchJson";
+import * as fetchJson from "@src/utils/fetch-json";
 
 enableFetchMocks();
 

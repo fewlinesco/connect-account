@@ -8,7 +8,7 @@ import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
-import { getServerSideCookies } from "@src/utils/serverSideCookies";
+import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 const handler: Handler = async (request, response) => {
   if (request.method === "POST") {

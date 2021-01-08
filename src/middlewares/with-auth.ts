@@ -11,7 +11,7 @@ import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import {
   getServerSideCookies,
   setServerSideCookies,
-} from "@src/utils/serverSideCookies";
+} from "@src/utils/server-side-cookies";
 import { decryptVerifyAccessToken } from "@src/workflows/decryptVerifyAccessToken";
 
 export function withAuth(handler: Handler): Handler {

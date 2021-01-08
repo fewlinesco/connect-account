@@ -9,8 +9,8 @@ import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
-import { getIdentityType } from "@src/utils/getIdentityType";
-import { getServerSideCookies } from "@src/utils/serverSideCookies";
+import { getIdentityType } from "@src/utils/get-identity-type";
+import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 const handler: Handler = async (request, response) => {
   if (request.method === "POST") {

@@ -2,7 +2,7 @@ import type { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
 import type { ProviderUserPasswordSet } from "@lib/@types/Password";
-import { fetchManagement } from "@src/utils/fetchManagement";
+import { fetchManagement } from "@src/utils/fetch-management";
 
 const IS_USER_PASSWORD_SET_QUERY = gql`
   query isUserPasswordSet($userId: String!) {

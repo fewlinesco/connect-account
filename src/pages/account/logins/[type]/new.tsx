@@ -10,7 +10,7 @@ import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
-import { getIdentityType } from "@src/utils/getIdentityType";
+import { getIdentityType } from "@src/utils/get-identity-type";
 
 const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   return (

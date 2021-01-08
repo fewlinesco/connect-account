@@ -2,7 +2,7 @@ import type { SetPasswordError } from "@lib/@types/Password";
 import type { User } from "@lib/@types/provider-user";
 import { HttpVerbs } from "@src/@types/core/http-verbs";
 import { ErrorSettingPassword } from "@src/clientErrors";
-import { fetchJson } from "@src/utils/fetchJson";
+import { fetchJson } from "@src/utils/fetch-json";
 
 export type SetPasswordOutput = {
   data: { createOrUpdatePassword: User };
