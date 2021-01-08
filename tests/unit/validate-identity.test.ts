@@ -6,7 +6,7 @@ import {
   TemporaryIdentityExpired,
 } from "@src/clientErrors";
 import * as fetchJson from "@src/utils/fetch-json";
-import { validateIdentity } from "@src/workflows/validateIdentity";
+import { validateIdentity } from "@src/workflows/validate-identity";
 
 enableFetchMocks();
 

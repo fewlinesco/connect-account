@@ -15,7 +15,7 @@ import {
   TemporaryIdentityExpired,
 } from "@src/clientErrors";
 import { displayAlertBar } from "@src/utils/display-alert-bar";
-import { validateIdentity } from "@src/workflows/validateIdentity";
+import { validateIdentity } from "@src/workflows/validate-identity";
 
 export const ValidateIdentityForm: React.FC<{
   type: IdentityTypes;

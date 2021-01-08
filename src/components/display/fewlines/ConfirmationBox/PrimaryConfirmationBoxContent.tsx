@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../Button/Button";
 import { Identity } from "@lib/@types";
-import { markIdentityAsPrimaryCall } from "@src/workflows/markIdentityAsPrimary";
+import { markIdentityAsPrimaryCall } from "@src/workflows/mark-identity-as-primary";
 
 interface PrimaryConfirmationBoxContentProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;

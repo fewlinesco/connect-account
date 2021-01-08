@@ -11,7 +11,7 @@ import {
 } from "@src/components/display/fewlines/Button/Button";
 import { Input } from "@src/components/display/fewlines/Input/Input";
 import { capitalizeFirstLetter } from "@src/utils/format";
-import { setPassword } from "@src/workflows/setPassword";
+import { setPassword } from "@src/workflows/set-password";
 
 type SetPasswordFormProps = {
   conditionalBreadcrumbItem: string;

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Button, ButtonVariant } from "../Button/Button";
 import { IdentityTypes } from "@lib/@types";
 import { getIdentityType } from "@src/utils/get-identity-type";
-import { deleteIdentity } from "@src/workflows/deleteIdentity";
+import { deleteIdentity } from "@src/workflows/delete-identity";
 
 interface DeleteIdentityProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;

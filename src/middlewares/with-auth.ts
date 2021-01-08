@@ -12,7 +12,7 @@ import {
   getServerSideCookies,
   setServerSideCookies,
 } from "@src/utils/server-side-cookies";
-import { decryptVerifyAccessToken } from "@src/workflows/decryptVerifyAccessToken";
+import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
 export function withAuth(handler: Handler): Handler {
   return async (

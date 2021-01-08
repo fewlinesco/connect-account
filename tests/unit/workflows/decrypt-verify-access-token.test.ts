@@ -3,7 +3,7 @@ import {
   EnvVar_IsJweSigned_MustBeABoolean,
   UnhandledTokenType,
 } from "@src/errors";
-import { decryptVerifyAccessToken } from "@src/workflows/decryptVerifyAccessToken";
+import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
 const mockConfigGetter = jest.fn();
 

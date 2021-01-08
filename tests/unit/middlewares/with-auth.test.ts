@@ -12,7 +12,7 @@ import { config, oauth2Client } from "@src/config";
 import { withAuth } from "@src/middlewares/with-auth";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import * as getDBUserFromSub from "@src/queries/get-db-user-from-sub";
-import * as decryptVerifyAccessToken from "@src/workflows/decryptVerifyAccessToken";
+import * as decryptVerifyAccessToken from "@src/workflows/decrypt-verify-access-token";
 
 jest.mock("@src/config", () => {
   const configFile = jest.requireActual("@src/config");
