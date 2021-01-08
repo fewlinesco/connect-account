@@ -84,7 +84,7 @@ describe("IdentityOverviewPage", () => {
       expect(screen.getByText("Email address")).toBeInTheDocument();
     });
 
-    it("should display the relevant options delete & mark as primary buttons but not validate identity one for a non primary validated email adress", () => {
+    it("should display the relevant delete & mark as primary buttons but not validate identity one for a non primary validated email address", () => {
       render(
         <IdentityOverviewPage
           identity={nonPrimaryEmailIdentity}
@@ -123,7 +123,7 @@ describe("IdentityOverviewPage", () => {
       expect(screen.queryByText("Awaiting validation")).not.toBeInTheDocument();
     });
 
-    it("shouldn't display the option delete, mark as primary & validate identity buttons for a primary email address", () => {
+    it("shouldn't display the delete, mark as primary & validate identity buttons for a primary email address", () => {
       render(
         <IdentityOverviewPage
           identity={primaryEmailIdentity}
@@ -158,7 +158,7 @@ describe("IdentityOverviewPage", () => {
       expect(screen.queryByText("Awaiting validation")).not.toBeInTheDocument();
     });
 
-    it("should display the option delete & validate identity buttons but not mark as primary one for an unvalidated email address", () => {
+    it("should display the delete & validate identity buttons but not mark as primary one for an unvalidated email address", () => {
       render(
         <IdentityOverviewPage
           identity={unvalidatedEmailIdentity}
@@ -210,7 +210,7 @@ describe("IdentityOverviewPage", () => {
       expect(screen.getByText("Phone number")).toBeInTheDocument();
     });
 
-    it("should display the relevant options delete & mark as primary buttons but not validate identity one for a non primary validated phone number", () => {
+    it("should display the relevant delete & mark as primary buttons but not validate identity one for a non primary validated phone number", () => {
       render(
         <IdentityOverviewPage
           identity={nonPrimaryPhoneIdentity}
@@ -245,7 +245,7 @@ describe("IdentityOverviewPage", () => {
       expect(screen.queryByText("Awaiting validation")).not.toBeInTheDocument();
     });
 
-    it("shouldn't display the option delete, mark as primary & validate identity buttons for a primary phone number", () => {
+    it("shouldn't display the delete, mark as primary & validate identity buttons for a primary phone number", () => {
       render(
         <IdentityOverviewPage
           identity={primaryPhoneIdentity}
@@ -280,7 +280,7 @@ describe("IdentityOverviewPage", () => {
       expect(screen.queryByText("Awaiting validation")).not.toBeInTheDocument();
     });
 
-    it("should display the option delete & validate identity buttons but not mark as primary one for an unvalidated phone number", () => {
+    it("should display the delete & validate identity buttons but not mark as primary one for an unvalidated phone number", () => {
       render(
         <IdentityOverviewPage
           identity={unvalidatedPhoneIdentity}
@@ -339,7 +339,7 @@ describe("ConfirmationBox", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("should display primary confirmation box after cliking on mark as primary button & close it by clicking on cancel button", async () => {
+  it("should display primary confirmation box after clicking on mark as primary button & close it by clicking on cancel button", async () => {
     render(
       <IdentityOverviewPage
         identity={nonPrimaryEmailIdentity}
@@ -382,7 +382,7 @@ describe("ConfirmationBox", () => {
     });
   });
 
-  it("should display delete confirmation box after cliking on delete button & close it by clicking on cancel button", async () => {
+  it("should display delete confirmation box after clicking on delete button & close it by clicking on cancel button", async () => {
     render(
       <IdentityOverviewPage
         identity={nonPrimaryEmailIdentity}
