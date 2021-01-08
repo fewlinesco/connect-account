@@ -1,4 +1,4 @@
-import { getIdentities } from "@lib/queries/getIdentities";
+import { getIdentities } from "@lib/queries/get-identities";
 import { NoDataReturned, NoIdentityFound } from "@src/clientErrors";
 import { GraphqlErrors } from "@src/errors";
 

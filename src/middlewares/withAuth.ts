@@ -1,7 +1,7 @@
 import { HttpStatus } from "@fwl/web";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { refreshTokensFlow } from "@lib/commands/refreshTokensFlow";
+import { refreshTokensFlow } from "@lib/commands/refresh-tokens-flow";
 import { UserCookie } from "@src/@types/UserCookie";
 import { Handler } from "@src/@types/core/Handler";
 import { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";

@@ -5,7 +5,7 @@ import { fetchManagement } from "../../src/utils/fetchManagement";
 import {
   SendIdentityValidationCodeResult,
   SendIdentityVerificationCodeInput,
-} from "../@types/VerificationCode";
+} from "../@types/verification-code";
 
 const SEND_IDENTITY_VALIDATION_CODE_MUTATION = gql`
   mutation sendIdentityValidationCode(

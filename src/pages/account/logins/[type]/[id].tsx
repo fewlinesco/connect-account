@@ -2,7 +2,7 @@ import type { GetServerSideProps } from "next";
 import React from "react";
 
 import { Identity, IdentityTypes } from "@lib/@types";
-import { getIdentity } from "@lib/queries/getIdentity";
+import { getIdentity } from "@lib/queries/get-identity";
 import { UserCookie } from "@src/@types/UserCookie";
 import { NoDataReturned, NoIdentityFound } from "@src/clientErrors";
 import { Layout } from "@src/components/Layout";

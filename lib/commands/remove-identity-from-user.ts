@@ -1,34 +1,37 @@
 import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
-import type { IdentityCommandProps } from "@lib/@types/IdentityCommandProps";
+import type { IdentityCommandProps } from "@lib/@types/identity-command-props";
 import { fetchManagement } from "@src/utils/fetchManagement";
 
-const ADD_IDENTITY_TO_USER = gql`
-  mutation addIdentityToUser(
+const REMOVE_IDENTITY_FROM_USER = gql`
+  mutation removeIdentityFromUser(
     $userId: String!
     $type: IdentityTypes!
     $value: String!
   ) {
-    addIdentityToUser(
-      input: { userId: $userId, type: $type, value: $value, validated: true }
+    removeIdentityFromUser(
+      input: { userId: $userId, type: $type, value: $value }
     ) {
       id
-      primary
-      status
-      type
-      value
+      identities {
+        id
+        primary
+        value
+        type
+        status
+      }
     }
   }
 `;
 
-export async function addIdentityToUser({
+export async function removeIdentityFromUser({
   userId,
   type,
   value,
 }: IdentityCommandProps): Promise<FetchResult> {
   const operation = {
-    query: ADD_IDENTITY_TO_USER,
+    query: REMOVE_IDENTITY_FROM_USER,
     variables: { userId, type, value },
   };
 

@@ -1,6 +1,6 @@
 import { HttpStatus } from "@fwl/web";
 
-import { removeIdentityFromUser } from "@lib/commands/removeIdentityFromUser";
+import { removeIdentityFromUser } from "@lib/commands/remove-identity-from-user";
 import { Handler } from "@src/@types/core/Handler";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";

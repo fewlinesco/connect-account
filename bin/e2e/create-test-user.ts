@@ -1,6 +1,6 @@
 import { IdentityStatus, IdentityTypes } from "../../lib/@types";
-import { createOrUpdatePassword } from "../../lib/commands/createOrUpdatePassword";
-import { createUserWithIdentities } from "../../lib/commands/createUserWithIdentities";
+import { createOrUpdatePassword } from "../../lib/commands/create-or-update-password";
+import { createUserWithIdentities } from "../../lib/commands/create-user-with-identities";
 
 async function createTestUser(): Promise<void> {
   if (process.env.GITHUB_CONTEXT_EVENT === undefined) {

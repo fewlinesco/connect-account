@@ -1,7 +1,7 @@
 import { FetchResult } from "apollo-link";
 import gql from "graphql-tag";
 
-import type { CheckVerificationCodeResult } from "@lib/@types/VerificationCode";
+import type { CheckVerificationCodeResult } from "@lib/@types/verification-code";
 import { fetchManagement } from "@src/utils/fetchManagement";
 
 const CHECK_VERIFICATION_CODE_QUERY = gql`

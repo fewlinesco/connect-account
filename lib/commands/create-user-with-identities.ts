@@ -5,7 +5,7 @@ import { fetchManagement } from "../../src/utils/fetchManagement";
 import type {
   CreateUserWithIdentitiesInput,
   User,
-} from "../@types/ProviderUser";
+} from "../@types/provider-user";
 
 const CREATE_USER_WITH_IDENTITIES_MUTATION = gql`
   mutation createUserWithIdentities(

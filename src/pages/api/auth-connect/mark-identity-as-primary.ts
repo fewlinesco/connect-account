@@ -1,6 +1,6 @@
 import { HttpStatus } from "@fwl/web";
 
-import { markIdentityAsPrimary } from "@lib/commands/markIdentityAsPrimary";
+import { markIdentityAsPrimary } from "@lib/commands/mark-identity-as-primary";
 import { UserCookie } from "@src/@types/UserCookie";
 import { Handler } from "@src/@types/core/Handler";
 import { withAuth } from "@src/middlewares/withAuth";

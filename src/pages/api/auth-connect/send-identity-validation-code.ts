@@ -1,6 +1,6 @@
 import { HttpStatus } from "@fwl/web";
 
-import { sendIdentityValidationCode } from "@lib/commands/sendIdentityValidationCode";
+import { sendIdentityValidationCode } from "@lib/commands/send-identity-validation-code";
 import { UserCookie } from "@src/@types/UserCookie";
 import { Handler } from "@src/@types/core/Handler";
 import { insertTemporaryIdentity } from "@src/commands/insertTemporaryIdentity";

@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from "next";
 import React from "react";
 
-import { isUserPasswordSet } from "@lib/queries/isUserPasswordSet";
+import { isUserPasswordSet } from "@lib/queries/is-user-password-set";
 import { UserCookie } from "@src/@types/UserCookie";
 import { NoDataReturned } from "@src/clientErrors";
 import { Layout } from "@src/components/Layout";

@@ -5,7 +5,7 @@ import { IncomingMessage, ServerResponse } from "http";
 import { Socket } from "net";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import * as refreshTokensFlow from "@lib/commands/refreshTokensFlow";
+import * as refreshTokensFlow from "@lib/commands/refresh-tokens-flow";
 import { Handler } from "@src/@types/core/Handler";
 import * as getAndPutUser from "@src/commands/getAndPutUser";
 import { config, oauth2Client } from "@src/config";

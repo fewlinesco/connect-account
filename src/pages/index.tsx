@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import React from "react";
 
-import { getProviderName } from "@lib/queries/getProviderName";
+import { getProviderName } from "@lib/queries/get-provider-name";
 import { NoDataReturned, NoProviderNameFound } from "@src/clientErrors";
 import { Main } from "@src/components/Layout";
 import { Home } from "@src/components/display/fewlines/Home/Home";
