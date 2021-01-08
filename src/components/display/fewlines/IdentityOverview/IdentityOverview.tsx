@@ -49,7 +49,7 @@ export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
       {status === "unvalidated" && (
         <NeutralLink href={`/account/logins/${type}/validation`}>
           <FakeButton variant={ButtonVariant.PRIMARY}>
-            proceed to validation
+            Proceed to validation
           </FakeButton>
         </NeutralLink>
       )}
