@@ -1,6 +1,6 @@
 import { getIdentityType } from "./getIdentityType";
 import { Identity, IdentityTypes } from "@lib/@types";
-import type { SortedIdentities } from "@src/@types/SortedIdentities";
+import type { SortedIdentities } from "@src/@types/sorted-identities";
 import { UnhandledIdentityType } from "@src/clientErrors";
 
 function sortPrimaryIdentity(a: Identity, b: Identity): number {

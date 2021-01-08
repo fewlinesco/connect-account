@@ -8,7 +8,7 @@ import {
 import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { Identity, IdentityTypes } from "@lib/@types";
-import { IdentitiesSectionContent } from "@src/@types/identitiesSectionContent";
+import { IdentitiesSectionContent } from "@src/@types/identities-section-content";
 import {
   capitalizeFirstLetter,
   formatSpecialSocialIdentities,

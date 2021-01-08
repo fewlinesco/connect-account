@@ -9,7 +9,7 @@ import { Form } from "../Form/Form";
 import { Input } from "../Input/Input";
 import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { IdentityTypes } from "@lib/@types";
-import { InMemoryTemporaryIdentity } from "@src/@types/TemporaryIdentity";
+import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import {
   IdentityAlreadyUsed,
   IdentityInputValueCantBeBlank,

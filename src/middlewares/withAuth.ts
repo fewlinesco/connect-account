@@ -2,9 +2,9 @@ import { HttpStatus } from "@fwl/web";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { refreshTokensFlow } from "@lib/commands/refresh-tokens-flow";
-import { UserCookie } from "@src/@types/UserCookie";
 import { Handler } from "@src/@types/core/Handler";
-import { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import { AccessToken } from "@src/@types/oauth2/oauth2-tokens";
+import { UserCookie } from "@src/@types/user-cookie";
 import { getAndPutUser } from "@src/commands/getAndPutUser";
 import { config, oauth2Client } from "@src/config";
 import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";

@@ -1,6 +1,6 @@
 import { IdentityTypes } from "@lib/@types";
-import { InMemoryTemporaryIdentity } from "@src/@types/TemporaryIdentity";
-import { HttpVerbs } from "@src/@types/core/HttpVerbs";
+import { HttpVerbs } from "@src/@types/core/http-verbs";
+import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import {
   ErrorSendingValidationCode,
   IdentityAlreadyUsed,

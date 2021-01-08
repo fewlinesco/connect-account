@@ -2,7 +2,7 @@ import type { GetServerSideProps } from "next";
 import React from "react";
 
 import { isUserPasswordSet } from "@lib/queries/is-user-password-set";
-import { UserCookie } from "@src/@types/UserCookie";
+import { UserCookie } from "@src/@types/user-cookie";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";

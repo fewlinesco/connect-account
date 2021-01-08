@@ -2,7 +2,7 @@ import { mount } from "enzyme";
 import React from "react";
 
 import { IdentityTypes } from "@lib/@types";
-import { SortedIdentities } from "@src/@types/SortedIdentities";
+import { SortedIdentities } from "@src/@types/sorted-identities";
 import AlertBar from "@src/components/display/fewlines/AlertBar/AlertBar";
 import { ButtonVariant } from "@src/components/display/fewlines/Button/Button";
 import { FakeButton } from "@src/components/display/fewlines/FakeButton/FakeButton";

@@ -3,7 +3,7 @@ import React from "react";
 import { StoriesContainer } from "../StoriesContainer";
 import { LoginsOverview } from "./LoginsOverview";
 import { IdentityTypes } from "@lib/@types";
-import { SortedIdentities } from "@src/@types/SortedIdentities";
+import { SortedIdentities } from "@src/@types/sorted-identities";
 
 export default { title: "pages/Logins Overview", component: LoginsOverview };
 

@@ -7,7 +7,7 @@ import { StandardIdentitiesSection } from "../StandardIdentitiesSection/Standard
 import { Timeline } from "../Timeline/Timeline";
 import { TimelineEnd } from "../TimelineEnd/TimelineEnd";
 import { Identity } from "@lib/@types";
-import { IdentitiesSectionContent } from "@src/@types/identitiesSectionContent";
+import { IdentitiesSectionContent } from "@src/@types/identities-section-content";
 
 type IdentitiesSectionProps = {
   sectionName: string;

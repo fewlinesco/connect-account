@@ -3,8 +3,8 @@ import { HttpStatus } from "@fwl/web";
 import { addIdentityToUser } from "@lib/commands/add-identity-to-user";
 import { markIdentityAsPrimary } from "@lib/commands/mark-identity-as-primary";
 import { checkVerificationCode } from "@lib/queries/check-verification-code";
-import { UserCookie } from "@src/@types/UserCookie";
 import { Handler } from "@src/@types/core/Handler";
+import { UserCookie } from "@src/@types/user-cookie";
 import {
   NoDataReturned,
   NoIdentityAdded,

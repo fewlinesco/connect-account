@@ -10,7 +10,7 @@ import {
   above,
 } from "taiko";
 
-import { authenticateToConnect } from "./utils/authenticateToConnect";
+import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
 describe("Marking another identity as the primary one on connect account", () => {
   jest.setTimeout(60000);

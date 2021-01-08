@@ -2,8 +2,8 @@ import type { GetServerSideProps } from "next";
 import React from "react";
 
 import { getIdentities } from "@lib/queries/get-identities";
-import type { SortedIdentities } from "@src/@types/SortedIdentities";
-import { UserCookie } from "@src/@types/UserCookie";
+import type { SortedIdentities } from "@src/@types/sorted-identities";
+import { UserCookie } from "@src/@types/user-cookie";
 import { NoDataReturned, NoIdentityFound } from "@src/clientErrors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";

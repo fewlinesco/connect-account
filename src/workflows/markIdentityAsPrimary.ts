@@ -1,5 +1,5 @@
 import { Identity } from "@lib/@types";
-import { HttpVerbs } from "@src/@types/core/HttpVerbs";
+import { HttpVerbs } from "@src/@types/core/http-verbs";
 import { fetchJson } from "@src/utils/fetchJson";
 
 export async function markIdentityAsPrimaryCall(

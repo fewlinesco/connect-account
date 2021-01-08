@@ -1,5 +1,5 @@
 import { putUser } from "./putUser";
-import { DynamoUser } from "@src/@types/DynamoUser";
+import { DynamoUser } from "@src/@types/dynamo-user";
 import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
 
 type OAuth2UserInfo = {

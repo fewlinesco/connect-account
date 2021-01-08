@@ -13,7 +13,7 @@ import { Separator } from "../Separator/Separator";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
 import { Identity } from "@lib/@types";
-import { IdentitiesSectionContent } from "@src/@types/identitiesSectionContent";
+import { IdentitiesSectionContent } from "@src/@types/identities-section-content";
 
 type StandardIdentitiesSectionProps = {
   sectionName: string;

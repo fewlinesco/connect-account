@@ -1,4 +1,4 @@
-import { HttpVerbs } from "@src/@types/core/HttpVerbs";
+import { HttpVerbs } from "@src/@types/core/http-verbs";
 import {
   InvalidValidationCode,
   TemporaryIdentityExpired,

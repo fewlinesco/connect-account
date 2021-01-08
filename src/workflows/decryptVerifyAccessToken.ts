@@ -1,4 +1,4 @@
-import type { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
+import type { AccessToken } from "@src/@types/oauth2/oauth2-tokens";
 import { oauth2Client, config } from "@src/config";
 import {
   EnvVar_IsJweSigned_MustBeABoolean,

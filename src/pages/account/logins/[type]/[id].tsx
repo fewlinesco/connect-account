@@ -3,7 +3,7 @@ import React from "react";
 
 import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentity } from "@lib/queries/get-identity";
-import { UserCookie } from "@src/@types/UserCookie";
+import { UserCookie } from "@src/@types/user-cookie";
 import { NoDataReturned, NoIdentityFound } from "@src/clientErrors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";

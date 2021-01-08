@@ -1,4 +1,4 @@
-import { TemporaryIdentity } from "./TemporaryIdentity";
+import { TemporaryIdentity } from "./temporary-identity";
 
 export type DynamoUser = {
   sub: string;

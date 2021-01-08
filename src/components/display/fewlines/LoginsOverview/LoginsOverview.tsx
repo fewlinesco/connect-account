@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { IdentitiesSection } from "../IdentitiesSection/IdentitiesSection";
 import { Identity } from "@lib/@types";
-import { SortedIdentities } from "@src/@types/SortedIdentities";
+import { SortedIdentities } from "@src/@types/sorted-identities";
 
 type LoginsOverviewProps = {
   sortedIdentities: SortedIdentities;

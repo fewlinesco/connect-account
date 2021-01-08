@@ -1,7 +1,7 @@
 import Cookie from "js-cookie";
 
 import { IdentityTypes } from "@lib/@types";
-import { HttpVerbs } from "@src/@types/core/HttpVerbs";
+import { HttpVerbs } from "@src/@types/core/http-verbs";
 import { fetchJson } from "@src/utils/fetchJson";
 import { getIdentityType } from "@src/utils/getIdentityType";
 

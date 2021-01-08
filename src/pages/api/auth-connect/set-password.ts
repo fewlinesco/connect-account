@@ -2,8 +2,8 @@ import { HttpStatus } from "@fwl/web";
 import { GraphQLError } from "graphql";
 
 import { createOrUpdatePassword } from "@lib/commands/create-or-update-password";
-import { UserCookie } from "@src/@types/UserCookie";
 import { Handler } from "@src/@types/core/Handler";
+import { UserCookie } from "@src/@types/user-cookie";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";

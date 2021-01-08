@@ -7,7 +7,7 @@ import {
   waitFor,
 } from "taiko";
 
-import { authenticateToConnect } from "./utils/authenticateToConnect";
+import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
 describe("DesktopNavigationBar", () => {
   jest.setTimeout(60000);

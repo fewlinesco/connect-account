@@ -1,8 +1,8 @@
 import { HttpStatus } from "@fwl/web";
 
 import { sendIdentityValidationCode } from "@lib/commands/send-identity-validation-code";
-import { UserCookie } from "@src/@types/UserCookie";
 import { Handler } from "@src/@types/core/Handler";
+import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insertTemporaryIdentity";
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";

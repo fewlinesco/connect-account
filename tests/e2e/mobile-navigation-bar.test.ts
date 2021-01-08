@@ -7,7 +7,7 @@ import {
   waitFor,
 } from "taiko";
 
-import { authenticateToConnect } from "./utils/authenticateToConnect";
+import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
 describe("Log in with a smart phone, open and close the navigation bar", () => {
   jest.setTimeout(60000);
