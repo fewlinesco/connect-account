@@ -24,6 +24,7 @@ export const ConfirmationBox: React.FC<ConfirmationBoxProps> = ({
           onClick={() => {
             setOpen(false);
           }}
+          data-testid="clickAwayListener"
         />
       )}
       <Box open={open} preventAnimation={preventAnimation}>
