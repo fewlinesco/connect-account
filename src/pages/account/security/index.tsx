@@ -5,7 +5,7 @@ import { isUserPasswordSet } from "@lib/queries/is-user-password-set";
 import { UserCookie } from "@src/@types/user-cookie";
 import { NoDataReturned } from "@src/client-errors";
 import { Layout } from "@src/components/Layout";
-import { Container } from "@src/components/display/fewlines/Container";
+import { Container } from "@src/components/containers/container";
 import { Security } from "@src/components/security/security";
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/with-auth";

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Container } from "../Container";
-import { ErrorFallbackComponent } from "./ErrorFallbackComponent";
+import { Container } from "../containers/container";
+import { ErrorFallbackComponent } from "./error-fallback-component";
 
 export default {
   title: "components/Error Fallback Component",

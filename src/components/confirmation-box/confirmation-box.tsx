@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { ClickAwayListener } from "../ClickAwayListener";
+import { ClickAwayListener } from "../display/fewlines/ClickAwayListener";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 interface ConfirmationBoxProps {

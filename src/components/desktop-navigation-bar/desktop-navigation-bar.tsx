@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Header } from "../../../header/header";
-import { Separator } from "../../../separator/separator";
-import { HomeIcon } from "../Icons/HomeIcon/HomeIcon";
-import { KeyIcon } from "../Icons/KeyIcon/KeyIcon";
-import { LockIcon } from "../Icons/LockIcon/LockIcon";
-import { BlackSwitchIcon } from "../Icons/SwitchIcon/BlackSwitchIcon/BlackSwitchIcon";
-import { BlackWorldIcon } from "../Icons/WorldIcon/BlackWorldIcon/BlackWorldIcon";
-import { NeutralLink } from "../NeutralLink/NeutralLink";
+import { HomeIcon } from "../display/fewlines/Icons/HomeIcon/HomeIcon";
+import { KeyIcon } from "../display/fewlines/Icons/KeyIcon/KeyIcon";
+import { LockIcon } from "../display/fewlines/Icons/LockIcon/LockIcon";
+import { BlackSwitchIcon } from "../display/fewlines/Icons/SwitchIcon/BlackSwitchIcon/BlackSwitchIcon";
+import { BlackWorldIcon } from "../display/fewlines/Icons/WorldIcon/BlackWorldIcon/BlackWorldIcon";
+import { NeutralLink } from "../display/fewlines/NeutralLink/NeutralLink";
+import { Header } from "../header/header";
+import { Separator } from "../separator/separator";
 
 export const DesktopNavigationBar: React.FC = () => {
   return (

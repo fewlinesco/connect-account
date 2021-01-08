@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { IdentitiesSection } from "../IdentitiesSection/IdentitiesSection";
+import { IdentitiesSection } from "../display/fewlines/IdentitiesSection/IdentitiesSection";
 import { Identity } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/sorted-identities";
 

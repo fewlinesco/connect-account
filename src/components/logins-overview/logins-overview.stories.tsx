@@ -1,7 +1,7 @@
 import React from "react";
 
-import { StoriesContainer } from "../StoriesContainer";
-import { LoginsOverview } from "./LoginsOverview";
+import { StoriesContainer } from "../containers/stories-container";
+import { LoginsOverview } from "./logins-overview";
 import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/sorted-identities";
 

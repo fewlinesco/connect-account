@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Button, ButtonVariant } from "../../../button/button";
-import { Container } from "../Container";
-import { ConfirmationBox } from "./ConfirmationBox";
-import { DeleteConfirmationBoxContent } from "./DeleteConfirmationBoxContent";
-import { PrimaryConfirmationBoxContent } from "./PrimaryConfirmationBoxContent";
+import { Button, ButtonVariant } from "../button/button";
+import { Container } from "../containers/container";
+import { ConfirmationBox } from "./confirmation-box";
+import { DeleteConfirmationBoxContent } from "./delete-confirmation-box-content";
+import { PrimaryConfirmationBoxContent } from "./primary-confirmation-box-content";
 import { IdentityTypes } from "@lib/@types";
 import { deviceBreakpoints } from "@src/design-system/theme";
 

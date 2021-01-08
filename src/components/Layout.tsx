@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { DesktopNavigationBar } from "./display/fewlines/DesktopNavigationBar/DesktopNavigationBar";
+import { DesktopNavigationBar } from "./desktop-navigation-bar/desktop-navigation-bar";
 import { MobileNavigationBar } from "./display/fewlines/MobileNavigationBar/MobileNavigationBar";
 import { Header } from "./header/header";
 import { deviceBreakpoints } from "@src/design-system/theme";

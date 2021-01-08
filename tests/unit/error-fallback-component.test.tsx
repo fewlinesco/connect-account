@@ -1,7 +1,7 @@
 import { mount } from "enzyme";
 import React from "react";
 
-import { ErrorFallbackComponent } from "@src/components/display/fewlines/ErrorFallback/ErrorFallbackComponent";
+import { ErrorFallbackComponent } from "@src/components/error-fallback-component/error-fallback-component";
 import { AccountApp } from "@src/pages/_app";
 
 describe("ErrorFallback component", () => {

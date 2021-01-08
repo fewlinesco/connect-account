@@ -1,6 +1,6 @@
 import React from "react";
 
-import { DesktopNavigationBar } from "./DesktopNavigationBar";
+import { DesktopNavigationBar } from "./desktop-navigation-bar";
 
 export default {
   title: "components/Desktop Navigation Bar",

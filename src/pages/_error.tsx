@@ -4,7 +4,7 @@ import NextError, { ErrorProps as NextErrorProps } from "next/error";
 import React from "react";
 
 import { Layout } from "@src/components/Layout";
-import { ErrorFallbackComponent } from "@src/components/display/fewlines/ErrorFallback/ErrorFallbackComponent";
+import { ErrorFallbackComponent } from "@src/components/error-fallback-component/error-fallback-component";
 
 type CustomErrorComponentProps = {
   error: Error;

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StoriesContainer } from "../StoriesContainer";
+import { StoriesContainer } from "../../../containers/stories-container";
 import { ValidateIdentityForm } from "./ValidateIdentityForm";
 import { IdentityTypes } from "@lib/@types/Identity";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { ErrorFallbackComponent } from "@src/components/display/fewlines/ErrorFallback/ErrorFallbackComponent";
+import { ErrorFallbackComponent } from "@src/components/error-fallback-component/error-fallback-component";
 
 const Custom404Component: React.FC = () => {
   return (

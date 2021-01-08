@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StoriesContainer } from "../display/fewlines/StoriesContainer";
+import { StoriesContainer } from "../containers/stories-container";
 import { Button, ButtonVariant } from "./button";
 
 export default { title: "components/Button", component: Button };
