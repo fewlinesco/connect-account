@@ -1,25 +1,23 @@
 import { HttpStatus } from "@fwl/web";
 import { GraphQLError } from "graphql";
-import type { NextApiResponse } from "next";
-import type { Handler } from "next-iron-session";
 
 import { createOrUpdatePassword } from "@lib/commands/createOrUpdatePassword";
 import { UserCookie } from "@src/@types/UserCookie";
-import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
+import { Handler } from "@src/@types/core/Handler";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
+import { getServerSideCookies } from "@src/utils/serverSideCookies";
 
-const handler: Handler = async (
-  request: ExtendedRequest,
-  response: NextApiResponse,
-) => {
+const handler: Handler = async (request, response) => {
   if (request.method === "POST") {
     const { passwordInput } = request.body;
 
-    const userCookie = request.session.get<UserCookie>("user-cookie");
+    const userCookie = await getServerSideCookies<UserCookie>(request, {
+      cookieName: "user-cookie",
+      isCookieSealed: true,
+    });
 
     if (userCookie) {
       return createOrUpdatePassword({
@@ -57,7 +55,4 @@ const handler: Handler = async (
   return Promise.reject();
 };
 
-export default wrapMiddlewares(
-  [withLogger, withSentry, withSession, withAuth],
-  handler,
-);
+export default wrapMiddlewares([withLogger, withSentry, withAuth], handler);

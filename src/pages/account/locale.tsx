@@ -6,7 +6,6 @@ import { Locale } from "@src/components/display/fewlines/Locale/Locale";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 
 const LocalePage: React.FC = () => {
@@ -20,10 +19,5 @@ const LocalePage: React.FC = () => {
 export default LocalePage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return wrapMiddlewaresForSSR(context, [
-    withLogger,
-    withSentry,
-    withSession,
-    withAuth,
-  ]);
+  return wrapMiddlewaresForSSR(context, [withLogger, withSentry, withAuth]);
 };

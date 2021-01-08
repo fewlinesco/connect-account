@@ -9,7 +9,6 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 
 const AccountPage: React.FC = () => {
@@ -26,12 +25,7 @@ const AccountPage: React.FC = () => {
 export default AccountPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return wrapMiddlewaresForSSR(context, [
-    withLogger,
-    withSentry,
-    withSession,
-    withAuth,
-  ]);
+  return wrapMiddlewaresForSSR(context, [withLogger, withSentry, withAuth]);
 };
 
 export const WelcomeMessage = styled.h1`

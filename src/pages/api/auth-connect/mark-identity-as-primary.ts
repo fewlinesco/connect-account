@@ -1,43 +1,50 @@
 import { HttpStatus } from "@fwl/web";
-import { Handler } from "next-iron-session";
 
 import { markIdentityAsPrimary } from "@lib/commands/markIdentityAsPrimary";
 import { UserCookie } from "@src/@types/UserCookie";
-import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
+import { Handler } from "@src/@types/core/Handler";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import { isMarkingIdentityAsPrimaryAuthorized } from "@src/utils/isMarkingIdentityAsPrimaryAuthorized";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
+import { getServerSideCookies } from "@src/utils/serverSideCookies";
 
-const handler: Handler = async (request: ExtendedRequest, response) => {
+const handler: Handler = async (request, response) => {
   addRequestScopeToSentry(request);
 
   try {
     if (request.method === "POST") {
       const { identityId } = request.body;
 
-      const userCookie = request.session.get<UserCookie>(
-        "user-cookie",
-      ) as UserCookie;
+      const userCookie = await getServerSideCookies<UserCookie>(request, {
+        cookieName: "user-cookie",
+        isCookieSealed: true,
+      });
 
-      const isAuthorized = await isMarkingIdentityAsPrimaryAuthorized(
-        userCookie.sub,
-        identityId,
-      );
+      if (userCookie) {
+        const isAuthorized = await isMarkingIdentityAsPrimaryAuthorized(
+          userCookie.sub,
+          identityId,
+        );
 
-      if (isAuthorized) {
-        return markIdentityAsPrimary(identityId).then((data) => {
-          response.statusCode = HttpStatus.OK;
-          response.setHeader("Content-type", "application/json");
-          response.json({ data });
-        });
+        if (isAuthorized) {
+          return markIdentityAsPrimary(identityId).then((data) => {
+            response.statusCode = HttpStatus.OK;
+            response.setHeader("Content-type", "application/json");
+            response.json({ data });
+          });
+        }
+
+        response.statusCode = HttpStatus.BAD_REQUEST;
+        return response.end();
+      } else {
+        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+        response.setHeader("location", "/");
+        response.end();
+        return;
       }
-
-      response.statusCode = HttpStatus.BAD_REQUEST;
-      return response.end();
     }
   } catch (error) {
     Sentry.withScope((scope) => {
@@ -52,7 +59,4 @@ const handler: Handler = async (request: ExtendedRequest, response) => {
   return Promise.reject(new Error("Method not allowed"));
 };
 
-export default wrapMiddlewares(
-  [withLogger, withSentry, withSession, withAuth],
-  handler,
-);
+export default wrapMiddlewares([withLogger, withSentry, withAuth], handler);

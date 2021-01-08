@@ -1,24 +1,28 @@
 import { HttpStatus } from "@fwl/web";
-import { ServerResponse } from "http";
+import { NextApiRequest, NextApiResponse } from "next";
 
 import { refreshTokensFlow } from "@lib/commands/refreshTokensFlow";
 import { UserCookie } from "@src/@types/UserCookie";
-import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Handler } from "@src/@types/core/Handler";
 import { AccessToken } from "@src/@types/oauth2/OAuth2Tokens";
 import { getAndPutUser } from "@src/commands/getAndPutUser";
 import { config, oauth2Client } from "@src/config";
 import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
+import {
+  getServerSideCookies,
+  setServerSideCookies,
+} from "@src/utils/serverSideCookies";
 import { decryptVerifyAccessToken } from "@src/workflows/decryptVerifyAccessToken";
 
 export function withAuth(handler: Handler): Handler {
   return async (
-    request: ExtendedRequest,
-    response: ServerResponse,
+    request: NextApiRequest,
+    response: NextApiResponse,
   ): Promise<unknown> => {
-    const userCookie = request.session.get<UserCookie | undefined>(
-      "user-cookie",
-    );
+    const userCookie = await getServerSideCookies<UserCookie>(request, {
+      cookieName: "user-cookie",
+      isCookieSealed: true,
+    });
 
     if (userCookie) {
       const { access_token: currentAccessToken, sub } = userCookie;
@@ -38,10 +42,21 @@ export function withAuth(handler: Handler): Handler {
                 config.connectJwtAlgorithm,
               );
 
-              request.session.set<UserCookie>("user-cookie", {
-                access_token,
-                sub,
-              });
+              await setServerSideCookies(
+                response,
+                "user-cookie",
+                {
+                  access_token,
+                  sub,
+                },
+                {
+                  shouldCookieBeSealed: true,
+                  maxAge: 24 * 60 * 60,
+                  path: "/",
+                  httpOnly: true,
+                  secure: true,
+                },
+              );
 
               await getAndPutUser({ sub, refresh_token }, user);
 

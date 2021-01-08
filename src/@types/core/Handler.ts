@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ServerResponse } from "http";
-
-import { ExtendedRequest } from "./ExtendedRequest";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export type Handler = (
-  request: ExtendedRequest,
-  response: ServerResponse,
+  request: NextApiRequest,
+  response: NextApiResponse,
 ) => Promise<any>;

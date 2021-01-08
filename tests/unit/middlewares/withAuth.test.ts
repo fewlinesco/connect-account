@@ -3,14 +3,13 @@ import { HttpStatus } from "@fwl/web";
 import { seal, defaults } from "@hapi/iron";
 import { IncomingMessage, ServerResponse } from "http";
 import { Socket } from "net";
+import { NextApiRequest, NextApiResponse } from "next";
 
 import * as refreshTokensFlow from "@lib/commands/refreshTokensFlow";
-import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Handler } from "@src/@types/core/Handler";
 import * as getAndPutUser from "@src/commands/getAndPutUser";
 import { config, oauth2Client } from "@src/config";
 import { withAuth } from "@src/middlewares/withAuth";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import * as getDBUserFromSub from "@src/queries/getDBUserFromSub.ts";
 import * as decryptVerifyAccessToken from "@src/workflows/decryptVerifyAccessToken";
@@ -76,15 +75,10 @@ const spiedOnGetAndPutUser = jest
 
 async function sealJWS(access_token: string, salt?: string): Promise<string> {
   return seal(
-    {
-      persistent: {
-        "user-cookie": {
-          access_token,
-          sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
-        },
-      },
-      flash: {},
-    },
+    JSON.stringify({
+      access_token,
+      sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
+    }),
     salt || config.connectAccountSessionSalt,
     defaults,
   );
@@ -93,51 +87,29 @@ async function sealJWS(access_token: string, salt?: string): Promise<string> {
 function mockedReqAndRes(
   sealedJWE: string,
 ): {
-  mockedExtendedRequest: ExtendedRequest;
-  mockedResponse: ServerResponse;
+  mockedNextApiRequest: NextApiRequest;
+  mockedResponse: NextApiResponse;
 } {
   const mockedRequest = new IncomingMessage(new Socket());
-  const mockedResponse = new ServerResponse(mockedRequest);
+  const mockedResponse = new ServerResponse(mockedRequest) as NextApiResponse;
 
-  const mockedSession = {
-    set: () => {
-      return;
-    },
-    get: () => {
-      return undefined;
-    },
-    unset: () => {
-      return;
-    },
-    destroy: () => {
-      return;
-    },
-    save: async () => {
-      return;
-    },
-  };
-
-  const mockedExtendedRequest = Object.assign(mockedRequest, {
-    session: mockedSession,
+  const mockedNextApiRequest = Object.assign(mockedRequest, {
     query: {},
     cookies: {},
     body: null,
     env: {},
   });
 
-  mockedExtendedRequest.headers = {
-    cookie: `connect-account-cookie=${sealedJWE}`,
+  mockedNextApiRequest.headers = {
+    cookie: `user-cookie=${sealedJWE}`,
   };
-  mockedExtendedRequest.rawHeaders = [
-    "Cookie",
-    `connect-account-cookie=${sealedJWE}`,
-  ];
+  mockedNextApiRequest.rawHeaders = ["Cookie", `user-cookie=${sealedJWE}`];
 
-  return { mockedExtendedRequest, mockedResponse };
+  return { mockedNextApiRequest, mockedResponse };
 }
 
 const mockedHandler: Handler = async (
-  _mockedExtendedRequest,
+  _mockedNextApiRequest,
   _mockedResponse,
 ) => {
   return _mockedResponse.end();
@@ -151,21 +123,18 @@ describe("withAuth", () => {
   test("should redirect to the login flow if no UserCookie is provided", async (done) => {
     expect.assertions(2);
 
-    const access_token = generateHS256JWS();
-    const sealedJWS = await sealJWS(
-      access_token,
-      "thisIsAWrongSaltToMakeUserCookieUndefined",
-    );
+    const mockedRequest = new IncomingMessage(new Socket());
+    const mockedResponse = new ServerResponse(mockedRequest) as NextApiResponse;
 
-    const { mockedExtendedRequest, mockedResponse } = mockedReqAndRes(
-      sealedJWS,
-    );
+    const mockedNextApiRequest = Object.assign(mockedRequest, {
+      query: {},
+      cookies: {},
+      body: null,
+      env: {},
+    });
 
-    const withAuthCallback = wrapMiddlewares(
-      [withSession, withAuth],
-      mockedHandler,
-    );
-    await withAuthCallback(mockedExtendedRequest, mockedResponse);
+    const withAuthCallback = wrapMiddlewares([withAuth], mockedHandler);
+    await withAuthCallback(mockedNextApiRequest, mockedResponse);
 
     expect(mockedResponse.statusCode).toEqual(HttpStatus.TEMPORARY_REDIRECT);
     expect(spiedOnDecryptVerifyAccessToken).not.toHaveBeenCalled();
@@ -184,7 +153,7 @@ describe("withAuth", () => {
 
       const sealedJWS = await sealJWS(access_token);
 
-      const { mockedExtendedRequest, mockedResponse } = mockedReqAndRes(
+      const { mockedNextApiRequest, mockedResponse } = mockedReqAndRes(
         sealedJWS,
       );
 
@@ -200,11 +169,8 @@ describe("withAuth", () => {
         return null;
       });
 
-      const withAuthCallback = wrapMiddlewares(
-        [withSession, withAuth],
-        mockedHandler,
-      );
-      await withAuthCallback(mockedExtendedRequest, mockedResponse);
+      const withAuthCallback = wrapMiddlewares([withAuth], mockedHandler);
+      await withAuthCallback(mockedNextApiRequest, mockedResponse);
 
       expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();
       expect(spiedOnGetDBUserFromSub).toHaveBeenCalled();
@@ -227,11 +193,11 @@ describe("withAuth", () => {
 
       const sealedJWS = await sealJWS(access_token);
 
-      const { mockedExtendedRequest, mockedResponse } = mockedReqAndRes(
+      const { mockedNextApiRequest, mockedResponse } = mockedReqAndRes(
         sealedJWS,
       );
 
-      mockedExtendedRequest.headers.referer = "referer/url";
+      mockedNextApiRequest.headers.referer = "referer/url";
 
       spiedOnDecryptVerifyAccessToken.mockImplementationOnce(async () => {
         class TokenExpiredError extends Error {
@@ -241,11 +207,8 @@ describe("withAuth", () => {
         throw new TokenExpiredError();
       });
 
-      const withAuthCallback = wrapMiddlewares(
-        [withSession, withAuth],
-        mockedHandler,
-      );
-      await withAuthCallback(mockedExtendedRequest, mockedResponse);
+      const withAuthCallback = wrapMiddlewares([withAuth], mockedHandler);
+      await withAuthCallback(mockedNextApiRequest, mockedResponse);
 
       expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();
       expect(spiedOnGetDBUserFromSub).toHaveBeenCalled();

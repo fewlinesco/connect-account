@@ -1,11 +1,9 @@
-import { ServerResponse } from "http";
 import { GetServerSideProps } from "next";
 import React from "react";
 
 import { Identity, IdentityTypes } from "@lib/@types";
 import { getIdentities } from "@lib/queries/getIdentities";
 import { UserCookie } from "@src/@types/UserCookie";
-import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import {
   NoDataReturned,
   NoIdentityFound,
@@ -18,8 +16,8 @@ import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
+import { getServerSideCookies } from "@src/utils/serverSideCookies";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   return (
@@ -52,8 +50,8 @@ export default UpdateIdentityPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return wrapMiddlewaresForSSR<{ type: string }>(
     context,
-    [withLogger, withSentry, withSession, withAuth],
-    async (request: ExtendedRequest, response: ServerResponse) => {
+    [withLogger, withSentry, withAuth],
+    async (request, response) => {
       if (!context?.params?.id) {
         response.statusCode = 400;
         response.end();
@@ -61,7 +59,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       }
 
       const identityId = context.params.id.toString();
-      const userCookie = request.session.get<UserCookie>("user-cookie");
+
+      const userCookie = await getServerSideCookies<UserCookie>(request, {
+        cookieName: "user-cookie",
+        isCookieSealed: true,
+      });
 
       if (userCookie) {
         const identity = await getIdentities(userCookie.sub).then(

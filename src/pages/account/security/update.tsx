@@ -3,7 +3,6 @@ import React from "react";
 
 import { isUserPasswordSet } from "@lib/queries/isUserPasswordSet";
 import { UserCookie } from "@src/@types/UserCookie";
-import { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
@@ -12,8 +11,8 @@ import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/withAuth";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
+import { getServerSideCookies } from "@src/utils/serverSideCookies";
 
 type SecurityPageProps = {
   isPasswordSet: boolean;
@@ -42,9 +41,12 @@ export default SecurityUpdatePage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return wrapMiddlewaresForSSR<{ type: string }>(
     context,
-    [withLogger, withSentry, withSession, withAuth],
-    async (request: ExtendedRequest) => {
-      const userCookie = request.session.get<UserCookie>("user-cookie");
+    [withLogger, withSentry, withAuth],
+    async (request) => {
+      const userCookie = await getServerSideCookies<UserCookie>(request, {
+        cookieName: "user-cookie",
+        isCookieSealed: true,
+      });
 
       if (userCookie) {
         const isPasswordSet = await isUserPasswordSet(userCookie.sub).then(

@@ -1,20 +1,15 @@
 import { HttpStatus } from "@fwl/web";
-import { NextApiResponse } from "next";
-import { Handler } from "next-iron-session";
 
-import type { ExtendedRequest } from "@src/@types/core/ExtendedRequest";
+import { Handler } from "@src/@types/core/Handler";
 import { getAndPutUser } from "@src/commands/getAndPutUser";
 import { oauth2Client } from "@src/config";
 import { withLogger } from "@src/middlewares/withLogger";
 import { withSentry } from "@src/middlewares/withSentry";
-import { withSession } from "@src/middlewares/withSession";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
+import { setServerSideCookies } from "@src/utils/serverSideCookies";
 import { decryptVerifyAccessToken } from "@src/workflows/decryptVerifyAccessToken";
 
-const handler: Handler = async (
-  request: ExtendedRequest,
-  response: NextApiResponse,
-): Promise<void> => {
+const handler: Handler = async (request, response): Promise<void> => {
   if (request.method === "GET") {
     const {
       access_token,
@@ -32,23 +27,33 @@ const handler: Handler = async (
 
     await getAndPutUser(oAuth2UserInfo);
 
-    request.session.set("user-cookie", {
-      access_token,
-      sub: decodedAccessToken.sub,
-    });
-
-    await request.session.save();
+    await setServerSideCookies(
+      response,
+      "user-cookie",
+      {
+        access_token,
+        sub: decodedAccessToken.sub,
+      },
+      {
+        shouldCookieBeSealed: true,
+        maxAge: 24 * 60 * 60,
+        path: "/",
+        httpOnly: true,
+        secure: true,
+      },
+    );
 
     response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
       Location: "/account",
     });
 
     response.end();
+    return;
   } else {
     response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
-
-    return response.end();
+    response.end();
+    return;
   }
 };
 
-export default wrapMiddlewares([withLogger, withSentry, withSession], handler);
+export default wrapMiddlewares([withLogger, withSentry], handler);
