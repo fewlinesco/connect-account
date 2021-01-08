@@ -3,8 +3,8 @@ import type { NextPageContext } from "next";
 import NextError, { ErrorProps as NextErrorProps } from "next/error";
 import React from "react";
 
-import { Layout } from "@src/components/Layout";
 import { ErrorFallbackComponent } from "@src/components/error-fallback-component/error-fallback-component";
+import { Layout } from "@src/components/layout";
 
 type CustomErrorComponentProps = {
   error: Error;

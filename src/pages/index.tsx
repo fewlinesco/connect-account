@@ -3,8 +3,8 @@ import React from "react";
 
 import { getProviderName } from "@lib/queries/get-provider-name";
 import { NoDataReturned, NoProviderNameFound } from "@src/client-errors";
-import { Main } from "@src/components/Layout";
 import { Home } from "@src/components/home/home";
+import { Main } from "@src/components/layout";
 import { oauth2Client } from "@src/config";
 import { GraphqlErrors } from "@src/errors";
 import { withLogger } from "@src/middlewares/with-logger";

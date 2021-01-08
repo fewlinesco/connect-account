@@ -9,9 +9,9 @@ import {
   BoxedLink,
   NoIdentitiesBox,
 } from "../IdentitiesSection/IdentitiesSection";
-import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
+import { NeutralLink } from "../neutral-link/neutral-link";
 import { Identity } from "@lib/@types";
 import { IdentitiesSectionContent } from "@src/@types/identities-section-content";
 

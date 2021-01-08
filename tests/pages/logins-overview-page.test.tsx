@@ -9,8 +9,8 @@ import {
   BoxedLink,
   NoIdentitiesBox,
 } from "@src/components/display/fewlines/IdentitiesSection/IdentitiesSection";
-import { NeutralLink } from "@src/components/display/fewlines/NeutralLink/NeutralLink";
 import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
+import { NeutralLink } from "@src/components/display/fewlines/neutral-link/neutral-link";
 import { FakeButton } from "@src/components/fake-button/fake-button";
 import { AccountApp } from "@src/pages/_app";
 import LoginsOverviewPage from "@src/pages/account/logins";

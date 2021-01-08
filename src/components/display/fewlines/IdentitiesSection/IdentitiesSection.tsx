@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
+import { TimelineEnd } from "../../../timeline-end/timeline-end";
 import { Timeline } from "../../../timeline/timeline";
-import { NeutralLink } from "../NeutralLink/NeutralLink";
 import { SocialIdentitiesSection } from "../SocialIdentitiesSection/SocialIdentitiesSection";
 import { StandardIdentitiesSection } from "../StandardIdentitiesSection/StandardIdentitiesSection";
-import { TimelineEnd } from "../TimelineEnd/TimelineEnd";
+import { NeutralLink } from "../neutral-link/neutral-link";
 import { Identity } from "@lib/@types";
 import { IdentitiesSectionContent } from "@src/@types/identities-section-content";
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { NavigationBarIconContainer } from "../../../NavigationBarIconContainer";
+import { NavigationBarIconContainer } from "../../../../../navigation-bar-icon-container";
 
 export const BlackWorldIcon: React.FC = () => {
   return (

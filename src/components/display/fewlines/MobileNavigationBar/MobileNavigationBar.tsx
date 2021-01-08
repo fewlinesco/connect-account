@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { ClickAwayListener } from "../ClickAwayListener";
+import { ClickAwayListener } from "../../../click-away-listener";
 import { Arrow } from "../Icons/Arrow/Arrow";
 import { BurgerIcon } from "../Icons/BurgerIcon/BurgerIcon";
 import { HomeIcon } from "../Icons/HomeIcon/HomeIcon";
@@ -12,7 +12,7 @@ import { NavBarCrossIcon } from "../Icons/NavBarCrossIcon/NavBarCrossIcon";
 import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import { WhiteSwitchIcon } from "../Icons/SwitchIcon/WhiteSwitchIcon/WhiteSwitchIcon";
 import { WhiteWorldIcon } from "../Icons/WorldIcon/WhiteWorldIcon/WhiteWorldIcon";
-import { NeutralLink } from "../NeutralLink/NeutralLink";
+import { NeutralLink } from "../neutral-link/neutral-link";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 interface MenuItemProps {

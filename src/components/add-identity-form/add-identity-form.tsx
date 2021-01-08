@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import { Button, ButtonVariant } from "../button/button";
-import { NeutralLink } from "../display/fewlines/NeutralLink/NeutralLink";
+import { NeutralLink } from "../display/fewlines/neutral-link/neutral-link";
 import { FakeButton } from "../fake-button/fake-button";
 import { Form } from "../form/form";
 import { Input } from "../input/input";

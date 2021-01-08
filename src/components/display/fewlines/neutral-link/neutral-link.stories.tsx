@@ -1,6 +1,6 @@
 import React from "react";
 
-import { NeutralLink } from "./NeutralLink";
+import { NeutralLink } from "./neutral-link";
 
 export default {
   title: "components/Neutral Link",
