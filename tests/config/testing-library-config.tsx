@@ -5,6 +5,19 @@ import React from "react";
 
 import { AccountApp } from "@src/pages/_app.tsx";
 
+const mockLink = ({
+  children,
+  ...props
+}: {
+  children: JSX.Element;
+}): JSX.Element => {
+  return React.cloneElement(children, props);
+};
+
+jest.mock("next/link", () => {
+  return mockLink;
+});
+
 const mockedNextRouter: NextRouter = {
   basePath: "",
   pathname: "/",
@@ -15,7 +28,7 @@ const mockedNextRouter: NextRouter = {
   replace: jest.fn(),
   reload: jest.fn(),
   back: jest.fn(),
-  prefetch: jest.fn().mockResolvedValue(undefined),
+  prefetch: jest.fn().mockResolvedValue(null),
   beforePopState: jest.fn(),
   events: {
     on: jest.fn(),
