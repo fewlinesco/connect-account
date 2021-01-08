@@ -13,7 +13,7 @@ import { IdentityTypes } from "@lib/@types/Identity";
 import {
   InvalidValidationCode,
   TemporaryIdentityExpired,
-} from "@src/clientErrors";
+} from "@src/client-errors";
 import { displayAlertBar } from "@src/utils/display-alert-bar";
 import { validateIdentity } from "@src/workflows/validate-identity";
 

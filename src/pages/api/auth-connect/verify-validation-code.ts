@@ -10,7 +10,7 @@ import {
   NoIdentityAdded,
   NoTemporaryIdentity,
   NoUserFound,
-} from "@src/clientErrors";
+} from "@src/client-errors";
 import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/with-auth";

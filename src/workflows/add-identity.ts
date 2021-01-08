@@ -6,7 +6,7 @@ import {
   IdentityAlreadyUsed,
   IdentityInputValueCantBeBlank,
   PhoneNumberInputValueShouldBeANumber,
-} from "@src/clientErrors";
+} from "@src/client-errors";
 import { fetchJson } from "@src/utils/fetch-json";
 import { getIdentityType } from "@src/utils/get-identity-type";
 

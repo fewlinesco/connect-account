@@ -4,7 +4,7 @@ import fetch, { enableFetchMocks } from "jest-fetch-mock";
 import {
   InvalidValidationCode,
   TemporaryIdentityExpired,
-} from "@src/clientErrors";
+} from "@src/client-errors";
 import * as fetchJson from "@src/utils/fetch-json";
 import { validateIdentity } from "@src/workflows/validate-identity";
 

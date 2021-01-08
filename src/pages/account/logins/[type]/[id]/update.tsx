@@ -8,7 +8,7 @@ import {
   NoDataReturned,
   NoIdentityFound,
   NoUserFound,
-} from "@src/clientErrors";
+} from "@src/client-errors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";

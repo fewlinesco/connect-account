@@ -4,7 +4,7 @@ import React from "react";
 import { getIdentities } from "@lib/queries/get-identities";
 import type { SortedIdentities } from "@src/@types/sorted-identities";
 import { UserCookie } from "@src/@types/user-cookie";
-import { NoDataReturned, NoIdentityFound } from "@src/clientErrors";
+import { NoDataReturned, NoIdentityFound } from "@src/client-errors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { LoginsOverview } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";

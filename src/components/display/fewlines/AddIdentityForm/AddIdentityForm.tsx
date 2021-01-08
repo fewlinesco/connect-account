@@ -14,7 +14,7 @@ import {
   IdentityAlreadyUsed,
   IdentityInputValueCantBeBlank,
   PhoneNumberInputValueShouldBeANumber,
-} from "@src/clientErrors";
+} from "@src/client-errors";
 import { getIdentityType } from "@src/utils/get-identity-type";
 import { addIdentity } from "@src/workflows/add-identity";
 

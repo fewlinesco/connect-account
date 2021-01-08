@@ -1,5 +1,5 @@
 import { getIdentities } from "@lib/queries/get-identities";
-import { NoDataReturned, NoIdentityFound } from "@src/clientErrors";
+import { NoDataReturned, NoIdentityFound } from "@src/client-errors";
 import { GraphqlErrors } from "@src/errors";
 
 export async function isMarkingIdentityAsPrimaryAuthorized(

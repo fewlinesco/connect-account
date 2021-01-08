@@ -4,7 +4,7 @@ import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { DynamoUser } from "@src/@types/dynamo-user";
 import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { config } from "@src/config";
-import { dynamoDbClient } from "@src/dbClient";
+import { dynamoDbClient } from "@src/db-client";
 
 export async function getDBUserFromSub(
   sub: string,

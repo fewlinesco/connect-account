@@ -3,7 +3,7 @@ import React from "react";
 
 import { isUserPasswordSet } from "@lib/queries/is-user-password-set";
 import { UserCookie } from "@src/@types/user-cookie";
-import { NoDataReturned } from "@src/clientErrors";
+import { NoDataReturned } from "@src/client-errors";
 import { Layout } from "@src/components/Layout";
 import { Container } from "@src/components/display/fewlines/Container";
 import { Security } from "@src/components/display/fewlines/Security/Security";
