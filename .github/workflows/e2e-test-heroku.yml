@@ -1,17 +1,17 @@
 name: CI e2e test - Heroku
 
 on:
-  deployment_status:
+  push:
 
 jobs:
   e2e-tests-heroku:
     runs-on: ubuntu-latest
 
     container:
-      image: node:14.15.1
+      image: fewlines/taiko:0.1.0
 
-    env:
-      GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
+    # env:
+    #   GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
 
     steps:
       - uses: actions/checkout@v2
@@ -34,17 +34,20 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install
 
-      - name: creating test user
-        env:
-          CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
-          CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
-          CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
-          CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
-        run: yarn e2e:create-test-user
+      - name: e2e
+        run: yarn test:e2e
 
-      - name: removing test user
-        env:
-          CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
-          CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
-          CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
-        run: yarn e2e:remove-test-user
+      # - name: creating test user
+      #   env:
+      #     CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
+      #     CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
+      #     CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
+      #     CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
+      #   run: yarn e2e:create-test-user
+
+      # - name: removing test user
+      #   env:
+      #     CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
+      #     CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
+      #     CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
+      #   run: yarn e2e:remove-test-user
