@@ -4,7 +4,7 @@ import React from "react";
 import { IdentityTypes } from "@lib/@types";
 import { AddIdentityForm } from "@src/components/add-identity-form/add-identity-form";
 import { Container } from "@src/components/containers/container";
-import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
+import { NavigationBreadcrumbs } from "@src/components/display/fewlines/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/layout";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";

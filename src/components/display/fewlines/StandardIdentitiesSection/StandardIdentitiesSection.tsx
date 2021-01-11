@@ -3,15 +3,15 @@ import styled from "styled-components";
 
 import { ButtonVariant } from "../../../button/button";
 import { FakeButton } from "../../../fake-button/fake-button";
-import { Separator } from "../../../separator/separator";
-import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import {
   BoxedLink,
   NoIdentitiesBox,
-} from "../IdentitiesSection/IdentitiesSection";
+} from "../../../identities-section/identities-section";
+import { NeutralLink } from "../../../neutral-link/neutral-link";
+import { Separator } from "../../../separator/separator";
+import { RightChevron } from "../Icons/RightChevron/RightChevron";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { ShowMoreButton } from "../ShowMoreButton/ShowMoreButton";
-import { NeutralLink } from "../neutral-link/neutral-link";
 import { Identity } from "@lib/@types";
 import { IdentitiesSectionContent } from "@src/@types/identities-section-content";
 

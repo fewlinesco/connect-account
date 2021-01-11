@@ -6,8 +6,8 @@ import { KeyIcon } from "../display/fewlines/Icons/KeyIcon/KeyIcon";
 import { LockIcon } from "../display/fewlines/Icons/LockIcon/LockIcon";
 import { BlackSwitchIcon } from "../display/fewlines/Icons/SwitchIcon/BlackSwitchIcon/BlackSwitchIcon";
 import { BlackWorldIcon } from "../display/fewlines/Icons/WorldIcon/BlackWorldIcon/BlackWorldIcon";
-import { NeutralLink } from "../display/fewlines/neutral-link/neutral-link";
 import { Header } from "../header/header";
+import { NeutralLink } from "../neutral-link/neutral-link";
 import { Separator } from "../separator/separator";
 
 export const DesktopNavigationBar: React.FC = () => {

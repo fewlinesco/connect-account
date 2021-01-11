@@ -5,13 +5,13 @@ import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/sorted-identities";
 import AlertBar from "@src/components/alert-bar/alert-bar";
 import { ButtonVariant } from "@src/components/button/button";
+import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
+import { FakeButton } from "@src/components/fake-button/fake-button";
 import {
   BoxedLink,
   NoIdentitiesBox,
-} from "@src/components/display/fewlines/IdentitiesSection/IdentitiesSection";
-import { ShowMoreButton } from "@src/components/display/fewlines/ShowMoreButton/ShowMoreButton";
-import { NeutralLink } from "@src/components/display/fewlines/neutral-link/neutral-link";
-import { FakeButton } from "@src/components/fake-button/fake-button";
+} from "@src/components/identities-section/identities-section";
+import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { AccountApp } from "@src/pages/_app";
 import LoginsOverviewPage from "@src/pages/account/logins";
 

@@ -7,7 +7,7 @@ import { Button, ButtonVariant } from "@src/components/button/button";
 import {
   NavigationBreadcrumbs,
   Breadcrumbs,
-} from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
+} from "@src/components/display/fewlines/navigation-breadcrumbs/navigation-breadcrumbs";
 import { FakeButton } from "@src/components/fake-button/fake-button";
 import { Form } from "@src/components/form/form";
 import { Input } from "@src/components/input/input";

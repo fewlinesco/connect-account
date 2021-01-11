@@ -1,6 +1,6 @@
 import React from "react";
 
-import { MobileNavigationBar } from "./MobileNavigationBar";
+import { MobileNavigationBar } from "./mobile-navigation-bar";
 
 export default {
   title: "components/Mobile Navigation Bar",

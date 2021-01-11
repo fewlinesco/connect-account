@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Separator } from "../../../separator/separator";
-import {
-  BoxedLink,
-  NoIdentitiesBox,
-} from "../IdentitiesSection/IdentitiesSection";
 import { ShadowBox } from "../ShadowBox/ShadowBox";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { IdentitiesSectionContent } from "@src/@types/identities-section-content";
+import {
+  BoxedLink,
+  NoIdentitiesBox,
+} from "@src/components/identities-section/identities-section";
+import { Separator } from "@src/components/separator/separator";
 import {
   capitalizeFirstLetter,
   formatSpecialSocialIdentities,

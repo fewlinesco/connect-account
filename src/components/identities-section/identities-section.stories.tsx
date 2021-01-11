@@ -1,7 +1,7 @@
 import React from "react";
 
-import { StoriesContainer } from "../../../containers/stories-container";
-import { IdentitiesSection } from "./IdentitiesSection";
+import { StoriesContainer } from "../containers/stories-container";
+import { IdentitiesSection } from "./identities-section";
 import { Identity, IdentityTypes } from "@lib/@types";
 
 export default {

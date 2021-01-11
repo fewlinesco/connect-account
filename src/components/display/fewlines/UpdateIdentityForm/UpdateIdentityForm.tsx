@@ -5,7 +5,7 @@ import { Button, ButtonVariant } from "../../../button/button";
 import { FakeButton } from "../../../fake-button/fake-button";
 import { Form } from "../../../form/form";
 import { Input } from "../../../input/input";
-import { NeutralLink } from "../neutral-link/neutral-link";
+import { NeutralLink } from "../../../neutral-link/neutral-link";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { Box } from "@src/components/box/box";
 

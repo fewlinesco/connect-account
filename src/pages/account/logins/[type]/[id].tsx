@@ -6,7 +6,7 @@ import { getIdentity } from "@lib/queries/get-identity";
 import { UserCookie } from "@src/@types/user-cookie";
 import { NoDataReturned, NoIdentityFound } from "@src/client-errors";
 import { Container } from "@src/components/containers/container";
-import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
+import { NavigationBreadcrumbs } from "@src/components/display/fewlines/navigation-breadcrumbs/navigation-breadcrumbs";
 import { IdentityOverview } from "@src/components/identity-overview/identity-overview";
 import { Layout } from "@src/components/layout";
 import { GraphqlErrors } from "@src/errors";

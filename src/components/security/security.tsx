@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { RightChevron } from "../display/fewlines/Icons/RightChevron/RightChevron";
 import { ShadowBox } from "../display/fewlines/ShadowBox/ShadowBox";
-import { NeutralLink } from "../display/fewlines/neutral-link/neutral-link";
+import { NeutralLink } from "../neutral-link/neutral-link";
 
 type SecurityProps = {
   isPasswordSet: boolean;

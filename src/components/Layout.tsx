@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 import { DesktopNavigationBar } from "./desktop-navigation-bar/desktop-navigation-bar";
-import { MobileNavigationBar } from "./display/fewlines/MobileNavigationBar/MobileNavigationBar";
 import { Header } from "./header/header";
+import { MobileNavigationBar } from "./mobile-navigation-bar/mobile-navigation-bar";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 export const Layout: React.FC = ({ children }) => {
