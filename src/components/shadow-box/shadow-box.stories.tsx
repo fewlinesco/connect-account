@@ -1,7 +1,7 @@
 import React from "react";
 
-import { StoriesContainer } from "../../../containers/stories-container";
-import { ShadowBox } from "./ShadowBox";
+import { StoriesContainer } from "../containers/stories-container";
+import { ShadowBox } from "./shadow-box";
 
 export default {
   title: "components/Shadow Box",

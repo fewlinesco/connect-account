@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ShowMoreButton } from "./ShowMoreButton";
+import { ShowMoreButton } from "./show-more-button";
 
 export default {
   title: "components/Show More Button",

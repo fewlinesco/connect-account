@@ -4,13 +4,13 @@ import React from "react";
 
 import { IdentityTypes } from "@lib/@types";
 import { Button, ButtonVariant } from "@src/components/button/button";
-import {
-  NavigationBreadcrumbs,
-  Breadcrumbs,
-} from "@src/components/display/fewlines/navigation-breadcrumbs/navigation-breadcrumbs";
 import { FakeButton } from "@src/components/fake-button/fake-button";
 import { Form } from "@src/components/form/form";
 import { Input } from "@src/components/input/input";
+import {
+  NavigationBreadcrumbs,
+  Breadcrumbs,
+} from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { AccountApp } from "@src/pages/_app";
 import AddIdentityPage from "@src/pages/account/logins/[type]/new";
 import * as fetchJson from "@src/utils/fetch-json";

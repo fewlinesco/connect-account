@@ -4,9 +4,9 @@ import styled from "styled-components";
 import { ButtonVariant } from "../button/button";
 import { HomeDesktopBackground } from "../display/fewlines/Icons/HomeDesktopBackground/HomeDesktopBackground";
 import { HomeMobileBackground } from "../display/fewlines/Icons/HomeMobileBackground/HomeMobileBackground";
-import { ShadowBox } from "../display/fewlines/ShadowBox/ShadowBox";
 import { FakeButton } from "../fake-button/fake-button";
 import { NeutralLink } from "../neutral-link/neutral-link";
+import { ShadowBox } from "../shadow-box/shadow-box";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 type HomeProps = { authorizeURL: string; providerName: string };

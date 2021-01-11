@@ -1,7 +1,7 @@
 import React from "react";
 
-import { StoriesContainer } from "../../../containers/stories-container";
-import { PasswordRulesErrorList } from "./PasswordRulesErrorList";
+import { StoriesContainer } from "../containers/stories-container";
+import { PasswordRulesErrorList } from "./password-rules-error-list";
 
 export default {
   title: "components/PasswordRulesErrorList",

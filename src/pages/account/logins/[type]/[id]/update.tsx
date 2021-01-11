@@ -10,8 +10,8 @@ import {
   NoUserFound,
 } from "@src/client-errors";
 import { Container } from "@src/components/containers/container";
-import { NavigationBreadcrumbs } from "@src/components/display/fewlines/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/layout";
+import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
@@ -32,14 +32,7 @@ const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
             "edit",
           ]}
         />
-        {/* <UpdateIdentity identity={identity}>
-          {({ updateIdentity }) => (
-            <UpdateIdentityForm
-              updateIdentity={updateIdentity}
-              currentIdentity={identity}
-            />
-          )}
-        </UpdateIdentity> */}
+        {/* <UpdateIdentityForm currentIdentity={identity} /> */}
       </Container>
     </Layout>
   );

@@ -1,9 +1,9 @@
 import { mount } from "enzyme";
 import React from "react";
 
-import { RadioButton } from "@src/components/display/fewlines/RadioButton/RadioButton";
 import { Input } from "@src/components/input/input";
 import { ListItem } from "@src/components/locale/locale";
+import { RadioButton } from "@src/components/radio-button/radio-button";
 import { AccountApp } from "@src/pages/_app";
 import LocalePage from "@src/pages/account/locale";
 

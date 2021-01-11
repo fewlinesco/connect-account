@@ -2,13 +2,10 @@ import { mount } from "enzyme";
 import React from "react";
 
 import { SECTION_LIST_CONTENT } from "@src/components/account-overview/account-overview";
-import {
-  TextBox,
-  SectionName,
-} from "@src/components/display/fewlines/SectionListItem/SectionListItem";
-import { ShadowBox } from "@src/components/display/fewlines/ShadowBox/ShadowBox";
+import { ShadowBox } from "@src/components/shadow-box/shadow-box";
 import { AccountApp } from "@src/pages/_app";
 import AccountPage, { WelcomeMessage } from "@src/pages/account/index";
+import { TextBox, SectionName } from "@src/section-list-item/section-list-item";
 
 jest.mock("@src/dbClient", () => {
   return {

@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { StyledForm } from "../../../form/form";
-import { PasswordRulesErrorList } from "../PasswordRulesErrorList/PasswordRulesErrorList";
+import { StyledForm } from "../form/form";
+import { PasswordRulesErrorList } from "../password-rules-error-list/password-rules-error-list";
 import type { SetPasswordErrorRules } from "@lib/@types/Password";
 import { Button, ButtonVariant } from "@src/components/button/button";
 import { Input } from "@src/components/input/input";

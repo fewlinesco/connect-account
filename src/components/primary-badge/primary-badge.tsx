@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { PrimaryIcon } from "../Icons/PrimaryIcon/PrimaryIcon";
+import { PrimaryIcon } from "../display/fewlines/Icons/PrimaryIcon/PrimaryIcon";
 
 export const PrimaryBadge: React.FC = () => {
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { ShadowBox } from "../ShadowBox/ShadowBox";
+import { ShadowBox } from "../shadow-box/shadow-box";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { IdentitiesSectionContent } from "@src/@types/identities-section-content";
 import {

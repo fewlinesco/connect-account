@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 import { MagnifyingGlass } from "../display/fewlines/Icons/MagnifyingGlas/MagnifyingGlass";
-import { RadioButton } from "../display/fewlines/RadioButton/RadioButton";
 import { Input } from "../input/input";
+import { RadioButton } from "../radio-button/radio-button";
 import { Separator } from "../separator/separator";
 import { deviceBreakpoints } from "@src/design-system/theme";
 

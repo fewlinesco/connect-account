@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import { SocialIdentitiesSection } from "../display/fewlines/SocialIdentitiesSection/SocialIdentitiesSection";
-import { StandardIdentitiesSection } from "../display/fewlines/StandardIdentitiesSection/StandardIdentitiesSection";
 import { NeutralLink } from "../neutral-link/neutral-link";
+import { SocialIdentitiesSection } from "../social-identities-section/social-identities-section";
+import { StandardIdentitiesSection } from "../standard-identities-section/standard-identities-section";
 import { TimelineEnd } from "../timeline-end/timeline-end";
 import { Timeline } from "../timeline/timeline";
 import { Identity } from "@lib/@types";
