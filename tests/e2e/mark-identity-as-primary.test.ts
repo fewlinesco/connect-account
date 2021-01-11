@@ -16,7 +16,15 @@ describe("Marking another identity as the primary one on connect account", () =>
   jest.setTimeout(60000);
 
   beforeAll(async () => {
-    await openBrowser({ args: ["--window-size=1440,1000"], headless: true });
+    await openBrowser({
+      args: [
+        "--window-size=1440,1000",
+        "--no-sandbox",
+        "--start-maximized",
+        "--disable-dev-shm",
+      ],
+      headless: true,
+    });
   });
 
   afterAll(async () => {
