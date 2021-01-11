@@ -16,7 +16,7 @@ jest.mock("@src/config", () => {
   };
 });
 
-jest.mock("@src/dbClient", () => {
+jest.mock("@src/db-client", () => {
   return {
     dynamoDbClient: {
       send: () => {

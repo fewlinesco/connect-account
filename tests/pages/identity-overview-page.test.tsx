@@ -5,7 +5,7 @@ import { render, screen, waitFor } from "../config/testing-library-config";
 import { IdentityTypes, Identity } from "@lib/@types";
 import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
 
-jest.mock("@src/dbClient", () => {
+jest.mock("@src/db-client", () => {
   return {
     dynamoDbClient: {
       send: () => {

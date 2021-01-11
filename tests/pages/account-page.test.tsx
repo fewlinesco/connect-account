@@ -7,7 +7,7 @@ import { AccountApp } from "@src/pages/_app";
 import AccountPage, { WelcomeMessage } from "@src/pages/account/index";
 import { TextBox, SectionName } from "@src/section-list-item/section-list-item";
 
-jest.mock("@src/dbClient", () => {
+jest.mock("@src/db-client", () => {
   return {
     dynamoDbClient: {
       send: () => {

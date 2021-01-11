@@ -17,7 +17,7 @@ import * as fetchJson from "@src/utils/fetch-json";
 
 enableFetchMocks();
 
-jest.mock("../../src/config", () => {
+jest.mock("@src/config", () => {
   return {
     config: {
       connectApplicationClientSecret: "foo-bar",
@@ -26,7 +26,7 @@ jest.mock("../../src/config", () => {
   };
 });
 
-jest.mock("@src/dbClient", () => {
+jest.mock("@src/db-client", () => {
   return {
     dynamoDbClient: {
       send: () => {

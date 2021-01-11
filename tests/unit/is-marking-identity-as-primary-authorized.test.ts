@@ -23,7 +23,7 @@ const mockedResponse: { data: { provider: ProviderUser } } = {
   },
 };
 
-jest.mock("@src/utils/fetchManagement.ts", () => {
+jest.mock("@src/utils/fetch-management.ts", () => {
   return {
     fetchManagement: () => {
       return mockedResponse;

@@ -24,7 +24,7 @@ jest.mock("@src/config", () => {
   };
 });
 
-jest.mock("@src/dbClient", () => {
+jest.mock("@src/db-client", () => {
   return {
     dynamoDbClient: {
       send: () => {
@@ -34,7 +34,7 @@ jest.mock("@src/dbClient", () => {
   };
 });
 
-jest.mock("@src/utils/getFlashMessage", () => {
+jest.mock("@src/utils/get-flash-message", () => {
   return {
     getFlashMessage: jest.fn().mockImplementation(() => {
       return "Email address has been deleted";
