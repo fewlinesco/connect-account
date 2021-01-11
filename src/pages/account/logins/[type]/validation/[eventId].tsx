@@ -3,13 +3,13 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { IdentityTypes } from "@lib/@types/Identity";
-import { Layout } from "@src/components/Layout";
-import { Container } from "@src/components/display/fewlines/Container";
-import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
-import { ValidateIdentityForm } from "@src/components/display/fewlines/ValidateIdentityForm/ValidateIdentityForm";
-import { withAuth } from "@src/middlewares/withAuth";
-import { withLogger } from "@src/middlewares/withLogger";
-import { withSentry } from "@src/middlewares/withSentry";
+import { Container } from "@src/components/containers/container";
+import { Layout } from "@src/components/layout";
+import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
+import { ValidateIdentityForm } from "@src/components/validate-identity-form/validate-identity-form";
+import { withAuth } from "@src/middlewares/with-auth";
+import { withLogger } from "@src/middlewares/with-logger";
+import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 
 const ValidateIdentityPage: React.FC<{

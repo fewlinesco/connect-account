@@ -1,16 +1,16 @@
 import { HttpStatus } from "@fwl/web";
 
-import { sendIdentityValidationCode } from "@lib/commands/sendIdentityValidationCode";
-import { UserCookie } from "@src/@types/UserCookie";
+import { sendIdentityValidationCode } from "@lib/commands/send-identity-validation-code";
 import { Handler } from "@src/@types/core/Handler";
-import { insertTemporaryIdentity } from "@src/commands/insertTemporaryIdentity";
+import { UserCookie } from "@src/@types/user-cookie";
+import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
 import { GraphqlErrors } from "@src/errors";
-import { withAuth } from "@src/middlewares/withAuth";
-import { withLogger } from "@src/middlewares/withLogger";
-import { withSentry } from "@src/middlewares/withSentry";
+import { withAuth } from "@src/middlewares/with-auth";
+import { withLogger } from "@src/middlewares/with-logger";
+import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
-import { getIdentityType } from "@src/utils/getIdentityType";
-import { getServerSideCookies } from "@src/utils/serverSideCookies";
+import { getIdentityType } from "@src/utils/get-identity-type";
+import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 const handler: Handler = async (request, response) => {
   if (request.method === "POST") {

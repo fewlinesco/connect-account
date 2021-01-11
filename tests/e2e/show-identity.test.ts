@@ -9,7 +9,7 @@ import {
   below,
 } from "taiko";
 
-import { authenticateToConnect } from "./utils/authenticateToConnect";
+import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
 describe("Account Web Application show identity", () => {
   jest.setTimeout(60000);

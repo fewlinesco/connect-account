@@ -2,15 +2,15 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { IdentityTypes } from "@lib/@types";
-import { Layout } from "@src/components/Layout";
-import { AddIdentityForm } from "@src/components/display/fewlines/AddIdentityForm/AddIdentityForm";
-import { Container } from "@src/components/display/fewlines/Container";
-import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
-import { withAuth } from "@src/middlewares/withAuth";
-import { withLogger } from "@src/middlewares/withLogger";
-import { withSentry } from "@src/middlewares/withSentry";
+import { AddIdentityForm } from "@src/components/add-identity-form/add-identity-form";
+import { Container } from "@src/components/containers/container";
+import { Layout } from "@src/components/layout";
+import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
+import { withAuth } from "@src/middlewares/with-auth";
+import { withLogger } from "@src/middlewares/with-logger";
+import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
-import { getIdentityType } from "@src/utils/getIdentityType";
+import { getIdentityType } from "@src/utils/get-identity-type";
 
 const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   return (

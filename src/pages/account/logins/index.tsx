@@ -1,22 +1,22 @@
 import type { GetServerSideProps } from "next";
 import React from "react";
 
-import { getIdentities } from "@lib/queries/getIdentities";
-import type { SortedIdentities } from "@src/@types/SortedIdentities";
-import { UserCookie } from "@src/@types/UserCookie";
-import { NoDataReturned, NoIdentityFound } from "@src/clientErrors";
-import { Layout } from "@src/components/Layout";
-import { Container } from "@src/components/display/fewlines/Container";
-import { LoginsOverview } from "@src/components/display/fewlines/LoginsOverview/LoginsOverview";
+import { getIdentities } from "@lib/queries/get-identities";
+import type { SortedIdentities } from "@src/@types/sorted-identities";
+import { UserCookie } from "@src/@types/user-cookie";
+import { NoDataReturned, NoIdentityFound } from "@src/client-errors";
+import { Container } from "@src/components/containers/container";
+import { Layout } from "@src/components/layout";
+import { LoginsOverview } from "@src/components/logins-overview/logins-overview";
 import { GraphqlErrors } from "@src/errors";
-import { withAuth } from "@src/middlewares/withAuth";
-import { withLogger } from "@src/middlewares/withLogger";
-import { withSentry } from "@src/middlewares/withSentry";
+import { withAuth } from "@src/middlewares/with-auth";
+import { withLogger } from "@src/middlewares/with-logger";
+import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
-import { displayAlertBar } from "@src/utils/displayAlertBar";
-import { getFlashMessage } from "@src/utils/getFlashMessage";
-import { getServerSideCookies } from "@src/utils/serverSideCookies";
-import { sortIdentities } from "@src/utils/sortIdentities";
+import { displayAlertBar } from "@src/utils/display-alert-bar";
+import { getFlashMessage } from "@src/utils/get-flash-message";
+import { getServerSideCookies } from "@src/utils/server-side-cookies";
+import { sortIdentities } from "@src/utils/sort-identities";
 
 type LoginsOverviewPageProps = {
   sortedIdentities: SortedIdentities;

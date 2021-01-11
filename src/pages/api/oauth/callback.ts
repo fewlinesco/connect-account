@@ -1,13 +1,13 @@
 import { HttpStatus } from "@fwl/web";
 
 import { Handler } from "@src/@types/core/Handler";
-import { getAndPutUser } from "@src/commands/getAndPutUser";
+import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { oauth2Client } from "@src/config";
-import { withLogger } from "@src/middlewares/withLogger";
-import { withSentry } from "@src/middlewares/withSentry";
+import { withLogger } from "@src/middlewares/with-logger";
+import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
-import { setServerSideCookies } from "@src/utils/serverSideCookies";
-import { decryptVerifyAccessToken } from "@src/workflows/decryptVerifyAccessToken";
+import { setServerSideCookies } from "@src/utils/server-side-cookies";
+import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
 const handler: Handler = async (request, response): Promise<void> => {
   if (request.method === "GET") {

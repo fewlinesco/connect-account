@@ -11,7 +11,7 @@ import {
   clear,
 } from "taiko";
 
-import { authenticateToConnect } from "./utils/authenticateToConnect";
+import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
 describe("Account Web Application update password", () => {
   jest.setTimeout(60000);

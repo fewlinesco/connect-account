@@ -2,19 +2,19 @@ import type { GetServerSideProps } from "next";
 import React from "react";
 
 import { Identity, IdentityTypes } from "@lib/@types";
-import { getIdentity } from "@lib/queries/getIdentity";
-import { UserCookie } from "@src/@types/UserCookie";
-import { NoDataReturned, NoIdentityFound } from "@src/clientErrors";
-import { Layout } from "@src/components/Layout";
-import { Container } from "@src/components/display/fewlines/Container";
-import { IdentityOverview } from "@src/components/display/fewlines/IdentityOverview/IdentityOverview";
-import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
+import { getIdentity } from "@lib/queries/get-identity";
+import { UserCookie } from "@src/@types/user-cookie";
+import { NoDataReturned, NoIdentityFound } from "@src/client-errors";
+import { Container } from "@src/components/containers/container";
+import { IdentityOverview } from "@src/components/identity-overview/identity-overview";
+import { Layout } from "@src/components/layout";
+import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { GraphqlErrors } from "@src/errors";
-import { withAuth } from "@src/middlewares/withAuth";
-import { withLogger } from "@src/middlewares/withLogger";
-import { withSentry } from "@src/middlewares/withSentry";
+import { withAuth } from "@src/middlewares/with-auth";
+import { withLogger } from "@src/middlewares/with-logger";
+import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
-import { getServerSideCookies } from "@src/utils/serverSideCookies";
+import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 const IdentityOverviewPage: React.FC<{
   identity: Identity;

@@ -2,13 +2,13 @@ import type { GetServerSideProps } from "next";
 import React from "react";
 import styled from "styled-components";
 
-import { Layout } from "@src/components/Layout";
-import { AccountOverview } from "@src/components/display/fewlines/AccountOverview/AccountOverview";
-import { Container } from "@src/components/display/fewlines/Container";
+import { AccountOverview } from "@src/components/account-overview/account-overview";
+import { Container } from "@src/components/containers/container";
+import { Layout } from "@src/components/layout";
 import { deviceBreakpoints } from "@src/design-system/theme";
-import { withAuth } from "@src/middlewares/withAuth";
-import { withLogger } from "@src/middlewares/withLogger";
-import { withSentry } from "@src/middlewares/withSentry";
+import { withAuth } from "@src/middlewares/with-auth";
+import { withLogger } from "@src/middlewares/with-logger";
+import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
 
 const AccountPage: React.FC = () => {

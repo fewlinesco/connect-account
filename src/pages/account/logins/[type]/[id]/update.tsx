@@ -2,22 +2,22 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { Identity, IdentityTypes } from "@lib/@types";
-import { getIdentities } from "@lib/queries/getIdentities";
-import { UserCookie } from "@src/@types/UserCookie";
+import { getIdentities } from "@lib/queries/get-identities";
+import { UserCookie } from "@src/@types/user-cookie";
 import {
   NoDataReturned,
   NoIdentityFound,
   NoUserFound,
-} from "@src/clientErrors";
-import { Layout } from "@src/components/Layout";
-import { Container } from "@src/components/display/fewlines/Container";
-import { NavigationBreadcrumbs } from "@src/components/display/fewlines/NavigationBreadcrumbs/NavigationBreadcrumbs";
+} from "@src/client-errors";
+import { Container } from "@src/components/containers/container";
+import { Layout } from "@src/components/layout";
+import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { GraphqlErrors } from "@src/errors";
-import { withAuth } from "@src/middlewares/withAuth";
-import { withLogger } from "@src/middlewares/withLogger";
-import { withSentry } from "@src/middlewares/withSentry";
+import { withAuth } from "@src/middlewares/with-auth";
+import { withLogger } from "@src/middlewares/with-logger";
+import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
-import { getServerSideCookies } from "@src/utils/serverSideCookies";
+import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   return (
@@ -32,14 +32,7 @@ const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
             "edit",
           ]}
         />
-        {/* <UpdateIdentity identity={identity}>
-          {({ updateIdentity }) => (
-            <UpdateIdentityForm
-              updateIdentity={updateIdentity}
-              currentIdentity={identity}
-            />
-          )}
-        </UpdateIdentity> */}
+        {/* <UpdateIdentityForm currentIdentity={identity} /> */}
       </Container>
     </Layout>
   );

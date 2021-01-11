@@ -1,25 +1,25 @@
 import { HttpStatus } from "@fwl/web";
 
-import { addIdentityToUser } from "@lib/commands/addIdentityToUser";
-import { markIdentityAsPrimary } from "@lib/commands/markIdentityAsPrimary";
-import { checkVerificationCode } from "@lib/queries/checkVerificationCode";
-import { UserCookie } from "@src/@types/UserCookie";
+import { addIdentityToUser } from "@lib/commands/add-identity-to-user";
+import { markIdentityAsPrimary } from "@lib/commands/mark-identity-as-primary";
+import { checkVerificationCode } from "@lib/queries/check-verification-code";
 import { Handler } from "@src/@types/core/Handler";
+import { UserCookie } from "@src/@types/user-cookie";
 import {
   NoDataReturned,
   NoIdentityAdded,
   NoTemporaryIdentity,
   NoUserFound,
-} from "@src/clientErrors";
-import { removeTemporaryIdentity } from "@src/commands/removeTemporaryIdentity";
+} from "@src/client-errors";
+import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
 import { GraphqlErrors } from "@src/errors";
-import { withAuth } from "@src/middlewares/withAuth";
-import { withLogger } from "@src/middlewares/withLogger";
-import { withSentry } from "@src/middlewares/withSentry";
+import { withAuth } from "@src/middlewares/with-auth";
+import { withLogger } from "@src/middlewares/with-logger";
+import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
-import { getDBUserFromSub } from "@src/queries/getDBUserFromSub";
-import { getIdentityType } from "@src/utils/getIdentityType";
-import { getServerSideCookies } from "@src/utils/serverSideCookies";
+import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
+import { getIdentityType } from "@src/utils/get-identity-type";
+import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 const handler: Handler = async (request, response) => {
   if (request.method === "POST") {

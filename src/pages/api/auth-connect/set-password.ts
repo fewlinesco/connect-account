@@ -1,14 +1,14 @@
 import { HttpStatus } from "@fwl/web";
 import { GraphQLError } from "graphql";
 
-import { createOrUpdatePassword } from "@lib/commands/createOrUpdatePassword";
-import { UserCookie } from "@src/@types/UserCookie";
+import { createOrUpdatePassword } from "@lib/commands/create-or-update-password";
 import { Handler } from "@src/@types/core/Handler";
-import { withAuth } from "@src/middlewares/withAuth";
-import { withLogger } from "@src/middlewares/withLogger";
-import { withSentry } from "@src/middlewares/withSentry";
+import { UserCookie } from "@src/@types/user-cookie";
+import { withAuth } from "@src/middlewares/with-auth";
+import { withLogger } from "@src/middlewares/with-logger";
+import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
-import { getServerSideCookies } from "@src/utils/serverSideCookies";
+import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 const handler: Handler = async (request, response) => {
   if (request.method === "POST") {

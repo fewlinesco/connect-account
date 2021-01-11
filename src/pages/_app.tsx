@@ -3,7 +3,7 @@ import Head from "next/head";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { GlobalStyle } from "@src/design-system/globals/globalStyle";
+import { GlobalStyle } from "@src/design-system/globals/global-style";
 import { theme } from "@src/design-system/theme";
 import "@src/utils/sentry";
 

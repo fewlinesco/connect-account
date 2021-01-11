@@ -1,5 +1,5 @@
-import { deleteUser } from "../../lib/commands/deleteUser";
-import { getUserIDFromIdentityValue } from "../../lib/queries/getUserIDFromIdentityValue";
+import { deleteUser } from "../../lib/commands/delete-user";
+import { getUserIDFromIdentityValue } from "../../lib/queries/get-user-id-from-identity-value";
 
 async function removeTestUser(): Promise<void> {
   if (process.env.GITHUB_CONTEXT_EVENT === undefined) {
