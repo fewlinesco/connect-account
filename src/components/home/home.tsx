@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 import { ButtonVariant } from "../button/button";
-import { HomeDesktopBackground } from "../display/fewlines/Icons/HomeDesktopBackground/HomeDesktopBackground";
-import { HomeMobileBackground } from "../display/fewlines/Icons/HomeMobileBackground/HomeMobileBackground";
 import { FakeButton } from "../fake-button/fake-button";
+import { HomeDesktopBackground } from "../icons/home-desktop-background/home-desktop-background";
+import { HomeMobileBackground } from "../icons/home-mobile-background/home-mobile-background";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { ShadowBox } from "../shadow-box/shadow-box";
 import { deviceBreakpoints } from "@src/design-system/theme";

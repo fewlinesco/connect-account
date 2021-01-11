@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-import { HomeIcon } from "../display/fewlines/Icons/HomeIcon/HomeIcon";
-import { KeyIcon } from "../display/fewlines/Icons/KeyIcon/KeyIcon";
-import { LockIcon } from "../display/fewlines/Icons/LockIcon/LockIcon";
-import { BlackSwitchIcon } from "../display/fewlines/Icons/SwitchIcon/BlackSwitchIcon/BlackSwitchIcon";
-import { BlackWorldIcon } from "../display/fewlines/Icons/WorldIcon/BlackWorldIcon/BlackWorldIcon";
 import { Header } from "../header/header";
+import { HomeIcon } from "../icons/home-icon/home-icon";
+import { KeyIcon } from "../icons/key-icon/key-icon";
+import { LockIcon } from "../icons/lock-icon/lock-icon";
+import { BlackSwitchIcon } from "../icons/switch-icon/black-switch-icon/black-switch-icon";
+import { BlackWorldIcon } from "../icons/world-icon/black-world-icon/black-world-icon";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { Separator } from "../separator/separator";
 

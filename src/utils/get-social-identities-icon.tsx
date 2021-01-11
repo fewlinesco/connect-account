@@ -1,18 +1,18 @@
 import React from "react";
 
 import { IdentityTypes } from "@lib/@types/Identity";
-import { AppleIcon } from "@src/components/display/fewlines/Icons/AppleIcon/AppleIcon";
-import { DecathlonIcon } from "@src/components/display/fewlines/Icons/DecathlonIcon/DecathlonIcon";
-import { FacebookIcon } from "@src/components/display/fewlines/Icons/FacebookIcon/FacebookIcon";
-import { GithubIcon } from "@src/components/display/fewlines/Icons/GithubIcon/GithubIcon";
-import { GoogleIcon } from "@src/components/display/fewlines/Icons/GoogleIcon/GoogleIcon";
-import { KakaoTalkIcon } from "@src/components/display/fewlines/Icons/KakaoTalkIcon/KakaoTalkIcon";
-import { LineIcon } from "@src/components/display/fewlines/Icons/LineIcon/LineIcon";
-import { MicrosoftIcon } from "@src/components/display/fewlines/Icons/MicrosoftIcon/MicrosoftIcon";
-import { NaverIcon } from "@src/components/display/fewlines/Icons/NaverIcon/NaverIcon";
-import { PaypalIcon } from "@src/components/display/fewlines/Icons/PaypalIcon/PaypalIcon";
-import { StravaIcon } from "@src/components/display/fewlines/Icons/StravaIcon/StravaIcon";
-import { VKontakteIcon } from "@src/components/display/fewlines/Icons/VKontakteIcon/VKontakteIcon";
+import { AppleIcon } from "@src/components/icons/apple-icon/apple-icon";
+import { DecathlonIcon } from "@src/components/icons/decathlon-icon/decathlon-icon";
+import { FacebookIcon } from "@src/components/icons/facebook-icon/facebook-icon";
+import { GithubIcon } from "@src/components/icons/github-icon/github-icon";
+import { GoogleIcon } from "@src/components/icons/google-icon/google-icon";
+import { KakaoTalkIcon } from "@src/components/icons/kakao-talk-icon/kakao-talk-icon";
+import { LineIcon } from "@src/components/icons/line-icon/line-icon";
+import { MicrosoftIcon } from "@src/components/icons/microsoft-icon/microsoft-icon";
+import { NaverIcon } from "@src/components/icons/naver-icon/naver-icon";
+import { PaypalIcon } from "@src/components/icons/paypal-icon/paypal-icon";
+import { StravaIcon } from "@src/components/icons/strava-icon/strava-icon";
+import { VKontakteIcon } from "@src/components/icons/vkontakte-icon/vkontakte-icon";
 
 const SOCIAL_IDENTITIES_ICONS = {
   APPLE: <AppleIcon />,

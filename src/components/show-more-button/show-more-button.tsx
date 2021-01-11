@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Triangle } from "../display/fewlines/Icons/Triangle/Triangle";
+import { Triangle } from "../icons/triangle/triangle";
 
 export const ShowMoreButton: React.FC<{
   hide: boolean;

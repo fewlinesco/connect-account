@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import { GhostTimelineBulletPoint } from "../display/fewlines/Icons/GhostTimelineBulletPoint/GhostTimelineBulletPoint";
-import { TimelineBulletPoint } from "../display/fewlines/Icons/TimelineBulletPoint/TimelineBulletPoint";
+import { GhostTimelineBulletPoint } from "../icons/ghost-timeline-bullet-point/ghost-timeline-bullet-point";
+import { TimelineBulletPoint } from "../icons/timeline-bullet-point/timeline-bullet-point";
 import { deviceBreakpoints } from "@src/design-system/theme/decat-theme";
 
 export const TimelineEnd: React.FC = () => {

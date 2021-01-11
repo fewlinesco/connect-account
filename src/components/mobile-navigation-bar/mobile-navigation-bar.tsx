@@ -3,15 +3,15 @@ import React from "react";
 import styled from "styled-components";
 
 import { ClickAwayListener } from "../click-away-listener";
-import { Arrow } from "../display/fewlines/Icons/Arrow/Arrow";
-import { BurgerIcon } from "../display/fewlines/Icons/BurgerIcon/BurgerIcon";
-import { HomeIcon } from "../display/fewlines/Icons/HomeIcon/HomeIcon";
-import { KeyIcon } from "../display/fewlines/Icons/KeyIcon/KeyIcon";
-import { LockIcon } from "../display/fewlines/Icons/LockIcon/LockIcon";
-import { NavBarCrossIcon } from "../display/fewlines/Icons/NavBarCrossIcon/NavBarCrossIcon";
-import { RightChevron } from "../display/fewlines/Icons/RightChevron/RightChevron";
-import { WhiteSwitchIcon } from "../display/fewlines/Icons/SwitchIcon/WhiteSwitchIcon/WhiteSwitchIcon";
-import { WhiteWorldIcon } from "../display/fewlines/Icons/WorldIcon/WhiteWorldIcon/WhiteWorldIcon";
+import { Arrow } from "../icons/arrow/arrow";
+import { BurgerIcon } from "../icons/burger-icon/burger-icon";
+import { HomeIcon } from "../icons/home-icon/home-icon";
+import { KeyIcon } from "../icons/key-icon/key-icon";
+import { LockIcon } from "../icons/lock-icon/lock-icon";
+import { NavBarCrossIcon } from "../icons/navbar-cross-icon/navbar-cross-icon";
+import { RightChevron } from "../icons/right-chevron/right-chevron";
+import { WhiteSwitchIcon } from "../icons/switch-icon/white-switch-icon/white-switch-icon";
+import { WhiteWorldIcon } from "../icons/world-icon/white-world-icon/white-world-icon";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { deviceBreakpoints } from "@src/design-system/theme";
 

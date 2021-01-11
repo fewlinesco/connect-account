@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { AwaitingValidationIcon } from "../display/fewlines/Icons/AwaitingValidationIcon/AwaitingValidationIcon";
+import { AwaitingValidationIcon } from "../icons/awaiting-validation-icon/awaiting-validation-icon";
 
 export const AwaitingValidationBadge: React.FC = () => {
   return (

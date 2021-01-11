@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { RightChevron } from "../display/fewlines/Icons/RightChevron/RightChevron";
+import { RightChevron } from "../icons/right-chevron/right-chevron";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { ShadowBox } from "../shadow-box/shadow-box";
 

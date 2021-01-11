@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 import { ButtonVariant } from "../button/button";
-import { RightChevron } from "../display/fewlines/Icons/RightChevron/RightChevron";
 import { FakeButton } from "../fake-button/fake-button";
+import { RightChevron } from "../icons/right-chevron/right-chevron";
 import {
   BoxedLink,
   NoIdentitiesBox,

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { MagnifyingGlass } from "../display/fewlines/Icons/MagnifyingGlas/MagnifyingGlass";
+import { MagnifyingGlass } from "../icons/magnifying-glass/magnifying-glass";
 import { Input } from "../input/input";
 import { RadioButton } from "../radio-button/radio-button";
 import { Separator } from "../separator/separator";
