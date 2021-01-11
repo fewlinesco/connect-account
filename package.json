@@ -94,10 +94,6 @@
     "typescript": "4.1.2",
     "url-loader": "4.1.1"
   },
-  "engines": {
-    "node": "14.15.1",
-    "yarn": "1.22.5"
-  },
   "babel": {
     "env": {
       "production": {
