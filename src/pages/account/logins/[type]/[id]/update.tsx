@@ -10,7 +10,7 @@ import {
   NoUserFound,
 } from "@src/client-errors";
 import { Container } from "@src/components/containers/container";
-import { Layout } from "@src/components/layout";
+import { Layout } from "@src/components/layout-remove";
 import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/with-auth";

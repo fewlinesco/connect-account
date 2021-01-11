@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from "next";
 import React from "react";
 
-import { Layout } from "@src/components/layout";
+import { Layout } from "@src/components/layout-remove";
 import { Locale } from "@src/components/locale/locale";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
