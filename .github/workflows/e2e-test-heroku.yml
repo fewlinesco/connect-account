@@ -39,3 +39,7 @@ jobs:
 
       - name: e2e
         run: yarn test:e2e
+        env:
+          CONNECT_ACCOUNT_TEST_EMAIL: ${{ secrets.CONNECT_ACCOUNT_TEST_EMAIL }}
+          CONNECT_ACCOUNT_TEST_PASSWORD: ${{ secrets.CONNECT_ACCOUNT_TEST_PASSWORD }}
+          CONNECT_ACCOUNT_TEST_URL: ${{ github.event.deployment.payload.web_url }}

@@ -4,7 +4,9 @@ import { config } from "@src/config";
 
 export async function authenticateToConnect(): Promise<void> {
   try {
-    await goto(config.connectAccountURL);
+    await goto(
+      process.env.CONNECT_ACCOUNT_TEST_URL || config.connectAccountURL,
+    );
 
     await waitFor("Access my account");
     expect(await text("Access my account").exists()).toBeTruthy();
