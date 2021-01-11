@@ -6,7 +6,7 @@ import type { SortedIdentities } from "@src/@types/sorted-identities";
 import { UserCookie } from "@src/@types/user-cookie";
 import { NoDataReturned, NoIdentityFound } from "@src/client-errors";
 import { Container } from "@src/components/containers/container";
-import { Layout } from "@src/components/layout-remove";
+import { Layout } from "@src/components/layout";
 import { LoginsOverview } from "@src/components/logins-overview/logins-overview";
 import { GraphqlErrors } from "@src/errors";
 import { withAuth } from "@src/middlewares/with-auth";
