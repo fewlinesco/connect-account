@@ -1,7 +1,7 @@
 name: CI e2e test - Heroku
 
 on:
-  push:
+  deployment_status:
 
 jobs:
   e2e-tests-heroku:
@@ -10,11 +10,14 @@ jobs:
     container:
       image: fewlines/taiko:0.1.0
 
-    # env:
-    #   GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
+    env:
+      GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: debug
+        run: echo $GITHUB_CONTEXT_EVENT
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -36,18 +39,3 @@ jobs:
 
       - name: e2e
         run: yarn test:e2e
-
-      # - name: creating test user
-      #   env:
-      #     CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
-      #     CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
-      #     CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
-      #     CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
-      #   run: yarn e2e:create-test-user
-
-      # - name: removing test user
-      #   env:
-      #     CONNECT_TEST_ACCOUNT_EMAIL: ${{ secrets.CONNECT_TEST_ACCOUNT_EMAIL }}
-      #     CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
-      #     CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
-      #   run: yarn e2e:remove-test-user
