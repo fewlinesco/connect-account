@@ -1,13 +1,10 @@
-import { mount } from "enzyme";
 import React from "react";
 
+import { render, screen } from "../config/testing-library-config";
 import { SECTION_LIST_CONTENT } from "@src/components/account-overview/account-overview";
-import { ShadowBox } from "@src/components/shadow-box/shadow-box";
-import { AccountApp } from "@src/pages/_app";
-import AccountPage, { WelcomeMessage } from "@src/pages/account/index";
-import { TextBox, SectionName } from "@src/section-list-item/section-list-item";
+import AccountPage from "@src/pages/account/index";
 
-jest.mock("@src/db-client", () => {
+jest.mock("@src/dbClient", () => {
   return {
     dynamoDbClient: {
       send: () => {
@@ -18,38 +15,31 @@ jest.mock("@src/db-client", () => {
 });
 
 describe("AccountPage", () => {
-  test("should display an H1 with the right text", () => {
-    expect.assertions(2);
+  it("should display each account section", () => {
+    render(<AccountPage />);
 
-    const component = mount(
-      <AccountApp>
-        <AccountPage />
-      </AccountApp>,
-    );
-    const welcomeMessage = component.find(WelcomeMessage);
-    expect(welcomeMessage.text()).toEqual("Welcome to your account");
-    expect(welcomeMessage).toHaveLength(1);
-  });
+    expect(
+      screen.getByRole("link", {
+        name: "LOGINS " + SECTION_LIST_CONTENT["LOGINS"].text,
+      }),
+    ).toBeInTheDocument();
 
-  test("should display each account section", () => {
-    expect.assertions(5);
+    expect(
+      screen.getByRole("link", {
+        name: "LOGINS " + SECTION_LIST_CONTENT["LOGINS"].text,
+      }),
+    ).toHaveAttribute("href", "/account/logins");
 
-    const component = mount(
-      <AccountApp>
-        <AccountPage />
-      </AccountApp>,
-    );
-    const shadowBoxes = component.find(ShadowBox);
-    expect(shadowBoxes).toHaveLength(2);
+    expect(
+      screen.getByRole("link", {
+        name: "SECURITY " + SECTION_LIST_CONTENT["SECURITY"].text,
+      }),
+    ).toBeInTheDocument();
 
-    shadowBoxes.forEach((shadowBox, index) => {
-      const textBox = shadowBox.find(TextBox);
-      const [sectionName, { text }] = Object.entries(SECTION_LIST_CONTENT)[
-        index
-      ];
-
-      expect(textBox.find(SectionName).text()).toEqual(sectionName);
-      expect(textBox.contains(text)).toEqual(true);
-    });
+    expect(
+      screen.getByRole("link", {
+        name: "SECURITY " + SECTION_LIST_CONTENT["SECURITY"].text,
+      }),
+    ).toHaveAttribute("href", "/account/security");
   });
 });
