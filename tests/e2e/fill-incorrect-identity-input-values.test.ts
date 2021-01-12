@@ -15,7 +15,7 @@ import { authenticateToConnect } from "./utils/authenticate-to-connect";
 import { config } from "@src/config";
 
 describe("Account Web Application update password", () => {
-  jest.setTimeout(60000);
+  jest.setTimeout(120000);
 
   beforeAll(async () => {
     await openBrowser({

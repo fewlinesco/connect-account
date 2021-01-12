@@ -10,7 +10,7 @@ import {
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
 describe("Log in with a smart phone, open and close the navigation bar", () => {
-  jest.setTimeout(60000);
+  jest.setTimeout(120000);
 
   beforeAll(async () => {
     await openBrowser({
