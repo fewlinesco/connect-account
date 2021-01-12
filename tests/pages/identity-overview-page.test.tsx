@@ -2,7 +2,8 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 
 import { render, screen, waitFor } from "../config/testing-library-config";
-import { IdentityTypes, Identity } from "@lib/@types";
+import * as mockIdentities from "../mocks/identities";
+import { Identity } from "@lib/@types";
 import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
 
 jest.mock("@src/db-client", () => {
@@ -23,60 +24,12 @@ function makeAsPrimaryRegExFactory(identity: Identity): RegExp {
 
 const userId = "ac3f358d-d2c9-487e-8387-2e6866b853c9";
 
-const nonPrimaryEmailIdentity: Identity = {
-  id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
-  primary: false,
-  status: "validated",
-  type: IdentityTypes.EMAIL,
-  value: "Test@test.test",
-};
-
-const primaryEmailIdentity: Identity = {
-  id: "6tf443c1-530b-4982-878d-33f0def6a7cf",
-  primary: true,
-  status: "validated",
-  type: IdentityTypes.EMAIL,
-  value: "test4@test.test",
-};
-
-const unvalidatedEmailIdentity: Identity = {
-  id: "77yt43c1-530b-4982-878d-33f0def6a7cf",
-  primary: false,
-  status: "unvalidated",
-  type: IdentityTypes.EMAIL,
-  value: "test6@test.test",
-};
-
-const nonPrimaryPhoneIdentity: Identity = {
-  id: "81z343c1-530b-4982-878d-33f0def6a7cf",
-  primary: false,
-  status: "validated",
-  type: IdentityTypes.PHONE,
-  value: "0642424242",
-};
-
-const primaryPhoneIdentity: Identity = {
-  id: "81z343c1-530b-4982-878d-33f0def6a7cf",
-  primary: true,
-  status: "validated",
-  type: IdentityTypes.PHONE,
-  value: "0642424242",
-};
-
-const unvalidatedPhoneIdentity: Identity = {
-  id: "81z343c1-530b-4982-878d-33f0def6a7cf",
-  primary: false,
-  status: "unvalidated",
-  type: IdentityTypes.PHONE,
-  value: "0642424242",
-};
-
 describe("IdentityOverviewPage", () => {
   describe("Identity type: EMAIL", () => {
     it("should render proper email breadcrumbs", () => {
       render(
         <IdentityOverviewPage
-          identity={nonPrimaryEmailIdentity}
+          identity={mockIdentities.nonPrimaryEmailIdentity}
           userId={userId}
         />,
       );
@@ -87,14 +40,16 @@ describe("IdentityOverviewPage", () => {
     it("should display the relevant delete & mark as primary buttons but not validate identity one for a non primary validated email address", () => {
       render(
         <IdentityOverviewPage
-          identity={nonPrimaryEmailIdentity}
+          identity={mockIdentities.nonPrimaryEmailIdentity}
           userId={userId}
         />,
       );
 
       expect(
         screen.getByRole("button", {
-          name: makeAsPrimaryRegExFactory(nonPrimaryEmailIdentity),
+          name: makeAsPrimaryRegExFactory(
+            mockIdentities.nonPrimaryEmailIdentity,
+          ),
         }),
       ).toBeInTheDocument();
 
@@ -114,7 +69,7 @@ describe("IdentityOverviewPage", () => {
     it("shouldn't display primary badge nor the awaiting validation one for a non primary validated email", () => {
       render(
         <IdentityOverviewPage
-          identity={nonPrimaryEmailIdentity}
+          identity={mockIdentities.nonPrimaryEmailIdentity}
           userId={userId}
         />,
       );
@@ -126,14 +81,14 @@ describe("IdentityOverviewPage", () => {
     it("shouldn't display the delete, mark as primary & validate identity buttons for a primary email address", () => {
       render(
         <IdentityOverviewPage
-          identity={primaryEmailIdentity}
+          identity={mockIdentities.primaryEmailIdentity}
           userId={userId}
         />,
       );
 
       expect(
         screen.queryByRole("button", {
-          name: makeAsPrimaryRegExFactory(primaryEmailIdentity),
+          name: makeAsPrimaryRegExFactory(mockIdentities.primaryEmailIdentity),
         }),
       ).not.toBeInTheDocument();
 
@@ -149,7 +104,7 @@ describe("IdentityOverviewPage", () => {
     it("should display primary badge and not the awaiting validation one for a primary email", () => {
       render(
         <IdentityOverviewPage
-          identity={primaryEmailIdentity}
+          identity={mockIdentities.primaryEmailIdentity}
           userId={userId}
         />,
       );
@@ -161,7 +116,7 @@ describe("IdentityOverviewPage", () => {
     it("should display the delete & validate identity buttons but not mark as primary one for an unvalidated email address", () => {
       render(
         <IdentityOverviewPage
-          identity={unvalidatedEmailIdentity}
+          identity={mockIdentities.unvalidatedEmailIdentity}
           userId={userId}
         />,
       );
@@ -180,7 +135,9 @@ describe("IdentityOverviewPage", () => {
 
       expect(
         screen.queryByRole("button", {
-          name: makeAsPrimaryRegExFactory(unvalidatedEmailIdentity),
+          name: makeAsPrimaryRegExFactory(
+            mockIdentities.unvalidatedEmailIdentity,
+          ),
         }),
       ).not.toBeInTheDocument();
     });
@@ -188,7 +145,7 @@ describe("IdentityOverviewPage", () => {
     it("should display the awaiting validation badge and not primary one for an unvalidated email", () => {
       render(
         <IdentityOverviewPage
-          identity={unvalidatedEmailIdentity}
+          identity={mockIdentities.unvalidatedEmailIdentity}
           userId={userId}
         />,
       );
@@ -202,7 +159,7 @@ describe("IdentityOverviewPage", () => {
     it("should render proper phone identity breadcrumbs", () => {
       render(
         <IdentityOverviewPage
-          identity={nonPrimaryPhoneIdentity}
+          identity={mockIdentities.nonPrimaryPhoneIdentity}
           userId={userId}
         />,
       );
@@ -213,14 +170,16 @@ describe("IdentityOverviewPage", () => {
     it("should display the relevant delete & mark as primary buttons but not validate identity one for a non primary validated phone number", () => {
       render(
         <IdentityOverviewPage
-          identity={nonPrimaryPhoneIdentity}
+          identity={mockIdentities.nonPrimaryPhoneIdentity}
           userId={userId}
         />,
       );
 
       expect(
         screen.getByRole("button", {
-          name: makeAsPrimaryRegExFactory(nonPrimaryPhoneIdentity),
+          name: makeAsPrimaryRegExFactory(
+            mockIdentities.nonPrimaryPhoneIdentity,
+          ),
         }),
       ).toBeInTheDocument();
 
@@ -236,7 +195,7 @@ describe("IdentityOverviewPage", () => {
     it("shouldn't display primary badge nor the awaiting validation one for a non primary validated phone number", () => {
       render(
         <IdentityOverviewPage
-          identity={nonPrimaryPhoneIdentity}
+          identity={mockIdentities.nonPrimaryPhoneIdentity}
           userId={userId}
         />,
       );
@@ -248,14 +207,14 @@ describe("IdentityOverviewPage", () => {
     it("shouldn't display the delete, mark as primary & validate identity buttons for a primary phone number", () => {
       render(
         <IdentityOverviewPage
-          identity={primaryPhoneIdentity}
+          identity={mockIdentities.primaryPhoneIdentity}
           userId={userId}
         />,
       );
 
       expect(
         screen.queryByRole("button", {
-          name: makeAsPrimaryRegExFactory(primaryPhoneIdentity),
+          name: makeAsPrimaryRegExFactory(mockIdentities.primaryPhoneIdentity),
         }),
       ).not.toBeInTheDocument();
 
@@ -271,7 +230,7 @@ describe("IdentityOverviewPage", () => {
     it("should display primary badge and not the awaiting validation one for a primary phone number", () => {
       render(
         <IdentityOverviewPage
-          identity={primaryPhoneIdentity}
+          identity={mockIdentities.primaryPhoneIdentity}
           userId={userId}
         />,
       );
@@ -283,7 +242,7 @@ describe("IdentityOverviewPage", () => {
     it("should display the delete & validate identity buttons but not mark as primary one for an unvalidated phone number", () => {
       render(
         <IdentityOverviewPage
-          identity={unvalidatedPhoneIdentity}
+          identity={mockIdentities.unvalidatedPhoneIdentity}
           userId={userId}
         />,
       );
@@ -298,7 +257,9 @@ describe("IdentityOverviewPage", () => {
 
       expect(
         screen.queryByRole("button", {
-          name: makeAsPrimaryRegExFactory(unvalidatedPhoneIdentity),
+          name: makeAsPrimaryRegExFactory(
+            mockIdentities.unvalidatedPhoneIdentity,
+          ),
         }),
       ).not.toBeInTheDocument();
     });
@@ -306,7 +267,7 @@ describe("IdentityOverviewPage", () => {
     it("should display the awaiting validation badge and not primary one for an unvalidated phone number", () => {
       render(
         <IdentityOverviewPage
-          identity={unvalidatedPhoneIdentity}
+          identity={mockIdentities.unvalidatedPhoneIdentity}
           userId={userId}
         />,
       );
@@ -321,20 +282,20 @@ describe("ConfirmationBox", () => {
   it("shouldn't display any confirmation box on first render", () => {
     render(
       <IdentityOverviewPage
-        identity={nonPrimaryEmailIdentity}
+        identity={mockIdentities.nonPrimaryEmailIdentity}
         userId={userId}
       />,
     );
 
     expect(
       screen.queryByText(
-        `You are about to set ${nonPrimaryEmailIdentity.value} as primary.`,
+        `You are about to set ${mockIdentities.nonPrimaryEmailIdentity.value} as primary.`,
       ),
     ).not.toBeInTheDocument();
 
     expect(
       screen.queryByText(
-        `You are about to delete ${nonPrimaryEmailIdentity.value}`,
+        `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
       ),
     ).not.toBeInTheDocument();
   });
@@ -342,7 +303,7 @@ describe("ConfirmationBox", () => {
   it("should display primary confirmation box after clicking on mark as primary button & close it by clicking on cancel button", async () => {
     render(
       <IdentityOverviewPage
-        identity={nonPrimaryEmailIdentity}
+        identity={mockIdentities.nonPrimaryEmailIdentity}
         userId={userId}
       />,
     );
@@ -351,13 +312,13 @@ describe("ConfirmationBox", () => {
 
     userEvent.click(
       screen.getByRole("button", {
-        name: makeAsPrimaryRegExFactory(nonPrimaryEmailIdentity),
+        name: makeAsPrimaryRegExFactory(mockIdentities.nonPrimaryEmailIdentity),
       }),
     );
 
     expect(
       screen.queryByText(
-        `You are about to set ${nonPrimaryEmailIdentity.value} as primary.`,
+        `You are about to set ${mockIdentities.nonPrimaryEmailIdentity.value} as primary.`,
       ),
     ).toBeInTheDocument();
 
@@ -376,7 +337,7 @@ describe("ConfirmationBox", () => {
     waitFor(() => {
       expect(
         screen.queryByText(
-          `You are about to set ${nonPrimaryEmailIdentity.value} as primary.`,
+          `You are about to set ${mockIdentities.nonPrimaryEmailIdentity.value} as primary.`,
         ),
       ).not.toBeVisible();
     });
@@ -385,7 +346,7 @@ describe("ConfirmationBox", () => {
   it("should display delete confirmation box after clicking on delete button & close it by clicking on cancel button", async () => {
     render(
       <IdentityOverviewPage
-        identity={nonPrimaryEmailIdentity}
+        identity={mockIdentities.nonPrimaryEmailIdentity}
         userId={userId}
       />,
     );
@@ -400,7 +361,7 @@ describe("ConfirmationBox", () => {
 
     expect(
       screen.queryByText(
-        `You are about to delete ${nonPrimaryEmailIdentity.value}`,
+        `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
       ),
     ).toBeInTheDocument();
 
@@ -419,7 +380,7 @@ describe("ConfirmationBox", () => {
     waitFor(() => {
       expect(
         screen.queryByText(
-          `You are about to delete ${nonPrimaryEmailIdentity.value}`,
+          `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
         ),
       ).not.toBeVisible();
     });
@@ -428,7 +389,7 @@ describe("ConfirmationBox", () => {
   it("should close confirmation box when clicking outside of it", () => {
     render(
       <IdentityOverviewPage
-        identity={nonPrimaryEmailIdentity}
+        identity={mockIdentities.nonPrimaryEmailIdentity}
         userId={userId}
       />,
     );
@@ -441,7 +402,7 @@ describe("ConfirmationBox", () => {
 
     expect(
       screen.queryByText(
-        `You are about to delete ${nonPrimaryEmailIdentity.value}`,
+        `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
       ),
     ).toBeInTheDocument();
 
@@ -450,7 +411,7 @@ describe("ConfirmationBox", () => {
     waitFor(() => {
       expect(
         screen.queryByText(
-          `You are about to delete ${nonPrimaryEmailIdentity.value}`,
+          `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
         ),
       ).not.toBeVisible();
     });
