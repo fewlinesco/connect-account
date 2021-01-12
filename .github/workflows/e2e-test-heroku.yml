@@ -16,9 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: debug
-        run: echo $GITHUB_CONTEXT_EVENT
-
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -37,9 +34,25 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install
 
+      - name: creating test user
+        env:
+          CONNECT_TEST_ACCOUNT_EMAIL: "taiko@e2e.test"
+          CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
+          CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
+          CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
+        run: yarn e2e:create-test-user
+
       - name: e2e
         run: yarn test:e2e
+        # if: github.event.deployment_status.status == 'success'
         env:
-          CONNECT_ACCOUNT_TEST_EMAIL: ${{ secrets.CONNECT_ACCOUNT_TEST_EMAIL }}
-          CONNECT_ACCOUNT_TEST_PASSWORD: ${{ secrets.CONNECT_ACCOUNT_TEST_PASSWORD }}
+          CONNECT_TEST_ACCOUNT_EMAIL: format('taiko_{0}@e2e.test', ${{ github.event.deployment.sha }})
+          CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_ACCOUNT_TEST_PASSWORD }}
           CONNECT_ACCOUNT_TEST_URL: ${{ github.event.deployment.payload.web_url }}
+
+      - name: removing test user
+        env:
+          CONNECT_TEST_ACCOUNT_EMAIL: "taiko@e2e.test"
+          CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
+          CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
+        run: yarn e2e:remove-test-user
