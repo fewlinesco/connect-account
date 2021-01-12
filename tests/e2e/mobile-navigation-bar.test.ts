@@ -15,7 +15,7 @@ describe("Log in with a smart phone, open and close the navigation bar", () => {
   beforeAll(async () => {
     await openBrowser({
       args: [
-        "--window-size=1440,1000",
+        "--window-size=400,800",
         "--no-sandbox",
         "--start-maximized",
         "--disable-dev-shm",
