@@ -49,13 +49,9 @@ export const StandardIdentitiesSection: React.FC<StandardIdentitiesSectionProps>
             <div key={identity.type + index}>
               <BoxedLink
                 disableClick={false}
-                href={{
-                  pathname: "/account/logins/[type]/[id]",
-                  query: {
-                    type: identity.type.toLowerCase(),
-                    id: identity.id,
-                  },
-                }}
+                href={`/account/logins/${identity.type.toLowerCase()}/${
+                  identity.id
+                }`}
               >
                 <>
                   <IdentityValue
