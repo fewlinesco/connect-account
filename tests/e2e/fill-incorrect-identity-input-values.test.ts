@@ -62,7 +62,10 @@ describe("Account Web Application update password", () => {
         await text("Identity has already been validated by a user.").exists(),
       ).toBeTruthy();
 
-      await goto(`${config.connectAccountURL}/account/logins/phone/new`);
+      const baseUrl =
+        process.env.CONNECT_TEST_ACCOUNT_URL || config.connectAccountURL + "/";
+
+      await goto(`${baseUrl}account/logins/phone/new`);
 
       await waitFor("phone number *");
       expect(await text("phone number *").exists()).toBeTruthy();

@@ -48,9 +48,10 @@ jobs:
         env:
           CONNECT_TEST_ACCOUNT_EMAIL: 'taiko_${{ github.event.deployment.sha }}@e2e.test'
           CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
-          CONNECT_ACCOUNT_TEST_URL: ${{ github.event.deployment.payload.web_url }}
+          CONNECT_TEST_ACCOUNT_URL: ${{ github.event.deployment.payload.web_url }}
 
       - name: removing test user
+        if: ${{ always() }}
         env:
           CONNECT_TEST_ACCOUNT_EMAIL: "taiko@e2e.test"
           CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}

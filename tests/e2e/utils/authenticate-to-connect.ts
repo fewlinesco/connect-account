@@ -5,7 +5,7 @@ import { config } from "@src/config";
 export async function authenticateToConnect(): Promise<void> {
   try {
     await goto(
-      process.env.CONNECT_ACCOUNT_TEST_URL || config.connectAccountURL,
+      process.env.CONNECT_TEST_ACCOUNT_URL || config.connectAccountURL,
     );
 
     await waitFor("Access my account");
