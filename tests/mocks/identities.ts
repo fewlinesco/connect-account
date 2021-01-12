@@ -47,3 +47,19 @@ export const unvalidatedPhoneIdentity: Identity = {
   type: IdentityTypes.PHONE,
   value: "0642424244",
 };
+
+export const primarySocialIdentity: Identity = {
+  id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+  primary: true,
+  status: "validated",
+  type: IdentityTypes.GITHUB,
+  value: "",
+};
+
+export const nonPrimarySocialIdentity: Identity = {
+  id: "8u76dcc1-530b-4982-878d-33f0def6a7cf",
+  primary: false,
+  status: "validated",
+  type: IdentityTypes.FACEBOOK,
+  value: "",
+};
