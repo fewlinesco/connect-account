@@ -46,8 +46,8 @@ jobs:
         run: yarn test:e2e
         # if: github.event.deployment_status.status == 'success'
         env:
-          CONNECT_TEST_ACCOUNT_EMAIL: format('taiko_{0}@e2e.test', ${{ github.event.deployment.sha }})
-          CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_ACCOUNT_TEST_PASSWORD }}
+          CONNECT_TEST_ACCOUNT_EMAIL: 'taiko_${{ github.event.deployment.sha }}@e2e.test'
+          CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
           CONNECT_ACCOUNT_TEST_URL: ${{ github.event.deployment.payload.web_url }}
 
       - name: removing test user
