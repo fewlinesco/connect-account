@@ -14,6 +14,16 @@ function makeAsPrimaryRegExFactory(identity: Identity): RegExp {
   );
 }
 
+jest.mock("@src/db-client", () => {
+  return {
+    dynamoDbClient: {
+      send: () => {
+        return;
+      },
+    },
+  };
+});
+
 describe("ConfirmationBox", () => {
   it("shouldn't display any confirmation box on first render", () => {
     render(
