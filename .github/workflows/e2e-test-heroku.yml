@@ -5,6 +5,7 @@ on:
 
 jobs:
   e2e-tests-heroku:
+    if: ${{ contains(github.event.deployment_status.target_url, 'heroku') }}
     runs-on: ubuntu-latest
 
     container:
