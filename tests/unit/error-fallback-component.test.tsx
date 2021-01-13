@@ -1,41 +1,31 @@
-import { mount } from "enzyme";
 import React from "react";
 
+import { render, screen } from "../config/testing-library-config";
 import { ErrorFallbackComponent } from "@src/components/error-fallback-component/error-fallback-component";
-import { AccountApp } from "@src/pages/_app";
 
 describe("ErrorFallback component", () => {
   test("should render the right content for 404 status code error", () => {
-    expect.assertions(4);
-    const component = mount(
-      <AccountApp>
-        <ErrorFallbackComponent statusCode={404} />
-      </AccountApp>,
-    );
+    render(<ErrorFallbackComponent statusCode={404} />);
 
-    const title = component.find("h1");
-    expect(title).toHaveLength(1);
-    expect(title.text()).toStrictEqual(
-      "We can't find the page you are looking for.",
+    expect(
+      screen.getByRole("heading", {
+        name: "We can't find the page you are looking for.",
+      }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "homepage" })).toHaveAttribute(
+      "href",
+      "/",
     );
-
-    const text = component.find("p");
-    expect(text).toHaveLength(1);
-    expect(text.exists("a[href='/']")).toEqual(true);
   });
 
   test("should render the right content for others status code error", () => {
-    expect.assertions(2);
-    const component = mount(
-      <AccountApp>
-        <ErrorFallbackComponent statusCode={500} />
-      </AccountApp>,
-    );
+    render(<ErrorFallbackComponent statusCode={500} />);
 
-    const title = component.find("h2");
-    expect(title).toHaveLength(1);
-    expect(title.text()).toStrictEqual(
-      "Something went wrong. We are working on getting this fixed as soon as we can.",
-    );
+    expect(
+      screen.getByRole("heading", {
+        name:
+          "Something went wrong. We are working on getting this fixed as soon as we can.",
+      }),
+    ).toBeInTheDocument();
   });
 });
