@@ -26,8 +26,8 @@
     "e2e:remove-test-user": "ts-node bin/e2e/remove-test-user.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "1.0.0-rc.10",
-    "@aws-sdk/util-dynamodb": "1.0.0-rc.10",
+    "@aws-sdk/client-dynamodb": "3.2.0",
+    "@aws-sdk/util-dynamodb": "3.2.0",
     "@fwl/logging": "0.1.1",
     "@fwl/oauth2": "0.1.8",
     "@fwl/web": "0.6.0",
