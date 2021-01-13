@@ -45,8 +45,10 @@ const Bar = styled.div`
 const ListItem = styled(NeutralLink)`
   display: flex;
   align-items: center;
-  padding: ${({ theme }) => theme.spaces.xs} 0 ${({ theme }) => theme.spaces.xs}
-    ${({ theme }) => theme.spaces.xs};
+  padding-top: ${({ theme }) => theme.spaces.xs};
+  padding-bottom: ${({ theme }) => theme.spaces.xs};
+  padding-right: 0;
+  padding-left: ${({ theme }) => theme.spaces.xs};
 `;
 
 const ListLabel = styled.p`
