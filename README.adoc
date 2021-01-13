@@ -459,11 +459,11 @@ For unit testing, we are using https://jestjs.io/[Jest].
 
 === User interaction with components
 
-We are using https://github.com/enzymejs/enzyme[Enzyme] to test components behavior regarding user interactions.
+We are using https://github.com/testing-library/dom-testing-library[Testing Library] to test components behavior regarding user interactions.
 
 === User flow
 
-https://github.com/puppeteer/puppeteer[Puppeteer]
+We are using https://github.com/getgauge/taiko[Taiko] to test our workflows.
 
 == Monitoring
 

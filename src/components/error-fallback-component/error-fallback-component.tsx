@@ -1,6 +1,7 @@
-import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
+
+import { NeutralLink } from "../neutral-link/neutral-link";
 
 type ErrorFallbackComponentProps = {
   statusCode: number;
@@ -16,11 +17,7 @@ export const ErrorFallbackComponent: React.FC<ErrorFallbackComponentProps> = ({
           <h1>We can&apos;t find the page you are looking for.</h1>
           <p>
             It may have expired, or there could be a typo. Maybe you can find
-            what you need on our{" "}
-            <Link href="/" passHref>
-              <a>homepage</a>
-            </Link>
-            .
+            what you need on our <NeutralLink href="/">homepage</NeutralLink>.
           </p>
         </>
       ) : (
