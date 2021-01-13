@@ -36,6 +36,7 @@ const mockedNextRouter: NextRouter = {
     emit: jest.fn(),
   },
   isFallback: false,
+  isReady: false,
 };
 
 const AllTheProviders: React.ComponentType = ({ children }) => {

@@ -1,15 +1,17 @@
-import { HttpStatus, WebError, WebErrorMessages } from "@fwl/web";
+import { HttpStatus } from "@fwl/web";
+import { WebError, WebErrorMessage } from "@fwl/web/dist/errors";
 import { GraphQLError } from "graphql";
 
 import type { OAuth2Errors } from "./@types/oauth2/oauth2-errors";
 
-const Errors: WebErrorMessages = {
-  OAUTH2_ERROR: { code: 503001, message: "OAuth2Client Error" },
+const Errors: WebErrorMessage = {
+  code: "503001",
+  message: "OAuth2Client Error",
 };
 
 export function OAuth2Error(error?: OAuth2Errors): WebError {
   return new WebError({
-    error: Errors.OAUTH2_ERROR,
+    error: Errors,
     httpStatus: HttpStatus.SERVICE_UNAVAILABLE,
     parentError: error,
   });
