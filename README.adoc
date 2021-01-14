@@ -482,3 +482,4 @@ To compile your PlantUML code, you can run the following:
 ----
 cat name-of-the-file.uml | docker run  --rm -i fewlines/developers-portal-diagram-generator plantuml -Djava.awt.headless=true -p -tjpg > name-of-the-file.jpg
 ----
+
