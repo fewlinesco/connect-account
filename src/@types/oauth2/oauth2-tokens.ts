@@ -5,8 +5,3 @@ export type AccessToken = {
   scope: string;
   sub: string;
 };
-
-export type RefreshTokenResponse = {
-  refresh_token: string;
-  access_token: string;
-};

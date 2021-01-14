@@ -1,4 +1,6 @@
-import OAuth2Client, { OAuth2ClientConstructor } from "@fwl/oauth2";
+import OAuth2Client, {
+  OAuth2ClientConstructor,
+} from "@fewlines/connect-client";
 
 type Config = {
   connectAccountURL: string;
@@ -90,7 +92,7 @@ function handleEnvVars(): void {
 handleEnvVars();
 
 const oauth2ClientConstructorProps: OAuth2ClientConstructor = {
-  openIDConfigurationURL: config.connectOpenIdConfigurationUrl,
+  providerURL: config.connectProviderUrl,
   clientID: config.connectApplicationClientId,
   clientSecret: config.connectApplicationClientSecret,
   redirectURI: config.connectAccountRedirectURI,
