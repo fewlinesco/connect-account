@@ -5,7 +5,7 @@ import {
   AlgoNotSupported,
   InvalidAudience,
   ScopesNotSupported,
-} from "@fwl/oauth2";
+} from "@fewlines/connect-client";
 
 export type OAuth2Errors =
   | MissingJWKSURI

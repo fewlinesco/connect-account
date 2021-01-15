@@ -205,7 +205,7 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 | Represents the kind of user authorized information and actions that an Application is able to access on another Application.
 
 | `CONNECT_OPEN_ID_CONFIGURATION_URL`
-| URL used for the `@fwl/oauth2` package to fetch the OpenID configuration.
+| URL used for the `@fewlines/connect-client` package to fetch the OpenID configuration.
 
 | `CONNECT_AUDIENCE`
 | Name of the Application that identifies the recipients that the JWT is intended for.
@@ -228,9 +228,9 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 
 To understand the flow of `connect-account`, you should read the `connect` https://developers.fewlines.co/guides/authorization_code_flow/overview/[documentation].
 
-== @fwl/oauth2
+== @fewlines/connect-client
 
-To understand the abstraction added by the `@fwl/oauth2`, please read the https://github.com/fewlinesco/node-web-libraries/tree/master/packages/oauth2[documentation]
+To understand the abstraction added by the `@fewlines/connect-client`, please read the https://github.com/fewlinesco/connect-js/tree/main/client[documentation]
 
 == Source Code Organization
 

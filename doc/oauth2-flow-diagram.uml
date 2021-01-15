@@ -32,7 +32,7 @@ user -> account : Wants to login
 
 account -> connect : Fetch OpenID configuration
 note left
-The **@fwl/oauth2** package mainly provides
+The **@fewlines/connect-client** package mainly provides
 an abstraction for the OAuth2 flow, and a
 secure way to decrypt/verify **JWE** or 
 **JWS** for **HS256** and **RS256** algorithms.

@@ -1,4 +1,6 @@
-import OAuth2Client, { OAuth2ClientConstructor } from "@fwl/oauth2";
+import OAuth2Client, {
+  OAuth2ClientConstructor,
+} from "@fewlines/connect-client";
 
 type Config = {
   connectAccountURL: string;
@@ -90,29 +92,12 @@ function handleEnvVars(): void {
 handleEnvVars();
 
 const oauth2ClientConstructorProps: OAuth2ClientConstructor = {
-  openIDConfigurationURL: config.connectOpenIdConfigurationUrl,
+  providerURL: config.connectProviderUrl,
   clientID: config.connectApplicationClientId,
   clientSecret: config.connectApplicationClientSecret,
   redirectURI: config.connectAccountRedirectURI,
   audience: config.connectAudience,
   scopes: config.connectApplicationScopes.split(" "),
-  fetch: (url: string, options: any) => {
-    if (url === config.connectOpenIdConfigurationUrl) {
-      return Promise.resolve({
-        json: () =>
-          Promise.resolve({
-            authorization_endpoint:
-              "https://fewlines.connect.prod.fewlines.tech/oauth/authorize",
-            jwks_uri:
-              "https://fewlines.connect.prod.fewlines.tech/.well-known/jwks.json",
-            scopes_supported: ["openid", "profile", "email", "phone"],
-            token_endpoint:
-              "https://fewlines.connect.prod.fewlines.tech/oauth/token",
-          }),
-      });
-    }
-    return fetch(url, options);
-  },
 };
 
 const oauth2Client = new OAuth2Client(oauth2ClientConstructorProps);

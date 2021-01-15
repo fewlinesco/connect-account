@@ -28,8 +28,8 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.2.0",
     "@aws-sdk/util-dynamodb": "3.2.0",
+    "@fewlines/connect-client": "0.2.1",
     "@fwl/logging": "0.1.1",
-    "@fwl/oauth2": "0.1.8",
     "@fwl/web": "0.6.0",
     "@hapi/iron": "6.0.0",
     "@sentry/browser": "5.29.2",

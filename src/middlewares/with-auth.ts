@@ -1,9 +1,8 @@
+import { JWTPayload } from "@fewlines/connect-client";
 import { HttpStatus } from "@fwl/web";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { refreshTokensFlow } from "@lib/commands/refresh-tokens-flow";
 import { Handler } from "@src/@types/core/Handler";
-import { AccessToken } from "@src/@types/oauth2/oauth2-tokens";
 import { UserCookie } from "@src/@types/user-cookie";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
@@ -33,11 +32,12 @@ export function withAuth(handler: Handler): Handler {
             const user = await getDBUserFromSub(sub);
 
             if (user) {
-              const { refresh_token, access_token } = await refreshTokensFlow(
-                user.refresh_token,
-              );
+              const {
+                refresh_token,
+                access_token,
+              } = await oauth2Client.refreshTokens(user.refresh_token);
 
-              const { sub } = await oauth2Client.verifyJWT<AccessToken>(
+              const { sub } = await oauth2Client.verifyJWT<JWTPayload>(
                 access_token,
                 config.connectJwtAlgorithm,
               );

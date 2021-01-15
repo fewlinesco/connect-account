@@ -1,4 +1,5 @@
-import type { AccessToken } from "@src/@types/oauth2/oauth2-tokens";
+import { JWTPayload } from "@fewlines/connect-client";
+
 import { oauth2Client, config } from "@src/config";
 import {
   EnvVar_IsJweSigned_MustBeABoolean,
@@ -7,11 +8,11 @@ import {
 
 export async function decryptVerifyAccessToken(
   accessToken: string,
-): Promise<AccessToken> {
+): Promise<JWTPayload> {
   const tokenPartsCount = accessToken.split(".").length;
 
   if (tokenPartsCount === 3) {
-    return oauth2Client.verifyJWT<AccessToken>(
+    return oauth2Client.verifyJWT<JWTPayload>(
       accessToken,
       config.connectJwtAlgorithm,
     );
@@ -22,19 +23,19 @@ export async function decryptVerifyAccessToken(
       throw new EnvVar_IsJweSigned_MustBeABoolean();
     }
 
-    const decodedToken = await oauth2Client.decryptJWE<AccessToken | string>(
+    const decodedToken = await oauth2Client.decryptJWE<JWTPayload | string>(
       accessToken,
       config.accountJwePrivateKey,
       isAccessTokenSigned,
     );
 
     if (isAccessTokenSigned && typeof decodedToken === "string") {
-      return oauth2Client.verifyJWT<AccessToken>(
+      return oauth2Client.verifyJWT<JWTPayload>(
         decodedToken,
         config.connectJwtAlgorithm,
       );
     } else {
-      return decodedToken as AccessToken;
+      return decodedToken as JWTPayload;
     }
   }
 

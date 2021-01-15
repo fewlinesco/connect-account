@@ -1,11 +1,10 @@
-import { defaultPayload, generateHS256JWS } from "@fwl/oauth2";
+import { defaultPayload, generateHS256JWS } from "@fewlines/connect-client";
 import { HttpStatus } from "@fwl/web";
 import { seal, defaults } from "@hapi/iron";
 import { IncomingMessage, ServerResponse } from "http";
 import { Socket } from "net";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import * as refreshTokensFlow from "@lib/commands/refresh-tokens-flow";
 import { Handler } from "@src/@types/core/Handler";
 import * as getAndPutUser from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
@@ -59,7 +58,7 @@ const spiedOnGetDBUserFromSub = jest
   });
 
 const spiedOnRefreshTokensFlow = jest
-  .spyOn(refreshTokensFlow, "refreshTokensFlow")
+  .spyOn(oauth2Client, "refreshTokens")
   .mockImplementation(async () => {
     return {
       refresh_token: "new_refresh_token",
