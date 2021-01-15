@@ -6,7 +6,7 @@ import { FakeButton } from "../fake-button/fake-button";
 import { HomeDesktopBackground } from "../icons/home-desktop-background/home-desktop-background";
 import { HomeMobileBackground } from "../icons/home-mobile-background/home-mobile-background";
 import { NeutralLink } from "../neutral-link/neutral-link";
-import { ShadowBox } from "../shadow-box/shadow-box";
+import { SectionBox } from "../shadow-box/section-box";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 type HomeProps = { authorizeURL: string; providerName: string };
@@ -18,7 +18,7 @@ export const Home: React.FC<HomeProps> = ({ authorizeURL, providerName }) => {
       <HomeMobileBackground />
       <Wrapper>
         <Container>
-          <ShadowBox>
+          <SectionBox>
             <Flex>
               <DescriptionText>
                 You are about to access your account from {providerName}
@@ -29,7 +29,7 @@ export const Home: React.FC<HomeProps> = ({ authorizeURL, providerName }) => {
                 </FakeButton>
               </NeutralLink>
             </Flex>
-          </ShadowBox>
+          </SectionBox>
         </Container>
       </Wrapper>
     </>

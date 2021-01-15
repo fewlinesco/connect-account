@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { RightChevron } from "../icons/right-chevron/right-chevron";
 import { NeutralLink } from "../neutral-link/neutral-link";
-import { ShadowBox } from "../shadow-box/shadow-box";
+import { SectionBox } from "../shadow-box/section-box";
 
 type SecurityProps = {
   isPasswordSet: boolean;
@@ -13,12 +13,12 @@ export const Security: React.FC<SecurityProps> = ({ isPasswordSet }) => {
   return (
     <>
       <h2>Password</h2>
-      <ShadowBox>
+      <SectionBox>
         <SecurityLink href="/account/security/update">
           <TextBox>{isPasswordSet ? "Update" : "Set"} your password</TextBox>
           <RightChevron />
         </SecurityLink>
-      </ShadowBox>
+      </SectionBox>
     </>
   );
 };

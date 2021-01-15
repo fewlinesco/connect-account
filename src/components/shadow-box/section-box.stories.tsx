@@ -1,17 +1,17 @@
 import React from "react";
 
 import { StoriesContainer } from "../containers/stories-container";
-import { ShadowBox } from "./shadow-box";
+import { SectionBox } from "./section-box";
 
 export default {
-  title: "components/Shadow Box",
-  component: ShadowBox,
+  title: "components/Section Box",
+  component: SectionBox,
 };
 
 export const StandardShadowBox = (): JSX.Element => {
   return (
     <StoriesContainer>
-      <ShadowBox>emailaddress@mail.test</ShadowBox>
+      <SectionBox>emailaddress@mail.test</SectionBox>
     </StoriesContainer>
   );
 };
