@@ -1,4 +1,7 @@
+import React from "react";
 import styled from "styled-components";
+
+import { Triangle } from "../icons/triangle/triangle";
 
 export enum ButtonVariant {
   PRIMARY = "PRIMARY",
@@ -64,4 +67,33 @@ export const Button = styled.button<ButtonProps>`
         background: ${props.theme.colors.background};
       }
     `};
+`;
+
+export const ShowMoreButton: React.FC<{
+  hide: boolean;
+  quantity: number;
+  setHideSecondary: (value: boolean) => void;
+}> = ({ hide, quantity, setHideSecondary }) => {
+  return (
+    <ShowMoreButtonStyle onClick={() => setHideSecondary(!hide)}>
+      {hide ? (
+        <div>
+          Show {quantity} more <Triangle rotate={hide} />
+        </div>
+      ) : (
+        <div>
+          Hide {quantity} <Triangle rotate={hide} />
+        </div>
+      )}
+    </ShowMoreButtonStyle>
+  );
+};
+
+const ShowMoreButtonStyle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 4.5rem;
+  margin-bottom: 2rem;
+  cursor: pointer;
 `;

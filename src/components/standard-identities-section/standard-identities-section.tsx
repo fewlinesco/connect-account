@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { ButtonVariant } from "../button/button";
+import { ButtonVariant, ShowMoreButton } from "../buttons/buttons";
 import { FakeButton } from "../fake-button/fake-button";
 import { RightChevron } from "../icons/right-chevron/right-chevron";
 import {
@@ -11,7 +11,6 @@ import {
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { Separator } from "../separator/separator";
 import { SectionBox } from "../shadow-box/section-box";
-import { ShowMoreButton } from "../show-more-button/show-more-button";
 import { Identity } from "@lib/@types";
 import { IdentitiesSectionContent } from "@src/@types/identities-section-content";
 

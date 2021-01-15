@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { Button, ButtonVariant } from "../button/button";
+import { Button, ButtonVariant } from "../buttons/buttons";
 import { Identity } from "@lib/@types";
 import { markIdentityAsPrimaryCall } from "@src/workflows/mark-identity-as-primary";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Button, ButtonVariant } from "../button/button";
+import { Button, ButtonVariant } from "../buttons/buttons";
 
 export const FakeButton: React.FC<{ variant: ButtonVariant }> = ({
   variant,
