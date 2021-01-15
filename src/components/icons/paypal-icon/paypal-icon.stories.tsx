@@ -3,7 +3,7 @@ import React from "react";
 import { PaypalIcon } from "./paypal-icon";
 
 export default {
-  title: "icons/social/Paypal Icon",
+  title: "icons/Social/Paypal Icon",
   component: PaypalIcon,
 };
 

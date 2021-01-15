@@ -1,6 +1,6 @@
 import { ThemeProvider } from 'styled-components';
 import { theme } from "../src/design-system/theme";
-import { GlobalStyle } from "../src/design-system/globals/globalStyle";
+import { GlobalStyle } from "../src/design-system/globals/global-style";
 import Router from 'next/router';
 import { RouterContext } from 'next/dist/next-server/lib/router-context';
 

@@ -3,7 +3,7 @@ import React from "react";
 import { MicrosoftIcon } from "./microsoft-icon";
 
 export default {
-  title: "icons/social/Microsoft Icon",
+  title: "icons/Social/Microsoft Icon",
   component: MicrosoftIcon,
 };
 

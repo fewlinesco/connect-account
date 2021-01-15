@@ -3,7 +3,7 @@ import React from "react";
 import { FacebookIcon } from "./facebook-icon";
 
 export default {
-  title: "icons/social/Facebook Icon",
+  title: "icons/Social/Facebook Icon",
   component: FacebookIcon,
 };
 
