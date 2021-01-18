@@ -1,9 +1,20 @@
-import { text, click, screenshot, waitFor, write, press, goto } from "taiko";
+import {
+  text,
+  click,
+  screenshot,
+  waitFor,
+  write,
+  press,
+  goto,
+  setConfig,
+} from "taiko";
 
 import { config } from "@src/config";
 
 export async function authenticateToConnect(): Promise<void> {
   try {
+    setConfig({ retryTimeout: 30000 });
+
     await goto(
       process.env.CONNECT_TEST_ACCOUNT_URL || config.connectAccountURL,
     );

@@ -58,7 +58,7 @@ jobs:
     - name: test
       run: yarn test
       
-  creating-e2e-check-run:
+  init-e2e-test-check:
     runs-on: ubuntu-latest
 
     steps: 
