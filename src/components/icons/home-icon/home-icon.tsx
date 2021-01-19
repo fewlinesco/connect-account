@@ -6,13 +6,13 @@ export const HomeIcon: React.FC = () => {
   return (
     <NavigationBarIconContainer>
       <svg
-        width="30"
-        height="26"
+        width="40"
+        height="40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M28.846 10.046L16.094 1.715a2 2 0 00-2.188 0L1.154 10.046h5.538V25H23V14.539a2 2 0 00-2-2h-4a2 2 0 00-2 2v3.156"
+          d="M33.846 16.046L21.094 7.715a2 2 0 00-2.188 0L6.154 16.046h5.538V31H28V20.538a2 2 0 00-2-2h-4a2 2 0 00-2 2v3.157"
           stroke="#03083C"
           strokeWidth="2"
           strokeLinecap="round"
