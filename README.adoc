@@ -422,6 +422,8 @@ export const SvgIcon: React.FC = () => {
 }
 ----
 
+When you use Figma to export SVG, be sure to export the upper component (i.e. *name 40x40*).
+
 == Database
 
 TODO
