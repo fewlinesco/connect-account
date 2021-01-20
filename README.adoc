@@ -392,7 +392,7 @@ const StyledComponent = styled.div {
 }
 ----
 
-Our chosen viewport breakpoints are : `576px` | `768px` | `992` | `1200`.
+Our chosen viewport breakpoints are : `576px` | `768px` | `992px` | `1200px`.
 
 Sometimes, you want to pass custom props to your styled component. Here is the way to do it:
 
@@ -466,6 +466,22 @@ We are using https://github.com/testing-library/dom-testing-library[Testing Libr
 === User flow
 
 We are using https://github.com/getgauge/taiko[Taiko] to test our workflows.
+
+=== Github Actions
+
+To automate our test processes, we use https://docs.github.com/en/actions[Github Actions] to execute workflows, which allow us to run our test suites on new commit pushed to each pull request.
+
+Regarding our main flows for end to end tests (i.e `e2e-test-heroku.yml` & `lint-and-test.yml`), here is the gist of it. 
+Since we had to trigger different flows based on a third party event (i.e. `review app deployment`), we couldn't leverage Github checks management automation on PR.
+To do so, we first create manually a https://docs.github.com/en/rest/reference/checks#get-a-check-run[check-run] (`init-e2e-test-check` job inside `lint-and-test.yml`). This custom check-run is just initialized at this point, and its `status` is pending.
+Once we receive the status of the deployment from our third party actor, we run our end to end test suite (`e2e-tests-heroku` job inside `e2e-test-heroku.yml`) if the review app deployment is a success, or we skip it in the case of a failure during the process.
+The last job (`e2e-tests-check-run-status` job inside `e2e-test-heroku.yml`) is used to manage the status of the custom check-run we created previously. 
+If the deployment failed, we set its status to failure too. When the end to end test suite can be runned, we wait for it to complete before setting the custom check-run status according to the tests results. 
+
+All of these cases are handled at job-level, mostly thanks to https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#job-status-check-functions[job status check functions], which permit to control more precisely jobs execution via conditional statements. 
+
+Inside most of our jobs, we used TypeScript written scripts to perform our actions (i.e. _fetching Github API to handle check-run creation and update_).
+
 
 == Monitoring
 
