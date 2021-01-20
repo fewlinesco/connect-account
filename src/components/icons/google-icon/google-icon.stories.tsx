@@ -3,7 +3,7 @@ import React from "react";
 import { GoogleIcon } from "./google-icon";
 
 export default {
-  title: "icons/social/Google Icon",
+  title: "icons/Social/Google Icon",
   component: GoogleIcon,
 };
 

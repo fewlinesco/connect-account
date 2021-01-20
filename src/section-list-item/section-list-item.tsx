@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { RightChevron } from "../components/icons/right-chevron/right-chevron";
 import { NeutralLink } from "../components/neutral-link/neutral-link";
-import { ShadowBox } from "../components/shadow-box/shadow-box";
+import { SectionBox } from "../components/shadow-box/section-box";
 
 type SectionListItemProps = {
   sectionName: string;
@@ -17,7 +17,7 @@ export const SectionListItem: React.FC<SectionListItemProps> = ({
   const { text, icon } = content;
 
   return (
-    <ShadowBox>
+    <SectionBox>
       <SectionLink href={`/account/${sectionName.toLocaleLowerCase()}`}>
         {icon}
         <TextBox>
@@ -26,7 +26,7 @@ export const SectionListItem: React.FC<SectionListItemProps> = ({
         </TextBox>
         <RightChevron />
       </SectionLink>
-    </ShadowBox>
+    </SectionBox>
   );
 };
 

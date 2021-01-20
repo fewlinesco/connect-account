@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { ButtonVariant } from "../button/button";
+import { ButtonVariant, ShowMoreButton } from "../buttons/buttons";
 import { FakeButton } from "../fake-button/fake-button";
 import { RightChevron } from "../icons/right-chevron/right-chevron";
 import {
@@ -10,8 +10,7 @@ import {
 } from "../identities-section/identities-section";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { Separator } from "../separator/separator";
-import { ShadowBox } from "../shadow-box/shadow-box";
-import { ShowMoreButton } from "../show-more-button/show-more-button";
+import { SectionBox } from "../shadow-box/section-box";
 import { Identity } from "@lib/@types";
 import { IdentitiesSectionContent } from "@src/@types/identities-section-content";
 
@@ -41,7 +40,7 @@ export const StandardIdentitiesSection: React.FC<StandardIdentitiesSectionProps>
   return (
     <>
       <h2>{title}</h2>
-      <ShadowBox>
+      <SectionBox>
         {identitiesList.length === 0 ? (
           <NoIdentitiesBox>{noIdentityMessage}</NoIdentitiesBox>
         ) : (
@@ -67,7 +66,7 @@ export const StandardIdentitiesSection: React.FC<StandardIdentitiesSectionProps>
             </div>
           ))
         )}
-      </ShadowBox>
+      </SectionBox>
       {identitiesList.length > 1 && (
         <Flex>
           <ShowMoreButton

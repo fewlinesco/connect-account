@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import { TimelineBulletPoint } from "../icons/timeline-bullet-point/timeline-bullet-point";
 import { deviceBreakpoints } from "@src/design-system/theme/decat-theme";
 
 export const Timeline: React.FC = () => {
@@ -14,6 +13,38 @@ export const Timeline: React.FC = () => {
         <Line />
       </LineContainer>
     </Flex>
+  );
+};
+
+export const TimelineEnd: React.FC = () => {
+  return (
+    <Flex>
+      <BulletPointContainer>
+        <TimelineBulletPoint />
+      </BulletPointContainer>
+      <LineContainer>
+        <EndLine />
+      </LineContainer>
+      <GhostBulletPointContainer>
+        <GhostTimelineBulletPoint />
+      </GhostBulletPointContainer>
+    </Flex>
+  );
+};
+
+export const TimelineBulletPoint: React.FC = () => {
+  return (
+    <svg width="8" height="8" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="4" cy="4" r="4" fill="#F0F1F3" />
+    </svg>
+  );
+};
+
+const GhostTimelineBulletPoint: React.FC = () => {
+  return (
+    <svg width="8" height="8" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="4" cy="4" r="3.5" fill="#fff" stroke="#F0F1F3" />
+    </svg>
   );
 };
 
@@ -43,5 +74,15 @@ const LineContainer = styled.div`
 
 const Line = styled.div`
   height: calc(100% - 0.6rem);
+  border-left: 1px solid ${({ theme }) => theme.colors.separator};
+`;
+
+const GhostBulletPointContainer = styled.div`
+  width: 0.8rem;
+  margin: -1rem 0 -0.2rem 0;
+`;
+
+const EndLine = styled.div`
+  height: 100%;
   border-left: 1px solid ${({ theme }) => theme.colors.separator};
 `;

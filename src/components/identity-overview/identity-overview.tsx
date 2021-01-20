@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { AwaitingValidationBadge } from "../awaiting-validation-badge/awaiting-validation-badge";
 import { Box } from "../box/box";
-import { Button, ButtonVariant } from "../button/button";
+import { Button, ButtonVariant } from "../buttons/buttons";
 import { ConfirmationBox } from "../confirmation-box/confirmation-box";
 import { DeleteConfirmationBoxContent } from "../confirmation-box/delete-confirmation-box-content";
 import { PrimaryConfirmationBoxContent } from "../confirmation-box/primary-confirmation-box-content";

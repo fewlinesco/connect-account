@@ -1,6 +1,6 @@
 import React from "react";
 
-import { NavigationBarIconContainer } from "../../navigation-bar-icon-container";
+import { NavigationBarIconContainer } from "../../containers/navigation-bar-icon-container";
 
 export const HomeIcon: React.FC = () => {
   return (

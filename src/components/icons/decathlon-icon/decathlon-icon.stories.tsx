@@ -3,7 +3,7 @@ import React from "react";
 import { DecathlonIcon } from "./decathlon-icon";
 
 export default {
-  title: "icons/social/Decathlon Icon",
+  title: "icons/Social/Decathlon Icon",
   component: DecathlonIcon,
 };
 

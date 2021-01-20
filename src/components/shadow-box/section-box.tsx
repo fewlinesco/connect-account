@@ -1,6 +1,6 @@
 import style from "styled-components";
 
-export const ShadowBox = style.div`
+export const SectionBox = style.div`
     background: ${({ theme }) => theme.colors.background};
     border-radius: ${({ theme }) => theme.radii[0]};
     box-shadow: ${({ theme }) => theme.shadows.box};

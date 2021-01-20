@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { ShadowBox } from "../shadow-box/shadow-box";
+import { SectionBox } from "../shadow-box/section-box";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { IdentitiesSectionContent } from "@src/@types/identities-section-content";
 import {
@@ -29,7 +29,7 @@ export const SocialIdentitiesSection: React.FC<SocialIdentitiesSectionProps> = (
   return (
     <>
       <h2>{title}</h2>
-      <ShadowBox>
+      <SectionBox>
         {identitiesList.length === 0 ? (
           <NoIdentitiesBox>{noIdentityMessage}</NoIdentitiesBox>
         ) : (
@@ -50,7 +50,7 @@ export const SocialIdentitiesSection: React.FC<SocialIdentitiesSectionProps> = (
             </div>
           ))
         )}
-      </ShadowBox>
+      </SectionBox>
     </>
   );
 };

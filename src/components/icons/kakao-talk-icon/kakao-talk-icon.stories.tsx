@@ -3,7 +3,7 @@ import React from "react";
 import { KakaoTalkIcon } from "./kakao-talk-icon";
 
 export default {
-  title: "icons/social/KakaoTalk Icon",
+  title: "icons/Social/KakaoTalk Icon",
   component: KakaoTalkIcon,
 };
 

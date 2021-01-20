@@ -3,7 +3,7 @@ import React from "react";
 import { StravaIcon } from "./strava-icon";
 
 export default {
-  title: "icons/social/Strava Icon",
+  title: "icons/Social/Strava Icon",
   component: StravaIcon,
 };
 
