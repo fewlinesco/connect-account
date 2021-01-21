@@ -25,9 +25,7 @@ async function createE2eCheckRun(): Promise<void> {
       },
       body: JSON.stringify(checkRunBody),
     },
-  ).catch((error) => {
-    throw error;
-  });
+  );
 }
 
 createE2eCheckRun();
