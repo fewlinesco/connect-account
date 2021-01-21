@@ -27,12 +27,12 @@ async function updateE2eCheckRunStatus(): Promise<void> {
     });
 
   const e2eCustomCheckRun = checkSuiteList.filter(
-    (check: Record<string, unknown>) => check.name === "e2e-tests-check-run",
+    (check: Record<string, unknown>) => check.name === "e2e-check-run",
   );
 
   const e2eCheckRun = checkSuiteList.filter(
     (check: Record<string, unknown>) =>
-      check.name === "e2e-tests-heroku" && check.conclusion !== "skipped",
+      check.name === "e2e-tests" && check.conclusion !== "skipped",
   );
 
   const checkRunBody = {

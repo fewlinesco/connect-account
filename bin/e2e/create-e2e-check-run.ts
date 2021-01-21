@@ -12,7 +12,7 @@ async function createE2eCheckRun(): Promise<void> {
   }
 
   const checkRunBody = {
-    name: "e2e-tests-check-run",
+    name: "e2e-check-run",
     head_sha: githubActionsContext.pull_request.head.sha,
   };
 

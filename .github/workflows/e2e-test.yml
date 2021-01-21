@@ -1,10 +1,10 @@
-name: CI e2e test - Heroku
+name: CI e2e test
 
 on:
   deployment_status:
 
 jobs:
-  e2e-tests-heroku:
+  e2e-tests:
     if: ${{ contains(github.event.deployment_status.target_url, 'heroku') && github.event.deployment_status.state == 'success'}}
     runs-on: ubuntu-latest
 
@@ -58,9 +58,9 @@ jobs:
           CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
         run: yarn e2e:remove-test-user
   
-  e2e-tests-check-status: 
+  e2e-update-github-check: 
     if: ${{ contains(github.event.deployment_status.target_url, 'heroku') && always() }}
-    needs: e2e-tests-heroku
+    needs: e2e-tests
     runs-on: ubuntu-latest
 
     container:
@@ -90,7 +90,7 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install
 
-      - name: update-check-run-status
+      - name: update check run status
         run: yarn e2e:update-check-run
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

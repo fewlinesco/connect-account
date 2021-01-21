@@ -58,7 +58,7 @@ jobs:
     - name: test
       run: yarn test
       
-  init-e2e-test-check:
+  e2e-init-github-check:
     runs-on: ubuntu-latest
 
     steps: 
@@ -87,4 +87,3 @@ jobs:
           GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn e2e:create-check-run
-        
