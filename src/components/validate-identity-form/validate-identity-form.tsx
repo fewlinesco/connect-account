@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import { Box } from "../box/box";
-import { Button, ButtonVariant } from "../button/button";
+import { Button, ButtonVariant } from "../buttons/buttons";
 import { FakeButton } from "../fake-button/fake-button";
 import { Form } from "../form/form";
 import { Input } from "../input/input";

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Button, ButtonVariant } from "../button/button";
+import { Button, ButtonVariant } from "../buttons/buttons";
 import { Container } from "../containers/container";
 import { ConfirmationBox } from "./confirmation-box";
 import { DeleteConfirmationBoxContent } from "./delete-confirmation-box-content";

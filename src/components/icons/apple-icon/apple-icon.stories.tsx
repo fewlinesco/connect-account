@@ -3,7 +3,7 @@ import React from "react";
 import { AppleIcon } from "./apple-icon";
 
 export default {
-  title: "icons/social/Apple Icon",
+  title: "icons/Social/Apple Icon",
   component: AppleIcon,
 };
 

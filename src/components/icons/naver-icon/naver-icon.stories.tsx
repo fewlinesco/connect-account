@@ -3,7 +3,7 @@ import React from "react";
 import { NaverIcon } from "./naver-icon";
 
 export default {
-  title: "icons/social/Naver Icon",
+  title: "icons/Social/Naver Icon",
   component: NaverIcon,
 };
 

@@ -4,8 +4,7 @@ import styled from "styled-components";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { SocialIdentitiesSection } from "../social-identities-section/social-identities-section";
 import { StandardIdentitiesSection } from "../standard-identities-section/standard-identities-section";
-import { TimelineEnd } from "../timeline-end/timeline-end";
-import { Timeline } from "../timeline/timeline";
+import { Timeline, TimelineEnd } from "../timeline/timeline";
 import { Identity } from "@lib/@types";
 import { IdentitiesSectionContent } from "@src/@types/identities-section-content";
 

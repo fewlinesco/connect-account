@@ -3,7 +3,7 @@ import React from "react";
 import { LineIcon } from "./line-icon";
 
 export default {
-  title: "icons/social/Line Icon",
+  title: "icons/Social/Line Icon",
   component: LineIcon,
 };
 

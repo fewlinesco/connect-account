@@ -1,9 +1,9 @@
 import React from "react";
 
 import { StoriesContainer } from "../containers/stories-container";
-import { Button, ButtonVariant } from "./button";
+import { Button, ButtonVariant } from "./buttons";
 
-export default { title: "components/Button", component: Button };
+export default { title: "components/Buttons", component: Button };
 
 export const PrimaryButton = (): JSX.Element => {
   return (
