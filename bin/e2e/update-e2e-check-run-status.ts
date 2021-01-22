@@ -26,14 +26,20 @@ async function updateE2eCheckRunStatus(): Promise<void> {
       throw error;
     });
 
+  console.log(checkSuiteList);
+
   const e2eCustomCheckRun = checkSuiteList.filter(
     (check: Record<string, unknown>) => check.name === "e2e-check-run",
   );
+
+  console.log("e2eCustomCheckRun: ", e2eCustomCheckRun);
 
   const e2eCheckRun = checkSuiteList.filter(
     (check: Record<string, unknown>) =>
       check.name === "e2e-tests" && check.conclusion !== "skipped",
   );
+
+  console.log("e2eCheckRun: ", e2eCheckRun);
 
   const checkRunBody = {
     status: "completed",
