@@ -1,29 +1,59 @@
-import { HttpStatus } from "@fwl/web";
+import { Endpoint, HttpStatus } from "@fwl/web";
+import {
+  loggingMiddleware,
+  wrapMiddlewares,
+  tracingMiddleware,
+  errorMiddleware,
+  recoveryMiddleware,
+} from "@fwl/web/dist/middlewares";
+import { NextApiRequest, NextApiResponse } from "next";
 
 import { removeIdentityFromUser } from "@lib/commands/remove-identity-from-user";
-import { Handler } from "@src/@types/core/Handler";
+import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
-import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
-import { wrapMiddlewares } from "@src/middlewares/wrapper";
+import getTracer from "@src/tracer";
 
-const handler: Handler = async (request, response) => {
-  const { userId, type, value } = request.body;
+const tracer = getTracer();
 
-  if (request.method === "DELETE") {
-    return removeIdentityFromUser({ userId, type, value }).then((data) => {
-      response.statusCode = HttpStatus.ACCEPTED;
+const handler = (
+  request: NextApiRequest,
+  response: NextApiResponse,
+): Promise<void> => {
+  return tracer.span("delete-identity handler", async (span) => {
+    const { userId, type, value } = request.body;
 
-      response.setHeader("Content-Type", "application/json");
+    span.setDisclosedAttribute("Identity type", type);
 
-      response.end(JSON.stringify({ data }));
-    });
-  }
+    if (request.method === "DELETE") {
+      return removeIdentityFromUser({ userId, type, value }).then((data) => {
+        response.statusCode = HttpStatus.ACCEPTED;
 
-  response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
-  response.end();
+        response.setHeader("Content-Type", "application/json");
 
-  return Promise.reject();
+        response.end(JSON.stringify({ data }));
+      });
+    }
+
+    response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
+    response.end();
+
+    return Promise.reject();
+  });
 };
 
-export default wrapMiddlewares([withLogger, withSentry, withAuth], handler);
+const wrappedHandler = wrapMiddlewares(
+  [
+    tracingMiddleware(tracer),
+    recoveryMiddleware(tracer),
+    errorMiddleware(tracer),
+    loggingMiddleware(tracer, logger),
+    withSentry,
+    withAuth,
+  ],
+  handler,
+);
+
+export default new Endpoint<NextApiRequest, NextApiResponse>()
+  .get(wrappedHandler)
+  .getHandler();
