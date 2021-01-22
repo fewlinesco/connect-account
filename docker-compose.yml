@@ -6,3 +6,22 @@ services:
     container_name: dynamodb-local
     ports:
       - "8000:8000"
+  
+  jaeger:
+    image: jaegertracing/all-in-one:1.20.0
+    command: ["--collector.zipkin.http-port=29995", "--log-level=debug"]
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"
+      - "14268:14268"
+      - "14250:14250"
+
+  opentelemetry_collector:
+    image: otel/opentelemetry-collector:0.12.0
+    command: ["--config=/etc/otel-collector-config.yaml", "--log-level=debug"]
+    depends_on:
+      - jaeger
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "9411:9411"
