@@ -30,17 +30,22 @@ async function updateE2eCheckRunStatus(): Promise<void> {
     (check: Record<string, unknown>) => check.name === "e2e-check-run",
   );
 
+  console.log("e2eCustomCheckRun: ", e2eCustomCheckRun);
+
   const e2eCheckRun = checkSuiteList.filter(
     (check: Record<string, unknown>) =>
       check.name === "e2e-tests" && check.conclusion !== "skipped",
   );
 
+  console.log("e2eCheckRun: ", e2eCheckRun);
+
   const checkRunBody = {
     status: "completed",
     conclusion: hasDeploymentFailed ? "failure" : e2eCheckRun[0].conclusion,
+    completed_at: new Date().toISOString(),
   };
 
-  await fetch(
+  const updatedCheckRun = await fetch(
     `https://api.github.com/repos/fewlinesco/connect-account/check-runs/${e2eCustomCheckRun[0].id}`,
     {
       method: "PATCH",
@@ -49,9 +54,13 @@ async function updateE2eCheckRunStatus(): Promise<void> {
       },
       body: JSON.stringify(checkRunBody),
     },
-  ).catch((error) => {
-    throw error;
-  });
+  )
+    .then((response) => response.json())
+    .catch((error) => {
+      throw error;
+    });
+
+  console.log("updatedCheckRun: ", updatedCheckRun);
 }
 
 updateE2eCheckRunStatus();
