@@ -25,6 +25,10 @@ type Config = {
   isJweSigned: string;
   connectTestAccountEmail: string;
   connectTestAccountPassword: string;
+  managementCredentials: {
+    URI: string;
+    APIKey: string;
+  };
 };
 
 const config: Config = {
@@ -50,6 +54,10 @@ const config: Config = {
   isJweSigned: "",
   connectTestAccountEmail: "",
   connectTestAccountPassword: "",
+  managementCredentials: {
+    URI: "",
+    APIKey: "",
+  },
 };
 
 function handleEnvVars(): void {
@@ -87,6 +95,10 @@ function handleEnvVars(): void {
   config.connectTestAccountEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL || "";
   config.connectTestAccountPassword =
     process.env.CONNECT_TEST_ACCOUNT_PASSWORD || "";
+  config.managementCredentials = {
+    URI: process.env.CONNECT_MANAGEMENT_URL || "",
+    APIKey: process.env.CONNECT_MANAGEMENT_API_KEY || "",
+  };
 }
 
 handleEnvVars();
