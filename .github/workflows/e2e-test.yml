@@ -1,11 +1,11 @@
-name: CI e2e test - Heroku
+name: CI e2e test
 
 on:
   deployment_status:
 
 jobs:
-  e2e-tests-heroku:
-    if: ${{ contains(github.event.deployment_status.target_url, 'heroku') }}
+  e2e-tests:
+    if: ${{ contains(github.event.deployment_status.target_url, 'heroku') && github.event.deployment_status.state == 'success'}}
     runs-on: ubuntu-latest
 
     container:
@@ -57,3 +57,40 @@ jobs:
           CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
           CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
         run: yarn e2e:remove-test-user
+  
+  e2e-update-github-check: 
+    if: ${{ contains(github.event.deployment_status.target_url, 'heroku') && always() }}
+    needs: e2e-tests
+    runs-on: ubuntu-latest
+
+    container:
+      image: node:14.15.1
+
+    env:
+      GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: |
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+            **/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - name: update check run status
+        run: yarn e2e:update-check-run
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
