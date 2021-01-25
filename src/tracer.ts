@@ -4,7 +4,6 @@ import { config } from "@src/config";
 
 const options = config.lightstepAccessToken
   ? {
-      serviceName: config.tracerServiceName,
       lightstepPublicSatelliteCollector: {
         serviceName: config.tracerServiceName,
         accessToken: config.lightstepAccessToken,
