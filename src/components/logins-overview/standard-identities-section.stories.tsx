@@ -1,7 +1,7 @@
 import React from "react";
 
 import { StoriesContainer } from "../containers/stories-container";
-import { StandardIdentitiesSection } from "./standard-identities-section";
+import { StandardIdentitiesSection } from "./logins-overview";
 import { Identity, IdentityTypes } from "@lib/@types";
 
 export default {
