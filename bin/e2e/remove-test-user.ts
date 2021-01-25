@@ -12,49 +12,39 @@ async function removeTestUser(): Promise<void> {
     throw new Error("deployment is undefined");
   }
 
-  if (githubActionsContext.deployment_status === undefined) {
-    throw new Error("deployment_status is undefined");
-  }
-
   if (process.env.CONNECT_TEST_ACCOUNT_EMAIL === undefined) {
     throw new Error(
       "CONNECT_TEST_ACCOUNT_EMAIL environment variable is undefined",
     );
   }
 
-  const githubDeploymentStatus = githubActionsContext.deployment_status;
+  const testUserEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL.split("@").join(
+    "_" + githubActionsContext.deployment.sha + "@",
+  );
 
-  if (!githubDeploymentStatus.environment.includes("storybook")) {
-    if (githubDeploymentStatus.state === "success") {
-      const testUserEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL.split(
-        "@",
-      ).join("_" + githubActionsContext.deployment.sha + "@");
-
-      const testUserId = await getUserIDFromIdentityValue({
-        value: testUserEmail,
-      }).then(({ data, errors }) => {
-        if (errors) {
-          throw errors;
-        }
-
-        if (!data) {
-          throw new Error("User not found.");
-        }
-
-        return data.provider.user.id;
-      });
-
-      await deleteUser({ userId: testUserId }).then(({ data, errors }) => {
-        if (errors) {
-          throw errors;
-        }
-
-        if (!data) {
-          throw new Error("Deleting error");
-        }
-      });
+  const testUserId = await getUserIDFromIdentityValue({
+    value: testUserEmail,
+  }).then(({ data, errors }) => {
+    if (errors) {
+      throw errors;
     }
-  }
+
+    if (!data) {
+      throw new Error("User not found.");
+    }
+
+    return data.provider.user.id;
+  });
+
+  await deleteUser({ userId: testUserId }).then(({ data, errors }) => {
+    if (errors) {
+      throw errors;
+    }
+
+    if (!data) {
+      throw new Error("Deleting error");
+    }
+  });
 }
 
 removeTestUser();
