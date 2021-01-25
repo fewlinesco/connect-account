@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StoriesContainer } from "../containers/stories-container";
+import { StoriesContainer } from "../../containers/stories-container";
 import { SocialIdentitiesSection } from "./logins-overview";
 import { Identity, IdentityTypes } from "@lib/@types";
 

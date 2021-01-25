@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-import { ButtonVariant, ShowMoreButton } from "../buttons/buttons";
-import { FakeButton } from "../fake-button/fake-button";
-import { RightChevron } from "../icons/right-chevron/right-chevron";
-import { NeutralLink } from "../neutral-link/neutral-link";
-import { Separator } from "../separator/separator";
-import { SectionBox } from "../shadow-box/section-box";
-import { TimelineEnd, Timeline } from "../timeline/timeline";
+import { ButtonVariant, ShowMoreButton } from "../../buttons/buttons";
+import { FakeButton } from "../../fake-button/fake-button";
+import { RightChevron } from "../../icons/right-chevron/right-chevron";
+import { NeutralLink } from "../../neutral-link/neutral-link";
+import { Separator } from "../../separator/separator";
+import { SectionBox } from "../../shadow-box/section-box";
+import { TimelineEnd, Timeline } from "../../timeline/timeline";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { IdentitiesSectionContent } from "@src/@types/identities-section-content";
 import { SortedIdentities } from "@src/@types/sorted-identities";
@@ -16,10 +16,6 @@ import {
   formatSpecialSocialIdentities,
 } from "@src/utils/format";
 import { getSocialIdentityIcon } from "@src/utils/get-social-identities-icon";
-
-type LoginsOverviewProps = {
-  sortedIdentities: SortedIdentities;
-};
 
 const IDENTITIES_SECTION_CONTENT = {
   EMAIL: {
@@ -38,9 +34,9 @@ const IDENTITIES_SECTION_CONTENT = {
   },
 };
 
-export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
-  sortedIdentities,
-}) => {
+const LoginsOverview: React.FC<{
+  sortedIdentities: SortedIdentities;
+}> = ({ sortedIdentities }) => {
   const {
     emailIdentities,
     phoneIdentities,
@@ -70,62 +66,32 @@ export const LoginsOverview: React.FC<LoginsOverviewProps> = ({
         }
 
         return (
-          <IdentitiesSection
-            key={sectionName}
-            sectionName={sectionName}
-            content={content}
-            identitiesList={identitiesList}
-            lastOfTheList={lastOfTheList}
-          />
+          <Section key={sectionName} lastOfTheList={lastOfTheList}>
+            {lastOfTheList ? <TimelineEnd /> : <Timeline />}
+            {sectionName !== "SOCIAL_LOGINS" ? (
+              <StandardIdentitiesSection
+                sectionName={sectionName}
+                content={content}
+                identitiesList={identitiesList}
+              />
+            ) : (
+              <SocialIdentitiesSection
+                content={content}
+                identitiesList={identitiesList}
+              />
+            )}
+          </Section>
         );
       })}
     </Container>
   );
 };
 
-type IdentitiesSectionProps = {
-  sectionName: string;
-  lastOfTheList: boolean;
-  content: IdentitiesSectionContent;
-  identitiesList: Identity[];
-};
-
-export const IdentitiesSection: React.FC<IdentitiesSectionProps> = ({
-  sectionName,
-  lastOfTheList,
-  content,
-  identitiesList,
-}) => {
-  return (
-    <Section lastOfTheList={lastOfTheList}>
-      {lastOfTheList ? <TimelineEnd /> : <Timeline />}
-      {sectionName !== "SOCIAL_LOGINS" ? (
-        <StandardIdentitiesSection
-          sectionName={sectionName}
-          content={content}
-          identitiesList={identitiesList}
-        />
-      ) : (
-        <SocialIdentitiesSection
-          content={content}
-          identitiesList={identitiesList}
-        />
-      )}
-    </Section>
-  );
-};
-
-type StandardIdentitiesSectionProps = {
+const StandardIdentitiesSection: React.FC<{
   sectionName: string;
   content: IdentitiesSectionContent;
   identitiesList: Identity[];
-};
-
-export const StandardIdentitiesSection: React.FC<StandardIdentitiesSectionProps> = ({
-  sectionName,
-  content,
-  identitiesList,
-}) => {
+}> = ({ sectionName, content, identitiesList }) => {
   const [
     hideSecondaryIdentities,
     setHideSecondaryIdentities,
@@ -143,7 +109,7 @@ export const StandardIdentitiesSection: React.FC<StandardIdentitiesSectionProps>
       <h2>{title}</h2>
       <SectionBox>
         {identitiesList.length === 0 ? (
-          <NoIdentitiesBox>{noIdentityMessage}</NoIdentitiesBox>
+          <NoIdentitiesParagraph>{noIdentityMessage}</NoIdentitiesParagraph>
         ) : (
           displayedList.map((identity: Identity, index) => (
             <div key={identity.type + index}>
@@ -153,15 +119,13 @@ export const StandardIdentitiesSection: React.FC<StandardIdentitiesSectionProps>
                   identity.id
                 }`}
               >
-                <>
-                  <IdentityValue
-                    primary={identity.primary}
-                    status={identity.status}
-                  >
-                    {identity.value}
-                  </IdentityValue>
-                  <RightChevron />
-                </>
+                <IdentityValue
+                  primary={identity.primary}
+                  status={identity.status}
+                >
+                  {identity.value}
+                </IdentityValue>
+                <RightChevron />
               </BoxedLink>
               {index < displayedList.length - 1 && <Separator />}
             </div>
@@ -186,15 +150,10 @@ export const StandardIdentitiesSection: React.FC<StandardIdentitiesSectionProps>
   );
 };
 
-type SocialIdentitiesSectionProps = {
+const SocialIdentitiesSection: React.FC<{
   content: IdentitiesSectionContent;
   identitiesList: Identity[];
-};
-
-export const SocialIdentitiesSection: React.FC<SocialIdentitiesSectionProps> = ({
-  content,
-  identitiesList,
-}) => {
+}> = ({ content, identitiesList }) => {
   const { title, noIdentityMessage } = content;
 
   return (
@@ -202,19 +161,19 @@ export const SocialIdentitiesSection: React.FC<SocialIdentitiesSectionProps> = (
       <h2>{title}</h2>
       <SectionBox>
         {identitiesList.length === 0 ? (
-          <NoIdentitiesBox>{noIdentityMessage}</NoIdentitiesBox>
+          <NoIdentitiesParagraph>{noIdentityMessage}</NoIdentitiesParagraph>
         ) : (
           identitiesList.map((identity: Identity, index) => (
             <div key={identity.type + index}>
               <BoxedLink href={"#"}>
                 <SocialIdentityBox>
                   {getSocialIdentityIcon(identity.type)}
-                  <SocialIdentityName>
+                  <p>
                     {identity.type === IdentityTypes.KAKAO_TALK ||
                     identity.type === IdentityTypes.VKONTAKTE
                       ? formatSpecialSocialIdentities(identity.type)
                       : capitalizeFirstLetter(identity.type)}
-                  </SocialIdentityName>
+                  </p>
                 </SocialIdentityBox>
               </BoxedLink>
               {index < identitiesList.length - 1 && <Separator />}
@@ -230,11 +189,9 @@ const Container = styled.div`
   margin: 0 0 10rem 0;
 `;
 
-type SectionProps = {
+const Section = styled.div<{
   lastOfTheList: boolean;
-};
-
-const Section = styled.div<SectionProps>`
+}>`
   padding: 0 0 ${({ theme }) => theme.spaces.s} 0;
   position: relative;
 
@@ -245,7 +202,7 @@ const Section = styled.div<SectionProps>`
     `}
 `;
 
-export const NoIdentitiesBox = styled.p`
+const NoIdentitiesParagraph = styled.p`
   display: flex;
   align-items: center;
   height: 7.2rem;
@@ -253,11 +210,9 @@ export const NoIdentitiesBox = styled.p`
   padding: 0 2rem;
 `;
 
-type BoxedLinkProps = {
+const BoxedLink = styled(NeutralLink)<{
   disableClick?: boolean;
-};
-
-export const BoxedLink = styled(NeutralLink)<BoxedLinkProps>`
+}>`
   height: 7.2rem;
   padding: 0 ${({ theme }) => theme.spaces.xs};
   display: flex;
@@ -279,6 +234,10 @@ const Flex = styled.div`
 const SocialIdentityBox = styled.div`
   display: flex;
   align-items: center;
+
+  p {
+    margin: 0 0 0 ${({ theme }) => theme.spaces.xxs};
+  }
 `;
 
 const IdentityValue = styled.p<Pick<Identity, "primary" | "status">>`
@@ -295,6 +254,4 @@ const IdentityValue = styled.p<Pick<Identity, "primary" | "status">>`
     `};
 `;
 
-const SocialIdentityName = styled.p`
-  margin: 0 0 0 ${({ theme }) => theme.spaces.xxs};
-`;
+export { SocialIdentitiesSection, StandardIdentitiesSection, LoginsOverview };

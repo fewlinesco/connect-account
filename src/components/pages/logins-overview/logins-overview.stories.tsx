@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StoriesContainer } from "../containers/stories-container";
+import { StoriesContainer } from "../../containers/stories-container";
 import { LoginsOverview } from "./logins-overview";
 import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/sorted-identities";
@@ -55,7 +55,22 @@ export const LoginsOverviewPage = (): JSX.Element => {
         value: "test2@test.test",
       },
     ],
-    socialIdentities: [],
+    socialIdentities: [
+      {
+        id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
+        primary: true,
+        status: "validated",
+        type: IdentityTypes.GITHUB,
+        value: "",
+      },
+      {
+        id: "8u76dcc1-530b-4982-878d-33f0def6a7cf",
+        primary: false,
+        status: "validated",
+        type: IdentityTypes.FACEBOOK,
+        value: "",
+      },
+    ],
   };
 
   return (
