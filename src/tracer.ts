@@ -1,11 +1,23 @@
 import { getTracer, startTracer, Tracer } from "@fwl/tracing";
 
-startTracer({
-  simpleCollector: {
-    serviceName: "connect-account",
-    url: "http://localhost:9411/api/v2/spans",
-  },
-});
+import { config } from "@src/config";
+
+const options = config.lightstepAccessToken
+  ? {
+      serviceName: config.tracerServiceName,
+      lightstepPublicSatelliteCollector: {
+        serviceName: config.tracerServiceName,
+        accessToken: config.lightstepAccessToken,
+      },
+    }
+  : {
+      simpleCollector: {
+        serviceName: config.tracerServiceName,
+        url: "http://localhost:9411/api/v2/spans",
+      },
+    };
+
+startTracer(options);
 
 export default function (): Tracer {
   return getTracer();

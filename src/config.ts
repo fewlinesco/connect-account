@@ -25,6 +25,8 @@ type Config = {
   isJweSigned: string;
   connectTestAccountEmail: string;
   connectTestAccountPassword: string;
+  tracerServiceName: string;
+  lightstepAccessToken: string;
 };
 
 const config: Config = {
@@ -50,6 +52,8 @@ const config: Config = {
   isJweSigned: "",
   connectTestAccountEmail: "",
   connectTestAccountPassword: "",
+  tracerServiceName: "",
+  lightstepAccessToken: "",
 };
 
 function handleEnvVars(): void {
@@ -87,6 +91,9 @@ function handleEnvVars(): void {
   config.connectTestAccountEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL || "";
   config.connectTestAccountPassword =
     process.env.CONNECT_TEST_ACCOUNT_PASSWORD || "";
+  config.tracerServiceName =
+    process.env.TRACER_SERVICE_NAME || "connect-account";
+  config.lightstepAccessToken = process.env.LIGHTSTEP_ACCESS_TOKEN || "";
 }
 
 handleEnvVars();
