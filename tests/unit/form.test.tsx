@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 
 import { Button, ButtonVariant } from "../../src/components/buttons/buttons";
-import { Form } from "../../src/components/form/form";
+import { Form } from "../../src/components/forms/form/form";
 import { render, screen } from "../config/testing-library-config";
 
 describe("Form", () => {

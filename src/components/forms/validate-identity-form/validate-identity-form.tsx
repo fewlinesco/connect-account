@@ -3,17 +3,17 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
-import { Box } from "../box/box";
-import { Button, ButtonVariant } from "../buttons/buttons";
-import { FakeButton } from "../fake-button/fake-button";
 import { Form } from "../form/form";
-import { Input } from "../input/input";
-import { NeutralLink } from "../neutral-link/neutral-link";
 import { IdentityTypes } from "@lib/@types/Identity";
 import {
   InvalidValidationCode,
   TemporaryIdentityExpired,
 } from "@src/client-errors";
+import { Box } from "@src/components/box/box";
+import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { FakeButton } from "@src/components/fake-button/fake-button";
+import { Input } from "@src/components/input/input";
+import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { displayAlertBar } from "@src/utils/display-alert-bar";
 import { validateIdentity } from "@src/workflows/validate-identity";
 
