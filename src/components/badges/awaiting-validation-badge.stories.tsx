@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AwaitingValidationBadge } from "./awaiting-validation-badge";
+import { AwaitingValidationBadge } from "./badges";
 
 export default {
   title: "components/Awaiting Validation Badge",

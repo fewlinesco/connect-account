@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PrimaryBadge } from "./primary-badge";
+import { PrimaryBadge } from "./badges";
 
 export default { title: "components/Primary Badge", component: PrimaryBadge };
 
