@@ -1,7 +1,7 @@
 import React from "react";
 
 import { StoriesContainer } from "../containers/stories-container";
-import { Timeline, TimelineEnd } from "./timeline";
+import { Timeline, TimelineEnd } from "./timelines";
 
 export default {
   title: "components/Timelines",

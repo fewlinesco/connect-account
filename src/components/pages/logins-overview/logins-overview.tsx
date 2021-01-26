@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 import { ButtonVariant, ShowMoreButton } from "../../buttons/buttons";
-import { FakeButton } from "../../fake-button/fake-button";
+import { FakeButton } from "../../buttons/fake-button";
 import { RightChevron } from "../../icons/right-chevron/right-chevron";
 import { NeutralLink } from "../../neutral-link/neutral-link";
 import { Separator } from "../../separator/separator";
 import { SectionBox } from "../../shadow-box/section-box";
-import { TimelineEnd, Timeline } from "../../timeline/timeline";
+import { TimelineEnd, Timeline } from "../../timelines/timelines";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { IdentitiesSectionContent } from "@src/@types/identities-section-content";
 import { SortedIdentities } from "@src/@types/sorted-identities";

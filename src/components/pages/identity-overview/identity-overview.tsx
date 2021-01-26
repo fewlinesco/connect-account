@@ -8,10 +8,10 @@ import {
 } from "@src/components/badges/badges";
 import { Box } from "@src/components/box/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { FakeButton } from "@src/components/buttons/fake-button";
 import { ConfirmationBox } from "@src/components/confirmation-box/confirmation-box";
 import { DeleteConfirmationBoxContent } from "@src/components/confirmation-box/delete-confirmation-box-content";
 import { PrimaryConfirmationBoxContent } from "@src/components/confirmation-box/primary-confirmation-box-content";
-import { FakeButton } from "@src/components/fake-button/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { getIdentityType } from "@src/utils/get-identity-type";
 

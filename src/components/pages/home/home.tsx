@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { ButtonVariant } from "@src/components/buttons/buttons";
-import { FakeButton } from "@src/components/fake-button/fake-button";
+import { FakeButton } from "@src/components/buttons/fake-button";
 import { HomeDesktopBackground } from "@src/components/icons/home-desktop-background/home-desktop-background";
 import { HomeMobileBackground } from "@src/components/icons/home-mobile-background/home-mobile-background";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
