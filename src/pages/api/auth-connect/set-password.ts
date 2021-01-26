@@ -1,9 +1,12 @@
+import {
+  createOrUpdatePassword,
+  InvalidPasswordInputError,
+} from "@fewlines/connect-management";
 import { HttpStatus } from "@fwl/web";
-import { GraphQLError } from "graphql";
 
-import { createOrUpdatePassword } from "@lib/commands/create-or-update-password";
 import { Handler } from "@src/@types/core/Handler";
 import { UserCookie } from "@src/@types/user-cookie";
+import { config } from "@src/config";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
@@ -20,33 +23,28 @@ const handler: Handler = async (request, response) => {
     });
 
     if (userCookie) {
-      return createOrUpdatePassword({
+      return createOrUpdatePassword(config.managementCredentials, {
         cleartextPassword: passwordInput,
         userId: userCookie.sub,
-      }).then(({ data, errors }) => {
-        if (errors) {
-          const restrictionRulesError = ((errors as unknown) as GraphQLError &
-            { code?: string }[]).find(
-            (error) => error.code === "password_does_not_meet_requirements",
-          );
-
-          if (restrictionRulesError) {
-            response.setHeader("Content-Type", "application/json");
-            response.statusCode = HttpStatus.UNPROCESSABLE_ENTITY;
-            response.json({ restrictionRulesError });
-          } else {
-            response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-            response.end();
-          }
-        } else if (!data) {
-          response.statusCode = HttpStatus.NOT_FOUND;
-          response.end();
-        } else {
+      })
+        .then(() => {
           response.setHeader("Content-Type", "application/json");
           response.statusCode = HttpStatus.OK;
-          response.json({ data });
-        }
-      });
+          response.end();
+          return;
+        })
+        .catch((error) => {
+          if (error instanceof InvalidPasswordInputError) {
+            response.setHeader("Content-Type", "application/json");
+            response.statusCode = HttpStatus.UNPROCESSABLE_ENTITY;
+            response.json({ restrictionRulesError: error.rules });
+            return;
+          }
+
+          response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+          response.end();
+          return;
+        });
     }
   }
 
