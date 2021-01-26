@@ -102,6 +102,9 @@ echo "::1 connect-account.local" | sudo tee -a /etc/hosts
 [source, shell]
 ----
 hivemind
+
+# In an other terminal tab
+docker-compose up
 ----
 
 Access your application on URL: `https://connect-account.local:29704`.
