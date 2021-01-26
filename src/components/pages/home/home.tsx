@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-import { ButtonVariant } from "../../buttons/buttons";
-import { FakeButton } from "../../fake-button/fake-button";
-import { HomeDesktopBackground } from "../../icons/home-desktop-background/home-desktop-background";
-import { HomeMobileBackground } from "../../icons/home-mobile-background/home-mobile-background";
-import { NeutralLink } from "../../neutral-link/neutral-link";
-import { SectionBox } from "../../shadow-box/section-box";
+import { ButtonVariant } from "@src/components/buttons/buttons";
+import { FakeButton } from "@src/components/fake-button/fake-button";
+import { HomeDesktopBackground } from "@src/components/icons/home-desktop-background/home-desktop-background";
+import { HomeMobileBackground } from "@src/components/icons/home-mobile-background/home-mobile-background";
+import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { SectionBox } from "@src/components/shadow-box/section-box";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 type HomeProps = { authorizeURL: string; providerName: string };
