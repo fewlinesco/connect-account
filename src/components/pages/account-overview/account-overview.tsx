@@ -1,8 +1,11 @@
 import React from "react";
+import styled from "styled-components";
 
-import { SectionListItem } from "../../../section-list-item/section-list-item";
-import { LoginsIcon } from "../../icons/logins-icon/logins-icon";
-import { SecurityIcon } from "../../icons/security-icon/security-icon";
+import { LoginsIcon } from "@src/components/icons/logins-icon/logins-icon";
+import { RightChevron } from "@src/components/icons/right-chevron/right-chevron";
+import { SecurityIcon } from "@src/components/icons/security-icon/security-icon";
+import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { SectionBox } from "@src/components/shadow-box/section-box";
 
 export const SECTION_LIST_CONTENT = {
   LOGINS: {
@@ -20,15 +23,39 @@ export const SECTION_LIST_CONTENT = {
 export const AccountOverview: React.FC = () => {
   return (
     <>
-      {Object.entries(SECTION_LIST_CONTENT).map(([sectionName, content]) => {
-        return (
-          <SectionListItem
-            key={sectionName}
-            sectionName={sectionName}
-            content={content}
-          />
-        );
-      })}
+      {Object.entries(SECTION_LIST_CONTENT).map(
+        ([sectionName, { text, icon }]) => {
+          return (
+            <SectionBox key={sectionName}>
+              <SectionLink href={`/account/${sectionName.toLocaleLowerCase()}`}>
+                {icon}
+                <TextBox>
+                  <SectionName>{sectionName}</SectionName>
+                  {text}
+                </TextBox>
+                <RightChevron />
+              </SectionLink>
+            </SectionBox>
+          );
+        },
+      )}
     </>
   );
 };
+
+const SectionLink = styled(NeutralLink)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: ${({ theme }) => theme.spaces.xs};
+`;
+
+export const TextBox = styled.div`
+  max-width: 50%;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  line-height: ${({ theme }) => theme.lineHeights.title};
+`;
+
+export const SectionName = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.s};
+`;
