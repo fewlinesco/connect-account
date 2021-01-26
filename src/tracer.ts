@@ -5,13 +5,13 @@ import { config } from "@src/config";
 const options = config.lightstepAccessToken
   ? {
       lightstepPublicSatelliteCollector: {
-        serviceName: config.tracerServiceName,
+        serviceName: config.serviceName,
         accessToken: config.lightstepAccessToken,
       },
     }
   : {
       simpleCollector: {
-        serviceName: config.tracerServiceName,
+        serviceName: config.serviceName,
         url: "http://localhost:9411/api/v2/spans",
       },
     };
