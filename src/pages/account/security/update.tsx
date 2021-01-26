@@ -4,7 +4,7 @@ import React from "react";
 import { isUserPasswordSet } from "@lib/queries/is-user-password-set";
 import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
-import { SetPasswordForm } from "@src/components/forms/set-password-form/set-password-form";
+import { SetPasswordForm } from "@src/components/forms/set-password-form";
 import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
 import { GraphqlErrors } from "@src/errors";

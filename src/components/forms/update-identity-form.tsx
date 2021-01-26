@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Form } from "../form/form";
+import { Form } from "./form";
 import { Identity, IdentityTypes } from "@lib/@types";
 import { Box } from "@src/components/box/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
