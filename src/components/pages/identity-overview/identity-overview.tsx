@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 
-import { AwaitingValidationBadge } from "../../awaiting-validation-badge/awaiting-validation-badge";
-import { Box } from "../../box/box";
-import { Button, ButtonVariant } from "../../buttons/buttons";
-import { ConfirmationBox } from "../../confirmation-box/confirmation-box";
-import { DeleteConfirmationBoxContent } from "../../confirmation-box/delete-confirmation-box-content";
-import { PrimaryConfirmationBoxContent } from "../../confirmation-box/primary-confirmation-box-content";
-import { FakeButton } from "../../fake-button/fake-button";
-import { NeutralLink } from "../../neutral-link/neutral-link";
-import { PrimaryBadge } from "../../primary-badge/primary-badge";
 import { Identity, IdentityTypes } from "@lib/@types";
+import { AwaitingValidationBadge } from "@src/components/awaiting-validation-badge/awaiting-validation-badge";
+import { Box } from "@src/components/box/box";
+import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { ConfirmationBox } from "@src/components/confirmation-box/confirmation-box";
+import { DeleteConfirmationBoxContent } from "@src/components/confirmation-box/delete-confirmation-box-content";
+import { PrimaryConfirmationBoxContent } from "@src/components/confirmation-box/primary-confirmation-box-content";
+import { FakeButton } from "@src/components/fake-button/fake-button";
+import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { PrimaryBadge } from "@src/components/primary-badge/primary-badge";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 type IdentityOverviewProps = {
