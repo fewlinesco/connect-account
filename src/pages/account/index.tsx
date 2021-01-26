@@ -2,9 +2,9 @@ import type { GetServerSideProps } from "next";
 import React from "react";
 import styled from "styled-components";
 
-import { AccountOverview } from "@src/components/account-overview/account-overview";
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
+import { AccountOverview } from "@src/components/pages/account-overview/account-overview";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";

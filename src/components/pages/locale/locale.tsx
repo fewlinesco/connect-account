@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-import { MagnifyingGlass } from "../icons/magnifying-glass/magnifying-glass";
-import { Input } from "../input/input";
-import { RadioButton } from "../radio-button/radio-button";
-import { Separator } from "../separator/separator";
+import { MagnifyingGlass } from "@src/components/icons/magnifying-glass/magnifying-glass";
+import { Input } from "@src/components/input/input";
+import { RadioButton } from "@src/components/radio-button/radio-button";
+import { Separator } from "@src/components/separator/separator";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 export const Locale: React.FC = () => {
