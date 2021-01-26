@@ -1,16 +1,26 @@
-import { HttpStatus } from "@fwl/web";
+import { Endpoint, HttpStatus } from "@fwl/web";
+import {
+  errorMiddleware,
+  loggingMiddleware,
+  recoveryMiddleware,
+  tracingMiddleware,
+} from "@fwl/web/dist/middlewares";
+import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/core/Handler";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { oauth2Client } from "@src/config";
-import { withLogger } from "@src/middlewares/with-logger";
+import { logger } from "@src/logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
+import getTracer from "@src/tracer";
 import { setServerSideCookies } from "@src/utils/server-side-cookies";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
-const handler: Handler = async (request, response): Promise<void> => {
-  if (request.method === "GET") {
+const tracer = getTracer();
+
+const handler: Handler = (request, response): Promise<void> => {
+  return tracer.span("callback handler", async () => {
     const {
       access_token,
       refresh_token,
@@ -49,11 +59,20 @@ const handler: Handler = async (request, response): Promise<void> => {
 
     response.end();
     return;
-  } else {
-    response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
-    response.end();
-    return;
-  }
+  });
 };
 
-export default wrapMiddlewares([withLogger, withSentry], handler);
+const wrappedHandler = wrapMiddlewares(
+  [
+    tracingMiddleware(tracer),
+    recoveryMiddleware(tracer),
+    errorMiddleware(tracer),
+    loggingMiddleware(tracer, logger),
+    withSentry,
+  ],
+  handler,
+);
+
+export default new Endpoint<NextApiRequest, NextApiResponse>()
+  .get(wrappedHandler)
+  .getHandler();
