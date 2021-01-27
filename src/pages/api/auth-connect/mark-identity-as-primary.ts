@@ -38,7 +38,7 @@ const handler: Handler = async (request, response) => {
 
       if (isAuthorized) {
         span.setDisclosedAttribute(
-          "Is `mark identity as primary` authorized",
+          "Is `mark Identity as primary` authorized",
           true,
         );
 
@@ -46,6 +46,8 @@ const handler: Handler = async (request, response) => {
           config.managementCredentials,
           identityId,
         ).then(() => {
+          span.setDisclosedAttribute("Is Identity marked as primary", true);
+
           response.statusCode = HttpStatus.OK;
           response.setHeader("Content-type", "application/json");
           response.end();

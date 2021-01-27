@@ -29,6 +29,8 @@ const handler: Handler = (request, response): Promise<void> => {
       identityType: type,
       identityValue: value,
     }).then(() => {
+      span.setDisclosedAttribute("Is Identity removed", true);
+
       response.statusCode = HttpStatus.ACCEPTED;
       response.setHeader("Content-Type", "application/json");
       response.end();

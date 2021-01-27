@@ -20,7 +20,7 @@ import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-t
 const tracer = getTracer();
 
 const handler: Handler = (request, response): Promise<void> => {
-  return tracer.span("callback handler", async () => {
+  return tracer.span("callback handler", async (span) => {
     const {
       access_token,
       refresh_token,
@@ -28,7 +28,11 @@ const handler: Handler = (request, response): Promise<void> => {
       `${request.query.code}`,
     );
 
+    span.setDisclosedAttribute("`authorization_code`", request.query.code);
+
     const decodedAccessToken = await decryptVerifyAccessToken(access_token);
+
+    span.setDisclosedAttribute("Is `access_token` valid", true);
 
     const oAuth2UserInfo = {
       sub: decodedAccessToken.sub,
@@ -36,6 +40,8 @@ const handler: Handler = (request, response): Promise<void> => {
     };
 
     await getAndPutUser(oAuth2UserInfo);
+
+    span.setDisclosedAttribute("Is User put", true);
 
     await setServerSideCookies(
       response,
@@ -52,6 +58,8 @@ const handler: Handler = (request, response): Promise<void> => {
         secure: true,
       },
     );
+
+    span.setDisclosedAttribute("Is cookie set", true);
 
     response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
       Location: "/account",

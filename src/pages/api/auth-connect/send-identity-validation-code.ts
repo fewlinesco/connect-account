@@ -48,6 +48,8 @@ const handler: Handler = (request, response): Promise<void> => {
         userId: userCookie.sub,
       })
         .then(async ({ eventId }) => {
+          span.setDisclosedAttribute("Is validation code sent", true);
+
           const temporaryIdentity = {
             eventId: eventId,
             value: identityInput.value,
@@ -78,7 +80,6 @@ const handler: Handler = (request, response): Promise<void> => {
             return;
           }
 
-          console.log("FLAG", error);
           response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
           response.end();
         });
