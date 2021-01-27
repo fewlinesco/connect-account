@@ -1772,6 +1772,18 @@
     node-fetch "2.6.1"
     node-jose "2.0.0"
 
+"@fewlines/connect-management@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@fewlines/connect-management/-/connect-management-0.2.0.tgz#0cc37fc56f5111d826eb2e594b119323248d1a13"
+  integrity sha512-9ddO7DG9whtMG74g6esciv1WNOYbhKmTr5TPDGN71lNSar9q52CkayrhY4VdXXotpr4ttXVMTvqPa9UvDQAYxA==
+  dependencies:
+    apollo-link "1.2.14"
+    apollo-link-context "1.0.20"
+    apollo-link-http "1.5.17"
+    cross-fetch "3.0.6"
+    graphql "15.4.0"
+    graphql-tag "2.11.0"
+
 "@fewlines/eslint-config@3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@fewlines/eslint-config/-/eslint-config-3.0.0.tgz#2d8c2be46b8bfec8222942b8ccc999d6d6d714f3"
@@ -3914,7 +3926,7 @@ apollo-link-http@1.5.17:
     apollo-link-http-common "^0.2.16"
     tslib "^1.9.3"
 
-apollo-link@^1.2.14:
+apollo-link@1.2.14, apollo-link@^1.2.14:
   version "1.2.14"
   resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.14.tgz#3feda4b47f9ebba7f4160bef8b977ba725b684d9"
   integrity sha512-p67CMEFP7kOG1JZ0ZkYZwRDa369w5PIjtMjvrQd/HnIV8FRsHRqLqK+oAZQnFa1DDdZtOtHTi+aMIW6EatC2jg==

@@ -10,8 +10,8 @@ import React from "react";
 
 import { getProviderName } from "@lib/queries/get-provider-name";
 import { NoDataReturned, NoProviderNameFound } from "@src/client-errors";
-import { Home } from "@src/components/home/home";
-import { Main } from "@src/components/layout";
+import { Main } from "@src/components/page-layout";
+import { Home } from "@src/components/pages/home/home";
 import { oauth2Client } from "@src/config";
 import { GraphqlErrors } from "@src/errors";
 import { logger } from "@src/logger";

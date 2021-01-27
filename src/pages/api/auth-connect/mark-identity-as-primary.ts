@@ -1,8 +1,9 @@
+import { markIdentityAsPrimary } from "@fewlines/connect-management";
 import { HttpStatus } from "@fwl/web";
 
-import { markIdentityAsPrimary } from "@lib/commands/mark-identity-as-primary";
 import { Handler } from "@src/@types/core/Handler";
 import { UserCookie } from "@src/@types/user-cookie";
+import { config } from "@src/config";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
@@ -30,15 +31,20 @@ const handler: Handler = async (request, response) => {
         );
 
         if (isAuthorized) {
-          return markIdentityAsPrimary(identityId).then((data) => {
+          return markIdentityAsPrimary(
+            config.managementCredentials,
+            identityId,
+          ).then(() => {
             response.statusCode = HttpStatus.OK;
             response.setHeader("Content-type", "application/json");
-            response.json({ data });
+            response.end();
+            return;
           });
         }
 
         response.statusCode = HttpStatus.BAD_REQUEST;
-        return response.end();
+        response.end();
+        return;
       } else {
         response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
         response.setHeader("location", "/");

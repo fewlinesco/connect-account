@@ -49,18 +49,14 @@ describe("Account Web Application update password", () => {
       expect(await text("email address *").exists()).toBeTruthy();
 
       await click("Add email");
-      await waitFor("Identity value can't be blank.");
-      expect(
-        await text("Identity value can't be blank.").exists(),
-      ).toBeTruthy();
+      await waitFor("Identity value can't be Blank");
+      expect(await text("Identity value can't be Blank").exists()).toBeTruthy();
 
       await focus(textBox({ placeholder: "Enter your email" }));
       await write(config.connectTestAccountEmail);
       await click("Add email");
-      await waitFor("Identity has already been validated by a user.");
-      expect(
-        await text("Identity has already been validated by a user.").exists(),
-      ).toBeTruthy();
+      await waitFor("Identity already used");
+      expect(await text("Identity already used").exists()).toBeTruthy();
 
       const baseUrl =
         process.env.CONNECT_TEST_ACCOUNT_URL || config.connectAccountURL + "/";
