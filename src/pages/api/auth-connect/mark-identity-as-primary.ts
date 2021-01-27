@@ -38,7 +38,7 @@ const handler: Handler = async (request, response) => {
 
       if (isAuthorized) {
         span.setDisclosedAttribute(
-          "Is identity marked as primary authorized",
+          "Is `mark identity as primary` authorized",
           true,
         );
 
