@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
-import { Form } from "../form";
+import { Form } from "./form";
 import { IdentityTypes } from "@lib/@types";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { PhoneNumberInputValueShouldBeANumber } from "@src/client-errors";
