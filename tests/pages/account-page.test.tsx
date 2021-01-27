@@ -1,7 +1,7 @@
 import React from "react";
 
 import { render, screen } from "../config/testing-library-config";
-import { SECTION_LIST_CONTENT } from "@src/components/account-overview/account-overview";
+import { SECTION_LIST_CONTENT } from "@src/components/pages/account-overview/account-overview";
 import AccountPage from "@src/pages/account/index";
 
 jest.mock("@src/db-client", () => {
