@@ -6,7 +6,7 @@ export function withSentry(handler: Handler): Handler {
     addRequestScopeToSentry(request);
 
     try {
-      return handler(request, response);
+      return await handler(request, response);
     } catch (error) {
       Sentry.withScope((scope) => {
         scope.setTag(request.url || "/", error.name);

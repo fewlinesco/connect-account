@@ -9,6 +9,7 @@ import {
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
+import { Handler } from "@src/@types/core/Handler";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
@@ -17,10 +18,7 @@ import getTracer from "@src/tracer";
 
 const tracer = getTracer();
 
-const handler = (
-  request: NextApiRequest,
-  response: NextApiResponse,
-): Promise<void> => {
+const handler: Handler = (request, response): Promise<void> => {
   return tracer.span("delete-identity handler", async (span) => {
     const { userId, type, value } = request.body;
 
