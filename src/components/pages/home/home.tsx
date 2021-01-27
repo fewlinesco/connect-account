@@ -9,9 +9,10 @@ import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SectionBox } from "@src/components/shadow-box/section-box";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-type HomeProps = { authorizeURL: string; providerName: string };
-
-export const Home: React.FC<HomeProps> = ({ authorizeURL, providerName }) => {
+export const Home: React.FC<{ authorizeURL: string; providerName: string }> = ({
+  authorizeURL,
+  providerName,
+}) => {
   return (
     <>
       <HomeDesktopBackground />

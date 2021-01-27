@@ -2,8 +2,8 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { IdentityTypes } from "@lib/@types";
-import { AddIdentityForm } from "@src/components/add-identity-form/add-identity-form";
 import { Container } from "@src/components/containers/container";
+import { AddIdentityForm } from "@src/components/forms/add-identity-form/add-identity-form";
 import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
 import { withAuth } from "@src/middlewares/with-auth";

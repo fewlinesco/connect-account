@@ -5,11 +5,9 @@ import { RightChevron } from "@src/components/icons/right-chevron/right-chevron"
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SectionBox } from "@src/components/shadow-box/section-box";
 
-type SecurityProps = {
+export const Security: React.FC<{
   isPasswordSet: boolean;
-};
-
-export const Security: React.FC<SecurityProps> = ({ isPasswordSet }) => {
+}> = ({ isPasswordSet }) => {
   return (
     <>
       <h2>Password</h2>

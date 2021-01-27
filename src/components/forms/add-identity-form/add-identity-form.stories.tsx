@@ -1,8 +1,8 @@
 import React from "react";
 
-import { StoriesContainer } from "../containers/stories-container";
 import { AddIdentityForm } from "./add-identity-form";
 import { IdentityTypes } from "@lib/@types";
+import { StoriesContainer } from "@src/components/containers/stories-container";
 
 export default {
   title: "pages/Add Identity Form",

@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-type RadioButtonProps = {
+export const RadioButton: React.FC<{
   name: string;
   checked: boolean;
-};
-
-export const RadioButton: React.FC<RadioButtonProps> = ({ name, checked }) => {
+}> = ({ name, checked }) => {
   return (
     <Wrapper>
       <label>

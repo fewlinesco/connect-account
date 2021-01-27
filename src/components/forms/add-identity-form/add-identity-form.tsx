@@ -3,11 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
-import { Button, ButtonVariant } from "../buttons/buttons";
-import { FakeButton } from "../buttons/fake-button";
-import { Form } from "../forms/form";
-import { Input } from "../input/input";
-import { NeutralLink } from "../neutral-link/neutral-link";
+import { Form } from "../form";
 import { IdentityTypes } from "@lib/@types";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import {
@@ -15,14 +11,16 @@ import {
   IdentityInputValueCantBeBlank,
   PhoneNumberInputValueShouldBeANumber,
 } from "@src/client-errors";
+import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { FakeButton } from "@src/components/buttons/fake-button";
+import { Input } from "@src/components/input/input";
+import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { getIdentityType } from "@src/utils/get-identity-type";
 import { addIdentity } from "@src/workflows/add-identity";
 
-type AddIdentityFormProps = {
+export const AddIdentityForm: React.FC<{
   type: IdentityTypes;
-};
-
-export const AddIdentityForm: React.FC<AddIdentityFormProps> = ({ type }) => {
+}> = ({ type }) => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const [identity, setIdentity] = React.useState<InMemoryTemporaryIdentity>({

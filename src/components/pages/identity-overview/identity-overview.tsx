@@ -15,15 +15,10 @@ import { PrimaryConfirmationBoxContent } from "@src/components/confirmation-box/
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
-type IdentityOverviewProps = {
+export const IdentityOverview: React.FC<{
   identity: Identity;
   userId: string;
-};
-
-export const IdentityOverview: React.FC<IdentityOverviewProps> = ({
-  identity,
-  userId,
-}) => {
+}> = ({ identity, userId }) => {
   const [confirmationBoxOpen, setConfirmationBoxOpen] = React.useState<boolean>(
     false,
   );
