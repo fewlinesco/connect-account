@@ -6,11 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Form } from "../form";
 import { IdentityTypes } from "@lib/@types";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
-import {
-  IdentityAlreadyUsed,
-  IdentityInputValueCantBeBlank,
-  PhoneNumberInputValueShouldBeANumber,
-} from "@src/client-errors";
+import { PhoneNumberInputValueShouldBeANumber } from "@src/client-errors";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { Input } from "@src/components/input/input";
@@ -39,20 +35,19 @@ export const AddIdentityForm: React.FC<{
         formID={formID}
         onSubmit={async () => {
           await addIdentity(identity)
-            .then(async (eventId) => {
-              router &&
-                router.push(`/account/logins/${type}/validation/${eventId}`);
+            .then(({ eventId, errorMessage }) => {
+              if (errorMessage) {
+                setFormID(uuidv4());
+                setErrorMessage(errorMessage);
+              }
+
+              if (eventId) {
+                router &&
+                  router.push(`/account/logins/${type}/validation/${eventId}`);
+              }
             })
             .catch((error) => {
-              if (error instanceof IdentityAlreadyUsed) {
-                setFormID(uuidv4());
-                setErrorMessage(error.message);
-              } else if (error instanceof IdentityInputValueCantBeBlank) {
-                setFormID(uuidv4());
-                setErrorMessage(error.message);
-              } else if (
-                error instanceof PhoneNumberInputValueShouldBeANumber
-              ) {
+              if (error instanceof PhoneNumberInputValueShouldBeANumber) {
                 setFormID(uuidv4());
                 setErrorMessage(error.message);
               } else {

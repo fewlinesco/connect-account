@@ -1,18 +1,13 @@
+import { addIdentityToUser } from "@fewlines/connect-management";
+import { checkVerificationCode } from "@fewlines/connect-management";
+import { markIdentityAsPrimary } from "@fewlines/connect-management";
 import { HttpStatus } from "@fwl/web";
 
-import { addIdentityToUser } from "@lib/commands/add-identity-to-user";
-import { markIdentityAsPrimary } from "@lib/commands/mark-identity-as-primary";
-import { checkVerificationCode } from "@lib/queries/check-verification-code";
 import { Handler } from "@src/@types/core/Handler";
 import { UserCookie } from "@src/@types/user-cookie";
-import {
-  NoDataReturned,
-  NoIdentityAdded,
-  NoTemporaryIdentity,
-  NoUserFound,
-} from "@src/client-errors";
+import { NoTemporaryIdentity, NoUserFound } from "@src/client-errors";
 import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
-import { GraphqlErrors } from "@src/errors";
+import { config } from "@src/config";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
@@ -39,50 +34,31 @@ const handler: Handler = async (request, response) => {
 
       if (temporaryIdentity) {
         if (temporaryIdentity.expiresAt > Date.now()) {
-          const checkVerificationCodeResult = await checkVerificationCode(
-            validationCode,
-            eventId,
-          ).then(({ errors, data }) => {
-            if (errors) {
-              throw new GraphqlErrors(errors);
-            }
-
-            if (!data) {
-              throw new NoDataReturned();
-            }
-
-            return data.checkVerificationCode;
-          });
+          const { status: verificationStatus } = await checkVerificationCode(
+            config.managementCredentials,
+            {
+              code: validationCode,
+              eventId,
+            },
+          );
 
           const { value, type, primary } = temporaryIdentity;
 
-          if (checkVerificationCodeResult.status === "VALID") {
-            const body = {
-              userId: userCookie.sub,
-              type: getIdentityType(type),
-              value,
-            };
-
-            const identityId = await addIdentityToUser(body).then(
-              ({ errors, data }) => {
-                if (errors) {
-                  throw new GraphqlErrors(errors);
-                }
-
-                if (!data) {
-                  throw new NoIdentityAdded();
-                }
-
-                return data.addIdentityToUser.id;
+          if (verificationStatus === "VALID") {
+            const { id: identityId } = await addIdentityToUser(
+              config.managementCredentials,
+              {
+                userId: userCookie.sub,
+                identityType: getIdentityType(type),
+                identityValue: value,
               },
             );
 
             if (primary) {
-              await markIdentityAsPrimary(identityId).then(({ errors }) => {
-                if (errors) {
-                  throw new GraphqlErrors(errors);
-                }
-              });
+              await markIdentityAsPrimary(
+                config.managementCredentials,
+                identityId,
+              );
             }
 
             await removeTemporaryIdentity(userCookie.sub, temporaryIdentity);
@@ -92,9 +68,9 @@ const handler: Handler = async (request, response) => {
             });
 
             return response.end();
-          } else if (checkVerificationCodeResult.status === "INVALID") {
+          } else if (verificationStatus === "INVALID") {
             response.statusCode = HttpStatus.BAD_REQUEST;
-            response.json({ error: checkVerificationCodeResult.status });
+            response.json({ error: verificationStatus });
             return;
           } else {
             response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {

@@ -1,29 +1,56 @@
-import { HttpStatus } from "@fwl/web";
+import { removeIdentityFromUser } from "@fewlines/connect-management";
+import { Endpoint, HttpStatus } from "@fwl/web";
+import {
+  loggingMiddleware,
+  wrapMiddlewares,
+  tracingMiddleware,
+  errorMiddleware,
+  recoveryMiddleware,
+} from "@fwl/web/dist/middlewares";
+import { NextApiRequest, NextApiResponse } from "next";
 
-import { removeIdentityFromUser } from "@lib/commands/remove-identity-from-user";
-import { Handler } from "@src/@types/core/Handler";
+import { config } from "@src/config";
+import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
-import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
-import { wrapMiddlewares } from "@src/middlewares/wrapper";
+import getTracer from "@src/tracer";
 
-const handler: Handler = async (request, response) => {
-  const { userId, type, value } = request.body;
+const tracer = getTracer();
 
-  if (request.method === "DELETE") {
-    return removeIdentityFromUser({ userId, type, value }).then((data) => {
+const handler = (
+  request: NextApiRequest,
+  response: NextApiResponse,
+): Promise<void> => {
+  return tracer.span("delete-identity handler", async (span) => {
+    const { userId, type, value } = request.body;
+
+    span.setDisclosedAttribute("Identity type", type);
+
+    return removeIdentityFromUser(config.managementCredentials, {
+      userId,
+      identityType: type,
+      identityValue: value,
+    }).then(() => {
       response.statusCode = HttpStatus.ACCEPTED;
-
       response.setHeader("Content-Type", "application/json");
-
-      response.end(JSON.stringify({ data }));
+      response.end();
+      return;
     });
-  }
-
-  response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
-  response.end();
-
-  return Promise.reject();
+  });
 };
 
-export default wrapMiddlewares([withLogger, withSentry, withAuth], handler);
+const wrappedHandler = wrapMiddlewares(
+  [
+    tracingMiddleware(tracer),
+    recoveryMiddleware(tracer),
+    errorMiddleware(tracer),
+    loggingMiddleware(tracer, logger),
+    withSentry,
+    withAuth,
+  ],
+  handler,
+);
+
+export default new Endpoint<NextApiRequest, NextApiResponse>()
+  .delete(wrappedHandler)
+  .getHandler();

@@ -1,0 +1,20 @@
+receivers:
+  zipkin:
+    endpoint: 0.0.0.0:9411
+
+processors:
+  batch:
+  queued_retry:
+
+exporters:
+  logging:
+  jaeger:
+    endpoint: "jaeger:14250"
+    insecure: true
+
+service:
+  pipelines:
+    traces:
+      receivers: [ zipkin]
+      processors: [batch, queued_retry]
+      exporters: [logging, jaeger]

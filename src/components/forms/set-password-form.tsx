@@ -1,3 +1,4 @@
+import { PasswordRules } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
@@ -25,7 +26,7 @@ export const SetPasswordForm: React.FC<{
   const [
     passwordRestrictionError,
     setPasswordRestrictionError,
-  ] = React.useState<SetPasswordErrorRules | undefined>();
+  ] = React.useState<PasswordRules | undefined>();
 
   const router = useRouter();
 
@@ -40,17 +41,13 @@ export const SetPasswordForm: React.FC<{
 
         if (isNotSubmitted) {
           if (passwordInput === passwordConfirmationInput) {
-            const { data, restrictionRulesError } = await setPassword(
-              passwordInput,
-            );
+            const { restrictionRulesError } = await setPassword(passwordInput);
 
             if (restrictionRulesError) {
-              setPasswordRestrictionError(restrictionRulesError.rules);
+              setPasswordRestrictionError(restrictionRulesError);
 
               setIsNotSubmitted(true);
-            }
-
-            if (data && data.createOrUpdatePassword) {
+            } else {
               router && router.push("/account/security");
             }
           } else {

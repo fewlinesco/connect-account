@@ -25,6 +25,12 @@ type Config = {
   isJweSigned: string;
   connectTestAccountEmail: string;
   connectTestAccountPassword: string;
+  serviceName: string;
+  lightstepAccessToken: string;
+  managementCredentials: {
+    URI: string;
+    APIKey: string;
+  };
 };
 
 const config: Config = {
@@ -50,6 +56,12 @@ const config: Config = {
   isJweSigned: "",
   connectTestAccountEmail: "",
   connectTestAccountPassword: "",
+  serviceName: "",
+  lightstepAccessToken: "",
+  managementCredentials: {
+    URI: "",
+    APIKey: "",
+  },
 };
 
 function handleEnvVars(): void {
@@ -87,6 +99,12 @@ function handleEnvVars(): void {
   config.connectTestAccountEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL || "";
   config.connectTestAccountPassword =
     process.env.CONNECT_TEST_ACCOUNT_PASSWORD || "";
+  config.serviceName = process.env.SERVICE_NAME || "Connect.Account";
+  config.lightstepAccessToken = process.env.LIGHTSTEP_ACCESS_TOKEN || "";
+  config.managementCredentials = {
+    URI: process.env.CONNECT_MANAGEMENT_URL || "",
+    APIKey: process.env.CONNECT_MANAGEMENT_API_KEY || "",
+  };
 }
 
 handleEnvVars();
