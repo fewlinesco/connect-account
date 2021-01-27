@@ -27,6 +27,10 @@ type Config = {
   connectTestAccountPassword: string;
   serviceName: string;
   lightstepAccessToken: string;
+  managementCredentials: {
+    URI: string;
+    APIKey: string;
+  };
 };
 
 const config: Config = {
@@ -54,6 +58,10 @@ const config: Config = {
   connectTestAccountPassword: "",
   serviceName: "",
   lightstepAccessToken: "",
+  managementCredentials: {
+    URI: "",
+    APIKey: "",
+  },
 };
 
 function handleEnvVars(): void {
@@ -93,6 +101,10 @@ function handleEnvVars(): void {
     process.env.CONNECT_TEST_ACCOUNT_PASSWORD || "";
   config.serviceName = process.env.SERVICE_NAME || "Connect.Account";
   config.lightstepAccessToken = process.env.LIGHTSTEP_ACCESS_TOKEN || "";
+  config.managementCredentials = {
+    URI: process.env.CONNECT_MANAGEMENT_URL || "",
+    APIKey: process.env.CONNECT_MANAGEMENT_API_KEY || "",
+  };
 }
 
 handleEnvVars();

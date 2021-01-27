@@ -1,10 +1,9 @@
+import { PasswordRules } from "@fewlines/connect-management";
 import React from "react";
 import styled from "styled-components";
 
-import type { SetPasswordErrorRules } from "@lib/@types/Password";
-
 export const PasswordRulesErrorList: React.FC<{
-  rules: SetPasswordErrorRules;
+  rules: PasswordRules;
 }> = ({ rules }) => {
   const { min_digits, min_non_digits, min_total_characters } = rules;
 

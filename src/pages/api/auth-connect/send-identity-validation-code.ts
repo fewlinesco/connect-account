@@ -1,10 +1,14 @@
+import {
+  IdentityValueCantBeBlankError,
+  sendIdentityValidationCode,
+  IdentityAlreadyUsedError,
+} from "@fewlines/connect-management";
 import { HttpStatus } from "@fwl/web";
 
-import { sendIdentityValidationCode } from "@lib/commands/send-identity-validation-code";
 import { Handler } from "@src/@types/core/Handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
-import { GraphqlErrors } from "@src/errors";
+import { config } from "@src/config";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
@@ -27,45 +31,41 @@ const handler: Handler = async (request, response) => {
         value: identityInput.value,
       };
 
-      const { data, errors } = await sendIdentityValidationCode({
+      return await sendIdentityValidationCode(config.managementCredentials, {
         callbackUrl,
         identity,
         localeCodeOverride: "en-EN",
         userId: userCookie.sub,
-      });
+      })
+        .then(async ({ eventId }) => {
+          const temporaryIdentity = {
+            eventId: eventId,
+            value: identityInput.value,
+            type: identityInput.type,
+            expiresAt: identityInput.expiresAt,
+            primary: identityInput.primary,
+          };
 
-      if (errors) {
-        if ((errors[0] as any).code === "identity_already_validated") {
-          response.statusCode = HttpStatus.BAD_REQUEST;
-          response.json({ error: (errors[0] as any).code });
+          await insertTemporaryIdentity(userCookie.sub, temporaryIdentity);
+
+          response.statusCode = HttpStatus.OK;
+          response.setHeader("Content-Type", "application/json");
+          response.json({ eventId });
           return;
-        }
+        })
+        .catch((error) => {
+          if (
+            error instanceof IdentityAlreadyUsedError ||
+            error instanceof IdentityValueCantBeBlankError
+          ) {
+            response.statusCode = HttpStatus.BAD_REQUEST;
+            response.json({ errorMessage: error.message });
+            return;
+          }
 
-        if ((errors[0] as any).errors.identity_value === "can't be blank") {
-          response.statusCode = HttpStatus.BAD_REQUEST;
-          response.json({ error: (errors[0] as any).errors.identity_value });
-          return;
-        }
-
-        throw new GraphqlErrors(errors);
-      } else if (!data) {
-        throw new Error("Management query failed");
-      } else {
-        const temporaryIdentity = {
-          eventId: data.sendIdentityValidationCode.eventId,
-          value: identityInput.value,
-          type: identityInput.type,
-          expiresAt: identityInput.expiresAt,
-          primary: identityInput.primary,
-        };
-
-        await insertTemporaryIdentity(userCookie.sub, temporaryIdentity);
-
-        response.statusCode = HttpStatus.OK;
-        response.setHeader("Content-Type", "application/json");
-        response.json({ data: data.sendIdentityValidationCode.eventId });
-        return;
-      }
+          response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+          response.end();
+        });
     }
 
     response.statusCode = HttpStatus.TEMPORARY_REDIRECT;

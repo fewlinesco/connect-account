@@ -1,3 +1,4 @@
+import { removeIdentityFromUser } from "@fewlines/connect-management";
 import { Endpoint, HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
@@ -8,7 +9,7 @@ import {
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { removeIdentityFromUser } from "@lib/commands/remove-identity-from-user";
+import { config } from "@src/config";
 import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
@@ -25,12 +26,15 @@ const handler = (
 
     span.setDisclosedAttribute("Identity type", type);
 
-    return removeIdentityFromUser({ userId, type, value }).then((data) => {
+    return removeIdentityFromUser(config.managementCredentials, {
+      userId,
+      identityType: type,
+      identityValue: value,
+    }).then(() => {
       response.statusCode = HttpStatus.ACCEPTED;
-
       response.setHeader("Content-Type", "application/json");
-
-      response.end(JSON.stringify({ data }));
+      response.end();
+      return;
     });
   });
 };
