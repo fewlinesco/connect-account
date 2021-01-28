@@ -27,7 +27,7 @@ import { getServerSideCookies } from "@src/utils/server-side-cookies";
 const tracer = getTracer();
 
 const handler: Handler = async (request, response) => {
-  return tracer.span("mark-identity-as-primary handler", async (span) => {
+  return tracer.span("verify-validation-code handler", async (span) => {
     const { validationCode, eventId } = request.body;
 
     const userCookie = (await getServerSideCookies<UserCookie>(request, {

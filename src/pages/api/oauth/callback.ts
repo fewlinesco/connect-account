@@ -28,7 +28,8 @@ const handler: Handler = (request, response): Promise<void> => {
       `${request.query.code}`,
     );
 
-    span.setDisclosedAttribute("`authorization_code`", request.query.code);
+    span.setAttribute("`authorization_code`", request.query.code);
+    span.setDisclosedAttribute("query.error", request.query.error);
 
     const decodedAccessToken = await decryptVerifyAccessToken(access_token);
 
@@ -41,7 +42,7 @@ const handler: Handler = (request, response): Promise<void> => {
 
     await getAndPutUser(oAuth2UserInfo);
 
-    span.setDisclosedAttribute("Is User put", true);
+    span.setDisclosedAttribute("User updated on DB", true);
 
     await setServerSideCookies(
       response,

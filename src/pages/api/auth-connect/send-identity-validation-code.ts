@@ -27,7 +27,7 @@ import { getServerSideCookies } from "@src/utils/server-side-cookies";
 const tracer = getTracer();
 
 const handler: Handler = (request, response): Promise<void> => {
-  return tracer.span("delete-identity handler", async (span) => {
+  return tracer.span("send-identity-validation-code handler", async (span) => {
     const { callbackUrl, identityInput } = request.body;
 
     const userCookie = await getServerSideCookies<UserCookie>(request, {
