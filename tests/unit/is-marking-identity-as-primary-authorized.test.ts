@@ -1,31 +1,21 @@
-import { IdentityTypes, ProviderUser } from "@lib/@types";
+import { IdentityTypes } from "@fewlines/connect-management/dist/src/types";
+
 import { isMarkingIdentityAsPrimaryAuthorized } from "@src/utils/is-marking-identity-as-primary-authorized";
 
 const userSub = "c396885b-18c7-43d6-ba4b-1b8fe4f7b66b";
-const mockedResponse: { data: { provider: ProviderUser } } = {
-  data: {
-    provider: {
-      id: "4a5f8589-0d91-4a69-924a-6f227a69666d",
-      name: "Mocked Provider",
-      user: {
-        id: userSub,
-        identities: [
-          {
-            id: "be90006d-b0d8-44bd-80a9-084048ee1cb8",
-            primary: true,
-            status: "validated",
-            type: IdentityTypes.EMAIL,
-            value: "foo@fewlines.test",
-          },
-        ],
-      },
-    },
+const mockedResponse = [
+  {
+    id: "be90006d-b0d8-44bd-80a9-084048ee1cb8",
+    primary: true,
+    status: "validated",
+    type: IdentityTypes.EMAIL,
+    value: "foo@fewlines.test",
   },
-};
+];
 
-jest.mock("@src/utils/fetch-management.ts", () => {
+jest.mock("@fewlines/connect-management", () => {
   return {
-    fetchManagement: () => {
+    getIdentities: () => {
       return mockedResponse;
     },
   };
