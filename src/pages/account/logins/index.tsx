@@ -1,14 +1,13 @@
+import { getIdentities } from "@fewlines/connect-management";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
-import { getIdentities } from "@lib/queries/get-identities";
 import type { SortedIdentities } from "@src/@types/sorted-identities";
 import { UserCookie } from "@src/@types/user-cookie";
-import { NoDataReturned, NoIdentityFound } from "@src/client-errors";
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { LoginsOverview } from "@src/components/pages/logins-overview/logins-overview";
-import { GraphqlErrors } from "@src/errors";
+import { config } from "@src/config";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
@@ -52,25 +51,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       });
 
       if (userCookie) {
-        const sortedIdentities = await getIdentities(userCookie.sub).then(
-          ({ errors, data }) => {
-            if (errors) {
-              throw new GraphqlErrors(errors);
-            }
-
-            if (!data) {
-              throw new NoDataReturned();
-            }
-
-            const identities = data.provider.user.identities;
-
-            if (!identities) {
-              throw new NoIdentityFound();
-            }
-
-            return sortIdentities(identities);
-          },
-        );
+        const sortedIdentities = await getIdentities(
+          config.managementCredentials,
+          userCookie.sub,
+        ).then((identities) => {
+          return sortIdentities(identities);
+        });
 
         return {
           props: {

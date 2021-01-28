@@ -1,3 +1,4 @@
+import { getProviderName } from "@fewlines/connect-management";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -8,12 +9,10 @@ import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { GetServerSideProps } from "next";
 import React from "react";
 
-import { getProviderName } from "@lib/queries/get-provider-name";
-import { NoDataReturned, NoProviderNameFound } from "@src/client-errors";
 import { Main } from "@src/components/page-layout";
 import { Home } from "@src/components/pages/home/home";
+import { config } from "@src/config";
 import { oauth2Client } from "@src/config";
-import { GraphqlErrors } from "@src/errors";
 import { logger } from "@src/logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
@@ -48,23 +47,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     async () => {
       const authorizeURL = await oauth2Client.getAuthorizationURL();
 
-      const providerName = await getProviderName().then(({ errors, data }) => {
-        if (errors) {
-          throw new GraphqlErrors(errors);
-        }
-
-        if (!data) {
-          throw new NoDataReturned();
-        }
-
-        const providerName = data.provider.name;
-
-        if (!providerName) {
-          throw new NoProviderNameFound();
-        }
-
-        return providerName;
-      });
+      const providerName = await getProviderName(config.managementCredentials);
 
       return {
         props: {

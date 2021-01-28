@@ -1,13 +1,13 @@
+import { isUserPasswordSet } from "@fewlines/connect-management";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
-import { isUserPasswordSet } from "@lib/queries/is-user-password-set";
 import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
 import { SetPasswordForm } from "@src/components/forms/set-password-form";
 import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
-import { GraphqlErrors } from "@src/errors";
+import { config } from "@src/config";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
@@ -49,14 +49,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       });
 
       if (userCookie) {
-        const isPasswordSet = await isUserPasswordSet(userCookie.sub).then(
-          (result) => {
-            if (result.errors) {
-              throw new GraphqlErrors(result.errors);
-            }
-
-            return result;
-          },
+        const isPasswordSet = await isUserPasswordSet(
+          config.managementCredentials,
+          userCookie.sub,
         );
 
         return {
