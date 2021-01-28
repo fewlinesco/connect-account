@@ -20,12 +20,14 @@ async function removeTestUser(): Promise<void> {
     );
   }
 
-  if (process.env.MANAGEMENT_URL === undefined) {
-    throw new Error("MANAGEMENT_URL environment variable is undefined");
+  if (process.env.CONNECT_MANAGEMENT_URL === undefined) {
+    throw new Error("CONNECT_MANAGEMENT_URL environment variable is undefined");
   }
 
-  if (process.env.MANAGEMENT_API_KEY === undefined) {
-    throw new Error("MANAGEMENT_API_KEY environment variable is undefined");
+  if (process.env.CONNECT_MANAGEMENT_API_KEY === undefined) {
+    throw new Error(
+      "CONNECT_MANAGEMENT_API_KEY environment variable is undefined",
+    );
   }
 
   const testUserEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL.split("@").join(
@@ -33,12 +35,18 @@ async function removeTestUser(): Promise<void> {
   );
 
   const testUserId = await getUserIdFromIdentityValue(
-    { URI: process.env.MANAGEMENT_URL, APIKey: process.env.MANAGEMENT_API_KEY },
+    {
+      URI: process.env.CONNECT_MANAGEMENT_URL,
+      APIKey: process.env.CONNECT_MANAGEMENT_API_KEY,
+    },
     testUserEmail,
   );
 
   await deleteUser(
-    { URI: process.env.MANAGEMENT_URL, APIKey: process.env.MANAGEMENT_API_KEY },
+    {
+      URI: process.env.CONNECT_MANAGEMENT_URL,
+      APIKey: process.env.CONNECT_MANAGEMENT_API_KEY,
+    },
     testUserId,
   );
 }

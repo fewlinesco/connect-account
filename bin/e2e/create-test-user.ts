@@ -30,12 +30,14 @@ async function createTestUser(): Promise<void> {
     );
   }
 
-  if (process.env.MANAGEMENT_URL === undefined) {
-    throw new Error("MANAGEMENT_URL environment variable is undefined");
+  if (process.env.CONNECT_MANAGEMENT_URL === undefined) {
+    throw new Error("CONNECT_MANAGEMENT_URL environment variable is undefined");
   }
 
-  if (process.env.MANAGEMENT_API_KEY === undefined) {
-    throw new Error("MANAGEMENT_API_KEY environment variable is undefined");
+  if (process.env.CONNECT_MANAGEMENT_API_KEY === undefined) {
+    throw new Error(
+      "CONNECT_MANAGEMENT_API_KEY environment variable is undefined",
+    );
   }
 
   const userIdentitiesInput = [
@@ -56,7 +58,10 @@ async function createTestUser(): Promise<void> {
   ];
 
   const userId = await createUserWithIdentities(
-    { URI: process.env.MANAGEMENT_URL, APIKey: process.env.MANAGEMENT_API_KEY },
+    {
+      URI: process.env.CONNECT_MANAGEMENT_URL,
+      APIKey: process.env.CONNECT_MANAGEMENT_API_KEY,
+    },
     {
       identities: userIdentitiesInput,
       localeCode: "en-US",
@@ -64,7 +69,10 @@ async function createTestUser(): Promise<void> {
   );
 
   await createOrUpdatePassword(
-    { URI: process.env.MANAGEMENT_URL, APIKey: process.env.MANAGEMENT_API_KEY },
+    {
+      URI: process.env.CONNECT_MANAGEMENT_URL,
+      APIKey: process.env.CONNECT_MANAGEMENT_API_KEY,
+    },
     {
       cleartextPassword: process.env.CONNECT_TEST_ACCOUNT_PASSWORD.trim(),
       userId,
