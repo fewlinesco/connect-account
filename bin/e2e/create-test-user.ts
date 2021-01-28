@@ -1,6 +1,11 @@
-import { IdentityStatus, IdentityTypes } from "../../lib/@types";
-import { createOrUpdatePassword } from "../../lib/commands/create-or-update-password";
-import { createUserWithIdentities } from "../../lib/commands/create-user-with-identities";
+import {
+  createOrUpdatePassword,
+  createUserWithIdentities,
+} from "@fewlines/connect-management";
+import {
+  IdentityStatus,
+  IdentityTypes,
+} from "@fewlines/connect-management/dist/src/types";
 
 async function createTestUser(): Promise<void> {
   if (process.env.GITHUB_CONTEXT_EVENT === undefined) {
@@ -25,6 +30,14 @@ async function createTestUser(): Promise<void> {
     );
   }
 
+  if (process.env.MANAGEMENT_URL === undefined) {
+    throw new Error("MANAGEMENT_URL environment variable is undefined");
+  }
+
+  if (process.env.MANAGEMENT_API_KEY === undefined) {
+    throw new Error("MANAGEMENT_API_KEY environment variable is undefined");
+  }
+
   const userIdentitiesInput = [
     {
       status: IdentityStatus.VALIDATED,
@@ -42,33 +55,21 @@ async function createTestUser(): Promise<void> {
     },
   ];
 
-  const userId = await createUserWithIdentities({
-    identities: userIdentitiesInput,
-    localeCode: "en-US",
-  }).then(({ data, errors }) => {
-    if (errors) {
-      throw errors;
-    }
+  const userId = await createUserWithIdentities(
+    { URI: process.env.MANAGEMENT_URL, APIKey: process.env.MANAGEMENT_API_KEY },
+    {
+      identities: userIdentitiesInput,
+      localeCode: "en-US",
+    },
+  );
 
-    if (!data) {
-      throw new Error("User creation error");
-    }
-
-    return data.createUserWithIdentities.id;
-  });
-
-  await createOrUpdatePassword({
-    cleartextPassword: process.env.CONNECT_TEST_ACCOUNT_PASSWORD.trim(),
-    userId,
-  }).then(({ data, errors }) => {
-    if (errors) {
-      throw errors;
-    }
-
-    if (!data) {
-      throw new Error("Password error");
-    }
-  });
+  await createOrUpdatePassword(
+    { URI: process.env.MANAGEMENT_URL, APIKey: process.env.MANAGEMENT_API_KEY },
+    {
+      cleartextPassword: process.env.CONNECT_TEST_ACCOUNT_PASSWORD.trim(),
+      userId,
+    },
+  );
 }
 
 createTestUser();
