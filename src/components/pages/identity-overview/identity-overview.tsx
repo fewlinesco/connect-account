@@ -1,7 +1,7 @@
+import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 import styled from "styled-components";
 
-import { Identity, IdentityTypes } from "@lib/@types";
 import {
   AwaitingValidationBadge,
   PrimaryBadge,

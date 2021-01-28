@@ -1,3 +1,4 @@
+import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 import styled from "styled-components";
 
@@ -8,7 +9,6 @@ import { NeutralLink } from "../../neutral-link/neutral-link";
 import { Separator } from "../../separator/separator";
 import { SectionBox } from "../../shadow-box/section-box";
 import { TimelineEnd, Timeline } from "../../timelines/timelines";
-import { Identity, IdentityTypes } from "@lib/@types";
 import { IdentitiesSectionContent } from "@src/@types/identities-section-content";
 import { SortedIdentities } from "@src/@types/sorted-identities";
 import {

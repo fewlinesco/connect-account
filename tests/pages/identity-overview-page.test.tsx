@@ -1,9 +1,9 @@
+import { Identity } from "@fewlines/connect-management";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
 import { render, screen } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
-import { Identity } from "@lib/@types";
 import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
 
 jest.mock("@src/db-client", () => {

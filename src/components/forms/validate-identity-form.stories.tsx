@@ -1,8 +1,8 @@
+import { IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 
 import { StoriesContainer } from "../containers/stories-container";
 import { ValidateIdentityForm } from "./validate-identity-form";
-import { IdentityTypes } from "@lib/@types/Identity";
 
 export default {
   title: "pages/Validate Identity Form",

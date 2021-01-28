@@ -1,4 +1,4 @@
-import { IdentityTypes, Identity } from "@lib/@types";
+import { IdentityTypes, Identity } from "@fewlines/connect-management";
 
 export const nonPrimaryEmailIdentity: Identity = {
   id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",

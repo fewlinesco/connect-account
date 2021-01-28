@@ -1,8 +1,8 @@
+import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 
 import { StoriesContainer } from "../../containers/stories-container";
 import { IdentityOverview } from "./identity-overview";
-import { Identity, IdentityTypes } from "@lib/@types";
 
 export default {
   title: "pages/Identity Overview",

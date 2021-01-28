@@ -1,6 +1,6 @@
+import { IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 
-import { IdentityTypes } from "@lib/@types/Identity";
 import { AppleIcon } from "@src/components/icons/apple-icon/apple-icon";
 import { DecathlonIcon } from "@src/components/icons/decathlon-icon/decathlon-icon";
 import { FacebookIcon } from "@src/components/icons/facebook-icon/facebook-icon";

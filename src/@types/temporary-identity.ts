@@ -1,4 +1,4 @@
-import { IdentityTypes } from "@lib/@types";
+import { IdentityTypes } from "@fewlines/connect-management";
 
 export type TemporaryIdentity = {
   eventId: string;

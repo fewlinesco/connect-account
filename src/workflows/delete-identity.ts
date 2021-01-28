@@ -1,6 +1,6 @@
+import { IdentityTypes } from "@fewlines/connect-management";
 import Cookie from "js-cookie";
 
-import { IdentityTypes } from "@lib/@types";
 import { HttpVerbs } from "@src/@types/core/http-verbs";
 import { fetchJson } from "@src/utils/fetch-json";
 import { getIdentityType } from "@src/utils/get-identity-type";

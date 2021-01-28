@@ -1,4 +1,5 @@
-import { Identity, IdentityTypes } from "@lib/@types";
+import { Identity, IdentityTypes } from "@fewlines/connect-management";
+
 import { sortIdentities } from "@src/utils/sort-identities";
 
 describe("sortIdentities", () => {

@@ -1,7 +1,7 @@
+import { IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 
 import { LoginsOverview } from "./logins-overview";
-import { IdentityTypes } from "@lib/@types";
 import { SortedIdentities } from "@src/@types/sorted-identities";
 import { StoriesContainer } from "@src/components/containers/stories-container";
 

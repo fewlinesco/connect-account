@@ -1,10 +1,10 @@
+import { IdentityTypes } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import { Form } from "./form";
-import { IdentityTypes } from "@lib/@types/Identity";
 import {
   InvalidValidationCode,
   TemporaryIdentityExpired,
