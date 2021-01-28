@@ -217,10 +217,6 @@
             {
               "pattern": "@src/**",
               "group": "internal"
-            },
-            {
-              "pattern": "@lib/**",
-              "group": "internal"
             }
           ],
           "pathGroupsExcludedImportTypes": [
@@ -251,8 +247,7 @@
     ],
     "moduleNameMapper": {
       "\\.(png|svg|jpg|gif|eot|ttf|woff|woff2)$": "<rootDir>/tests/config/import-asset-fix.ts",
-      "@src/(.*)": "<rootDir>/src/$1",
-      "@lib/(.*)": "<rootDir>/lib/$1"
+      "@src/(.*)": "<rootDir>/src/$1"
     },
     "setupFilesAfterEnv": [
       "@testing-library/jest-dom/extend-expect"
