@@ -1,5 +1,6 @@
+import { Identity, IdentityTypes } from "@fewlines/connect-management";
+
 import { getIdentityType } from "./get-identity-type";
-import { Identity, IdentityTypes } from "@lib/@types";
 import type { SortedIdentities } from "@src/@types/sorted-identities";
 import { UnhandledIdentityType } from "@src/client-errors";
 

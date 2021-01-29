@@ -1,15 +1,17 @@
+import {
+  getIdentity,
+  Identity,
+  IdentityTypes,
+} from "@fewlines/connect-management";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
-import { Identity, IdentityTypes } from "@lib/@types";
-import { getIdentity } from "@lib/queries/get-identity";
 import { UserCookie } from "@src/@types/user-cookie";
-import { NoDataReturned, NoIdentityFound } from "@src/client-errors";
 import { Container } from "@src/components/containers/container";
 import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
 import { IdentityOverview } from "@src/components/pages/identity-overview/identity-overview";
-import { GraphqlErrors } from "@src/errors";
+import { config } from "@src/config";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
@@ -58,23 +60,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       });
 
       if (userCookie) {
-        const identity = await getIdentity(
-          userCookie.sub,
-          context.params.id.toString(),
-        ).then(({ errors, data }) => {
-          if (errors) {
-            throw new GraphqlErrors(errors);
-          }
-
-          if (!data) {
-            throw new NoDataReturned();
-          }
-
-          if (!data.provider.user.identity) {
-            throw new NoIdentityFound();
-          }
-
-          return data.provider.user.identity;
+        const identity = await getIdentity(config.managementCredentials, {
+          userId: userCookie.sub,
+          identityId: context.params.id.toString(),
         });
 
         return {

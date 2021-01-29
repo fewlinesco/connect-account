@@ -1,18 +1,17 @@
+import {
+  Identity,
+  IdentityTypes,
+  getIdentities,
+} from "@fewlines/connect-management";
 import { GetServerSideProps } from "next";
 import React from "react";
 
-import { Identity, IdentityTypes } from "@lib/@types";
-import { getIdentities } from "@lib/queries/get-identities";
 import { UserCookie } from "@src/@types/user-cookie";
-import {
-  NoDataReturned,
-  NoIdentityFound,
-  NoUserFound,
-} from "@src/client-errors";
+import { NoUserFound } from "@src/client-errors";
 import { Container } from "@src/components/containers/container";
 import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
-import { GraphqlErrors } from "@src/errors";
+import { config } from "@src/config";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
@@ -59,27 +58,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       });
 
       if (userCookie) {
-        const identity = await getIdentities(userCookie.sub).then(
-          ({ errors, data }) => {
-            if (errors) {
-              throw new GraphqlErrors(errors);
-            }
-
-            if (!data) {
-              throw new NoDataReturned();
-            }
-
-            const identities = data.provider.user.identities;
-
-            if (!identities) {
-              throw new NoIdentityFound();
-            }
-
-            return identities.filter(
-              (userIdentity) => userIdentity.id === identityId,
-            )[0];
-          },
-        );
+        const identity = await getIdentities(
+          config.managementCredentials,
+          userCookie.sub,
+        ).then((identities) => {
+          return identities.find(
+            (userIdentity) => userIdentity.id === identityId,
+          );
+        });
 
         if (!identity) {
           return {

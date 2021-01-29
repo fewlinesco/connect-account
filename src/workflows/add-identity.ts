@@ -1,4 +1,5 @@
-import { IdentityTypes } from "@lib/@types";
+import { IdentityTypes } from "@fewlines/connect-management";
+
 import { HttpVerbs } from "@src/@types/core/http-verbs";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import {

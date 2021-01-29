@@ -1,8 +1,8 @@
+import { IdentityTypes } from "@fewlines/connect-management/dist/src/types";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
 import { render, screen } from "../config/testing-library-config";
-import { IdentityTypes } from "@lib/@types/Identity";
 import ValidateIdentityPage from "@src/pages/account/logins/[type]/validation/[eventId]";
 
 jest.mock("@src/db-client", () => {

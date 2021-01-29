@@ -1,5 +1,7 @@
-import { deleteUser } from "../../lib/commands/delete-user";
-import { getUserIDFromIdentityValue } from "../../lib/queries/get-user-id-from-identity-value";
+import {
+  deleteUser,
+  getUserIdFromIdentityValue,
+} from "@fewlines/connect-management";
 
 async function removeTestUser(): Promise<void> {
   if (process.env.GITHUB_CONTEXT_EVENT === undefined) {
@@ -18,33 +20,35 @@ async function removeTestUser(): Promise<void> {
     );
   }
 
+  if (process.env.CONNECT_MANAGEMENT_URL === undefined) {
+    throw new Error("CONNECT_MANAGEMENT_URL environment variable is undefined");
+  }
+
+  if (process.env.CONNECT_MANAGEMENT_API_KEY === undefined) {
+    throw new Error(
+      "CONNECT_MANAGEMENT_API_KEY environment variable is undefined",
+    );
+  }
+
   const testUserEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL.split("@").join(
     "_" + githubActionsContext.deployment.sha + "@",
   );
 
-  const testUserId = await getUserIDFromIdentityValue({
-    value: testUserEmail,
-  }).then(({ data, errors }) => {
-    if (errors) {
-      throw errors;
-    }
+  const testUserId = await getUserIdFromIdentityValue(
+    {
+      URI: process.env.CONNECT_MANAGEMENT_URL,
+      APIKey: process.env.CONNECT_MANAGEMENT_API_KEY,
+    },
+    testUserEmail,
+  );
 
-    if (!data) {
-      throw new Error("User not found.");
-    }
-
-    return data.provider.user.id;
-  });
-
-  await deleteUser({ userId: testUserId }).then(({ data, errors }) => {
-    if (errors) {
-      throw errors;
-    }
-
-    if (!data) {
-      throw new Error("Deleting error");
-    }
-  });
+  await deleteUser(
+    {
+      URI: process.env.CONNECT_MANAGEMENT_URL,
+      APIKey: process.env.CONNECT_MANAGEMENT_API_KEY,
+    },
+    testUserId,
+  );
 }
 
 removeTestUser();

@@ -4,7 +4,6 @@ import React from "react";
 import styled from "styled-components";
 
 import { StyledForm } from "./form";
-import type { SetPasswordErrorRules } from "@lib/@types/Password";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { Input } from "@src/components/input/input";
 import { PasswordRulesErrorList } from "@src/components/password-rules-error-list/password-rules-error-list";
@@ -98,7 +97,7 @@ const MismatchedPassword = styled.p`
 `;
 
 const ExtendedInputStyle = styled(Input)<{
-  passwordRestrictionError?: SetPasswordErrorRules;
+  passwordRestrictionError?: PasswordRules;
   passwordsNotMatching?: boolean;
 }>`
   ${({ theme, passwordRestrictionError, passwordsNotMatching }) =>

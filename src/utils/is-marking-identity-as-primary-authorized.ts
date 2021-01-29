@@ -1,28 +1,12 @@
-import { getIdentities } from "@lib/queries/get-identities";
-import { NoDataReturned, NoIdentityFound } from "@src/client-errors";
-import { GraphqlErrors } from "@src/errors";
+import { getIdentities } from "@fewlines/connect-management";
+
+import { config } from "@src/config";
 
 export async function isMarkingIdentityAsPrimaryAuthorized(
   sub: string,
   identityId: string,
 ): Promise<boolean> {
-  const identities = await getIdentities(sub).then(({ errors, data }) => {
-    if (errors) {
-      throw new GraphqlErrors(errors);
-    }
-
-    if (!data) {
-      throw new NoDataReturned();
-    }
-
-    const identities = data.provider.user.identities;
-
-    if (!identities) {
-      throw new NoIdentityFound();
-    }
-
-    return identities;
-  });
+  const identities = await getIdentities(config.managementCredentials, sub);
 
   return identities
     ? identities.some((identity) => identity.id === identityId)

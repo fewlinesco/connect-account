@@ -1,8 +1,8 @@
+import { IdentityTypes } from "@fewlines/connect-management";
 import { ServerResponse } from "http";
 import { GetServerSideProps } from "next";
 import React from "react";
 
-import { IdentityTypes } from "@lib/@types/Identity";
 import { Container } from "@src/components/containers/container";
 import { ValidateIdentityForm } from "@src/components/forms/validate-identity-form";
 import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";

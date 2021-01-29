@@ -1,3 +1,4 @@
+import { IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 import styled from "styled-components";
 
@@ -6,7 +7,6 @@ import { Container } from "../containers/container";
 import { ConfirmationBox } from "./confirmation-box";
 import { DeleteConfirmationBoxContent } from "./delete-confirmation-box-content";
 import { PrimaryConfirmationBoxContent } from "./primary-confirmation-box-content";
-import { IdentityTypes } from "@lib/@types";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 export default {

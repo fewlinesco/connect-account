@@ -1,8 +1,8 @@
+import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 
 import { StoriesContainer } from "../../containers/stories-container";
 import { StandardIdentitiesSection } from "./logins-overview";
-import { Identity, IdentityTypes } from "@lib/@types";
 
 export default {
   title: "components/Standard Identity Section",

@@ -1,7 +1,7 @@
+import { IdentityTypes } from "@fewlines/connect-management";
 import { GetServerSideProps } from "next";
 import React from "react";
 
-import { IdentityTypes } from "@lib/@types";
 import { Container } from "@src/components/containers/container";
 import { AddIdentityForm } from "@src/components/forms/add-identity-form";
 import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";

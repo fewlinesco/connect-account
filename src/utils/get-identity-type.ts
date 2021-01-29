@@ -1,4 +1,5 @@
-import { IdentityTypes } from "@lib/@types";
+import { IdentityTypes } from "@fewlines/connect-management";
+
 import { UnhandledIdentityType } from "@src/client-errors";
 
 export function getIdentityType(type: string): IdentityTypes {
