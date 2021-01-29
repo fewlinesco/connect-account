@@ -62,9 +62,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           config.managementCredentials,
           userCookie.sub,
         ).then((identities) => {
-          return identities.filter(
+          return identities.find(
             (userIdentity) => userIdentity.id === identityId,
-          )[0];
+          );
         });
 
         if (!identity) {
