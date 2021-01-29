@@ -2,19 +2,29 @@ import {
   createOrUpdatePassword,
   InvalidPasswordInputError,
 } from "@fewlines/connect-management";
-import { HttpStatus } from "@fwl/web";
+import { Endpoint, HttpStatus } from "@fwl/web";
+import {
+  loggingMiddleware,
+  wrapMiddlewares,
+  tracingMiddleware,
+  errorMiddleware,
+  recoveryMiddleware,
+} from "@fwl/web/dist/middlewares";
+import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/core/Handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { config } from "@src/config";
+import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
-import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
-import { wrapMiddlewares } from "@src/middlewares/wrapper";
+import getTracer from "@src/tracer";
 import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
+const tracer = getTracer();
+
 const handler: Handler = async (request, response) => {
-  if (request.method === "POST") {
+  return tracer.span("set-password handler", async (span) => {
     const { passwordInput } = request.body;
 
     const userCookie = await getServerSideCookies<UserCookie>(request, {
@@ -28,6 +38,8 @@ const handler: Handler = async (request, response) => {
         userId: userCookie.sub,
       })
         .then(() => {
+          span.setDisclosedAttribute("Password created or updated", true);
+
           response.setHeader("Content-Type", "application/json");
           response.statusCode = HttpStatus.OK;
           response.end();
@@ -35,6 +47,8 @@ const handler: Handler = async (request, response) => {
         })
         .catch((error) => {
           if (error instanceof InvalidPasswordInputError) {
+            span.setDisclosedAttribute("Invalid password input", true);
+
             response.setHeader("Content-Type", "application/json");
             response.statusCode = HttpStatus.UNPROCESSABLE_ENTITY;
             response.json({ restrictionRulesError: error.rules });
@@ -46,11 +60,21 @@ const handler: Handler = async (request, response) => {
           return;
         });
     }
-  }
-
-  response.statusCode = HttpStatus.METHOD_NOT_ALLOWED;
-
-  return Promise.reject();
+  });
 };
 
-export default wrapMiddlewares([withLogger, withSentry, withAuth], handler);
+const wrappedHandler = wrapMiddlewares(
+  [
+    tracingMiddleware(tracer),
+    recoveryMiddleware(tracer),
+    errorMiddleware(tracer),
+    loggingMiddleware(tracer, logger),
+    withSentry,
+    withAuth,
+  ],
+  handler,
+);
+
+export default new Endpoint<NextApiRequest, NextApiResponse>()
+  .post(wrappedHandler)
+  .getHandler();
