@@ -110,7 +110,7 @@ function handleEnvVars(): void {
 handleEnvVars();
 
 const oauth2ClientConstructorProps: OAuth2ClientConstructor = {
-  providerURL: config.connectProviderUrl,
+  openIDConfigurationURL: config.connectOpenIdConfigurationUrl,
   clientID: config.connectApplicationClientId,
   clientSecret: config.connectApplicationClientSecret,
   redirectURI: config.connectAccountRedirectURI,

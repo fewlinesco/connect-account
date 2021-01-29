@@ -1763,10 +1763,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fewlines/connect-client@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@fewlines/connect-client/-/connect-client-0.2.1.tgz#042f95bd505102de14812e822a71258dbee54578"
-  integrity sha512-x3Isn6on77eXTtHQ4DItUQK6i7HqIOpXXXeju+Wjo93+KVOGvldQqs/k4WqouEBwuHdM27UidmXwbxaduUyHCQ==
+"@fewlines/connect-client@0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@fewlines/connect-client/-/connect-client-0.2.2.tgz#83f7da73fe4b77f775aba69e46a1add2e2c1069f"
+  integrity sha512-xUI+sEm+9916VSh//MtBeSRxjMSbeZWWpBV9zjB9XaJUOQ8P2cl1THWma6ojFdPVSPimGvXIEh4ZJLuVLV5vtA==
   dependencies:
     jsonwebtoken "8.5.1"
     node-fetch "2.6.1"
