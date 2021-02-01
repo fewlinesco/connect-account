@@ -94,5 +94,3 @@ jobs:
         run: yarn e2e:create-status-check
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  
