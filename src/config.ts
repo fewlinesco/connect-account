@@ -5,13 +5,11 @@ import OAuth2Client, {
 type Config = {
   connectAccountURL: string;
   connectAccountTheme: string;
-  connectManagementUrl: string;
   dynamoRegion: string;
   dynamoDbEndpoint: string;
   dynamoAccessKeyID: string;
   dynamoSecretAccessKey: string;
   dynamoTableName: string;
-  connectManagementApiKey: string;
   connectProviderUrl: string;
   connectApplicationClientId: string;
   connectApplicationClientSecret: string;
@@ -36,13 +34,11 @@ type Config = {
 const config: Config = {
   connectAccountURL: "",
   connectAccountTheme: "",
-  connectManagementUrl: "",
   dynamoRegion: "",
   dynamoDbEndpoint: "",
   dynamoAccessKeyID: "",
   dynamoSecretAccessKey: "",
   dynamoTableName: "",
-  connectManagementApiKey: "",
   connectProviderUrl: "",
   connectApplicationClientId: "",
   connectApplicationClientSecret: "",
@@ -68,16 +64,13 @@ function handleEnvVars(): void {
   const appHostname =
     process.env.CONNECT_ACCOUNT_HOSTNAME ||
     `${process.env.HEROKU_APP_NAME}.herokuapp.com`;
-
   config.connectAccountURL = appHostname ? `https://${appHostname}` : "";
   config.connectAccountTheme = process.env.CONNECT_ACCOUNT_THEME || "fewlines";
-  config.connectManagementUrl = process.env.CONNECT_MANAGEMENT_URL || "";
   config.dynamoRegion = process.env.DYNAMODB_REGION || "";
   config.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";
   config.dynamoAccessKeyID = process.env.DYNAMODB_ACCESS_KEY_ID || "";
   config.dynamoSecretAccessKey = process.env.DYNAMODB_SECRET_ACCESS_KEY || "";
   config.dynamoTableName = process.env.DYNAMODB_TABLE_NAME || "";
-  config.connectManagementApiKey = process.env.CONNECT_MANAGEMENT_API_KEY || "";
   config.connectProviderUrl = process.env.CONNECT_PROVIDER_URL || "";
   config.connectApplicationClientId =
     process.env.CONNECT_APPLICATION_CLIENT_ID || "";
