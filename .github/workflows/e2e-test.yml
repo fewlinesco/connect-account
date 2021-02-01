@@ -90,7 +90,9 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install
 
-      - name: update check run status
-        run: yarn e2e:update-check-run
+      - name: create status check
+        run: yarn e2e:create-status-check
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  
