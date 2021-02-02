@@ -31,9 +31,6 @@ async function createE2eStatusCheck(): Promise<void> {
       check.name === "e2e-tests" && check.conclusion !== "skipped",
   );
 
-  console.log(e2eCheckRun);
-  console.log(e2eCheckRun[0].pull_requests);
-
   const statusCheckBody = {
     context: "e2e tests",
     state: hasDeploymentFailed ? "failure" : e2eCheckRun[0].conclusion,
