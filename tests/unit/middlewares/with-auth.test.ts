@@ -5,7 +5,7 @@ import { IncomingMessage, ServerResponse } from "http";
 import { Socket } from "net";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { Handler } from "@src/@types/core/Handler";
+import { Handler } from "@src/@types/core/handler";
 import * as getAndPutUser from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
 import { withAuth } from "@src/middlewares/with-auth";

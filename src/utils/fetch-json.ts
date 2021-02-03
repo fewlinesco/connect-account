@@ -1,8 +1,8 @@
-import type { Method } from "@src/@types/core/Method";
+import { HttpVerbs } from "@src/@types/core/http-verbs";
 
 export function fetchJson(
   endpoint: string,
-  method: Method,
+  method: Exclude<HttpVerbs, HttpVerbs.GET>,
   body: Record<string, unknown>,
 ): Promise<Response> {
   return fetch(endpoint, {
