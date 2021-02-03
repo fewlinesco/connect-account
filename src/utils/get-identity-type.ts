@@ -1,6 +1,6 @@
 import { IdentityTypes } from "@fewlines/connect-management";
 
-import { UnhandledIdentityType } from "@src/client-errors";
+import { UnhandledIdentityType } from "@src/errors";
 
 export function getIdentityType(type: string): IdentityTypes {
   switch (type.toUpperCase()) {

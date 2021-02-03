@@ -1,8 +1,5 @@
 import { HttpVerbs } from "@src/@types/core/http-verbs";
-import {
-  InvalidValidationCode,
-  TemporaryIdentityExpired,
-} from "@src/client-errors";
+import { InvalidValidationCode, TemporaryIdentityExpired } from "@src/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 
 export async function validateIdentity(

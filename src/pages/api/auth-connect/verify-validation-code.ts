@@ -13,9 +13,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/core/Handler";
 import { UserCookie } from "@src/@types/user-cookie";
-import { NoTemporaryIdentity, NoUserFound } from "@src/client-errors";
 import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
 import { config } from "@src/config";
+import { NoTemporaryIdentity, NoUserFound } from "@src/errors";
 import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";

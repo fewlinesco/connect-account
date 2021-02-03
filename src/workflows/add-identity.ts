@@ -5,7 +5,7 @@ import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import {
   ErrorSendingValidationCode,
   PhoneNumberInputValueShouldBeANumber,
-} from "@src/client-errors";
+} from "@src/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
