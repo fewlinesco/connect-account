@@ -7,7 +7,7 @@ import {
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { Handler } from "@src/@types/core/Handler";
+import { Handler } from "@src/@types/handler";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { oauth2Client } from "@src/config";
 import { logger } from "@src/logger";

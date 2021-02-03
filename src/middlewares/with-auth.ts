@@ -2,7 +2,7 @@ import { JWTPayload } from "@fewlines/connect-client";
 import { HttpStatus } from "@fwl/web";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { Handler } from "@src/@types/core/Handler";
+import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";

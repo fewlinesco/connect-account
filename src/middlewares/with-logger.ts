@@ -1,6 +1,6 @@
 import { createLogger, EncoderTypeEnum } from "@fwl/logging";
 
-import { Handler } from "../@types/core/Handler";
+import { Handler } from "../@types/handler";
 
 const logger = createLogger({
   service: "connect-account",
