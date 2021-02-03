@@ -5,7 +5,7 @@ import {
   NextApiResponse,
 } from "next";
 
-import { Handler } from "@src/@types/core/handler";
+import { Handler } from "@src/@types/handler";
 
 type Middleware = (handler: Handler) => Handler;
 

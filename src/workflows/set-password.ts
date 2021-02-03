@@ -1,6 +1,6 @@
 import { PasswordRules } from "@fewlines/connect-management";
 
-import { HttpVerbs } from "@src/@types/core/http-verbs";
+import { HttpVerbs } from "@src/@types/http-verbs";
 import { ErrorSettingPassword } from "@src/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 

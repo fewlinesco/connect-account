@@ -1,4 +1,4 @@
-import { HttpVerbs } from "@src/@types/core/http-verbs";
+import { HttpVerbs } from "@src/@types/http-verbs";
 
 export function fetchJson(
   endpoint: string,

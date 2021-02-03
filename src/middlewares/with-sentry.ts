@@ -1,4 +1,4 @@
-import { Handler } from "@src/@types/core/handler";
+import { Handler } from "@src/@types/handler";
 import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 export function withSentry(handler: Handler): Handler {

@@ -12,7 +12,7 @@ import {
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { Handler } from "@src/@types/core/handler";
+import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
