@@ -24,8 +24,7 @@
     "e2e:remove-heroku-redirect-uri": "node bin/e2e/remove-heroku-redirect-uri-from-connect.mjs",
     "e2e:create-test-user": "ts-node bin/e2e/create-test-user.ts",
     "e2e:remove-test-user": "ts-node bin/e2e/remove-test-user.ts",
-    "e2e:create-check-run": "ts-node bin/e2e/create-e2e-check-run.ts",
-    "e2e:update-check-run": "ts-node bin/e2e/update-e2e-check-run-status.ts"
+    "e2e:create-status-check": "ts-node bin/e2e/create-e2e-status-check.ts"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.2.0",

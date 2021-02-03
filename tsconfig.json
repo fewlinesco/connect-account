@@ -16,7 +16,6 @@
     "noImplicitReturns": true,
     "baseUrl": ".",
     "paths": {
-      "@lib/*": ["lib/*"],
       "@src/*": ["src/*"]
     },
     "sourceMap": true
@@ -27,7 +26,6 @@
     "compilerOptions": {
       "module": "commonjs",
       "paths": {
-        "@lib/*": ["lib/*"],
         "@src/*": ["src/*"]
       }
     }

@@ -1,9 +1,9 @@
+import { Identity } from "@fewlines/connect-management";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
 import { render, screen, waitFor } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
-import { Identity } from "@lib/@types";
 import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
 
 const userId = "ac3f358d-d2c9-487e-8387-2e6866b853c9";
