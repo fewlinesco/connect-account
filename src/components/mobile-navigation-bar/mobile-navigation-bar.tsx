@@ -12,6 +12,7 @@ import { NavBarCrossIcon } from "../icons/navbar-cross-icon/navbar-cross-icon";
 import { RightChevron } from "../icons/right-chevron/right-chevron";
 import { WhiteSwitchIcon } from "../icons/switch-icon/white-switch-icon/white-switch-icon";
 import { WhiteWorldIcon } from "../icons/world-icon/white-world-icon/white-world-icon";
+import { LogoutAnchor } from "../logout-anchor/logout-anchor";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
@@ -37,7 +38,6 @@ export const MobileNavigationBar: React.FC = () => {
               </ListItemLabel>
               <RightChevron />
             </ListItem>
-
             <ListItem href="/account/logins" onClick={() => setIsOpen(false)}>
               <ListItemLabel>
                 <KeyIcon />
@@ -52,6 +52,7 @@ export const MobileNavigationBar: React.FC = () => {
               </ListItemLabel>
               <RightChevron />
             </ListItem>
+            <LogoutAnchor />
           </MenuList>
         )}
         <Bar>
