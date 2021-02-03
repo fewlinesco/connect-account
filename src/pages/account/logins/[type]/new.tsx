@@ -1,4 +1,11 @@
 import { IdentityTypes } from "@fewlines/connect-management";
+import {
+  loggingMiddleware,
+  tracingMiddleware,
+  errorMiddleware,
+  recoveryMiddleware,
+} from "@fwl/web/dist/middlewares";
+import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { GetServerSideProps } from "next";
 import React from "react";
 
@@ -6,10 +13,9 @@ import { Container } from "@src/components/containers/container";
 import { AddIdentityForm } from "@src/components/forms/add-identity-form";
 import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
-import { withAuth } from "@src/middlewares/with-auth";
-import { withLogger } from "@src/middlewares/with-logger";
+import { logger } from "@src/logger";
 import { withSentry } from "@src/middlewares/with-sentry";
-import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
+import getTracer from "@src/tracer";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
@@ -33,10 +39,18 @@ const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
 
 export default AddIdentityPage;
 
+const tracer = getTracer();
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return wrapMiddlewaresForSSR<{ type: string }>(
+  return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
-    [withLogger, withSentry, withAuth],
+    [
+      tracingMiddleware(tracer),
+      recoveryMiddleware(tracer),
+      errorMiddleware(tracer),
+      loggingMiddleware(tracer, logger),
+      withSentry,
+    ],
     async () => {
       if (!context?.params?.type) {
         context.res.statusCode = 400;

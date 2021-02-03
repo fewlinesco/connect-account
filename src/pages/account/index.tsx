@@ -1,3 +1,10 @@
+import {
+  loggingMiddleware,
+  tracingMiddleware,
+  errorMiddleware,
+  recoveryMiddleware,
+} from "@fwl/web/dist/middlewares";
+import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
 import styled from "styled-components";
@@ -6,10 +13,9 @@ import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { AccountOverview } from "@src/components/pages/account-overview/account-overview";
 import { deviceBreakpoints } from "@src/design-system/theme";
-import { withAuth } from "@src/middlewares/with-auth";
-import { withLogger } from "@src/middlewares/with-logger";
+import { logger } from "@src/logger";
 import { withSentry } from "@src/middlewares/with-sentry";
-import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
+import getTracer from "@src/tracer";
 
 const AccountPage: React.FC = () => {
   return (
@@ -24,8 +30,16 @@ const AccountPage: React.FC = () => {
 
 export default AccountPage;
 
+const tracer = getTracer();
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return wrapMiddlewaresForSSR(context, [withLogger, withSentry, withAuth]);
+  return getServerSidePropsWithMiddlewares(context, [
+    tracingMiddleware(tracer),
+    recoveryMiddleware(tracer),
+    errorMiddleware(tracer),
+    loggingMiddleware(tracer, logger),
+    withSentry,
+  ]);
 };
 
 export const WelcomeMessage = styled.h1`
