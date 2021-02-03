@@ -41,6 +41,7 @@ const Flex = styled.div`
 const DesktopNavigationBarWrapper = styled.div`
   min-width: 24rem;
   width: 30%;
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
 
   @media ${deviceBreakpoints.m} {
     display: none;
