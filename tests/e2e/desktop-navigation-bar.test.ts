@@ -10,7 +10,7 @@ import {
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
 describe("DesktopNavigationBar", () => {
-  jest.setTimeout(60000);
+  jest.setTimeout(120000);
 
   beforeAll(async () => {
     await openBrowser({
