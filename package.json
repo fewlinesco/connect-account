@@ -33,7 +33,7 @@
     "@fewlines/connect-management": "0.2.0",
     "@fwl/logging": "0.1.1",
     "@fwl/tracing": "0.7.0",
-    "@fwl/web": "0.6.2",
+    "@fwl/web": "0.8.0",
     "@hapi/iron": "6.0.0",
     "@sentry/browser": "5.29.2",
     "@sentry/node": "5.29.2",
