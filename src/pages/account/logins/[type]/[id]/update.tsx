@@ -14,11 +14,11 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { UserCookie } from "@src/@types/user-cookie";
-import { NoUserFound } from "@src/client-errors";
 import { Container } from "@src/components/containers/container";
 import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
 import { config } from "@src/config";
+import { NoUserFound } from "@src/errors";
 import { logger } from "@src/logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";

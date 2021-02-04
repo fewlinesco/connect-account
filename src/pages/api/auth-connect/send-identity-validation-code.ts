@@ -14,7 +14,7 @@ import {
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { Handler } from "@src/@types/core/Handler";
+import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
 import { config } from "@src/config";

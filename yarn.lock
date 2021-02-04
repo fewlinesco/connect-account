@@ -1811,13 +1811,14 @@
     "@opentelemetry/plugin-https" "0.14.0"
     "@opentelemetry/tracing" "0.14.0"
 
-"@fwl/web@0.6.2":
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/@fwl/web/-/web-0.6.2.tgz#94b4232df7eae0a83aa478e7930da04791bf8f13"
-  integrity sha512-0yu8/VkB40aaOdBTDTxhp4IOSOEgf7ZvpsKBg5ba/kxGQ5t+4kc1UbKKkfwgnjhIxbeVW94dIOOwkIh2Lc+cRw==
+"@fwl/web@0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@fwl/web/-/web-0.8.0.tgz#c5cc8f253a0a69ce304c79354c27481fcb82204c"
+  integrity sha512-3r5uultfA2mlOmT2zNFiE4EGgEnkW2hG45rxTty5Q6g44DgCOxy+l1nci6pMfTEO5X+XVzy1x0VCAq4iosfZIA==
   dependencies:
     "@fwl/logging" "0.1.1"
     "@fwl/tracing" "0.7.0"
+    "@hapi/iron" "6.0.0"
     on-finished "2.3.0"
     parseurl "1.3.3"
     qs "6.9.6"

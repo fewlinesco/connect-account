@@ -6,11 +6,11 @@ import { v4 as uuidv4 } from "uuid";
 
 import { Form } from "./form";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
-import { PhoneNumberInputValueShouldBeANumber } from "@src/client-errors";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { Input } from "@src/components/input/input";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { PhoneNumberInputValueShouldBeANumber } from "@src/errors";
 import { getIdentityType } from "@src/utils/get-identity-type";
 import { addIdentity } from "@src/workflows/add-identity";
 

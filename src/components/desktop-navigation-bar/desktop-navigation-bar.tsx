@@ -7,12 +7,13 @@ import { KeyIcon } from "../icons/key-icon/key-icon";
 import { LockIcon } from "../icons/lock-icon/lock-icon";
 import { BlackSwitchIcon } from "../icons/switch-icon/black-switch-icon/black-switch-icon";
 import { BlackWorldIcon } from "../icons/world-icon/black-world-icon/black-world-icon";
+import { LogoutAnchor } from "../logout-anchor/logout-anchor";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { Separator } from "../separator/separator";
 
 export const DesktopNavigationBar: React.FC = () => {
   return (
-    <Bar>
+    <>
       <Header />
       <ListItem href="/account">
         <HomeIcon />
@@ -34,13 +35,10 @@ export const DesktopNavigationBar: React.FC = () => {
         </SwitchLanguageLabel>
         <BlackSwitchIcon />
       </SwitchLanguageItem>
-    </Bar>
+      <LogoutAnchor />
+    </>
   );
 };
-
-const Bar = styled.div`
-  width: 100%;
-`;
 
 const ListItem = styled(NeutralLink)`
   display: flex;
