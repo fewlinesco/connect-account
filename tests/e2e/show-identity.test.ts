@@ -12,7 +12,7 @@ import {
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
 describe("Account Web Application show identity", () => {
-  jest.setTimeout(60000);
+  jest.setTimeout(120000);
 
   beforeAll(async () => {
     await openBrowser({
