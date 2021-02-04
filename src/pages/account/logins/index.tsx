@@ -16,6 +16,7 @@ import { Layout } from "@src/components/page-layout";
 import { LoginsOverview } from "@src/components/pages/logins-overview/logins-overview";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
+import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
 import { displayAlertBar } from "@src/utils/display-alert-bar";
@@ -59,6 +60,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       errorMiddleware(tracer),
       loggingMiddleware(tracer, logger),
       withSentry,
+      withAuth,
     ],
     async (request) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {

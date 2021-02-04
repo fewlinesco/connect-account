@@ -14,6 +14,7 @@ import { AddIdentityForm } from "@src/components/forms/add-identity-form";
 import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/logger";
+import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
 import { getIdentityType } from "@src/utils/get-identity-type";
@@ -50,6 +51,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       errorMiddleware(tracer),
       loggingMiddleware(tracer, logger),
       withSentry,
+      withAuth,
     ],
     async () => {
       if (!context?.params?.type) {
