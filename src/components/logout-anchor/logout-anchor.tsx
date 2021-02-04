@@ -7,14 +7,7 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 const LogoutAnchor: React.FC = () => {
   return (
     <LogoutStyle>
-      <NeutralLink
-        href="/"
-        onClick={() => {
-          document.cookie = 'user-cookie=""; Max-Age=0';
-        }}
-      >
-        Logout
-      </NeutralLink>
+      <NeutralLink href="/api/logout">Logout</NeutralLink>
     </LogoutStyle>
   );
 };
