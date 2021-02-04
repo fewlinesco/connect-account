@@ -2,7 +2,7 @@ import { Identity, IdentityTypes } from "@fewlines/connect-management";
 
 import { getIdentityType } from "./get-identity-type";
 import type { SortedIdentities } from "@src/@types/sorted-identities";
-import { UnhandledIdentityType } from "@src/client-errors";
+import { UnhandledIdentityType } from "@src/errors";
 
 function sortPrimaryIdentity(a: Identity, b: Identity): number {
   return a.primary === b.primary ? 0 : a.primary ? -1 : 1;

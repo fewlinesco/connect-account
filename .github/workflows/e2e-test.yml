@@ -58,7 +58,7 @@ jobs:
           CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
         run: yarn e2e:remove-test-user
   
-  e2e-update-github-check: 
+  e2e-create-status-check: 
     if: ${{ contains(github.event.deployment_status.target_url, 'heroku') && always() }}
     needs: e2e-tests
     runs-on: ubuntu-latest
@@ -90,7 +90,7 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install
 
-      - name: update check run status
-        run: yarn e2e:update-check-run
+      - name: create status check
+        run: yarn e2e:create-status-check
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

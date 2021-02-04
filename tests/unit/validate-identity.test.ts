@@ -1,10 +1,7 @@
 import { HttpStatus } from "@fwl/web";
 import fetch, { enableFetchMocks } from "jest-fetch-mock";
 
-import {
-  InvalidValidationCode,
-  TemporaryIdentityExpired,
-} from "@src/client-errors";
+import { InvalidValidationCode, TemporaryIdentityExpired } from "@src/errors";
 import * as fetchJson from "@src/utils/fetch-json";
 import { validateIdentity } from "@src/workflows/validate-identity";
 

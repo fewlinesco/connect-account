@@ -5,15 +5,12 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import { Form } from "./form";
-import {
-  InvalidValidationCode,
-  TemporaryIdentityExpired,
-} from "@src/client-errors";
 import { Box } from "@src/components/box/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { Input } from "@src/components/input/input";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { InvalidValidationCode, TemporaryIdentityExpired } from "@src/errors";
 import { displayAlertBar } from "@src/utils/display-alert-bar";
 import { validateIdentity } from "@src/workflows/validate-identity";
 

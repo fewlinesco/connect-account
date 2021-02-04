@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-async function updateE2eCheckRunStatus(): Promise<void> {
+async function createE2eStatusCheck(): Promise<void> {
   if (process.env.GITHUB_CONTEXT_EVENT === undefined) {
     throw new Error("GITHUB_CONTEXT_EVENT environment variable is undefined");
   }
@@ -26,32 +26,29 @@ async function updateE2eCheckRunStatus(): Promise<void> {
       throw error;
     });
 
-  const e2eCustomCheckRun = checkSuiteList.filter(
-    (check: Record<string, unknown>) => check.name === "e2e-check-run",
-  );
-
   const e2eCheckRun = checkSuiteList.filter(
     (check: Record<string, unknown>) =>
       check.name === "e2e-tests" && check.conclusion !== "skipped",
   );
 
-  const checkRunBody = {
-    status: "completed",
-    conclusion: hasDeploymentFailed ? "failure" : e2eCheckRun[0].conclusion,
+  const statusCheckBody = {
+    context: "e2e tests",
+    state: hasDeploymentFailed ? "failure" : e2eCheckRun[0].conclusion,
+    target_url: `https://github.com/fewlinesco/connect-account/pull/${e2eCheckRun[0].pull_requests[0].number}/checks?check_run_id=${e2eCheckRun[0].id}`,
   };
 
   await fetch(
-    `https://api.github.com/repos/fewlinesco/connect-account/check-runs/${e2eCustomCheckRun[0].id}`,
+    `https://api.github.com/repos/fewlinesco/connect-account/statuses/${githubActionsContext.deployment.sha}`,
     {
-      method: "PATCH",
+      method: "POST",
       headers: {
         Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
       },
-      body: JSON.stringify(checkRunBody),
+      body: JSON.stringify(statusCheckBody),
     },
   ).catch((error) => {
     throw error;
   });
 }
 
-updateE2eCheckRunStatus();
+createE2eStatusCheck();
