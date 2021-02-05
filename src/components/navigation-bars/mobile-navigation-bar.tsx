@@ -5,21 +5,14 @@ import styled from "styled-components";
 import { ClickAwayListener } from "../click-away-listener";
 import { Arrow } from "../icons/arrow/arrow";
 import { BurgerIcon } from "../icons/burger-icon/burger-icon";
-import { HomeIcon } from "../icons/home-icon/home-icon";
-import { KeyIcon } from "../icons/key-icon/key-icon";
-import { LockIcon } from "../icons/lock-icon/lock-icon";
 import { NavBarCrossIcon } from "../icons/navbar-cross-icon/navbar-cross-icon";
 import { RightChevron } from "../icons/right-chevron/right-chevron";
 import { WhiteSwitchIcon } from "../icons/switch-icon/white-switch-icon/white-switch-icon";
 import { WhiteWorldIcon } from "../icons/world-icon/white-world-icon/white-world-icon";
 import { LogoutAnchor } from "../logout-anchor/logout-anchor";
 import { NeutralLink } from "../neutral-link/neutral-link";
+import { NAVIGATION_SECTIONS } from "./navigation-sections";
 import { deviceBreakpoints } from "@src/design-system/theme";
-
-interface MenuItemProps {
-  color?: string;
-  borderLeft?: boolean;
-}
 
 export const MobileNavigationBar: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -27,35 +20,31 @@ export const MobileNavigationBar: React.FC = () => {
 
   return (
     <>
-      {isOpen && <ClickAwayListener onClick={() => setIsOpen(false)} />}
+      {isOpen ? <ClickAwayListener onClick={() => setIsOpen(false)} /> : null}
       <Container>
-        {isOpen && (
+        {isOpen ? (
           <MenuList>
-            <ListItem href="/account" onClick={() => setIsOpen(false)}>
-              <ListItemLabel>
-                <HomeIcon />
-                <Value>Home</Value>
-              </ListItemLabel>
-              <RightChevron />
-            </ListItem>
-            <ListItem href="/account/logins" onClick={() => setIsOpen(false)}>
-              <ListItemLabel>
-                <KeyIcon />
-                <Value>Logins</Value>
-              </ListItemLabel>
-              <RightChevron />
-            </ListItem>
-            <ListItem href="/account/security" onClick={() => setIsOpen(false)}>
-              <ListItemLabel>
-                <LockIcon />
-                <Value>Security</Value>
-              </ListItemLabel>
-              <RightChevron />
-            </ListItem>
+            {Object.entries(NAVIGATION_SECTIONS).map(
+              ([title, { href, icon }]) => {
+                return (
+                  <ListItem
+                    href={href}
+                    onClick={() => setIsOpen(false)}
+                    key={title + href}
+                  >
+                    <ListItemLabel>
+                      {icon}
+                      <p>{title}</p>
+                    </ListItemLabel>
+                    <RightChevron />
+                  </ListItem>
+                );
+              },
+            )}
             <LogoutAnchor />
           </MenuList>
-        )}
-        <Bar>
+        ) : null}
+        <SubSection>
           {isOpen ? (
             <MenuItem color="primary" onClick={() => setIsOpen(false)}>
               <SpecialLink href="/account/locale">
@@ -89,7 +78,7 @@ export const MobileNavigationBar: React.FC = () => {
               </Content>
             )}
           </MenuItem>
-        </Bar>
+        </SubSection>
       </Container>
     </>
   );
@@ -108,13 +97,16 @@ const Container = styled.div`
   }
 `;
 
-const Bar = styled.div`
+const SubSection = styled.div`
   height: 7.2rem;
   display: flex;
   border-top: 0.1rem solid ${({ theme }) => theme.colors.separator};
 `;
 
-const MenuItem = styled.div<MenuItemProps>`
+const MenuItem = styled.div<{
+  color?: string;
+  borderLeft?: boolean;
+}>`
   display: flex;
   align-items: center;
   width: 100%;
@@ -152,7 +144,6 @@ const LanguagesOptions = styled.div`
 `;
 
 const MenuList = styled.div`
-  z-index: 2;
   background-color: ${({ theme }) => theme.colors.background};
   box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
 `;
@@ -164,15 +155,15 @@ const ListItem = styled(NeutralLink)`
   align-items: center;
   justify-content: space-between;
   padding: 0 ${({ theme }) => theme.spaces.xs};
+
+  p {
+    margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
+  }
 `;
 
 const ListItemLabel = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const Value = styled.p`
-  margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
 `;
 
 const SpecialLink = styled(NeutralLink)`
