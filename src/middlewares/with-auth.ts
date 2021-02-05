@@ -7,81 +7,103 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
+import getTracer from "@src/tracer";
 import {
   getServerSideCookies,
   setServerSideCookies,
 } from "@src/utils/server-side-cookies";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
+const tracer = getTracer();
+
 export function withAuth(handler: Handler): Handler {
   return async (
     request: NextApiRequest,
     response: NextApiResponse,
   ): Promise<unknown> => {
-    const userCookie = await getServerSideCookies<UserCookie>(request, {
-      cookieName: "user-cookie",
-      isCookieSealed: true,
-    });
+    return tracer.span("withAuth middleware", async (span) => {
+      const userCookie = await getServerSideCookies<UserCookie>(request, {
+        cookieName: "user-cookie",
+        isCookieSealed: true,
+      });
 
-    if (userCookie) {
-      const { access_token: currentAccessToken, sub } = userCookie;
+      if (userCookie) {
+        span.setDisclosedAttribute("userCookie found", true);
 
-      await decryptVerifyAccessToken(currentAccessToken).catch(
-        async (error) => {
-          if (error.name === "TokenExpiredError") {
-            const user = await getDBUserFromSub(sub);
+        const { access_token: currentAccessToken, sub } = userCookie;
 
-            if (user) {
-              const {
-                refresh_token,
-                access_token,
-              } = await oauth2Client.refreshTokens(user.refresh_token);
+        await decryptVerifyAccessToken(currentAccessToken).catch(
+          async (error) => {
+            if (error.name === "TokenExpiredError") {
+              span.setDisclosedAttribute("is access_token expired", true);
 
-              const { sub } = await oauth2Client.verifyJWT<JWTPayload>(
-                access_token,
-                config.connectJwtAlgorithm,
-              );
+              const user = await getDBUserFromSub(sub);
 
-              await setServerSideCookies(
-                response,
-                "user-cookie",
-                {
+              if (user) {
+                span.setDisclosedAttribute("user found on DB", user);
+
+                const {
+                  refresh_token,
                   access_token,
-                  sub,
-                },
-                {
-                  shouldCookieBeSealed: true,
-                  maxAge: 24 * 60 * 60,
-                  path: "/",
-                  httpOnly: true,
-                  secure: true,
-                },
-              );
+                } = await oauth2Client.refreshTokens(user.refresh_token);
 
-              await getAndPutUser({ sub, refresh_token }, user);
+                span.setDisclosedAttribute("is token refreshed", true);
 
-              response.statusCode = HttpStatus.OK;
-              response.setHeader("location", request.headers.referer || "");
-              response.end();
-              return;
-            } else {
-              response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-              response.setHeader("location", "/");
-              response.end();
-              return;
+                const { sub } = await oauth2Client.verifyJWT<JWTPayload>(
+                  access_token,
+                  config.connectJwtAlgorithm,
+                );
+
+                span.setDisclosedAttribute("is access_token valid", true);
+
+                await setServerSideCookies(
+                  response,
+                  "user-cookie",
+                  {
+                    access_token,
+                    sub,
+                  },
+                  {
+                    shouldCookieBeSealed: true,
+                    maxAge: 24 * 60 * 60,
+                    path: "/",
+                    httpOnly: true,
+                    secure: true,
+                  },
+                );
+
+                span.setDisclosedAttribute("is cookie set", true);
+
+                await getAndPutUser({ sub, refresh_token }, user);
+
+                span.setDisclosedAttribute("user updated on DB", true);
+
+                response.statusCode = HttpStatus.OK;
+                response.setHeader("location", request.headers.referer || "");
+                response.end();
+                return;
+              } else {
+                response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+                response.setHeader("location", "/");
+                response.end();
+                return;
+              }
             }
-          }
+            span.setDisclosedAttribute("decryptVerifyError", error);
+            throw error;
+          },
+        );
 
-          throw error;
-        },
-      );
+        span.setDisclosedAttribute("is access_token valid", true);
 
-      return handler(request, response);
-    } else {
-      response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-      response.setHeader("location", "/");
-      response.end();
-      return;
-    }
+        return handler(request, response);
+      } else {
+        span.setDisclosedAttribute("UserCookie found", false);
+        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+        response.setHeader("location", "/");
+        response.end();
+        return;
+      }
+    });
   };
 }
