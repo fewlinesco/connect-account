@@ -15,13 +15,6 @@
 
 <!--- Use this section if you had issues that led you to some workaround, otherwise the section can be removed -->
 
-## How Has This Been Tested?
-
-<!---
-Please describe the tests that you ran to verify your changes.
-If needed, provide instructions, so we can reproduce (i.e. test configuration).
--->
-
 ## List of added dependencies
 
 <!--- if appropriate, otherwise the section can be removed -->

@@ -2,36 +2,30 @@ import React from "react";
 import styled from "styled-components";
 
 import { Header } from "../header/header";
-import { HomeIcon } from "../icons/home-icon/home-icon";
-import { KeyIcon } from "../icons/key-icon/key-icon";
-import { LockIcon } from "../icons/lock-icon/lock-icon";
 import { BlackSwitchIcon } from "../icons/switch-icon/black-switch-icon/black-switch-icon";
 import { BlackWorldIcon } from "../icons/world-icon/black-world-icon/black-world-icon";
 import { LogoutAnchor } from "../logout-anchor/logout-anchor";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { Separator } from "../separator/separator";
+import { NAVIGATION_SECTIONS } from "./navigation-sections";
 
 export const DesktopNavigationBar: React.FC = () => {
   return (
     <>
       <Header />
-      <ListItem href="/account">
-        <HomeIcon />
-        <ListLabel>Home</ListLabel>
-      </ListItem>
-      <ListItem href="/account/logins">
-        <KeyIcon />
-        <ListLabel>Logins</ListLabel>
-      </ListItem>
-      <ListItem href="/account/security">
-        <LockIcon />
-        <ListLabel>Security</ListLabel>
-      </ListItem>
+      {Object.entries(NAVIGATION_SECTIONS).map(([title, { href, icon }]) => {
+        return (
+          <ListItem href={href} key={title + href}>
+            {icon}
+            <p>{title}</p>
+          </ListItem>
+        );
+      })}
       <Separator />
       <SwitchLanguageItem href="/account/locale">
         <SwitchLanguageLabel>
           <BlackWorldIcon />
-          <ListLabel>English</ListLabel>
+          <p>English</p>
         </SwitchLanguageLabel>
         <BlackSwitchIcon />
       </SwitchLanguageItem>
@@ -47,10 +41,10 @@ const ListItem = styled(NeutralLink)`
   padding-bottom: ${({ theme }) => theme.spaces.xs};
   padding-right: 0;
   padding-left: ${({ theme }) => theme.spaces.xs};
-`;
 
-const ListLabel = styled.p`
-  margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
+  p {
+    margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
+  }
 `;
 
 const SwitchLanguageItem = styled(NeutralLink)`
@@ -62,4 +56,8 @@ const SwitchLanguageItem = styled(NeutralLink)`
 const SwitchLanguageLabel = styled.div`
   display: flex;
   align-items: center;
+
+  p {
+    margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
+  }
 `;
