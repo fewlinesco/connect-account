@@ -47,7 +47,7 @@ const handler: Handler = (request, response): Promise<void> => {
         userId: userCookie.sub,
       })
         .then(async ({ eventId }) => {
-          span.setDisclosedAttribute("Is validation code sent", true);
+          span.setDisclosedAttribute("is validation code sent", true);
 
           const temporaryIdentity = {
             eventId: eventId,

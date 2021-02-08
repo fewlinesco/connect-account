@@ -28,12 +28,12 @@ const handler: Handler = (request, response): Promise<void> => {
       `${request.query.code}`,
     );
 
-    span.setAttribute("`authorization_code`", request.query.code);
+    span.setAttribute("authorization_code", request.query.code);
     span.setDisclosedAttribute("query.error", request.query.error);
 
     const decodedAccessToken = await decryptVerifyAccessToken(access_token);
 
-    span.setDisclosedAttribute("Is `access_token` valid", true);
+    span.setDisclosedAttribute("is access_token valid", true);
 
     const oAuth2UserInfo = {
       sub: decodedAccessToken.sub,
@@ -42,7 +42,7 @@ const handler: Handler = (request, response): Promise<void> => {
 
     await getAndPutUser(oAuth2UserInfo);
 
-    span.setDisclosedAttribute("User updated on DB", true);
+    span.setDisclosedAttribute("user updated on DB", true);
 
     await setServerSideCookies(
       response,
@@ -60,7 +60,7 @@ const handler: Handler = (request, response): Promise<void> => {
       },
     );
 
-    span.setDisclosedAttribute("Is cookie set", true);
+    span.setDisclosedAttribute("is cookie set", true);
 
     response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
       Location: "/account",

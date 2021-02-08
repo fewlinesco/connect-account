@@ -1,6 +1,13 @@
 import { getIdentities } from "@fewlines/connect-management";
 import { getServerSideCookies } from "@fwl/web";
-import type { GetServerSideProps } from "next";
+import {
+  loggingMiddleware,
+  tracingMiddleware,
+  errorMiddleware,
+  recoveryMiddleware,
+} from "@fwl/web/dist/middlewares";
+import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
+import { GetServerSideProps } from "next";
 import React from "react";
 
 import type { SortedIdentities } from "@src/@types/sorted-identities";
@@ -9,10 +16,10 @@ import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { LoginsOverview } from "@src/components/pages/logins-overview/logins-overview";
 import { config } from "@src/config";
+import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
-import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
-import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
+import getTracer from "@src/tracer";
 import { displayAlertBar } from "@src/utils/display-alert-bar";
 import { getFlashMessage } from "@src/utils/get-flash-message";
 import { sortIdentities } from "@src/utils/sort-identities";
@@ -40,10 +47,21 @@ const LoginsOverviewPage: React.FC<LoginsOverviewPageProps> = ({
 
 export default LoginsOverviewPage;
 
+const tracer = getTracer();
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return wrapMiddlewaresForSSR<{ sortedIdentities: SortedIdentities }>(
+  return getServerSidePropsWithMiddlewares<{
+    sortedIdentities: SortedIdentities;
+  }>(
     context,
-    [withLogger, withSentry, withAuth],
+    [
+      tracingMiddleware(tracer),
+      recoveryMiddleware(tracer),
+      errorMiddleware(tracer),
+      loggingMiddleware(tracer, logger),
+      withSentry,
+      withAuth,
+    ],
     async (request) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",

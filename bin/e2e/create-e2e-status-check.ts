@@ -31,10 +31,14 @@ async function createE2eStatusCheck(): Promise<void> {
       check.name === "e2e-tests" && check.conclusion !== "skipped",
   );
 
+  const target_url = hasDeploymentFailed
+    ? githubActionsContext.deployment_status.target_url
+    : `https://github.com/fewlinesco/connect-account/pull/${e2eCheckRun[0].pull_requests[0].number}/checks?check_run_id=${e2eCheckRun[0].id}`;
+
   const statusCheckBody = {
     context: "e2e tests",
     state: hasDeploymentFailed ? "failure" : e2eCheckRun[0].conclusion,
-    target_url: `https://github.com/fewlinesco/connect-account/pull/${e2eCheckRun[0].pull_requests[0].number}/checks?check_run_id=${e2eCheckRun[0].id}`,
+    target_url,
   };
 
   await fetch(

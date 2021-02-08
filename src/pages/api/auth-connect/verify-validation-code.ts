@@ -42,10 +42,10 @@ const handler: Handler = async (request, response) => {
       );
 
       if (temporaryIdentity) {
-        span.setDisclosedAttribute("Is temporary Identity found", true);
+        span.setDisclosedAttribute("is temporary Identity found", true);
 
         if (temporaryIdentity.expiresAt > Date.now()) {
-          span.setDisclosedAttribute("Is temporary Identity expired", false);
+          span.setDisclosedAttribute("is temporary Identity expired", false);
 
           const { status: verificationStatus } = await checkVerificationCode(
             config.managementCredentials,
@@ -58,7 +58,7 @@ const handler: Handler = async (request, response) => {
           const { value, type, primary } = temporaryIdentity;
 
           if (verificationStatus === "VALID") {
-            span.setDisclosedAttribute("Is temporary Identity valid", true);
+            span.setDisclosedAttribute("is temporary Identity valid", true);
 
             const { id: identityId } = await addIdentityToUser(
               config.managementCredentials,
@@ -70,7 +70,7 @@ const handler: Handler = async (request, response) => {
             );
 
             if (primary) {
-              span.setDisclosedAttribute("Is temporary Identity primary", true);
+              span.setDisclosedAttribute("is temporary Identity primary", true);
 
               await markIdentityAsPrimary(
                 config.managementCredentials,
@@ -78,7 +78,7 @@ const handler: Handler = async (request, response) => {
               );
             }
 
-            span.setDisclosedAttribute("Is temporary Identity primary", false);
+            span.setDisclosedAttribute("is temporary Identity primary", false);
 
             await removeTemporaryIdentity(userCookie.sub, temporaryIdentity);
 
@@ -88,7 +88,7 @@ const handler: Handler = async (request, response) => {
 
             return response.end();
           } else if (verificationStatus === "INVALID") {
-            span.setDisclosedAttribute("Is temporary Identity valid", false);
+            span.setDisclosedAttribute("is temporary Identity valid", false);
 
             response.statusCode = HttpStatus.BAD_REQUEST;
             response.json({ error: verificationStatus });
@@ -99,7 +99,7 @@ const handler: Handler = async (request, response) => {
             });
           }
         } else {
-          span.setDisclosedAttribute("Temporary Identity expired", true);
+          span.setDisclosedAttribute("temporary Identity expired", true);
 
           await removeTemporaryIdentity(userCookie.sub, temporaryIdentity);
 
@@ -108,7 +108,7 @@ const handler: Handler = async (request, response) => {
           return;
         }
       } else {
-        span.setDisclosedAttribute("Is temporary Identity found", false);
+        span.setDisclosedAttribute("is temporary Identity found", false);
 
         throw new NoTemporaryIdentity();
       }
