@@ -28,7 +28,7 @@ export function withAuth(handler: Handler): Handler {
       });
 
       if (userCookie) {
-        span.setDisclosedAttribute("userCookie found", true);
+        span.setDisclosedAttribute("user cookie found", true);
 
         const { access_token: currentAccessToken, sub } = userCookie;
 
@@ -40,7 +40,7 @@ export function withAuth(handler: Handler): Handler {
               const user = await getDBUserFromSub(sub);
 
               if (user) {
-                span.setDisclosedAttribute("user found on DB", user);
+                span.setDisclosedAttribute("user found on DB", true);
 
                 const {
                   refresh_token,
@@ -83,6 +83,7 @@ export function withAuth(handler: Handler): Handler {
                 response.end();
                 return;
               } else {
+                span.setDisclosedAttribute("user found on DB", false);
                 response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
                 response.setHeader("location", "/");
                 response.end();
@@ -98,7 +99,7 @@ export function withAuth(handler: Handler): Handler {
 
         return handler(request, response);
       } else {
-        span.setDisclosedAttribute("UserCookie found", false);
+        span.setDisclosedAttribute("user cookie found", false);
         response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
         response.setHeader("location", "/");
         response.end();
