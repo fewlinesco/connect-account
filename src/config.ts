@@ -60,8 +60,6 @@ const config: Config = {
   },
 };
 
-process.exit(1);
-
 function handleEnvVars(): void {
   const appHostname =
     process.env.CONNECT_ACCOUNT_HOSTNAME ||
