@@ -70,5 +70,4 @@ export {
   NoUserFound,
   NoTemporaryIdentity,
   TemporaryIdentityExpired,
-  DeleteUserCookieError,
 };

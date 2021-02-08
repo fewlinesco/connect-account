@@ -15,12 +15,20 @@ import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
-
-const tracer = getTracer();
+import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = (request, response): Promise<void> => {
-  return tracer.span("delete-identity handler", async (span) => {
+  const webErrors = {
+    badRequest: ERRORS_DATA.BAD_REQUEST,
+    unexpectedError: ERRORS_DATA.UNEXPECTED_ERROR,
+  };
+
+  return getTracer().span("delete-identity handler", async (span) => {
     const { userId, type, value } = request.body;
+
+    if ([userId, type, value].includes(undefined)) {
+      throw webErrorFactory(webErrors.badRequest);
+    }
 
     span.setDisclosedAttribute("Identity type", type);
 
@@ -28,29 +36,33 @@ const handler: Handler = (request, response): Promise<void> => {
       userId,
       identityType: type,
       identityValue: value,
-    }).then(() => {
-      span.setDisclosedAttribute("is Identity removed", true);
+    })
+      .then(() => {
+        span.setDisclosedAttribute("is Identity removed", true);
 
-      response.statusCode = HttpStatus.ACCEPTED;
-      response.setHeader("Content-Type", "application/json");
-      response.end();
-      return;
-    });
+        response.statusCode = HttpStatus.ACCEPTED;
+        response.setHeader("Content-Type", "application/json");
+        response.end();
+        return;
+      })
+      .catch(() => {
+        throw webErrorFactory(webErrors.unexpectedError);
+      });
   });
 };
 
-const wrappedHandler = wrapMiddlewares(
-  [
-    tracingMiddleware(tracer),
-    recoveryMiddleware(tracer),
-    errorMiddleware(tracer),
-    loggingMiddleware(tracer, logger),
-    withSentry,
-    withAuth,
-  ],
-  handler,
-);
-
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .delete(wrappedHandler)
+  .delete(
+    wrapMiddlewares(
+      [
+        tracingMiddleware(getTracer()),
+        recoveryMiddleware(getTracer()),
+        errorMiddleware(getTracer()),
+        loggingMiddleware(getTracer(), logger),
+        withSentry,
+        withAuth,
+      ],
+      handler,
+    ),
+  )
   .getHandler();
