@@ -38,7 +38,7 @@ const handler: Handler = async (request, response) => {
         userId: userCookie.sub,
       })
         .then(() => {
-          span.setDisclosedAttribute("Password created or updated", true);
+          span.setDisclosedAttribute("password created or updated", true);
 
           response.setHeader("Content-Type", "application/json");
           response.statusCode = HttpStatus.OK;
@@ -47,7 +47,7 @@ const handler: Handler = async (request, response) => {
         })
         .catch((error) => {
           if (error instanceof InvalidPasswordInputError) {
-            span.setDisclosedAttribute("Invalid password input", true);
+            span.setDisclosedAttribute("invalid password input", true);
 
             response.setHeader("Content-Type", "application/json");
             response.statusCode = HttpStatus.UNPROCESSABLE_ENTITY;
