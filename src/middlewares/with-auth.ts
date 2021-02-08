@@ -1,5 +1,9 @@
 import { JWTPayload } from "@fewlines/connect-client";
-import { HttpStatus } from "@fwl/web";
+import {
+  HttpStatus,
+  getServerSideCookies,
+  setServerSideCookies,
+} from "@fwl/web";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
@@ -7,10 +11,6 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
-import {
-  getServerSideCookies,
-  setServerSideCookies,
-} from "@src/utils/server-side-cookies";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
 export function withAuth(handler: Handler): Handler {

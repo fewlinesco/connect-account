@@ -4,7 +4,7 @@ import {
   IdentityAlreadyUsedError,
 } from "@fewlines/connect-management";
 import { getTracer } from "@fwl/tracing";
-import { Endpoint, HttpStatus } from "@fwl/web";
+import { Endpoint, HttpStatus, getServerSideCookies } from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -22,7 +22,6 @@ import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { getIdentityType } from "@src/utils/get-identity-type";
-import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 const tracer = getTracer();
 

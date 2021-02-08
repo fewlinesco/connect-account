@@ -1,7 +1,7 @@
 import { addIdentityToUser } from "@fewlines/connect-management";
 import { checkVerificationCode } from "@fewlines/connect-management";
 import { markIdentityAsPrimary } from "@fewlines/connect-management";
-import { Endpoint, HttpStatus } from "@fwl/web";
+import { Endpoint, HttpStatus, getServerSideCookies } from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -22,7 +22,6 @@ import { withSentry } from "@src/middlewares/with-sentry";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import getTracer from "@src/tracer";
 import { getIdentityType } from "@src/utils/get-identity-type";
-import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 const tracer = getTracer();
 

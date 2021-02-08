@@ -1,4 +1,5 @@
 import { isUserPasswordSet } from "@fewlines/connect-management";
+import { getServerSideCookies } from "@fwl/web";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
@@ -11,7 +12,6 @@ import { withAuth } from "@src/middlewares/with-auth";
 import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
-import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 type SecurityPageProps = {
   isPasswordSet: boolean;
