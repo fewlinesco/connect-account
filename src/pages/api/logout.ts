@@ -19,14 +19,14 @@ const tracer = getTracer();
 const handler: Handler = (_request, response): Promise<void> => {
   return tracer.span("logout handler", async (span) => {
     await deleteServerSideCookie(response, "user-cookie").catch(() => {
-      span.setDisclosedAttribute("User logged out", false);
+      span.setDisclosedAttribute("user logged out", false);
 
       throw new DeleteUserCookieError(
         "Error deleting UserCookie for login out",
       );
     });
 
-    span.setDisclosedAttribute("User logged out", true);
+    span.setDisclosedAttribute("user logged out", true);
 
     response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
     response.setHeader("location", "/");
