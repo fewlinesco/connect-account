@@ -7,7 +7,7 @@ import {
 
 const ERRORS_DATA = {
   BAD_REQUEST: {
-    code: "unexpected_error",
+    code: "bad_request",
     httpStatus: HttpStatus.BAD_REQUEST,
     message: "Request malformed",
   },
