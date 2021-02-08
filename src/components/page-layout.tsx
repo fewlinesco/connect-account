@@ -1,14 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 
+import AlertBar from "./alert-bar/alert-bar";
 import { Header } from "./header/header";
 import { DesktopNavigationBar } from "./navigation-bars/desktop-navigation-bar";
 import { MobileNavigationBar } from "./navigation-bars/mobile-navigation-bar";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-export const Layout: React.FC = ({ children }) => {
+export const Layout: React.FC<{ alertMessages?: string[] }> = ({
+  children,
+  alertMessages,
+}) => {
   return (
     <Main>
+      {alertMessages
+        ? alertMessages.map((alertMessage) => {
+            return (
+              <AlertBar text={alertMessage} key={"alertBar" + Date.now()} />
+            );
+          })
+        : null}
       <MobileDisplayOnly>
         <Header />
         <MobileNavigationBar />
