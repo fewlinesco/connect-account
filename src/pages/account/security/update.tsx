@@ -1,4 +1,11 @@
 import { isUserPasswordSet } from "@fewlines/connect-management";
+import {
+  loggingMiddleware,
+  tracingMiddleware,
+  errorMiddleware,
+  recoveryMiddleware,
+} from "@fwl/web/dist/middlewares";
+import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
@@ -8,10 +15,10 @@ import { SetPasswordForm } from "@src/components/forms/set-password-form";
 import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
 import { config } from "@src/config";
+import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
-import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
-import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
+import getTracer from "@src/tracer";
 import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 type SecurityPageProps = {
@@ -38,10 +45,19 @@ const SecurityUpdatePage: React.FC<SecurityPageProps> = ({ isPasswordSet }) => {
 
 export default SecurityUpdatePage;
 
+const tracer = getTracer();
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return wrapMiddlewaresForSSR<{ type: string }>(
+  return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
-    [withLogger, withSentry, withAuth],
+    [
+      tracingMiddleware(tracer),
+      recoveryMiddleware(tracer),
+      errorMiddleware(tracer),
+      loggingMiddleware(tracer, logger),
+      withSentry,
+      withAuth,
+    ],
     async (request) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",

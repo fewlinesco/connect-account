@@ -1,4 +1,11 @@
 import { IdentityTypes } from "@fewlines/connect-management";
+import {
+  loggingMiddleware,
+  tracingMiddleware,
+  errorMiddleware,
+  recoveryMiddleware,
+} from "@fwl/web/dist/middlewares";
+import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { ServerResponse } from "http";
 import { GetServerSideProps } from "next";
 import React from "react";
@@ -7,10 +14,10 @@ import { Container } from "@src/components/containers/container";
 import { ValidateIdentityForm } from "@src/components/forms/validate-identity-form";
 import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
+import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
-import { withLogger } from "@src/middlewares/with-logger";
 import { withSentry } from "@src/middlewares/with-sentry";
-import { wrapMiddlewaresForSSR } from "@src/middlewares/wrapper";
+import getTracer from "@src/tracer";
 
 const ValidateIdentityPage: React.FC<{
   type: IdentityTypes;
@@ -36,10 +43,19 @@ const ValidateIdentityPage: React.FC<{
 
 export default ValidateIdentityPage;
 
+const tracer = getTracer();
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return wrapMiddlewaresForSSR<{ type: string }>(
+  return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
-    [withLogger, withSentry, withAuth],
+    [
+      tracingMiddleware(tracer),
+      recoveryMiddleware(tracer),
+      errorMiddleware(tracer),
+      loggingMiddleware(tracer, logger),
+      withSentry,
+      withAuth,
+    ],
     async (_request, response: ServerResponse) => {
       if (!context?.params?.type) {
         response.statusCode = 400;
