@@ -25,6 +25,7 @@ export function withAuth(handler: Handler): Handler {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
         isCookieSealed: true,
+        cookieSalt: config.cookieSalt,
       });
 
       if (userCookie) {
@@ -65,6 +66,7 @@ export function withAuth(handler: Handler): Handler {
                   },
                   {
                     shouldCookieBeSealed: true,
+                    cookieSalt: config.cookieSalt,
                     maxAge: 24 * 60 * 60,
                     path: "/",
                     httpOnly: true,

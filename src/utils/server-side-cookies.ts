@@ -15,7 +15,7 @@ export async function setServerSideCookies(
   if (shouldCookieBeSealed) {
     const sealedCookieValue = await seal(
       JSON.stringify(cookieValue),
-      config.connectAccountSessionSalt,
+      config.cookieSalt,
       defaults,
     );
 
@@ -53,7 +53,7 @@ export async function getServerSideCookies<T = unknown>(
   if (isCookieSealed) {
     const unsealedCookie = await unseal(
       targetedCookie,
-      config.connectAccountSessionSalt,
+      config.cookieSalt,
       defaults,
     );
 

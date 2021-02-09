@@ -32,6 +32,7 @@ const handler: Handler = (request, response): Promise<void> => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
+      cookieSalt: config.cookieSalt,
     });
 
     if (userCookie) {

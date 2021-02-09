@@ -32,6 +32,7 @@ const handler: Handler = async (request, response) => {
     const userCookie = (await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
+      cookieSalt: config.cookieSalt,
     })) as UserCookie;
 
     const user = await getDBUserFromSub(userCookie.sub);
