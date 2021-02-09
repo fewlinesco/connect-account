@@ -6,6 +6,7 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 
 export const AlertBar: React.FC<{ text: string }> = ({ text }) => {
   const [showAlertBar, setShowAlertBar] = React.useState<boolean>(true);
+
   return (
     <Wrapper>
       {showAlertBar && (
@@ -74,7 +75,7 @@ const Alert = styled.div`
   color: ${({ theme }) => theme.colors.background};
   border-radius: ${({ theme }) => theme.radii[0]};
   padding: 1.6rem;
-  z-index: 1;
+  z-index: 10;
   visibility: hidden;
   opacity: 0;
   animation: fadeinout 3s;

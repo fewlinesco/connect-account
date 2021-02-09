@@ -11,8 +11,14 @@ export const Layout: React.FC<{ alertMessages?: string[] }> = ({
   children,
   alertMessages,
 }) => {
+  React.useEffect(() => {
+    if (alertMessages) {
+      document.cookie = "alert-messages=; max-age=0; path=/;";
+    }
+  }, []);
+
   return (
-    <Main>
+    <>
       {alertMessages
         ? alertMessages.map((alertMessage) => {
             return (
@@ -20,17 +26,19 @@ export const Layout: React.FC<{ alertMessages?: string[] }> = ({
             );
           })
         : null}
-      <MobileDisplayOnly>
-        <Header />
-        <MobileNavigationBar />
-      </MobileDisplayOnly>
-      <Flex>
-        <DesktopNavigationBarWrapper>
-          <DesktopNavigationBar />
-        </DesktopNavigationBarWrapper>
-        <ChildrenContainer>{children}</ChildrenContainer>
-      </Flex>
-    </Main>
+      <Main>
+        <MobileDisplayOnly>
+          <Header />
+          <MobileNavigationBar />
+        </MobileDisplayOnly>
+        <Flex>
+          <DesktopNavigationBarWrapper>
+            <DesktopNavigationBar />
+          </DesktopNavigationBarWrapper>
+          <ChildrenContainer>{children}</ChildrenContainer>
+        </Flex>
+      </Main>
+    </>
   );
 };
 

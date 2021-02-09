@@ -24,7 +24,7 @@ import { sortIdentities } from "@src/utils/sort-identities";
 
 const LoginsOverviewPage: React.FC<{
   sortedIdentities: SortedIdentities;
-  alertMessages: string[];
+  alertMessages?: string[];
 }> = ({ sortedIdentities, alertMessages }) => {
   return (
     <Layout alertMessages={alertMessages}>
@@ -69,15 +69,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           return sortIdentities(identities);
         });
 
-        const alertMessages = getServerSideCookies(request, {
+        const alertMessages = await getServerSideCookies(request, {
           cookieName: "alert-messages",
           isCookieSealed: false,
         });
 
+        console.log(alertMessages);
+
         return {
           props: {
             sortedIdentities,
-            alertMessages,
+            alertMessages: alertMessages ? alertMessages : null,
           },
         };
       }
