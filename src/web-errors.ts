@@ -16,6 +16,16 @@ const ERRORS_DATA = {
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
     message: "An unexpected error occurred",
   },
+  CONNECT_UNREACHABLE: {
+    code: "connect_unreachable",
+    httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
+    message: "Unable to reach Connect",
+  },
+  IDENTITY_NOT_FOUND: {
+    code: "identity_not_found",
+    httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
+    message: "An unexpected error occurred",
+  },
 };
 
 const webErrorFactory = ({

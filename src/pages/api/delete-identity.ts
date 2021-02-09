@@ -1,4 +1,7 @@
-import { removeIdentityFromUser } from "@fewlines/connect-management";
+import {
+  GraphqlErrors,
+  removeIdentityFromUser,
+} from "@fewlines/connect-management";
 import { Endpoint, HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
@@ -20,7 +23,8 @@ import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 const handler: Handler = (request, response): Promise<void> => {
   const webErrors = {
     badRequest: ERRORS_DATA.BAD_REQUEST,
-    unexpectedError: ERRORS_DATA.UNEXPECTED_ERROR,
+    identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
+    connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
   };
 
   return getTracer().span("delete-identity handler", async (span) => {
@@ -45,8 +49,16 @@ const handler: Handler = (request, response): Promise<void> => {
         response.end();
         return;
       })
-      .catch(() => {
-        throw webErrorFactory(webErrors.unexpectedError);
+      .catch((error) => {
+        if (error instanceof GraphqlErrors) {
+          throw webErrorFactory(webErrors.identityNotFound);
+        }
+
+        // if (error instanceof FetchError) {
+        //   throw webErrorFactory(webErrors.connectUnreachable);
+        // }
+
+        throw error;
       });
   });
 };
