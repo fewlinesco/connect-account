@@ -16,14 +16,6 @@ jest.mock("@src/db-client", () => {
   };
 });
 
-jest.mock("@src/utils/get-flash-message", () => {
-  return {
-    getFlashMessage: jest.fn().mockImplementation(() => {
-      return "Email address has been deleted";
-    }),
-  };
-});
-
 describe("LoginsOverviewPage", () => {
   describe("Identity type: EMAIL", () => {
     it("should display primary email identity first and all of them when clicking on the show more button", () => {
@@ -310,9 +302,16 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
+      const alertMessages = ["Email address has been deleted"];
+
       expect.assertions(3);
 
-      render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
+      render(
+        <LoginsOverviewPage
+          sortedIdentities={sortedIdentities}
+          alertMessages={alertMessages}
+        />,
+      );
 
       expect(
         await screen.findByText("Email address has been deleted"),
