@@ -18,21 +18,19 @@ export const Layout: React.FC<{ alertMessages?: string[] }> = ({
   }, []);
 
   return (
-    <>
-      <Main>
-        <AlertMessages alertMessages={alertMessages} />
-        <MobileDisplayOnly>
-          <Header />
-          <MobileNavigationBar />
-        </MobileDisplayOnly>
-        <Flex>
-          <DesktopNavigationBarWrapper>
-            <DesktopNavigationBar />
-          </DesktopNavigationBarWrapper>
-          <ChildrenContainer>{children}</ChildrenContainer>
-        </Flex>
-      </Main>
-    </>
+    <Main>
+      <AlertMessages alertMessages={alertMessages} />
+      <MobileDisplayOnly>
+        <Header />
+        <MobileNavigationBar />
+      </MobileDisplayOnly>
+      <Flex>
+        <DesktopNavigationBarWrapper>
+          <DesktopNavigationBar />
+        </DesktopNavigationBarWrapper>
+        <ChildrenContainer>{children}</ChildrenContainer>
+      </Flex>
+    </Main>
   );
 };
 

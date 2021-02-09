@@ -74,8 +74,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           isCookieSealed: false,
         });
 
-        console.log(alertMessages);
-
         return {
           props: {
             sortedIdentities,
