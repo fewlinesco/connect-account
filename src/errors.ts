@@ -58,6 +58,15 @@ class TemporaryIdentityExpired extends Error {
   readonly message = "Temporary Identity Expired";
 }
 
+class DeleteUserCookieError extends Error {
+  readonly message: string;
+
+  constructor(message: string) {
+    super();
+    this.message = message;
+  }
+}
+
 export {
   UnhandledTokenType,
   EnvVar_IsJweSigned_MustBeABoolean,
@@ -70,4 +79,5 @@ export {
   NoUserFound,
   NoTemporaryIdentity,
   TemporaryIdentityExpired,
+  DeleteUserCookieError,
 };

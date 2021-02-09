@@ -1796,11 +1796,12 @@
   dependencies:
     logfmt "1.3.2"
 
-"@fwl/tracing@0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@fwl/tracing/-/tracing-0.7.0.tgz#eb3896cafad163a125eadd44d01c0f4e82035b08"
-  integrity sha512-cJU4zigJMvBU6g7fEdXA1CQZXwSscXvlpQG7f9fX91queo0rfmwzG/XSRPD6u3Y/+n9JJwpoo0YCAl69PSs3fQ==
+"@fwl/tracing@0.8.1":
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/@fwl/tracing/-/tracing-0.8.1.tgz#cf617b9834eac54f30502e10f7d5319f76b0a3fc"
+  integrity sha512-DYwDD0fXfv6HhDiW1R0zZku5gqf9BUGx/lDRB+Q/N/dpUBOteemMn9Ji6s3Y0Gn3qXykduxQTT1dV07sZVkcag==
   dependencies:
+    "@fwl/logging" "0.1.1"
     "@opentelemetry/api" "0.14.0"
     "@opentelemetry/context-async-hooks" "0.14.0"
     "@opentelemetry/core" "0.14.0"
@@ -1811,13 +1812,13 @@
     "@opentelemetry/plugin-https" "0.14.0"
     "@opentelemetry/tracing" "0.14.0"
 
-"@fwl/web@0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@fwl/web/-/web-0.8.0.tgz#c5cc8f253a0a69ce304c79354c27481fcb82204c"
-  integrity sha512-3r5uultfA2mlOmT2zNFiE4EGgEnkW2hG45rxTty5Q6g44DgCOxy+l1nci6pMfTEO5X+XVzy1x0VCAq4iosfZIA==
+"@fwl/web@0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@fwl/web/-/web-0.9.0.tgz#57e5d8e84c351ba8bb5fe1e75bb73ae1d8bac088"
+  integrity sha512-YygaQyrbSzXtpsCcPtJF005jhbps2Wb808ziGq2KVQ9BPKryYoXmGVneLsfYjyrl+BSPgFhu94qYVb1kzU3p+w==
   dependencies:
     "@fwl/logging" "0.1.1"
-    "@fwl/tracing" "0.7.0"
+    "@fwl/tracing" "0.8.1"
     "@hapi/iron" "6.0.0"
     on-finished "2.3.0"
     parseurl "1.3.3"

@@ -51,18 +51,18 @@ const handler: Handler = (request, response): Promise<void> => {
   });
 };
 
+const wrappedHandler = wrapMiddlewares(
+  [
+    tracingMiddleware(getTracer()),
+    recoveryMiddleware(getTracer()),
+    errorMiddleware(getTracer()),
+    loggingMiddleware(getTracer(), logger),
+    withSentry,
+    withAuth,
+  ],
+  handler,
+);
+
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .delete(
-    wrapMiddlewares(
-      [
-        tracingMiddleware(getTracer()),
-        recoveryMiddleware(getTracer()),
-        errorMiddleware(getTracer()),
-        loggingMiddleware(getTracer(), logger),
-        withSentry,
-        withAuth,
-      ],
-      handler,
-    ),
-  )
+  .delete(wrappedHandler)
   .getHandler();

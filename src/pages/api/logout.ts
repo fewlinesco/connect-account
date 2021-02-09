@@ -9,21 +9,19 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
+import { DeleteUserCookieError } from "@src/errors";
 import { logger } from "@src/logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = (_request, response): Promise<void> => {
-  const webErrors = {
-    unexpectedError: ERRORS_DATA.UNEXPECTED_ERROR,
-  };
-
   return getTracer().span("logout handler", async (span) => {
     await deleteServerSideCookie(response, "user-cookie").catch(() => {
       span.setDisclosedAttribute("user logged out", false);
 
-      throw webErrorFactory(webErrors.unexpectedError);
+      throw new DeleteUserCookieError(
+        "Error deleting UserCookie for login out",
+      );
     });
 
     span.setDisclosedAttribute("user logged out", true);
@@ -35,17 +33,17 @@ const handler: Handler = (_request, response): Promise<void> => {
   });
 };
 
+const wrappedHandler = wrapMiddlewares(
+  [
+    tracingMiddleware(getTracer()),
+    recoveryMiddleware(getTracer()),
+    errorMiddleware(getTracer()),
+    loggingMiddleware(getTracer(), logger),
+    withSentry,
+  ],
+  handler,
+);
+
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .get(
-    wrapMiddlewares(
-      [
-        tracingMiddleware(getTracer()),
-        recoveryMiddleware(getTracer()),
-        errorMiddleware(getTracer()),
-        loggingMiddleware(getTracer(), logger),
-        withSentry,
-      ],
-      handler,
-    ),
-  )
+  .get(wrappedHandler)
   .getHandler();
