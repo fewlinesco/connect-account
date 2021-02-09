@@ -28,12 +28,16 @@ export default LocalePage;
 const tracer = getTracer();
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return getServerSidePropsWithMiddlewares(context, [
-    tracingMiddleware(tracer),
-    recoveryMiddleware(tracer),
-    errorMiddleware(tracer),
-    loggingMiddleware(tracer, logger),
-    withSentry,
-    withAuth,
-  ]);
+  return getServerSidePropsWithMiddlewares(
+    context,
+    [
+      tracingMiddleware(tracer),
+      recoveryMiddleware(tracer),
+      errorMiddleware(tracer),
+      loggingMiddleware(tracer, logger),
+      withSentry,
+      withAuth,
+    ],
+    "/account/locale",
+  );
 };

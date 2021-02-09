@@ -44,6 +44,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       loggingMiddleware(tracer, logger),
       withSentry,
     ],
+    "/",
     async () => {
       const authorizeURL = await oauth2Client.getAuthorizationURL();
 
