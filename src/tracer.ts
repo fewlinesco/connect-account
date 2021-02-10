@@ -12,7 +12,7 @@ const options = config.lightstepAccessToken
   : {
       simpleCollector: {
         serviceName: config.serviceName,
-        url: "http://localhost:9411/api/v2/spans",
+        url: "http://localhost:55681/v1/traces",
       },
     };
 

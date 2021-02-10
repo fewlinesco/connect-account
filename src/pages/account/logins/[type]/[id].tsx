@@ -63,6 +63,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       withSentry,
       withAuth,
     ],
+    "/account/logins/[type]/[id]",
     async (request, response) => {
       if (!context?.params?.id) {
         response.statusCode = 400;
