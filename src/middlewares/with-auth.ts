@@ -1,5 +1,9 @@
 import { JWTPayload } from "@fewlines/connect-client";
-import { HttpStatus } from "@fwl/web";
+import {
+  HttpStatus,
+  getServerSideCookies,
+  setServerSideCookies,
+} from "@fwl/web";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
@@ -8,10 +12,6 @@ import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import getTracer from "@src/tracer";
-import {
-  getServerSideCookies,
-  setServerSideCookies,
-} from "@src/utils/server-side-cookies";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
 const tracer = getTracer();
@@ -25,6 +25,7 @@ export function withAuth(handler: Handler): Handler {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
         isCookieSealed: true,
+        cookieSalt: config.cookieSalt,
       });
 
       if (userCookie) {
@@ -65,6 +66,7 @@ export function withAuth(handler: Handler): Handler {
                   },
                   {
                     shouldCookieBeSealed: true,
+                    cookieSalt: config.cookieSalt,
                     maxAge: 24 * 60 * 60,
                     path: "/",
                     httpOnly: true,

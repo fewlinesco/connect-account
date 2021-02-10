@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { CrossIcon } from "./edit-icon";
+import { CrossIcon } from "./cross-icon";
 
 export default {
   title: "icons/Cross Icon",

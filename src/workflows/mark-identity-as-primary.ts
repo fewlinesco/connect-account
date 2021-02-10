@@ -14,7 +14,5 @@ export async function markIdentityAsPrimaryCall(
     "/api/auth-connect/mark-identity-as-primary",
     HttpVerbs.POST,
     body,
-  ).catch((error) => {
-    throw error;
-  });
+  );
 }

@@ -3,6 +3,7 @@ import {
   Identity,
   IdentityTypes,
 } from "@fewlines/connect-management";
+import { getServerSideCookies } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -23,7 +24,6 @@ import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
-import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 const IdentityOverviewPage: React.FC<{
   identity: Identity;
@@ -74,6 +74,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
         isCookieSealed: true,
+        cookieSalt: config.cookieSalt,
       });
 
       if (userCookie) {

@@ -11,7 +11,6 @@ import { FakeButton } from "@src/components/buttons/fake-button";
 import { Input } from "@src/components/input/input";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { InvalidValidationCode, TemporaryIdentityExpired } from "@src/errors";
-import { displayAlertBar } from "@src/utils/display-alert-bar";
 import { validateIdentity } from "@src/workflows/validate-identity";
 
 export const ValidateIdentityForm: React.FC<{
@@ -45,12 +44,6 @@ export const ValidateIdentityForm: React.FC<{
             });
         }}
       >
-        {displayAlertBar(
-          type.toUpperCase() === IdentityTypes.EMAIL
-            ? "Confirmation email has been sent"
-            : "Confirmation SMS has been sent",
-        )}
-
         <Box>
           <Value>Enter the validation code below</Value>
         </Box>

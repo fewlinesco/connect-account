@@ -1,5 +1,8 @@
-import { removeIdentityFromUser } from "@fewlines/connect-management";
-import { Endpoint, HttpStatus } from "@fwl/web";
+import {
+  IdentityTypes,
+  removeIdentityFromUser,
+} from "@fewlines/connect-management";
+import { Endpoint, HttpStatus, setAlertMessagesCookie } from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -15,6 +18,7 @@ import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
+import { getIdentityType } from "@src/utils/get-identity-type";
 
 const tracer = getTracer();
 
@@ -30,6 +34,14 @@ const handler: Handler = (request, response): Promise<void> => {
       identityValue: value,
     }).then(() => {
       span.setDisclosedAttribute("is Identity removed", true);
+
+      const deleteMessage = `${
+        getIdentityType(type) === IdentityTypes.EMAIL
+          ? "Email address"
+          : "Phone number"
+      } has been deleted`;
+
+      setAlertMessagesCookie(response, deleteMessage);
 
       response.statusCode = HttpStatus.ACCEPTED;
       response.setHeader("Content-Type", "application/json");

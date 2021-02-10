@@ -1,5 +1,5 @@
 import { markIdentityAsPrimary } from "@fewlines/connect-management";
-import { Endpoint, HttpStatus } from "@fwl/web";
+import { getServerSideCookies, Endpoint, HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -17,7 +17,6 @@ import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
 import { isMarkingIdentityAsPrimaryAuthorized } from "@src/utils/is-marking-identity-as-primary-authorized";
-import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 const tracer = getTracer();
 
@@ -28,6 +27,7 @@ const handler: Handler = async (request, response) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
+      cookieSalt: config.cookieSalt,
     });
 
     if (userCookie) {
