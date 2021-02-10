@@ -15,9 +15,5 @@ export const deleteIdentity = async (
     value,
   };
 
-  return fetchJson("/api/delete-identity", HttpVerbs.DELETE, requestData).catch(
-    (error) => {
-      throw error;
-    },
-  );
+  return fetchJson("/api/delete-identity", HttpVerbs.DELETE, requestData);
 };
