@@ -86,4 +86,9 @@ const Alert = styled.div`
     margin: 0 0 0 ${({ theme }) => theme.spaces.xxs};
     cursor: pointer;
   }
+
+  @media ${deviceBreakpoints.m} {
+    width: 90%;
+    margin: 0 auto;
+  }
 `;
