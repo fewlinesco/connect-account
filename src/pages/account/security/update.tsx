@@ -58,6 +58,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       withSentry,
       withAuth,
     ],
+    "/account/security/update",
     async (request) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
