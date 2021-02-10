@@ -19,11 +19,11 @@ interface ButtonProps {
 }
 
 const DivButton = styled(Button)<ButtonProps>`
-  ${(props) =>
+  /* ${(props) =>
     props.variant === ButtonVariant.PRIMARY &&
     `
       margin: 0;
-    `};
+    `}; */
 
   display: flex;
   justify-content: center;
