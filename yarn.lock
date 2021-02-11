@@ -1833,10 +1833,10 @@
     graphql "15.4.0"
     graphql-tag "2.11.0"
 
-"@fewlines/eslint-config@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@fewlines/eslint-config/-/eslint-config-3.0.0.tgz#2d8c2be46b8bfec8222942b8ccc999d6d6d714f3"
-  integrity sha512-5J9UukKUA4phA1zAgZJIcVLv8Ps5kpNGAD3jtPqe/Ee2HhLN6AZTlThmgUIqIvm/0ZpDI7d/mrBPNcnt0nOuYA==
+"@fewlines/eslint-config@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@fewlines/eslint-config/-/eslint-config-3.1.0.tgz#8945bb48c16b43862374489fa502b1401de1ca5b"
+  integrity sha512-F6FFVA0UqjQ8lcDiu2VooKwNGXrk1UQLfM0U+xEQYbacWUelE6bXDrHI1FwRXn993fW36kXH2U0BW3lFhalvzw==
 
 "@fwl/logging@0.1.1":
   version "0.1.1"
