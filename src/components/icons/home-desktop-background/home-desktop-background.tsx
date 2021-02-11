@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-export const HomeDesktopBackground: React.FC = () => {
+const HomeDesktopBackground: React.FC = () => {
   return (
     <Wrapper>
       <svg
@@ -225,3 +225,5 @@ const Wrapper = styled.div`
     display: none;
   }
 `;
+
+export { HomeDesktopBackground };

@@ -7,7 +7,7 @@ import { DesktopNavigationBar } from "./navigation-bars/desktop-navigation-bar";
 import { MobileNavigationBar } from "./navigation-bars/mobile-navigation-bar";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-export const Layout: React.FC<{ alertMessages?: string[] }> = ({
+const Layout: React.FC<{ alertMessages?: string[] }> = ({
   children,
   alertMessages,
 }) => {
@@ -34,7 +34,7 @@ export const Layout: React.FC<{ alertMessages?: string[] }> = ({
   );
 };
 
-export const Main = styled.main`
+const Main = styled.main`
   width: 100%;
   height: 100vh;
   max-width: 88rem;
@@ -75,3 +75,5 @@ const MobileDisplayOnly = styled.div`
     display: block;
   }
 `;
+
+export { Layout, Main };

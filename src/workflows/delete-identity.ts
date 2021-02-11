@@ -4,7 +4,7 @@ import { HttpVerbs } from "@src/@types/http-verbs";
 import { fetchJson } from "@src/utils/fetch-json";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
-export const deleteIdentity = async (
+const deleteIdentity = async (
   userId: string,
   type: IdentityTypes,
   value: string,
@@ -17,3 +17,5 @@ export const deleteIdentity = async (
 
   return fetchJson("/api/delete-identity", HttpVerbs.DELETE, requestData);
 };
+
+export { deleteIdentity };

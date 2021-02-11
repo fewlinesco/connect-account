@@ -3,7 +3,7 @@ import { GetItemCommand, GetItemCommandOutput } from "@aws-sdk/client-dynamodb";
 import { dynamoDbClient } from "../db-client";
 import { config } from "@src/config";
 
-export async function getUser(sub: string): Promise<GetItemCommandOutput> {
+async function getUser(sub: string): Promise<GetItemCommandOutput> {
   const getItem = {
     TableName: config.dynamoTableName,
     Key: {
@@ -13,3 +13,5 @@ export async function getUser(sub: string): Promise<GetItemCommandOutput> {
 
   return dynamoDbClient.send(new GetItemCommand(getItem));
 }
+
+export { getUser };

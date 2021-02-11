@@ -3,12 +3,7 @@ import styled from "styled-components";
 
 import { RightChevron } from "./right-chevron";
 
-export default {
-  title: "icons/Right Chevron",
-  component: RightChevron,
-};
-
-export const StandardRightChevron = (): JSX.Element => {
+const StandardRightChevron = (): JSX.Element => {
   return (
     <Container>
       <RightChevron />
@@ -20,3 +15,9 @@ const Container = styled.div`
   width: 90%;
   margin: 0 auto;
 `;
+
+export { StandardRightChevron };
+export default {
+  title: "icons/Right Chevron",
+  component: RightChevron,
+};

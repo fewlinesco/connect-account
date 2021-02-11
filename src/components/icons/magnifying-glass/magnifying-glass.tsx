@@ -1,6 +1,6 @@
 import React from "react";
 
-export const MagnifyingGlass: React.FC = () => {
+const MagnifyingGlass: React.FC = () => {
   return (
     <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
       <title>Magnifying glass</title>
@@ -11,3 +11,5 @@ export const MagnifyingGlass: React.FC = () => {
     </svg>
   );
 };
+
+export { MagnifyingGlass };

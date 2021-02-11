@@ -7,7 +7,7 @@ import { SecurityIcon } from "@src/components/icons/security-icon/security-icon"
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SectionBox } from "@src/components/shadow-box/section-box";
 
-export const SECTION_LIST_CONTENT = {
+const SECTION_LIST_CONTENT = {
   LOGINS: {
     text:
       "Manage your logins options, including emails, phone numbers and social logins",
@@ -20,7 +20,7 @@ export const SECTION_LIST_CONTENT = {
   },
 };
 
-export const AccountOverview: React.FC = () => {
+const AccountOverview: React.FC = () => {
   return (
     <>
       {Object.entries(SECTION_LIST_CONTENT).map(
@@ -50,12 +50,14 @@ const SectionLink = styled(NeutralLink)`
   padding: ${({ theme }) => theme.spaces.xs};
 `;
 
-export const TextBox = styled.div`
+const TextBox = styled.div`
   max-width: 50%;
   font-size: ${({ theme }) => theme.fontSizes.xs};
   line-height: ${({ theme }) => theme.lineHeights.title};
 `;
 
-export const SectionName = styled.p`
+const SectionName = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.s};
 `;
+
+export { SECTION_LIST_CONTENT, AccountOverview };

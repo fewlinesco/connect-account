@@ -7,7 +7,7 @@ type FormProps = {
   children: React.ReactNode | React.ReactNode[];
 };
 
-export const Form: React.FC<FormProps> = ({ formID, onSubmit, children }) => {
+const Form: React.FC<FormProps> = ({ formID, onSubmit, children }) => {
   const [isNotSubmitted, setIsNotSubmitted] = React.useState(true);
 
   React.useEffect(() => {
@@ -32,7 +32,9 @@ export const Form: React.FC<FormProps> = ({ formID, onSubmit, children }) => {
   );
 };
 
-export const StyledForm = styled.form`
+const StyledForm = styled.form`
   display: column;
   align-items: center;
 `;
+
+export { Form, StyledForm };

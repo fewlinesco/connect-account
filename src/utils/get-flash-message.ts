@@ -1,6 +1,6 @@
 import Cookie from "js-cookie";
 
-export function getFlashMessage(): string | void {
+function getFlashMessage(): string | void {
   const flashMessage = Cookie.get("flashMessage");
 
   if (flashMessage) {
@@ -8,3 +8,5 @@ export function getFlashMessage(): string | void {
     return flashMessage;
   }
 }
+
+export { getFlashMessage };

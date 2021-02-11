@@ -3,11 +3,6 @@ import React from "react";
 import { StoriesContainer } from "../containers/stories-container";
 import { PasswordRulesErrorList } from "./password-rules-error-list";
 
-export default {
-  title: "components/PasswordRulesErrorList",
-  component: PasswordRulesErrorList,
-};
-
 const singularRules = {
   min_digits: {
     error: true,
@@ -38,7 +33,7 @@ const pluralRules = {
   },
 };
 
-export const PasswordRulesErrorListSingular = (): JSX.Element => {
+const PasswordRulesErrorListSingular = (): JSX.Element => {
   return (
     <StoriesContainer>
       <PasswordRulesErrorList rules={singularRules} />
@@ -46,10 +41,16 @@ export const PasswordRulesErrorListSingular = (): JSX.Element => {
   );
 };
 
-export const PasswordRulesErrorListPlural = (): JSX.Element => {
+const PasswordRulesErrorListPlural = (): JSX.Element => {
   return (
     <StoriesContainer>
       <PasswordRulesErrorList rules={pluralRules} />
     </StoriesContainer>
   );
+};
+
+export { PasswordRulesErrorListSingular, PasswordRulesErrorListPlural };
+export default {
+  title: "components/PasswordRulesErrorList",
+  component: PasswordRulesErrorList,
 };

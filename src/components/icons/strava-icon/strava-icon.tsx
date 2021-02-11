@@ -1,6 +1,6 @@
 import React from "react";
 
-export const StravaIcon: React.FC = () => {
+const StravaIcon: React.FC = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,3 +19,5 @@ export const StravaIcon: React.FC = () => {
     </svg>
   );
 };
+
+export { StravaIcon };

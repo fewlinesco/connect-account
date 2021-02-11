@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { Triangle } from "../icons/triangle/triangle";
 
-export enum ButtonVariant {
+enum ButtonVariant {
   PRIMARY = "PRIMARY",
   SECONDARY = "SECONDARY",
   DANGER = "DANGER",
@@ -14,7 +14,7 @@ interface ButtonProps {
   variant?: ButtonVariant;
 }
 
-export const Button = styled.button<ButtonProps>`
+const Button = styled.button<ButtonProps>`
   height: 4rem;
   border-radius: ${({ theme }) => theme.radii[0]};
   font-size: ${({ theme }) => theme.fontSizes.s};
@@ -69,7 +69,7 @@ export const Button = styled.button<ButtonProps>`
     `};
 `;
 
-export const ShowMoreButton: React.FC<{
+const ShowMoreButton: React.FC<{
   hide: boolean;
   quantity: number;
   setHideSecondary: (value: boolean) => void;
@@ -97,3 +97,5 @@ const ShowMoreButtonStyle = styled.div`
   margin-bottom: 2rem;
   cursor: pointer;
 `;
+
+export { Button, ButtonVariant, ShowMoreButton };

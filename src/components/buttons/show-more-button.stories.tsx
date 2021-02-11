@@ -2,12 +2,7 @@ import React from "react";
 
 import { ShowMoreButton } from "./buttons";
 
-export default {
-  title: "components/Show More Button",
-  component: ShowMoreButton,
-};
-
-export const StandardShowMoreButton = (): JSX.Element => {
+const StandardShowMoreButton = (): JSX.Element => {
   const [hide, setHideSecondary] = React.useState<boolean>(true);
 
   return (
@@ -17,4 +12,10 @@ export const StandardShowMoreButton = (): JSX.Element => {
       setHideSecondary={setHideSecondary}
     />
   );
+};
+
+export { StandardShowMoreButton };
+export default {
+  title: "components/Show More Button",
+  component: ShowMoreButton,
 };

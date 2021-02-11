@@ -2,7 +2,7 @@ import { getIdentities } from "@fewlines/connect-management";
 
 import { config } from "@src/config";
 
-export async function isMarkingIdentityAsPrimaryAuthorized(
+async function isMarkingIdentityAsPrimaryAuthorized(
   sub: string,
   identityId: string,
 ): Promise<boolean> {
@@ -12,3 +12,5 @@ export async function isMarkingIdentityAsPrimaryAuthorized(
     ? identities.some((identity) => identity.id === identityId)
     : false;
 }
+
+export { isMarkingIdentityAsPrimaryAuthorized };

@@ -15,9 +15,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   );
 };
 
-export default App;
-
-export const AccountApp: React.FC = ({ children }) => {
+const AccountApp: React.FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <Head>
@@ -29,3 +27,6 @@ export const AccountApp: React.FC = ({ children }) => {
     </ThemeProvider>
   );
 };
+
+export { AccountApp };
+export default App;

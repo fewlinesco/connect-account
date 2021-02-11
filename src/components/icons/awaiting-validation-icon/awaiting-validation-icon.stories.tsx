@@ -3,12 +3,7 @@ import styled from "styled-components";
 
 import { AwaitingValidationIcon } from "./awaiting-validation-icon";
 
-export default {
-  title: "icons/Awaiting Validation Icon",
-  component: AwaitingValidationIcon,
-};
-
-export const StandardAwaitingValidationIcon = (): JSX.Element => {
+const StandardAwaitingValidationIcon = (): JSX.Element => {
   return (
     <Container>
       <AwaitingValidationIcon />
@@ -19,3 +14,9 @@ export const StandardAwaitingValidationIcon = (): JSX.Element => {
 const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.blacks[4]};
 `;
+
+export { StandardAwaitingValidationIcon };
+export default {
+  title: "icons/Awaiting Validation Icon",
+  component: AwaitingValidationIcon,
+};

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { deviceBreakpoints } from "@src/design-system/theme/decat-theme";
 
-export const Timeline: React.FC = () => {
+const Timeline: React.FC = () => {
   return (
     <Flex>
       <BulletPointContainer>
@@ -16,7 +16,7 @@ export const Timeline: React.FC = () => {
   );
 };
 
-export const TimelineEnd: React.FC = () => {
+const TimelineEnd: React.FC = () => {
   return (
     <Flex>
       <BulletPointContainer>
@@ -32,7 +32,7 @@ export const TimelineEnd: React.FC = () => {
   );
 };
 
-export const TimelineBulletPoint: React.FC = () => {
+const TimelineBulletPoint: React.FC = () => {
   return (
     <svg width="8" height="8" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="4" cy="4" r="4" fill="#F0F1F3" />
@@ -86,3 +86,5 @@ const EndLine = styled.div`
   height: 100%;
   border-left: 1px solid ${({ theme }) => theme.colors.separator};
 `;
+
+export { Timeline, TimelineEnd, TimelineBulletPoint };

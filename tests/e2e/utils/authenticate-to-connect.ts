@@ -11,7 +11,7 @@ import {
 
 import { config } from "@src/config";
 
-export async function authenticateToConnect(): Promise<void> {
+async function authenticateToConnect(): Promise<void> {
   try {
     setConfig({ retryTimeout: 30000 });
 
@@ -40,3 +40,5 @@ export async function authenticateToConnect(): Promise<void> {
     throw error;
   }
 }
+
+export { authenticateToConnect };

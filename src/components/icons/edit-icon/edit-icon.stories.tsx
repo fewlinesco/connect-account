@@ -3,12 +3,7 @@ import styled from "styled-components";
 
 import { EditIcon } from "./edit-icon";
 
-export default {
-  title: "icons/Edit Icon",
-  component: EditIcon,
-};
-
-export const StandardEditIcon = (): JSX.Element => {
+const StandardEditIcon = (): JSX.Element => {
   return (
     <Container>
       <EditIcon />
@@ -19,3 +14,9 @@ export const StandardEditIcon = (): JSX.Element => {
 const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.blacks[4]};
 `;
+
+export { StandardEditIcon };
+export default {
+  title: "icons/Edit Icon",
+  component: EditIcon,
+};

@@ -2,11 +2,12 @@ import React from "react";
 
 import { Arrow } from "./arrow";
 
+const StandardArrow = (): JSX.Element => {
+  return <Arrow />;
+};
+
+export { StandardArrow };
 export default {
   title: "icons/Arrow",
   component: Arrow,
-};
-
-export const StandardlArrow = (): JSX.Element => {
-  return <Arrow />;
 };

@@ -3,9 +3,7 @@ import React from "react";
 import { StoriesContainer } from "../containers/stories-container";
 import { Button, ButtonVariant } from "./buttons";
 
-export default { title: "components/Buttons", component: Button };
-
-export const PrimaryButton = (): JSX.Element => {
+const PrimaryButton = (): JSX.Element => {
   return (
     <StoriesContainer>
       <Button variant={ButtonVariant.PRIMARY}>Primary</Button>
@@ -13,7 +11,7 @@ export const PrimaryButton = (): JSX.Element => {
   );
 };
 
-export const SecondaryButton = (): JSX.Element => {
+const SecondaryButton = (): JSX.Element => {
   return (
     <StoriesContainer>
       <Button variant={ButtonVariant.SECONDARY}>Secondary</Button>
@@ -21,7 +19,7 @@ export const SecondaryButton = (): JSX.Element => {
   );
 };
 
-export const DangerButton = (): JSX.Element => {
+const DangerButton = (): JSX.Element => {
   return (
     <StoriesContainer>
       <Button variant={ButtonVariant.DANGER}>Danger</Button>
@@ -29,10 +27,13 @@ export const DangerButton = (): JSX.Element => {
   );
 };
 
-export const GhostButton = (): JSX.Element => {
+const GhostButton = (): JSX.Element => {
   return (
     <StoriesContainer>
       <Button variant={ButtonVariant.GHOST}>Ghost</Button>
     </StoriesContainer>
   );
 };
+
+export { PrimaryButton, SecondaryButton, DangerButton, GhostButton };
+export default { title: "components/Buttons", component: Button };

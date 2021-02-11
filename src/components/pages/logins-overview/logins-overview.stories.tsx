@@ -5,9 +5,7 @@ import { LoginsOverview } from "./logins-overview";
 import { SortedIdentities } from "@src/@types/sorted-identities";
 import { StoriesContainer } from "@src/components/containers/stories-container";
 
-export default { title: "pages/Logins Overview", component: LoginsOverview };
-
-export const LoginsOverviewPage = (): JSX.Element => {
+const LoginsOverviewPage = (): JSX.Element => {
   const mockedSortedResponse: SortedIdentities = {
     phoneIdentities: [
       {
@@ -79,3 +77,6 @@ export const LoginsOverviewPage = (): JSX.Element => {
     </StoriesContainer>
   );
 };
+
+export { LoginsOverviewPage };
+export default { title: "pages/Logins Overview", component: LoginsOverview };

@@ -3,12 +3,7 @@ import styled from "styled-components";
 
 import { CrossIcon } from "./cross-icon";
 
-export default {
-  title: "icons/Cross Icon",
-  component: CrossIcon,
-};
-
-export const StandardCrossIcon = (): JSX.Element => {
+const StandardCrossIcon = (): JSX.Element => {
   return (
     <Container>
       <CrossIcon />
@@ -19,3 +14,9 @@ export const StandardCrossIcon = (): JSX.Element => {
 const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.blacks[4]};
 `;
+
+export { StandardCrossIcon };
+export default {
+  title: "icons/Cross Icon",
+  component: CrossIcon,
+};

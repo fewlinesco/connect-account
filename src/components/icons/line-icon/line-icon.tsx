@@ -1,6 +1,6 @@
 import React from "react";
 
-export const LineIcon: React.FC = () => {
+const LineIcon: React.FC = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -22,3 +22,5 @@ export const LineIcon: React.FC = () => {
     </svg>
   );
 };
+
+export { LineIcon };

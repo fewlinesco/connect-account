@@ -29,7 +29,7 @@ const SOCIAL_IDENTITIES_ICONS = {
   DECATHLON: <DecathlonIcon />,
 };
 
-export const getSocialIdentityIcon = (type: IdentityTypes): JSX.Element => {
+const getSocialIdentityIcon = (type: IdentityTypes): JSX.Element => {
   switch (type) {
     case IdentityTypes["APPLE"]:
       return SOCIAL_IDENTITIES_ICONS.APPLE;
@@ -59,3 +59,5 @@ export const getSocialIdentityIcon = (type: IdentityTypes): JSX.Element => {
       return <React.Fragment />;
   }
 };
+
+export { getSocialIdentityIcon };

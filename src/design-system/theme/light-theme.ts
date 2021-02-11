@@ -10,14 +10,14 @@ const breakpoints = {
   l: 1200,
 };
 
-export type DeviceBreakpoints = {
+type DeviceBreakpoints = {
   xs: string;
   s: string;
   m: string;
   l: string;
 };
 
-export const deviceBreakpoints = {
+const deviceBreakpoints = {
   xs: `(max-width: ${breakpoints.xs}px)`,
   s: `(max-width: ${breakpoints.s}px)`,
   m: `(max-width: ${breakpoints.m}px)`,
@@ -126,7 +126,7 @@ const transitions = {
 
 const logo = fewlinesLogo;
 
-export const lightTheme: DefaultTheme = {
+const lightTheme: DefaultTheme = {
   spaces,
   fontSizes,
   fontWeights,
@@ -140,3 +140,6 @@ export const lightTheme: DefaultTheme = {
   transitions,
   logo,
 };
+
+export type { DeviceBreakpoints };
+export { lightTheme, deviceBreakpoints };
