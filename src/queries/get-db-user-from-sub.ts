@@ -6,9 +6,7 @@ import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { config } from "@src/config";
 import { dynamoDbClient } from "@src/db-client";
 
-export async function getDBUserFromSub(
-  sub: string,
-): Promise<DynamoUser | null> {
+async function getDBUserFromSub(sub: string): Promise<DynamoUser | null> {
   try {
     const getItem = {
       TableName: config.dynamoTableName,
@@ -36,3 +34,5 @@ export async function getDBUserFromSub(
     throw error;
   }
 }
+
+export { getDBUserFromSub };
