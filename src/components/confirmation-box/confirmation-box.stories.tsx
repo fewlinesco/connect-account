@@ -9,24 +9,19 @@ import { DeleteConfirmationBoxContent } from "./delete-confirmation-box-content"
 import { PrimaryConfirmationBoxContent } from "./primary-confirmation-box-content";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-export default {
-  title: "components/Confirmation Box",
-  component: ConfirmationBox,
-};
-
-const identity = {
-  type: IdentityTypes.EMAIL,
-  value: "test@fewlines.test",
-  id: "1234567890",
-};
-
-export const PrimaryConfirmationBox = (): JSX.Element => {
+const PrimaryConfirmationBox = (): JSX.Element => {
   const [open, setOpen] = React.useState<boolean>(false);
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
   const [
     confirmationBoxContent,
     setConfirmationBoxContent,
   ] = React.useState<JSX.Element>(<React.Fragment />);
+
+  const identity = {
+    type: IdentityTypes.EMAIL,
+    value: "test@fewlines.test",
+    id: "1234567890",
+  };
 
   return (
     <ConfirmationStoryContainer>
@@ -57,7 +52,7 @@ export const PrimaryConfirmationBox = (): JSX.Element => {
   );
 };
 
-export const DangerConfirmationBox = (): JSX.Element => {
+const DangerConfirmationBox = (): JSX.Element => {
   const [open, setOpen] = React.useState<boolean>(false);
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
   const [
@@ -66,6 +61,12 @@ export const DangerConfirmationBox = (): JSX.Element => {
   ] = React.useState<JSX.Element>(<React.Fragment />);
 
   const userId = "12345-67890-e1234-ad67890-az12345";
+
+  const identity = {
+    type: IdentityTypes.EMAIL,
+    value: "test@fewlines.test",
+    id: "1234567890",
+  };
 
   return (
     <ConfirmationStoryContainer>
@@ -107,3 +108,9 @@ const ConfirmationStoryContainer = styled(Container)`
     width: 100%;
   }
 `;
+
+export default {
+  title: "components/Confirmation Box",
+  component: ConfirmationBox,
+};
+export { PrimaryConfirmationBox, DangerConfirmationBox };

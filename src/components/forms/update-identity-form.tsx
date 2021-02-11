@@ -9,7 +9,7 @@ import { FakeButton } from "@src/components/buttons/fake-button";
 import { Input } from "@src/components/input/input";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 
-export const UpdateIdentityForm: React.FC<{
+const UpdateIdentityForm: React.FC<{
   updateIdentity: (newValue: string) => Promise<void>;
   currentIdentity: Identity;
 }> = ({ currentIdentity, updateIdentity }) => {
@@ -56,3 +56,5 @@ const Value = styled.p`
   margin-right: 0.5rem;
   font-weight: ${({ theme }) => theme.fontWeights.bold};
 `;
+
+export { UpdateIdentityForm };

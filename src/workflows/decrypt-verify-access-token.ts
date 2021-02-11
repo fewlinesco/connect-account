@@ -6,7 +6,7 @@ import {
   UnhandledTokenType,
 } from "@src/errors";
 
-export async function decryptVerifyAccessToken(
+async function decryptVerifyAccessToken(
   accessToken: string,
 ): Promise<JWTPayload> {
   const tokenPartsCount = accessToken.split(".").length;
@@ -41,3 +41,5 @@ export async function decryptVerifyAccessToken(
 
   throw new UnhandledTokenType();
 }
+
+export { decryptVerifyAccessToken };

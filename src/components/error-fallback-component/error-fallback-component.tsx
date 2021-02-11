@@ -3,13 +3,9 @@ import styled from "styled-components";
 
 import { NeutralLink } from "../neutral-link/neutral-link";
 
-type ErrorFallbackComponentProps = {
+const ErrorFallbackComponent: React.FC<{
   statusCode: number;
-};
-
-export const ErrorFallbackComponent: React.FC<ErrorFallbackComponentProps> = ({
-  statusCode,
-}) => {
+}> = ({ statusCode }) => {
   return (
     <Wrapper statusCode={statusCode}>
       {statusCode === 404 ? (
@@ -44,3 +40,5 @@ const Wrapper = styled.div<{ statusCode: number }>`
   margin-top: ${({ statusCode, theme }) =>
     statusCode !== 404 ? theme.spaces.s : ""};
 `;
+
+export { ErrorFallbackComponent };

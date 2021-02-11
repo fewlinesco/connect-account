@@ -3,7 +3,7 @@ import { Identity } from "@fewlines/connect-management";
 import { HttpVerbs } from "@src/@types/http-verbs";
 import { fetchJson } from "@src/utils/fetch-json";
 
-export async function markIdentityAsPrimaryCall(
+async function markIdentityAsPrimaryCall(
   identityId: Identity["id"],
 ): Promise<Response> {
   const body = {
@@ -16,3 +16,5 @@ export async function markIdentityAsPrimaryCall(
     body,
   );
 }
+
+export { markIdentityAsPrimaryCall };

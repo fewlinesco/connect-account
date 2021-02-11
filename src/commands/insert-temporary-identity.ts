@@ -3,6 +3,7 @@ import { PutItemCommandOutput } from "@aws-sdk/client-dynamodb";
 import { putUser } from "./put-user";
 import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
+
 async function insertTemporaryIdentity(
   sub: string,
   temporaryIdentity: TemporaryIdentity,

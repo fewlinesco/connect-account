@@ -13,7 +13,7 @@ import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { InvalidValidationCode, TemporaryIdentityExpired } from "@src/errors";
 import { validateIdentity } from "@src/workflows/validate-identity";
 
-export const ValidateIdentityForm: React.FC<{
+const ValidateIdentityForm: React.FC<{
   type: IdentityTypes;
   eventId: string;
 }> = ({ type, eventId }) => {
@@ -89,3 +89,5 @@ const WrongInputError = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   margin-bottom: 3rem;
 `;
+
+export { ValidateIdentityForm };

@@ -5,9 +5,7 @@ import { StoriesContainer } from "../containers/stories-container";
 import { Input } from "../input/input";
 import { Form } from "./form";
 
-export default { title: "components/Form", component: Form };
-
-export const StandardForm = (): JSX.Element => {
+const StandardForm = (): JSX.Element => {
   const [numberOfSubmit, setNumberOfSubmit] = React.useState(0);
 
   return (
@@ -26,3 +24,6 @@ export const StandardForm = (): JSX.Element => {
     </StoriesContainer>
   );
 };
+
+export { StandardForm };
+export default { title: "components/Form", component: Form };
