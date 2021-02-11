@@ -23,11 +23,9 @@ const LocalePage: React.FC = () => {
   );
 };
 
-export default LocalePage;
-
 const tracer = getTracer();
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
     context,
     [
@@ -41,3 +39,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     "/account/locale",
   );
 };
+
+export { getServerSideProps };
+export default LocalePage;

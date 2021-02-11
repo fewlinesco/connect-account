@@ -29,11 +29,18 @@ const AccountPage: React.FC = () => {
   );
 };
 
-export default AccountPage;
+const WelcomeMessage = styled.h1`
+  margin-top: 0.5rem;
+  margin-bottom: 5rem;
+
+  @media ${deviceBreakpoints.m} {
+    margin-bottom: 4rem;
+  }
+`;
 
 const tracer = getTracer();
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
     context,
     [
@@ -48,11 +55,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   );
 };
 
-export const WelcomeMessage = styled.h1`
-  margin-top: 0.5rem;
-  margin-bottom: 5rem;
-
-  @media ${deviceBreakpoints.m} {
-    margin-bottom: 4rem;
-  }
-`;
+export { getServerSideProps };
+export default AccountPage;

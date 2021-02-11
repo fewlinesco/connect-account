@@ -48,11 +48,9 @@ const IdentityOverviewPage: React.FC<{
   );
 };
 
-export default IdentityOverviewPage;
-
 const tracer = getTracer();
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
@@ -95,3 +93,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   );
 };
+
+export { getServerSideProps };
+export default IdentityOverviewPage;

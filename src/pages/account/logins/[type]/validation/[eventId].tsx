@@ -43,11 +43,9 @@ const ValidateIdentityPage: React.FC<{
   );
 };
 
-export default ValidateIdentityPage;
-
 const tracer = getTracer();
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
@@ -86,3 +84,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   );
 };
+
+export { getServerSideProps };
+export default ValidateIdentityPage;
