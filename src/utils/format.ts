@@ -1,4 +1,4 @@
-export function capitalizeFirstLetter(word: string): string {
+function capitalizeFirstLetter(word: string): string {
   const normalizedWord = word.toLocaleLowerCase();
   return normalizedWord.charAt(0).toLocaleUpperCase() + normalizedWord.slice(1);
 }
@@ -14,7 +14,7 @@ function formatVKontakte(word: string): string {
   return word.slice(0, 2) + word.slice(2).toLocaleLowerCase();
 }
 
-export function formatSpecialSocialIdentities(
+function formatSpecialSocialIdentities(
   word: "KAKAO_TALK" | "VKONTAKTE",
 ): string {
   if (word === "KAKAO_TALK") {
@@ -27,3 +27,5 @@ export function formatSpecialSocialIdentities(
 
   throw new Error("Wrong social identity");
 }
+
+export { capitalizeFirstLetter, formatSpecialSocialIdentities };

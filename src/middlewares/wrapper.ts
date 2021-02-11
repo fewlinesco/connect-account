@@ -9,10 +9,7 @@ import { Handler } from "@src/@types/handler";
 
 type Middleware = (handler: Handler) => Handler;
 
-export function wrapMiddlewares(
-  middlewares: Middleware[],
-  handler: Handler,
-): Handler {
+function wrapMiddlewares(middlewares: Middleware[], handler: Handler): Handler {
   for (const middleware of middlewares.reverse()) {
     handler = middleware(handler);
   }
@@ -20,7 +17,7 @@ export function wrapMiddlewares(
   return handler;
 }
 
-export async function wrapMiddlewaresForSSR<P>(
+async function wrapMiddlewaresForSSR<P>(
   context: GetServerSidePropsContext,
   middlewares: Middleware[],
   handler: Handler = () => Promise.resolve(),
@@ -32,3 +29,5 @@ export async function wrapMiddlewaresForSSR<P>(
 
   return result ? result : { props: {} };
 }
+
+export { wrapMiddlewares, wrapMiddlewaresForSSR };
