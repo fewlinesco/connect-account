@@ -86,7 +86,7 @@ const LoginsOverview: React.FC<{
   );
 };
 
-export type IdentitiesSectionContent = {
+type IdentitiesSectionContent = {
   title: string;
   noIdentityMessage: string;
   addNewIdentityMessage?: string;

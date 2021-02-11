@@ -4,12 +4,7 @@ import React from "react";
 import { StoriesContainer } from "../../containers/stories-container";
 import { SocialIdentitiesSection } from "./logins-overview";
 
-export default {
-  title: "components/ Social Identities Section",
-  component: SocialIdentitiesSection,
-};
-
-export const StandardSocialIdentitiesSection = (): JSX.Element => {
+const StandardSocialIdentitiesSection = (): JSX.Element => {
   const socialIdentities: Identity[] = [
     {
       id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -38,4 +33,10 @@ export const StandardSocialIdentitiesSection = (): JSX.Element => {
       />
     </StoriesContainer>
   );
+};
+
+export { StandardSocialIdentitiesSection };
+export default {
+  title: "components/ Social Identities Section",
+  component: SocialIdentitiesSection,
 };
