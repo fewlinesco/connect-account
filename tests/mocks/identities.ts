@@ -1,6 +1,6 @@
 import { IdentityTypes, Identity } from "@fewlines/connect-management";
 
-export const nonPrimaryEmailIdentity: Identity = {
+const nonPrimaryEmailIdentity: Identity = {
   id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
   primary: false,
   status: "validated",
@@ -8,7 +8,7 @@ export const nonPrimaryEmailIdentity: Identity = {
   value: "Test@test.test",
 };
 
-export const primaryEmailIdentity: Identity = {
+const primaryEmailIdentity: Identity = {
   id: "6tf443c1-530b-4982-878d-33f0def6a7cf",
   primary: true,
   status: "validated",
@@ -16,7 +16,7 @@ export const primaryEmailIdentity: Identity = {
   value: "test4@test.test",
 };
 
-export const unvalidatedEmailIdentity: Identity = {
+const unvalidatedEmailIdentity: Identity = {
   id: "77yt43c1-530b-4982-878d-33f0def6a7cf",
   primary: false,
   status: "unvalidated",
@@ -24,7 +24,7 @@ export const unvalidatedEmailIdentity: Identity = {
   value: "test6@test.test",
 };
 
-export const nonPrimaryPhoneIdentity: Identity = {
+const nonPrimaryPhoneIdentity: Identity = {
   id: "81z343c1-530b-4982-878d-33f0def6a7cf",
   primary: false,
   status: "validated",
@@ -32,7 +32,7 @@ export const nonPrimaryPhoneIdentity: Identity = {
   value: "0642424242",
 };
 
-export const primaryPhoneIdentity: Identity = {
+const primaryPhoneIdentity: Identity = {
   id: "81z343c1-530b-4982-878d-33f0def6a7cf",
   primary: true,
   status: "validated",
@@ -40,7 +40,7 @@ export const primaryPhoneIdentity: Identity = {
   value: "0642424243",
 };
 
-export const unvalidatedPhoneIdentity: Identity = {
+const unvalidatedPhoneIdentity: Identity = {
   id: "81z343c1-530b-4982-878d-33f0def6a7cf",
   primary: false,
   status: "unvalidated",
@@ -48,7 +48,7 @@ export const unvalidatedPhoneIdentity: Identity = {
   value: "0642424244",
 };
 
-export const primarySocialIdentity: Identity = {
+const primarySocialIdentity: Identity = {
   id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
   primary: true,
   status: "validated",
@@ -56,10 +56,21 @@ export const primarySocialIdentity: Identity = {
   value: "",
 };
 
-export const nonPrimarySocialIdentity: Identity = {
+const nonPrimarySocialIdentity: Identity = {
   id: "8u76dcc1-530b-4982-878d-33f0def6a7cf",
   primary: false,
   status: "validated",
   type: IdentityTypes.FACEBOOK,
   value: "",
+};
+
+export {
+  nonPrimaryEmailIdentity,
+  primaryEmailIdentity,
+  unvalidatedEmailIdentity,
+  nonPrimaryPhoneIdentity,
+  primaryPhoneIdentity,
+  unvalidatedPhoneIdentity,
+  primarySocialIdentity,
+  nonPrimarySocialIdentity,
 };
