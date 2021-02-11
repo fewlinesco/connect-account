@@ -1,6 +1,6 @@
 import { IdentityTypes } from "@fewlines/connect-management";
 
-export type TemporaryIdentity = {
+type TemporaryIdentity = {
   eventId: string;
   value: string;
   type: string;
@@ -8,9 +8,11 @@ export type TemporaryIdentity = {
   primary: boolean;
 };
 
-export type InMemoryTemporaryIdentity = {
+type InMemoryTemporaryIdentity = {
   value: string;
   type: IdentityTypes;
   expiresAt: number;
   primary: boolean;
 };
+
+export type { TemporaryIdentity, InMemoryTemporaryIdentity };

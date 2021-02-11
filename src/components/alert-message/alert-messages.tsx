@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { CrossIcon } from "../icons/cross-icon/cross-icon";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-export const AlertMessages: React.FC<{ alertMessages?: string[] }> = ({
+const AlertMessages: React.FC<{ alertMessages?: string[] }> = ({
   alertMessages,
 }) => {
   const [showAlertMessages, setShowAlertMessages] = React.useState<boolean>(
@@ -92,3 +92,5 @@ const Alert = styled.div`
     margin: 0 auto;
   }
 `;
+
+export { AlertMessages };
