@@ -67,6 +67,10 @@ const Flex = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: ${({ theme }) => theme.spaces.s};
+
+  div {
+    margin: 0;
+  }
 `;
 
 const DescriptionText = styled.p`

@@ -14,17 +14,7 @@ export const FakeButton: React.FC<{ variant: ButtonVariant }> = ({
   );
 };
 
-interface ButtonProps {
-  variant?: ButtonVariant;
-}
-
-const DivButton = styled(Button)<ButtonProps>`
-  /* ${(props) =>
-    props.variant === ButtonVariant.PRIMARY &&
-    `
-      margin: 0;
-    `}; */
-
+const DivButton = styled(Button)`
   display: flex;
   justify-content: center;
   align-items: center;
