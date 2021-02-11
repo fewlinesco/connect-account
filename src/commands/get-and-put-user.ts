@@ -8,7 +8,7 @@ type OAuth2UserInfo = {
   id_token?: string;
 };
 
-export async function getAndPutUser(
+async function getAndPutUser(
   { sub, refresh_token }: OAuth2UserInfo,
   currentUserData?: DynamoUser,
 ): Promise<void> {
@@ -35,3 +35,5 @@ export async function getAndPutUser(
   await putUser(user);
   return;
 }
+
+export { getAndPutUser };
