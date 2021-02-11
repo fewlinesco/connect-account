@@ -1,29 +1,64 @@
 import { Identity, IdentityTypes } from "@fewlines/connect-management";
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 
 import { Form } from "./form";
+import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Box } from "@src/components/box/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { Input } from "@src/components/input/input";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { PhoneNumberInputValueShouldBeANumber } from "@src/errors";
+import { addIdentity } from "@src/workflows/add-identity";
 
 export const UpdateIdentityForm: React.FC<{
-  updateIdentity: (newValue: string) => Promise<void>;
   currentIdentity: Identity;
-}> = ({ currentIdentity, updateIdentity }) => {
-  const [identity, setIdentity] = React.useState("");
+}> = ({ currentIdentity }) => {
+  const [identity, setIdentity] = React.useState<InMemoryTemporaryIdentity>({
+    value: "",
+    type: currentIdentity.type,
+    expiresAt: Date.now(),
+    primary: false,
+  });
+  const [formID, setFormID] = React.useState<string>(uuidv4());
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const { value } = currentIdentity;
+
+  const router = useRouter();
 
   return (
     <>
       <Box key={value}>
         <Value>{value}</Value>
       </Box>
+      {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
       <Form
+        formID={formID}
         onSubmit={async () => {
-          updateIdentity(identity);
+          await addIdentity(identity, currentIdentity.id)
+            .then(async ({ eventId, errorMessage }) => {
+              if (errorMessage) {
+                setFormID(uuidv4());
+                setErrorMessage(errorMessage);
+              }
+              if (eventId) {
+                router &&
+                  router.push(
+                    `/account/logins/${currentIdentity.type}/validation/${eventId}`,
+                  );
+              }
+            })
+            .catch((error) => {
+              if (error instanceof PhoneNumberInputValueShouldBeANumber) {
+                setFormID(uuidv4());
+                setErrorMessage(error.message);
+              } else {
+                throw error;
+              }
+            });
         }}
       >
         <p>
@@ -37,8 +72,15 @@ export const UpdateIdentityForm: React.FC<{
           type="text"
           name="value"
           placeholder={`Enter your ${currentIdentity.type}`}
-          value={identity}
-          onChange={(event) => setIdentity(event.target.value)}
+          value={identity.value}
+          onChange={(event) =>
+            setIdentity({
+              value: event.target.value,
+              type: currentIdentity.type,
+              expiresAt: Date.now() + 300000,
+              primary: currentIdentity.primary,
+            })
+          }
         />
         <Button variant={ButtonVariant.PRIMARY} type="submit">
           Update {currentIdentity.type}
@@ -55,4 +97,10 @@ export const UpdateIdentityForm: React.FC<{
 const Value = styled.p`
   margin-right: 0.5rem;
   font-weight: ${({ theme }) => theme.fontWeights.bold};
+`;
+
+const WrongInputError = styled.p`
+  color: ${({ theme }) => theme.colors.red};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+  margin-bottom: 3rem;
 `;

@@ -6,6 +6,7 @@ export type TemporaryIdentity = {
   type: string;
   expiresAt: number;
   primary: boolean;
+  identityToUpdateId?: string;
 };
 
 export type InMemoryTemporaryIdentity = {

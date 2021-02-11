@@ -33,7 +33,7 @@ const tracer = getTracer();
 
 const handler: Handler = (request, response): Promise<void> => {
   return tracer.span("send-identity-validation-code handler", async (span) => {
-    const { callbackUrl, identityInput } = request.body;
+    const { callbackUrl, identityInput, identityToUpdateId } = request.body;
 
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
@@ -62,6 +62,9 @@ const handler: Handler = (request, response): Promise<void> => {
             type: identityInput.type,
             expiresAt: identityInput.expiresAt,
             primary: identityInput.primary,
+            identityToUpdateId: identityToUpdateId
+              ? identityToUpdateId
+              : undefined,
           };
 
           await insertTemporaryIdentity(userCookie.sub, temporaryIdentity);

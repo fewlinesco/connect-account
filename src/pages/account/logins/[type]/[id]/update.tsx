@@ -16,6 +16,7 @@ import React from "react";
 
 import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
+import { UpdateIdentityForm } from "@src/components/forms/update-identity-form";
 import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
 import { config } from "@src/config";
@@ -38,7 +39,7 @@ const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
             "edit",
           ]}
         />
-        {/* <UpdateIdentityForm currentIdentity={identity} /> */}
+        <UpdateIdentityForm currentIdentity={identity} />
       </Container>
     </Layout>
   );
@@ -94,6 +95,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return {
           props: {
             identity,
+            userId: userCookie.sub,
           },
         };
       } else {
