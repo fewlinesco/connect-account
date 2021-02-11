@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Input = styled.input`
+const Input = styled.input`
   background: ${({ theme }) => theme.colors.background};
   border: 0.1rem solid ${({ theme }) => theme.colors.blacks[2]};
   border-radius: ${({ theme }) => theme.radii[0]};
@@ -21,3 +21,5 @@ export const Input = styled.input`
     cursor: pointer;
   }
 `;
+
+export { Input };
