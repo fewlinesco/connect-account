@@ -21,6 +21,7 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
+import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
 import { config } from "@src/config";
@@ -55,19 +56,24 @@ const handler: Handler = (request, response): Promise<void> => {
       })
         .then(async ({ eventId }) => {
           span.setDisclosedAttribute("is validation code sent", true);
-
-          const temporaryIdentity = {
+          console.log("bqh lol");
+          let temporaryIdentity: TemporaryIdentity = {
             eventId: eventId,
             value: identityInput.value,
             type: identityInput.type,
             expiresAt: identityInput.expiresAt,
             primary: identityInput.primary,
-            identityToUpdateId: identityToUpdateId
-              ? identityToUpdateId
-              : undefined,
           };
 
+          if (identityToUpdateId) {
+            temporaryIdentity = {
+              ...temporaryIdentity,
+              identityToUpdateId,
+            };
+          }
+
           await insertTemporaryIdentity(userCookie.sub, temporaryIdentity);
+          console.log("rip");
 
           const verificationCodeMessage =
             getIdentityType(identityInput.type) === IdentityTypes.EMAIL
