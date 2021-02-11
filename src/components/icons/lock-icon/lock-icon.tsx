@@ -2,7 +2,7 @@ import React from "react";
 
 import { NavigationBarIconContainer } from "../../containers/navigation-bar-icon-container";
 
-export const LockIcon: React.FC = () => {
+const LockIcon: React.FC = () => {
   return (
     <NavigationBarIconContainer>
       <svg
@@ -39,3 +39,5 @@ export const LockIcon: React.FC = () => {
     </NavigationBarIconContainer>
   );
 };
+
+export { LockIcon };

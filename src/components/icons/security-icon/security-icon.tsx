@@ -1,6 +1,6 @@
 import React from "react";
 
-export const SecurityIcon: React.FC = () => {
+const SecurityIcon: React.FC = () => {
   return (
     <svg width="80" height="80" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -44,3 +44,5 @@ export const SecurityIcon: React.FC = () => {
     </svg>
   );
 };
+
+export { SecurityIcon };

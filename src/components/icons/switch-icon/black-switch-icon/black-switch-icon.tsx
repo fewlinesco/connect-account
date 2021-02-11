@@ -2,7 +2,7 @@ import React from "react";
 
 import { NavigationBarIconContainer } from "../../../containers/navigation-bar-icon-container";
 
-export const BlackSwitchIcon: React.FC = () => {
+const BlackSwitchIcon: React.FC = () => {
   return (
     <NavigationBarIconContainer>
       <svg
@@ -21,3 +21,5 @@ export const BlackSwitchIcon: React.FC = () => {
     </NavigationBarIconContainer>
   );
 };
+
+export { BlackSwitchIcon };

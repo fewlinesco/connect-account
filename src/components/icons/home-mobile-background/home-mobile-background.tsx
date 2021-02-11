@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-export const HomeMobileBackground: React.FC = () => {
+const HomeMobileBackground: React.FC = () => {
   return (
     <Wrapper>
       <svg
@@ -111,3 +111,5 @@ const Wrapper = styled.div`
     justify-content: center;
   }
 `;
+
+export { HomeMobileBackground };

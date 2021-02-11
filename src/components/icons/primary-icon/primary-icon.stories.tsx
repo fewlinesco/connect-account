@@ -3,9 +3,7 @@ import styled from "styled-components";
 
 import { PrimaryIcon } from "./primary-icon";
 
-export default { title: "icons/Primary Icon", component: PrimaryIcon };
-
-export const StandardPrimaryIcon = (): JSX.Element => {
+const StandardPrimaryIcon = (): JSX.Element => {
   return (
     <Container>
       <PrimaryIcon />
@@ -16,3 +14,6 @@ export const StandardPrimaryIcon = (): JSX.Element => {
 const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.blacks[4]};
 `;
+
+export { StandardPrimaryIcon };
+export default { title: "icons/Primary Icon", component: PrimaryIcon };

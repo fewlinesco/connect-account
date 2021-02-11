@@ -1,6 +1,6 @@
 import React from "react";
 
-export const VKontakteIcon: React.FC = () => {
+const VKontakteIcon: React.FC = () => {
   return (
     <svg
       width="32"
@@ -16,3 +16,5 @@ export const VKontakteIcon: React.FC = () => {
     </svg>
   );
 };
+
+export { VKontakteIcon };

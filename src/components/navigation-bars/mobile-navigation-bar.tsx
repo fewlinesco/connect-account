@@ -14,7 +14,7 @@ import { NeutralLink } from "../neutral-link/neutral-link";
 import { NAVIGATION_SECTIONS } from "./navigation-sections";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-export const MobileNavigationBar: React.FC = () => {
+const MobileNavigationBar: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const router = useRouter();
 
@@ -171,3 +171,5 @@ const SpecialLink = styled(NeutralLink)`
     color: ${({ theme }) => theme.colors.background};
   }
 `;
+
+export { MobileNavigationBar };

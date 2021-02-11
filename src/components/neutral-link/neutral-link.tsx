@@ -7,7 +7,7 @@ interface ExtendedLinkProps extends LinkProps {
   onClick?: () => void;
 }
 
-export const NeutralLink: React.FC<ExtendedLinkProps> = ({
+const NeutralLink: React.FC<ExtendedLinkProps> = ({
   href,
   as,
   className,
@@ -35,3 +35,5 @@ const NeutralAnchor = style.a`
     cursor: pointer;
   }
 `;
+
+export { NeutralLink };
