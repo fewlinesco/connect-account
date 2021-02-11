@@ -14,7 +14,7 @@ import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { PhoneNumberInputValueShouldBeANumber } from "@src/errors";
 import { addIdentity } from "@src/workflows/add-identity";
 
-export const UpdateIdentityForm: React.FC<{
+const UpdateIdentityForm: React.FC<{
   currentIdentity: Identity;
 }> = ({ currentIdentity }) => {
   const [identity, setIdentity] = React.useState<InMemoryTemporaryIdentity>({
@@ -104,3 +104,5 @@ const WrongInputError = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   margin-bottom: 3rem;
 `;
+
+export { UpdateIdentityForm };

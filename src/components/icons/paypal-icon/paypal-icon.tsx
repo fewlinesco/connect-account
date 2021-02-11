@@ -1,6 +1,6 @@
 import React from "react";
 
-export const PaypalIcon: React.FC = () => {
+const PaypalIcon: React.FC = () => {
   return (
     <svg
       width="32"
@@ -28,3 +28,5 @@ export const PaypalIcon: React.FC = () => {
     </svg>
   );
 };
+
+export { PaypalIcon };

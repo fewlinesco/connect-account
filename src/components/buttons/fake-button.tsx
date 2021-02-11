@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { Button, ButtonVariant } from "./buttons";
 
-export const FakeButton: React.FC<{ variant: ButtonVariant }> = ({
+const FakeButton: React.FC<{ variant: ButtonVariant }> = ({
   variant,
   children,
 }) => {
@@ -19,3 +19,5 @@ const DivButton = styled(Button)`
   justify-content: center;
   align-items: center;
 `;
+
+export { FakeButton };

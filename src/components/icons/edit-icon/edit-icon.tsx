@@ -1,6 +1,6 @@
 import React from "react";
 
-export const EditIcon: React.FC = () => {
+const EditIcon: React.FC = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,3 +16,5 @@ export const EditIcon: React.FC = () => {
     </svg>
   );
 };
+
+export { EditIcon };

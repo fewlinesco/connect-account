@@ -9,7 +9,7 @@ import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SectionBox } from "@src/components/shadow-box/section-box";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-export const Home: React.FC<{ authorizeURL: string; providerName: string }> = ({
+const Home: React.FC<{ authorizeURL: string; providerName: string }> = ({
   authorizeURL,
   providerName,
 }) => {
@@ -79,9 +79,4 @@ const DescriptionText = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.semibold};
 `;
 
-export const BackLink = styled.p`
-  text-align: center;
-  margin: ${({ theme }) => theme.spaces.xs} 0;
-  color: ${({ theme }) => theme.colors.primary};
-  cursor: pointer;
-`;
+export { Home };

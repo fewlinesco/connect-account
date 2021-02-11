@@ -9,7 +9,7 @@ import { NeutralLink } from "../neutral-link/neutral-link";
 import { Separator } from "../separator/separator";
 import { NAVIGATION_SECTIONS } from "./navigation-sections";
 
-export const DesktopNavigationBar: React.FC = () => {
+const DesktopNavigationBar: React.FC = () => {
   return (
     <>
       <Header />
@@ -61,3 +61,5 @@ const SwitchLanguageLabel = styled.div`
     margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
   }
 `;
+
+export { DesktopNavigationBar };

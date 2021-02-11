@@ -5,7 +5,7 @@ import { RightChevron } from "@src/components/icons/right-chevron/right-chevron"
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SectionBox } from "@src/components/shadow-box/section-box";
 
-export const Security: React.FC<{
+const Security: React.FC<{
   isPasswordSet: boolean;
 }> = ({ isPasswordSet }) => {
   return (
@@ -29,8 +29,10 @@ const SecurityLink = styled(NeutralLink)`
   cursor: pointer;
 `;
 
-export const TextBox = styled.div`
+const TextBox = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.s};
   line-height: ${({ theme }) => theme.lineHeights.title};
   max-width: 50%;
 `;
+
+export { Security };

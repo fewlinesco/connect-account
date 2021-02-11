@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export const Triangle: React.FC<{ rotate: boolean }> = ({ rotate }) => {
+const Triangle: React.FC<{ rotate: boolean }> = ({ rotate }) => {
   const className = rotate ? "rotate" : "";
 
   return (
@@ -33,3 +33,5 @@ const Rotate = styled.span`
     margin-bottom: 0.3rem;
   }
 `;
+
+export { Triangle };

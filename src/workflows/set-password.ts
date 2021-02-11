@@ -4,13 +4,11 @@ import { HttpVerbs } from "@src/@types/http-verbs";
 import { ErrorSettingPassword } from "@src/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 
-export type SetPasswordOutput = {
+type SetPasswordOutput = {
   restrictionRulesError?: PasswordRules;
 };
 
-export async function setPassword(
-  passwordInput: string,
-): Promise<SetPasswordOutput> {
+async function setPassword(passwordInput: string): Promise<SetPasswordOutput> {
   return fetchJson("/api/auth-connect/set-password", HttpVerbs.POST, {
     passwordInput,
   }).then((response) => {
@@ -21,3 +19,6 @@ export async function setPassword(
     return response.json();
   });
 }
+
+export type { SetPasswordOutput };
+export { setPassword };

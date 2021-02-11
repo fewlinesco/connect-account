@@ -37,11 +37,9 @@ const LoginsOverviewPage: React.FC<{
   );
 };
 
-export default LoginsOverviewPage;
-
 const tracer = getTracer();
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{
     sortedIdentities: SortedIdentities;
   }>(
@@ -87,3 +85,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   );
 };
+
+export { getServerSideProps };
+export default LoginsOverviewPage;

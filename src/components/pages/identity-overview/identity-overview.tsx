@@ -15,7 +15,7 @@ import { PrimaryConfirmationBoxContent } from "@src/components/confirmation-box/
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
-export const IdentityOverview: React.FC<{
+const IdentityOverview: React.FC<{
   identity: Identity;
   userId: string;
 }> = ({ identity, userId }) => {
@@ -120,3 +120,5 @@ const Flex = styled.div`
   display: flex;
   align-items: center;
 `;
+
+export { IdentityOverview };

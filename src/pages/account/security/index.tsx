@@ -20,11 +20,9 @@ import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
 
-type SecurityPageProps = {
+const SecurityPage: React.FC<{
   isPasswordSet: boolean;
-};
-
-const SecurityPage: React.FC<SecurityPageProps> = ({ isPasswordSet }) => {
+}> = ({ isPasswordSet }) => {
   return (
     <Layout>
       <Container>
@@ -36,11 +34,9 @@ const SecurityPage: React.FC<SecurityPageProps> = ({ isPasswordSet }) => {
   );
 };
 
-export default SecurityPage;
-
 const tracer = getTracer();
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
@@ -76,3 +72,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   );
 };
+
+export { getServerSideProps };
+export default SecurityPage;

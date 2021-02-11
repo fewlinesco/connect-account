@@ -9,14 +9,14 @@ const breakpoints = {
   l: 1200,
 };
 
-export type DeviceBreakpoints = {
+type DeviceBreakpoints = {
   xs: string;
   s: string;
   m: string;
   l: string;
 };
 
-export const deviceBreakpoints: DeviceBreakpoints = {
+const deviceBreakpoints: DeviceBreakpoints = {
   xs: `(max-width: ${breakpoints.xs}px)`,
   s: `(max-width: ${breakpoints.s}px)`,
   m: `(max-width: ${breakpoints.m}px)`,
@@ -125,7 +125,7 @@ const transitions = {
 
 const logo = decatLogo;
 
-export const decatTheme: DefaultTheme = {
+const decatTheme: DefaultTheme = {
   spaces,
   fontSizes,
   fontWeights,
@@ -139,3 +139,6 @@ export const decatTheme: DefaultTheme = {
   transitions,
   logo,
 };
+
+export type { DeviceBreakpoints };
+export { decatTheme, deviceBreakpoints };

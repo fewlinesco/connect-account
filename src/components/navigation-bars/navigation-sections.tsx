@@ -4,7 +4,7 @@ import { HomeIcon } from "../icons/home-icon/home-icon";
 import { KeyIcon } from "../icons/key-icon/key-icon";
 import { LockIcon } from "../icons/lock-icon/lock-icon";
 
-export const NAVIGATION_SECTIONS = {
+const NAVIGATION_SECTIONS = {
   Home: {
     href: "/account",
     icon: <HomeIcon />,
@@ -18,3 +18,5 @@ export const NAVIGATION_SECTIONS = {
     icon: <LockIcon />,
   },
 };
+
+export { NAVIGATION_SECTIONS };

@@ -9,7 +9,7 @@ import {
 import { fetchJson } from "@src/utils/fetch-json";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
-export async function addIdentity(
+async function addIdentity(
   identityInput: InMemoryTemporaryIdentity,
   identityToUpdateId?: Identity["id"],
 ): Promise<{ eventId: string; errorMessage?: string }> {
@@ -45,3 +45,5 @@ export async function addIdentity(
     return response.json();
   });
 }
+
+export { addIdentity };

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-export const StoriesContainer = styled.div`
+const StoriesContainer = styled.div`
   position: relative;
   height: 100vh;
   width: 60%;
@@ -24,3 +24,5 @@ export const StoriesContainer = styled.div`
     width: 90%;
   }
 `;
+
+export { StoriesContainer };

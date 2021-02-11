@@ -14,7 +14,7 @@ import { PhoneNumberInputValueShouldBeANumber } from "@src/errors";
 import { getIdentityType } from "@src/utils/get-identity-type";
 import { addIdentity } from "@src/workflows/add-identity";
 
-export const AddIdentityForm: React.FC<{
+const AddIdentityForm: React.FC<{
   type: IdentityTypes;
 }> = ({ type }) => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
@@ -117,3 +117,5 @@ const Label = styled.label`
   margin-bottom: ${({ theme }) => theme.spaces.xs};
   cursor: pointer;
 `;
+
+export { AddIdentityForm };

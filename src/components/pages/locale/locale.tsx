@@ -7,7 +7,7 @@ import { RadioButton } from "@src/components/radio-button/radio-button";
 import { Separator } from "@src/components/separator/separator";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-export const Locale: React.FC = () => {
+const Locale: React.FC = () => {
   return (
     <>
       <Container>
@@ -58,7 +58,7 @@ const LanguagesList = styled.div`
   flex-direction: column;
 `;
 
-export const ListItem = styled.div`
+const ListItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -70,3 +70,5 @@ export const ListItem = styled.div`
 const Value = styled.div`
   margin-left: ${({ theme }) => theme.spaces.xxs};
 `;
+
+export { Locale, ListItem };

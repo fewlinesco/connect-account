@@ -2,7 +2,7 @@ import React from "react";
 
 import { NavigationBarIconContainer } from "../../containers/navigation-bar-icon-container";
 
-export const HomeIcon: React.FC = () => {
+const HomeIcon: React.FC = () => {
   return (
     <NavigationBarIconContainer>
       <svg
@@ -22,3 +22,5 @@ export const HomeIcon: React.FC = () => {
     </NavigationBarIconContainer>
   );
 };
+
+export { HomeIcon };

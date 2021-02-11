@@ -1,6 +1,6 @@
 import React from "react";
 
-export const KakaoTalkIcon: React.FC = () => {
+const KakaoTalkIcon: React.FC = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -20,3 +20,5 @@ export const KakaoTalkIcon: React.FC = () => {
     </svg>
   );
 };
+
+export { KakaoTalkIcon };

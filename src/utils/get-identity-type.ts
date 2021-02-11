@@ -2,7 +2,7 @@ import { IdentityTypes } from "@fewlines/connect-management";
 
 import { UnhandledIdentityType } from "@src/errors";
 
-export function getIdentityType(type: string): IdentityTypes {
+function getIdentityType(type: string): IdentityTypes {
   switch (type.toUpperCase()) {
     case "EMAIL":
       return IdentityTypes.EMAIL;
@@ -38,3 +38,5 @@ export function getIdentityType(type: string): IdentityTypes {
       throw new UnhandledIdentityType(`Can't deal with identity type ${type}`);
   }
 }
+
+export { getIdentityType };

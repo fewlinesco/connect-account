@@ -1,6 +1,6 @@
 import React from "react";
 
-export const CrossIcon: React.FC = () => {
+const CrossIcon: React.FC = () => {
   return (
     <svg width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
       <title>Closing cross</title>
@@ -12,4 +12,4 @@ export const CrossIcon: React.FC = () => {
   );
 };
 
-export default CrossIcon;
+export { CrossIcon };

@@ -4,7 +4,7 @@ import { putUser } from "./put-user";
 import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 
-export async function insertTemporaryIdentity(
+async function insertTemporaryIdentity(
   sub: string,
   temporaryIdentity: TemporaryIdentity,
 ): Promise<PutItemCommandOutput> {
@@ -22,3 +22,5 @@ export async function insertTemporaryIdentity(
   // TODO: better deal with this error
   throw new Error("User not found");
 }
+
+export { insertTemporaryIdentity };

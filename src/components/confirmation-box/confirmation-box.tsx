@@ -11,7 +11,7 @@ interface ConfirmationBoxProps {
   children: JSX.Element;
 }
 
-export const ConfirmationBox: React.FC<ConfirmationBoxProps> = ({
+const ConfirmationBox: React.FC<ConfirmationBoxProps> = ({
   open,
   setOpen,
   preventAnimation,
@@ -96,3 +96,5 @@ const Box = styled.div<Pick<ConfirmationBoxProps, "open" | "preventAnimation">>`
     }
   }
 `;
+
+export { ConfirmationBox };
