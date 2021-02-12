@@ -1,14 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 
+import { AlertMessages } from "./alert-message/alert-messages";
 import { Header } from "./header/header";
 import { DesktopNavigationBar } from "./navigation-bars/desktop-navigation-bar";
 import { MobileNavigationBar } from "./navigation-bars/mobile-navigation-bar";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-export const Layout: React.FC = ({ children }) => {
+const Layout: React.FC<{ alertMessages?: string[] }> = ({
+  children,
+  alertMessages,
+}) => {
+  React.useEffect(() => {
+    if (alertMessages) {
+      document.cookie = "alert-messages=; max-age=0; path=/;";
+    }
+  }, []);
+
   return (
     <Main>
+      <AlertMessages alertMessages={alertMessages} />
       <MobileDisplayOnly>
         <Header />
         <MobileNavigationBar />
@@ -23,7 +34,7 @@ export const Layout: React.FC = ({ children }) => {
   );
 };
 
-export const Main = styled.main`
+const Main = styled.main`
   width: 100%;
   height: 100vh;
   max-width: 88rem;
@@ -64,3 +75,5 @@ const MobileDisplayOnly = styled.div`
     display: block;
   }
 `;
+
+export { Layout, Main };

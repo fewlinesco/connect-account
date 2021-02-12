@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export const RadioButton: React.FC<{
+const RadioButton: React.FC<{
   name: string;
   checked: boolean;
 }> = ({ name, checked }) => {
@@ -39,8 +39,7 @@ const Wrapper = styled.div`
   }
 
   label input:checked + span {
-    border: ${({ theme }) => theme.borders.normal}
-      ${({ theme }) => theme.colors.primary};
+    border: ${({ theme }) => theme.borders.normal};
   }
 
   label input:checked + span:after {
@@ -55,3 +54,5 @@ const Wrapper = styled.div`
     transform: translate(-50%, -50%);
   }
 `;
+
+export { RadioButton };

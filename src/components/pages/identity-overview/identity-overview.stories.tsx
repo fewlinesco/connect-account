@@ -4,12 +4,7 @@ import React from "react";
 import { StoriesContainer } from "../../containers/stories-container";
 import { IdentityOverview } from "./identity-overview";
 
-export default {
-  title: "pages/Identity Overview",
-  component: IdentityOverview,
-};
-
-export const PrimaryIdentityOverview = (): JSX.Element => {
+const PrimaryIdentityOverview = (): JSX.Element => {
   const mockedResponse: { identity: Identity; userId: string } = {
     identity: {
       id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -31,7 +26,7 @@ export const PrimaryIdentityOverview = (): JSX.Element => {
   );
 };
 
-export const NonPrimaryIdentityOverview = (): JSX.Element => {
+const NonPrimaryIdentityOverview = (): JSX.Element => {
   const mockedResponse: { identity: Identity; userId: string } = {
     identity: {
       id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -53,7 +48,7 @@ export const NonPrimaryIdentityOverview = (): JSX.Element => {
   );
 };
 
-export const NonValidatedIdentityOverview = (): JSX.Element => {
+const NonValidatedIdentityOverview = (): JSX.Element => {
   const mockedResponse: { identity: Identity; userId: string } = {
     identity: {
       id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -73,4 +68,14 @@ export const NonValidatedIdentityOverview = (): JSX.Element => {
       />
     </StoriesContainer>
   );
+};
+
+export {
+  PrimaryIdentityOverview,
+  NonPrimaryIdentityOverview,
+  NonValidatedIdentityOverview,
+};
+export default {
+  title: "pages/Identity Overview",
+  component: IdentityOverview,
 };

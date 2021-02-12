@@ -12,7 +12,7 @@ interface PrimaryConfirmationBoxContentProps {
   id: Identity["id"];
 }
 
-export const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxContentProps> = ({
+const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxContentProps> = ({
   setOpen,
   value,
   id,
@@ -48,6 +48,8 @@ export const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxConte
   );
 };
 
-export const PrimaryConfirmationText = styled.p`
+const PrimaryConfirmationText = styled.p`
   margin: 0 0 ${({ theme }) => theme.spaces.xs};
 `;
+
+export { PrimaryConfirmationBoxContent, PrimaryConfirmationText };

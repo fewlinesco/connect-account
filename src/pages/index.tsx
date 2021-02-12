@@ -27,11 +27,9 @@ const HomePage: React.FC<HomePageProps> = ({ authorizeURL, providerName }) => {
   );
 };
 
-export default HomePage;
-
 const tracer = getTracer();
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{
     authorizeURL: string;
     providerName: string;
@@ -44,6 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       loggingMiddleware(tracer, logger),
       withSentry,
     ],
+    "/",
     async () => {
       const authorizeURL = await oauth2Client.getAuthorizationURL();
 
@@ -58,3 +57,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   );
 };
+
+export { getServerSideProps };
+export default HomePage;

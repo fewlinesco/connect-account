@@ -3,6 +3,7 @@ import {
   IdentityTypes,
   getIdentities,
 } from "@fewlines/connect-management";
+import { getServerSideCookies } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -23,7 +24,6 @@ import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
-import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   return (
@@ -44,11 +44,9 @@ const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   );
 };
 
-export default UpdateIdentityPage;
-
 const tracer = getTracer();
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
@@ -59,6 +57,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       withSentry,
       withAuth,
     ],
+    "/account/logins/[type]/[id]/update",
     async (request, response) => {
       if (!context?.params?.id) {
         response.statusCode = 400;
@@ -71,6 +70,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
         isCookieSealed: true,
+        cookieSalt: config.cookieSalt,
       });
 
       if (userCookie) {
@@ -100,3 +100,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   );
 };
+
+export { getServerSideProps };
+export default UpdateIdentityPage;

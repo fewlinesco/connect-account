@@ -4,7 +4,7 @@ import { marshall, NativeAttributeValue } from "@aws-sdk/util-dynamodb";
 import { config } from "@src/config";
 import { dynamoDbClient } from "@src/db-client";
 
-export async function putUser(userData: {
+async function putUser(userData: {
   [key: string]: NativeAttributeValue;
 }): Promise<PutItemCommandOutput> {
   const params = {
@@ -16,3 +16,5 @@ export async function putUser(userData: {
 
   return dynamoDbClient.send(itemCommand);
 }
+
+export { putUser };

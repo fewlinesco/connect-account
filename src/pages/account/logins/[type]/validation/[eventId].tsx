@@ -1,4 +1,5 @@
 import { IdentityTypes } from "@fewlines/connect-management";
+import { getServerSideCookies } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -22,9 +23,10 @@ import getTracer from "@src/tracer";
 const ValidateIdentityPage: React.FC<{
   type: IdentityTypes;
   eventId: string;
-}> = ({ type, eventId }) => {
+  alertMessages?: string[];
+}> = ({ type, eventId, alertMessages }) => {
   return (
-    <Layout>
+    <Layout alertMessages={alertMessages}>
       <Container>
         <h1>Logins</h1>
         <NavigationBreadcrumbs
@@ -41,11 +43,9 @@ const ValidateIdentityPage: React.FC<{
   );
 };
 
-export default ValidateIdentityPage;
-
 const tracer = getTracer();
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
@@ -56,7 +56,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       withSentry,
       withAuth,
     ],
-    async (_request, response: ServerResponse) => {
+    "/account/logins/[type]/validation/[eventId]",
+    async (request, response: ServerResponse) => {
       if (!context?.params?.type) {
         response.statusCode = 400;
         response.end();
@@ -68,12 +69,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return;
       }
 
+      const alertMessages = await getServerSideCookies(request, {
+        cookieName: "alert-messages",
+        isCookieSealed: false,
+      });
+
       return {
         props: {
           type: context.params.type,
           eventId: context.params.eventId,
+          alertMessages: alertMessages ? alertMessages : null,
         },
       };
     },
   );
 };
+
+export { getServerSideProps };
+export default ValidateIdentityPage;

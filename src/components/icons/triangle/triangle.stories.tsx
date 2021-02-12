@@ -2,12 +2,13 @@ import React from "react";
 
 import { Triangle } from "./triangle";
 
-export default { title: "icons/Triangle", component: Triangle };
-
-export const StandardTriangle = (): JSX.Element => {
+const StandardTriangle = (): JSX.Element => {
   return <Triangle rotate={false} />;
 };
 
-export const RotatedTriangle = (): JSX.Element => {
+const RotatedTriangle = (): JSX.Element => {
   return <Triangle rotate={true} />;
 };
+
+export { StandardTriangle, RotatedTriangle };
+export default { title: "icons/Triangle", component: Triangle };

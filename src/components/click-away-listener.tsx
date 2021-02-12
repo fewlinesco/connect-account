@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ClickAwayListener = styled.div`
+const ClickAwayListener = styled.div`
   position: fixed;
   left: 0;
   top: 0;
@@ -8,3 +8,5 @@ export const ClickAwayListener = styled.div`
   height: 100vh;
   z-index: 1;
 `;
+
+export { ClickAwayListener };

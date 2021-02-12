@@ -16,7 +16,7 @@ Sentry.configureScope((scope) => {
   scope.setTag("Node environment", process.env.NODE_ENV);
 });
 
-export const addRequestScopeToSentry = (
+const addRequestScopeToSentry = (
   request: NextApiRequest | IncomingMessage,
 ): void => {
   const headers = Object.entries(request.headers).reduce(
@@ -40,4 +40,5 @@ export const addRequestScopeToSentry = (
   });
 };
 
+export { addRequestScopeToSentry };
 export default Sentry;

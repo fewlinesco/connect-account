@@ -3,7 +3,7 @@ import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { NoUserFound } from "@src/errors";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 
-export async function removeTemporaryIdentity(
+async function removeTemporaryIdentity(
   sub: string,
   temporaryIdentity: TemporaryIdentity,
 ): Promise<void> {
@@ -23,3 +23,5 @@ export async function removeTemporaryIdentity(
 
   throw new NoUserFound();
 }
+
+export { removeTemporaryIdentity };

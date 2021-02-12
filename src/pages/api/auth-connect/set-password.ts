@@ -2,7 +2,7 @@ import {
   createOrUpdatePassword,
   InvalidPasswordInputError,
 } from "@fewlines/connect-management";
-import { Endpoint, HttpStatus } from "@fwl/web";
+import { Endpoint, HttpStatus, getServerSideCookies } from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -19,7 +19,6 @@ import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
-import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 const tracer = getTracer();
 
@@ -30,6 +29,7 @@ const handler: Handler = async (request, response) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
+      cookieSalt: config.cookieSalt,
     });
 
     if (userCookie) {

@@ -1,4 +1,4 @@
-import { Endpoint, HttpStatus } from "@fwl/web";
+import { Endpoint, HttpStatus, setServerSideCookies } from "@fwl/web";
 import {
   errorMiddleware,
   loggingMiddleware,
@@ -9,12 +9,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
-import { oauth2Client } from "@src/config";
+import { oauth2Client, config } from "@src/config";
 import { logger } from "@src/logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import getTracer from "@src/tracer";
-import { setServerSideCookies } from "@src/utils/server-side-cookies";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
 const tracer = getTracer();
@@ -53,6 +52,7 @@ const handler: Handler = (request, response): Promise<void> => {
       },
       {
         shouldCookieBeSealed: true,
+        cookieSalt: config.cookieSalt,
         maxAge: 24 * 60 * 60,
         path: "/",
         httpOnly: true,

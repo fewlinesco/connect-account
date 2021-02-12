@@ -4,12 +4,7 @@ import React from "react";
 import { StoriesContainer } from "../../containers/stories-container";
 import { StandardIdentitiesSection } from "./logins-overview";
 
-export default {
-  title: "components/Standard Identity Section",
-  component: StandardIdentitiesSection,
-};
-
-export const EmailIdentitiesSection = (): JSX.Element => {
+const EmailIdentitiesSection = (): JSX.Element => {
   const emailIdentities: Identity[] = [
     {
       id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -42,7 +37,7 @@ export const EmailIdentitiesSection = (): JSX.Element => {
   );
 };
 
-export const PhoneIdentitiesSection = (): JSX.Element => {
+const PhoneIdentitiesSection = (): JSX.Element => {
   const phoneIdentities: Identity[] = [
     {
       id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -73,4 +68,10 @@ export const PhoneIdentitiesSection = (): JSX.Element => {
       />
     </StoriesContainer>
   );
+};
+
+export { EmailIdentitiesSection, PhoneIdentitiesSection };
+export default {
+  title: "components/Standard Identity Section",
+  component: StandardIdentitiesSection,
 };

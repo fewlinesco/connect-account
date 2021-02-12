@@ -38,11 +38,9 @@ const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   );
 };
 
-export default AddIdentityPage;
-
 const tracer = getTracer();
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
@@ -53,6 +51,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       withSentry,
       withAuth,
     ],
+    "/account/logins/[type]/new",
     async () => {
       if (!context?.params?.type) {
         context.res.statusCode = 400;
@@ -74,3 +73,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   );
 };
+
+export { getServerSideProps };
+export default AddIdentityPage;

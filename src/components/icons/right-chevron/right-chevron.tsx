@@ -1,6 +1,6 @@
 import React from "react";
 
-export const RightChevron: React.FC = () => {
+const RightChevron: React.FC = () => {
   return (
     <svg
       width="10"
@@ -13,3 +13,5 @@ export const RightChevron: React.FC = () => {
     </svg>
   );
 };
+
+export { RightChevron };

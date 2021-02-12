@@ -17,7 +17,7 @@ jest.mock("@src/db-client", () => {
 
 const eventId = "foo";
 
-const alertBarMessages = {
+const alertMessages = {
   email: "Confirmation email has been sent",
   phone: "Confirmation SMS has been sent",
 };
@@ -26,21 +26,21 @@ describe("ValidateIdentityPage", () => {
   describe("Identity type : EMAIL", () => {
     it("should display proper email alert message", async () => {
       render(
-        <ValidateIdentityPage type={IdentityTypes.EMAIL} eventId={eventId} />,
+        <ValidateIdentityPage
+          type={IdentityTypes.EMAIL}
+          eventId={eventId}
+          alertMessages={[alertMessages.email]}
+        />,
       );
 
       expect.assertions(3);
 
-      expect(
-        await screen.findByText(alertBarMessages.email),
-      ).toBeInTheDocument();
+      expect(await screen.findByText(alertMessages.email)).toBeInTheDocument();
 
       expect(await screen.findByTitle("Closing cross")).toBeInTheDocument();
       userEvent.click(screen.getByTitle("Closing cross"));
 
-      expect(
-        screen.queryByText(alertBarMessages.email),
-      ).not.toBeInTheDocument();
+      expect(screen.queryByText(alertMessages.email)).not.toBeInTheDocument();
     });
 
     it("should render proper email form elements ", () => {
@@ -84,21 +84,21 @@ describe("ValidateIdentityPage", () => {
   describe("Identity type : PHONE", () => {
     it("should display proper phone alert message", async () => {
       render(
-        <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />,
+        <ValidateIdentityPage
+          type={IdentityTypes.PHONE}
+          eventId={eventId}
+          alertMessages={[alertMessages.phone]}
+        />,
       );
 
       expect.assertions(3);
 
-      expect(
-        await screen.findByText(alertBarMessages.phone),
-      ).toBeInTheDocument();
+      expect(await screen.findByText(alertMessages.phone)).toBeInTheDocument();
 
       expect(await screen.findByTitle("Closing cross")).toBeInTheDocument();
       userEvent.click(screen.getByTitle("Closing cross"));
 
-      expect(
-        screen.queryByText(alertBarMessages.phone),
-      ).not.toBeInTheDocument();
+      expect(screen.queryByText(alertMessages.phone)).not.toBeInTheDocument();
     });
 
     it("should render proper phone form elements ", () => {

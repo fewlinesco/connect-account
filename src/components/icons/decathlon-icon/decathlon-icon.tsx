@@ -1,6 +1,6 @@
 import React from "react";
 
-export const DecathlonIcon: React.FC = () => {
+const DecathlonIcon: React.FC = () => {
   return (
     <svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -14,3 +14,5 @@ export const DecathlonIcon: React.FC = () => {
     </svg>
   );
 };
+
+export { DecathlonIcon };

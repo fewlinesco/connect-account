@@ -10,7 +10,7 @@ import { PasswordRulesErrorList } from "@src/components/password-rules-error-lis
 import { capitalizeFirstLetter } from "@src/utils/format";
 import { setPassword } from "@src/workflows/set-password";
 
-export const SetPasswordForm: React.FC<{
+const SetPasswordForm: React.FC<{
   conditionalBreadcrumbItem: string;
 }> = ({ conditionalBreadcrumbItem }) => {
   const [isNotSubmitted, setIsNotSubmitted] = React.useState(true);
@@ -104,3 +104,5 @@ const ExtendedInputStyle = styled(Input)<{
     (passwordRestrictionError || passwordsNotMatching) &&
     `border-color: ${theme.colors.red};`}
 `;
+
+export { SetPasswordForm };

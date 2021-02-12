@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { AwaitingValidationIcon } from "../icons/awaiting-validation-icon/awaiting-validation-icon";
 import { PrimaryIcon } from "../icons/primary-icon/primary-icon";
 
-export const PrimaryBadge: React.FC = () => {
+const PrimaryBadge: React.FC = () => {
   return (
     <Wrapper>
       <p>Primary</p>
@@ -13,7 +13,7 @@ export const PrimaryBadge: React.FC = () => {
   );
 };
 
-export const AwaitingValidationBadge: React.FC = () => {
+const AwaitingValidationBadge: React.FC = () => {
   return (
     <AwaitingWrapper>
       <p>Awaiting validation</p>
@@ -55,3 +55,5 @@ const Wrapper = styled.div`
     margin-right: 0.3rem;
   }
 `;
+
+export { PrimaryBadge, AwaitingValidationBadge };

@@ -1,6 +1,6 @@
 import React from "react";
 
-export const BurgerIcon: React.FC = () => {
+const BurgerIcon: React.FC = () => {
   return (
     <svg width="25" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -11,3 +11,5 @@ export const BurgerIcon: React.FC = () => {
     </svg>
   );
 };
+
+export { BurgerIcon };

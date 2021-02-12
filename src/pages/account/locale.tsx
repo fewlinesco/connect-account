@@ -23,17 +23,22 @@ const LocalePage: React.FC = () => {
   );
 };
 
-export default LocalePage;
-
 const tracer = getTracer();
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return getServerSidePropsWithMiddlewares(context, [
-    tracingMiddleware(tracer),
-    recoveryMiddleware(tracer),
-    errorMiddleware(tracer),
-    loggingMiddleware(tracer, logger),
-    withSentry,
-    withAuth,
-  ]);
+const getServerSideProps: GetServerSideProps = async (context) => {
+  return getServerSidePropsWithMiddlewares(
+    context,
+    [
+      tracingMiddleware(tracer),
+      recoveryMiddleware(tracer),
+      errorMiddleware(tracer),
+      loggingMiddleware(tracer, logger),
+      withSentry,
+      withAuth,
+    ],
+    "/account/locale",
+  );
 };
+
+export { getServerSideProps };
+export default LocalePage;

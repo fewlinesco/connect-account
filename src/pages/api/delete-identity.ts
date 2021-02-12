@@ -1,8 +1,9 @@
 import {
   GraphqlErrors,
+  IdentityTypes,
   removeIdentityFromUser,
 } from "@fewlines/connect-management";
-import { Endpoint, HttpStatus } from "@fwl/web";
+import { Endpoint, HttpStatus, setAlertMessagesCookie } from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -18,6 +19,7 @@ import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
+import { getIdentityType } from "@src/utils/get-identity-type";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = (request, response): Promise<void> => {
@@ -43,6 +45,14 @@ const handler: Handler = (request, response): Promise<void> => {
     })
       .then(() => {
         span.setDisclosedAttribute("is Identity removed", true);
+
+        const deleteMessage = `${
+          getIdentityType(type) === IdentityTypes.EMAIL
+            ? "Email address"
+            : "Phone number"
+        } has been deleted`;
+
+        setAlertMessagesCookie(response, deleteMessage);
 
         response.statusCode = HttpStatus.ACCEPTED;
         response.setHeader("Content-Type", "application/json");

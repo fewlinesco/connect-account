@@ -1,4 +1,5 @@
 import { isUserPasswordSet } from "@fewlines/connect-management";
+import { getServerSideCookies } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -19,13 +20,10 @@ import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
-import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
-type SecurityPageProps = {
+const SecurityUpdatePage: React.FC<{
   isPasswordSet: boolean;
-};
-
-const SecurityUpdatePage: React.FC<SecurityPageProps> = ({ isPasswordSet }) => {
+}> = ({ isPasswordSet }) => {
   const conditionalBreadcrumbItem = isPasswordSet ? "update" : "set";
 
   return (
@@ -43,11 +41,9 @@ const SecurityUpdatePage: React.FC<SecurityPageProps> = ({ isPasswordSet }) => {
   );
 };
 
-export default SecurityUpdatePage;
-
 const tracer = getTracer();
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
@@ -58,10 +54,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       withSentry,
       withAuth,
     ],
+    "/account/security/update",
     async (request) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
         isCookieSealed: true,
+        cookieSalt: config.cookieSalt,
       });
 
       if (userCookie) {
@@ -81,3 +79,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   );
 };
+
+export { getServerSideProps };
+export default SecurityUpdatePage;

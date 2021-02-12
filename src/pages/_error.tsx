@@ -13,7 +13,7 @@ type CustomErrorComponentProps = {
   children?: React.ReactElement;
 };
 
-export type ErrorProps = {
+type ErrorProps = {
   isReadyToRender: boolean;
 } & NextErrorProps;
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-export const NaverIcon: React.FC = () => {
+const NaverIcon: React.FC = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,3 +15,5 @@ export const NaverIcon: React.FC = () => {
     </svg>
   );
 };
+
+export { NaverIcon };

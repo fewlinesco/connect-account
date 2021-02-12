@@ -2,9 +2,15 @@ import {
   IdentityValueCantBeBlankError,
   sendIdentityValidationCode,
   IdentityAlreadyUsedError,
+  IdentityTypes,
 } from "@fewlines/connect-management";
 import { getTracer } from "@fwl/tracing";
-import { Endpoint, HttpStatus } from "@fwl/web";
+import {
+  Endpoint,
+  HttpStatus,
+  getServerSideCookies,
+  setAlertMessagesCookie,
+} from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -22,7 +28,6 @@ import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { getIdentityType } from "@src/utils/get-identity-type";
-import { getServerSideCookies } from "@src/utils/server-side-cookies";
 
 const tracer = getTracer();
 
@@ -33,6 +38,7 @@ const handler: Handler = (request, response): Promise<void> => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
+      cookieSalt: config.cookieSalt,
     });
 
     if (userCookie) {
@@ -59,6 +65,13 @@ const handler: Handler = (request, response): Promise<void> => {
           };
 
           await insertTemporaryIdentity(userCookie.sub, temporaryIdentity);
+
+          const verificationCodeMessage =
+            getIdentityType(identityInput.type) === IdentityTypes.EMAIL
+              ? "Confirmation email has been sent"
+              : "Confirmation SMS has been sent";
+
+          setAlertMessagesCookie(response, verificationCodeMessage);
 
           response.statusCode = HttpStatus.OK;
           response.setHeader("Content-Type", "application/json");

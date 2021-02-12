@@ -2,7 +2,7 @@ import { HttpVerbs } from "@src/@types/http-verbs";
 import { InvalidValidationCode, TemporaryIdentityExpired } from "@src/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 
-export async function validateIdentity(
+async function validateIdentity(
   validationCode: string,
   eventId: string,
 ): Promise<string> {
@@ -27,3 +27,5 @@ export async function validateIdentity(
     return path;
   });
 }
+
+export { validateIdentity };

@@ -1,6 +1,6 @@
 import { HttpVerbs } from "@src/@types/http-verbs";
 
-export function fetchJson(
+function fetchJson(
   endpoint: string,
   method: Exclude<HttpVerbs, HttpVerbs.GET>,
   body: Record<string, unknown>,
@@ -13,3 +13,5 @@ export function fetchJson(
     body: JSON.stringify(body),
   });
 }
+
+export { fetchJson };

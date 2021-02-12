@@ -1,6 +1,6 @@
 import React from "react";
 
-export const MicrosoftIcon: React.FC = () => {
+const MicrosoftIcon: React.FC = () => {
   return (
     <svg
       width="30"
@@ -15,3 +15,5 @@ export const MicrosoftIcon: React.FC = () => {
     </svg>
   );
 };
+
+export { MicrosoftIcon };

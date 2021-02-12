@@ -12,7 +12,7 @@ function sortIdentityStatus(a: Identity, b: Identity): number {
   return a.status === b.status ? 0 : a.status === "validated" ? -1 : 1;
 }
 
-export function sortIdentities(identities: Identity[]): SortedIdentities {
+function sortIdentities(identities: Identity[]): SortedIdentities {
   const phoneIdentities: Identity[] = [];
   const emailIdentities: Identity[] = [];
   const socialIdentities: Identity[] = [];
@@ -57,3 +57,5 @@ export function sortIdentities(identities: Identity[]): SortedIdentities {
 
   return { phoneIdentities, emailIdentities, socialIdentities };
 }
+
+export { sortIdentities };

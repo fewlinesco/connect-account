@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-export const Container = styled.div`
+const Container = styled.div`
   width: 100%;
   height: 100vh;
   max-height: 100vh;
@@ -24,3 +24,5 @@ export const Container = styled.div`
     height: auto;
   }
 `;
+
+export { Container };

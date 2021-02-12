@@ -1,7 +1,9 @@
 import { Identity } from "@fewlines/connect-management";
 
-export type SortedIdentities = {
+type SortedIdentities = {
   phoneIdentities: Identity[];
   emailIdentities: Identity[];
   socialIdentities: Identity[];
 };
+
+export type { SortedIdentities };

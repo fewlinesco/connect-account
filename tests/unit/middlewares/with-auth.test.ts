@@ -18,7 +18,7 @@ jest.mock("@src/config", () => {
 
   return {
     config: {
-      connectAccountSessionSalt: "#*b+x3ZXE3-h[E+Q5YC5`jr~y%CA~R-[",
+      cookieSalt: "#*b+x3ZXE3-h[E+Q5YC5`jr~y%CA~R-[",
       connectOpenIdConfigurationUrl: "",
       connectApplicationClientId: "",
       connectApplicationClientSecret: "c9ab0fdc-b2dc-47ad-933b-87cf1b180ab5",
@@ -78,7 +78,7 @@ async function sealJWS(access_token: string, salt?: string): Promise<string> {
       access_token,
       sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
     }),
-    salt || config.connectAccountSessionSalt,
+    salt || config.cookieSalt,
     defaults,
   );
 }

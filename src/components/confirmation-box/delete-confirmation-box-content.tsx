@@ -14,7 +14,7 @@ interface DeleteIdentityProps {
   value: string;
 }
 
-export const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
+const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
   setOpen,
   value,
   type,
@@ -50,6 +50,8 @@ export const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
   );
 };
 
-export const DeleteConfirmationText = styled.p`
+const DeleteConfirmationText = styled.p`
   margin: 0 0 ${({ theme }) => theme.spaces.xs};
 `;
+
+export { DeleteConfirmationBoxContent, DeleteConfirmationText };

@@ -14,7 +14,7 @@ type Config = {
   connectApplicationClientId: string;
   connectApplicationClientSecret: string;
   connectApplicationScopes: string;
-  connectAccountSessionSalt: string;
+  cookieSalt: string;
   connectOpenIdConfigurationUrl: string;
   connectAccountRedirectURI: string;
   connectAudience: string;
@@ -43,7 +43,7 @@ const config: Config = {
   connectApplicationClientId: "",
   connectApplicationClientSecret: "",
   connectApplicationScopes: "",
-  connectAccountSessionSalt: "",
+  cookieSalt: "",
   connectOpenIdConfigurationUrl: "",
   connectAccountRedirectURI: "",
   connectAudience: "",
@@ -78,8 +78,7 @@ function handleEnvVars(): void {
     process.env.CONNECT_APPLICATION_CLIENT_SECRET || "";
   config.connectApplicationScopes =
     process.env.CONNECT_APPLICATION_SCOPES || "";
-  config.connectAccountSessionSalt =
-    process.env.CONNECT_ACCOUNT_SESSION_SALT || "";
+  config.cookieSalt = process.env.CONNECT_ACCOUNT_SESSION_SALT || "";
   config.connectOpenIdConfigurationUrl =
     process.env.CONNECT_OPEN_ID_CONFIGURATION_URL || "";
   config.connectAccountRedirectURI = appHostname

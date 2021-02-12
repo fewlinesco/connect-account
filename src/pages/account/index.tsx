@@ -29,22 +29,7 @@ const AccountPage: React.FC = () => {
   );
 };
 
-export default AccountPage;
-
-const tracer = getTracer();
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return getServerSidePropsWithMiddlewares(context, [
-    tracingMiddleware(tracer),
-    recoveryMiddleware(tracer),
-    errorMiddleware(tracer),
-    loggingMiddleware(tracer, logger),
-    withSentry,
-    withAuth,
-  ]);
-};
-
-export const WelcomeMessage = styled.h1`
+const WelcomeMessage = styled.h1`
   margin-top: 0.5rem;
   margin-bottom: 5rem;
 
@@ -52,3 +37,23 @@ export const WelcomeMessage = styled.h1`
     margin-bottom: 4rem;
   }
 `;
+
+const tracer = getTracer();
+
+const getServerSideProps: GetServerSideProps = async (context) => {
+  return getServerSidePropsWithMiddlewares(
+    context,
+    [
+      tracingMiddleware(tracer),
+      recoveryMiddleware(tracer),
+      errorMiddleware(tracer),
+      loggingMiddleware(tracer, logger),
+      withSentry,
+      withAuth,
+    ],
+    "/account",
+  );
+};
+
+export { getServerSideProps };
+export default AccountPage;

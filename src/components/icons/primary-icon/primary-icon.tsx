@@ -1,6 +1,6 @@
 import React from "react";
 
-export const PrimaryIcon: React.FC = () => {
+const PrimaryIcon: React.FC = () => {
   return (
     <svg width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -14,3 +14,5 @@ export const PrimaryIcon: React.FC = () => {
     </svg>
   );
 };
+
+export { PrimaryIcon };

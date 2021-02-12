@@ -4,12 +4,7 @@ import React from "react";
 import { AddIdentityForm } from "./add-identity-form";
 import { StoriesContainer } from "@src/components/containers/stories-container";
 
-export default {
-  title: "pages/Add Identity Form",
-  component: AddIdentityForm,
-};
-
-export const AddEmailForm = (): JSX.Element => {
+const AddEmailForm = (): JSX.Element => {
   return (
     <StoriesContainer>
       <AddIdentityForm type={IdentityTypes.EMAIL} />
@@ -17,10 +12,16 @@ export const AddEmailForm = (): JSX.Element => {
   );
 };
 
-export const AddPhoneForm = (): JSX.Element => {
+const AddPhoneForm = (): JSX.Element => {
   return (
     <StoriesContainer>
       <AddIdentityForm type={IdentityTypes.PHONE} />
     </StoriesContainer>
   );
+};
+
+export { AddEmailForm, AddPhoneForm };
+export default {
+  title: "pages/Add Identity Form",
+  component: AddIdentityForm,
 };

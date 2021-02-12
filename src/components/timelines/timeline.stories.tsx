@@ -3,12 +3,7 @@ import React from "react";
 import { StoriesContainer } from "../containers/stories-container";
 import { Timeline, TimelineEnd } from "./timelines";
 
-export default {
-  title: "components/Timelines",
-  component: Timeline,
-};
-
-export const TimeLine = (): JSX.Element => {
+const TimeLine = (): JSX.Element => {
   return (
     <StoriesContainer>
       <Timeline />
@@ -16,10 +11,16 @@ export const TimeLine = (): JSX.Element => {
   );
 };
 
-export const TimeLineEnd = (): JSX.Element => {
+const TimeLineEnd = (): JSX.Element => {
   return (
     <StoriesContainer>
       <TimelineEnd />
     </StoriesContainer>
   );
+};
+
+export { TimeLine, TimeLineEnd };
+export default {
+  title: "components/Timelines",
+  component: Timeline,
 };

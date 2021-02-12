@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { Button, ButtonVariant } from "./buttons";
 
-export const FakeButton: React.FC<{ variant: ButtonVariant }> = ({
+const FakeButton: React.FC<{ variant: ButtonVariant }> = ({
   variant,
   children,
 }) => {
@@ -14,18 +14,16 @@ export const FakeButton: React.FC<{ variant: ButtonVariant }> = ({
   );
 };
 
-interface ButtonProps {
-  variant?: ButtonVariant;
-}
+const DivButton = styled(Button)<{ variant?: ButtonVariant }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-const DivButton = styled(Button)<ButtonProps>`
   ${(props) =>
     props.variant === ButtonVariant.PRIMARY &&
     `
       margin: 0;
     `};
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
+
+export { FakeButton };
