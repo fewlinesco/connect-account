@@ -54,7 +54,8 @@ const colors = {
 };
 
 const fonts = {
-  openSans: "'Open Sans', sans-serif",
+  system:
+    "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
 };
 
 const fontWeights = {
