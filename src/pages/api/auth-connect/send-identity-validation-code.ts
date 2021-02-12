@@ -56,7 +56,7 @@ const handler: Handler = (request, response): Promise<void> => {
       })
         .then(async ({ eventId }) => {
           span.setDisclosedAttribute("is validation code sent", true);
-          console.log("bqh lol");
+
           let temporaryIdentity: TemporaryIdentity = {
             eventId: eventId,
             value: identityInput.value,
@@ -73,7 +73,6 @@ const handler: Handler = (request, response): Promise<void> => {
           }
 
           await insertTemporaryIdentity(userCookie.sub, temporaryIdentity);
-          console.log("rip");
 
           const verificationCodeMessage =
             getIdentityType(identityInput.type) === IdentityTypes.EMAIL
