@@ -21,6 +21,7 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
+import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
 import { config } from "@src/config";
@@ -33,7 +34,7 @@ const tracer = getTracer();
 
 const handler: Handler = (request, response): Promise<void> => {
   return tracer.span("send-identity-validation-code handler", async (span) => {
-    const { callbackUrl, identityInput } = request.body;
+    const { callbackUrl, identityInput, identityToUpdateId } = request.body;
 
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
@@ -56,13 +57,20 @@ const handler: Handler = (request, response): Promise<void> => {
         .then(async ({ eventId }) => {
           span.setDisclosedAttribute("is validation code sent", true);
 
-          const temporaryIdentity = {
+          let temporaryIdentity: TemporaryIdentity = {
             eventId: eventId,
             value: identityInput.value,
             type: identityInput.type,
             expiresAt: identityInput.expiresAt,
             primary: identityInput.primary,
           };
+
+          if (identityToUpdateId) {
+            temporaryIdentity = {
+              ...temporaryIdentity,
+              identityToUpdateId,
+            };
+          }
 
           await insertTemporaryIdentity(userCookie.sub, temporaryIdentity);
 
