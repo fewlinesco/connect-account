@@ -4,7 +4,7 @@ import type {
   AppType,
   DocumentInitialProps,
 } from "next/dist/next-server/lib/utils";
-import Document, { Html, Main, NextScript } from "next/document";
+import Document, { Html, Main, Head, NextScript } from "next/document";
 import React from "react";
 import { ServerStyleSheet } from "styled-components";
 
@@ -52,6 +52,7 @@ export default class MyDocument extends Document {
   render(): any {
     return (
       <Html>
+        <Head />
         <body>
           <Main />
           <NextScript />
