@@ -50,6 +50,16 @@ const IdentityOverview: React.FC<{
           </FakeButton>
         </NeutralLink>
       )}
+      {/* {status === "validated" && (
+        <NeutralLink href={`/account/logins/${type}/${identity.id}/update`}>
+          <FakeButton variant={ButtonVariant.PRIMARY}>
+            Update this{" "}
+            {getIdentityType(type) === IdentityTypes.PHONE
+              ? "phone number"
+              : "email address"}
+          </FakeButton>
+        </NeutralLink>
+      )} */}
       {!primary && status === "validated" && (
         <Button
           variant={ButtonVariant.SECONDARY}

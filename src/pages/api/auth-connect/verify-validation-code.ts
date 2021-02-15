@@ -1,4 +1,8 @@
-import { addIdentityToUser } from "@fewlines/connect-management";
+import {
+  addIdentityToUser,
+  getIdentity,
+  removeIdentityFromUser,
+} from "@fewlines/connect-management";
 import { checkVerificationCode } from "@fewlines/connect-management";
 import { markIdentityAsPrimary } from "@fewlines/connect-management";
 import { Endpoint, HttpStatus, getServerSideCookies } from "@fwl/web";
@@ -56,7 +60,12 @@ const handler: Handler = async (request, response) => {
             },
           );
 
-          const { value, type, primary } = temporaryIdentity;
+          const {
+            value,
+            type,
+            primary,
+            identityToUpdateId,
+          } = temporaryIdentity;
 
           if (verificationStatus === "VALID") {
             span.setDisclosedAttribute("is temporary Identity valid", true);
@@ -82,6 +91,19 @@ const handler: Handler = async (request, response) => {
             span.setDisclosedAttribute("is temporary Identity primary", false);
 
             await removeTemporaryIdentity(userCookie.sub, temporaryIdentity);
+
+            if (identityToUpdateId) {
+              const identityToUpdate = await getIdentity(
+                config.managementCredentials,
+                { userId: userCookie.sub, identityId: identityToUpdateId },
+              );
+
+              await removeIdentityFromUser(config.managementCredentials, {
+                userId: userCookie.sub,
+                identityType: getIdentityType(type),
+                identityValue: identityToUpdate ? identityToUpdate.value : "",
+              });
+            }
 
             response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
               Location: "/account/logins",
