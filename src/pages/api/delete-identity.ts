@@ -1,4 +1,5 @@
 import {
+  ConnectUnreachableError,
   GraphqlErrors,
   IdentityTypes,
   removeIdentityFromUser,
@@ -64,9 +65,9 @@ const handler: Handler = (request, response): Promise<void> => {
           throw webErrorFactory(webErrors.identityNotFound);
         }
 
-        // if (error instanceof FetchError) {
-        //   throw webErrorFactory(webErrors.connectUnreachable);
-        // }
+        if (error instanceof ConnectUnreachableError) {
+          throw webErrorFactory(webErrors.connectUnreachable);
+        }
 
         throw error;
       });
