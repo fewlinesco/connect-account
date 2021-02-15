@@ -48,8 +48,7 @@ export default class MyDocument extends Document {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-  render(): any {
+  render(): JSX.Element {
     return (
       <Html>
         <Head />
