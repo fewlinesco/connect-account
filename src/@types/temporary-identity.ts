@@ -6,6 +6,7 @@ type TemporaryIdentity = {
   type: string;
   expiresAt: number;
   primary: boolean;
+  callbackUrl: string;
   identityToUpdateId?: string;
 };
 

@@ -22,6 +22,7 @@ const ValidateIdentityForm: React.FC<{
   const [validationCode, setValidationCode] = React.useState<string>("");
   const [flashMessage, setFlashMessage] = React.useState<string>("");
   const [formID, setFormID] = React.useState<string>(uuidv4());
+  const [reSentEventId, setReSentEventId] = React.useState<string | null>(null);
   const router = useRouter();
 
   return (
@@ -30,7 +31,10 @@ const ValidateIdentityForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
-          await validateIdentity(validationCode, eventId)
+          await validateIdentity(
+            validationCode,
+            reSentEventId ? reSentEventId : eventId,
+          )
             .then((path) => {
               router && router.push(path);
             })
@@ -73,12 +77,13 @@ const ValidateIdentityForm: React.FC<{
       <Button
         variant={ButtonVariant.SECONDARY}
         onClick={async () => {
-          const body = {};
           await fetchJson(
             "/api/auth-connect/re-send-identity-validation-code",
             HttpVerbs.POST,
-            body,
-          );
+            { eventId },
+          )
+            .then(async (response) => await response.json())
+            .then(({ eventId }) => setReSentEventId(eventId));
         }}
       >
         Resend confirmation code

@@ -27,13 +27,17 @@ import { config } from "@src/config";
 import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
+import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const handler: Handler = (request, response): Promise<void> => {
   return getTracer().span(
     "send-identity-validation-code handler",
     async (span) => {
-      const { callbackUrl, identityInput } = request.body;
+      if (!request.body.eventId) {
+        // WebError
+        throw new Error();
+      }
 
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
@@ -42,9 +46,33 @@ const handler: Handler = (request, response): Promise<void> => {
       });
 
       if (userCookie) {
+        const user = await getDBUserFromSub(userCookie.sub);
+
+        if (!user?.temporary_identities) {
+          // WebError
+          throw new Error();
+        }
+
+        const temporaryIdentity = user.temporary_identities.find(
+          ({ eventId }) => eventId === request.body.eventId,
+        );
+
+        if (!temporaryIdentity) {
+          // WebError
+          throw new Error();
+        }
+
+        const {
+          type,
+          value,
+          callbackUrl,
+          expiresAt,
+          primary,
+        } = temporaryIdentity;
+
         const identity = {
-          type: getIdentityType(identityInput.type),
-          value: identityInput.value,
+          type: getIdentityType(type),
+          value: value,
         };
 
         return await sendIdentityValidationCode(config.managementCredentials, {
@@ -57,17 +85,18 @@ const handler: Handler = (request, response): Promise<void> => {
             span.setDisclosedAttribute("is validation code sent", true);
 
             const temporaryIdentity = {
-              eventId: eventId,
-              value: identityInput.value,
-              type: identityInput.type,
-              expiresAt: identityInput.expiresAt,
-              primary: identityInput.primary,
+              eventId,
+              value,
+              type,
+              expiresAt,
+              primary,
+              callbackUrl,
             };
 
             await insertTemporaryIdentity(userCookie.sub, temporaryIdentity);
 
             const verificationCodeMessage =
-              getIdentityType(identityInput.type) === IdentityTypes.EMAIL
+              getIdentityType(type) === IdentityTypes.EMAIL
                 ? "Confirmation email has been sent"
                 : "Confirmation SMS has been sent";
 
