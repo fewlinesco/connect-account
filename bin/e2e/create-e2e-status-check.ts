@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import fetch from "cross-fetch";
 
 async function createE2eStatusCheck(): Promise<void> {
   if (process.env.GITHUB_CONTEXT_EVENT === undefined) {
