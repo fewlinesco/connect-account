@@ -50,7 +50,7 @@ const IdentityOverview: React.FC<{
           </FakeButton>
         </NeutralLink>
       )}
-      {status === "validated" && (
+      {/* {status === "validated" && (
         <NeutralLink href={`/account/logins/${type}/${identity.id}/update`}>
           <FakeButton variant={ButtonVariant.PRIMARY}>
             Update this{" "}
@@ -59,7 +59,7 @@ const IdentityOverview: React.FC<{
               : "email address"}
           </FakeButton>
         </NeutralLink>
-      )}
+      )} */}
       {!primary && status === "validated" && (
         <Button
           variant={ButtonVariant.SECONDARY}
