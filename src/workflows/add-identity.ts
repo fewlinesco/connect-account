@@ -1,4 +1,4 @@
-import { IdentityTypes } from "@fewlines/connect-management";
+import { Identity, IdentityTypes } from "@fewlines/connect-management";
 
 import { HttpVerbs } from "@src/@types/http-verbs";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
@@ -11,10 +11,12 @@ import { getIdentityType } from "@src/utils/get-identity-type";
 
 async function addIdentity(
   identityInput: InMemoryTemporaryIdentity,
+  identityToUpdateId?: Identity["id"],
 ): Promise<{ eventId: string; errorMessage?: string }> {
   const body = {
     callbackUrl: "/",
     identityInput,
+    identityToUpdateId,
   };
 
   return fetchJson(
