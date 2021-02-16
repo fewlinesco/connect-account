@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { deviceBreakpoints } from "@src/design-system/theme/decat-theme";
+import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Timeline: React.FC = () => {
   return (

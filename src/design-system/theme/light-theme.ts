@@ -54,7 +54,8 @@ const colors = {
 };
 
 const fonts = {
-  openSans: "'Open Sans', sans-serif",
+  system:
+    "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu,Cantarell, 'Helvetica Neue', sans-serif;",
 };
 
 const fontWeights = {
