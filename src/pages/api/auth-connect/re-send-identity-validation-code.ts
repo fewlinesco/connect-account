@@ -42,7 +42,7 @@ const handler: Handler = (request, response): Promise<void> => {
   };
 
   return getTracer().span(
-    "send-identity-validation-code handler",
+    "re-send-identity-validation-code handler",
     async (span) => {
       if (!request.body.eventId) {
         throw webErrorFactory(webErrors.badRequest);
