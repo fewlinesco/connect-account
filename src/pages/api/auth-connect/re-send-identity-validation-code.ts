@@ -35,6 +35,7 @@ import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 const handler: Handler = (request, response): Promise<void> => {
   const webErrors = {
     badRequest: ERRORS_DATA.BAD_REQUEST,
+    identityInputCantBeBLank: ERRORS_DATA.IDENTITY_INPUT_CANT_BE_BLANK,
     temporaryIdentityNotFound: ERRORS_DATA.TEMPORARY_IDENTITY_NOT_FOUND,
     temporaryIdentitiesNotFound: ERRORS_DATA.TEMPORARIES_IDENTITY_NOT_FOUND,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
@@ -107,21 +108,27 @@ const handler: Handler = (request, response): Promise<void> => {
             return;
           })
           .catch((error) => {
-            if (
-              error instanceof IdentityAlreadyUsedError ||
-              error instanceof IdentityValueCantBeBlankError
-            ) {
+            if (error instanceof IdentityAlreadyUsedError) {
               span.setDisclosedAttribute(
-                "Identity input exception",
+                "Identity input already used",
                 error.message,
               );
 
-              response.statusCode = HttpStatus.BAD_REQUEST;
-              response.json({ errorMessage: error.message });
-              return;
+              throw webErrorFactory(webErrors.badRequest);
+            }
+
+            if (error instanceof IdentityValueCantBeBlankError) {
+              span.setDisclosedAttribute(
+                "Identity input can't be blank",
+                error.message,
+              );
+
+              throw webErrorFactory(webErrors.identityInputCantBeBLank);
             }
 
             if (error instanceof ConnectUnreachableError) {
+              span.setDisclosedAttribute("Connect unreachable", error.message);
+
               throw webErrorFactory(webErrors.connectUnreachable);
             }
 

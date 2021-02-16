@@ -62,10 +62,14 @@ const handler: Handler = (request, response): Promise<void> => {
       })
       .catch((error) => {
         if (error instanceof GraphqlErrors) {
+          span.setDisclosedAttribute("GraphQL error", error.message);
+
           throw webErrorFactory(webErrors.identityNotFound);
         }
 
         if (error instanceof ConnectUnreachableError) {
+          span.setDisclosedAttribute("Connect unreachable", error.message);
+
           throw webErrorFactory(webErrors.connectUnreachable);
         }
 

@@ -11,6 +11,11 @@ const ERRORS_DATA = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: "Request malformed",
   },
+  IDENTITY_INPUT_CANT_BE_BLANK: {
+    code: "identity_input_cant_be_blank",
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: "Identity input can't be blank",
+  },
   UNEXPECTED_ERROR: {
     code: "unexpected_error",
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
