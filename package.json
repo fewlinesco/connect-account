@@ -47,7 +47,7 @@
     "next": "10.0.6",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-phone-number-input": "^3.1.15",
+    "react-phone-number-input": "3.1.15",
     "styled-components": "5.2.1",
     "swr": "0.4.2",
     "uuid": "8.3.2"
@@ -69,7 +69,7 @@
     "@types/node": "14.14.25",
     "@types/react": "17.0.1",
     "@types/react-dom": "17.0.0",
-    "@types/react-phone-number-input": "^3.0.6",
+    "@types/react-phone-number-input": "3.0.6",
     "@types/styled-components": "5.1.7",
     "@types/uuid": "8.3.0",
     "@typescript-eslint/eslint-plugin": "4.15.0",

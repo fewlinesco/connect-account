@@ -3363,7 +3363,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-phone-number-input@^3.0.6":
+"@types/react-phone-number-input@3.0.6":
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/@types/react-phone-number-input/-/react-phone-number-input-3.0.6.tgz#fa38246931ddb79629d2ac90565a97edd184f1bc"
   integrity sha512-72+yblLIzquMluZEipZxHzFMcnLZmeW3/1dkAG/iK63wQLwyMRIYk+5U+AvRahAzLs4YBfZqlhyiwOa3qCGikg==
@@ -12719,7 +12719,7 @@ react-native-get-random-values@^1.4.0:
   dependencies:
     fast-base64-decode "^1.0.0"
 
-react-phone-number-input@^3.1.15:
+react-phone-number-input@3.1.15:
   version "3.1.15"
   resolved "https://registry.yarnpkg.com/react-phone-number-input/-/react-phone-number-input-3.1.15.tgz#effe89bb0ffe102b8069ab405e0d88e4b74796aa"
   integrity sha512-X08Y0e2eIpy0DhVN3YzrDtb8XgDm0+kjTJRckoVyw4BYflbsId3aSaz5qIL2Dad8prKyIGYRrwMWPjmf+rD/5w==

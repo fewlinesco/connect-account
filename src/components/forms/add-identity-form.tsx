@@ -1,6 +1,8 @@
+import "react-phone-number-input/style.css";
 import { IdentityTypes } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
+import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
@@ -62,23 +64,43 @@ const AddIdentityForm: React.FC<{
             : "email address"}{" "}
           *
         </p>
-        <Input
-          type={
-            getIdentityType(type) === IdentityTypes.EMAIL ? "email" : "text"
-          }
-          name="value"
-          placeholder={`Enter your ${type.toLowerCase()}`}
-          value={identity.value}
-          onChange={(event) => {
-            setIdentity({
-              value: event.target.value,
-              type,
-              expiresAt: Date.now() + 300000,
-              primary: identity.primary,
-            });
-          }}
-        />
-
+        {getIdentityType(type) === IdentityTypes.EMAIL ? (
+          <Input
+            type="email"
+            name="value"
+            placeholder="Enter your email"
+            value={identity.value}
+            onChange={(event) => {
+              setIdentity({
+                value: event.target.value,
+                type,
+                expiresAt: Date.now() + 300000,
+                primary: identity.primary,
+              });
+            }}
+          />
+        ) : (
+          <StyledPhoneInput
+            placeholder="Enter your phone number"
+            value={identity.value}
+            defaultCountry="FR"
+            onChange={(value) => {
+              setIdentity({
+                value,
+                type,
+                expiresAt: Date.now() + 300000,
+                primary: identity.primary,
+              });
+            }}
+            error={
+              identity.value
+                ? isValidPhoneNumber(identity.value)
+                  ? undefined
+                  : "Invalid phone number"
+                : "Phone number required"
+            }
+          />
+        )}
         <Label>
           <Input
             type="checkbox"
@@ -116,6 +138,23 @@ const Label = styled.label`
   display: block;
   margin-bottom: ${({ theme }) => theme.spaces.xs};
   cursor: pointer;
+`;
+
+const StyledPhoneInput = styled(PhoneInput)`
+  margin: ${({ theme }) => theme.spaces.xs} 0;
+
+  .PhoneInputInput {
+    width: 100%;
+    height: 4rem;
+    padding-left: 1.6rem;
+    border: 0.1rem solid ${({ theme }) => theme.colors.blacks[2]};
+    border-radius: ${({ theme }) => theme.radii[0]};
+
+    ::placeholder {
+      color: ${({ theme }) => theme.colors.lightGrey};
+      font-size: ${({ theme }) => theme.fontSizes.s};
+    }
+  }
 `;
 
 export { AddIdentityForm };
