@@ -14,10 +14,8 @@ import { logger } from "@src/logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
 
-const tracer = getTracer();
-
 const handler: Handler = (_request, response): Promise<void> => {
-  return tracer.span("logout handler", async (span) => {
+  return getTracer().span("logout handler", async (span) => {
     await deleteServerSideCookie(response, "user-cookie").catch(() => {
       span.setDisclosedAttribute("user logged out", false);
 
@@ -37,10 +35,10 @@ const handler: Handler = (_request, response): Promise<void> => {
 
 const wrappedHandler = wrapMiddlewares(
   [
-    tracingMiddleware(tracer),
-    recoveryMiddleware(tracer),
-    errorMiddleware(tracer),
-    loggingMiddleware(tracer, logger),
+    tracingMiddleware(getTracer()),
+    recoveryMiddleware(getTracer()),
+    errorMiddleware(getTracer()),
+    loggingMiddleware(getTracer(), logger),
     withSentry,
   ],
   handler,
