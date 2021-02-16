@@ -84,6 +84,7 @@ const wrappedHandler = wrapMiddlewares(
     withAuth,
   ],
   handler,
+  "/api/delete-identity",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

@@ -19,12 +19,21 @@ import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
-
-const tracer = getTracer();
+import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = async (request, response) => {
-  return tracer.span("set-password handler", async (span) => {
+  const webErrors = {
+    connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+    invalidPasswordInput: ERRORS_DATA.INVALID_PASSWORD_INPUT,
+    invalidBody: ERRORS_DATA.INVALID_BODY,
+  };
+
+  return getTracer().span("set-password handler", async (span) => {
     const { passwordInput } = request.body;
+
+    if (!passwordInput) {
+      throw webErrorFactory(webErrors.invalidBody);
+    }
 
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
@@ -49,15 +58,13 @@ const handler: Handler = async (request, response) => {
           if (error instanceof InvalidPasswordInputError) {
             span.setDisclosedAttribute("invalid password input", true);
 
-            response.setHeader("Content-Type", "application/json");
-            response.statusCode = HttpStatus.UNPROCESSABLE_ENTITY;
-            response.json({ restrictionRulesError: error.rules });
-            return;
-          }
+            webErrors.invalidPasswordInput.errorDetails = error.rules;
 
-          response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-          response.end();
-          return;
+            throw webErrorFactory(webErrors.invalidPasswordInput);
+          }
+          span.setDisclosedAttribute("password created or updated", false);
+
+          throw webErrorFactory(webErrors.connectUnreachable);
         });
     }
   });
@@ -65,14 +72,15 @@ const handler: Handler = async (request, response) => {
 
 const wrappedHandler = wrapMiddlewares(
   [
-    tracingMiddleware(tracer),
-    recoveryMiddleware(tracer),
-    errorMiddleware(tracer),
-    loggingMiddleware(tracer, logger),
+    tracingMiddleware(getTracer()),
+    recoveryMiddleware(getTracer()),
+    errorMiddleware(getTracer()),
+    loggingMiddleware(getTracer(), logger),
     withSentry,
     withAuth,
   ],
   handler,
+  "/api/auth-connect/set-password",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

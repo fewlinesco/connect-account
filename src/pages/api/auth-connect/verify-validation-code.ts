@@ -2,9 +2,11 @@ import {
   addIdentityToUser,
   getIdentity,
   removeIdentityFromUser,
+  checkVerificationCode,
+  markIdentityAsPrimary,
+  GraphqlErrors,
+  ConnectUnreachableError,
 } from "@fewlines/connect-management";
-import { checkVerificationCode } from "@fewlines/connect-management";
-import { markIdentityAsPrimary } from "@fewlines/connect-management";
 import { Endpoint, HttpStatus, getServerSideCookies } from "@fwl/web";
 import {
   loggingMiddleware,
@@ -19,19 +21,32 @@ import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
 import { config } from "@src/config";
-import { NoTemporaryIdentity, NoUserFound } from "@src/errors";
 import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import getTracer from "@src/tracer";
 import { getIdentityType } from "@src/utils/get-identity-type";
-
-const tracer = getTracer();
+import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = async (request, response) => {
-  return tracer.span("verify-validation-code handler", async (span) => {
+  const webErrors = {
+    badRequest: ERRORS_DATA.BAD_REQUEST,
+    identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
+    temporaryIdentityNotFound: ERRORS_DATA.TEMPORARY_IDENTITY_NOT_FOUND,
+    connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+    invalidBody: ERRORS_DATA.INVALID_BODY,
+    invalidValidationCode: ERRORS_DATA.INVALID_VALIDATION_CODE,
+    temporaryIdentityExpired: ERRORS_DATA.TEMPORARY_IDENTITY_EXPIRED,
+    noUserFound: ERRORS_DATA.NO_USER_FOUND,
+  };
+
+  return getTracer().span("verify-validation-code handler", async (span) => {
     const { validationCode, eventId } = request.body;
+
+    if ([validationCode, eventId].includes(undefined)) {
+      throw webErrorFactory(webErrors.invalidBody);
+    }
 
     const userCookie = (await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
@@ -42,6 +57,8 @@ const handler: Handler = async (request, response) => {
     const user = await getDBUserFromSub(userCookie.sub);
 
     if (user) {
+      span.setDisclosedAttribute("user found", true);
+
       const temporaryIdentity = user.temporary_identities.find(
         (temporaryIdentity) => temporaryIdentity.eventId === eventId,
       );
@@ -58,7 +75,17 @@ const handler: Handler = async (request, response) => {
               code: validationCode,
               eventId,
             },
-          );
+          ).catch((error) => {
+            if (error instanceof GraphqlErrors) {
+              throw webErrorFactory(webErrors.identityNotFound);
+            }
+
+            if (error instanceof ConnectUnreachableError) {
+              throw webErrorFactory(webErrors.connectUnreachable);
+            }
+
+            throw error;
+          });
 
           const {
             value,
@@ -77,7 +104,17 @@ const handler: Handler = async (request, response) => {
                 identityType: getIdentityType(type),
                 identityValue: value,
               },
-            );
+            ).catch((error) => {
+              if (error instanceof GraphqlErrors) {
+                throw webErrorFactory(webErrors.identityNotFound);
+              }
+
+              if (error instanceof ConnectUnreachableError) {
+                throw webErrorFactory(webErrors.connectUnreachable);
+              }
+
+              throw error;
+            });
 
             if (primary) {
               span.setDisclosedAttribute("is temporary Identity primary", true);
@@ -85,7 +122,17 @@ const handler: Handler = async (request, response) => {
               await markIdentityAsPrimary(
                 config.managementCredentials,
                 identityId,
-              );
+              ).catch((error) => {
+                if (error instanceof GraphqlErrors) {
+                  throw webErrorFactory(webErrors.identityNotFound);
+                }
+
+                if (error instanceof ConnectUnreachableError) {
+                  throw webErrorFactory(webErrors.connectUnreachable);
+                }
+
+                throw error;
+              });
             }
 
             span.setDisclosedAttribute("is temporary Identity primary", false);
@@ -96,12 +143,32 @@ const handler: Handler = async (request, response) => {
               const identityToUpdate = await getIdentity(
                 config.managementCredentials,
                 { userId: userCookie.sub, identityId: identityToUpdateId },
-              );
+              ).catch((error) => {
+                if (error instanceof GraphqlErrors) {
+                  throw webErrorFactory(webErrors.identityNotFound);
+                }
+
+                if (error instanceof ConnectUnreachableError) {
+                  throw webErrorFactory(webErrors.connectUnreachable);
+                }
+
+                throw error;
+              });
 
               await removeIdentityFromUser(config.managementCredentials, {
                 userId: userCookie.sub,
                 identityType: getIdentityType(type),
                 identityValue: identityToUpdate ? identityToUpdate.value : "",
+              }).catch((error) => {
+                if (error instanceof GraphqlErrors) {
+                  throw webErrorFactory(webErrors.identityNotFound);
+                }
+
+                if (error instanceof ConnectUnreachableError) {
+                  throw webErrorFactory(webErrors.connectUnreachable);
+                }
+
+                throw error;
               });
             }
 
@@ -113,9 +180,7 @@ const handler: Handler = async (request, response) => {
           } else if (verificationStatus === "INVALID") {
             span.setDisclosedAttribute("is temporary Identity valid", false);
 
-            response.statusCode = HttpStatus.BAD_REQUEST;
-            response.json({ error: verificationStatus });
-            return;
+            throw webErrorFactory(webErrors.invalidValidationCode);
           } else {
             response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
               Location: `/account/logins/${type}/validation/${eventId}`,
@@ -126,31 +191,31 @@ const handler: Handler = async (request, response) => {
 
           await removeTemporaryIdentity(userCookie.sub, temporaryIdentity);
 
-          response.statusCode = HttpStatus.BAD_REQUEST;
-          response.json({ error: "Temporary Identity Expired" });
-          return;
+          throw webErrorFactory(webErrors.temporaryIdentityExpired);
         }
       } else {
         span.setDisclosedAttribute("is temporary Identity found", false);
 
-        throw new NoTemporaryIdentity();
+        throw webErrorFactory(webErrors.temporaryIdentityNotFound);
       }
     } else {
-      throw new NoUserFound();
+      span.setDisclosedAttribute("user found", false);
+      throw webErrorFactory(webErrors.noUserFound);
     }
   });
 };
 
 const wrappedHandler = wrapMiddlewares(
   [
-    tracingMiddleware(tracer),
-    recoveryMiddleware(tracer),
-    errorMiddleware(tracer),
-    loggingMiddleware(tracer, logger),
+    tracingMiddleware(getTracer()),
+    recoveryMiddleware(getTracer()),
+    errorMiddleware(getTracer()),
+    loggingMiddleware(getTracer(), logger),
     withSentry,
     withAuth,
   ],
   handler,
+  "/api/auth-connect/verify-validation-code",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

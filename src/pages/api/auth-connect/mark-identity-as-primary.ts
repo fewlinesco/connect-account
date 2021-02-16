@@ -1,4 +1,8 @@
-import { markIdentityAsPrimary } from "@fewlines/connect-management";
+import {
+  ConnectUnreachableError,
+  GraphqlErrors,
+  markIdentityAsPrimary,
+} from "@fewlines/connect-management";
 import { getServerSideCookies, Endpoint, HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
@@ -17,12 +21,22 @@ import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
 import { isMarkingIdentityAsPrimaryAuthorized } from "@src/utils/is-marking-identity-as-primary-authorized";
-
-const tracer = getTracer();
+import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = async (request, response) => {
-  return tracer.span("mark-identity-as-primary handler", async (span) => {
+  const webErrors = {
+    badRequest: ERRORS_DATA.BAD_REQUEST,
+    identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
+    connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+    invalidBody: ERRORS_DATA.INVALID_BODY,
+  };
+
+  return getTracer().span("mark-identity-as-primary handler", async (span) => {
     const { identityId } = request.body;
+
+    if (!identityId) {
+      throw webErrorFactory(webErrors.invalidBody);
+    }
 
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
@@ -42,17 +56,29 @@ const handler: Handler = async (request, response) => {
           true,
         );
 
-        return markIdentityAsPrimary(
-          config.managementCredentials,
-          identityId,
-        ).then(() => {
-          span.setDisclosedAttribute("is Identity marked as primary", true);
+        return markIdentityAsPrimary(config.managementCredentials, identityId)
+          .then(() => {
+            span.setDisclosedAttribute("is Identity marked as primary", true);
 
-          response.statusCode = HttpStatus.OK;
-          response.setHeader("Content-type", "application/json");
-          response.end();
-          return;
-        });
+            response.statusCode = HttpStatus.OK;
+            response.setHeader("Content-type", "application/json");
+            response.end();
+            return;
+          })
+          .catch((error) => {
+            if (error instanceof GraphqlErrors) {
+              span.setDisclosedAttribute("Identity not found", error.message);
+              throw webErrorFactory(webErrors.identityNotFound);
+            }
+
+            if (error instanceof ConnectUnreachableError) {
+              span.setDisclosedAttribute("Connect unreachable", error.message);
+              throw webErrorFactory(webErrors.connectUnreachable);
+            }
+
+            span.setDisclosedAttribute("is Identity marked as primary", false);
+            throw error;
+          });
       }
 
       span.setDisclosedAttribute(
@@ -60,9 +86,7 @@ const handler: Handler = async (request, response) => {
         false,
       );
 
-      response.statusCode = HttpStatus.BAD_REQUEST;
-      response.end();
-      return;
+      throw webErrorFactory(webErrors.badRequest);
     } else {
       response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
       response.setHeader("location", "/");
@@ -74,14 +98,15 @@ const handler: Handler = async (request, response) => {
 
 const wrappedHandler = wrapMiddlewares(
   [
-    tracingMiddleware(tracer),
-    recoveryMiddleware(tracer),
-    errorMiddleware(tracer),
-    loggingMiddleware(tracer, logger),
+    tracingMiddleware(getTracer()),
+    recoveryMiddleware(getTracer()),
+    errorMiddleware(getTracer()),
+    loggingMiddleware(getTracer(), logger),
     withSentry,
     withAuth,
   ],
   handler,
+  "/api/auth-connect/mark-identity-as-primary",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

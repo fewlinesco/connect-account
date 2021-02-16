@@ -11,13 +11,13 @@ async function validateIdentity(
     eventId,
   }).then(async (response) => {
     if (response.status >= 400) {
-      const { error } = await response.json();
+      const { code } = await response.json();
 
-      if (error === "INVALID") {
+      if (code === "invalid_validation_code") {
         throw new InvalidValidationCode("Invalid validation code");
       }
 
-      if (error === "Temporary Identity Expired") {
+      if (code === "temporary_identity_expired") {
         throw new TemporaryIdentityExpired();
       }
     }
