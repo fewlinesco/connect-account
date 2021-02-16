@@ -62,13 +62,7 @@ const handler: Handler = (request, response): Promise<void> => {
           throw new Error();
         }
 
-        const {
-          type,
-          value,
-          callbackUrl,
-          expiresAt,
-          primary,
-        } = temporaryIdentity;
+        const { type, value, expiresAt, primary } = temporaryIdentity;
 
         const identity = {
           type: getIdentityType(type),
@@ -76,7 +70,7 @@ const handler: Handler = (request, response): Promise<void> => {
         };
 
         return await sendIdentityValidationCode(config.managementCredentials, {
-          callbackUrl,
+          callbackUrl: "/",
           identity,
           localeCodeOverride: "en-EN",
           userId: userCookie.sub,
@@ -90,15 +84,14 @@ const handler: Handler = (request, response): Promise<void> => {
               type,
               expiresAt,
               primary,
-              callbackUrl,
             };
 
             await insertTemporaryIdentity(userCookie.sub, temporaryIdentity);
 
             const verificationCodeMessage =
               getIdentityType(type) === IdentityTypes.EMAIL
-                ? "Confirmation email has been sent"
-                : "Confirmation SMS has been sent";
+                ? "A new confirmation email has been sent"
+                : "A new confirmation SMS has been sent";
 
             setAlertMessagesCookie(response, verificationCodeMessage);
 

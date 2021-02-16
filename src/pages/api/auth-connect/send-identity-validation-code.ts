@@ -63,7 +63,6 @@ const handler: Handler = (request, response): Promise<void> => {
             type: identityInput.type,
             expiresAt: identityInput.expiresAt,
             primary: identityInput.primary,
-            callbackUrl,
           };
 
           if (identityToUpdateId) {

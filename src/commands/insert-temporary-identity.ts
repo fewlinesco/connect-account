@@ -2,7 +2,7 @@ import { PutItemCommandOutput } from "@aws-sdk/client-dynamodb";
 
 import { putUser } from "./put-user";
 import { TemporaryIdentity } from "@src/@types/temporary-identity";
-import { NoUserFound } from "@src/errors";
+import { NoUserFoundError } from "@src/errors";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 
 async function insertTemporaryIdentity(
@@ -20,7 +20,7 @@ async function insertTemporaryIdentity(
     return putUser(updatedUser);
   }
 
-  throw new NoUserFound();
+  throw new NoUserFoundError();
 }
 
 export { insertTemporaryIdentity };
