@@ -3,6 +3,7 @@ import {
   sendIdentityValidationCode,
   IdentityAlreadyUsedError,
   IdentityTypes,
+  ConnectUnreachableError,
 } from "@fewlines/connect-management";
 import { getTracer } from "@fwl/tracing";
 import {
@@ -29,14 +30,21 @@ import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import { getIdentityType } from "@src/utils/get-identity-type";
+import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = (request, response): Promise<void> => {
+  const webErrors = {
+    badRequest: ERRORS_DATA.BAD_REQUEST,
+    temporaryIdentityNotFound: ERRORS_DATA.TEMPORARY_IDENTITY_NOT_FOUND,
+    temporaryIdentitiesNotFound: ERRORS_DATA.TEMPORARIES_IDENTITY_NOT_FOUND,
+    connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+  };
+
   return getTracer().span(
     "send-identity-validation-code handler",
     async (span) => {
       if (!request.body.eventId) {
-        // WebError
-        throw new Error();
+        throw webErrorFactory(webErrors.badRequest);
       }
 
       const userCookie = await getServerSideCookies<UserCookie>(request, {
@@ -49,8 +57,7 @@ const handler: Handler = (request, response): Promise<void> => {
         const user = await getDBUserFromSub(userCookie.sub);
 
         if (!user?.temporary_identities) {
-          // WebError
-          throw new Error();
+          throw webErrorFactory(webErrors.temporaryIdentitiesNotFound);
         }
 
         const temporaryIdentity = user.temporary_identities.find(
@@ -58,8 +65,7 @@ const handler: Handler = (request, response): Promise<void> => {
         );
 
         if (!temporaryIdentity) {
-          // WebError
-          throw new Error();
+          throw webErrorFactory(webErrors.temporaryIdentityNotFound);
         }
 
         const { type, value, expiresAt, primary } = temporaryIdentity;
@@ -115,8 +121,11 @@ const handler: Handler = (request, response): Promise<void> => {
               return;
             }
 
-            response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-            response.end();
+            if (error instanceof ConnectUnreachableError) {
+              throw webErrorFactory(webErrors.connectUnreachable);
+            }
+
+            throw error;
           });
       }
 

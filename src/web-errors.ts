@@ -24,7 +24,17 @@ const ERRORS_DATA = {
   IDENTITY_NOT_FOUND: {
     code: "identity_not_found",
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
-    message: "An unexpected error occurred",
+    message: "Identity not found",
+  },
+  TEMPORARY_IDENTITY_NOT_FOUND: {
+    code: "temporary_identity_not_found",
+    httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
+    message: "Temporary Identity not found",
+  },
+  TEMPORARIES_IDENTITY_NOT_FOUND: {
+    code: "temporaries_identity_not_found",
+    httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
+    message: "Temporary Identity list not found",
   },
 };
 
