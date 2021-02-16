@@ -22,7 +22,7 @@ const ValidateIdentityForm: React.FC<{
   const [validationCode, setValidationCode] = React.useState<string>("");
   const [flashMessage, setFlashMessage] = React.useState<string>("");
   const [formID, setFormID] = React.useState<string>(uuidv4());
-  const [reSentEventId, setReSentEventId] = React.useState<string | null>(null);
+
   const router = useRouter();
 
   return (
@@ -31,10 +31,7 @@ const ValidateIdentityForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
-          await validateIdentity(
-            validationCode,
-            reSentEventId ? reSentEventId : eventId,
-          )
+          await validateIdentity(validationCode, eventId)
             .then((path) => {
               router && router.push(path);
             })
@@ -83,7 +80,9 @@ const ValidateIdentityForm: React.FC<{
             { eventId },
           )
             .then(async (response) => await response.json())
-            .then(({ eventId }) => setReSentEventId(eventId));
+            .then(({ eventId }) =>
+              router.push(`/account/logins/${type}/validation/${eventId}`),
+            );
         }}
       >
         Resend confirmation code
