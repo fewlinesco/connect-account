@@ -4,7 +4,6 @@ import OAuth2Client, {
 
 type Config = {
   connectAccountURL: string;
-  connectAccountTheme: string;
   dynamoRegion: string;
   dynamoDbEndpoint: string;
   dynamoAccessKeyID: string;
@@ -33,7 +32,6 @@ type Config = {
 
 const config: Config = {
   connectAccountURL: "",
-  connectAccountTheme: "",
   dynamoRegion: "",
   dynamoDbEndpoint: "",
   dynamoAccessKeyID: "",
@@ -65,7 +63,6 @@ function handleEnvVars(): void {
     process.env.CONNECT_ACCOUNT_HOSTNAME ||
     `${process.env.HEROKU_APP_NAME}.herokuapp.com`;
   config.connectAccountURL = appHostname ? `https://${appHostname}` : "";
-  config.connectAccountTheme = process.env.CONNECT_ACCOUNT_THEME || "fewlines";
   config.dynamoRegion = process.env.DYNAMODB_REGION || "";
   config.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";
   config.dynamoAccessKeyID = process.env.DYNAMODB_ACCESS_KEY_ID || "";
