@@ -44,8 +44,6 @@ const SetPasswordForm: React.FC<{
               passwordInput,
             );
 
-            console.log(restrictionRules);
-
             if (restrictionRules) {
               setPasswordRestrictionError(restrictionRules);
 
