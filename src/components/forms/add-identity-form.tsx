@@ -2,7 +2,7 @@ import "react-phone-number-input/style.css";
 import { IdentityTypes } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
-import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
+import PhoneInput from "react-phone-number-input";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
@@ -61,7 +61,7 @@ const AddIdentityForm: React.FC<{
         <p>
           {getIdentityType(type) === IdentityTypes.PHONE
             ? "phone number"
-            : "email address"}{" "}
+            : "email address "}
           *
         </p>
         {getIdentityType(type) === IdentityTypes.EMAIL ? (
@@ -92,13 +92,6 @@ const AddIdentityForm: React.FC<{
                 primary: identity.primary,
               });
             }}
-            error={
-              identity.value
-                ? isValidPhoneNumber(identity.value)
-                  ? undefined
-                  : "Invalid phone number"
-                : "Phone number required"
-            }
           />
         )}
         <Label>
