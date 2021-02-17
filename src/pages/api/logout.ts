@@ -16,9 +16,6 @@ import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = (_request, response): Promise<void> => {
   const webErrors = {
-    badRequest: ERRORS_DATA.BAD_REQUEST,
-    identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
-    connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
     cookieDeletionFailed: ERRORS_DATA.COOKIE_DELETION_FAILED,
   };
 

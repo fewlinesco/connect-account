@@ -108,6 +108,8 @@ const handler: Handler = (request, response): Promise<void> => {
             return;
           })
           .catch((error) => {
+            span.setDisclosedAttribute("is validation code sent", false);
+
             if (error instanceof IdentityAlreadyUsedError) {
               span.setDisclosedAttribute(
                 "Identity input already used",

@@ -55,6 +55,8 @@ const handler: Handler = async (request, response) => {
           return;
         })
         .catch((error) => {
+          span.setDisclosedAttribute("password created or updated", false);
+
           if (error instanceof InvalidPasswordInputError) {
             span.setDisclosedAttribute("invalid password input", true);
 
@@ -62,7 +64,6 @@ const handler: Handler = async (request, response) => {
 
             throw webErrorFactory(webErrors.invalidPasswordInput);
           }
-          span.setDisclosedAttribute("password created or updated", false);
 
           throw webErrorFactory(webErrors.connectUnreachable);
         });

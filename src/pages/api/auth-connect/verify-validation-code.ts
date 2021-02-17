@@ -31,7 +31,6 @@ import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = async (request, response) => {
   const webErrors = {
-    badRequest: ERRORS_DATA.BAD_REQUEST,
     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
     temporaryIdentityNotFound: ERRORS_DATA.TEMPORARY_IDENTITY_NOT_FOUND,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
@@ -200,6 +199,7 @@ const handler: Handler = async (request, response) => {
       }
     } else {
       span.setDisclosedAttribute("user found", false);
+
       throw webErrorFactory(webErrors.noUserFound);
     }
   });

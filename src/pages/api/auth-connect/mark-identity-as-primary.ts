@@ -66,6 +66,8 @@ const handler: Handler = async (request, response) => {
             return;
           })
           .catch((error) => {
+            span.setDisclosedAttribute("is Identity marked as primary", false);
+
             if (error instanceof GraphqlErrors) {
               span.setDisclosedAttribute("Identity not found", error.message);
               throw webErrorFactory(webErrors.identityNotFound);
@@ -76,7 +78,6 @@ const handler: Handler = async (request, response) => {
               throw webErrorFactory(webErrors.connectUnreachable);
             }
 
-            span.setDisclosedAttribute("is Identity marked as primary", false);
             throw error;
           });
       }

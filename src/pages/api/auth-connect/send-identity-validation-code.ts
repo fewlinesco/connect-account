@@ -35,9 +35,7 @@ import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 const handler: Handler = (request, response): Promise<void> => {
   const webErrors = {
     badRequest: ERRORS_DATA.BAD_REQUEST,
-    identityInputCantBeBLank: ERRORS_DATA.IDENTITY_INPUT_CANT_BE_BLANK,
-    temporaryIdentityNotFound: ERRORS_DATA.TEMPORARY_IDENTITY_NOT_FOUND,
-    temporaryIdentitiesNotFound: ERRORS_DATA.TEMPORARIES_IDENTITY_NOT_FOUND,
+    identityInputCantBeBlank: ERRORS_DATA.IDENTITY_INPUT_CANT_BE_BLANK,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
   };
 
@@ -97,6 +95,8 @@ const handler: Handler = (request, response): Promise<void> => {
             return;
           })
           .catch((error) => {
+            span.setDisclosedAttribute("is validation code sent", false);
+
             if (error instanceof IdentityAlreadyUsedError) {
               span.setDisclosedAttribute(
                 "Identity input already used",
@@ -112,7 +112,7 @@ const handler: Handler = (request, response): Promise<void> => {
                 error.message,
               );
 
-              throw webErrorFactory(webErrors.identityInputCantBeBLank);
+              throw webErrorFactory(webErrors.identityInputCantBeBlank);
             }
 
             if (error instanceof ConnectUnreachableError) {

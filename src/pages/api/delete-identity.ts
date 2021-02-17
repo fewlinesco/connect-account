@@ -61,6 +61,7 @@ const handler: Handler = (request, response): Promise<void> => {
         return;
       })
       .catch((error) => {
+        span.setDisclosedAttribute("is Identity removed", false);
         if (error instanceof GraphqlErrors) {
           span.setDisclosedAttribute("GraphQL error", error.message);
 
