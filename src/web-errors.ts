@@ -11,6 +11,11 @@ const ERRORS_DATA = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: "Request malformed",
   },
+  IDENTITY_INPUT_CANT_BE_BLANK: {
+    code: "identity_input_cant_be_blank",
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: "Identity input can't be blank",
+  },
   UNEXPECTED_ERROR: {
     code: "unexpected_error",
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -24,7 +29,17 @@ const ERRORS_DATA = {
   IDENTITY_NOT_FOUND: {
     code: "identity_not_found",
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
-    message: "An unexpected error occurred",
+    message: "Identity not found",
+  },
+  TEMPORARY_IDENTITY_NOT_FOUND: {
+    code: "temporary_identity_not_found",
+    httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
+    message: "Temporary Identity not found",
+  },
+  TEMPORARIES_IDENTITY_NOT_FOUND: {
+    code: "temporaries_identity_not_found",
+    httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
+    message: "Temporary Identity list not found",
   },
 };
 
