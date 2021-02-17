@@ -46,7 +46,7 @@ class InvalidValidationCode extends Error {
   }
 }
 
-class NoUserFound extends Error {
+class NoUserFoundError extends Error {
   readonly message = "No User found";
 }
 
@@ -76,7 +76,7 @@ export {
   PhoneNumberInputValueShouldBeANumber,
   UnhandledIdentityType,
   InvalidValidationCode,
-  NoUserFound,
+  NoUserFoundError,
   NoTemporaryIdentity,
   TemporaryIdentityExpired,
   DeleteUserCookieError,

@@ -1,6 +1,6 @@
 import { putUser } from "./put-user";
 import { TemporaryIdentity } from "@src/@types/temporary-identity";
-import { NoUserFound } from "@src/errors";
+import { NoUserFoundError } from "@src/errors";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 
 async function removeTemporaryIdentity(
@@ -21,7 +21,7 @@ async function removeTemporaryIdentity(
     return;
   }
 
-  throw new NoUserFound();
+  throw new NoUserFoundError();
 }
 
 export { removeTemporaryIdentity };

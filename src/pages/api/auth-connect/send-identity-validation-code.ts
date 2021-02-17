@@ -76,8 +76,8 @@ const handler: Handler = (request, response): Promise<void> => {
 
           const verificationCodeMessage =
             getIdentityType(identityInput.type) === IdentityTypes.EMAIL
-              ? "Confirmation email has been sent"
-              : "Confirmation SMS has been sent";
+              ? "A confirmation email has been sent"
+              : "A confirmation SMS has been sent";
 
           setAlertMessagesCookie(response, verificationCodeMessage);
 

@@ -19,7 +19,7 @@ import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
 import { config } from "@src/config";
-import { NoTemporaryIdentity, NoUserFound } from "@src/errors";
+import { NoTemporaryIdentity, NoUserFoundError } from "@src/errors";
 import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
@@ -136,7 +136,7 @@ const handler: Handler = async (request, response) => {
         throw new NoTemporaryIdentity();
       }
     } else {
-      throw new NoUserFound();
+      throw new NoUserFoundError();
     }
   });
 };
