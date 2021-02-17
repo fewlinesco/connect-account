@@ -22,13 +22,13 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
-import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
+import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import { getIdentityType } from "@src/utils/get-identity-type";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
@@ -42,9 +42,11 @@ const handler: Handler = (request, response): Promise<void> => {
   };
 
   return getTracer().span(
-    "send-identity-validation-code handler",
+    "re-send-identity-validation-code handler",
     async (span) => {
-      const { callbackUrl, identityInput, identityToUpdateId } = request.body;
+      if (!request.body.eventId) {
+        throw webErrorFactory(webErrors.badRequest);
+      }
 
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
@@ -53,13 +55,29 @@ const handler: Handler = (request, response): Promise<void> => {
       });
 
       if (userCookie) {
+        const user = await getDBUserFromSub(userCookie.sub);
+
+        if (!user?.temporary_identities) {
+          throw webErrorFactory(webErrors.temporaryIdentitiesNotFound);
+        }
+
+        const temporaryIdentity = user.temporary_identities.find(
+          ({ eventId }) => eventId === request.body.eventId,
+        );
+
+        if (!temporaryIdentity) {
+          throw webErrorFactory(webErrors.temporaryIdentityNotFound);
+        }
+
+        const { type, value, expiresAt, primary } = temporaryIdentity;
+
         const identity = {
-          type: getIdentityType(identityInput.type),
-          value: identityInput.value,
+          type: getIdentityType(type),
+          value: value,
         };
 
         return await sendIdentityValidationCode(config.managementCredentials, {
-          callbackUrl,
+          callbackUrl: "/",
           identity,
           localeCodeOverride: "en-EN",
           userId: userCookie.sub,
@@ -67,27 +85,20 @@ const handler: Handler = (request, response): Promise<void> => {
           .then(async ({ eventId }) => {
             span.setDisclosedAttribute("is validation code sent", true);
 
-            let temporaryIdentity: TemporaryIdentity = {
-              eventId: eventId,
-              value: identityInput.value,
-              type: identityInput.type,
-              expiresAt: identityInput.expiresAt,
-              primary: identityInput.primary,
+            const temporaryIdentity = {
+              eventId,
+              value,
+              type,
+              expiresAt,
+              primary,
             };
-
-            if (identityToUpdateId) {
-              temporaryIdentity = {
-                ...temporaryIdentity,
-                identityToUpdateId,
-              };
-            }
 
             await insertTemporaryIdentity(userCookie.sub, temporaryIdentity);
 
             const verificationCodeMessage =
-              getIdentityType(identityInput.type) === IdentityTypes.EMAIL
-                ? "A confirmation email has been sent"
-                : "A confirmation SMS has been sent";
+              getIdentityType(type) === IdentityTypes.EMAIL
+                ? "A new confirmation email has been sent"
+                : "A new confirmation SMS has been sent";
 
             setAlertMessagesCookie(response, verificationCodeMessage);
 
@@ -143,7 +154,6 @@ const wrappedHandler = wrapMiddlewares(
     withAuth,
   ],
   handler,
-  "/api/auth-connect/send-identity-validation-code",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
