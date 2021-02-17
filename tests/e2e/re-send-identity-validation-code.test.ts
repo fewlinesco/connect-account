@@ -25,7 +25,7 @@ describe("Account Web Application re-send Identity validation code", () => {
         "--start-maximized",
         "--disable-dev-shm",
       ],
-      headless: false,
+      headless: true,
     });
   });
 
