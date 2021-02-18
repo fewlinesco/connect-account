@@ -151,6 +151,7 @@ const wrappedHandler = wrapMiddlewares(
     withAuth,
   ],
   handler,
+  "/api/auth-connect/verify-validation-code",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

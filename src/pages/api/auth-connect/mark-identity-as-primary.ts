@@ -82,6 +82,7 @@ const wrappedHandler = wrapMiddlewares(
     withAuth,
   ],
   handler,
+  "/api/auth-connect/mark-identity-as-primary",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
