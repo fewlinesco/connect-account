@@ -50,44 +50,44 @@ const handler: Handler = async (request, response) => {
         identityId,
       );
 
-      if (isAuthorized) {
+      if (!isAuthorized) {
         span.setDisclosedAttribute(
           "is mark Identity as primary authorized",
-          true,
+          false,
         );
 
-        return markIdentityAsPrimary(config.managementCredentials, identityId)
-          .then(() => {
-            span.setDisclosedAttribute("is Identity marked as primary", true);
-
-            response.statusCode = HttpStatus.OK;
-            response.setHeader("Content-type", "application/json");
-            response.end();
-            return;
-          })
-          .catch((error) => {
-            span.setDisclosedAttribute("is Identity marked as primary", false);
-
-            if (error instanceof GraphqlErrors) {
-              span.setDisclosedAttribute("Identity not found", error.message);
-              throw webErrorFactory(webErrors.identityNotFound);
-            }
-
-            if (error instanceof ConnectUnreachableError) {
-              span.setDisclosedAttribute("Connect unreachable", error.message);
-              throw webErrorFactory(webErrors.connectUnreachable);
-            }
-
-            throw error;
-          });
+        throw webErrorFactory(webErrors.badRequest);
       }
 
       span.setDisclosedAttribute(
-        "is identity marked as primary authorized",
-        false,
+        "is mark Identity as primary authorized",
+        true,
       );
 
-      throw webErrorFactory(webErrors.badRequest);
+      return markIdentityAsPrimary(config.managementCredentials, identityId)
+        .then(() => {
+          span.setDisclosedAttribute("is Identity marked as primary", true);
+
+          response.statusCode = HttpStatus.OK;
+          response.setHeader("Content-type", "application/json");
+          response.end();
+          return;
+        })
+        .catch((error) => {
+          span.setDisclosedAttribute("is Identity marked as primary", false);
+
+          if (error instanceof GraphqlErrors) {
+            span.setDisclosedAttribute("Identity not found", error.message);
+            throw webErrorFactory(webErrors.identityNotFound);
+          }
+
+          if (error instanceof ConnectUnreachableError) {
+            span.setDisclosedAttribute("exception.message", error.message);
+            throw webErrorFactory(webErrors.connectUnreachable);
+          }
+
+          throw error;
+        });
     } else {
       response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
       response.setHeader("location", "/");

@@ -1,4 +1,5 @@
 import {
+  ConnectUnreachableError,
   createOrUpdatePassword,
   InvalidPasswordInputError,
 } from "@fewlines/connect-management";
@@ -63,6 +64,11 @@ const handler: Handler = async (request, response) => {
             webErrors.invalidPasswordInput.errorDetails = error.rules;
 
             throw webErrorFactory(webErrors.invalidPasswordInput);
+          }
+
+          if (error instanceof ConnectUnreachableError) {
+            span.setDisclosedAttribute("exception.message", error.message);
+            throw webErrorFactory(webErrors.connectUnreachable);
           }
 
           throw webErrorFactory(webErrors.connectUnreachable);

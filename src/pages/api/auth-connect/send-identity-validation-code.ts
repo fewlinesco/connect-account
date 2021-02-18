@@ -37,6 +37,7 @@ const handler: Handler = (request, response): Promise<void> => {
     badRequest: ERRORS_DATA.BAD_REQUEST,
     identityInputCantBeBlank: ERRORS_DATA.IDENTITY_INPUT_CANT_BE_BLANK,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+    databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
   };
 
   return getTracer().span(
@@ -80,7 +81,15 @@ const handler: Handler = (request, response): Promise<void> => {
               };
             }
 
-            await insertTemporaryIdentity(userCookie.sub, temporaryIdentity);
+            await insertTemporaryIdentity(
+              userCookie.sub,
+              temporaryIdentity,
+            ).catch((error) => {
+              span.setDisclosedAttribute("database reachable", false);
+              span.setDisclosedAttribute("exception.message", error.message);
+
+              throw webErrorFactory(webErrors.databaseUnreachable);
+            });
 
             const verificationCodeMessage =
               getIdentityType(identityInput.type) === IdentityTypes.EMAIL

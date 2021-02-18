@@ -21,12 +21,6 @@ const ERRORS_DATA = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: "Invalid body",
   },
-  INVALID_PASSWORD_INPUT: {
-    code: "invalid_password_input",
-    httpStatus: HttpStatus.UNPROCESSABLE_ENTITY,
-    message: "Invalid password input",
-    errorDetails: {},
-  },
   INVALID_VALIDATION_CODE: {
     code: "invalid_validation_code",
     httpStatus: HttpStatus.BAD_REQUEST,
@@ -37,6 +31,12 @@ const ERRORS_DATA = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: "Temporary Identity expired",
   },
+  INVALID_PASSWORD_INPUT: {
+    code: "invalid_password_input",
+    httpStatus: HttpStatus.UNPROCESSABLE_ENTITY,
+    message: "Invalid password input",
+    errorDetails: {},
+  },
   UNEXPECTED_ERROR: {
     code: "unexpected_error",
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -46,6 +46,11 @@ const ERRORS_DATA = {
     code: "connect_unreachable",
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
     message: "Unable to reach Connect",
+  },
+  DATABASE_UNREACHABLE: {
+    code: "database_unreachable",
+    httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
+    message: "Unable to reach database",
   },
   IDENTITY_NOT_FOUND: {
     code: "identity_not_found",
