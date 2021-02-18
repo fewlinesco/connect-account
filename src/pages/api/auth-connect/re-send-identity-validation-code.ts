@@ -154,6 +154,7 @@ const wrappedHandler = wrapMiddlewares(
     withAuth,
   ],
   handler,
+  "/api/auth-connect/re-send-identity-validation-code",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

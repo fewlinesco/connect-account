@@ -42,6 +42,7 @@ const wrappedHandler = wrapMiddlewares(
     withSentry,
   ],
   handler,
+  "/api/logout",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

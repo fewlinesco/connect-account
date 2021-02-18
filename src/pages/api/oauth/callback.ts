@@ -4,6 +4,7 @@ import {
   loggingMiddleware,
   recoveryMiddleware,
   tracingMiddleware,
+  wrapMiddlewares,
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -12,7 +13,6 @@ import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { oauth2Client, config } from "@src/config";
 import { logger } from "@src/logger";
 import { withSentry } from "@src/middlewares/with-sentry";
-import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import getTracer from "@src/tracer";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
@@ -80,6 +80,7 @@ const wrappedHandler = wrapMiddlewares(
     withSentry,
   ],
   handler,
+  "/api/oauth/callback",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

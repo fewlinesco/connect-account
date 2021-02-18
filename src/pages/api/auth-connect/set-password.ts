@@ -73,6 +73,7 @@ const wrappedHandler = wrapMiddlewares(
     withAuth,
   ],
   handler,
+  "/api/auth-connect/set-password",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
