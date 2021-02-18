@@ -14,6 +14,7 @@ const LogoutAnchor: React.FC = () => {
 
 const LogoutStyle = styled.div`
   margin: 2rem 0 0 2rem;
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
 
   @media ${deviceBreakpoints.m} {
     padding-bottom: 2rem;
