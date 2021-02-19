@@ -12,7 +12,7 @@ import { getIdentityType } from "@src/utils/get-identity-type";
 async function addIdentity(
   identityInput: InMemoryTemporaryIdentity,
   identityToUpdateId?: Identity["id"],
-): Promise<{ eventId: string; errorMessage?: string }> {
+): Promise<{ eventId: string } | { code: string; message: string }> {
   const body = {
     callbackUrl: "/",
     identityInput,
@@ -41,6 +41,8 @@ async function addIdentity(
         throw error;
       }
     }
+
+    console.log(response.body);
 
     return response.json();
   });

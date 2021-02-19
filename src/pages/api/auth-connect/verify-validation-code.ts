@@ -77,9 +77,8 @@ const handler: Handler = async (request, response) => {
       span.setDisclosedAttribute("is temporary Identity found", true);
 
       await removeTemporaryIdentity(userCookie.sub, temporaryIdentity).catch(
-        (error) => {
+        () => {
           span.setDisclosedAttribute("database reachable", false);
-          span.setDisclosedAttribute("exception.message", error.message);
 
           throw webErrorFactory(webErrors.databaseUnreachable);
         },
@@ -202,9 +201,8 @@ const handler: Handler = async (request, response) => {
         span.setDisclosedAttribute("temporary Identity expired", true);
 
         await removeTemporaryIdentity(userCookie.sub, temporaryIdentity).catch(
-          (error) => {
+          () => {
             span.setDisclosedAttribute("database reachable", false);
-            span.setDisclosedAttribute("exception.message", error.message);
 
             throw webErrorFactory(webErrors.databaseUnreachable);
           },

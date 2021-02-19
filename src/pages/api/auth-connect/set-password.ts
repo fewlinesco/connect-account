@@ -42,38 +42,42 @@ const handler: Handler = async (request, response) => {
       cookieSalt: config.cookieSalt,
     });
 
-    if (userCookie) {
-      return createOrUpdatePassword(config.managementCredentials, {
-        cleartextPassword: passwordInput,
-        userId: userCookie.sub,
-      })
-        .then(() => {
-          span.setDisclosedAttribute("password created or updated", true);
-
-          response.setHeader("Content-Type", "application/json");
-          response.statusCode = HttpStatus.OK;
-          response.end();
-          return;
-        })
-        .catch((error) => {
-          span.setDisclosedAttribute("password created or updated", false);
-
-          if (error instanceof InvalidPasswordInputError) {
-            span.setDisclosedAttribute("invalid password input", true);
-
-            webErrors.invalidPasswordInput.errorDetails = error.rules;
-
-            throw webErrorFactory(webErrors.invalidPasswordInput);
-          }
-
-          if (error instanceof ConnectUnreachableError) {
-            span.setDisclosedAttribute("exception.message", error.message);
-            throw webErrorFactory(webErrors.connectUnreachable);
-          }
-
-          throw webErrorFactory(webErrors.connectUnreachable);
-        });
+    if (!userCookie) {
+      response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+      response.setHeader("location", "/");
+      response.end();
+      return;
     }
+
+    return createOrUpdatePassword(config.managementCredentials, {
+      cleartextPassword: passwordInput,
+      userId: userCookie.sub,
+    })
+      .then(() => {
+        span.setDisclosedAttribute("password created or updated", true);
+
+        response.setHeader("Content-Type", "application/json");
+        response.statusCode = HttpStatus.OK;
+        response.end();
+        return;
+      })
+      .catch((error) => {
+        span.setDisclosedAttribute("password created or updated", false);
+
+        if (error instanceof InvalidPasswordInputError) {
+          span.setDisclosedAttribute("invalid password input", true);
+
+          webErrors.invalidPasswordInput.errorDetails = error.rules;
+
+          throw webErrorFactory(webErrors.invalidPasswordInput);
+        }
+
+        if (error instanceof ConnectUnreachableError) {
+          throw webErrorFactory(webErrors.connectUnreachable);
+        }
+
+        throw webErrorFactory(webErrors.connectUnreachable);
+      });
   });
 };
 

@@ -51,93 +51,80 @@ const handler: Handler = (request, response): Promise<void> => {
         cookieSalt: config.cookieSalt,
       });
 
-      if (userCookie) {
-        const identity = {
-          type: getIdentityType(identityInput.type),
-          value: identityInput.value,
-        };
-
-        return await sendIdentityValidationCode(config.managementCredentials, {
-          callbackUrl,
-          identity,
-          localeCodeOverride: "en-EN",
-          userId: userCookie.sub,
-        })
-          .then(async ({ eventId }) => {
-            span.setDisclosedAttribute("is validation code sent", true);
-
-            let temporaryIdentity: TemporaryIdentity = {
-              eventId: eventId,
-              value: identityInput.value,
-              type: identityInput.type,
-              expiresAt: identityInput.expiresAt,
-              primary: identityInput.primary,
-            };
-
-            if (identityToUpdateId) {
-              temporaryIdentity = {
-                ...temporaryIdentity,
-                identityToUpdateId,
-              };
-            }
-
-            await insertTemporaryIdentity(
-              userCookie.sub,
-              temporaryIdentity,
-            ).catch((error) => {
-              span.setDisclosedAttribute("database reachable", false);
-              span.setDisclosedAttribute("exception.message", error.message);
-
-              throw webErrorFactory(webErrors.databaseUnreachable);
-            });
-
-            const verificationCodeMessage =
-              getIdentityType(identityInput.type) === IdentityTypes.EMAIL
-                ? "A confirmation email has been sent"
-                : "A confirmation SMS has been sent";
-
-            setAlertMessagesCookie(response, verificationCodeMessage);
-
-            response.statusCode = HttpStatus.OK;
-            response.setHeader("Content-Type", "application/json");
-            response.json({ eventId });
-            return;
-          })
-          .catch((error) => {
-            span.setDisclosedAttribute("is validation code sent", false);
-
-            if (error instanceof IdentityAlreadyUsedError) {
-              span.setDisclosedAttribute(
-                "Identity input already used",
-                error.message,
-              );
-
-              throw webErrorFactory(webErrors.badRequest);
-            }
-
-            if (error instanceof IdentityValueCantBeBlankError) {
-              span.setDisclosedAttribute(
-                "Identity input can't be blank",
-                error.message,
-              );
-
-              throw webErrorFactory(webErrors.identityInputCantBeBlank);
-            }
-
-            if (error instanceof ConnectUnreachableError) {
-              span.setDisclosedAttribute("Connect unreachable", error.message);
-
-              throw webErrorFactory(webErrors.connectUnreachable);
-            }
-
-            throw error;
-          });
+      if (!userCookie) {
+        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+        response.setHeader("location", "/");
+        response.end();
+        return;
       }
 
-      response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-      response.setHeader("location", "/");
-      response.end();
-      return;
+      const identity = {
+        type: getIdentityType(identityInput.type),
+        value: identityInput.value,
+      };
+
+      return await sendIdentityValidationCode(config.managementCredentials, {
+        callbackUrl,
+        identity,
+        localeCodeOverride: "en-EN",
+        userId: userCookie.sub,
+      })
+        .then(async ({ eventId }) => {
+          span.setDisclosedAttribute("is validation code sent", true);
+
+          let temporaryIdentity: TemporaryIdentity = {
+            eventId: eventId,
+            value: identityInput.value,
+            type: identityInput.type,
+            expiresAt: identityInput.expiresAt,
+            primary: identityInput.primary,
+          };
+
+          if (identityToUpdateId) {
+            temporaryIdentity = {
+              ...temporaryIdentity,
+              identityToUpdateId,
+            };
+          }
+
+          await insertTemporaryIdentity(
+            userCookie.sub,
+            temporaryIdentity,
+          ).catch(() => {
+            span.setDisclosedAttribute("database reachable", false);
+
+            throw webErrorFactory(webErrors.databaseUnreachable);
+          });
+
+          const verificationCodeMessage =
+            getIdentityType(identityInput.type) === IdentityTypes.EMAIL
+              ? "A confirmation email has been sent"
+              : "A confirmation SMS has been sent";
+
+          setAlertMessagesCookie(response, verificationCodeMessage);
+
+          response.statusCode = HttpStatus.OK;
+          response.setHeader("Content-Type", "application/json");
+          response.json({ eventId });
+          return;
+        })
+        .catch((error) => {
+          span.setDisclosedAttribute("is validation code sent", false);
+
+          if (error instanceof IdentityAlreadyUsedError) {
+            throw webErrorFactory(webErrors.badRequest);
+          }
+
+          if (error instanceof IdentityValueCantBeBlankError) {
+            throw webErrorFactory(webErrors.identityInputCantBeBlank);
+          }
+
+          if (error instanceof ConnectUnreachableError) {
+            throw webErrorFactory(webErrors.connectUnreachable);
+          }
+
+          throw error;
+        });
     },
   );
 };

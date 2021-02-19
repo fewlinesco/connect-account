@@ -44,56 +44,51 @@ const handler: Handler = async (request, response) => {
       cookieSalt: config.cookieSalt,
     });
 
-    if (userCookie) {
-      const isAuthorized = await isMarkingIdentityAsPrimaryAuthorized(
-        userCookie.sub,
-        identityId,
-      );
-
-      if (!isAuthorized) {
-        span.setDisclosedAttribute(
-          "is mark Identity as primary authorized",
-          false,
-        );
-
-        throw webErrorFactory(webErrors.badRequest);
-      }
-
-      span.setDisclosedAttribute(
-        "is mark Identity as primary authorized",
-        true,
-      );
-
-      return markIdentityAsPrimary(config.managementCredentials, identityId)
-        .then(() => {
-          span.setDisclosedAttribute("is Identity marked as primary", true);
-
-          response.statusCode = HttpStatus.OK;
-          response.setHeader("Content-type", "application/json");
-          response.end();
-          return;
-        })
-        .catch((error) => {
-          span.setDisclosedAttribute("is Identity marked as primary", false);
-
-          if (error instanceof GraphqlErrors) {
-            span.setDisclosedAttribute("Identity not found", error.message);
-            throw webErrorFactory(webErrors.identityNotFound);
-          }
-
-          if (error instanceof ConnectUnreachableError) {
-            span.setDisclosedAttribute("exception.message", error.message);
-            throw webErrorFactory(webErrors.connectUnreachable);
-          }
-
-          throw error;
-        });
-    } else {
+    if (!userCookie) {
       response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
       response.setHeader("location", "/");
       response.end();
       return;
     }
+
+    const isAuthorized = await isMarkingIdentityAsPrimaryAuthorized(
+      userCookie.sub,
+      identityId,
+    );
+
+    if (!isAuthorized) {
+      span.setDisclosedAttribute(
+        "is mark Identity as primary authorized",
+        false,
+      );
+
+      throw webErrorFactory(webErrors.badRequest);
+    }
+
+    span.setDisclosedAttribute("is mark Identity as primary authorized", true);
+
+    return markIdentityAsPrimary(config.managementCredentials, identityId)
+      .then(() => {
+        span.setDisclosedAttribute("is Identity marked as primary", true);
+
+        response.statusCode = HttpStatus.OK;
+        response.setHeader("Content-type", "application/json");
+        response.end();
+        return;
+      })
+      .catch((error) => {
+        span.setDisclosedAttribute("is Identity marked as primary", false);
+
+        if (error instanceof GraphqlErrors) {
+          throw webErrorFactory(webErrors.identityNotFound);
+        }
+
+        if (error instanceof ConnectUnreachableError) {
+          throw webErrorFactory(webErrors.connectUnreachable);
+        }
+
+        throw error;
+      });
   });
 };
 
