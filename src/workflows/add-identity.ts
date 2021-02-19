@@ -42,8 +42,6 @@ async function addIdentity(
       }
     }
 
-    console.log(response.body);
-
     return response.json();
   });
 }

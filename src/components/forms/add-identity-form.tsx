@@ -36,7 +36,6 @@ const AddIdentityForm: React.FC<{
         onSubmit={async () => {
           await addIdentity(identity)
             .then((response) => {
-              console.log(response);
               if ("message" in response) {
                 setFormID(uuidv4());
                 setErrorMessage(response.message);

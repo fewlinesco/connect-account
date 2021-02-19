@@ -39,15 +39,15 @@ const UpdateIdentityForm: React.FC<{
         formID={formID}
         onSubmit={async () => {
           await addIdentity(identity, currentIdentity.id)
-            .then(async ({ eventId, errorMessage }) => {
-              if (errorMessage) {
+            .then(async (response) => {
+              if ("message" in response) {
                 setFormID(uuidv4());
-                setErrorMessage(errorMessage);
+                setErrorMessage(response.message);
               }
-              if (eventId) {
+              if ("eventId" in response) {
                 router &&
                   router.push(
-                    `/account/logins/${currentIdentity.type}/validation/${eventId}`,
+                    `/account/logins/${currentIdentity.type}/validation/${response.eventId}`,
                   );
               }
             })
