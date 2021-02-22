@@ -8,6 +8,7 @@ import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
+import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { Locale } from "@src/components/pages/locale/locale";
 import { logger } from "@src/logger";
@@ -18,7 +19,9 @@ import getTracer from "@src/tracer";
 const LocalePage: React.FC = () => {
   return (
     <Layout>
-      <Locale />
+      <Container>
+        <Locale />
+      </Container>
     </Layout>
   );
 };

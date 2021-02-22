@@ -10,15 +10,14 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 const Locale: React.FC = () => {
   return (
     <>
-      <Container>
-        <h1>Switch Language</h1>
-        <div className="search-input">
-          <Input />
-          <div className="magnifying-glass">
-            <MagnifyingGlass />
-          </div>
+      <Title>Switch Language</Title>
+      <SearchInputContainer>
+        <Input />
+        <div className="magnifying-glass">
+          <MagnifyingGlass />
         </div>
-      </Container>
+      </SearchInputContainer>
+
       <LanguagesList>
         <ListItem>
           <Value>English</Value>
@@ -30,18 +29,13 @@ const Locale: React.FC = () => {
   );
 };
 
-const Container = styled.div`
+const SearchInputContainer = styled.div`
+  position: relative;
   width: 90%;
-  margin: 0 auto;
+  margin: ${({ theme }) => theme.spaces.s} auto 0 auto;
 
   @media ${deviceBreakpoints.m} {
     width: 100%;
-  }
-
-  .search-input {
-    display: flex;
-    position: relative;
-    margin-top: ${({ theme }) => theme.spaces.s};
   }
 
   .magnifying-glass {
@@ -49,6 +43,15 @@ const Container = styled.div`
     right: 1.5rem;
     bottom: 2.8rem;
     cursor: pointer;
+  }
+`;
+
+const Title = styled.h1`
+  margin-top: 0.5rem;
+  margin-bottom: 5rem;
+
+  @media ${deviceBreakpoints.m} {
+    margin-bottom: 4rem;
   }
 `;
 
