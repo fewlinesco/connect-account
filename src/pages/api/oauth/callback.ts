@@ -14,12 +14,15 @@ import { oauth2Client, config } from "@src/config";
 import { logger } from "@src/logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
-const tracer = getTracer();
-
 const handler: Handler = (request, response): Promise<void> => {
-  return tracer.span("callback handler", async (span) => {
+  const webErrors = {
+    databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
+  };
+
+  return getTracer().span("callback handler", async (span) => {
     const {
       access_token,
       refresh_token,
@@ -39,7 +42,11 @@ const handler: Handler = (request, response): Promise<void> => {
       refresh_token,
     };
 
-    await getAndPutUser(oAuth2UserInfo);
+    await getAndPutUser(oAuth2UserInfo).catch(() => {
+      span.setDisclosedAttribute("database reachable", false);
+
+      throw webErrorFactory(webErrors.databaseUnreachable);
+    });
 
     span.setDisclosedAttribute("user updated on DB", true);
 
@@ -73,10 +80,10 @@ const handler: Handler = (request, response): Promise<void> => {
 
 const wrappedHandler = wrapMiddlewares(
   [
-    tracingMiddleware(tracer),
-    recoveryMiddleware(tracer),
-    errorMiddleware(tracer),
-    loggingMiddleware(tracer, logger),
+    tracingMiddleware(getTracer()),
+    recoveryMiddleware(getTracer()),
+    errorMiddleware(getTracer()),
+    loggingMiddleware(getTracer(), logger),
     withSentry,
   ],
   handler,

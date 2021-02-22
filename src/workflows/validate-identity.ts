@@ -1,6 +1,7 @@
 import { HttpVerbs } from "@src/@types/http-verbs";
 import { InvalidValidationCode, TemporaryIdentityExpired } from "@src/errors";
 import { fetchJson } from "@src/utils/fetch-json";
+import { ERRORS_DATA } from "@src/web-errors";
 
 async function validateIdentity(
   validationCode: string,
@@ -11,13 +12,13 @@ async function validateIdentity(
     eventId,
   }).then(async (response) => {
     if (response.status >= 400) {
-      const { error } = await response.json();
+      const { code } = await response.json();
 
-      if (error === "INVALID") {
+      if (code === ERRORS_DATA.INVALID_VALIDATION_CODE.code) {
         throw new InvalidValidationCode("Invalid validation code");
       }
 
-      if (error === "Temporary Identity Expired") {
+      if (code === ERRORS_DATA.TEMPORARY_IDENTITY_EXPIRED.code) {
         throw new TemporaryIdentityExpired();
       }
     }

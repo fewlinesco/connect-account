@@ -1,4 +1,5 @@
 import {
+  ConnectUnreachableError,
   createOrUpdatePassword,
   InvalidPasswordInputError,
 } from "@fewlines/connect-management";
@@ -19,12 +20,21 @@ import { logger } from "@src/logger";
 import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
-
-const tracer = getTracer();
+import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = async (request, response) => {
-  return tracer.span("set-password handler", async (span) => {
+  const webErrors = {
+    connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+    invalidPasswordInput: ERRORS_DATA.INVALID_PASSWORD_INPUT,
+    invalidBody: ERRORS_DATA.INVALID_BODY,
+  };
+
+  return getTracer().span("set-password handler", async (span) => {
     const { passwordInput } = request.body;
+
+    if (!passwordInput) {
+      throw webErrorFactory(webErrors.invalidBody);
+    }
 
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
@@ -32,43 +42,51 @@ const handler: Handler = async (request, response) => {
       cookieSalt: config.cookieSalt,
     });
 
-    if (userCookie) {
-      return createOrUpdatePassword(config.managementCredentials, {
-        cleartextPassword: passwordInput,
-        userId: userCookie.sub,
-      })
-        .then(() => {
-          span.setDisclosedAttribute("password created or updated", true);
-
-          response.setHeader("Content-Type", "application/json");
-          response.statusCode = HttpStatus.OK;
-          response.end();
-          return;
-        })
-        .catch((error) => {
-          if (error instanceof InvalidPasswordInputError) {
-            span.setDisclosedAttribute("invalid password input", true);
-
-            response.setHeader("Content-Type", "application/json");
-            response.statusCode = HttpStatus.UNPROCESSABLE_ENTITY;
-            response.json({ restrictionRulesError: error.rules });
-            return;
-          }
-
-          response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-          response.end();
-          return;
-        });
+    if (!userCookie) {
+      response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+      response.setHeader("location", "/");
+      response.end();
+      return;
     }
+
+    return createOrUpdatePassword(config.managementCredentials, {
+      cleartextPassword: passwordInput,
+      userId: userCookie.sub,
+    })
+      .then(() => {
+        span.setDisclosedAttribute("password created or updated", true);
+
+        response.setHeader("Content-Type", "application/json");
+        response.statusCode = HttpStatus.OK;
+        response.end();
+        return;
+      })
+      .catch((error) => {
+        span.setDisclosedAttribute("password created or updated", false);
+
+        if (error instanceof InvalidPasswordInputError) {
+          span.setDisclosedAttribute("invalid password input", true);
+
+          webErrors.invalidPasswordInput.errorDetails = error.rules;
+
+          throw webErrorFactory(webErrors.invalidPasswordInput);
+        }
+
+        if (error instanceof ConnectUnreachableError) {
+          throw webErrorFactory(webErrors.connectUnreachable);
+        }
+
+        throw webErrorFactory(webErrors.connectUnreachable);
+      });
   });
 };
 
 const wrappedHandler = wrapMiddlewares(
   [
-    tracingMiddleware(tracer),
-    recoveryMiddleware(tracer),
-    errorMiddleware(tracer),
-    loggingMiddleware(tracer, logger),
+    tracingMiddleware(getTracer()),
+    recoveryMiddleware(getTracer()),
+    errorMiddleware(getTracer()),
+    loggingMiddleware(getTracer(), logger),
     withSentry,
     withAuth,
   ],

@@ -5,7 +5,7 @@ import { ErrorSettingPassword } from "@src/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 
 type SetPasswordOutput = {
-  restrictionRulesError?: PasswordRules;
+  details?: PasswordRules;
 };
 
 async function setPassword(passwordInput: string): Promise<SetPasswordOutput> {

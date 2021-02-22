@@ -1,4 +1,8 @@
-import { markIdentityAsPrimary } from "@fewlines/connect-management";
+import {
+  ConnectUnreachableError,
+  GraphqlErrors,
+  markIdentityAsPrimary,
+} from "@fewlines/connect-management";
 import { getServerSideCookies, Endpoint, HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
@@ -17,12 +21,22 @@ import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
 import { isMarkingIdentityAsPrimaryAuthorized } from "@src/utils/is-marking-identity-as-primary-authorized";
-
-const tracer = getTracer();
+import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = async (request, response) => {
-  return tracer.span("mark-identity-as-primary handler", async (span) => {
+  const webErrors = {
+    badRequest: ERRORS_DATA.BAD_REQUEST,
+    identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
+    connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+    invalidBody: ERRORS_DATA.INVALID_BODY,
+  };
+
+  return getTracer().span("mark-identity-as-primary handler", async (span) => {
     const { identityId } = request.body;
+
+    if (!identityId) {
+      throw webErrorFactory(webErrors.invalidBody);
+    }
 
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
@@ -30,54 +44,60 @@ const handler: Handler = async (request, response) => {
       cookieSalt: config.cookieSalt,
     });
 
-    if (userCookie) {
-      const isAuthorized = await isMarkingIdentityAsPrimaryAuthorized(
-        userCookie.sub,
-        identityId,
-      );
-
-      if (isAuthorized) {
-        span.setDisclosedAttribute(
-          "is mark Identity as primary authorized",
-          true,
-        );
-
-        return markIdentityAsPrimary(
-          config.managementCredentials,
-          identityId,
-        ).then(() => {
-          span.setDisclosedAttribute("is Identity marked as primary", true);
-
-          response.statusCode = HttpStatus.OK;
-          response.setHeader("Content-type", "application/json");
-          response.end();
-          return;
-        });
-      }
-
-      span.setDisclosedAttribute(
-        "is identity marked as primary authorized",
-        false,
-      );
-
-      response.statusCode = HttpStatus.BAD_REQUEST;
-      response.end();
-      return;
-    } else {
+    if (!userCookie) {
       response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
       response.setHeader("location", "/");
       response.end();
       return;
     }
+
+    const isAuthorized = await isMarkingIdentityAsPrimaryAuthorized(
+      userCookie.sub,
+      identityId,
+    );
+
+    if (!isAuthorized) {
+      span.setDisclosedAttribute(
+        "is mark Identity as primary authorized",
+        false,
+      );
+
+      throw webErrorFactory(webErrors.badRequest);
+    }
+
+    span.setDisclosedAttribute("is mark Identity as primary authorized", true);
+
+    return markIdentityAsPrimary(config.managementCredentials, identityId)
+      .then(() => {
+        span.setDisclosedAttribute("is Identity marked as primary", true);
+
+        response.statusCode = HttpStatus.OK;
+        response.setHeader("Content-type", "application/json");
+        response.end();
+        return;
+      })
+      .catch((error) => {
+        span.setDisclosedAttribute("is Identity marked as primary", false);
+
+        if (error instanceof GraphqlErrors) {
+          throw webErrorFactory(webErrors.identityNotFound);
+        }
+
+        if (error instanceof ConnectUnreachableError) {
+          throw webErrorFactory(webErrors.connectUnreachable);
+        }
+
+        throw error;
+      });
   });
 };
 
 const wrappedHandler = wrapMiddlewares(
   [
-    tracingMiddleware(tracer),
-    recoveryMiddleware(tracer),
-    errorMiddleware(tracer),
-    loggingMiddleware(tracer, logger),
+    tracingMiddleware(getTracer()),
+    recoveryMiddleware(getTracer()),
+    errorMiddleware(getTracer()),
+    loggingMiddleware(getTracer(), logger),
     withSentry,
     withAuth,
   ],
