@@ -45,7 +45,7 @@ const LoginsOverview: React.FC<{
   const identitiesSectionList = Object.entries(IDENTITIES_SECTION_CONTENT);
 
   return (
-    <Container>
+    <>
       {identitiesSectionList.map(([sectionName, content], index) => {
         const lastOfTheList = index === identitiesSectionList.length - 1;
         let identitiesList: Identity[] = [];
@@ -82,7 +82,7 @@ const LoginsOverview: React.FC<{
           </Section>
         );
       })}
-    </Container>
+    </>
   );
 };
 
@@ -189,10 +189,6 @@ const SocialIdentitiesSection: React.FC<{
     </>
   );
 };
-
-const Container = styled.div`
-  margin: 0 0 10rem 0;
-`;
 
 const Section = styled.div<{
   lastOfTheList: boolean;
