@@ -18,7 +18,7 @@ describe("validateIdentity unit test", () => {
     expect.assertions(2);
 
     const mockedFetchResponse = new Response(
-      JSON.stringify({ error: "INVALID" }),
+      JSON.stringify({ code: "invalid_validation_code" }),
       {
         status: HttpStatus.BAD_REQUEST,
       },
@@ -36,7 +36,7 @@ describe("validateIdentity unit test", () => {
     expect.assertions(2);
 
     const mockedFetchResponse = new Response(
-      JSON.stringify({ error: "Temporary Identity Expired" }),
+      JSON.stringify({ code: "temporary_identity_expired" }),
       {
         status: HttpStatus.BAD_REQUEST,
       },

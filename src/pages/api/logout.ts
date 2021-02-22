@@ -9,19 +9,21 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
-import { DeleteUserCookieError } from "@src/errors";
 import { logger } from "@src/logger";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = (_request, response): Promise<void> => {
+  const webErrors = {
+    cookieDeletionFailed: ERRORS_DATA.COOKIE_DELETION_FAILED,
+  };
+
   return getTracer().span("logout handler", async (span) => {
     await deleteServerSideCookie(response, "user-cookie").catch(() => {
       span.setDisclosedAttribute("user logged out", false);
 
-      throw new DeleteUserCookieError(
-        "Error deleting UserCookie for login out",
-      );
+      throw webErrorFactory(webErrors.cookieDeletionFailed);
     });
 
     span.setDisclosedAttribute("user logged out", true);
@@ -42,6 +44,7 @@ const wrappedHandler = wrapMiddlewares(
     withSentry,
   ],
   handler,
+  "/api/logout",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
