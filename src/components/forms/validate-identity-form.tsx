@@ -86,14 +86,14 @@ const ValidateIdentityForm: React.FC<{
             );
         }}
       >
-        Resend confirmation code
+        Resend validation code
       </Button>
     </>
   );
 };
 
 const DidntReceiveCode = styled.p`
-  margin: ${({ theme }) => theme.spaces.xs} 0 ${({ theme }) => theme.spaces.xxs};
+  margin: ${({ theme }) => theme.spaces.s} 0 ${({ theme }) => theme.spaces.xs};
 `;
 
 const Value = styled.p`
