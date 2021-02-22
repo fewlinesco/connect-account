@@ -39,6 +39,7 @@ const handler: Handler = (request, response): Promise<void> => {
     temporaryIdentityNotFound: ERRORS_DATA.TEMPORARY_IDENTITY_NOT_FOUND,
     temporaryIdentitiesNotFound: ERRORS_DATA.TEMPORARIES_IDENTITY_NOT_FOUND,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+    databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
   };
 
   return getTracer().span(
@@ -54,92 +55,93 @@ const handler: Handler = (request, response): Promise<void> => {
         cookieSalt: config.cookieSalt,
       });
 
-      if (userCookie) {
-        const user = await getDBUserFromSub(userCookie.sub);
-
-        if (!user?.temporary_identities) {
-          throw webErrorFactory(webErrors.temporaryIdentitiesNotFound);
-        }
-
-        const temporaryIdentity = user.temporary_identities.find(
-          ({ eventId }) => eventId === request.body.eventId,
-        );
-
-        if (!temporaryIdentity) {
-          throw webErrorFactory(webErrors.temporaryIdentityNotFound);
-        }
-
-        const { type, value, expiresAt, primary } = temporaryIdentity;
-
-        const identity = {
-          type: getIdentityType(type),
-          value: value,
-        };
-
-        return await sendIdentityValidationCode(config.managementCredentials, {
-          callbackUrl: "/",
-          identity,
-          localeCodeOverride: "en-EN",
-          userId: userCookie.sub,
-        })
-          .then(async ({ eventId }) => {
-            span.setDisclosedAttribute("is validation code sent", true);
-
-            const temporaryIdentity = {
-              eventId,
-              value,
-              type,
-              expiresAt,
-              primary,
-            };
-
-            await insertTemporaryIdentity(userCookie.sub, temporaryIdentity);
-
-            const verificationCodeMessage =
-              getIdentityType(type) === IdentityTypes.EMAIL
-                ? "A new confirmation email has been sent"
-                : "A new confirmation SMS has been sent";
-
-            setAlertMessagesCookie(response, verificationCodeMessage);
-
-            response.statusCode = HttpStatus.OK;
-            response.setHeader("Content-Type", "application/json");
-            response.json({ eventId });
-            return;
-          })
-          .catch((error) => {
-            if (error instanceof IdentityAlreadyUsedError) {
-              span.setDisclosedAttribute(
-                "Identity input already used",
-                error.message,
-              );
-
-              throw webErrorFactory(webErrors.badRequest);
-            }
-
-            if (error instanceof IdentityValueCantBeBlankError) {
-              span.setDisclosedAttribute(
-                "Identity input can't be blank",
-                error.message,
-              );
-
-              throw webErrorFactory(webErrors.identityInputCantBeBLank);
-            }
-
-            if (error instanceof ConnectUnreachableError) {
-              span.setDisclosedAttribute("Connect unreachable", error.message);
-
-              throw webErrorFactory(webErrors.connectUnreachable);
-            }
-
-            throw error;
-          });
+      if (!userCookie) {
+        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+        response.setHeader("location", "/");
+        response.end();
+        return;
       }
 
-      response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-      response.setHeader("location", "/");
-      response.end();
-      return;
+      const user = await getDBUserFromSub(userCookie.sub).catch(() => {
+        span.setDisclosedAttribute("database reachable", false);
+
+        throw webErrorFactory(webErrors.databaseUnreachable);
+      });
+
+      if (!user?.temporary_identities) {
+        throw webErrorFactory(webErrors.temporaryIdentitiesNotFound);
+      }
+
+      const temporaryIdentity = user.temporary_identities.find(
+        ({ eventId }) => eventId === request.body.eventId,
+      );
+
+      if (!temporaryIdentity) {
+        throw webErrorFactory(webErrors.temporaryIdentityNotFound);
+      }
+
+      const { type, value, expiresAt, primary } = temporaryIdentity;
+
+      const identity = {
+        type: getIdentityType(type),
+        value: value,
+      };
+
+      return await sendIdentityValidationCode(config.managementCredentials, {
+        callbackUrl: "/",
+        identity,
+        localeCodeOverride: "en-EN",
+        userId: userCookie.sub,
+      })
+        .then(async ({ eventId }) => {
+          span.setDisclosedAttribute("is validation code sent", true);
+
+          const temporaryIdentity = {
+            eventId,
+            value,
+            type,
+            expiresAt,
+            primary,
+          };
+
+          await insertTemporaryIdentity(
+            userCookie.sub,
+            temporaryIdentity,
+          ).catch(() => {
+            span.setDisclosedAttribute("database reachable", false);
+
+            throw webErrorFactory(webErrors.databaseUnreachable);
+          });
+
+          const verificationCodeMessage =
+            getIdentityType(type) === IdentityTypes.EMAIL
+              ? "A new confirmation email has been sent"
+              : "A new confirmation SMS has been sent";
+
+          setAlertMessagesCookie(response, verificationCodeMessage);
+
+          response.statusCode = HttpStatus.OK;
+          response.setHeader("Content-Type", "application/json");
+          response.json({ eventId });
+          return;
+        })
+        .catch((error) => {
+          span.setDisclosedAttribute("is validation code sent", false);
+
+          if (error instanceof IdentityAlreadyUsedError) {
+            throw webErrorFactory(webErrors.badRequest);
+          }
+
+          if (error instanceof IdentityValueCantBeBlankError) {
+            throw webErrorFactory(webErrors.identityInputCantBeBLank);
+          }
+
+          if (error instanceof ConnectUnreachableError) {
+            throw webErrorFactory(webErrors.connectUnreachable);
+          }
+
+          throw error;
+        });
     },
   );
 };
@@ -154,6 +156,7 @@ const wrappedHandler = wrapMiddlewares(
     withAuth,
   ],
   handler,
+  "/api/auth-connect/re-send-identity-validation-code",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

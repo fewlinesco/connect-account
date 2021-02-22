@@ -1,5 +1,6 @@
 import { defaultPayload, generateHS256JWS } from "@fewlines/connect-client";
 import { HttpStatus } from "@fwl/web";
+import { wrapMiddlewares } from "@fwl/web/dist/middlewares";
 import { seal, defaults } from "@hapi/iron";
 import { IncomingMessage, ServerResponse } from "http";
 import { Socket } from "net";
@@ -9,7 +10,6 @@ import { Handler } from "@src/@types/handler";
 import * as getAndPutUser from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
 import { withAuth } from "@src/middlewares/with-auth";
-import { wrapMiddlewares } from "@src/middlewares/wrapper";
 import * as getDBUserFromSub from "@src/queries/get-db-user-from-sub";
 import * as decryptVerifyAccessToken from "@src/workflows/decrypt-verify-access-token";
 

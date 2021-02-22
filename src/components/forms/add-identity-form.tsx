@@ -37,15 +37,17 @@ const AddIdentityForm: React.FC<{
         formID={formID}
         onSubmit={async () => {
           await addIdentity(identity)
-            .then(({ eventId, errorMessage }) => {
-              if (errorMessage) {
+            .then((response) => {
+              if ("message" in response) {
                 setFormID(uuidv4());
-                setErrorMessage(errorMessage);
+                setErrorMessage(response.message);
               }
 
-              if (eventId) {
+              if ("eventId" in response) {
                 router &&
-                  router.push(`/account/logins/${type}/validation/${eventId}`);
+                  router.push(
+                    `/account/logins/${type}/validation/${response.eventId}`,
+                  );
               }
             })
             .catch((error) => {

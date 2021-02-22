@@ -8,7 +8,7 @@ import { fetchJson } from "@src/utils/fetch-json";
 async function addIdentity(
   identityInput: InMemoryTemporaryIdentity,
   identityToUpdateId?: Identity["id"],
-): Promise<{ eventId: string; errorMessage?: string }> {
+): Promise<{ eventId: string } | { code: string; message: string }> {
   const body = {
     callbackUrl: "/",
     identityInput,

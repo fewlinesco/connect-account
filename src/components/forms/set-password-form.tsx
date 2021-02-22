@@ -40,10 +40,12 @@ const SetPasswordForm: React.FC<{
 
         if (isNotSubmitted) {
           if (passwordInput === passwordConfirmationInput) {
-            const { restrictionRulesError } = await setPassword(passwordInput);
+            const { details: restrictionRules } = await setPassword(
+              passwordInput,
+            );
 
-            if (restrictionRulesError) {
-              setPasswordRestrictionError(restrictionRulesError);
+            if (restrictionRules) {
+              setPasswordRestrictionError(restrictionRules);
 
               setIsNotSubmitted(true);
             } else {
