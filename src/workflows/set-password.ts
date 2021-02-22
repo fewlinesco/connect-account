@@ -5,6 +5,7 @@ import { ErrorSettingPassword } from "@src/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 
 type SetPasswordOutput = {
+  isUpdated?: boolean;
   details?: PasswordRules;
 };
 
