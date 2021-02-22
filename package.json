@@ -248,6 +248,7 @@
     ],
     "moduleNameMapper": {
       "\\.(png|svg|jpg|gif|eot|ttf|woff|woff2)$": "<rootDir>/tests/config/import-asset-fix.ts",
+      "\\.(css|less)$": "<rootDir>/tests/config/import-asset-fix.ts",
       "@src/(.*)": "<rootDir>/src/$1"
     },
     "setupFilesAfterEnv": [
