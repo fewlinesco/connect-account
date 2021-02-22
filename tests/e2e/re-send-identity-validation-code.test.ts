@@ -43,12 +43,12 @@ describe("Account Web Application re-send Identity validation code", () => {
       expect(await text("LOGINS").exists()).toBeTruthy();
 
       await click("LOGINS");
-      await waitFor("+ add new email address");
-      expect(await text("+ add new email address").exists()).toBeTruthy();
-      await click(link("+ add new email address"));
+      await waitFor("+ Add new email address");
+      expect(await text("+ Add new email address").exists()).toBeTruthy();
+      await click(link("+ Add new email address"));
 
-      await waitFor("email address *");
-      expect(await text("email address *").exists()).toBeTruthy();
+      await waitFor("Email address *");
+      expect(await text("Email address *").exists()).toBeTruthy();
       await focus(textBox({ placeholder: "Enter your email" }));
       await write("resend-validation-code@taiko.test");
       await click("Add email");

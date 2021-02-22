@@ -20,12 +20,12 @@ const IDENTITIES_SECTION_CONTENT = {
   EMAIL: {
     title: "Email addresses",
     noIdentityMessage: "No email added yet.",
-    addNewIdentityMessage: "add new email address",
+    addNewIdentityMessage: "Add new email address",
   },
   PHONE: {
     title: "Phone numbers",
     noIdentityMessage: "No phone number added yet.",
-    addNewIdentityMessage: "add new phone number",
+    addNewIdentityMessage: "Add new phone number",
   },
   SOCIAL_LOGINS: {
     title: "Social logins",
