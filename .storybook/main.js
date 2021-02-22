@@ -11,6 +11,9 @@ module.exports = {
   ],
   webpackFinal: async (config, { configType }) => {
     config.resolve.plugins = [new TsconfigPathsPlugin()];
+
+    config.node = { fs: "empty" };
+
     return config;
 }
 }
