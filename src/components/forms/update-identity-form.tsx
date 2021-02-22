@@ -11,7 +11,6 @@ import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { Input } from "@src/components/input/input";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
-import { PhoneNumberInputValueShouldBeANumber } from "@src/errors";
 import { addIdentity } from "@src/workflows/add-identity";
 
 const UpdateIdentityForm: React.FC<{
@@ -38,8 +37,8 @@ const UpdateIdentityForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
-          await addIdentity(identity, currentIdentity.id)
-            .then(async (response) => {
+          await addIdentity(identity, currentIdentity.id).then(
+            async (response) => {
               if ("message" in response) {
                 setFormID(uuidv4());
                 setErrorMessage(response.message);
@@ -50,23 +49,15 @@ const UpdateIdentityForm: React.FC<{
                     `/account/logins/${currentIdentity.type}/validation/${response.eventId}`,
                   );
               }
-            })
-            .catch((error) => {
-              if (error instanceof PhoneNumberInputValueShouldBeANumber) {
-                setFormID(uuidv4());
-                setErrorMessage(error.message);
-              } else {
-                throw error;
-              }
-            });
+            },
+          );
         }}
       >
         <p>
           New{" "}
           {currentIdentity.type === IdentityTypes.PHONE
-            ? "phone number"
-            : "email address"}{" "}
-          *
+            ? "phone number *"
+            : "email address *"}
         </p>
         <Input
           type="text"

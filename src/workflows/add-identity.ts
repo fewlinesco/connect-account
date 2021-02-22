@@ -2,7 +2,6 @@ import { Identity } from "@fewlines/connect-management";
 
 import { HttpVerbs } from "@src/@types/http-verbs";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
-import { ErrorSendingValidationCode } from "@src/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 
 async function addIdentity(
@@ -20,10 +19,6 @@ async function addIdentity(
     HttpVerbs.POST,
     body,
   ).then(async (response) => {
-    if (response.status > 400) {
-      throw new ErrorSendingValidationCode();
-    }
-
     return response.json();
   });
 }

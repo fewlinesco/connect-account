@@ -12,7 +12,6 @@ import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { Input } from "@src/components/input/input";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
-import { PhoneNumberInputValueShouldBeANumber } from "@src/errors";
 import { getIdentityType } from "@src/utils/get-identity-type";
 import { addIdentity } from "@src/workflows/add-identity";
 
@@ -36,28 +35,19 @@ const AddIdentityForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
-          await addIdentity(identity)
-            .then((response) => {
-              if ("message" in response) {
-                setFormID(uuidv4());
-                setErrorMessage(response.message);
-              }
+          await addIdentity(identity).then((response) => {
+            if ("message" in response) {
+              setFormID(uuidv4());
+              setErrorMessage(response.message);
+            }
 
-              if ("eventId" in response) {
-                router &&
-                  router.push(
-                    `/account/logins/${type}/validation/${response.eventId}`,
-                  );
-              }
-            })
-            .catch((error) => {
-              if (error instanceof PhoneNumberInputValueShouldBeANumber) {
-                setFormID(uuidv4());
-                setErrorMessage(error.message);
-              } else {
-                throw error;
-              }
-            });
+            if ("eventId" in response) {
+              router &&
+                router.push(
+                  `/account/logins/${type}/validation/${response.eventId}`,
+                );
+            }
+          });
         }}
       >
         <p>
