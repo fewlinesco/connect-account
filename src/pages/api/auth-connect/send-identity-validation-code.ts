@@ -45,6 +45,10 @@ const handler: Handler = (request, response): Promise<void> => {
     async (span) => {
       const { callbackUrl, identityInput, identityToUpdateId } = request.body;
 
+      if (!identityInput.value) {
+        throw webErrorFactory(webErrors.identityInputCantBeBlank);
+      }
+
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
         isCookieSealed: true,
