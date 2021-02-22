@@ -4,11 +4,8 @@ import {
   goto,
   text,
   click,
-  write,
   screenshot,
   waitFor,
-  focus,
-  textBox,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
@@ -34,7 +31,7 @@ describe("Account Web Application update password", () => {
   });
 
   test("should show error messages if password inputs are filled incorrectly", async (done) => {
-    expect.assertions(8);
+    expect.assertions(7);
 
     try {
       await authenticateToConnect();
@@ -65,14 +62,6 @@ describe("Account Web Application update password", () => {
 
       await waitFor("phone number *");
       expect(await text("phone number *").exists()).toBeTruthy();
-
-      await focus(textBox({ placeholder: "Enter your phone" }));
-      await write("foo");
-      await click("Add phone");
-      await waitFor("Phone identity value should be a number.");
-      expect(
-        await text("Phone identity value should be a number.").exists(),
-      ).toBeTruthy();
 
       done();
     } catch (error) {
