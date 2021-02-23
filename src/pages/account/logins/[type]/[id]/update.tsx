@@ -51,9 +51,9 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     [
       tracingMiddleware(tracer),
       recoveryMiddleware(tracer),
+      withSentry,
       errorMiddleware(tracer),
       loggingMiddleware(tracer, logger),
-      withSentry,
       withAuth,
     ],
     "/account/logins/[type]/[id]/update",
