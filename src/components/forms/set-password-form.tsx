@@ -40,20 +40,20 @@ const SetPasswordForm: React.FC<{
 
         if (isNotSubmitted) {
           if (passwordInput === passwordConfirmationInput) {
-            const { details: restrictionRules } = await setPassword(
+            const { isUpdated, details: restrictionRules } = await setPassword(
               passwordInput,
             );
 
             if (restrictionRules) {
               setPasswordRestrictionError(restrictionRules);
-
               setIsNotSubmitted(true);
-            } else {
+            }
+
+            if (isUpdated) {
               router && router.push("/account/security");
             }
           } else {
             setIsNotSubmitted(true);
-
             setPasswordsNotMatching(true);
           }
         }
