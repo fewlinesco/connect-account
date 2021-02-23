@@ -96,9 +96,9 @@ const wrappedHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
     recoveryMiddleware(getTracer()),
+    withSentry,
     errorMiddleware(getTracer()),
     loggingMiddleware(getTracer(), logger),
-    withSentry,
     withAuth,
   ],
   handler,

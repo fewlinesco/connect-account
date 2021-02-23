@@ -53,12 +53,12 @@ const handler: Handler = async (request, response) => {
       cleartextPassword: passwordInput,
       userId: userCookie.sub,
     })
-      .then(() => {
+      .then((isUpdated) => {
         span.setDisclosedAttribute("password created or updated", true);
 
         response.setHeader("Content-Type", "application/json");
         response.statusCode = HttpStatus.OK;
-        response.end();
+        response.json({ isUpdated });
         return;
       })
       .catch((error) => {
@@ -85,9 +85,9 @@ const wrappedHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
     recoveryMiddleware(getTracer()),
+    withSentry,
     errorMiddleware(getTracer()),
     loggingMiddleware(getTracer(), logger),
-    withSentry,
     withAuth,
   ],
   handler,
