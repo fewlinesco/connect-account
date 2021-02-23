@@ -17,7 +17,6 @@ import React from "react";
 import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
 import { UpdateIdentityForm } from "@src/components/forms/update-identity-form";
-import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
 import { config } from "@src/config";
 import { NoUserFoundError } from "@src/errors";
@@ -28,17 +27,16 @@ import getTracer from "@src/tracer";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   return (
-    <Layout>
+    <Layout
+      title="Logins"
+      breadcrumbs={[
+        identity.type.toUpperCase() === IdentityTypes.EMAIL
+          ? "Email address"
+          : "Phone number",
+        "edit",
+      ]}
+    >
       <Container>
-        <h1>Logins</h1>
-        <NavigationBreadcrumbs
-          breadcrumbs={[
-            identity.type.toUpperCase() === IdentityTypes.EMAIL
-              ? "Email address"
-              : "Phone number",
-            "edit",
-          ]}
-        />
         <UpdateIdentityForm currentIdentity={identity} />
       </Container>
     </Layout>

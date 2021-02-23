@@ -13,7 +13,6 @@ import React from "react";
 import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
 import { SetPasswordForm } from "@src/components/forms/set-password-form";
-import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
@@ -27,12 +26,11 @@ const SecurityUpdatePage: React.FC<{
   const conditionalBreadcrumbItem = isPasswordSet ? "update" : "set";
 
   return (
-    <Layout>
+    <Layout
+      title="Security"
+      breadcrumbs={["Password", conditionalBreadcrumbItem]}
+    >
       <Container>
-        <h1>Security</h1>
-        <NavigationBreadcrumbs
-          breadcrumbs={["Password", conditionalBreadcrumbItem]}
-        />
         <SetPasswordForm
           conditionalBreadcrumbItem={conditionalBreadcrumbItem}
         />

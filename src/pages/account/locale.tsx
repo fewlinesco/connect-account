@@ -18,7 +18,7 @@ import getTracer from "@src/tracer";
 
 const LocalePage: React.FC = () => {
   return (
-    <Layout>
+    <Layout title="Switch Language">
       <Container>
         <Locale />
       </Container>

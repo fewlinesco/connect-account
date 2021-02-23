@@ -27,10 +27,12 @@ const LoginsOverviewPage: React.FC<{
   alertMessages?: string[];
 }> = ({ sortedIdentities, alertMessages }) => {
   return (
-    <Layout alertMessages={alertMessages}>
+    <Layout
+      alertMessages={alertMessages}
+      title="Logins"
+      breadcrumbs={["Your emails, phones and social logins"]}
+    >
       <Container>
-        <h1>Logins</h1>
-        <h3>Your emails, phones and social logins</h3>
         <LoginsOverview sortedIdentities={sortedIdentities} />
       </Container>
     </Layout>
