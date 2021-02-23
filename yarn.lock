@@ -1812,19 +1812,19 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fewlines/connect-client@0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@fewlines/connect-client/-/connect-client-0.2.5.tgz#cbdf8500c2e12b2aa0953c159c87a35aaf0d5a96"
-  integrity sha512-KNXU3kcDqY5hRA8ResjPuhjc8bt7fZo5IKkDNSlKanaer8l0Oi8a1TeeO1vKwDWuMVbukB1xfI2hsk2LtYMe4A==
+"@fewlines/connect-client@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@fewlines/connect-client/-/connect-client-0.3.0.tgz#b3eaaec7f63f63e9ed368dc12bcfc0a1647e273a"
+  integrity sha512-WskmhMwUqlky+QdZrbinkPZLCZLahccq+iOEGoYN+7S/FRxY6p70YYrB7pYCEdD1eUbTiImtyn+zZg6+DDi1LA==
   dependencies:
     jsonwebtoken "8.5.1"
     node-fetch "2.6.1"
     node-jose "2.0.0"
 
-"@fewlines/connect-management@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@fewlines/connect-management/-/connect-management-0.2.1.tgz#b651c76f1bd100eb915851810ae3f8008224ea6f"
-  integrity sha512-KHJ1jXfRyQI8eg8zS0IcAEHajygJh+PRN4YaUY73LnnMYW5lGHuUNNDeKLSnKrb2Uo23sxoCRz27J+mJQ6fRzg==
+"@fewlines/connect-management@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@fewlines/connect-management/-/connect-management-0.3.0.tgz#55c548afe4a003554afa67fc4bb00d0abd7f6e1e"
+  integrity sha512-L3GdYIIW04v2ttX3kS5e2cUGKpWp31N0by1fTZsEOSBFWSI1BFHcISqD9KbrB3f/QRDfpSuTu+pK+asqcSD6LQ==
   dependencies:
     apollo-link "1.2.14"
     apollo-link-context "1.0.20"
@@ -1861,10 +1861,10 @@
     "@opentelemetry/plugin-https" "0.16.0"
     "@opentelemetry/tracing" "0.16.0"
 
-"@fwl/web@0.10.3":
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/@fwl/web/-/web-0.10.3.tgz#cdbeee29f41c2b3f94041542a1bbf501e8ae6840"
-  integrity sha512-j+gqEzGFvZR2wtfDxQSO0qT0i0T25fVPDXUtuI3azW1gk8hxXoCGa7S7gDtmR2XjYoHJMF9Hm55LPeMFOj02VQ==
+"@fwl/web@0.10.4":
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/@fwl/web/-/web-0.10.4.tgz#b0daf90dd4beb3e7d0052593e67468ec7269e0ca"
+  integrity sha512-cjhgnLCNrmTBi4EpFfAS7lZfh0njK/8y+Zzj6y52JNgkoW3X5wfaxvla26hSC5gx+7Sas1WfC/Uy+d4oXg1Saw==
   dependencies:
     "@fwl/logging" "0.1.1"
     "@fwl/tracing" "0.9.0"
