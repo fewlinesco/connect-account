@@ -66,7 +66,7 @@ describe("ValidateIdentityPage", () => {
       ).toHaveAttribute("href", "/account/logins");
 
       expect(
-        screen.getByRole("button", { name: "Resend confirmation code" }),
+        screen.getByRole("button", { name: "Resend validation code" }),
       ).toBeInTheDocument();
     });
 
@@ -124,7 +124,7 @@ describe("ValidateIdentityPage", () => {
       ).toHaveAttribute("href", "/account/logins");
 
       expect(
-        screen.getByRole("button", { name: "Resend confirmation code" }),
+        screen.getByRole("button", { name: "Resend validation code" }),
       ).toBeInTheDocument();
     });
 
