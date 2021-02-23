@@ -24,7 +24,6 @@ import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import getTracer from "@src/tracer";
-import { getIdentityType } from "@src/utils/get-identity-type";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = async (request, _response) => {
@@ -98,14 +97,9 @@ const handler: Handler = async (request, _response) => {
     await updateIdentity(
       config.managementCredentials,
       user.sub,
-      {
-        validationCode,
-        eventId,
-      },
-      {
-        value: temporaryIdentity.value,
-        type: getIdentityType(temporaryIdentity.type),
-      },
+      validationCode,
+      eventId,
+      temporaryIdentity.value,
       temporaryIdentity.eventId,
     ).catch((error) => {
       if (error instanceof IdentityNotFoundError) {
