@@ -4,8 +4,13 @@ import {
   InvalidValidationCodeError,
   IdentityNotFoundError,
   GraphqlErrors,
+  checkVerificationCode,
+  addIdentityToUser,
+  markIdentityAsPrimary,
+  getIdentity,
+  removeIdentityFromUser,
 } from "@fewlines/connect-management";
-import { Endpoint, getServerSideCookies } from "@fwl/web";
+import { Endpoint, getServerSideCookies, HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -24,9 +29,10 @@ import { withAuth } from "@src/middlewares/with-auth";
 import { withSentry } from "@src/middlewares/with-sentry";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import getTracer from "@src/tracer";
+import { getIdentityType } from "@src/utils/get-identity-type";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
-const handler: Handler = async (request, _response) => {
+const handler: Handler = async (request, response) => {
   const webErrors = {
     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
     temporaryIdentityNotFound: ERRORS_DATA.TEMPORARY_IDENTITY_NOT_FOUND,
@@ -94,24 +100,53 @@ const handler: Handler = async (request, _response) => {
 
     span.setDisclosedAttribute("is temporary Identity expired", false);
 
-    await updateIdentity(
-      config.managementCredentials,
-      user.sub,
-      validationCode,
-      eventId,
-      temporaryIdentity.value,
-      temporaryIdentity.eventId,
-    ).catch((error) => {
-      if (error instanceof IdentityNotFoundError) {
-        throw webErrorFactory(webErrors.identityNotFound);
-      }
+    if (temporaryIdentity.identityToUpdateId) {
+      console.log("Identity to update", temporaryIdentity.identityToUpdateId);
 
+      await updateIdentity(
+        config.managementCredentials,
+        user.sub,
+        validationCode,
+        eventId,
+        temporaryIdentity.value,
+        temporaryIdentity.identityToUpdateId,
+      )
+        .then(() =>
+          response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
+            Location: "/account/logins",
+          }),
+        )
+        .catch((error) => {
+          console.log("Error", error);
+          if (error instanceof IdentityNotFoundError) {
+            throw webErrorFactory(webErrors.identityNotFound);
+          }
+
+          if (error instanceof GraphqlErrors) {
+            throw webErrorFactory(webErrors.identityNotFound);
+          }
+
+          if (error instanceof InvalidValidationCodeError) {
+            throw webErrorFactory(webErrors.invalidValidationCode);
+          }
+
+          if (error instanceof ConnectUnreachableError) {
+            throw webErrorFactory(webErrors.connectUnreachable);
+          }
+
+          throw error;
+        });
+    }
+
+    const { status: verificationStatus } = await checkVerificationCode(
+      config.managementCredentials,
+      {
+        code: validationCode,
+        eventId,
+      },
+    ).catch((error) => {
       if (error instanceof GraphqlErrors) {
         throw webErrorFactory(webErrors.identityNotFound);
-      }
-
-      if (error instanceof InvalidValidationCodeError) {
-        throw webErrorFactory(webErrors.invalidValidationCode);
       }
 
       if (error instanceof ConnectUnreachableError) {
@@ -120,6 +155,91 @@ const handler: Handler = async (request, _response) => {
 
       throw error;
     });
+
+    const { value, type, primary, identityToUpdateId } = temporaryIdentity;
+
+    if (verificationStatus === "VALID") {
+      span.setDisclosedAttribute("is temporary Identity valid", true);
+
+      const { id: identityId } = await addIdentityToUser(
+        config.managementCredentials,
+        {
+          userId: userCookie.sub,
+          identityType: getIdentityType(type),
+          identityValue: value,
+        },
+      ).catch((error) => {
+        if (error instanceof GraphqlErrors) {
+          throw webErrorFactory(webErrors.identityNotFound);
+        }
+
+        if (error instanceof ConnectUnreachableError) {
+          throw webErrorFactory(webErrors.connectUnreachable);
+        }
+
+        throw error;
+      });
+
+      if (primary) {
+        span.setDisclosedAttribute("is temporary Identity primary", true);
+
+        await markIdentityAsPrimary(
+          config.managementCredentials,
+          identityId,
+        ).catch((error) => {
+          if (error instanceof GraphqlErrors) {
+            throw webErrorFactory(webErrors.identityNotFound);
+          }
+
+          if (error instanceof ConnectUnreachableError) {
+            throw webErrorFactory(webErrors.connectUnreachable);
+          }
+
+          throw error;
+        });
+      }
+
+      span.setDisclosedAttribute("is temporary Identity primary", false);
+
+      if (identityToUpdateId) {
+        const identityToUpdate = await getIdentity(
+          config.managementCredentials,
+          { userId: userCookie.sub, identityId: identityToUpdateId },
+        ).catch((error) => {
+          if (error instanceof GraphqlErrors) {
+            throw webErrorFactory(webErrors.identityNotFound);
+          }
+
+          if (error instanceof ConnectUnreachableError) {
+            throw webErrorFactory(webErrors.connectUnreachable);
+          }
+
+          throw error;
+        });
+
+        await removeIdentityFromUser(config.managementCredentials, {
+          userId: userCookie.sub,
+          identityType: getIdentityType(type),
+          identityValue: identityToUpdate ? identityToUpdate.value : "",
+        }).catch((error) => {
+          if (error instanceof GraphqlErrors) {
+            throw webErrorFactory(webErrors.identityNotFound);
+          }
+
+          if (error instanceof ConnectUnreachableError) {
+            throw webErrorFactory(webErrors.connectUnreachable);
+          }
+
+          throw error;
+        });
+      }
+
+      response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
+        Location: "/account/logins",
+      });
+
+      return response.end();
+    }
   });
 };
 

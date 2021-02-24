@@ -30,7 +30,7 @@
     "@aws-sdk/client-dynamodb": "3.4.1",
     "@aws-sdk/util-dynamodb": "3.4.1",
     "@fewlines/connect-client": "0.3.0",
-    "@fewlines/connect-management": "0.4.0",
+    "@fewlines/connect-management": "0.0.0-experimental-7cb23f2",
     "@fwl/logging": "0.1.1",
     "@fwl/tracing": "0.9.0",
     "@fwl/web": "0.10.4",
