@@ -45,8 +45,8 @@ describe("Account Web Application update password", () => {
 
       await waitFor("Add new email address");
       await click("Add new email address");
-      await waitFor("email address *");
-      expect(await text("email address *").exists()).toBeTruthy();
+      await waitFor("Email address *");
+      expect(await text("Email address *").exists()).toBeTruthy();
 
       await click("Add email");
       await waitFor("Identity input can't be blank");
@@ -63,8 +63,8 @@ describe("Account Web Application update password", () => {
 
       await goto(`${baseUrl}account/logins/phone/new`);
 
-      await waitFor("phone number *");
-      expect(await text("phone number *").exists()).toBeTruthy();
+      await waitFor("Phone number *");
+      expect(await text("Phone number *").exists()).toBeTruthy();
 
       await focus(textBox({ placeholder: "Enter your phone" }));
       await write("foo");

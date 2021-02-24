@@ -16,7 +16,6 @@ import React from "react";
 
 import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
-import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
 import { IdentityOverview } from "@src/components/pages/identity-overview/identity-overview";
 import { config } from "@src/config";
@@ -32,16 +31,15 @@ const IdentityOverviewPage: React.FC<{
   const { type } = identity;
 
   return (
-    <Layout>
+    <Layout
+      title="Logins"
+      breadcrumbs={[
+        type.toUpperCase() === IdentityTypes.EMAIL
+          ? "Email address"
+          : "Phone number",
+      ]}
+    >
       <Container>
-        <h1>Logins</h1>
-        <NavigationBreadcrumbs
-          breadcrumbs={[
-            type.toUpperCase() === IdentityTypes.EMAIL
-              ? "Email address"
-              : "Phone number",
-          ]}
-        />
         <IdentityOverview identity={identity} userId={userId} />
       </Container>
     </Layout>

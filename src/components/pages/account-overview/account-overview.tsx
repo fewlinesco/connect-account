@@ -6,6 +6,7 @@ import { RightChevron } from "@src/components/icons/right-chevron/right-chevron"
 import { SecurityIcon } from "@src/components/icons/security-icon/security-icon";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SectionBox } from "@src/components/shadow-box/section-box";
+import { deviceBreakpoints } from "@src/design-system/theme";
 
 const SECTION_LIST_CONTENT = {
   LOGINS: {
@@ -51,13 +52,19 @@ const SectionLink = styled(NeutralLink)`
 `;
 
 const TextBox = styled.div`
-  max-width: 50%;
+  max-width: 70%;
   font-size: ${({ theme }) => theme.fontSizes.xs};
   line-height: ${({ theme }) => theme.lineHeights.title};
+
+  @media ${deviceBreakpoints.m} {
+    max-width: 60%;
+  }
 `;
 
 const SectionName = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.s};
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
+  letter-spacing: ${({ theme }) => theme.letterSpacing.tracked};
 `;
 
 export { SECTION_LIST_CONTENT, AccountOverview };

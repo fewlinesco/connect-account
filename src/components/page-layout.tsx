@@ -5,12 +5,14 @@ import { AlertMessages } from "./alert-message/alert-messages";
 import { Header } from "./header/header";
 import { DesktopNavigationBar } from "./navigation-bars/desktop-navigation-bar";
 import { MobileNavigationBar } from "./navigation-bars/mobile-navigation-bar";
+import { NavigationBreadcrumbs } from "./navigation-breadcrumbs/navigation-breadcrumbs";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-const Layout: React.FC<{ alertMessages?: string[] }> = ({
-  children,
-  alertMessages,
-}) => {
+const Layout: React.FC<{
+  alertMessages?: string[];
+  title?: string;
+  breadcrumbs?: string[];
+}> = ({ children, alertMessages, title, breadcrumbs }) => {
   React.useEffect(() => {
     if (alertMessages) {
       document.cookie = "alert-messages=; max-age=0; path=/;";
@@ -28,7 +30,17 @@ const Layout: React.FC<{ alertMessages?: string[] }> = ({
         <DesktopNavigationBarWrapper>
           <DesktopNavigationBar />
         </DesktopNavigationBarWrapper>
-        <ChildrenContainer>{children}</ChildrenContainer>
+        <ChildrenContainer>
+          {title ? (
+            <MainTitle needSpacing={breadcrumbs ? false : true}>
+              {title}
+            </MainTitle>
+          ) : null}
+          {breadcrumbs ? (
+            <NavigationBreadcrumbs breadcrumbs={breadcrumbs} />
+          ) : null}
+          {children}
+        </ChildrenContainer>
       </Flex>
     </Main>
   );
@@ -42,6 +54,14 @@ const Main = styled.main`
 
   @media ${deviceBreakpoints.m} {
     height: auto;
+  }
+
+  h2 {
+    margin: 0 0 ${({ theme }) => theme.spaces.xxs} 0;
+  }
+
+  h3 {
+    margin: 0 0 ${({ theme }) => theme.spaces.s} 0;
   }
 `;
 
@@ -61,6 +81,7 @@ const DesktopNavigationBarWrapper = styled.div`
 
 const ChildrenContainer = styled.div`
   width: 60%;
+  height: 100vh;
   margin: 0 auto;
 
   @media ${deviceBreakpoints.m} {
@@ -74,6 +95,13 @@ const MobileDisplayOnly = styled.div`
   @media ${deviceBreakpoints.m} {
     display: block;
   }
+`;
+
+const MainTitle = styled.h1<{ needSpacing?: boolean }>`
+  padding: 2.4rem 0 ${({ theme }) => theme.spaces.xxs};
+  margin-top: 0.5rem;
+  ${({ theme, needSpacing }) =>
+    needSpacing && `margin-bottom: ${theme.spaces.s}`}
 `;
 
 export { Layout, Main };
