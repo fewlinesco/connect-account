@@ -9,7 +9,7 @@ async function sentryReport(
   error: Record<string, unknown>,
   request: NextApiRequest,
 ): Promise<void> {
-  return tracer.span("sentryMiddleware middleware", async (span) => {
+  return tracer.span("sentry-middleware", async (span) => {
     addRequestScopeToSentry(request);
 
     span.setDisclosedAttribute("http.status_code", error.httpStatus);

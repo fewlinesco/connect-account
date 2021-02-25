@@ -25,7 +25,7 @@ async function authentication(
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
   };
 
-  return tracer.span("withAuth middleware", async (span) => {
+  return tracer.span("auth-middleware", async (span) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
