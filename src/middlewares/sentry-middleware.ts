@@ -6,7 +6,7 @@ import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
 
 async function sentryReport(
   tracer: Tracer,
-  error: any,
+  error: Record<string, unknown>,
   request: NextApiRequest,
 ): Promise<void> {
   return tracer.span("sentryMiddleware middleware", async (span) => {
@@ -17,7 +17,7 @@ async function sentryReport(
     span.setDisclosedAttribute("error.message", error.message);
 
     Sentry.withScope((scope) => {
-      scope.setTag(request.url || "no URL found", error.name);
+      scope.setTag(request.url || "no URL found", error.name as string);
       Sentry.captureException(error);
     });
 
