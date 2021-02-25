@@ -21,7 +21,7 @@ import { Layout } from "@src/components/page-layout";
 import { config } from "@src/config";
 import { NoUserFoundError } from "@src/errors";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
 
@@ -43,18 +43,16 @@ const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   );
 };
 
-const tracer = getTracer();
-
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
-      tracingMiddleware(tracer),
-      recoveryMiddleware(tracer),
+      tracingMiddleware(getTracer()),
+      recoveryMiddleware(getTracer()),
       withSentry,
-      errorMiddleware(tracer),
-      loggingMiddleware(tracer, logger),
-      withAuth,
+      errorMiddleware(getTracer()),
+      loggingMiddleware(getTracer(), logger),
+      authMiddleware(getTracer()),
     ],
     "/account/logins/[type]/[id]/update",
     async (request, response) => {

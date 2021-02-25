@@ -17,7 +17,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Handler } from "@src/@types/handler";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
 import { getIdentityType } from "@src/utils/get-identity-type";
@@ -86,7 +86,7 @@ const wrappedHandler = wrapMiddlewares(
     withSentry,
     errorMiddleware(getTracer()),
     loggingMiddleware(getTracer(), logger),
-    withAuth,
+    authMiddleware(getTracer()),
   ],
   handler,
   "/api/delete-identity",

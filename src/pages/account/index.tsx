@@ -12,7 +12,7 @@ import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { AccountOverview } from "@src/components/pages/account-overview/account-overview";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
 
@@ -26,18 +26,16 @@ const AccountPage: React.FC = () => {
   );
 };
 
-const tracer = getTracer();
-
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
     context,
     [
-      tracingMiddleware(tracer),
-      recoveryMiddleware(tracer),
+      tracingMiddleware(getTracer()),
+      recoveryMiddleware(getTracer()),
       withSentry,
-      errorMiddleware(tracer),
-      loggingMiddleware(tracer, logger),
-      withAuth,
+      errorMiddleware(getTracer()),
+      loggingMiddleware(getTracer(), logger),
+      authMiddleware(getTracer()),
     ],
     "/account",
   );

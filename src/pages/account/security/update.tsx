@@ -16,7 +16,7 @@ import { SetPasswordForm } from "@src/components/forms/set-password-form";
 import { Layout } from "@src/components/page-layout";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
 
@@ -39,18 +39,16 @@ const SecurityUpdatePage: React.FC<{
   );
 };
 
-const tracer = getTracer();
-
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
-      tracingMiddleware(tracer),
-      recoveryMiddleware(tracer),
+      tracingMiddleware(getTracer()),
+      recoveryMiddleware(getTracer()),
       withSentry,
-      errorMiddleware(tracer),
-      loggingMiddleware(tracer, logger),
-      withAuth,
+      errorMiddleware(getTracer()),
+      loggingMiddleware(getTracer(), logger),
+      authMiddleware(getTracer()),
     ],
     "/account/security/update",
     async (request) => {

@@ -13,7 +13,7 @@ import { Container } from "@src/components/containers/container";
 import { AddIdentityForm } from "@src/components/forms/add-identity-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { withSentry } from "@src/middlewares/with-sentry";
 import getTracer from "@src/tracer";
 import { getIdentityType } from "@src/utils/get-identity-type";
@@ -36,18 +36,16 @@ const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   );
 };
 
-const tracer = getTracer();
-
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
-      tracingMiddleware(tracer),
-      recoveryMiddleware(tracer),
+      tracingMiddleware(getTracer()),
+      recoveryMiddleware(getTracer()),
       withSentry,
-      errorMiddleware(tracer),
-      loggingMiddleware(tracer, logger),
-      withAuth,
+      errorMiddleware(getTracer()),
+      loggingMiddleware(getTracer(), logger),
+      authMiddleware(getTracer()),
     ],
     "/account/logins/[type]/new",
     async () => {
