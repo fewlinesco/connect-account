@@ -12,11 +12,16 @@ import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import getTracer from "@src/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
 const tracer = getTracer();
 
 export function withAuth(handler: Handler): Handler {
+  const webErrors = {
+    databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
+  };
+
   return async (
     request: NextApiRequest,
     response: NextApiResponse,
@@ -38,7 +43,13 @@ export function withAuth(handler: Handler): Handler {
             if (error.name === "TokenExpiredError") {
               span.setDisclosedAttribute("is access_token expired", true);
 
-              const user = await getDBUserFromSub(sub);
+              const user = await getDBUserFromSub(sub).catch(() => {
+                span.setDisclosedAttribute("database reachable", false);
+
+                throw webErrorFactory(webErrors.databaseUnreachable);
+              });
+
+              span.setDisclosedAttribute("database reachable", true);
 
               if (user) {
                 span.setDisclosedAttribute("user found on DB", true);
