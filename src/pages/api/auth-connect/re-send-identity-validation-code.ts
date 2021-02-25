@@ -73,14 +73,16 @@ const handler: Handler = (request, response): Promise<void> => {
       }
 
       const temporaryIdentity = user.temporary_identities.find(
-        ({ eventId }) => eventId === request.body.eventId,
+        ({ eventIds }) => {
+          return eventIds.find((eventId) => eventId === request.body.eventId);
+        },
       );
 
       if (!temporaryIdentity) {
         throw webErrorFactory(webErrors.temporaryIdentityNotFound);
       }
 
-      const { type, value, expiresAt, primary } = temporaryIdentity;
+      const { type, value, expiresAt, primary, eventIds } = temporaryIdentity;
 
       const identity = {
         type: getIdentityType(type),
@@ -97,7 +99,7 @@ const handler: Handler = (request, response): Promise<void> => {
           span.setDisclosedAttribute("is validation code sent", true);
 
           const temporaryIdentity = {
-            eventId,
+            eventIds: [...eventIds, eventId],
             value,
             type,
             expiresAt,

@@ -69,9 +69,9 @@ const handler: Handler = async (request, response) => {
 
     span.setDisclosedAttribute("user found", true);
 
-    const temporaryIdentity = user.temporary_identities.find(
-      (temporaryIdentity) => temporaryIdentity.eventId === eventId,
-    );
+    const temporaryIdentity = user.temporary_identities.find(({ eventIds }) => {
+      return eventIds.find((eventId) => eventId === request.body.eventId);
+    });
 
     if (temporaryIdentity) {
       span.setDisclosedAttribute("is temporary Identity found", true);
