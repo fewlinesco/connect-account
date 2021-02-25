@@ -5,11 +5,12 @@ import styled from "styled-components";
 
 import { WrongInputError } from "../input/wrong-input-error";
 import { StyledForm } from "./form";
+import { HttpVerbs } from "@src/@types/http-verbs";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { Input } from "@src/components/input/input";
 import { PasswordRulesErrorList } from "@src/components/password-rules-error-list/password-rules-error-list";
+import { fetchJson } from "@src/utils/fetch-json";
 import { capitalizeFirstLetter } from "@src/utils/format";
-import { setPassword } from "@src/workflows/set-password";
 
 const SetPasswordForm: React.FC<{
   conditionalBreadcrumbItem: string;
@@ -43,19 +44,24 @@ const SetPasswordForm: React.FC<{
 
         if (isNotSubmitted) {
           if (passwordInput === passwordConfirmationInput) {
-            await setPassword(passwordInput)
+            await fetchJson("/api/auth-connect/set-password", HttpVerbs.POST, {
+              passwordInput,
+            })
               .then((response) => {
-                if ("details" in response) {
-                  setPasswordRestrictionError(response.details);
+                return response.json();
+              })
+              .then((result) => {
+                if ("details" in result) {
+                  setPasswordRestrictionError(result.details);
                   setIsNotSubmitted(true);
                 }
 
-                if ("message" in response && response.code === "invalid_body") {
+                if ("message" in result && result.code === "invalid_body") {
                   setErrorMessage("Password can't be blank");
                   setIsNotSubmitted(true);
                 }
 
-                if ("isUpdated" in response) {
+                if ("isUpdated" in result) {
                   router && router.push("/account/security");
                 }
               })
