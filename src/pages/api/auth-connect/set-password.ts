@@ -76,7 +76,7 @@ const handler: Handler = async (request, response) => {
           throw webErrorFactory(webErrors.connectUnreachable);
         }
 
-        throw webErrorFactory(webErrors.connectUnreachable);
+        throw error;
       });
   });
 };
