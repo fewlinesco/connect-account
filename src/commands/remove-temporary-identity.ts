@@ -13,7 +13,7 @@ async function removeTemporaryIdentity(
     const updatedUser = {
       ...user,
       temporary_identities: user.temporary_identities.filter(
-        (identity) => identity.eventId !== temporaryIdentity.eventId,
+        (identity) => identity.value !== temporaryIdentity.value,
       ),
     };
 

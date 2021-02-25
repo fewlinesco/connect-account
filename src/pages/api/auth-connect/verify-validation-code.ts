@@ -66,6 +66,7 @@ const handler: Handler = async (request, response) => {
 
       throw webErrorFactory(webErrors.noUserFound);
     }
+    console.log("user: ", user);
 
     span.setDisclosedAttribute("user found", true);
 
@@ -73,16 +74,10 @@ const handler: Handler = async (request, response) => {
       return eventIds.find((eventId) => eventId === request.body.eventId);
     });
 
+    console.log("temporaryIdentity: ", temporaryIdentity);
+
     if (temporaryIdentity) {
       span.setDisclosedAttribute("is temporary Identity found", true);
-
-      await removeTemporaryIdentity(userCookie.sub, temporaryIdentity).catch(
-        () => {
-          span.setDisclosedAttribute("database reachable", false);
-
-          throw webErrorFactory(webErrors.databaseUnreachable);
-        },
-      );
 
       if (temporaryIdentity.expiresAt > Date.now()) {
         span.setDisclosedAttribute("is temporary Identity expired", false);
@@ -127,6 +122,15 @@ const handler: Handler = async (request, response) => {
             }
 
             throw error;
+          });
+
+          await removeTemporaryIdentity(
+            userCookie.sub,
+            temporaryIdentity,
+          ).catch(() => {
+            span.setDisclosedAttribute("database reachable", false);
+
+            throw webErrorFactory(webErrors.databaseUnreachable);
           });
 
           if (primary) {
