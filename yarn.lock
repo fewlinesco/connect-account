@@ -1812,10 +1812,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fewlines/connect-client@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@fewlines/connect-client/-/connect-client-0.4.0.tgz#88c3822b41971ee0930cfd1101aecd0be604215e"
-  integrity sha512-PX5NyWUBsTIrPEr4cQmXSogrXG1CXbNv+T6YmfowU81t/K8IBIyNuBF1/BP7N74U4bpdpZ1XF1KS7+HSvQOeBQ==
+"@fewlines/connect-client@0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@fewlines/connect-client/-/connect-client-0.4.1.tgz#fa351d6efb221159934b9a62ec712f54f0dad360"
+  integrity sha512-wM0pq016IYQQiWVlp3FfTuxBkR2N7GpjPUwuG0pj2eb3kF0MHho8LoWHwgny/5XF76Nq8OXqotBO9jjUjZa84w==
   dependencies:
     jsonwebtoken "8.5.1"
     node-fetch "2.6.1"

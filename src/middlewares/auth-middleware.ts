@@ -1,4 +1,4 @@
-import { JWTPayload } from "@fewlines/connect-client";
+import { JWTPayload, UnreachableError } from "@fewlines/connect-client";
 import { Tracer } from "@fwl/tracing";
 import {
   HttpStatus,
@@ -21,6 +21,7 @@ async function authentication(
   response: NextApiResponse,
 ): Promise<void> {
   const webErrors = {
+    connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
   };
 
@@ -55,14 +56,31 @@ async function authentication(
               const {
                 refresh_token,
                 access_token,
-              } = await oauth2Client.refreshTokens(user.refresh_token);
+              } = await oauth2Client
+                .refreshTokens(user.refresh_token)
+                .catch((error) => {
+                  span.setDisclosedAttribute("is token refreshed", false);
+
+                  if (error instanceof UnreachableError) {
+                    throw webErrorFactory(webErrors.connectUnreachable);
+                  }
+
+                  throw error;
+                });
 
               span.setDisclosedAttribute("is token refreshed", true);
 
-              const { sub } = await oauth2Client.verifyJWT<JWTPayload>(
-                access_token,
-                config.connectJwtAlgorithm,
-              );
+              const { sub } = await oauth2Client
+                .verifyJWT<JWTPayload>(access_token, config.connectJwtAlgorithm)
+                .catch((error) => {
+                  span.setDisclosedAttribute("is access_token valid", false);
+
+                  if (error instanceof UnreachableError) {
+                    throw webErrorFactory(webErrors.connectUnreachable);
+                  }
+
+                  throw error;
+                });
 
               span.setDisclosedAttribute("is access_token valid", true);
 
@@ -85,7 +103,11 @@ async function authentication(
 
               span.setDisclosedAttribute("is cookie set", true);
 
-              await getAndPutUser({ sub, refresh_token }, user);
+              await getAndPutUser({ sub, refresh_token }, user).catch(() => {
+                span.setDisclosedAttribute("database reachable", false);
+
+                throw webErrorFactory(webErrors.databaseUnreachable);
+              });
 
               span.setDisclosedAttribute("user updated on DB", true);
 
