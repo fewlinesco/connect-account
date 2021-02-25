@@ -9,11 +9,16 @@ type SetPasswordOutput = {
   details?: PasswordRules;
 };
 
-async function setPassword(passwordInput: string): Promise<SetPasswordOutput> {
+async function setPassword(
+  passwordInput: string,
+): Promise<
+  | { isUpdated: boolean }
+  | { code: string; message: string; details?: PasswordRules }
+> {
   return fetchJson("/api/auth-connect/set-password", HttpVerbs.POST, {
     passwordInput,
   }).then((response) => {
-    if (response.status >= 400 && response.status !== 422) {
+    if (response.status > 400 && response.status !== 422) {
       throw new ErrorSettingPassword();
     }
 
