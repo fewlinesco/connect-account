@@ -3,12 +3,14 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
+import { WrongInputError } from "../input/wrong-input-error";
 import { StyledForm } from "./form";
+import { HttpVerbs } from "@src/@types/http-verbs";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { Input } from "@src/components/input/input";
 import { PasswordRulesErrorList } from "@src/components/password-rules-error-list/password-rules-error-list";
+import { fetchJson } from "@src/utils/fetch-json";
 import { capitalizeFirstLetter } from "@src/utils/format";
-import { setPassword } from "@src/workflows/set-password";
 
 const SetPasswordForm: React.FC<{
   conditionalBreadcrumbItem: string;
@@ -26,6 +28,7 @@ const SetPasswordForm: React.FC<{
     passwordRestrictionError,
     setPasswordRestrictionError,
   ] = React.useState<PasswordRules | undefined>();
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const router = useRouter();
 
@@ -37,21 +40,34 @@ const SetPasswordForm: React.FC<{
         setIsNotSubmitted(false);
         setPasswordsNotMatching(false);
         setPasswordRestrictionError(undefined);
+        setErrorMessage(null);
 
         if (isNotSubmitted) {
           if (passwordInput === passwordConfirmationInput) {
-            const { isUpdated, details: restrictionRules } = await setPassword(
+            await fetchJson("/api/auth-connect/set-password", HttpVerbs.POST, {
               passwordInput,
-            );
+            })
+              .then((response) => {
+                return response.json();
+              })
+              .then((result) => {
+                if ("details" in result) {
+                  setPasswordRestrictionError(result.details);
+                  setIsNotSubmitted(true);
+                }
 
-            if (restrictionRules) {
-              setPasswordRestrictionError(restrictionRules);
-              setIsNotSubmitted(true);
-            }
+                if ("message" in result && result.code === "invalid_body") {
+                  setErrorMessage("Password can't be blank");
+                  setIsNotSubmitted(true);
+                }
 
-            if (isUpdated) {
-              router && router.push("/account/security");
-            }
+                if ("isUpdated" in result) {
+                  router && router.push("/account/security");
+                }
+              })
+              .catch((error) => {
+                throw error;
+              });
           } else {
             setIsNotSubmitted(true);
             setPasswordsNotMatching(true);
@@ -67,6 +83,7 @@ const SetPasswordForm: React.FC<{
           Your password confirmation do not match your new password.
         </MismatchedPassword>
       ) : null}
+      {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
       <p>New password</p>
       <ExtendedInputStyle
         type="password"

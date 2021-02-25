@@ -33,7 +33,7 @@ describe("Account Web Application update password", () => {
   });
 
   test("should show error messages if password inputs are filled incorrectly", async (done) => {
-    expect.assertions(11);
+    expect.assertions(12);
 
     try {
       await authenticateToConnect();
@@ -79,6 +79,16 @@ describe("Account Web Application update password", () => {
       expect(await text("1 digit").exists()).toBeTruthy();
       expect(await text("1 non-digit").exists()).toBeTruthy();
       expect(await text("8 characters").exists()).toBeTruthy();
+
+      await focus(textBox({ placeholder: "New password" }));
+      await clear(textBox({ placeholder: "New password" }));
+      await write("");
+      await focus(textBox({ placeholder: "Confirm new password" }));
+      await clear(textBox({ placeholder: "Confirm new password" }));
+      await write("");
+      await click("Update password");
+      await waitFor("Password can't be blank.");
+      expect(await text("Password can't be blank.").exists()).toBeTruthy();
 
       done();
     } catch (error) {
