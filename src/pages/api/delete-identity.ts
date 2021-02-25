@@ -18,7 +18,7 @@ import { Handler } from "@src/@types/handler";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 import { getIdentityType } from "@src/utils/get-identity-type";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
@@ -83,7 +83,7 @@ const wrappedHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
     recoveryMiddleware(getTracer()),
-    withSentry,
+    sentryMiddleware(getTracer()),
     errorMiddleware(getTracer()),
     loggingMiddleware(getTracer(), logger),
     authMiddleware(getTracer()),

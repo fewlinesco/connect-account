@@ -22,7 +22,7 @@ import { config } from "@src/config";
 import { NoUserFoundError } from "@src/errors";
 import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
@@ -49,7 +49,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     [
       tracingMiddleware(getTracer()),
       recoveryMiddleware(getTracer()),
-      withSentry,
+      sentryMiddleware(getTracer()),
       errorMiddleware(getTracer()),
       loggingMiddleware(getTracer(), logger),
       authMiddleware(getTracer()),
