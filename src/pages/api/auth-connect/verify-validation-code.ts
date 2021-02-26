@@ -101,8 +101,6 @@ const handler: Handler = async (request, response) => {
     span.setDisclosedAttribute("is temporary Identity expired", false);
 
     if (temporaryIdentity.identityToUpdateId) {
-      console.log("Identity to update", temporaryIdentity.identityToUpdateId);
-
       await updateIdentity(
         config.managementCredentials,
         user.sub,
@@ -117,7 +115,6 @@ const handler: Handler = async (request, response) => {
           }),
         )
         .catch((error) => {
-          console.log("Error", error);
           if (error instanceof IdentityNotFoundError) {
             throw webErrorFactory(webErrors.identityNotFound);
           }
