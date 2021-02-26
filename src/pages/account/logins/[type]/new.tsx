@@ -11,45 +11,41 @@ import React from "react";
 
 import { Container } from "@src/components/containers/container";
 import { AddIdentityForm } from "@src/components/forms/add-identity-form";
-import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   return (
-    <Layout>
+    <Layout
+      title="Logins"
+      breadcrumbs={[
+        getIdentityType(type) === IdentityTypes.EMAIL
+          ? "Email address"
+          : "Phone number",
+        "new",
+      ]}
+    >
       <Container>
-        <h1>Logins</h1>
-        <NavigationBreadcrumbs
-          breadcrumbs={[
-            getIdentityType(type) === IdentityTypes.EMAIL
-              ? "Email address"
-              : "Phone number",
-            "new",
-          ]}
-        />
         <AddIdentityForm type={type} />
       </Container>
     </Layout>
   );
 };
 
-const tracer = getTracer();
-
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
-      tracingMiddleware(tracer),
-      recoveryMiddleware(tracer),
-      withSentry,
-      errorMiddleware(tracer),
-      loggingMiddleware(tracer, logger),
-      withAuth,
+      tracingMiddleware(getTracer()),
+      recoveryMiddleware(getTracer()),
+      sentryMiddleware(getTracer()),
+      errorMiddleware(getTracer()),
+      loggingMiddleware(getTracer(), logger),
+      authMiddleware(getTracer()),
     ],
     "/account/logins/[type]/new",
     async () => {

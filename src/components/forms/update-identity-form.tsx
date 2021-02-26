@@ -4,6 +4,7 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
+import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
 import { HttpVerbs } from "@src/@types/http-verbs";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
@@ -110,12 +111,6 @@ const UpdateIdentityForm: React.FC<{
 const Value = styled.p`
   margin-right: 0.5rem;
   font-weight: ${({ theme }) => theme.fontWeights.bold};
-`;
-
-const WrongInputError = styled.p`
-  color: ${({ theme }) => theme.colors.red};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  margin-bottom: 3rem;
 `;
 
 export { UpdateIdentityForm };

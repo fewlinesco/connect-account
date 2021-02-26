@@ -41,20 +41,22 @@ const Box = styled.div<Pick<ConfirmationBoxProps, "open" | "preventAnimation">>`
   padding: 4rem 2rem 3rem;
   position: absolute;
   bottom: 0;
-  width: 100%;
+  width: calc(88rem * 60 / 100);
   background-color: ${({ theme }) => theme.colors.background};
+  right: 50%;
+  transform: translate(50%);
   z-index: 3;
 
   @media ${deviceBreakpoints.m} {
     position: fixed;
-    left: 0;
-    bottom: 0;
+    right: 0;
+    width: 100%;
+    transform: none;
   }
 
   ${(props) =>
     props.open &&
     `
-    animation: appearFromBottom 0.1s;
     visibility: visible;
     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
   `}
@@ -62,39 +64,8 @@ const Box = styled.div<Pick<ConfirmationBoxProps, "open" | "preventAnimation">>`
   ${(props) =>
     !props.open &&
     `
-    animation: disappearFromBottom 0.1s;
     visibility: hidden;
   `};
-
-  ${(props) =>
-    props.preventAnimation &&
-    `
-    animation: none;
-  `};
-
-  @keyframes appearFromBottom {
-    from {
-      bottom: -250px;
-      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0);
-    }
-    to {
-      bottom: 0;
-      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
-    }
-  }
-
-  @keyframes disappearFromBottom {
-    from {
-      bottom: 0;
-      visibility: visible;
-      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
-    }
-    to {
-      bottom: -250px;
-      visibility: hidden;
-      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0);
-    }
-  }
 `;
 
 export { ConfirmationBox };

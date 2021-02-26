@@ -16,13 +16,12 @@ import React from "react";
 
 import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
-import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
 import { IdentityOverview } from "@src/components/pages/identity-overview/identity-overview";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 
 const IdentityOverviewPage: React.FC<{
@@ -32,34 +31,31 @@ const IdentityOverviewPage: React.FC<{
   const { type } = identity;
 
   return (
-    <Layout>
+    <Layout
+      title="Logins"
+      breadcrumbs={[
+        type.toUpperCase() === IdentityTypes.EMAIL
+          ? "Email address"
+          : "Phone number",
+      ]}
+    >
       <Container>
-        <h1>Logins</h1>
-        <NavigationBreadcrumbs
-          breadcrumbs={[
-            type.toUpperCase() === IdentityTypes.EMAIL
-              ? "Email address"
-              : "Phone number",
-          ]}
-        />
         <IdentityOverview identity={identity} userId={userId} />
       </Container>
     </Layout>
   );
 };
 
-const tracer = getTracer();
-
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
-      tracingMiddleware(tracer),
-      recoveryMiddleware(tracer),
-      withSentry,
-      errorMiddleware(tracer),
-      loggingMiddleware(tracer, logger),
-      withAuth,
+      tracingMiddleware(getTracer()),
+      recoveryMiddleware(getTracer()),
+      sentryMiddleware(getTracer()),
+      errorMiddleware(getTracer()),
+      loggingMiddleware(getTracer(), logger),
+      authMiddleware(getTracer()),
     ],
     "/account/logins/[type]/[id]",
     async (request, response) => {

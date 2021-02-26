@@ -4,7 +4,7 @@ import { marshall, NativeAttributeValue } from "@aws-sdk/util-dynamodb";
 import { config } from "../../src/config";
 import { dynamoDbClient } from "../../src/db-client";
 
-export async function putUser(userData: {
+async function putUser(userData: {
   [key: string]: NativeAttributeValue;
 }): Promise<void> {
   try {
@@ -38,3 +38,5 @@ const Item = {
 };
 
 putUser(Item);
+
+export { putUser };

@@ -8,33 +8,34 @@ import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
 
+import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { Locale } from "@src/components/pages/locale/locale";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 
 const LocalePage: React.FC = () => {
   return (
-    <Layout>
-      <Locale />
+    <Layout title="Switch Language">
+      <Container>
+        <Locale />
+      </Container>
     </Layout>
   );
 };
-
-const tracer = getTracer();
 
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
     context,
     [
-      tracingMiddleware(tracer),
-      recoveryMiddleware(tracer),
-      withSentry,
-      errorMiddleware(tracer),
-      loggingMiddleware(tracer, logger),
-      withAuth,
+      tracingMiddleware(getTracer()),
+      recoveryMiddleware(getTracer()),
+      sentryMiddleware(getTracer()),
+      errorMiddleware(getTracer()),
+      loggingMiddleware(getTracer(), logger),
+      authMiddleware(getTracer()),
     ],
     "/account/locale",
   );

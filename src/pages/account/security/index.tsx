@@ -16,36 +16,32 @@ import { Layout } from "@src/components/page-layout";
 import { Security } from "@src/components/pages/security/security";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 
 const SecurityPage: React.FC<{
   isPasswordSet: boolean;
 }> = ({ isPasswordSet }) => {
   return (
-    <Layout>
+    <Layout title="Security" breadcrumbs={["Password, login history and more"]}>
       <Container>
-        <h1>Security</h1>
-        <h3>Password, login history and more</h3>
         <Security isPasswordSet={isPasswordSet} />
       </Container>
     </Layout>
   );
 };
 
-const tracer = getTracer();
-
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
-      tracingMiddleware(tracer),
-      recoveryMiddleware(tracer),
-      withSentry,
-      errorMiddleware(tracer),
-      loggingMiddleware(tracer, logger),
-      withAuth,
+      tracingMiddleware(getTracer()),
+      recoveryMiddleware(getTracer()),
+      sentryMiddleware(getTracer()),
+      errorMiddleware(getTracer()),
+      loggingMiddleware(getTracer(), logger),
+      authMiddleware(getTracer()),
     ],
     "/account/security",
     async (request) => {

@@ -4,6 +4,7 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
+import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
@@ -60,8 +61,8 @@ const AddIdentityForm: React.FC<{
       >
         <p>
           {getIdentityType(type) === IdentityTypes.PHONE
-            ? "phone number"
-            : "email address"}{" "}
+            ? "Phone number"
+            : "Email address"}{" "}
           *
         </p>
         <Input
@@ -107,12 +108,6 @@ const AddIdentityForm: React.FC<{
     </>
   );
 };
-
-const WrongInputError = styled.p`
-  color: ${({ theme }) => theme.colors.red};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  margin-bottom: 3rem;
-`;
 
 const Label = styled.label`
   display: block;
