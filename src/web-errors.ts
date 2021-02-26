@@ -26,6 +26,11 @@ const ERRORS_DATA = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: "Invalid validation code",
   },
+  EXPIRED_VALIDATION_CODE: {
+    code: "expired_validation_code",
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: "Expired validation code",
+  },
   TEMPORARY_IDENTITY_EXPIRED: {
     code: "temporary_identity_expired",
     httpStatus: HttpStatus.BAD_REQUEST,
