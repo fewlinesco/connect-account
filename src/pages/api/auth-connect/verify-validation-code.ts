@@ -198,39 +198,6 @@ const handler: Handler = async (request, response) => {
 
       span.setDisclosedAttribute("is temporary Identity primary", false);
 
-      if (identityToUpdateId) {
-        const identityToUpdate = await getIdentity(
-          config.managementCredentials,
-          { userId: userCookie.sub, identityId: identityToUpdateId },
-        ).catch((error) => {
-          if (error instanceof GraphqlErrors) {
-            throw webErrorFactory(webErrors.identityNotFound);
-          }
-
-          if (error instanceof ConnectUnreachableError) {
-            throw webErrorFactory(webErrors.connectUnreachable);
-          }
-
-          throw error;
-        });
-
-        await removeIdentityFromUser(config.managementCredentials, {
-          userId: userCookie.sub,
-          identityType: getIdentityType(type),
-          identityValue: identityToUpdate ? identityToUpdate.value : "",
-        }).catch((error) => {
-          if (error instanceof GraphqlErrors) {
-            throw webErrorFactory(webErrors.identityNotFound);
-          }
-
-          if (error instanceof ConnectUnreachableError) {
-            throw webErrorFactory(webErrors.connectUnreachable);
-          }
-
-          throw error;
-        });
-      }
-
       response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
         Location: "/account/logins",
       });
