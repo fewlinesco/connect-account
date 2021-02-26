@@ -1,4 +1,5 @@
 import { defaultPayload, generateHS256JWS } from "@fewlines/connect-client";
+import { getTracer } from "@fwl/tracing";
 import { HttpStatus } from "@fwl/web";
 import { wrapMiddlewares } from "@fwl/web/dist/middlewares";
 import { seal, defaults } from "@hapi/iron";
@@ -9,7 +10,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Handler } from "@src/@types/handler";
 import * as getAndPutUser from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
-import { withAuth } from "@src/middlewares/with-auth";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
 import * as getDBUserFromSub from "@src/queries/get-db-user-from-sub";
 import * as decryptVerifyAccessToken from "@src/workflows/decrypt-verify-access-token";
 
@@ -132,7 +133,10 @@ describe("withAuth", () => {
       env: {},
     });
 
-    const withAuthCallback = wrapMiddlewares([withAuth], mockedHandler);
+    const withAuthCallback = wrapMiddlewares(
+      [authMiddleware(getTracer())],
+      mockedHandler,
+    );
     await withAuthCallback(mockedNextApiRequest, mockedResponse);
 
     expect(mockedResponse.statusCode).toEqual(HttpStatus.TEMPORARY_REDIRECT);
@@ -168,7 +172,10 @@ describe("withAuth", () => {
         return null;
       });
 
-      const withAuthCallback = wrapMiddlewares([withAuth], mockedHandler);
+      const withAuthCallback = wrapMiddlewares(
+        [authMiddleware(getTracer())],
+        mockedHandler,
+      );
       await withAuthCallback(mockedNextApiRequest, mockedResponse);
 
       expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();
@@ -206,7 +213,10 @@ describe("withAuth", () => {
         throw new TokenExpiredError();
       });
 
-      const withAuthCallback = wrapMiddlewares([withAuth], mockedHandler);
+      const withAuthCallback = wrapMiddlewares(
+        [authMiddleware(getTracer())],
+        mockedHandler,
+      );
       await withAuthCallback(mockedNextApiRequest, mockedResponse);
 
       expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();

@@ -14,7 +14,7 @@ import { Home } from "@src/components/pages/home/home";
 import { config } from "@src/config";
 import { oauth2Client } from "@src/config";
 import { logger } from "@src/logger";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 
 type HomePageProps = { authorizeURL: string; providerName: string };
@@ -27,8 +27,6 @@ const HomePage: React.FC<HomePageProps> = ({ authorizeURL, providerName }) => {
   );
 };
 
-const tracer = getTracer();
-
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{
     authorizeURL: string;
@@ -36,11 +34,11 @@ const getServerSideProps: GetServerSideProps = async (context) => {
   }>(
     context,
     [
-      tracingMiddleware(tracer),
-      recoveryMiddleware(tracer),
-      withSentry,
-      errorMiddleware(tracer),
-      loggingMiddleware(tracer, logger),
+      tracingMiddleware(getTracer()),
+      recoveryMiddleware(getTracer()),
+      sentryMiddleware(getTracer()),
+      errorMiddleware(getTracer()),
+      loggingMiddleware(getTracer(), logger),
     ],
     "/",
     async () => {
