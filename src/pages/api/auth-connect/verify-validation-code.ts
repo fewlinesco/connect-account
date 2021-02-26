@@ -7,8 +7,6 @@ import {
   checkVerificationCode,
   addIdentityToUser,
   markIdentityAsPrimary,
-  getIdentity,
-  removeIdentityFromUser,
 } from "@fewlines/connect-management";
 import { Endpoint, getServerSideCookies, HttpStatus } from "@fwl/web";
 import {
@@ -153,7 +151,7 @@ const handler: Handler = async (request, response) => {
       throw error;
     });
 
-    const { value, type, primary, identityToUpdateId } = temporaryIdentity;
+    const { value, type, primary } = temporaryIdentity;
 
     if (verificationStatus === "VALID") {
       span.setDisclosedAttribute("is temporary Identity valid", true);
