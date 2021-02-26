@@ -47,6 +47,11 @@ const ERRORS_DATA = {
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
     message: "Unable to reach Connect",
   },
+  UNREACHABLE: {
+    code: "unreachable",
+    httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
+    message: "Unable to reach the service",
+  },
   DATABASE_UNREACHABLE: {
     code: "database_unreachable",
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,

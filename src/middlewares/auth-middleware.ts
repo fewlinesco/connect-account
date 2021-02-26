@@ -21,7 +21,7 @@ async function authentication(
   response: NextApiResponse,
 ): Promise<void> {
   const webErrors = {
-    connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+    unreachable: ERRORS_DATA.UNREACHABLE,
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
   };
 
@@ -62,7 +62,7 @@ async function authentication(
                   span.setDisclosedAttribute("is token refreshed", false);
 
                   if (error instanceof UnreachableError) {
-                    throw webErrorFactory(webErrors.connectUnreachable);
+                    throw webErrorFactory(webErrors.unreachable);
                   }
 
                   throw error;
@@ -76,7 +76,7 @@ async function authentication(
                   span.setDisclosedAttribute("is access_token valid", false);
 
                   if (error instanceof UnreachableError) {
-                    throw webErrorFactory(webErrors.connectUnreachable);
+                    throw webErrorFactory(webErrors.unreachable);
                   }
 
                   throw error;
