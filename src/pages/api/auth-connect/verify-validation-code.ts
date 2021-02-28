@@ -108,12 +108,17 @@ const handler: Handler = async (request, response) => {
         temporaryIdentity.value,
         temporaryIdentity.identityToUpdateId,
       )
-        .then(() =>
+        .then(() => {
+          span.setDisclosedAttribute("is Identity updated", true);
+
           response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
             Location: "/account/logins",
-          }),
-        )
+          });
+          return;
+        })
         .catch((error) => {
+          span.setDisclosedAttribute("is Identity updated", false);
+
           if (error instanceof IdentityNotFoundError) {
             throw webErrorFactory(webErrors.identityNotFound);
           }
@@ -211,7 +216,8 @@ const handler: Handler = async (request, response) => {
       Location: "/account/logins",
     });
 
-    return response.end();
+    response.end();
+    return;
   });
 };
 
