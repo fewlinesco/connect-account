@@ -70,7 +70,7 @@ const handler: Handler = async (request, response) => {
     span.setDisclosedAttribute("user found", true);
 
     const temporaryIdentity = user.temporary_identities.find(({ eventIds }) => {
-      return eventIds.find((eventId) => eventId === request.body.eventId);
+      return eventIds.find((inDbEventId) => inDbEventId === eventId);
     });
 
     if (temporaryIdentity) {

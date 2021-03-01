@@ -45,7 +45,9 @@ const handler: Handler = (request, response): Promise<void> => {
   return getTracer().span(
     "re-send-identity-validation-code handler",
     async (span) => {
-      if (!request.body.eventId) {
+      const { eventId } = request.body;
+
+      if (!eventId) {
         throw webErrorFactory(webErrors.badRequest);
       }
 
@@ -74,7 +76,7 @@ const handler: Handler = (request, response): Promise<void> => {
 
       const temporaryIdentity = user.temporary_identities.find(
         ({ eventIds }) => {
-          return eventIds.find((eventId) => eventId === request.body.eventId);
+          return eventIds.find((inDbEventId) => inDbEventId === eventId);
         },
       );
 
