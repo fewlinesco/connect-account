@@ -1,4 +1,4 @@
-import { JWTPayload, UnreachableError } from "@fewlines/connect-client";
+import { UnreachableError } from "@fewlines/connect-client";
 import { Tracer } from "@fwl/tracing";
 import {
   HttpStatus,
@@ -68,19 +68,22 @@ async function authentication(
                   throw error;
                 });
 
+              console.log("refresh_token: ", refresh_token);
+              console.log("access_token: ", access_token);
+
               span.setDisclosedAttribute("is token refreshed", true);
 
-              const { sub } = await oauth2Client
-                .verifyJWT<JWTPayload>(access_token, config.connectJwtAlgorithm)
-                .catch((error) => {
-                  span.setDisclosedAttribute("is access_token valid", false);
+              const { sub } = await decryptVerifyAccessToken(
+                access_token,
+              ).catch((error) => {
+                span.setDisclosedAttribute("is access_token valid", false);
 
-                  if (error instanceof UnreachableError) {
-                    throw webErrorFactory(webErrors.unreachable);
-                  }
+                if (error instanceof UnreachableError) {
+                  throw webErrorFactory(webErrors.unreachable);
+                }
 
-                  throw error;
-                });
+                throw error;
+              });
 
               span.setDisclosedAttribute("is access_token valid", true);
 
@@ -94,7 +97,7 @@ async function authentication(
                 {
                   shouldCookieBeSealed: true,
                   cookieSalt: config.cookieSalt,
-                  maxAge: 24 * 60 * 60,
+                  maxAge: 120,
                   path: "/",
                   httpOnly: true,
                   secure: true,
