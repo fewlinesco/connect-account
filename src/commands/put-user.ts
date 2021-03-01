@@ -14,7 +14,7 @@ async function putUser(userData: {
 
   const itemCommand = new PutItemCommand(params);
 
-  return dynamoDbClient.send(itemCommand);
+  return await dynamoDbClient.send(itemCommand);
 }
 
 export { putUser };
