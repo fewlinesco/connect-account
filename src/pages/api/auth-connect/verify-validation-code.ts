@@ -22,8 +22,8 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import getTracer from "@src/tracer";
 import { getIdentityType } from "@src/utils/get-identity-type";
@@ -223,10 +223,10 @@ const wrappedHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
     recoveryMiddleware(getTracer()),
-    withSentry,
+    sentryMiddleware(getTracer()),
     errorMiddleware(getTracer()),
     loggingMiddleware(getTracer(), logger),
-    withAuth,
+    authMiddleware(getTracer()),
   ],
   handler,
   "/api/auth-connect/verify-validation-code",

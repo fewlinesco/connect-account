@@ -16,8 +16,8 @@ import { Layout } from "@src/components/page-layout";
 import { Security } from "@src/components/pages/security/security";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 
 const SecurityPage: React.FC<{
@@ -32,18 +32,16 @@ const SecurityPage: React.FC<{
   );
 };
 
-const tracer = getTracer();
-
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
-      tracingMiddleware(tracer),
-      recoveryMiddleware(tracer),
-      withSentry,
-      errorMiddleware(tracer),
-      loggingMiddleware(tracer, logger),
-      withAuth,
+      tracingMiddleware(getTracer()),
+      recoveryMiddleware(getTracer()),
+      sentryMiddleware(getTracer()),
+      errorMiddleware(getTracer()),
+      loggingMiddleware(getTracer(), logger),
+      authMiddleware(getTracer()),
     ],
     "/account/security",
     async (request) => {
