@@ -73,7 +73,7 @@ const handler: Handler = (request, response): Promise<void> => {
           span.setDisclosedAttribute("is validation code sent", true);
 
           let temporaryIdentity: TemporaryIdentity = {
-            eventId: eventId,
+            eventIds: [eventId],
             value: identityInput.value,
             type: identityInput.type,
             expiresAt: identityInput.expiresAt,

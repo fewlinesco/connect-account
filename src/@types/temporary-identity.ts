@@ -1,7 +1,7 @@
 import { IdentityTypes } from "@fewlines/connect-management";
 
 type TemporaryIdentity = {
-  eventId: string;
+  eventIds: string[];
   value: string;
   type: string;
   expiresAt: number;
