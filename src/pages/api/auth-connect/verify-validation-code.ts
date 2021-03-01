@@ -66,15 +66,12 @@ const handler: Handler = async (request, response) => {
 
       throw webErrorFactory(webErrors.noUserFound);
     }
-    console.log("user: ", user);
 
     span.setDisclosedAttribute("user found", true);
 
     const temporaryIdentity = user.temporary_identities.find(({ eventIds }) => {
       return eventIds.find((eventId) => eventId === request.body.eventId);
     });
-
-    console.log("temporaryIdentity: ", temporaryIdentity);
 
     if (temporaryIdentity) {
       span.setDisclosedAttribute("is temporary Identity found", true);
