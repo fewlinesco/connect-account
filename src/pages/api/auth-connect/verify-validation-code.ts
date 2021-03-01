@@ -159,21 +159,10 @@ const handler: Handler = async (request, response) => {
       throw error;
     });
 
-    if (verificationStatus === "EXPIRED") {
-      span.setDisclosedAttribute("is validation code expired", true);
-
-      throw webErrorFactory(webErrors.expiredValidationCode);
-    } else if (verificationStatus !== "VALID") {
-      span.setDisclosedAttribute("is validation code valid", false);
-
-      throw webErrorFactory(webErrors.invalidValidationCode);
-    }
-
-    span.setDisclosedAttribute("is validation code expired", false);
-    span.setDisclosedAttribute("is validation code valid", true);
-
     const { id: identityId } = await addIdentityToUser(
       config.managementCredentials,
+      verificationStatus,
+      eventId,
       {
         userId: userCookie.sub,
         identityType: getIdentityType(type),
