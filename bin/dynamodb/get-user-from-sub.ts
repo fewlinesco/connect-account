@@ -27,7 +27,13 @@ async function getUserFromSub(): Promise<void> {
         console.log("User:\n", data);
 
         const { Item } = data;
-        Item && console.log("User data:\n", unmarshall(Item));
+        Item &&
+          console.log(
+            "User data:\n",
+            unmarshall(Item),
+            "\nTemporary Identities: \n",
+            unmarshall(Item).temporary_identities,
+          );
       } else {
         throw new Error(errors.tooManyArgs);
       }

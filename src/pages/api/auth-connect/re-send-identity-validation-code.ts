@@ -84,7 +84,14 @@ const handler: Handler = (request, response): Promise<void> => {
         throw webErrorFactory(webErrors.temporaryIdentityNotFound);
       }
 
-      const { type, value, expiresAt, primary, eventIds } = temporaryIdentity;
+      const {
+        type,
+        value,
+        expiresAt,
+        primary,
+        eventIds,
+        identityToUpdateId,
+      } = temporaryIdentity;
 
       const identity = {
         type: getIdentityType(type),
@@ -106,6 +113,7 @@ const handler: Handler = (request, response): Promise<void> => {
             type,
             expiresAt,
             primary,
+            identityToUpdateId,
           };
 
           await insertTemporaryIdentity(

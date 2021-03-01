@@ -4,7 +4,6 @@ import {
   InvalidValidationCodeError,
   IdentityNotFoundError,
   GraphqlErrors,
-  checkVerificationCode,
   addIdentityToUser,
   markIdentityAsPrimary,
 } from "@fewlines/connect-management";
@@ -91,16 +90,22 @@ const handler: Handler = async (request, response) => {
 
     span.setDisclosedAttribute("is temporary Identity expired", false);
 
-    const { value, type, primary, eventIds } = temporaryIdentity;
+    const {
+      value,
+      type,
+      primary,
+      eventIds,
+      identityToUpdateId,
+    } = temporaryIdentity;
 
-    if (temporaryIdentity.identityToUpdateId) {
-      await updateIdentityFromUser(
+    if (identityToUpdateId) {
+      return await updateIdentityFromUser(
         config.managementCredentials,
         user.sub,
         validationCode,
         eventIds,
-        temporaryIdentity.value,
-        temporaryIdentity.identityToUpdateId,
+        value,
+        identityToUpdateId,
       )
         .then(async () => {
           span.setDisclosedAttribute("is Identity updated", true);
@@ -117,6 +122,8 @@ const handler: Handler = async (request, response) => {
           response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
             Location: "/account/logins",
           });
+
+          response.end();
           return;
         })
         .catch((error) => {
