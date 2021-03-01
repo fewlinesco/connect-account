@@ -1,4 +1,5 @@
 import React from "react";
+import Anime, { anime } from "react-anime";
 import styled from "styled-components";
 
 import { AlertMessages } from "./alert-message/alert-messages";
@@ -39,7 +40,13 @@ const Layout: React.FC<{
           {breadcrumbs ? (
             <NavigationBreadcrumbs breadcrumbs={breadcrumbs} />
           ) : null}
-          {children}
+          <Anime
+            opacity={[0, 1]}
+            translateY={"1em"}
+            delay={(_e, i) => (i ? i * 1000 : 0)}
+          >
+            {children}
+          </Anime>
         </ChildrenContainer>
       </Flex>
     </Main>
