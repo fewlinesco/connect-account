@@ -27,8 +27,8 @@
     "e2e:create-status-check": "ts-node bin/e2e/create-e2e-status-check.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.4.1",
-    "@aws-sdk/util-dynamodb": "3.4.1",
+    "@aws-sdk/client-dynamodb": "3.7.0",
+    "@aws-sdk/util-dynamodb": "3.7.0",
     "@fewlines/connect-client": "0.4.1",
     "@fewlines/connect-management": "0.5.0",
     "@fwl/logging": "0.1.1",
