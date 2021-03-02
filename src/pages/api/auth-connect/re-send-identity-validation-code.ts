@@ -26,6 +26,7 @@ import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
 import { config } from "@src/config";
+import { NoUserFoundError } from "@src/errors";
 import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
@@ -41,6 +42,7 @@ const handler: Handler = (request, response): Promise<void> => {
     temporaryIdentitiesNotFound: ERRORS_DATA.TEMPORARIES_IDENTITY_NOT_FOUND,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
+    noUserFound: ERRORS_DATA.NO_USER_FOUND,
   };
 
   return getTracer().span(
@@ -116,6 +118,14 @@ const handler: Handler = (request, response): Promise<void> => {
             userCookie.sub,
             temporaryIdentity,
           ).catch((error) => {
+            if (error instanceof NoUserFoundError) {
+              span.setDisclosedAttribute("user found", false);
+              throw webErrorFactory({
+                ...webErrors.noUserFound,
+                parentError: error,
+              });
+            }
+
             span.setDisclosedAttribute("database reachable", false);
 
             throw webErrorFactory({

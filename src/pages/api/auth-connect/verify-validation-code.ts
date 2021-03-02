@@ -22,6 +22,7 @@ import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
 import { config } from "@src/config";
+import { NoUserFoundError } from "@src/errors";
 import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
@@ -57,7 +58,6 @@ const handler: Handler = async (request, response) => {
 
     const user = await getDBUserFromSub(userCookie.sub).catch((error) => {
       span.setDisclosedAttribute("database reachable", false);
-      span.setDisclosedAttribute("exception.message", error.message);
 
       throw webErrorFactory({
         ...webErrors.databaseUnreachable,
@@ -141,6 +141,14 @@ const handler: Handler = async (request, response) => {
             userCookie.sub,
             temporaryIdentity,
           ).catch((error) => {
+            if (error instanceof NoUserFoundError) {
+              span.setDisclosedAttribute("user found", false);
+              throw webErrorFactory({
+                ...webErrors.noUserFound,
+                parentError: error,
+              });
+            }
+
             span.setDisclosedAttribute("database reachable", false);
 
             throw webErrorFactory({
@@ -240,6 +248,14 @@ const handler: Handler = async (request, response) => {
 
         await removeTemporaryIdentity(userCookie.sub, temporaryIdentity).catch(
           (error) => {
+            if (error instanceof NoUserFoundError) {
+              span.setDisclosedAttribute("user found", false);
+              throw webErrorFactory({
+                ...webErrors.noUserFound,
+                parentError: error,
+              });
+            }
+
             span.setDisclosedAttribute("database reachable", false);
 
             throw webErrorFactory({
