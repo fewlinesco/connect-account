@@ -29,7 +29,7 @@ const Item = {
   refresh_token: "refresh_token",
   temporary_identities: [
     {
-      event_id: "event_id",
+      event_ids: ["event_id"],
       value: "value",
       type: "type",
       expires_at: 42,

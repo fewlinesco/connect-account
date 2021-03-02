@@ -93,7 +93,6 @@ const handler: Handler = (request, response): Promise<void> => {
             temporaryIdentity,
           ).catch(() => {
             span.setDisclosedAttribute("database reachable", false);
-
             throw webErrorFactory(webErrors.databaseUnreachable);
           });
 

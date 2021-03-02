@@ -34,25 +34,20 @@ async function authentication(
 
     if (userCookie) {
       span.setDisclosedAttribute("user cookie found", true);
-
       const { access_token: currentAccessToken, sub } = userCookie;
 
       await decryptVerifyAccessToken(currentAccessToken).catch(
         async (error) => {
           if (error.name === "TokenExpiredError") {
             span.setDisclosedAttribute("is access_token expired", true);
-
             const user = await getDBUserFromSub(sub).catch(() => {
               span.setDisclosedAttribute("database reachable", false);
-
               throw webErrorFactory(webErrors.databaseUnreachable);
             });
-
             span.setDisclosedAttribute("database reachable", true);
 
             if (user) {
               span.setDisclosedAttribute("user found on DB", true);
-
               const {
                 refresh_token,
                 access_token,
@@ -60,28 +55,24 @@ async function authentication(
                 .refreshTokens(user.refresh_token)
                 .catch((error) => {
                   span.setDisclosedAttribute("is token refreshed", false);
-
                   if (error instanceof UnreachableError) {
                     throw webErrorFactory(webErrors.unreachable);
                   }
 
                   throw error;
                 });
-
               span.setDisclosedAttribute("is token refreshed", true);
 
               const { sub } = await decryptVerifyAccessToken(
                 access_token,
               ).catch((error) => {
                 span.setDisclosedAttribute("is access_token valid", false);
-
                 if (error instanceof UnreachableError) {
                   throw webErrorFactory(webErrors.unreachable);
                 }
 
                 throw error;
               });
-
               span.setDisclosedAttribute("is access_token valid", true);
 
               await setServerSideCookies(
@@ -105,10 +96,8 @@ async function authentication(
 
               await getAndPutUser({ sub, refresh_token }, user).catch(() => {
                 span.setDisclosedAttribute("database reachable", false);
-
                 throw webErrorFactory(webErrors.databaseUnreachable);
               });
-
               span.setDisclosedAttribute("user updated on DB", true);
 
               response.statusCode = HttpStatus.OK;
