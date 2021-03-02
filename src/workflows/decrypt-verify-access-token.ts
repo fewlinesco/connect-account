@@ -12,13 +12,11 @@ async function decryptVerifyAccessToken(
   const tokenPartsCount = accessToken.split(".").length;
 
   if (tokenPartsCount === 3) {
-    console.log(tokenPartsCount);
     return oauth2Client.verifyJWT<JWTPayload>(
       accessToken,
       config.connectJwtAlgorithm,
     );
   } else if (tokenPartsCount === 5) {
-    console.log(tokenPartsCount);
     const isAccessTokenSigned = JSON.parse(config.isJweSigned);
 
     if (typeof isAccessTokenSigned !== "boolean") {

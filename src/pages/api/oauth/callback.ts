@@ -60,7 +60,7 @@ const handler: Handler = (request, response): Promise<void> => {
       {
         shouldCookieBeSealed: true,
         cookieSalt: config.cookieSalt,
-        maxAge: 120,
+        maxAge: 24 * 60 * 60,
         path: "/",
         httpOnly: true,
         secure: true,

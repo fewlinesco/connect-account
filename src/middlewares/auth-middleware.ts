@@ -68,9 +68,6 @@ async function authentication(
                   throw error;
                 });
 
-              console.log("refresh_token: ", refresh_token);
-              console.log("access_token: ", access_token);
-
               span.setDisclosedAttribute("is token refreshed", true);
 
               const { sub } = await decryptVerifyAccessToken(
@@ -97,7 +94,7 @@ async function authentication(
                 {
                   shouldCookieBeSealed: true,
                   cookieSalt: config.cookieSalt,
-                  maxAge: 120,
+                  maxAge: 24 * 60 * 60,
                   path: "/",
                   httpOnly: true,
                   secure: true,
