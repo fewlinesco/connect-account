@@ -43,10 +43,13 @@ const handler: Handler = (request, response): Promise<void> => {
       refresh_token,
     };
 
-    await getAndPutUser(oAuth2UserInfo).catch(() => {
+    await getAndPutUser(oAuth2UserInfo).catch((error) => {
       span.setDisclosedAttribute("database reachable", false);
 
-      throw webErrorFactory(webErrors.databaseUnreachable);
+      throw webErrorFactory({
+        ...webErrors.databaseUnreachable,
+        parentError: error,
+      });
     });
 
     span.setDisclosedAttribute("user updated on DB", true);

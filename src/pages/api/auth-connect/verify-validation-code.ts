@@ -59,7 +59,10 @@ const handler: Handler = async (request, response) => {
       span.setDisclosedAttribute("database reachable", false);
       span.setDisclosedAttribute("exception.message", error.message);
 
-      throw webErrorFactory(webErrors.databaseUnreachable);
+      throw webErrorFactory({
+        ...webErrors.databaseUnreachable,
+        parentError: error,
+      });
     });
 
     if (!user) {
@@ -137,10 +140,13 @@ const handler: Handler = async (request, response) => {
           await removeTemporaryIdentity(
             userCookie.sub,
             temporaryIdentity,
-          ).catch(() => {
+          ).catch((error) => {
             span.setDisclosedAttribute("database reachable", false);
 
-            throw webErrorFactory(webErrors.databaseUnreachable);
+            throw webErrorFactory({
+              ...webErrors.databaseUnreachable,
+              parentError: error,
+            });
           });
 
           if (primary) {
@@ -233,10 +239,13 @@ const handler: Handler = async (request, response) => {
         span.setDisclosedAttribute("temporary Identity expired", true);
 
         await removeTemporaryIdentity(userCookie.sub, temporaryIdentity).catch(
-          () => {
+          (error) => {
             span.setDisclosedAttribute("database reachable", false);
 
-            throw webErrorFactory(webErrors.databaseUnreachable);
+            throw webErrorFactory({
+              ...webErrors.databaseUnreachable,
+              parentError: error,
+            });
           },
         );
 

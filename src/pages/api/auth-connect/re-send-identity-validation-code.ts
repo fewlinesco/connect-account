@@ -65,10 +65,13 @@ const handler: Handler = (request, response): Promise<void> => {
         return;
       }
 
-      const user = await getDBUserFromSub(userCookie.sub).catch(() => {
+      const user = await getDBUserFromSub(userCookie.sub).catch((error) => {
         span.setDisclosedAttribute("database reachable", false);
 
-        throw webErrorFactory(webErrors.databaseUnreachable);
+        throw webErrorFactory({
+          ...webErrors.databaseUnreachable,
+          parentError: error,
+        });
       });
 
       if (!user?.temporary_identities) {
@@ -112,10 +115,13 @@ const handler: Handler = (request, response): Promise<void> => {
           await insertTemporaryIdentity(
             userCookie.sub,
             temporaryIdentity,
-          ).catch(() => {
+          ).catch((error) => {
             span.setDisclosedAttribute("database reachable", false);
 
-            throw webErrorFactory(webErrors.databaseUnreachable);
+            throw webErrorFactory({
+              ...webErrors.databaseUnreachable,
+              parentError: error,
+            });
           });
 
           const verificationCodeMessage =
@@ -142,7 +148,10 @@ const handler: Handler = (request, response): Promise<void> => {
           }
 
           if (error instanceof ConnectUnreachableError) {
-            throw webErrorFactory(webErrors.connectUnreachable);
+            throw webErrorFactory({
+              ...webErrors.connectUnreachable,
+              parentError: error,
+            });
           }
 
           throw error;

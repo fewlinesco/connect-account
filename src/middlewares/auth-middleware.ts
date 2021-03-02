@@ -45,7 +45,10 @@ async function authentication(
             const user = await getDBUserFromSub(sub).catch(() => {
               span.setDisclosedAttribute("database reachable", false);
 
-              throw webErrorFactory(webErrors.databaseUnreachable);
+              throw webErrorFactory({
+                ...webErrors.databaseUnreachable,
+                parentError: error,
+              });
             });
 
             span.setDisclosedAttribute("database reachable", true);
@@ -106,7 +109,10 @@ async function authentication(
               await getAndPutUser({ sub, refresh_token }, user).catch(() => {
                 span.setDisclosedAttribute("database reachable", false);
 
-                throw webErrorFactory(webErrors.databaseUnreachable);
+                throw webErrorFactory({
+                  ...webErrors.databaseUnreachable,
+                  parentError: error,
+                });
               });
 
               span.setDisclosedAttribute("user updated on DB", true);

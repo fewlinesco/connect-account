@@ -91,10 +91,13 @@ const handler: Handler = (request, response): Promise<void> => {
           await insertTemporaryIdentity(
             userCookie.sub,
             temporaryIdentity,
-          ).catch(() => {
+          ).catch((error) => {
             span.setDisclosedAttribute("database reachable", false);
 
-            throw webErrorFactory(webErrors.databaseUnreachable);
+            throw webErrorFactory({
+              ...webErrors.databaseUnreachable,
+              parentError: error,
+            });
           });
 
           const verificationCodeMessage =
