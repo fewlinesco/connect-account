@@ -222,7 +222,7 @@ describe("withAuth", () => {
       expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();
       expect(spiedOnGetDBUserFromSub).toHaveBeenCalled();
       expect(spiedOnRefreshTokensFlow).toHaveBeenCalled();
-      expect(spiedOnVerifyJWT).toHaveBeenCalled();
+      expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();
       expect(spiedOnGetAndPutUser).toHaveBeenCalled();
       expect(mockedResponse.statusCode).toEqual(HttpStatus.OK);
       expect(mockedResponse.getHeader("location")).toBe("referer/url");
