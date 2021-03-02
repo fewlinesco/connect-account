@@ -1,16 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
+import { Logo } from "../logo/logo";
 import { NeutralLink } from "../neutral-link/neutral-link";
-import { useTheme } from "@src/design-system/theme/use-theme";
 
 const Header: React.FC = () => {
-  const theme = useTheme();
-
   return (
     <Flex>
       <NeutralLink href="/account">
-        <img width="90" src={theme.logo} aria-label="Logo" />
+        <Logo />
       </NeutralLink>
       <p>Account</p>
     </Flex>

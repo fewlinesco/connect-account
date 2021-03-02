@@ -79,7 +79,5 @@ declare module "styled-components" {
       quick: string;
       classic: string;
     };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logo: any;
   }
 }
