@@ -8,13 +8,14 @@ import { v4 as uuidv4 } from "uuid";
 
 import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
+import { HttpVerbs } from "@src/@types/http-verbs";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { Input } from "@src/components/input/input";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { fetchJson } from "@src/utils/fetch-json";
 import { getIdentityType } from "@src/utils/get-identity-type";
-import { addIdentity } from "@src/workflows/add-identity";
 
 const AddIdentityForm: React.FC<{
   type: IdentityTypes;
@@ -36,19 +37,30 @@ const AddIdentityForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
-          await addIdentity(identity).then((response) => {
-            if ("message" in response) {
-              setFormID(uuidv4());
-              setErrorMessage(response.message);
-            }
+          const body = {
+            callbackUrl: "/",
+            identityInput: identity,
+          };
 
-            if ("eventId" in response) {
-              router &&
-                router.push(
-                  `/account/logins/${type}/validation/${response.eventId}`,
-                );
-            }
-          });
+          await fetchJson(
+            "/api/auth-connect/send-identity-validation-code",
+            HttpVerbs.POST,
+            body,
+          )
+            .then((response) => response.json())
+            .then((parsedResponse) => {
+              if ("message" in parsedResponse) {
+                setFormID(uuidv4());
+                setErrorMessage(parsedResponse.message);
+              }
+
+              if ("eventId" in parsedResponse) {
+                router &&
+                  router.push(
+                    `/account/logins/${type}/validation/${parsedResponse.eventId}`,
+                  );
+              }
+            });
         }}
       >
         <p>
