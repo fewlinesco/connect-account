@@ -33,12 +33,15 @@ const handler: Handler = async (request, response) => {
   const webErrors = {
     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
     temporaryIdentityNotFound: ERRORS_DATA.TEMPORARY_IDENTITY_NOT_FOUND,
+    temporaryIdentityListNotFound:
+      ERRORS_DATA.TEMPORARY_IDENTITY_LIST_NOT_FOUND,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
     invalidBody: ERRORS_DATA.INVALID_BODY,
     invalidValidationCode: ERRORS_DATA.INVALID_VALIDATION_CODE,
     expiredValidationCode: ERRORS_DATA.EXPIRED_VALIDATION_CODE,
     temporaryIdentityExpired: ERRORS_DATA.TEMPORARY_IDENTITY_EXPIRED,
+    eventIdListNotFound: ERRORS_DATA.EVENT_ID_LIST_NOT_FOUND,
     noUserFound: ERRORS_DATA.NO_USER_FOUND,
   };
 
@@ -58,36 +61,43 @@ const handler: Handler = async (request, response) => {
     const user = await getDBUserFromSub(userCookie.sub).catch((error) => {
       span.setDisclosedAttribute("database reachable", false);
       span.setDisclosedAttribute("exception.message", error.message);
-
       throw webErrorFactory(webErrors.databaseUnreachable);
     });
 
     if (!user) {
       span.setDisclosedAttribute("user found", false);
-
       throw webErrorFactory(webErrors.noUserFound);
     }
-
     span.setDisclosedAttribute("user found", true);
 
+    if (!user.temporary_identities) {
+      span.setDisclosedAttribute("temporary identity list found", false);
+      throw webErrorFactory(webErrors.temporaryIdentityListNotFound);
+    }
+    span.setDisclosedAttribute("temporary identity list found", true);
+
     const temporaryIdentity = user.temporary_identities.find(({ eventIds }) => {
+      if (!eventIds) {
+        span.setDisclosedAttribute("event ids list found", false);
+        throw webErrorFactory(webErrors.eventIdListNotFound);
+      }
+      span.setDisclosedAttribute("event ids list found", true);
+
       return eventIds.find((inDbEventId) => inDbEventId === eventId);
     });
 
+    console.log({ temporaryIdentity });
+
     if (!temporaryIdentity) {
       span.setDisclosedAttribute("is temporary Identity found", false);
-
       throw webErrorFactory(webErrors.temporaryIdentityNotFound);
     }
-
     span.setDisclosedAttribute("is temporary Identity found", true);
 
     if (temporaryIdentity.expiresAt < Date.now()) {
       span.setDisclosedAttribute("is temporary Identity expired", true);
-
       throw webErrorFactory(webErrors.temporaryIdentityExpired);
     }
-
     span.setDisclosedAttribute("is temporary Identity expired", false);
 
     const {
@@ -188,13 +198,11 @@ const handler: Handler = async (request, response) => {
         throw error;
       });
     }
-
     span.setDisclosedAttribute("is temporary Identity primary", false);
 
     await removeTemporaryIdentity(userCookie.sub, temporaryIdentity).catch(
       () => {
         span.setDisclosedAttribute("database reachable", false);
-
         throw webErrorFactory(webErrors.databaseUnreachable);
       },
     );

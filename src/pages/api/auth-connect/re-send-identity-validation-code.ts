@@ -37,7 +37,7 @@ const handler: Handler = (request, response): Promise<void> => {
     badRequest: ERRORS_DATA.BAD_REQUEST,
     identityInputCantBeBLank: ERRORS_DATA.IDENTITY_INPUT_CANT_BE_BLANK,
     temporaryIdentityNotFound: ERRORS_DATA.TEMPORARY_IDENTITY_NOT_FOUND,
-    temporaryIdentitiesNotFound: ERRORS_DATA.TEMPORARIES_IDENTITY_NOT_FOUND,
+    temporaryIdentitiesNotFound: ERRORS_DATA.TEMPORARY_IDENTITY_LIST_NOT_FOUND,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
   };
