@@ -4,6 +4,7 @@ import {
   tracingMiddleware,
   errorMiddleware,
   recoveryMiddleware,
+  rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { GetServerSideProps } from "next";
@@ -35,6 +36,10 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     context,
     [
       tracingMiddleware(getTracer()),
+      rateLimitingMiddleware(getTracer(), logger, {
+        windowMs: 5000,
+        requestsUntilBlock: 20,
+      }),
       recoveryMiddleware(getTracer()),
       sentryMiddleware(getTracer()),
       errorMiddleware(getTracer()),
