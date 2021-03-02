@@ -10,6 +10,7 @@ import {
   tracingMiddleware,
   errorMiddleware,
   recoveryMiddleware,
+  rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -84,6 +85,10 @@ const handler: Handler = async (request, response) => {
 const wrappedHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
+    rateLimitingMiddleware(getTracer(), logger, {
+      windowMs: 5000,
+      requestsUntilBlock: 20,
+    }),
     recoveryMiddleware(getTracer()),
     sentryMiddleware(getTracer()),
     errorMiddleware(getTracer()),

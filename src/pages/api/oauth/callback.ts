@@ -2,6 +2,7 @@ import { Endpoint, HttpStatus, setServerSideCookies } from "@fwl/web";
 import {
   errorMiddleware,
   loggingMiddleware,
+  rateLimitingMiddleware,
   recoveryMiddleware,
   tracingMiddleware,
   wrapMiddlewares,
@@ -81,6 +82,10 @@ const handler: Handler = (request, response): Promise<void> => {
 const wrappedHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
+    rateLimitingMiddleware(getTracer(), logger, {
+      windowMs: 5000,
+      requestsUntilBlock: 20,
+    }),
     recoveryMiddleware(getTracer()),
     sentryMiddleware(getTracer()),
     errorMiddleware(getTracer()),
