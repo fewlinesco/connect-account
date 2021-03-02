@@ -84,8 +84,6 @@ const handler: Handler = async (request, response) => {
       return;
     });
 
-    console.log({ temporaryIdentity });
-
     if (!temporaryIdentity) {
       span.setDisclosedAttribute("is temporary Identity found", false);
       throw webErrorFactory(webErrors.temporaryIdentityNotFound);

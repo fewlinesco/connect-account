@@ -23,6 +23,7 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
+import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
 import { config } from "@src/config";
@@ -114,15 +115,20 @@ const handler: Handler = (request, response): Promise<void> => {
       })
         .then(async ({ eventId }) => {
           span.setDisclosedAttribute("is validation code sent", true);
-
-          const temporaryIdentity = {
+          let temporaryIdentity: TemporaryIdentity = {
             eventIds: [...eventIds, eventId],
             value,
             type,
             expiresAt,
             primary,
-            identityToUpdateId,
           };
+
+          if (identityToUpdateId) {
+            temporaryIdentity = {
+              ...temporaryIdentity,
+              identityToUpdateId,
+            };
+          }
 
           await insertTemporaryIdentity(
             userCookie.sub,
