@@ -110,7 +110,7 @@ const AddIdentityForm: React.FC<{
 };
 
 const Label = styled.label`
-  display: block;
+  display: flex;
   margin-bottom: ${({ theme }) => theme.spaces.xs};
   cursor: pointer;
 `;
