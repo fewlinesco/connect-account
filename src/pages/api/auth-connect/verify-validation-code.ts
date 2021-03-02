@@ -88,11 +88,17 @@ const handler: Handler = async (request, response) => {
           },
         ).catch((error) => {
           if (error instanceof GraphqlErrors) {
-            throw webErrorFactory(webErrors.identityNotFound);
+            throw webErrorFactory({
+              ...webErrors.identityNotFound,
+              parentError: error,
+            });
           }
 
           if (error instanceof ConnectUnreachableError) {
-            throw webErrorFactory(webErrors.connectUnreachable);
+            throw webErrorFactory({
+              ...webErrors.connectUnreachable,
+              parentError: error,
+            });
           }
 
           throw error;
@@ -112,11 +118,17 @@ const handler: Handler = async (request, response) => {
             },
           ).catch((error) => {
             if (error instanceof GraphqlErrors) {
-              throw webErrorFactory(webErrors.identityNotFound);
+              throw webErrorFactory({
+                ...webErrors.identityNotFound,
+                parentError: error,
+              });
             }
 
             if (error instanceof ConnectUnreachableError) {
-              throw webErrorFactory(webErrors.connectUnreachable);
+              throw webErrorFactory({
+                ...webErrors.connectUnreachable,
+                parentError: error,
+              });
             }
 
             throw error;
@@ -139,11 +151,17 @@ const handler: Handler = async (request, response) => {
               identityId,
             ).catch((error) => {
               if (error instanceof GraphqlErrors) {
-                throw webErrorFactory(webErrors.identityNotFound);
+                throw webErrorFactory({
+                  ...webErrors.identityNotFound,
+                  parentError: error,
+                });
               }
 
               if (error instanceof ConnectUnreachableError) {
-                throw webErrorFactory(webErrors.connectUnreachable);
+                throw webErrorFactory({
+                  ...webErrors.connectUnreachable,
+                  parentError: error,
+                });
               }
 
               throw error;
@@ -158,11 +176,17 @@ const handler: Handler = async (request, response) => {
               { userId: userCookie.sub, identityId: identityToUpdateId },
             ).catch((error) => {
               if (error instanceof GraphqlErrors) {
-                throw webErrorFactory(webErrors.identityNotFound);
+                throw webErrorFactory({
+                  ...webErrors.identityNotFound,
+                  parentError: error,
+                });
               }
 
               if (error instanceof ConnectUnreachableError) {
-                throw webErrorFactory(webErrors.connectUnreachable);
+                throw webErrorFactory({
+                  ...webErrors.connectUnreachable,
+                  parentError: error,
+                });
               }
 
               throw error;
@@ -174,11 +198,17 @@ const handler: Handler = async (request, response) => {
               identityValue: identityToUpdate ? identityToUpdate.value : "",
             }).catch((error) => {
               if (error instanceof GraphqlErrors) {
-                throw webErrorFactory(webErrors.identityNotFound);
+                throw webErrorFactory({
+                  ...webErrors.identityNotFound,
+                  parentError: error,
+                });
               }
 
               if (error instanceof ConnectUnreachableError) {
-                throw webErrorFactory(webErrors.connectUnreachable);
+                throw webErrorFactory({
+                  ...webErrors.connectUnreachable,
+                  parentError: error,
+                });
               }
 
               throw error;

@@ -81,11 +81,17 @@ const handler: Handler = async (request, response) => {
         span.setDisclosedAttribute("is Identity marked as primary", false);
 
         if (error instanceof GraphqlErrors) {
-          throw webErrorFactory(webErrors.identityNotFound);
+          throw webErrorFactory({
+            ...webErrors.identityNotFound,
+            parentError: error,
+          });
         }
 
         if (error instanceof ConnectUnreachableError) {
-          throw webErrorFactory(webErrors.connectUnreachable);
+          throw webErrorFactory({
+            ...webErrors.connectUnreachable,
+            parentError: error,
+          });
         }
 
         throw error;

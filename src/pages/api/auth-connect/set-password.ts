@@ -67,14 +67,17 @@ const handler: Handler = async (request, response) => {
 
         if (error instanceof InvalidPasswordInputError) {
           span.setDisclosedAttribute("invalid password input", true);
-
-          webErrors.invalidPasswordInput.errorDetails = error.rules;
-
-          throw webErrorFactory(webErrors.invalidPasswordInput);
+          throw webErrorFactory({
+            ...webErrors.invalidPasswordInput,
+            errorDetails: error.rules,
+          });
         }
 
         if (error instanceof ConnectUnreachableError) {
-          throw webErrorFactory(webErrors.connectUnreachable);
+          throw webErrorFactory({
+            ...webErrors.connectUnreachable,
+            parentError: error,
+          });
         }
 
         throw error;
