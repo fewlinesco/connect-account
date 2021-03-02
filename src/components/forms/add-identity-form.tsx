@@ -2,10 +2,10 @@ import "react-phone-number-input/style.css";
 import { IdentityTypes } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
-import PhoneInput from "react-phone-number-input";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
+import { StyledPhoneInput } from "../input/styled-phone-input";
 import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
 import { HttpVerbs } from "@src/@types/http-verbs";
@@ -129,23 +129,6 @@ const Label = styled.label`
   display: flex;
   margin-bottom: ${({ theme }) => theme.spaces.xs};
   cursor: pointer;
-`;
-
-const StyledPhoneInput = styled(PhoneInput)`
-  margin: ${({ theme }) => theme.spaces.xs} 0;
-
-  .PhoneInputInput {
-    width: 100%;
-    height: 4rem;
-    padding-left: 1.6rem;
-    border: 0.1rem solid ${({ theme }) => theme.colors.blacks[2]};
-    border-radius: ${({ theme }) => theme.radii[0]};
-
-    ::placeholder {
-      color: ${({ theme }) => theme.colors.lightGrey};
-      font-size: ${({ theme }) => theme.fontSizes.s};
-    }
-  }
 `;
 
 export { AddIdentityForm };
