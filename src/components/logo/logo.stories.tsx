@@ -3,7 +3,7 @@ import React from "react";
 import { StoriesContainer } from "../containers/stories-container";
 import { Logo } from "./logo";
 
-const StandardInput = (): JSX.Element => {
+const StandardLogo = (): JSX.Element => {
   return (
     <StoriesContainer>
       <Logo />
@@ -11,5 +11,5 @@ const StandardInput = (): JSX.Element => {
   );
 };
 
-export { StandardInput };
+export { StandardLogo };
 export default { title: "components/Logo", component: Logo };
