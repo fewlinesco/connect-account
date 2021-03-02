@@ -5,7 +5,15 @@ import {
   WebErrorDetails,
 } from "@fwl/web/dist/errors";
 
-const ERRORS_DATA = {
+type WebErrorData = {
+  code: ApplicationError["code"];
+  message: ApplicationError["message"];
+  httpStatus: HttpStatus;
+  errorDetails?: WebErrorDetails;
+  parentError?: Error;
+};
+
+const ERRORS_DATA: Record<string, WebErrorData> = {
   BAD_REQUEST: {
     code: "bad_request",
     httpStatus: HttpStatus.BAD_REQUEST,
@@ -35,7 +43,6 @@ const ERRORS_DATA = {
     code: "invalid_password_input",
     httpStatus: HttpStatus.UNPROCESSABLE_ENTITY,
     message: "Invalid password input",
-    errorDetails: {},
   },
   UNEXPECTED_ERROR: {
     code: "unexpected_error",
@@ -89,16 +96,13 @@ const webErrorFactory = ({
   message,
   httpStatus,
   errorDetails,
-}: {
-  code: ApplicationError["code"];
-  message: ApplicationError["message"];
-  httpStatus: HttpStatus;
-  errorDetails?: WebErrorDetails;
-}): WebError =>
+  parentError,
+}: WebErrorData): WebError =>
   new WebError({
     error: { code, message },
     httpStatus,
     errorDetails,
+    parentError,
   });
 
 export { webErrorFactory, ERRORS_DATA };
