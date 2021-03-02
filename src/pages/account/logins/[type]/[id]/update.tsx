@@ -9,6 +9,7 @@ import {
   tracingMiddleware,
   errorMiddleware,
   recoveryMiddleware,
+  rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { GetServerSideProps } from "next";
@@ -17,46 +18,46 @@ import React from "react";
 import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
 import { UpdateIdentityForm } from "@src/components/forms/update-identity-form";
-import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
 import { config } from "@src/config";
 import { NoUserFoundError } from "@src/errors";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   return (
-    <Layout>
+    <Layout
+      title="Logins"
+      breadcrumbs={[
+        identity.type.toUpperCase() === IdentityTypes.EMAIL
+          ? "Email address"
+          : "Phone number",
+        "edit",
+      ]}
+    >
       <Container>
-        <h1>Logins</h1>
-        <NavigationBreadcrumbs
-          breadcrumbs={[
-            identity.type.toUpperCase() === IdentityTypes.EMAIL
-              ? "Email address"
-              : "Phone number",
-            "edit",
-          ]}
-        />
         <UpdateIdentityForm currentIdentity={identity} />
       </Container>
     </Layout>
   );
 };
 
-const tracer = getTracer();
-
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
-      tracingMiddleware(tracer),
-      recoveryMiddleware(tracer),
-      errorMiddleware(tracer),
-      loggingMiddleware(tracer, logger),
-      withSentry,
-      withAuth,
+      tracingMiddleware(getTracer()),
+      rateLimitingMiddleware(getTracer(), logger, {
+        windowMs: 5000,
+        requestsUntilBlock: 20,
+      }),
+      recoveryMiddleware(getTracer()),
+      sentryMiddleware(getTracer()),
+      errorMiddleware(getTracer()),
+      loggingMiddleware(getTracer(), logger),
+      authMiddleware(getTracer()),
     ],
     "/account/logins/[type]/[id]/update",
     async (request, response) => {

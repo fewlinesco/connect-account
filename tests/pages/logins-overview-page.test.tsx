@@ -83,7 +83,7 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        screen.getByRole("link", { name: "+ add new email address" }),
+        screen.getByRole("link", { name: "+ Add new email address" }),
       ).toBeInTheDocument();
     });
 
@@ -116,7 +116,7 @@ describe("LoginsOverviewPage", () => {
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
 
       expect(
-        screen.getByRole("link", { name: "+ add new email address" }),
+        screen.getByRole("link", { name: "+ Add new email address" }),
       ).toBeInTheDocument();
     });
 
@@ -133,7 +133,7 @@ describe("LoginsOverviewPage", () => {
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
 
       expect(
-        screen.getByRole("link", { name: "+ add new phone number" }),
+        screen.getByRole("link", { name: "+ Add new phone number" }),
       ).toBeInTheDocument();
     });
   });
@@ -204,7 +204,7 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        screen.getByRole("link", { name: "+ add new phone number" }),
+        screen.getByRole("link", { name: "+ Add new phone number" }),
       ).toBeInTheDocument();
     });
 
@@ -236,7 +236,7 @@ describe("LoginsOverviewPage", () => {
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
 
       expect(
-        screen.getByRole("link", { name: "+ add new phone number" }),
+        screen.getByRole("link", { name: "+ Add new phone number" }),
       ).toBeInTheDocument();
     });
 
@@ -255,7 +255,7 @@ describe("LoginsOverviewPage", () => {
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
 
       expect(
-        screen.getByRole("link", { name: "+ add new phone number" }),
+        screen.getByRole("link", { name: "+ Add new phone number" }),
       ).toBeInTheDocument();
     });
   });

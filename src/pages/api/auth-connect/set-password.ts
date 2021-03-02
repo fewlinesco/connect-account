@@ -10,6 +10,7 @@ import {
   tracingMiddleware,
   errorMiddleware,
   recoveryMiddleware,
+  rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -17,8 +18,8 @@ import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
@@ -53,12 +54,12 @@ const handler: Handler = async (request, response) => {
       cleartextPassword: passwordInput,
       userId: userCookie.sub,
     })
-      .then(() => {
+      .then((isUpdated) => {
         span.setDisclosedAttribute("password created or updated", true);
 
         response.setHeader("Content-Type", "application/json");
         response.statusCode = HttpStatus.OK;
-        response.end();
+        response.json({ isUpdated });
         return;
       })
       .catch((error) => {
@@ -76,7 +77,7 @@ const handler: Handler = async (request, response) => {
           throw webErrorFactory(webErrors.connectUnreachable);
         }
 
-        throw webErrorFactory(webErrors.connectUnreachable);
+        throw error;
       });
   });
 };
@@ -84,11 +85,15 @@ const handler: Handler = async (request, response) => {
 const wrappedHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
+    rateLimitingMiddleware(getTracer(), logger, {
+      windowMs: 5000,
+      requestsUntilBlock: 20,
+    }),
     recoveryMiddleware(getTracer()),
+    sentryMiddleware(getTracer()),
     errorMiddleware(getTracer()),
     loggingMiddleware(getTracer(), logger),
-    withSentry,
-    withAuth,
+    authMiddleware(getTracer()),
   ],
   handler,
   "/api/auth-connect/set-password",

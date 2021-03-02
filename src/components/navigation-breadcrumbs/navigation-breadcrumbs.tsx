@@ -7,8 +7,7 @@ const NavigationBreadcrumbs: React.FC<{
   return <Breadcrumbs>{breadcrumbs.join(" | ")}</Breadcrumbs>;
 };
 
-const Breadcrumbs = styled.div`
-  padding: 0 0 ${({ theme }) => theme.spaces.s};
+const Breadcrumbs = styled.h3`
   font-size: ${({ theme }) => theme.fontSizes.s};
 `;
 

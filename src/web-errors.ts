@@ -26,6 +26,11 @@ const ERRORS_DATA = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: "Invalid validation code",
   },
+  EXPIRED_VALIDATION_CODE: {
+    code: "expired_validation_code",
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: "Expired validation code",
+  },
   TEMPORARY_IDENTITY_EXPIRED: {
     code: "temporary_identity_expired",
     httpStatus: HttpStatus.BAD_REQUEST,
@@ -47,6 +52,11 @@ const ERRORS_DATA = {
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
     message: "Unable to reach Connect",
   },
+  UNREACHABLE: {
+    code: "unreachable",
+    httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
+    message: "Unable to reach the service",
+  },
   DATABASE_UNREACHABLE: {
     code: "database_unreachable",
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -62,8 +72,8 @@ const ERRORS_DATA = {
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
     message: "Temporary Identity not found",
   },
-  TEMPORARIES_IDENTITY_NOT_FOUND: {
-    code: "temporaries_identity_not_found",
+  TEMPORARY_IDENTITY_LIST_NOT_FOUND: {
+    code: "temporary_identity_list_not_found",
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
     message: "Temporary Identity list not found",
   },

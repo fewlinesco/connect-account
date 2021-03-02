@@ -2,6 +2,7 @@ import { Endpoint, HttpStatus, setServerSideCookies } from "@fwl/web";
 import {
   errorMiddleware,
   loggingMiddleware,
+  rateLimitingMiddleware,
   recoveryMiddleware,
   tracingMiddleware,
   wrapMiddlewares,
@@ -12,7 +13,7 @@ import { Handler } from "@src/@types/handler";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { oauth2Client, config } from "@src/config";
 import { logger } from "@src/logger";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
@@ -81,10 +82,14 @@ const handler: Handler = (request, response): Promise<void> => {
 const wrappedHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
+    rateLimitingMiddleware(getTracer(), logger, {
+      windowMs: 5000,
+      requestsUntilBlock: 20,
+    }),
     recoveryMiddleware(getTracer()),
+    sentryMiddleware(getTracer()),
     errorMiddleware(getTracer()),
     loggingMiddleware(getTracer(), logger),
-    withSentry,
   ],
   handler,
   "/api/oauth/callback",

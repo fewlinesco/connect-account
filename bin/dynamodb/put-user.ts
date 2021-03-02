@@ -4,7 +4,7 @@ import { marshall, NativeAttributeValue } from "@aws-sdk/util-dynamodb";
 import { config } from "../../src/config";
 import { dynamoDbClient } from "../../src/db-client";
 
-export async function putUser(userData: {
+async function putUser(userData: {
   [key: string]: NativeAttributeValue;
 }): Promise<void> {
   try {
@@ -29,7 +29,7 @@ const Item = {
   refresh_token: "refresh_token",
   temporary_identities: [
     {
-      event_id: "event_id",
+      event_ids: ["event_id"],
       value: "value",
       type: "type",
       expires_at: 42,
@@ -38,3 +38,5 @@ const Item = {
 };
 
 putUser(Item);
+
+export { putUser };

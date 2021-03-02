@@ -4,6 +4,7 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
+import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
 import { HttpVerbs } from "@src/@types/http-verbs";
 import { Box } from "@src/components/box/box";
@@ -85,25 +86,19 @@ const ValidateIdentityForm: React.FC<{
             );
         }}
       >
-        Resend confirmation code
+        Resend validation code
       </Button>
     </>
   );
 };
 
 const DidntReceiveCode = styled.p`
-  margin: ${({ theme }) => theme.spaces.xs} 0 ${({ theme }) => theme.spaces.xxs};
+  margin: ${({ theme }) => theme.spaces.s} 0 ${({ theme }) => theme.spaces.xs};
 `;
 
 const Value = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.light};
   font-size: ${({ theme }) => theme.fontSizes.s};
-`;
-
-const WrongInputError = styled.p`
-  color: ${({ theme }) => theme.colors.red};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  margin-bottom: 3rem;
 `;
 
 export { ValidateIdentityForm };

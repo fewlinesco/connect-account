@@ -5,6 +5,7 @@ import {
   tracingMiddleware,
   errorMiddleware,
   recoveryMiddleware,
+  rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { GetServerSideProps } from "next";
@@ -17,8 +18,8 @@ import { Layout } from "@src/components/page-layout";
 import { LoginsOverview } from "@src/components/pages/logins-overview/logins-overview";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 import { sortIdentities } from "@src/utils/sort-identities";
 
@@ -27,17 +28,17 @@ const LoginsOverviewPage: React.FC<{
   alertMessages?: string[];
 }> = ({ sortedIdentities, alertMessages }) => {
   return (
-    <Layout alertMessages={alertMessages}>
+    <Layout
+      alertMessages={alertMessages}
+      title="Logins"
+      breadcrumbs={["Your emails, phones and social logins"]}
+    >
       <Container>
-        <h1>Logins</h1>
-        <h3>Your emails, phones and social logins</h3>
         <LoginsOverview sortedIdentities={sortedIdentities} />
       </Container>
     </Layout>
   );
 };
-
-const tracer = getTracer();
 
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{
@@ -45,12 +46,16 @@ const getServerSideProps: GetServerSideProps = async (context) => {
   }>(
     context,
     [
-      tracingMiddleware(tracer),
-      recoveryMiddleware(tracer),
-      errorMiddleware(tracer),
-      loggingMiddleware(tracer, logger),
-      withSentry,
-      withAuth,
+      tracingMiddleware(getTracer()),
+      rateLimitingMiddleware(getTracer(), logger, {
+        windowMs: 5000,
+        requestsUntilBlock: 20,
+      }),
+      recoveryMiddleware(getTracer()),
+      sentryMiddleware(getTracer()),
+      errorMiddleware(getTracer()),
+      loggingMiddleware(getTracer(), logger),
+      authMiddleware(getTracer()),
     ],
     "/account/logins",
     async (request) => {

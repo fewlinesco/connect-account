@@ -5,6 +5,7 @@ import {
   tracingMiddleware,
   errorMiddleware,
   recoveryMiddleware,
+  rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { ServerResponse } from "http";
@@ -13,11 +14,10 @@ import React from "react";
 
 import { Container } from "@src/components/containers/container";
 import { ValidateIdentityForm } from "@src/components/forms/validate-identity-form";
-import { NavigationBreadcrumbs } from "@src/components/navigation-breadcrumbs/navigation-breadcrumbs";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 
 const ValidateIdentityPage: React.FC<{
@@ -26,35 +26,37 @@ const ValidateIdentityPage: React.FC<{
   alertMessages?: string[];
 }> = ({ type, eventId, alertMessages }) => {
   return (
-    <Layout alertMessages={alertMessages}>
+    <Layout
+      alertMessages={alertMessages}
+      title="Logins"
+      breadcrumbs={[
+        type.toUpperCase() === IdentityTypes.EMAIL
+          ? "Email address"
+          : "Phone number",
+        "validation",
+      ]}
+    >
       <Container>
-        <h1>Logins</h1>
-        <NavigationBreadcrumbs
-          breadcrumbs={[
-            type.toUpperCase() === IdentityTypes.EMAIL
-              ? "Email address"
-              : "Phone number",
-            "validation",
-          ]}
-        />
         <ValidateIdentityForm type={type} eventId={eventId} />
       </Container>
     </Layout>
   );
 };
 
-const tracer = getTracer();
-
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     [
-      tracingMiddleware(tracer),
-      recoveryMiddleware(tracer),
-      errorMiddleware(tracer),
-      loggingMiddleware(tracer, logger),
-      withSentry,
-      withAuth,
+      tracingMiddleware(getTracer()),
+      rateLimitingMiddleware(getTracer(), logger, {
+        windowMs: 5000,
+        requestsUntilBlock: 20,
+      }),
+      recoveryMiddleware(getTracer()),
+      sentryMiddleware(getTracer()),
+      errorMiddleware(getTracer()),
+      loggingMiddleware(getTracer(), logger),
+      authMiddleware(getTracer()),
     ],
     "/account/logins/[type]/validation/[eventId]",
     async (request, response: ServerResponse) => {

@@ -18,6 +18,7 @@ import {
   tracingMiddleware,
   errorMiddleware,
   recoveryMiddleware,
+  rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -27,8 +28,8 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getIdentityType } from "@src/utils/get-identity-type";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
@@ -77,7 +78,7 @@ const handler: Handler = (request, response): Promise<void> => {
           span.setDisclosedAttribute("is validation code sent", true);
 
           let temporaryIdentity: TemporaryIdentity = {
-            eventId: eventId,
+            eventIds: [eventId],
             value: identityInput.value,
             type: identityInput.type,
             expiresAt: identityInput.expiresAt,
@@ -96,7 +97,6 @@ const handler: Handler = (request, response): Promise<void> => {
             temporaryIdentity,
           ).catch(() => {
             span.setDisclosedAttribute("database reachable", false);
-
             throw webErrorFactory(webErrors.databaseUnreachable);
           });
 
@@ -136,11 +136,15 @@ const handler: Handler = (request, response): Promise<void> => {
 const wrappedHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
+    rateLimitingMiddleware(getTracer(), logger, {
+      windowMs: 5000,
+      requestsUntilBlock: 20,
+    }),
     recoveryMiddleware(getTracer()),
+    sentryMiddleware(getTracer()),
     errorMiddleware(getTracer()),
     loggingMiddleware(getTracer(), logger),
-    withSentry,
-    withAuth,
+    authMiddleware(getTracer()),
   ],
   handler,
   "/api/auth-connect/send-identity-validation-code",

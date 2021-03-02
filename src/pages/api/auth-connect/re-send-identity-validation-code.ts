@@ -18,16 +18,18 @@ import {
   tracingMiddleware,
   errorMiddleware,
   recoveryMiddleware,
+  rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
+import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
-import { withAuth } from "@src/middlewares/with-auth";
-import { withSentry } from "@src/middlewares/with-sentry";
+import { authMiddleware } from "@src/middlewares/auth-middleware";
+import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import { getIdentityType } from "@src/utils/get-identity-type";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
@@ -37,7 +39,7 @@ const handler: Handler = (request, response): Promise<void> => {
     badRequest: ERRORS_DATA.BAD_REQUEST,
     identityInputCantBeBLank: ERRORS_DATA.IDENTITY_INPUT_CANT_BE_BLANK,
     temporaryIdentityNotFound: ERRORS_DATA.TEMPORARY_IDENTITY_NOT_FOUND,
-    temporaryIdentitiesNotFound: ERRORS_DATA.TEMPORARIES_IDENTITY_NOT_FOUND,
+    temporaryIdentitiesNotFound: ERRORS_DATA.TEMPORARY_IDENTITY_LIST_NOT_FOUND,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
   };
@@ -45,7 +47,9 @@ const handler: Handler = (request, response): Promise<void> => {
   return getTracer().span(
     "re-send-identity-validation-code handler",
     async (span) => {
-      if (!request.body.eventId) {
+      const { eventId } = request.body;
+
+      if (!eventId) {
         throw webErrorFactory(webErrors.badRequest);
       }
 
@@ -64,23 +68,39 @@ const handler: Handler = (request, response): Promise<void> => {
 
       const user = await getDBUserFromSub(userCookie.sub).catch(() => {
         span.setDisclosedAttribute("database reachable", false);
-
         throw webErrorFactory(webErrors.databaseUnreachable);
       });
 
       if (!user?.temporary_identities) {
+        span.setDisclosedAttribute("user found", false);
         throw webErrorFactory(webErrors.temporaryIdentitiesNotFound);
       }
+      span.setDisclosedAttribute("user found", true);
 
       const temporaryIdentity = user.temporary_identities.find(
-        ({ eventId }) => eventId === request.body.eventId,
+        ({ eventIds }) => {
+          if (eventIds) {
+            return eventIds.find((inDbEventId) => inDbEventId === eventId);
+          }
+
+          return;
+        },
       );
 
       if (!temporaryIdentity) {
+        span.setDisclosedAttribute("is temporary Identity found", false);
         throw webErrorFactory(webErrors.temporaryIdentityNotFound);
       }
+      span.setDisclosedAttribute("is temporary Identity found", true);
 
-      const { type, value, expiresAt, primary } = temporaryIdentity;
+      const {
+        type,
+        value,
+        expiresAt,
+        primary,
+        eventIds,
+        identityToUpdateId,
+      } = temporaryIdentity;
 
       const identity = {
         type: getIdentityType(type),
@@ -95,21 +115,26 @@ const handler: Handler = (request, response): Promise<void> => {
       })
         .then(async ({ eventId }) => {
           span.setDisclosedAttribute("is validation code sent", true);
-
-          const temporaryIdentity = {
-            eventId,
+          let temporaryIdentity: TemporaryIdentity = {
+            eventIds: [...eventIds, eventId],
             value,
             type,
             expiresAt,
             primary,
           };
 
+          if (identityToUpdateId) {
+            temporaryIdentity = {
+              ...temporaryIdentity,
+              identityToUpdateId,
+            };
+          }
+
           await insertTemporaryIdentity(
             userCookie.sub,
             temporaryIdentity,
           ).catch(() => {
             span.setDisclosedAttribute("database reachable", false);
-
             throw webErrorFactory(webErrors.databaseUnreachable);
           });
 
@@ -149,11 +174,15 @@ const handler: Handler = (request, response): Promise<void> => {
 const wrappedHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
+    rateLimitingMiddleware(getTracer(), logger, {
+      windowMs: 5000,
+      requestsUntilBlock: 20,
+    }),
     recoveryMiddleware(getTracer()),
+    sentryMiddleware(getTracer()),
     errorMiddleware(getTracer()),
     loggingMiddleware(getTracer(), logger),
-    withSentry,
-    withAuth,
+    authMiddleware(getTracer()),
   ],
   handler,
   "/api/auth-connect/re-send-identity-validation-code",
