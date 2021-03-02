@@ -67,23 +67,30 @@ const handler: Handler = (request, response): Promise<void> => {
 
       const user = await getDBUserFromSub(userCookie.sub).catch(() => {
         span.setDisclosedAttribute("database reachable", false);
-
         throw webErrorFactory(webErrors.databaseUnreachable);
       });
 
       if (!user?.temporary_identities) {
+        span.setDisclosedAttribute("user found", false);
         throw webErrorFactory(webErrors.temporaryIdentitiesNotFound);
       }
+      span.setDisclosedAttribute("user found", true);
 
       const temporaryIdentity = user.temporary_identities.find(
         ({ eventIds }) => {
-          return eventIds.find((inDbEventId) => inDbEventId === eventId);
+          if (eventIds) {
+            return eventIds.find((inDbEventId) => inDbEventId === eventId);
+          }
+
+          return;
         },
       );
 
       if (!temporaryIdentity) {
+        span.setDisclosedAttribute("is temporary Identity found", false);
         throw webErrorFactory(webErrors.temporaryIdentityNotFound);
       }
+      span.setDisclosedAttribute("is temporary Identity found", true);
 
       const {
         type,
@@ -122,7 +129,6 @@ const handler: Handler = (request, response): Promise<void> => {
             temporaryIdentity,
           ).catch(() => {
             span.setDisclosedAttribute("database reachable", false);
-
             throw webErrorFactory(webErrors.databaseUnreachable);
           });
 

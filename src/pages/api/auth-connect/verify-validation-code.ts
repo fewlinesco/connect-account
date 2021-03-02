@@ -42,7 +42,6 @@ const handler: Handler = async (request, response) => {
     invalidValidationCode: ERRORS_DATA.INVALID_VALIDATION_CODE,
     expiredValidationCode: ERRORS_DATA.EXPIRED_VALIDATION_CODE,
     temporaryIdentityExpired: ERRORS_DATA.TEMPORARY_IDENTITY_EXPIRED,
-    eventIdListNotFound: ERRORS_DATA.EVENT_ID_LIST_NOT_FOUND,
     noUserFound: ERRORS_DATA.NO_USER_FOUND,
   };
 
@@ -78,13 +77,11 @@ const handler: Handler = async (request, response) => {
     span.setDisclosedAttribute("temporary identity list found", true);
 
     const temporaryIdentity = user.temporary_identities.find(({ eventIds }) => {
-      if (!eventIds) {
-        span.setDisclosedAttribute("event ids list found", false);
-        throw webErrorFactory(webErrors.eventIdListNotFound);
+      if (eventIds) {
+        return eventIds.find((inDbEventId) => inDbEventId === eventId);
       }
-      span.setDisclosedAttribute("event ids list found", true);
 
-      return eventIds.find((inDbEventId) => inDbEventId === eventId);
+      return;
     });
 
     console.log({ temporaryIdentity });
