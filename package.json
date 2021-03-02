@@ -47,7 +47,7 @@
     "next": "10.0.6",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-phone-number-input": "3.1.15",
+    "react-phone-number-input": "3.1.16",
     "styled-components": "5.2.1",
     "swr": "0.4.2",
     "uuid": "8.3.2"
