@@ -103,7 +103,6 @@ const handler: Handler = (request, response): Promise<void> => {
             }
 
             span.setDisclosedAttribute("database reachable", false);
-
             throw webErrorFactory({
               ...webErrors.databaseUnreachable,
               parentError: error,

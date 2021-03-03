@@ -23,6 +23,7 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
+import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
 import { config } from "@src/config";
@@ -39,7 +40,7 @@ const handler: Handler = (request, response): Promise<void> => {
     badRequest: ERRORS_DATA.BAD_REQUEST,
     identityInputCantBeBLank: ERRORS_DATA.IDENTITY_INPUT_CANT_BE_BLANK,
     temporaryIdentityNotFound: ERRORS_DATA.TEMPORARY_IDENTITY_NOT_FOUND,
-    temporaryIdentitiesNotFound: ERRORS_DATA.TEMPORARIES_IDENTITY_NOT_FOUND,
+    temporaryIdentitiesNotFound: ERRORS_DATA.TEMPORARY_IDENTITY_LIST_NOT_FOUND,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
     noUserFound: ERRORS_DATA.NO_USER_FOUND,
@@ -69,7 +70,6 @@ const handler: Handler = (request, response): Promise<void> => {
 
       const user = await getDBUserFromSub(userCookie.sub).catch((error) => {
         span.setDisclosedAttribute("database reachable", false);
-
         throw webErrorFactory({
           ...webErrors.databaseUnreachable,
           parentError: error,
@@ -77,20 +77,35 @@ const handler: Handler = (request, response): Promise<void> => {
       });
 
       if (!user?.temporary_identities) {
+        span.setDisclosedAttribute("user found", false);
         throw webErrorFactory(webErrors.temporaryIdentitiesNotFound);
       }
+      span.setDisclosedAttribute("user found", true);
 
       const temporaryIdentity = user.temporary_identities.find(
         ({ eventIds }) => {
-          return eventIds.find((inDbEventId) => inDbEventId === eventId);
+          if (eventIds) {
+            return eventIds.find((inDbEventId) => inDbEventId === eventId);
+          }
+
+          return;
         },
       );
 
       if (!temporaryIdentity) {
+        span.setDisclosedAttribute("is temporary Identity found", false);
         throw webErrorFactory(webErrors.temporaryIdentityNotFound);
       }
+      span.setDisclosedAttribute("is temporary Identity found", true);
 
-      const { type, value, expiresAt, primary, eventIds } = temporaryIdentity;
+      const {
+        type,
+        value,
+        expiresAt,
+        primary,
+        eventIds,
+        identityToUpdateId,
+      } = temporaryIdentity;
 
       const identity = {
         type: getIdentityType(type),
@@ -105,14 +120,20 @@ const handler: Handler = (request, response): Promise<void> => {
       })
         .then(async ({ eventId }) => {
           span.setDisclosedAttribute("is validation code sent", true);
-
-          const temporaryIdentity = {
+          let temporaryIdentity: TemporaryIdentity = {
             eventIds: [...eventIds, eventId],
             value,
             type,
             expiresAt,
             primary,
           };
+
+          if (identityToUpdateId) {
+            temporaryIdentity = {
+              ...temporaryIdentity,
+              identityToUpdateId,
+            };
+          }
 
           await insertTemporaryIdentity(
             userCookie.sub,
@@ -127,7 +148,6 @@ const handler: Handler = (request, response): Promise<void> => {
             }
 
             span.setDisclosedAttribute("database reachable", false);
-
             throw webErrorFactory({
               ...webErrors.databaseUnreachable,
               parentError: error,

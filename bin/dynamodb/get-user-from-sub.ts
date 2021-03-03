@@ -24,10 +24,16 @@ async function getUserFromSub(): Promise<void> {
         };
         const data = await dynamoDbClient.send(new GetItemCommand(getItem));
 
-        console.log("User:\n", data);
+        console.log("\nUser:\n", data);
 
         const { Item } = data;
-        Item && console.log("User data:\n", unmarshall(Item));
+        if (Item) {
+          console.log("\nUser data:\n", unmarshall(Item));
+          console.log(
+            "\nTemporary Identities:\n",
+            unmarshall(Item).temporary_identities,
+          );
+        }
       } else {
         throw new Error(errors.tooManyArgs);
       }

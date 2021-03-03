@@ -34,17 +34,14 @@ async function authentication(
 
     if (userCookie) {
       span.setDisclosedAttribute("user cookie found", true);
-
       const { access_token: currentAccessToken, sub } = userCookie;
 
       await decryptVerifyAccessToken(currentAccessToken).catch(
         async (error) => {
           if (error.name === "TokenExpiredError") {
             span.setDisclosedAttribute("is access_token expired", true);
-
-            const user = await getDBUserFromSub(sub).catch(() => {
+            const user = await getDBUserFromSub(sub).catch((error) => {
               span.setDisclosedAttribute("database reachable", false);
-
               throw webErrorFactory({
                 ...webErrors.databaseUnreachable,
                 parentError: error,
@@ -55,7 +52,6 @@ async function authentication(
 
             if (user) {
               span.setDisclosedAttribute("user found on DB", true);
-
               const {
                 refresh_token,
                 access_token,
@@ -63,7 +59,6 @@ async function authentication(
                 .refreshTokens(user.refresh_token)
                 .catch((error) => {
                   span.setDisclosedAttribute("is token refreshed", false);
-
                   if (error instanceof UnreachableError) {
                     throw webErrorFactory({
                       ...webErrors.unreachable,
@@ -73,14 +68,12 @@ async function authentication(
 
                   throw error;
                 });
-
               span.setDisclosedAttribute("is token refreshed", true);
 
               const { sub } = await decryptVerifyAccessToken(
                 access_token,
               ).catch((error) => {
                 span.setDisclosedAttribute("is access_token valid", false);
-
                 if (error instanceof UnreachableError) {
                   throw webErrorFactory({
                     ...webErrors.unreachable,
@@ -90,7 +83,6 @@ async function authentication(
 
                 throw error;
               });
-
               span.setDisclosedAttribute("is access_token valid", true);
 
               await setServerSideCookies(
@@ -112,14 +104,15 @@ async function authentication(
 
               span.setDisclosedAttribute("is cookie set", true);
 
-              await getAndPutUser({ sub, refresh_token }, user).catch(() => {
-                span.setDisclosedAttribute("database reachable", false);
-
-                throw webErrorFactory({
-                  ...webErrors.databaseUnreachable,
-                  parentError: error,
-                });
-              });
+              await getAndPutUser({ sub, refresh_token }, user).catch(
+                (error) => {
+                  span.setDisclosedAttribute("database reachable", false);
+                  throw webErrorFactory({
+                    ...webErrors.databaseUnreachable,
+                    parentError: error,
+                  });
+                },
+              );
 
               span.setDisclosedAttribute("user updated on DB", true);
 

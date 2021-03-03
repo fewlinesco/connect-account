@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
+import { HttpVerbs } from "@src/@types/http-verbs";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Box } from "@src/components/box/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
@@ -13,7 +14,7 @@ import { FakeButton } from "@src/components/buttons/fake-button";
 import { Input } from "@src/components/input/input";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { PhoneNumberInputValueShouldBeANumber } from "@src/errors";
-import { addIdentity } from "@src/workflows/add-identity";
+import { fetchJson } from "@src/utils/fetch-json";
 
 const UpdateIdentityForm: React.FC<{
   currentIdentity: Identity;
@@ -39,16 +40,28 @@ const UpdateIdentityForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
-          await addIdentity(identity, currentIdentity.id)
-            .then(async (response) => {
-              if ("message" in response) {
+          const body = {
+            callbackUrl: "/",
+            identityInput: identity,
+            identityToUpdateId: currentIdentity.id,
+          };
+
+          await fetchJson(
+            "/api/auth-connect/send-identity-validation-code",
+            HttpVerbs.POST,
+            body,
+          )
+            .then((response) => response.json())
+            .then(async (parsedResponse) => {
+              if ("message" in parsedResponse) {
                 setFormID(uuidv4());
-                setErrorMessage(response.message);
+                setErrorMessage(parsedResponse.message);
               }
-              if ("eventId" in response) {
+
+              if ("eventId" in parsedResponse) {
                 router &&
                   router.push(
-                    `/account/logins/${currentIdentity.type}/validation/${response.eventId}`,
+                    `/account/logins/${currentIdentity.type}/validation/${parsedResponse.eventId}`,
                   );
               }
             })
