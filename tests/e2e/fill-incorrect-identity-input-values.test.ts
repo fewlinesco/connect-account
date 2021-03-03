@@ -33,8 +33,8 @@ describe("Account Web Application add identity", () => {
     await closeBrowser();
   });
 
-  test("should show error messages if password inputs are filled incorrectly", async (done) => {
-    expect.assertions(7);
+  test("should show error messages if identity inputs are filled incorrectly", async (done) => {
+    expect.assertions(8);
 
     try {
       await authenticateToConnect();
