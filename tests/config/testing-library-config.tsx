@@ -3,7 +3,7 @@ import { RouterContext } from "next/dist/next-server/lib/router-context";
 import { NextRouter } from "next/router";
 import React from "react";
 
-import { AccountApp } from "@src/pages/_app.tsx";
+import { AccountApp } from "@src/pages/_app";
 
 const mockLink = ({
   children,
@@ -37,6 +37,7 @@ const mockedNextRouter: NextRouter = {
   },
   isFallback: false,
   isReady: false,
+  isLocaleDomain: false,
 };
 
 const AllTheProviders: React.ComponentType = ({ children }) => {
