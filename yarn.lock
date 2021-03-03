@@ -3465,6 +3465,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-phone-number-input@3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@types/react-phone-number-input/-/react-phone-number-input-3.0.6.tgz#fa38246931ddb79629d2ac90565a97edd184f1bc"
+  integrity sha512-72+yblLIzquMluZEipZxHzFMcnLZmeW3/1dkAG/iK63wQLwyMRIYk+5U+AvRahAzLs4YBfZqlhyiwOa3qCGikg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-syntax-highlighter@11.0.4":
   version "11.0.4"
   resolved "https://registry.yarnpkg.com/@types/react-syntax-highlighter/-/react-syntax-highlighter-11.0.4.tgz#d86d17697db62f98046874f62fdb3e53a0bbc4cd"
@@ -6062,6 +6069,11 @@ cosmiconfig@^7.0.0:
     parse-json "^5.0.0"
     path-type "^4.0.0"
     yaml "^1.10.0"
+
+country-flag-icons@^1.0.2:
+  version "1.2.9"
+  resolved "https://registry.yarnpkg.com/country-flag-icons/-/country-flag-icons-1.2.9.tgz#cee7d150b23d3532adcc1e22c2ebb59962e04633"
+  integrity sha512-qn1cKt9PJrghEb1IbyIIqHcvNLPJ8mul0lbz6lFSBmzbGqYC38PJ4wPSIT0gV/iB/DbPylHE04zJNedrj1BXvA==
 
 cp-file@^7.0.0:
   version "7.0.0"
@@ -8965,6 +8977,13 @@ inline-style-parser@0.1.1:
   resolved "https://registry.yarnpkg.com/inline-style-parser/-/inline-style-parser-0.1.1.tgz#ec8a3b429274e9c0a1f1c4ffa9453a7fef72cea1"
   integrity sha512-7NXolsK4CAS5+xvdj5OMMbI962hU/wvwoxk+LWR9Ek9bVtyuuYScDN6eS0rUm6TxApFpw7CX1o4uJzcd4AyD3Q==
 
+input-format@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/input-format/-/input-format-0.3.5.tgz#be8f6c3e6b9cd8689e6e46f72f86878f7e5f24ca"
+  integrity sha512-PJJYVeD+YLKe4qO+0Oo4lCAAdz4fV5kw/Rsf2zSL2SjFPqIHhFA/I+v0+0zYXBHoR+Q+YLIWc0ztk7u1yN5YcA==
+  dependencies:
+    prop-types "^15.7.2"
+
 inquirer@7.0.4:
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-7.0.4.tgz#99af5bde47153abca23f5c7fc30db247f39da703"
@@ -10303,6 +10322,11 @@ levn@~0.3.0:
   dependencies:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
+
+libphonenumber-js@^1.9.11:
+  version "1.9.11"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.9.11.tgz#d7e0f3d967d0376d9c5624e3be007c70d0d6146a"
+  integrity sha512-ussVs6j3k0NEU4PNwWmVNGgmZQ88YrqzAw80ztmBfEhIQr55FpjFzPoDk5sWIfOmPuY1jmCKrxWCIemkBKqSPw==
 
 line-column@^1.0.2:
   version "1.0.2"
@@ -12776,6 +12800,17 @@ react-native-get-random-values@^1.4.0:
   integrity sha512-sPTRTJk4bpuZeTBf6d7DldQGAOCi0GZh5NxzNI3eHXzxwHbNkV13Q22TehiSb3bsaVqwLC4UAa6QvYIucyyc+A==
   dependencies:
     fast-base64-decode "^1.0.0"
+
+react-phone-number-input@3.1.16:
+  version "3.1.16"
+  resolved "https://registry.yarnpkg.com/react-phone-number-input/-/react-phone-number-input-3.1.16.tgz#fd2ffbce4c3db08bf76b3af9ca35cfdb2f526b2c"
+  integrity sha512-OiQGVJJIi5w+N4hIqf2AxJZoRd0bMkg3lBVZXYiDCWSbVTc7ibiRXpn0akl5pjrTpDz9N8y3tHSJBXD6uEhKQA==
+  dependencies:
+    classnames "^2.2.5"
+    country-flag-icons "^1.0.2"
+    input-format "^0.3.5"
+    libphonenumber-js "^1.9.11"
+    prop-types "^15.7.2"
 
 react-popper-tooltip@^3.1.1:
   version "3.1.1"

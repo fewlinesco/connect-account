@@ -16,6 +16,11 @@ const ERRORS_DATA = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: "Identity input can't be blank",
   },
+  INVALID_PHONE_NUMBER_INPUT: {
+    code: "invalid_phone_number_input",
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: "Invalid phone number format input",
+  },
   INVALID_BODY: {
     code: "invalid_body",
     httpStatus: HttpStatus.BAD_REQUEST,

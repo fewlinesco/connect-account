@@ -1,9 +1,11 @@
+import "react-phone-number-input/style.css";
 import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
+import { StyledPhoneInput } from "../input/styled-phone-input";
 import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
 import { HttpVerbs } from "@src/@types/http-verbs";
@@ -13,8 +15,8 @@ import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { Input } from "@src/components/input/input";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
-import { PhoneNumberInputValueShouldBeANumber } from "@src/errors";
 import { fetchJson } from "@src/utils/fetch-json";
+import { getIdentityType } from "@src/utils/get-identity-type";
 
 const UpdateIdentityForm: React.FC<{
   currentIdentity: Identity;
@@ -64,38 +66,45 @@ const UpdateIdentityForm: React.FC<{
                     `/account/logins/${currentIdentity.type}/validation/${parsedResponse.eventId}`,
                   );
               }
-            })
-            .catch((error) => {
-              if (error instanceof PhoneNumberInputValueShouldBeANumber) {
-                setFormID(uuidv4());
-                setErrorMessage(error.message);
-              } else {
-                throw error;
-              }
             });
         }}
       >
         <p>
           New{" "}
-          {currentIdentity.type === IdentityTypes.PHONE
-            ? "phone number"
-            : "email address"}{" "}
-          *
+          {getIdentityType(currentIdentity.type) === IdentityTypes.PHONE
+            ? "Phone number *"
+            : "Email address *"}
         </p>
-        <Input
-          type="text"
-          name="value"
-          placeholder={`Enter your ${currentIdentity.type}`}
-          value={identity.value}
-          onChange={(event) =>
-            setIdentity({
-              value: event.target.value,
-              type: currentIdentity.type,
-              expiresAt: Date.now() + 300000,
-              primary: currentIdentity.primary,
-            })
-          }
-        />
+        {getIdentityType(currentIdentity.type) === IdentityTypes.EMAIL ? (
+          <Input
+            type="text"
+            name="value"
+            placeholder={`Enter your ${currentIdentity.type}`}
+            value={identity.value}
+            onChange={(event) =>
+              setIdentity({
+                value: event.target.value,
+                type: currentIdentity.type,
+                expiresAt: Date.now() + 300000,
+                primary: currentIdentity.primary,
+              })
+            }
+          />
+        ) : (
+          <StyledPhoneInput
+            placeholder="Enter your phone number"
+            value={identity.value}
+            defaultCountry="FR"
+            onChange={(value) => {
+              setIdentity({
+                value,
+                type: currentIdentity.type,
+                expiresAt: Date.now() + 300000,
+                primary: identity.primary,
+              });
+            }}
+          />
+        )}
         <Button variant={ButtonVariant.PRIMARY} type="submit">
           Update {currentIdentity.type}
         </Button>

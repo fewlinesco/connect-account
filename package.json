@@ -47,6 +47,7 @@
     "next": "10.0.6",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-phone-number-input": "3.1.16",
     "styled-components": "5.2.1",
     "swr": "0.4.2",
     "uuid": "8.3.2"
@@ -68,6 +69,7 @@
     "@types/node": "14.14.25",
     "@types/react": "17.0.1",
     "@types/react-dom": "17.0.0",
+    "@types/react-phone-number-input": "3.0.6",
     "@types/styled-components": "5.1.7",
     "@types/uuid": "8.3.0",
     "@typescript-eslint/eslint-plugin": "4.15.0",
@@ -246,6 +248,7 @@
     ],
     "moduleNameMapper": {
       "\\.(png|svg|jpg|gif|eot|ttf|woff|woff2)$": "<rootDir>/tests/config/import-asset-fix.ts",
+      "\\.(css|less)$": "<rootDir>/tests/config/import-asset-fix.ts",
       "@src/(.*)": "<rootDir>/src/$1"
     },
     "setupFilesAfterEnv": [
