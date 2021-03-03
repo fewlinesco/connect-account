@@ -72,8 +72,8 @@ const UpdateIdentityForm: React.FC<{
         <p>
           New{" "}
           {getIdentityType(currentIdentity.type) === IdentityTypes.PHONE
-            ? "phone number *"
-            : "email address *"}
+            ? "Phone number *"
+            : "Email address *"}
         </p>
         {getIdentityType(currentIdentity.type) === IdentityTypes.EMAIL ? (
           <Input

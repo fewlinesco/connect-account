@@ -65,8 +65,8 @@ const AddIdentityForm: React.FC<{
       >
         <p>
           {getIdentityType(type) === IdentityTypes.PHONE
-            ? "phone number *"
-            : "email address *"}
+            ? "Phone number *"
+            : "Email address *"}
         </p>
         {getIdentityType(type) === IdentityTypes.EMAIL ? (
           <Input
