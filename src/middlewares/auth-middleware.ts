@@ -65,7 +65,10 @@ async function authentication(
                   span.setDisclosedAttribute("is token refreshed", false);
 
                   if (error instanceof UnreachableError) {
-                    throw webErrorFactory(webErrors.unreachable);
+                    throw webErrorFactory({
+                      ...webErrors.unreachable,
+                      parentError: error,
+                    });
                   }
 
                   throw error;
@@ -79,7 +82,10 @@ async function authentication(
                 span.setDisclosedAttribute("is access_token valid", false);
 
                 if (error instanceof UnreachableError) {
-                  throw webErrorFactory(webErrors.unreachable);
+                  throw webErrorFactory({
+                    ...webErrors.unreachable,
+                    parentError: error,
+                  });
                 }
 
                 throw error;

@@ -67,7 +67,6 @@ const handler: Handler = async (request, response) => {
 
     if (!user) {
       span.setDisclosedAttribute("user found", false);
-
       throw webErrorFactory(webErrors.noUserFound);
     }
 
