@@ -49,8 +49,8 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     [
       tracingMiddleware(getTracer()),
       rateLimitingMiddleware(getTracer(), logger, {
-        windowMs: 5000,
-        requestsUntilBlock: 20,
+        windowMs: 300000,
+        requestsUntilBlock: 200,
       }),
       recoveryMiddleware(getTracer()),
       sentryMiddleware(getTracer()),

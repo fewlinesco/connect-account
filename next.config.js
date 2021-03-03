@@ -16,6 +16,7 @@ module.exports = {
         },
       },
     });
+
     if (!isServer) {
       config.node = {
         fs: "empty",
@@ -23,6 +24,7 @@ module.exports = {
 
       config.resolve.alias["@sentry/node"] = "@sentry/browser";
     }
+
     return config;
   },
 };

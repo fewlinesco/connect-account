@@ -21,6 +21,7 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 import { Handler } from "@src/@types/handler";
 import { TemporaryIdentity } from "@src/@types/temporary-identity";
@@ -38,6 +39,7 @@ const handler: Handler = (request, response): Promise<void> => {
   const webErrors = {
     badRequest: ERRORS_DATA.BAD_REQUEST,
     identityInputCantBeBlank: ERRORS_DATA.IDENTITY_INPUT_CANT_BE_BLANK,
+    invalidPhoneNumberInput: ERRORS_DATA.INVALID_PHONE_NUMBER_INPUT,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
     noUserFound: ERRORS_DATA.NO_USER_FOUND,
@@ -47,6 +49,17 @@ const handler: Handler = (request, response): Promise<void> => {
     "send-identity-validation-code handler",
     async (span) => {
       const { callbackUrl, identityInput, identityToUpdateId } = request.body;
+
+      if (!identityInput.value) {
+        throw webErrorFactory(webErrors.identityInputCantBeBlank);
+      }
+
+      if (
+        getIdentityType(identityInput.type) === IdentityTypes.PHONE &&
+        !isValidPhoneNumber(identityInput.value)
+      ) {
+        throw webErrorFactory(webErrors.invalidPhoneNumberInput);
+      }
 
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
@@ -149,8 +162,8 @@ const wrappedHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
     rateLimitingMiddleware(getTracer(), logger, {
-      windowMs: 5000,
-      requestsUntilBlock: 20,
+      windowMs: 300000,
+      requestsUntilBlock: 200,
     }),
     recoveryMiddleware(getTracer()),
     sentryMiddleware(getTracer()),

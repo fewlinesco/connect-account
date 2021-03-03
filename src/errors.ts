@@ -19,15 +19,6 @@ class IdentityAlreadyUsed extends Error {
   }
 }
 
-class PhoneNumberInputValueShouldBeANumber extends Error {
-  readonly message: string;
-
-  constructor(message: string) {
-    super();
-    this.message = message;
-  }
-}
-
 class UnhandledIdentityType extends Error {
   readonly message: string;
 
@@ -69,7 +60,6 @@ export {
   ErrorSendingValidationCode,
   ErrorSettingPassword,
   IdentityAlreadyUsed,
-  PhoneNumberInputValueShouldBeANumber,
   UnhandledIdentityType,
   InvalidValidationCode,
   NoUserFoundError,

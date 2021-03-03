@@ -106,10 +106,10 @@ describe("ValidateIdentityPage", () => {
         <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />,
       );
 
-      const validationCodeInput = screen.getByRole("textbox");
-      expect(validationCodeInput).toBeVisible();
-      userEvent.type(validationCodeInput, "424242");
-      expect(validationCodeInput).toHaveDisplayValue("424242");
+      const validationCodeInputComponent = screen.getByRole("textbox");
+      expect(validationCodeInputComponent).toBeVisible();
+      userEvent.type(validationCodeInputComponent, "424242");
+      expect(validationCodeInputComponent).toHaveDisplayValue("424242");
 
       expect(
         screen.getByRole("button", { name: "Confirm phone" }),

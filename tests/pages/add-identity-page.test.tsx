@@ -64,11 +64,10 @@ describe("AddIdentityPage", () => {
     it("should render proper phone form elements ", () => {
       render(<AddIdentityPage type={IdentityTypes.PHONE} />);
 
-      const addIdentityInput = screen.getByRole("textbox");
-
-      expect(addIdentityInput).toBeVisible();
-      userEvent.type(addIdentityInput, "0642424242");
-      expect(addIdentityInput).toHaveDisplayValue("0642424242");
+      const addIdentityInputComponent = screen.getByRole("textbox");
+      expect(addIdentityInputComponent).toBeVisible();
+      userEvent.type(addIdentityInputComponent, "0642424242");
+      expect(addIdentityInputComponent).toHaveDisplayValue(["06 42 42 42 42"]);
 
       const markAsPrimaryCheckbox = screen.getByRole("checkbox", {
         name: "Mark this identity as my primary one",
