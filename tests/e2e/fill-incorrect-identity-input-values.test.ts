@@ -6,6 +6,9 @@ import {
   click,
   screenshot,
   waitFor,
+  textBox,
+  focus,
+  write,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
@@ -49,12 +52,6 @@ describe("Account Web Application add identity", () => {
       await waitFor("Identity input can't be blank");
       expect(await text("Identity input can't be blank").exists()).toBeTruthy();
 
-      // await focus(textBox({ placeholder: "Enter your email" }));
-      // await write(config.connectTestAccountEmail);
-      // await click("Add email");
-      // await waitFor("Identity already used");
-      // expect(await text("Identity already used").exists()).toBeTruthy();
-
       const baseUrl =
         process.env.CONNECT_TEST_ACCOUNT_URL || config.connectAccountURL + "/";
 
@@ -62,6 +59,13 @@ describe("Account Web Application add identity", () => {
 
       await waitFor("Phone number *");
       expect(await text("Phone number *").exists()).toBeTruthy();
+      await focus(textBox({ placeholder: "Enter your phone number" }));
+      await write("000000000000000000000000000000");
+      await click("Add phone");
+      await waitFor("Invalid phone number format input.");
+      expect(
+        await text("Invalid phone number format input.").exists(),
+      ).toBeTruthy();
 
       done();
     } catch (error) {
