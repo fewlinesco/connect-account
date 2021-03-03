@@ -1,15 +1,18 @@
-import { PasswordRules } from "@fewlines/connect-management";
 import React from "react";
 import styled from "styled-components";
 
 const PasswordRulesErrorList: React.FC<{
-  rules: PasswordRules;
+  rules: Record<string, string>;
 }> = ({ rules }) => {
-  const { min_digits, min_non_digits, min_total_characters } = rules;
+  const {
+    min_digits_minimum,
+    min_non_digits_minimum,
+    min_total_characters_minimum,
+  } = rules;
 
-  const isMinDigitsPlural = min_digits.minimum > 1;
-  const isMinNonDigitsPlural = min_non_digits.minimum > 1;
-  const isMinTotalCharsPlural = min_total_characters.minimum > 1;
+  const isMinDigitsPlural = Number(min_digits_minimum) > 1;
+  const isMinNonDigitsPlural = Number(min_non_digits_minimum) > 1;
+  const isMinTotalCharsPlural = Number(min_total_characters_minimum) > 1;
 
   return (
     <PasswordRestrictionErrorWrapper>
@@ -17,13 +20,14 @@ const PasswordRulesErrorList: React.FC<{
       <p>Ensure that your password contains at least:</p>
       <ul>
         <li>
-          {min_digits.minimum} digit{isMinDigitsPlural ? "s" : ""}
+          {min_digits_minimum} digit{isMinDigitsPlural ? "s" : ""}
         </li>
         <li>
-          {min_non_digits.minimum} non-digit{isMinNonDigitsPlural ? "s" : ""}
+          {min_non_digits_minimum} non-digit
+          {isMinNonDigitsPlural ? "s" : ""}
         </li>
         <li>
-          {min_total_characters.minimum} character
+          {min_total_characters_minimum} character
           {isMinTotalCharsPlural ? "s" : ""}
         </li>
       </ul>

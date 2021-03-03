@@ -1,11 +1,15 @@
 import { HttpStatus } from "@fwl/web";
-import { ApplicationError, WebError } from "@fwl/web/dist/errors";
+import {
+  ApplicationError,
+  WebError,
+  WebErrorDetails,
+} from "@fwl/web/dist/errors";
 
 type WebErrorData = {
   code: ApplicationError["code"];
   message: ApplicationError["message"];
   httpStatus: HttpStatus;
-  errorDetails?: Record<string, unknown>;
+  errorDetails?: WebErrorDetails;
   parentError?: Error;
 };
 
