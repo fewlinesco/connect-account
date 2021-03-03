@@ -134,7 +134,10 @@ const handler: Handler = (request, response): Promise<void> => {
           }
 
           if (error instanceof ConnectUnreachableError) {
-            throw webErrorFactory(webErrors.connectUnreachable);
+            throw webErrorFactory({
+              ...webErrors.connectUnreachable,
+              parentError: error,
+            });
           }
 
           throw error;
