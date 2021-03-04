@@ -1,4 +1,11 @@
-import { UnreachableError } from "@fewlines/connect-client";
+import {
+  AlgoNotSupportedError,
+  InvalidAudienceError,
+  InvalidKeyIDRS256Error,
+  MissingJWKSURIError,
+  MissingKeyIDHS256Error,
+  UnreachableError,
+} from "@fewlines/connect-client";
 import { Tracer } from "@fwl/tracing";
 import {
   HttpStatus,
@@ -11,6 +18,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { UserCookie } from "@src/@types/user-cookie";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
+import { UnhandledTokenType } from "@src/errors";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
@@ -23,6 +31,7 @@ async function authentication(
   const webErrors = {
     unreachable: ERRORS_DATA.UNREACHABLE,
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
+    badRequest: ERRORS_DATA.BAD_REQUEST,
   };
 
   return tracer.span("auth-middleware", async (span) => {
@@ -74,6 +83,20 @@ async function authentication(
                 access_token,
               ).catch((error) => {
                 span.setDisclosedAttribute("is access_token valid", false);
+                if (
+                  error instanceof MissingJWKSURIError ||
+                  error instanceof InvalidAudienceError ||
+                  error instanceof MissingKeyIDHS256Error ||
+                  error instanceof AlgoNotSupportedError ||
+                  error instanceof InvalidKeyIDRS256Error ||
+                  error instanceof UnhandledTokenType
+                ) {
+                  throw webErrorFactory({
+                    ...webErrors.badRequest,
+                    parentError: error,
+                  });
+                }
+
                 if (error instanceof UnreachableError) {
                   throw webErrorFactory({
                     ...webErrors.unreachable,
@@ -128,7 +151,28 @@ async function authentication(
               return;
             }
           }
-          span.setDisclosedAttribute("decryptVerifyError", error);
+
+          if (
+            error instanceof MissingJWKSURIError ||
+            error instanceof InvalidAudienceError ||
+            error instanceof MissingKeyIDHS256Error ||
+            error instanceof AlgoNotSupportedError ||
+            error instanceof InvalidKeyIDRS256Error ||
+            error instanceof UnhandledTokenType
+          ) {
+            throw webErrorFactory({
+              ...webErrors.badRequest,
+              parentError: error,
+            });
+          }
+
+          if (error instanceof UnreachableError) {
+            throw webErrorFactory({
+              ...webErrors.unreachable,
+              parentError: error,
+            });
+          }
+
           throw error;
         },
       );
