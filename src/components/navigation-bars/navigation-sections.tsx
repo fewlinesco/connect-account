@@ -13,8 +13,12 @@ const NAVIGATION_SECTIONS = {
     href: "/account/logins",
     icon: <KeyIcon />,
   },
-  Test: {
+  TestHybrid: {
     href: "/account/logins/test",
+    icon: <KeyIcon />,
+  },
+  TestFullSWR: {
+    href: "/account/logins/test-no-gssp",
     icon: <KeyIcon />,
   },
   Security: {

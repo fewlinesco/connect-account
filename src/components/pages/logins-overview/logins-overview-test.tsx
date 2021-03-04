@@ -75,8 +75,6 @@ const LoginsOverviewTest: React.FC = () => {
           case "SOCIAL_LOGINS":
             identitiesList = socialIdentities;
             break;
-          default:
-            null;
         }
 
         return (
