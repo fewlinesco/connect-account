@@ -2,6 +2,8 @@ import {
   Identity,
   IdentityTypes,
   getIdentities,
+  GraphqlErrors,
+  ConnectUnreachableError,
 } from "@fewlines/connect-management";
 import { getServerSideCookies } from "@fwl/web";
 import {
@@ -25,6 +27,7 @@ import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   return (
@@ -67,6 +70,11 @@ const getServerSideProps: GetServerSideProps = async (context) => {
         return;
       }
 
+      const webErrors = {
+        identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
+        connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+      };
+
       const identityId = context.params.id.toString();
 
       const userCookie = await getServerSideCookies<UserCookie>(request, {
@@ -79,11 +87,29 @@ const getServerSideProps: GetServerSideProps = async (context) => {
         const identity = await getIdentities(
           config.managementCredentials,
           userCookie.sub,
-        ).then((identities) => {
-          return identities.find(
-            (userIdentity) => userIdentity.id === identityId,
-          );
-        });
+        )
+          .then((identities) => {
+            return identities.find(
+              (userIdentity) => userIdentity.id === identityId,
+            );
+          })
+          .catch((error) => {
+            if (error instanceof GraphqlErrors) {
+              throw webErrorFactory({
+                ...webErrors.identityNotFound,
+                parentError: error,
+              });
+            }
+
+            if (error instanceof ConnectUnreachableError) {
+              throw webErrorFactory({
+                ...webErrors.connectUnreachable,
+                parentError: error,
+              });
+            }
+
+            throw error;
+          });
 
         if (!identity) {
           return {

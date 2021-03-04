@@ -1,4 +1,12 @@
-import { getProviderName } from "@fewlines/connect-management";
+import {
+  ScopesNotSupportedError,
+  UnreachableError,
+} from "@fewlines/connect-client";
+import {
+  ConnectUnreachableError,
+  getProviderName,
+  GraphqlErrors,
+} from "@fewlines/connect-management";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -17,6 +25,7 @@ import { oauth2Client } from "@src/config";
 import { logger } from "@src/logger";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 type HomePageProps = { authorizeURL: string; providerName: string };
 
@@ -47,9 +56,49 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     ],
     "/",
     async () => {
-      const authorizeURL = await oauth2Client.getAuthorizationURL();
+      const webErrors = {
+        identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
+        connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+        unreachable: ERRORS_DATA.UNREACHABLE,
+        badRequest: ERRORS_DATA.BAD_REQUEST,
+      };
 
-      const providerName = await getProviderName(config.managementCredentials);
+      const authorizeURL = await oauth2Client
+        .getAuthorizationURL()
+        .catch((error) => {
+          if (error instanceof ScopesNotSupportedError) {
+            throw webErrorFactory(webErrors.badRequest);
+          }
+
+          if (error instanceof UnreachableError) {
+            throw webErrorFactory({
+              ...webErrors.unreachable,
+              parentError: error,
+            });
+          }
+
+          throw error;
+        });
+
+      const providerName = await getProviderName(
+        config.managementCredentials,
+      ).catch((error) => {
+        if (error instanceof GraphqlErrors) {
+          throw webErrorFactory({
+            ...webErrors.identityNotFound,
+            parentError: error,
+          });
+        }
+
+        if (error instanceof ConnectUnreachableError) {
+          throw webErrorFactory({
+            ...webErrors.connectUnreachable,
+            parentError: error,
+          });
+        }
+
+        throw error;
+      });
 
       return {
         props: {
