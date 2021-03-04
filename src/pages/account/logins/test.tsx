@@ -20,7 +20,7 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 
 const TestPage: React.FC<{
-  alertMessages: string[] | null;
+  alertMessages?: string[];
 }> = ({ alertMessages }) => {
   return (
     <Layout
@@ -61,7 +61,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
 
       return {
         props: {
-          alertMessages: alertMessages ? alertMessages : null,
+          alertMessages: alertMessages ? alertMessages : undefined,
         },
       };
     },
