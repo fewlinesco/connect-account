@@ -9,7 +9,7 @@ import { NavigationBreadcrumbs } from "./navigation-breadcrumbs/navigation-bread
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Layout: React.FC<{
-  alertMessages: string[] | null;
+  alertMessages?: string[];
   title?: string;
   breadcrumbs?: string[];
 }> = ({ children, alertMessages, title, breadcrumbs }) => {

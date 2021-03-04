@@ -25,7 +25,7 @@ import { sortIdentities } from "@src/utils/sort-identities";
 
 const LoginsOverviewPage: React.FC<{
   sortedIdentities: SortedIdentities;
-  alertMessages: string[] | null;
+  alertMessages?: string[];
 }> = ({ sortedIdentities, alertMessages }) => {
   return (
     <Layout
@@ -81,7 +81,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
         return {
           props: {
             sortedIdentities,
-            alertMessages: alertMessages ? alertMessages : null,
+            alertMessages: alertMessages ? alertMessages : undefined,
           },
         };
       }

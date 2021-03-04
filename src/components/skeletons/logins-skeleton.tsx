@@ -51,7 +51,7 @@ const SkeletonLine = styled(SkeletonAnimation)`
   border-radius: ${({ theme }) => theme.radii[1]};
   padding: 2rem 0;
   position: relative;
-  background-color: #f3f3f3;
+  background-color: #e2e2e2;
   margin-bottom: 2rem;
 `;
 
@@ -59,7 +59,7 @@ const SkeletonBlock = styled(SkeletonAnimation)`
   border-radius: ${({ theme }) => theme.radii[1]};
   padding: 8rem 0;
   position: relative;
-  background-color: #f3f3f3;
+  background-color: #e2e2e2;
   margin-bottom: 5rem;
 `;
 

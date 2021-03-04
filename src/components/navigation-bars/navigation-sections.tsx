@@ -13,6 +13,10 @@ const NAVIGATION_SECTIONS = {
     href: "/account/logins",
     icon: <KeyIcon />,
   },
+  Test: {
+    href: "/account/logins/test",
+    icon: <KeyIcon />,
+  },
   Security: {
     href: "/account/security",
     icon: <LockIcon />,
