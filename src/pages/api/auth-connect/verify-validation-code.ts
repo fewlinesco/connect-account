@@ -22,6 +22,7 @@ import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
 import { config } from "@src/config";
+import { NoUserFoundError } from "@src/errors";
 import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
@@ -40,7 +41,6 @@ const handler: Handler = async (request, response) => {
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
     invalidBody: ERRORS_DATA.INVALID_BODY,
     invalidValidationCode: ERRORS_DATA.INVALID_VALIDATION_CODE,
-    expiredValidationCode: ERRORS_DATA.EXPIRED_VALIDATION_CODE,
     temporaryIdentityExpired: ERRORS_DATA.TEMPORARY_IDENTITY_EXPIRED,
     noUserFound: ERRORS_DATA.NO_USER_FOUND,
   };
@@ -60,14 +60,17 @@ const handler: Handler = async (request, response) => {
 
     const user = await getDBUserFromSub(userCookie.sub).catch((error) => {
       span.setDisclosedAttribute("database reachable", false);
-      span.setDisclosedAttribute("exception.message", error.message);
-      throw webErrorFactory(webErrors.databaseUnreachable);
+      throw webErrorFactory({
+        ...webErrors.databaseUnreachable,
+        parentError: error,
+      });
     });
 
     if (!user) {
       span.setDisclosedAttribute("user found", false);
       throw webErrorFactory(webErrors.noUserFound);
     }
+
     span.setDisclosedAttribute("user found", true);
 
     if (!user.temporary_identities) {
@@ -119,10 +122,20 @@ const handler: Handler = async (request, response) => {
           await removeTemporaryIdentity(
             userCookie.sub,
             temporaryIdentity,
-          ).catch(() => {
-            span.setDisclosedAttribute("database reachable", false);
+          ).catch((error) => {
+            if (error instanceof NoUserFoundError) {
+              span.setDisclosedAttribute("user found", false);
+              throw webErrorFactory({
+                ...webErrors.noUserFound,
+                parentError: error,
+              });
+            }
 
-            throw webErrorFactory(webErrors.databaseUnreachable);
+            span.setDisclosedAttribute("database reachable", false);
+            throw webErrorFactory({
+              ...webErrors.databaseUnreachable,
+              parentError: error,
+            });
           });
 
           response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
@@ -139,16 +152,22 @@ const handler: Handler = async (request, response) => {
             throw webErrorFactory(webErrors.identityNotFound);
           }
 
-          if (error instanceof GraphqlErrors) {
-            throw webErrorFactory(webErrors.identityNotFound);
-          }
-
           if (error instanceof InvalidValidationCodeError) {
             throw webErrorFactory(webErrors.invalidValidationCode);
           }
 
+          if (error instanceof GraphqlErrors) {
+            throw webErrorFactory({
+              ...webErrors.identityNotFound,
+              parentError: error,
+            });
+          }
+
           if (error instanceof ConnectUnreachableError) {
-            throw webErrorFactory(webErrors.connectUnreachable);
+            throw webErrorFactory({
+              ...webErrors.connectUnreachable,
+              parentError: error,
+            });
           }
 
           throw error;
@@ -166,11 +185,17 @@ const handler: Handler = async (request, response) => {
       },
     ).catch((error) => {
       if (error instanceof GraphqlErrors) {
-        throw webErrorFactory(webErrors.identityNotFound);
+        throw webErrorFactory({
+          ...webErrors.identityNotFound,
+          parentError: error,
+        });
       }
 
       if (error instanceof ConnectUnreachableError) {
-        throw webErrorFactory(webErrors.connectUnreachable);
+        throw webErrorFactory({
+          ...webErrors.connectUnreachable,
+          parentError: error,
+        });
       }
 
       throw error;
@@ -184,11 +209,17 @@ const handler: Handler = async (request, response) => {
         identityId,
       ).catch((error) => {
         if (error instanceof GraphqlErrors) {
-          throw webErrorFactory(webErrors.identityNotFound);
+          throw webErrorFactory({
+            ...webErrors.identityNotFound,
+            parentError: error,
+          });
         }
 
         if (error instanceof ConnectUnreachableError) {
-          throw webErrorFactory(webErrors.connectUnreachable);
+          throw webErrorFactory({
+            ...webErrors.connectUnreachable,
+            parentError: error,
+          });
         }
 
         throw error;
@@ -197,9 +228,12 @@ const handler: Handler = async (request, response) => {
     span.setDisclosedAttribute("is temporary Identity primary", false);
 
     await removeTemporaryIdentity(userCookie.sub, temporaryIdentity).catch(
-      () => {
+      (error) => {
         span.setDisclosedAttribute("database reachable", false);
-        throw webErrorFactory(webErrors.databaseUnreachable);
+        throw webErrorFactory({
+          ...webErrors.databaseUnreachable,
+          parentError: error,
+        });
       },
     );
 

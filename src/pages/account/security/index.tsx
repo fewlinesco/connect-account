@@ -1,4 +1,8 @@
-import { isUserPasswordSet } from "@fewlines/connect-management";
+import {
+  ConnectUnreachableError,
+  GraphqlErrors,
+  isUserPasswordSet,
+} from "@fewlines/connect-management";
 import { getServerSideCookies } from "@fwl/web";
 import {
   loggingMiddleware,
@@ -20,6 +24,7 @@ import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const SecurityPage: React.FC<{
   isPasswordSet: boolean;
@@ -50,6 +55,11 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     ],
     "/account/security",
     async (request) => {
+      const webErrors = {
+        identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
+        connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+      };
+
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
         isCookieSealed: true,
@@ -60,7 +70,23 @@ const getServerSideProps: GetServerSideProps = async (context) => {
         const isPasswordSet = await isUserPasswordSet(
           config.managementCredentials,
           userCookie.sub,
-        );
+        ).catch((error) => {
+          if (error instanceof GraphqlErrors) {
+            throw webErrorFactory({
+              ...webErrors.identityNotFound,
+              parentError: error,
+            });
+          }
+
+          if (error instanceof ConnectUnreachableError) {
+            throw webErrorFactory({
+              ...webErrors.connectUnreachable,
+              parentError: error,
+            });
+          }
+
+          throw error;
+        });
 
         return {
           props: {

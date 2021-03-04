@@ -1,4 +1,3 @@
-import { PasswordRules } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
@@ -27,7 +26,7 @@ const SetPasswordForm: React.FC<{
   const [
     passwordRestrictionError,
     setPasswordRestrictionError,
-  ] = React.useState<PasswordRules | undefined>();
+  ] = React.useState<Record<string, string> | undefined>();
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const router = useRouter();
@@ -116,7 +115,7 @@ const MismatchedPassword = styled.p`
 `;
 
 const ExtendedInputStyle = styled(Input)<{
-  passwordRestrictionError?: PasswordRules;
+  passwordRestrictionError?: Record<string, string>;
   passwordsNotMatching?: boolean;
 }>`
   ${({ theme, passwordRestrictionError, passwordsNotMatching }) =>

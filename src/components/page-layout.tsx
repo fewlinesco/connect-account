@@ -82,7 +82,7 @@ const DesktopNavigationBarWrapper = styled.div`
 
 const ChildrenContainer = styled.div`
   width: 60%;
-  height: 100vh;
+  height: 100%;
   margin: 0 auto;
 
   @media ${deviceBreakpoints.m} {

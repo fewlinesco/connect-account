@@ -27,6 +27,7 @@ import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
 import { config } from "@src/config";
+import { NoUserFoundError } from "@src/errors";
 import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
@@ -42,6 +43,7 @@ const handler: Handler = (request, response): Promise<void> => {
     temporaryIdentitiesNotFound: ERRORS_DATA.TEMPORARY_IDENTITY_LIST_NOT_FOUND,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
+    noUserFound: ERRORS_DATA.NO_USER_FOUND,
   };
 
   return getTracer().span(
@@ -66,9 +68,12 @@ const handler: Handler = (request, response): Promise<void> => {
         return;
       }
 
-      const user = await getDBUserFromSub(userCookie.sub).catch(() => {
+      const user = await getDBUserFromSub(userCookie.sub).catch((error) => {
         span.setDisclosedAttribute("database reachable", false);
-        throw webErrorFactory(webErrors.databaseUnreachable);
+        throw webErrorFactory({
+          ...webErrors.databaseUnreachable,
+          parentError: error,
+        });
       });
 
       if (!user?.temporary_identities) {
@@ -133,9 +138,20 @@ const handler: Handler = (request, response): Promise<void> => {
           await insertTemporaryIdentity(
             userCookie.sub,
             temporaryIdentity,
-          ).catch(() => {
+          ).catch((error) => {
+            if (error instanceof NoUserFoundError) {
+              span.setDisclosedAttribute("user found", false);
+              throw webErrorFactory({
+                ...webErrors.noUserFound,
+                parentError: error,
+              });
+            }
+
             span.setDisclosedAttribute("database reachable", false);
-            throw webErrorFactory(webErrors.databaseUnreachable);
+            throw webErrorFactory({
+              ...webErrors.databaseUnreachable,
+              parentError: error,
+            });
           });
 
           const verificationCodeMessage =
@@ -162,7 +178,10 @@ const handler: Handler = (request, response): Promise<void> => {
           }
 
           if (error instanceof ConnectUnreachableError) {
-            throw webErrorFactory(webErrors.connectUnreachable);
+            throw webErrorFactory({
+              ...webErrors.connectUnreachable,
+              parentError: error,
+            });
           }
 
           throw error;
