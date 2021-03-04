@@ -4,7 +4,6 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
 
   @media ${deviceBreakpoints.m} {
     height: auto;

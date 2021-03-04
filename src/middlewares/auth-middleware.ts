@@ -40,10 +40,14 @@ async function authentication(
         async (error) => {
           if (error.name === "TokenExpiredError") {
             span.setDisclosedAttribute("is access_token expired", true);
-            const user = await getDBUserFromSub(sub).catch(() => {
+            const user = await getDBUserFromSub(sub).catch((error) => {
               span.setDisclosedAttribute("database reachable", false);
-              throw webErrorFactory(webErrors.databaseUnreachable);
+              throw webErrorFactory({
+                ...webErrors.databaseUnreachable,
+                parentError: error,
+              });
             });
+
             span.setDisclosedAttribute("database reachable", true);
 
             if (user) {
@@ -56,7 +60,10 @@ async function authentication(
                 .catch((error) => {
                   span.setDisclosedAttribute("is token refreshed", false);
                   if (error instanceof UnreachableError) {
-                    throw webErrorFactory(webErrors.unreachable);
+                    throw webErrorFactory({
+                      ...webErrors.unreachable,
+                      parentError: error,
+                    });
                   }
 
                   throw error;
@@ -68,7 +75,10 @@ async function authentication(
               ).catch((error) => {
                 span.setDisclosedAttribute("is access_token valid", false);
                 if (error instanceof UnreachableError) {
-                  throw webErrorFactory(webErrors.unreachable);
+                  throw webErrorFactory({
+                    ...webErrors.unreachable,
+                    parentError: error,
+                  });
                 }
 
                 throw error;
@@ -94,10 +104,16 @@ async function authentication(
 
               span.setDisclosedAttribute("is cookie set", true);
 
-              await getAndPutUser({ sub, refresh_token }, user).catch(() => {
-                span.setDisclosedAttribute("database reachable", false);
-                throw webErrorFactory(webErrors.databaseUnreachable);
-              });
+              await getAndPutUser({ sub, refresh_token }, user).catch(
+                (error) => {
+                  span.setDisclosedAttribute("database reachable", false);
+                  throw webErrorFactory({
+                    ...webErrors.databaseUnreachable,
+                    parentError: error,
+                  });
+                },
+              );
+
               span.setDisclosedAttribute("user updated on DB", true);
 
               response.statusCode = HttpStatus.OK;

@@ -41,10 +41,6 @@ class NoUserFoundError extends Error {
   readonly message = "No User found";
 }
 
-class NoTemporaryIdentity extends Error {
-  readonly message = "No Temporary Identity";
-}
-
 class TemporaryIdentityExpired extends Error {
   readonly message = "Temporary Identity Expired";
 }
@@ -67,7 +63,6 @@ export {
   UnhandledIdentityType,
   InvalidValidationCode,
   NoUserFoundError,
-  NoTemporaryIdentity,
   TemporaryIdentityExpired,
   DeleteUserCookieError,
 };

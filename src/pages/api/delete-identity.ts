@@ -64,15 +64,17 @@ const handler: Handler = (request, response): Promise<void> => {
       .catch((error) => {
         span.setDisclosedAttribute("is Identity removed", false);
         if (error instanceof GraphqlErrors) {
-          span.setDisclosedAttribute("GraphQL error", error.message);
-
-          throw webErrorFactory(webErrors.identityNotFound);
+          throw webErrorFactory({
+            ...webErrors.identityNotFound,
+            parentError: error,
+          });
         }
 
         if (error instanceof ConnectUnreachableError) {
-          span.setDisclosedAttribute("Connect unreachable", error.message);
-
-          throw webErrorFactory(webErrors.connectUnreachable);
+          throw webErrorFactory({
+            ...webErrors.connectUnreachable,
+            parentError: error,
+          });
         }
 
         throw error;
