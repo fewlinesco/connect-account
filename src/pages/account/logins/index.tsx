@@ -25,7 +25,7 @@ import { sortIdentities } from "@src/utils/sort-identities";
 
 const LoginsOverviewPage: React.FC<{
   sortedIdentities: SortedIdentities;
-  alertMessages?: string[];
+  alertMessages: string[] | null;
 }> = ({ sortedIdentities, alertMessages }) => {
   return (
     <Layout
