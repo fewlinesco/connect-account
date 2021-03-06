@@ -158,8 +158,12 @@ const handler: Handler = (request, response): Promise<void> => {
             getIdentityType(type) === IdentityTypes.EMAIL
               ? "A new confirmation email has been sent"
               : "A new confirmation SMS has been sent";
+          const newCookie = {
+            text: verificationCodeMessage,
+            expiresAt: Date.now() + 300000,
+          };
 
-          setAlertMessagesCookie(response, verificationCodeMessage);
+          setAlertMessagesCookie(response, [newCookie]);
 
           response.statusCode = HttpStatus.OK;
           response.setHeader("Content-Type", "application/json");

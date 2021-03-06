@@ -1,23 +1,35 @@
+import { AlertMessage } from "@fwl/web/dist/src/typings/utils";
 import React from "react";
 import styled from "styled-components";
 
 import { CrossIcon } from "../icons/cross-icon/cross-icon";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-const AlertMessages: React.FC<{ alertMessages?: string[] }> = ({
-  alertMessages,
-}) => {
+const AlertMessages: React.FC<{
+  alertMessages?: AlertMessage[];
+}> = ({ alertMessages }) => {
   const [showAlertMessages, setShowAlertMessages] = React.useState<boolean>(
     true,
   );
 
+  if (!alertMessages) {
+    return null;
+  }
+  if (alertMessages.length === 0) {
+    return null;
+  }
+
   return (
     <Wrapper>
-      {showAlertMessages && alertMessages
-        ? alertMessages.map((alertMessage) => {
+      {showAlertMessages
+        ? alertMessages.map(({ text, expiresAt }) => {
+            if (expiresAt < Date.now()) {
+              return null;
+            }
+
             return (
               <Alert key={"alertMessage" + Date.now()}>
-                <p>{alertMessage}</p>
+                <p>{text}</p>
                 <div
                   className="cross"
                   onClick={() => setShowAlertMessages(false)}

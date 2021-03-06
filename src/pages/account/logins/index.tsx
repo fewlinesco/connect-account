@@ -12,6 +12,7 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
+import { AlertMessage } from "@fwl/web/dist/src/typings/utils";
 import { GetServerSideProps } from "next";
 import React from "react";
 
@@ -30,7 +31,7 @@ import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const LoginsOverviewPage: React.FC<{
   sortedIdentities: SortedIdentities;
-  alertMessages?: string[];
+  alertMessages?: AlertMessage[];
 }> = ({ sortedIdentities, alertMessages }) => {
   return (
     <Layout
@@ -106,10 +107,18 @@ const getServerSideProps: GetServerSideProps = async (context) => {
           isCookieSealed: false,
         });
 
+        if (alertMessages) {
+          return {
+            props: {
+              sortedIdentities,
+              alertMessages,
+            },
+          };
+        }
+
         return {
           props: {
             sortedIdentities,
-            alertMessages: alertMessages ? alertMessages : null,
           },
         };
       }

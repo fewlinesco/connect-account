@@ -8,6 +8,7 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
+import { AlertMessage } from "@fwl/web/dist/src/typings/utils";
 import { ServerResponse } from "http";
 import { GetServerSideProps } from "next";
 import React from "react";
@@ -23,7 +24,7 @@ import getTracer from "@src/tracer";
 const ValidateIdentityPage: React.FC<{
   type: IdentityTypes;
   eventId: string;
-  alertMessages?: string[];
+  alertMessages?: AlertMessage[];
 }> = ({ type, eventId, alertMessages }) => {
   return (
     <Layout
@@ -71,16 +72,28 @@ const getServerSideProps: GetServerSideProps = async (context) => {
         return;
       }
 
-      const alertMessages = await getServerSideCookies(request, {
-        cookieName: "alert-messages",
-        isCookieSealed: false,
-      });
+      const alertMessages = await getServerSideCookies<string | undefined>(
+        request,
+        {
+          cookieName: "alert-messages",
+          isCookieSealed: false,
+        },
+      );
+
+      if (alertMessages) {
+        return {
+          props: {
+            type: context.params.type,
+            eventId: context.params.eventId,
+            alertMessages,
+          },
+        };
+      }
 
       return {
         props: {
           type: context.params.type,
           eventId: context.params.eventId,
-          alertMessages: alertMessages ? alertMessages : null,
         },
       };
     },
