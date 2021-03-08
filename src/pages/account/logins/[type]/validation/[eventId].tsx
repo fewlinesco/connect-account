@@ -1,5 +1,5 @@
 import { IdentityTypes } from "@fewlines/connect-management";
-import { getServerSideCookies } from "@fwl/web";
+import { AlertMessage, getServerSideCookies } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -23,7 +23,7 @@ import getTracer from "@src/tracer";
 const ValidateIdentityPage: React.FC<{
   type: IdentityTypes;
   eventId: string;
-  alertMessages?: string[];
+  alertMessages?: AlertMessage[];
 }> = ({ type, eventId, alertMessages }) => {
   return (
     <Layout
@@ -71,16 +71,28 @@ const getServerSideProps: GetServerSideProps = async (context) => {
         return;
       }
 
-      const alertMessages = await getServerSideCookies(request, {
-        cookieName: "alert-messages",
-        isCookieSealed: false,
-      });
+      const alertMessages = await getServerSideCookies<string | undefined>(
+        request,
+        {
+          cookieName: "alert-messages",
+          isCookieSealed: false,
+        },
+      );
+
+      if (alertMessages) {
+        return {
+          props: {
+            type: context.params.type,
+            eventId: context.params.eventId,
+            alertMessages,
+          },
+        };
+      }
 
       return {
         props: {
           type: context.params.type,
           eventId: context.params.eventId,
-          alertMessages: alertMessages ? alertMessages : null,
         },
       };
     },

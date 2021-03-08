@@ -19,6 +19,8 @@ jest.mock("@src/db-client", () => {
 describe("LoginsOverviewPage", () => {
   describe("Identity type: EMAIL", () => {
     it("should display primary email identity first and all of them when clicking on the show more button", () => {
+      expect.assertions(7);
+
       const sortedIdentities: SortedIdentities = {
         emailIdentities: [
           mockIdentities.primaryEmailIdentity,
@@ -140,6 +142,8 @@ describe("LoginsOverviewPage", () => {
 
   describe("Identity type: PHONE", () => {
     it("should display primary phone identity first and all of them when clicking on the show more button", () => {
+      expect.assertions(7);
+
       const sortedIdentities: SortedIdentities = {
         emailIdentities: [],
         phoneIdentities: [
@@ -209,6 +213,8 @@ describe("LoginsOverviewPage", () => {
     });
 
     it("should display primary phone identity without show more button if provided 1 identity", () => {
+      expect.assertions(4);
+
       const sortedIdentities: SortedIdentities = {
         emailIdentities: [],
         phoneIdentities: [mockIdentities.primaryPhoneIdentity],
@@ -241,6 +247,8 @@ describe("LoginsOverviewPage", () => {
     });
 
     it("should display default message when no identity is provided", () => {
+      expect.assertions(3);
+
       const sortedIdentities: SortedIdentities = {
         emailIdentities: [],
         phoneIdentities: [],
@@ -252,6 +260,7 @@ describe("LoginsOverviewPage", () => {
       expect(
         screen.getByText("No phone number added yet."),
       ).toBeInTheDocument();
+
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
 
       expect(
@@ -262,6 +271,8 @@ describe("LoginsOverviewPage", () => {
 
   describe("Identity type: SOCIAL", () => {
     it("should display all social identities provided without the show more button", () => {
+      expect.assertions(3);
+
       const sortedIdentities: SortedIdentities = {
         emailIdentities: [],
         phoneIdentities: [],
@@ -272,7 +283,6 @@ describe("LoginsOverviewPage", () => {
       };
 
       render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
-
       expect(screen.getByText("Github")).toBeInTheDocument();
       expect(screen.getByText("Facebook")).toBeInTheDocument();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
@@ -290,21 +300,27 @@ describe("LoginsOverviewPage", () => {
       expect(
         screen.getByText("No social logins added yet."),
       ).toBeInTheDocument();
+
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
     });
   });
 
   describe("Alert message", () => {
     it("should display an alert message if there's one in the cookies", async () => {
+      expect.assertions(3);
+
       const sortedIdentities: SortedIdentities = {
         emailIdentities: [mockIdentities.primaryEmailIdentity],
         phoneIdentities: [],
         socialIdentities: [],
       };
 
-      const alertMessages = ["Email address has been deleted"];
-
-      expect.assertions(3);
+      const alertMessages = [
+        {
+          text: "Email address has been deleted",
+          expiresAt: Date.now() + 300000,
+        },
+      ];
 
       render(
         <LoginsOverviewPage
@@ -316,6 +332,49 @@ describe("LoginsOverviewPage", () => {
       expect(
         await screen.findByText("Email address has been deleted"),
       ).toBeInTheDocument();
+
+      expect(await screen.findByTitle("Closing cross")).toBeInTheDocument();
+      userEvent.click(screen.getByTitle("Closing cross"));
+
+      expect(
+        screen.queryByText("Email address has been deleted"),
+      ).not.toBeInTheDocument();
+    });
+
+    it("should not render expired alert messages ", async () => {
+      expect.assertions(4);
+
+      const sortedIdentities: SortedIdentities = {
+        emailIdentities: [mockIdentities.primaryEmailIdentity],
+        phoneIdentities: [],
+        socialIdentities: [],
+      };
+
+      const alertMessages = [
+        {
+          text: "This is not expired",
+          expiresAt: Date.now() + 300000,
+        },
+        {
+          text: "This is expired",
+          expiresAt: Date.now() - 300000,
+        },
+      ];
+
+      render(
+        <LoginsOverviewPage
+          sortedIdentities={sortedIdentities}
+          alertMessages={alertMessages}
+        />,
+      );
+
+      expect(
+        await screen.findByText("This is not expired"),
+      ).toBeInTheDocument();
+
+      expect(
+        await screen.queryByText("This is expired"),
+      ).not.toBeInTheDocument();
 
       expect(await screen.findByTitle("Closing cross")).toBeInTheDocument();
       userEvent.click(screen.getByTitle("Closing cross"));

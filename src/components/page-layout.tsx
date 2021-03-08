@@ -1,3 +1,4 @@
+import { AlertMessage } from "@fwl/web";
 import React from "react";
 import styled from "styled-components";
 
@@ -9,7 +10,7 @@ import { NavigationBreadcrumbs } from "./navigation-breadcrumbs/navigation-bread
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Layout: React.FC<{
-  alertMessages?: string[];
+  alertMessages?: AlertMessage[];
   title?: string;
   breadcrumbs?: string[];
 }> = ({ children, alertMessages, title, breadcrumbs }) => {

@@ -3,7 +3,7 @@ import {
   getIdentities,
   GraphqlErrors,
 } from "@fewlines/connect-management";
-import { getServerSideCookies } from "@fwl/web";
+import { AlertMessage, getServerSideCookies } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -30,7 +30,7 @@ import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const LoginsOverviewPage: React.FC<{
   sortedIdentities: SortedIdentities;
-  alertMessages?: string[];
+  alertMessages?: AlertMessage[];
 }> = ({ sortedIdentities, alertMessages }) => {
   return (
     <Layout
@@ -106,10 +106,18 @@ const getServerSideProps: GetServerSideProps = async (context) => {
           isCookieSealed: false,
         });
 
+        if (alertMessages) {
+          return {
+            props: {
+              sortedIdentities,
+              alertMessages,
+            },
+          };
+        }
+
         return {
           props: {
             sortedIdentities,
-            alertMessages: alertMessages ? alertMessages : null,
           },
         };
       }
