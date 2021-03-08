@@ -53,8 +53,12 @@ const handler: Handler = (request, response): Promise<void> => {
             ? "Email address"
             : "Phone number"
         } has been deleted`;
+        const newCookie = {
+          text: deleteMessage,
+          expiresAt: Date.now() + 300000,
+        };
 
-        setAlertMessagesCookie(response, deleteMessage);
+        setAlertMessagesCookie(response, [newCookie]);
 
         response.statusCode = HttpStatus.ACCEPTED;
         response.setHeader("Content-Type", "application/json");

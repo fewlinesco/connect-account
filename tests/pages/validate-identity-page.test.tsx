@@ -18,8 +18,14 @@ jest.mock("@src/db-client", () => {
 const eventId = "foo";
 
 const alertMessages = {
-  email: "Confirmation email has been sent",
-  phone: "Confirmation SMS has been sent",
+  email: {
+    text: "Confirmation email has been sent",
+    expiresAt: Date.now() + 300000,
+  },
+  phone: {
+    text: "Confirmation SMS has been sent",
+    expiresAt: Date.now() + 300000,
+  },
 };
 
 describe("ValidateIdentityPage", () => {
@@ -35,12 +41,16 @@ describe("ValidateIdentityPage", () => {
 
       expect.assertions(3);
 
-      expect(await screen.findByText(alertMessages.email)).toBeInTheDocument();
+      expect(
+        await screen.findByText(alertMessages.email.text),
+      ).toBeInTheDocument();
 
       expect(await screen.findByTitle("Closing cross")).toBeInTheDocument();
       userEvent.click(screen.getByTitle("Closing cross"));
 
-      expect(screen.queryByText(alertMessages.email)).not.toBeInTheDocument();
+      expect(
+        screen.queryByText(alertMessages.email.text),
+      ).not.toBeInTheDocument();
     });
 
     it("should render proper email form elements ", () => {
@@ -93,12 +103,16 @@ describe("ValidateIdentityPage", () => {
 
       expect.assertions(3);
 
-      expect(await screen.findByText(alertMessages.phone)).toBeInTheDocument();
+      expect(
+        await screen.findByText(alertMessages.phone.text),
+      ).toBeInTheDocument();
 
       expect(await screen.findByTitle("Closing cross")).toBeInTheDocument();
       userEvent.click(screen.getByTitle("Closing cross"));
 
-      expect(screen.queryByText(alertMessages.phone)).not.toBeInTheDocument();
+      expect(
+        screen.queryByText(alertMessages.phone.text),
+      ).not.toBeInTheDocument();
     });
 
     it("should render proper phone form elements ", () => {
