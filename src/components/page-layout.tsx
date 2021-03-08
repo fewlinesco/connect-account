@@ -1,4 +1,4 @@
-import { AlertMessage } from "@fwl/web/dist/src/typings/utils";
+import { AlertMessage } from "@fwl/web";
 import React from "react";
 import styled from "styled-components";
 

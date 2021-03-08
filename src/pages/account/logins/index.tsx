@@ -3,7 +3,7 @@ import {
   getIdentities,
   GraphqlErrors,
 } from "@fewlines/connect-management";
-import { getServerSideCookies } from "@fwl/web";
+import { AlertMessage, getServerSideCookies } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -12,7 +12,6 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
-import { AlertMessage } from "@fwl/web/dist/src/typings/utils";
 import { GetServerSideProps } from "next";
 import React from "react";
 
