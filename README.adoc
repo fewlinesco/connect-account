@@ -261,7 +261,7 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 
 === bin/
 
-- *dynamodb/*: Scripts related to DynamoDB, used in Github Actions.
+- *dynamodb/*: Scripts to interact with your local DynamoDB instead of the AWS CLI, which requires sensitives admin credentials.
 - *e2e/*: Scripts related to e2e tests, used in Github Actions.
 
 === doc/
@@ -449,7 +449,7 @@ Also remember to add a `<title/>` JSX tag under the `<svg/>` tag for accessibili
 
 == Database
 
-We are using DynamoDB as our persistence layer. It's K/V structure allows fast performances, but you'll need to be aware of some specificities, like being unable to update an existing value.
+We are using DynamoDB as our persistence layer. Its K/V structure allows fast performances, but you'll need to be aware of some specificities, like being unable to update an existing value.
 
 == Cookies
 
