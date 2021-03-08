@@ -1,4 +1,4 @@
-import { getServerSideCookies } from "@fwl/web";
+import { getServerSideCookies, AlertMessage } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -20,7 +20,7 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 
 const TestPage: React.FC<{
-  alertMessages?: string[];
+  alertMessages?: AlertMessage[];
 }> = ({ alertMessages }) => {
   return (
     <Layout
@@ -53,18 +53,6 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       authMiddleware(getTracer()),
     ],
     "/account/logins",
-    async (request) => {
-      const alertMessages = await getServerSideCookies(request, {
-        cookieName: "alert-messages",
-        isCookieSealed: false,
-      });
-
-      return {
-        props: {
-          alertMessages: alertMessages ? alertMessages : undefined,
-        },
-      };
-    },
   );
 };
 

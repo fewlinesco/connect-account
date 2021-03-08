@@ -1,3 +1,4 @@
+import { AlertMessage } from "@fwl/web";
 import React from "react";
 
 import { Container } from "@src/components/containers/container";
@@ -5,7 +6,7 @@ import { Layout } from "@src/components/page-layout";
 import { LoginsOverviewTest } from "@src/components/pages/logins-overview/logins-overview-test";
 
 const TestSoGSSPPage: React.FC<{
-  alertMessages?: string[];
+  alertMessages?: AlertMessage[];
 }> = ({ alertMessages }) => {
   return (
     <Layout
