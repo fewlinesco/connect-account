@@ -19,22 +19,6 @@ image::./doc/identity-action-flow.jpg[Identity action flow]
 
 image::./doc/set-or-update-password-flow.jpg[Set or Update user password]
 
-== Working with the Account web application
-
-You will most likely need to *fork* the repository to add your custom frontend components, to change the layout, or add your branding and design-system.
-
-‼️ You'll need to manually update your **origin** master branch each time before making a new branch from your fork. To do so, run the following, from your **local** master:
-
-[source, shell]
-----
-git fetch --upstream
-git rebase --upstream
-git push origin master
-git checkout -b name-of-your-branch
-----
-
-> In the future (i.e. when the `@fwl/account-sdk` will be done), the use of the web application will be done through *cloning*, instead of *forking*.
-
 == NPM scripts
 
 === Setup
@@ -164,7 +148,7 @@ if you want to automatically fix linting issues.
 
 === Pre-push trigger
 
-We are using `Husky` to trigger the linting, testing and building of the app before pushing the code to GitHub to prevent unnecessary `Heroku` build.
+We are using `Husky` to trigger the linting and building of the app before pushing the code to GitHub to prevent unnecessary `Heroku` builds. We do not plan to migrate from version `4.x` to `5.x`.
 
 == Environment variables
 
@@ -180,14 +164,20 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 | `CONNECT_ACCOUNT_HOSTNAME`
 | Hostname of the account web application. This is not needed on `Heroku` for review environments.
 
-| `CONNECT_ACCOUNT_THEME`
-| Styling theme that will be used. Default: `fewlines`.
-
 | `DYNAMODB_REGION`
 | Region of the AWS cluster.
 
 | `DYNAMODB_ENDPOINT`
 | URL of the AWS cluster where your DynamoDB instance run from.
+
+| `DYNAMODB_ACCESS_KEY_ID`
+| Access key ID used for production when your DB is hosted by AWS.
+
+| `DYNAMODB_SECRET_ACCESS_KEY`
+| Secret access key used for production when your DB is hosted by AWS.
+
+| `DYNAMODB_TABLE_NAME`
+| Name of the DynamoDB table. You can see this as the name of the DB, as tables are different from relational DB in the context of a DynamoDB.
 
 | `CONNECT_MANAGEMENT_URL`
 | URL used to fetch identities from the management GraphQL endpoint.
@@ -210,6 +200,9 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 | `CONNECT_OPEN_ID_CONFIGURATION_URL`
 | URL used for the `@fewlines/connect-client` package to fetch the OpenID configuration.
 
+| `CONNECT_REDIRECT_URI`
+| URL used for the Connect authentication flow.
+
 | `CONNECT_AUDIENCE`
 | Name of the Application that identifies the recipients that the JWT is intended for.
 
@@ -222,8 +215,23 @@ We are using `Husky` to trigger the linting, testing and building of the app bef
 | `IS_JWE_SIGNED`
 | A boolean value that indicates if the JWE access token is signed or not.
 
+| `SERVICE_NAME`
+| Service name for Lightstep.
+
+| `LIGHTSTEP_ACCESS_TOKEN`
+| Your Lightstep access token.
+
 | `NEXT_PUBLIC_SENTRY_DSN`
 | Data Source Name representing the configuration required by the Sentry SDKs.
+
+| `SENTRY_ENVIRONMENT`
+| Should be set to `development`. Used to prevent sentry report when working with a build version locally.
+
+| `CONNECT_TEST_ACCOUNT_EMAIL`
+| Email of the Connect account that will be used for e2e tests.
+
+| `CONNECT_TEST_ACCOUNT_PASSWORD=`
+| Password of the Connect account that will be used for e2e tests.
 |===
 
 
@@ -251,62 +259,72 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 - */main.js*: Config file for Storybook.
 - */preview.js*: File used to inject, through decorators, the design-system theme and global style.
 
+=== bin/
+
+- *dynamodb/*: Scripts related to DynamoDB used in Github Actions.
+- *e2e/*: Scripts related to e2e tests used in Github Actions.
+
+=== doc/
+
+PlantUML diagrams and their respective built images.
+
+=== public/
+
+Favicons for various OS.
+
 === src/
 
 - *@types/*: Type declaration used in multiple places.
-- *assets/*: Folder containing assets.
 - *commands/*: Write (e.g. `POST`) database actions.
-- *components/*:
-  - *business/*: React components that provide business logic through render props. You shouldn't have to touch them.
-  - *visualization/*: React component that only — for the most part — handle the visualization part. 
-    - *fewlines/*: Our default visualization components. Used as a template.
-- *design-system/*: Style or atomic components (e.g. icons) related code.
-- *hooks/*: Reusable actions flows.
+- *components/*: React functional components used to render, with their respective stories.
+- *design-system/*:
+  - *globals/*: Global style components.
+  - *theme/*: `styled-components` related theme files.
 - *middleware/*: Reusable wrappers to add various features to server side actions.
 - *pages/*: NextJS router.
 - *queries/*: Read (i.e. `GET`) database actions.
 - *utils/*: Small snippets/functions used multiple times throughout the application
 - *workflows/*: workflows used in multiples places.
 - *config.ts*: Entry point used to verify env vars sourcing, and prevent the app to run if forgotten.
+- *db-client.ts*: Singleton of the DynamoDB client.
+- *errors.ts*: List of exceptions related to Connect.Account.
+- *logger.ts*: Singleton of the logger client provided by `@fwl/web`.
+- *tracer.ts*: Singleton of the tracer client provided by `@fwl/web`.
+- *web-errors.ts*: List of exceptions related to `@fwl/web` WebErrors.
 
 === tests/
-- *__mocks__*: Centralized mocked data or function.
-- **.test.(ts|tsx)*: Unit test files.
+- *config/*: Config files for the different libraries used to test, and import fixe files.
+- *e2e/*: Centralized e2e test files.
+- *mocks/*: Centralized mocked data or function.
+- *pages/*: Centralized Next.js pages integration tests.
+- *unit/*: Centralized components and functions unit tests.
 
 === config files
-- *package.json*: We use this file, as much as possible as a centralized config file for various packages, like `ESLint`, `Jest` or `Husky`.
-- *tsconfig.json*: TypeScript compiler options.
-- *next.config.js*: Extended webpack compiler config used by NextJS.
-- *.tool-version*: Asdf config file.
+- *.dockerignore*: Ignored files for the Docker image building.
 - *.env_vars.sample*: Environment variables template file. You will need to copy this file, remove the `.sample` part, and add the correct values.
 - *.gitignore*: GitHub config file used to prevent the pushing of certain files.
-
-== Splitting logic from visualization components
-
-To help minimized conflict from upstream in your fork, we chose to split the business logic — which is handled by us — from visualization components. To do so, we are using https://reactjs.org/docs/render-props.html[Render Props]:
-
-[source, jsx]
-----
-<BusinessComponent>
-  {({ businessLogic }) => (
-    <VisualizationComponent businessLogic={businessLogic} />
-  )}
-</BusinessComponent>
-----
-
-> As said previously, we'll transition from a fork strategy to a clone one. This won't prevent us to use the Render Props API.
+- *.tool-version*: asdf config file.
+- *app.json*: Building instructions for Heroku.
+- *assets.d.ts*: Allow the import of assets files in TypeScript files.
+- *Brewfile*: Tools needed that will be installed via Brew.
+- *docker-compose*: Instructions to launch DynamoDB and the observability tools.
+- *Dockerfile*: Instructions for Docker image building.
+- *next-env.d.ts*: Adds NextJS types globally.
+- *next.config.js*: Extended webpack compiler config used by NextJS.
+- *nginx.conf*: Local proxy configuration.
+- *otel-collector-config*: Configuration of the collector for tracing.
+- *package.json*: We use this file, as much as possible as a centralized config file for various packages, like `ESLint`, `Jest` or `Husky`.
+- *Procfile.dev*: Instructions for Hivemind/Overmind.
+- *README.adoc*: Connect.Account documentation, written in AsciiDoc.
+- *tsconfig.json*: TypeScript compiler options.
+- *yarn.lock*: Package manager instructions.
 
 == TypeScript
 
 === Type declaration
 
 The rule we follow is that, if a declared type is only used in one file, we locate it in said file. Otherwise, we move it in its own file, under `@types/`.
-The exceptions to this rule are:
-
-- *next-env.d.ts*: Adds NextJS types globally.
-- *assets.d.ts*: Allow the import of assets files in TypeScript files.
-
-as NextJS required them to be located at the root of the repository.
+The exceptions to this rule are *next-env.d.ts* and *assets.d.ts* as NextJS required them to be located at the root of the repository.
 
 === Typing React components
 
@@ -427,9 +445,11 @@ export const SvgIcon: React.FC = () => {
 
 When you use Figma to export SVG, be sure to export the upper component (i.e. *name 40x40*).
 
+Also remember to add a `<title/>` JSX tag under the `<svg/>` tag for accessibility.
+
 == Database
 
-TODO
+We are using DynamoDB as our persistence layer. It's K/V structure allows fast performances, but you'll need to be aware of some specificities, like being unable to update an existing value.
 
 == Session
 
@@ -486,7 +506,7 @@ Inside most of our jobs, we used TypeScript written scripts to perform our actio
 
 == Monitoring
 
-We are using https://docs.sentry.io/[Sentry] to monitor production's exceptions raised.
+We are using https://docs.sentry.io/[Sentry] to monitor production and review app's exceptions raised.
 
 A custom utility function, called `addRequestScopeToSentry`, is provided to format the data used for the report.
 
