@@ -45,8 +45,8 @@ describe("ValidateIdentityPage", () => {
         await screen.findByText(alertMessages.email.text),
       ).toBeInTheDocument();
 
-      expect(await screen.findByTitle("Closing cross")).toBeInTheDocument();
-      userEvent.click(screen.getByTitle("Closing cross"));
+      expect(await screen.findByTitle("Cross icon")).toBeInTheDocument();
+      userEvent.click(screen.getByTitle("Cross icon"));
 
       expect(
         screen.queryByText(alertMessages.email.text),
@@ -107,8 +107,8 @@ describe("ValidateIdentityPage", () => {
         await screen.findByText(alertMessages.phone.text),
       ).toBeInTheDocument();
 
-      expect(await screen.findByTitle("Closing cross")).toBeInTheDocument();
-      userEvent.click(screen.getByTitle("Closing cross"));
+      expect(await screen.findByTitle("Cross icon")).toBeInTheDocument();
+      userEvent.click(screen.getByTitle("Cross icon"));
 
       expect(
         screen.queryByText(alertMessages.phone.text),
