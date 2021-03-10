@@ -15,7 +15,7 @@ import { authenticateToConnect } from "./utils/authenticate-to-connect";
 import { config } from "@src/config";
 
 describe("Account Web Application add identity", () => {
-  jest.setTimeout(120000);
+  jest.setTimeout(30000);
 
   beforeAll(async () => {
     await openBrowser({

@@ -15,7 +15,7 @@ import {
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
 describe("Account Web Application re-send Identity validation code", () => {
-  jest.setTimeout(120000);
+  jest.setTimeout(30000);
 
   beforeAll(async () => {
     await openBrowser({

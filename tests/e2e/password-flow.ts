@@ -14,7 +14,7 @@ import {
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
 describe("Account Web Application update password", () => {
-  jest.setTimeout(120000);
+  jest.setTimeout(30000);
 
   beforeAll(async () => {
     await openBrowser({
@@ -40,19 +40,21 @@ describe("Account Web Application update password", () => {
 
       await waitFor("SECURITY");
       expect(await text("SECURITY").exists()).toBeTruthy();
-
       await click("SECURITY");
+
       await waitFor("Update your password");
       expect(await text("Update your password").exists()).toBeTruthy();
-
       await click("Update your password");
+
       await waitFor("New password");
       expect(await text("New password").exists()).toBeTruthy();
 
       await focus(textBox({ placeholder: "New password" }));
       await write("q");
+
       await focus(textBox({ placeholder: "Confirm new password" }));
       await write("qq");
+
       await click("Update password");
       await waitFor(
         "Your password confirmation do not match your new password.",
@@ -66,9 +68,11 @@ describe("Account Web Application update password", () => {
       await focus(textBox({ placeholder: "New password" }));
       await clear(textBox({ placeholder: "New password" }));
       await write("q");
+
       await focus(textBox({ placeholder: "Confirm new password" }));
       await clear(textBox({ placeholder: "Confirm new password" }));
       await write("q");
+
       await click("Update password");
       await waitFor("The password you enter does not meet the criteria.");
       expect(
