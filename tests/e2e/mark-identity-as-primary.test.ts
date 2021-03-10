@@ -31,7 +31,7 @@ describe("Marking another identity as the primary one on connect account", () =>
     await closeBrowser();
   });
 
-  test("should correctly mark another identity to primary status and going back to logins overview page", async (done) => {
+  test("It should correctly mark another identity to primary status and going back to logins overview page", async (done) => {
     expect.assertions(9);
 
     try {
