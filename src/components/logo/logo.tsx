@@ -2,7 +2,17 @@ import React from "react";
 
 const Logo: React.FC = () => {
   return (
-    <svg width="114" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="114"
+      height="24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-labelledby="provider-logo-title"
+      role="img"
+    >
+      <title id="provider-logo-title">
+        Fewlines logo - Go back to homepage
+      </title>
       <path
         d="M4.12 18.809a.567.567 0 0 0 0 .553l.064.113a.603.603 0 0 1 .026.048l1.957 3.493a.534.534 0 0 0 .465.276h2.131a.534.534 0 0 0 .465-.276l4.289-7.652c.155-.277-.039-.622-.349-.622H6.71a.534.534 0 0 0-.465.276l-2.125 3.79zM24.093 9.902l-.947-1.689a.8.8 0 0 0-.697-.414H10.755a.8.8 0 0 0-.696.414l-2.46 4.39c-.156.277.038.622.348.622h16.331a.534.534 0 0 0 .465-.276l.374-.667a.567.567 0 0 0 0-.553l-1.024-1.827z"
         fill="#1825AA"
