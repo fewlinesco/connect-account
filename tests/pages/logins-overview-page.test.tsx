@@ -333,8 +333,8 @@ describe("LoginsOverviewPage", () => {
         await screen.findByText("Email address has been deleted"),
       ).toBeInTheDocument();
 
-      expect(await screen.findByTitle("Cross icon")).toBeInTheDocument();
-      userEvent.click(screen.getByTitle("Cross icon"));
+      expect(await screen.findByTitle("Closing cross")).toBeInTheDocument();
+      userEvent.click(screen.getByTitle("Closing cross"));
 
       expect(
         screen.queryByText("Email address has been deleted"),
@@ -376,8 +376,8 @@ describe("LoginsOverviewPage", () => {
         await screen.queryByText("This is expired"),
       ).not.toBeInTheDocument();
 
-      expect(await screen.findByTitle("Cross icon")).toBeInTheDocument();
-      userEvent.click(screen.getByTitle("Cross icon"));
+      expect(await screen.findByTitle("Closing cross")).toBeInTheDocument();
+      userEvent.click(screen.getByTitle("Closing cross"));
 
       expect(
         screen.queryByText("Email address has been deleted"),
