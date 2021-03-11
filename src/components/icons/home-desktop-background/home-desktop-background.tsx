@@ -11,6 +11,7 @@ const HomeDesktopBackground: React.FC = () => {
         height="819"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
       >
         <circle cx="372" cy="411" r="371.5" stroke="#E5E5E5" />
         <g clipPath="url(#clip0)">
