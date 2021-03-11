@@ -2,7 +2,13 @@ import React from "react";
 
 const PrimaryIcon: React.FC = () => {
   return (
-    <svg width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="14"
+      height="14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
       <path
         d="M6.667.333a6.667 6.667 0 100 13.334 6.667 6.667 0 000-13.334zm0 12a5.333 5.333 0 110-10.665 5.333 5.333 0 010 10.665z"
         fill="#fff"

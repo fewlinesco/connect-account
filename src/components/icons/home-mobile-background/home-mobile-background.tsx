@@ -11,6 +11,7 @@ const HomeMobileBackground: React.FC = () => {
         height="645"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
       >
         <g opacity=".2">
           <path d="M19-79v724" stroke="#03083C" />
