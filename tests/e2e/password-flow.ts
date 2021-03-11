@@ -32,7 +32,7 @@ describe("Account Web Application update password", () => {
     await closeBrowser();
   });
 
-  test("should show error messages if password inputs are filled incorrectly", async (done) => {
+  test("It should show error messages if password inputs are filled incorrectly", async (done) => {
     expect.assertions(12);
 
     try {

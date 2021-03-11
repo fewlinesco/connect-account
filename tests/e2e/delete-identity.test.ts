@@ -6,7 +6,6 @@ import {
   screenshot,
   waitFor,
   link,
-  evaluate,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
@@ -22,7 +21,7 @@ describe("Delete Identity", () => {
         "--start-maximized",
         "--disable-dev-shm",
       ],
-      headless: false,
+      headless: true,
     });
   });
 
@@ -31,7 +30,7 @@ describe("Delete Identity", () => {
   });
 
   test("It should navigate to the show of the Identity, and delete it", async (done) => {
-    expect.assertions(9);
+    expect.assertions(12);
 
     try {
       await authenticateToConnect();
@@ -45,25 +44,25 @@ describe("Delete Identity", () => {
       await click("Show");
 
       await waitFor("_delete_");
-      expect(await text("_delete_").exists()).toBeTruthy();
+      expect(await link("_delete_").exists()).toBeTruthy();
       await click(link("_delete_"));
 
       await waitFor("Delete this email address");
       expect(await text("Delete this email address").exists()).toBeTruthy();
       await click(text("Delete this email address"));
 
-      await waitFor("You are about to");
-      expect(await text("You are about to").exists()).toBeTruthy();
-      await click(text("Delete this email address"));
+      await waitFor("You are about to delete");
+      expect(await text("You are about to delete").exists()).toBeTruthy();
+      expect(await text("Delete this email address").exists()).toBeTruthy();
+      await click("Delete this email address");
 
       await waitFor("Show");
       expect(await text("Show").exists()).toBeTruthy();
       await click("Show");
-      // expect(
-      //   await evaluate(text("_delete_"), (element) => element === undefined),
-      // ).toBe(true);
 
-      waitFor(async () => !(await text("_delete_").exists()));
+      await waitFor("Hide");
+      expect(await text("Hide").exists()).toBeTruthy();
+      expect(!(await link("_delete_").exists(0, 0))).toBeTruthy();
 
       done();
     } catch (error) {
