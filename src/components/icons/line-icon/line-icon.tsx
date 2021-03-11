@@ -7,10 +7,10 @@ const LineIcon: React.FC = () => {
       width="32"
       height="32"
       viewBox="0 0 270 250"
-      aria-labelledby="lineTitle"
+      aria-labelledby="line-title"
       role="img"
     >
-      <title id="lineTitle">Line logo</title>
+      <title id="line-title">Line logo</title>
       <path
         d="M200.533 256H55.467C24.834 256 0 231.166 0 200.533V55.467C0 24.834 24.834 0 55.467 0h145.067C231.166 0 256 24.834 256 55.467v145.067C256 231.166 231.166 256 200.533 256"
         fill="#00b900"

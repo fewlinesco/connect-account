@@ -7,10 +7,10 @@ const StravaIcon: React.FC = () => {
       width="32"
       height="32"
       viewBox="0 0 61 61"
-      aria-labelledby="stravaTitle"
+      aria-labelledby="strava-title"
       role="img"
     >
-      <title id="stravaTitle">Strava logo</title>
+      <title id="strava-title">Strava logo</title>
       <path
         d="M41.03 47.852l-5.572-10.976h-8.172L41.03 64l13.736-27.124h-8.18"
         fill="#f9b797"
