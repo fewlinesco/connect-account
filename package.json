@@ -46,6 +46,7 @@
     "js-cookie": "2.2.1",
     "next": "10.0.7",
     "react": "17.0.1",
+    "react-aria": "3.4.0",
     "react-dom": "17.0.1",
     "react-phone-number-input": "3.1.16",
     "styled-components": "5.2.1",

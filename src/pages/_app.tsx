@@ -1,6 +1,7 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
+import { SSRProvider } from "react-aria";
 import { ThemeProvider } from "styled-components";
 
 import { GlobalStyle } from "@src/design-system/globals/global-style";
@@ -17,14 +18,19 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
 
 const AccountApp: React.FC = ({ children }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <Head>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <title>Connect Account</title>
-      </Head>
-      <GlobalStyle />
-      {children}
-    </ThemeProvider>
+    <SSRProvider>
+      <ThemeProvider theme={theme}>
+        <Head>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+          <title>Connect Account</title>
+        </Head>
+        <GlobalStyle />
+        {children}
+      </ThemeProvider>
+    </SSRProvider>
   );
 };
 
