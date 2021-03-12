@@ -13,7 +13,7 @@ import {
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
 describe("Marking another identity as the primary one on connect account", () => {
-  jest.setTimeout(120000);
+  jest.setTimeout(60000);
 
   beforeAll(async () => {
     await openBrowser({
@@ -31,7 +31,7 @@ describe("Marking another identity as the primary one on connect account", () =>
     await closeBrowser();
   });
 
-  test("should correctly mark another identity to primary status and going back to logins overview page", async (done) => {
+  test("It should correctly mark another identity to primary status and going back to logins overview page", async (done) => {
     expect.assertions(9);
 
     try {

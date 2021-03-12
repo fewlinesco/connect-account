@@ -55,6 +55,13 @@ async function createTestUser(): Promise<void> {
         "2_" + githubActionsContext.deployment.sha + "@",
       ),
     },
+    {
+      status: IdentityStatus.VALIDATED,
+      type: IdentityTypes.EMAIL,
+      value: process.env.CONNECT_TEST_ACCOUNT_EMAIL.split("@").join(
+        "_delete_" + githubActionsContext.deployment.sha + "@",
+      ),
+    },
   ];
 
   const userId = await createUserWithIdentities(
