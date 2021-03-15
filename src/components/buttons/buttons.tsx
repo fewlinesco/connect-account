@@ -1,3 +1,4 @@
+import { useButton } from "@react-aria/button";
 import React from "react";
 import styled from "styled-components";
 
@@ -11,10 +12,25 @@ enum ButtonVariant {
 }
 
 interface ButtonProps {
+  onClick: (e?: React.MouseEvent<HTMLElement>) => void;
   variant?: ButtonVariant;
 }
 
-const Button = styled.button<ButtonProps>`
+const Button: React.FC<ButtonProps> = (props) => {
+  const { variant, children } = props;
+  const buttonRef = React.useRef(null);
+  const { buttonProps } = useButton(props, buttonRef);
+
+  console.log(buttonProps);
+
+  return (
+    <StyledButton {...buttonProps} variant={variant}>
+      {children}
+    </StyledButton>
+  );
+};
+
+const StyledButton = styled.button<Record<string, unknown>>`
   height: 4rem;
   border-radius: ${({ theme }) => theme.radii[0]};
   font-size: ${({ theme }) => theme.fontSizes.s};
@@ -73,9 +89,19 @@ const ShowMoreButton: React.FC<{
   hide: boolean;
   quantity: number;
   setHideSecondary: (value: boolean) => void;
-}> = ({ hide, quantity, setHideSecondary }) => {
+}> = (props) => {
+  const { hide, quantity, setHideSecondary } = props;
+  const showMoreButtonRef = React.useRef(null);
+  const { buttonProps } = useButton(
+    { ...props, elementType: "div" },
+    showMoreButtonRef,
+  );
+
   return (
-    <ShowMoreButtonStyle onClick={() => setHideSecondary(!hide)}>
+    <ShowMoreButtonStyle
+      {...buttonProps}
+      onClick={() => setHideSecondary(!hide)}
+    >
       {hide ? (
         <div>
           Show {quantity} more <Triangle rotate={hide} />
@@ -98,4 +124,4 @@ const ShowMoreButtonStyle = styled.div`
   cursor: pointer;
 `;
 
-export { Button, ButtonVariant, ShowMoreButton };
+export { Button, StyledButton, ButtonVariant, ShowMoreButton };

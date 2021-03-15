@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Button, ButtonVariant } from "./buttons";
+import { StyledButton, ButtonVariant } from "./buttons";
 
 const FakeButton: React.FC<{ variant: ButtonVariant }> = ({
   variant,
@@ -14,7 +14,7 @@ const FakeButton: React.FC<{ variant: ButtonVariant }> = ({
   );
 };
 
-const DivButton = styled(Button)`
+const DivButton = styled(StyledButton)`
   display: flex;
   justify-content: center;
   align-items: center;
