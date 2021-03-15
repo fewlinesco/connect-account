@@ -38,6 +38,7 @@ const mockedNextRouter: NextRouter = {
   isFallback: false,
   isReady: false,
   isLocaleDomain: false,
+  isPreview: false,
 };
 
 const AllTheProviders: React.ComponentType = ({ children }) => {

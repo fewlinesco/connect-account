@@ -355,6 +355,32 @@ Next's `Link` component requires its child to be an anchor tag. To lighten the J
 
 When adding a new supported Social Identity to the application, remember to add the corresponding icon as SVG.
 
+=== Dev buttons
+
+To help with repetitive tasks during the development of a feature, or to help debugging, we have added a set dev buttons to trigger various action on press. You can find them inside `src/components/dev-buttons`.
+To enable them, you will have to render `<DevButtons/>` inside `_app.tsx`, like this:
+
+[source, typescript]
+----
+import { DevButtons } from "@src/components/dev-buttons/dev-buttons";
+
+const AccountApp: React.FC = ({ children }) => {
+  return (
+    <ThemeProvider theme={theme}>
+      <Head>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <title>Connect Account</title>
+      </Head>
+      <GlobalStyle />
+      {children}
+      <DevButtons/>
+    </ThemeProvider>
+  );
+};
+----
+
+We have also added a test to ensure that the component is not being rendered in review/production env, so don't forget to remove `<DevButtons/>` when you are done. If you need to add new buttons, feel free to do so.
+
 == Style
 
 === Global style
