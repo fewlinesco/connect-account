@@ -22,8 +22,6 @@ const Button: React.FC<ButtonProps> = (props) => {
   const buttonRef = React.useRef(null);
   const { buttonProps } = useButton(props, buttonRef);
 
-  console.log(buttonProps);
-
   return (
     <StyledButton {...buttonProps} variant={variant}>
       {children}
