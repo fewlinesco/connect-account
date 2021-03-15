@@ -3,13 +3,24 @@ import styled from "styled-components";
 
 const DevButtonAddAlertMessage: React.FC = () => {
   const count = 0;
+  const cookiesList = encodeURIComponent(
+    JSON.stringify([
+      {
+        text: `This is the alert message number ${count}`,
+        expiresAt: Date.now() + 300000,
+      },
+    ]),
+  );
 
-  const newCookie = {
-    text: `This is the alert message number ${count}`,
-    expiresAt: Date.now() + 300000,
-  };
-
-  return <DevButton onClick={() => {}}>Add alert message</DevButton>;
+  return (
+    <DevButton
+      onClick={() => {
+        document.cookie = `alert-messages=${cookiesList}; max-age=3600; path=/;`;
+      }}
+    >
+      Add alert message
+    </DevButton>
+  );
 };
 const DevButtons: React.FC = () => {
   return (
