@@ -4,13 +4,13 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
+import { InputText } from "../input/input-text";
 import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
 import { HttpVerbs } from "@src/@types/http-verbs";
 import { Box } from "@src/components/box/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
-import { Input } from "@src/components/input/input";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { InvalidValidationCode, TemporaryIdentityExpired } from "@src/errors";
 import { fetchJson } from "@src/utils/fetch-json";
@@ -51,13 +51,13 @@ const ValidateIdentityForm: React.FC<{
         <Box>
           <Value>Enter the validation code below</Value>
         </Box>
-        <p>Validation code</p>
-        <Input
+        <InputText
           type="text"
           name="value"
           placeholder="012345"
           value={validationCode}
-          onChange={(event) => setValidationCode(event.target.value)}
+          onChange={(value) => setValidationCode(value)}
+          label="Validaton code"
         />
         <Button
           variant={ButtonVariant.PRIMARY}

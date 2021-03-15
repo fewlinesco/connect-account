@@ -5,7 +5,7 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
-import { StyledPhoneInput } from "../input/styled-phone-input";
+import { InputText } from "../input/input-text";
 import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
 import { HttpVerbs } from "@src/@types/http-verbs";
@@ -63,28 +63,31 @@ const AddIdentityForm: React.FC<{
             });
         }}
       >
-        <p>
-          {getIdentityType(type) === IdentityTypes.PHONE
-            ? "Phone number *"
-            : "Email address *"}
-        </p>
+        <p></p>
         {getIdentityType(type) === IdentityTypes.EMAIL ? (
-          <Input
+          <InputText
             type="email"
             name="value"
             placeholder="Enter your email"
             value={identity.value}
-            onChange={(event) => {
+            onChange={(value) => {
               setIdentity({
-                value: event.target.value,
+                value: value,
                 type,
                 expiresAt: Date.now() + 300000,
                 primary: identity.primary,
               });
             }}
+            label={
+              getIdentityType(type) === IdentityTypes.PHONE
+                ? "Phone number *"
+                : "Email address *"
+            }
           />
         ) : (
-          <StyledPhoneInput
+          <InputText
+            type="tel"
+            name="phone"
             placeholder="Enter your phone number"
             value={identity.value}
             defaultCountry="FR"
@@ -96,6 +99,11 @@ const AddIdentityForm: React.FC<{
                 primary: identity.primary,
               });
             }}
+            label={
+              getIdentityType(type) === IdentityTypes.PHONE
+                ? "Phone number *"
+                : "Email address *"
+            }
           />
         )}
         <Label>

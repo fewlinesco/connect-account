@@ -95,9 +95,9 @@ const UpdateIdentityForm: React.FC<{
             placeholder="Enter your phone number"
             value={identity.value}
             defaultCountry="FR"
-            onChange={(value) => {
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setIdentity({
-                value,
+                value: event.target.value,
                 type: currentIdentity.type,
                 expiresAt: Date.now() + 300000,
                 primary: identity.primary,
