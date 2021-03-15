@@ -62,6 +62,7 @@ const IdentityOverview: React.FC<{
       )}
       {!primary && status === "validated" && (
         <Button
+          type="button"
           variant={ButtonVariant.SECONDARY}
           onClick={() => {
             setPreventAnimation(false);
@@ -80,6 +81,7 @@ const IdentityOverview: React.FC<{
       )}
       {!primary && (
         <Button
+          type="button"
           variant={ButtonVariant.GHOST}
           onClick={() => {
             setPreventAnimation(false);

@@ -6,7 +6,9 @@ import { Button, ButtonVariant } from "./buttons";
 const PrimaryButton = (): JSX.Element => {
   return (
     <StoriesContainer>
-      <Button variant={ButtonVariant.PRIMARY}>Primary</Button>
+      <Button type="button" variant={ButtonVariant.PRIMARY}>
+        Primary
+      </Button>
     </StoriesContainer>
   );
 };
@@ -14,7 +16,9 @@ const PrimaryButton = (): JSX.Element => {
 const SecondaryButton = (): JSX.Element => {
   return (
     <StoriesContainer>
-      <Button variant={ButtonVariant.SECONDARY}>Secondary</Button>
+      <Button type="button" variant={ButtonVariant.SECONDARY}>
+        Secondary
+      </Button>
     </StoriesContainer>
   );
 };
@@ -22,7 +26,9 @@ const SecondaryButton = (): JSX.Element => {
 const DangerButton = (): JSX.Element => {
   return (
     <StoriesContainer>
-      <Button variant={ButtonVariant.DANGER}>Danger</Button>
+      <Button type="button" variant={ButtonVariant.DANGER}>
+        Danger
+      </Button>
     </StoriesContainer>
   );
 };
@@ -30,7 +36,9 @@ const DangerButton = (): JSX.Element => {
 const GhostButton = (): JSX.Element => {
   return (
     <StoriesContainer>
-      <Button variant={ButtonVariant.GHOST}>Ghost</Button>
+      <Button type="button" variant={ButtonVariant.GHOST}>
+        Ghost
+      </Button>
     </StoriesContainer>
   );
 };

@@ -1,7 +1,7 @@
+import { SSRProvider } from "@react-aria/ssr";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
-import { SSRProvider } from "react-aria";
 import { ThemeProvider } from "styled-components";
 
 import { GlobalStyle } from "@src/design-system/globals/global-style";

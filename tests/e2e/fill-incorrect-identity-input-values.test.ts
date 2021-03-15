@@ -15,7 +15,7 @@ import { authenticateToConnect } from "./utils/authenticate-to-connect";
 import { config } from "@src/config";
 
 describe("Account Web Application add identity", () => {
-  jest.setTimeout(120000);
+  jest.setTimeout(60000);
 
   beforeAll(async () => {
     await openBrowser({
@@ -33,7 +33,7 @@ describe("Account Web Application add identity", () => {
     await closeBrowser();
   });
 
-  test("should show error messages if identity inputs are filled incorrectly", async (done) => {
+  test("It should show error messages if Identity inputs are filled incorrectly", async (done) => {
     expect.assertions(8);
 
     try {

@@ -1,5 +1,5 @@
 import { IdentityTypes } from "@fewlines/connect-management";
-import { AlertMessage, getServerSideCookies } from "@fwl/web";
+import { AlertMessage, getServerSideCookies, HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -61,12 +61,12 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     "/account/logins/[type]/validation/[eventId]",
     async (request, response: ServerResponse) => {
       if (!context?.params?.type) {
-        response.statusCode = 400;
+        response.statusCode = HttpStatus.NOT_FOUND;
         response.end();
         return;
       }
       if (!context?.params?.eventId) {
-        response.statusCode = 400;
+        response.statusCode = HttpStatus.NOT_FOUND;
         response.end();
         return;
       }

@@ -26,6 +26,7 @@ const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxContentProps
       </PrimaryConfirmationText>
 
       <Button
+        type="button"
         variant={ButtonVariant.PRIMARY}
         onClick={async () =>
           await markIdentityAsPrimaryCall(id).then(() => {
@@ -37,6 +38,7 @@ const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxContentProps
       </Button>
 
       <Button
+        type="button"
         variant={ButtonVariant.SECONDARY}
         onClick={() => {
           setOpen(false);

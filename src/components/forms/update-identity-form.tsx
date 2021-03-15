@@ -105,7 +105,7 @@ const UpdateIdentityForm: React.FC<{
             }}
           />
         )}
-        <Button variant={ButtonVariant.PRIMARY} type="submit">
+        <Button type="submit" variant={ButtonVariant.PRIMARY}>
           Update {currentIdentity.type}
         </Button>
       </Form>
