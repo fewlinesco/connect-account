@@ -38,20 +38,22 @@ const Box = styled.div<Pick<ConfirmationBoxProps, "open" | "preventAnimation">>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4rem 2rem 3rem;
-  position: absolute;
-  bottom: 0;
+  padding: 4.8rem;
   width: calc(88rem * 60 / 100);
   background-color: ${({ theme }) => theme.colors.background};
+  position: absolute;
+  bottom: 50%;
   right: 50%;
-  transform: translate(50%);
+  transform: translate(50%, 50%);
   z-index: 3;
 
   @media ${deviceBreakpoints.m} {
     position: fixed;
     right: 0;
+    bottom: 0;
     width: 100%;
     transform: none;
+    padding: 4rem 4rem 2rem;
   }
 
   ${(props) =>
