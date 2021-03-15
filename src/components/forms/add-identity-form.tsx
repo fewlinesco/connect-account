@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import { InputText } from "../input/input-text";
+import { StyledPhoneInput } from "../input/styled-phone-input";
 import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
 import { HttpVerbs } from "@src/@types/http-verbs";
@@ -63,7 +64,6 @@ const AddIdentityForm: React.FC<{
             });
         }}
       >
-        <p></p>
         {getIdentityType(type) === IdentityTypes.EMAIL ? (
           <InputText
             type="email"
@@ -78,33 +78,25 @@ const AddIdentityForm: React.FC<{
                 primary: identity.primary,
               });
             }}
-            label={
-              getIdentityType(type) === IdentityTypes.PHONE
-                ? "Phone number *"
-                : "Email address *"
-            }
+            label="Email address *"
           />
         ) : (
-          <InputText
-            type="tel"
-            name="phone"
-            placeholder="Enter your phone number"
-            value={identity.value}
-            defaultCountry="FR"
-            onChange={(value) => {
-              setIdentity({
-                value,
-                type,
-                expiresAt: Date.now() + 300000,
-                primary: identity.primary,
-              });
-            }}
-            label={
-              getIdentityType(type) === IdentityTypes.PHONE
-                ? "Phone number *"
-                : "Email address *"
-            }
-          />
+          <>
+            <p>Phone number *</p>
+            <StyledPhoneInput
+              placeholder="Enter your phone number"
+              value={identity.value}
+              defaultCountry="FR"
+              onChange={(value) => {
+                setIdentity({
+                  value,
+                  type,
+                  expiresAt: Date.now() + 300000,
+                  primary: identity.primary,
+                });
+              }}
+            />
+          </>
         )}
         <Label>
           <Input

@@ -2,8 +2,6 @@ import { useTextField } from "@react-aria/textfield";
 import React from "react";
 import styled from "styled-components";
 
-// import { StyledPhoneInput } from "./styled-phone-input";
-
 interface InputProps {
   type: string;
   name: string;

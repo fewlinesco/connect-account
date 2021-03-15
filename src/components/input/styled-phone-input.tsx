@@ -1,7 +1,7 @@
 import PhoneInput from "react-phone-number-input";
 import styled from "styled-components";
 
-const StyledPhoneInput = styled(PhoneInput)<Record<string, unknown>>`
+const StyledPhoneInput = styled(PhoneInput)`
   margin: ${({ theme }) => theme.spaces.xs} 0;
 
   .PhoneInputInput {
