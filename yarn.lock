@@ -2441,7 +2441,7 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
-"@react-aria/button@^3.3.1":
+"@react-aria/button@3.3.1":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@react-aria/button/-/button-3.3.1.tgz#f180ffa95e3e822b7da4937421cf8280dd17af17"
   integrity sha512-LXNuo0L79AhYqnxV+Y3J3xt7hPcmCVCEpZaC/dBzovR1MLunrdpk3QAXsRt3tqza1XvoqdvNhNHQm1Z1kyBTUg==
@@ -2486,7 +2486,7 @@
     "@react-aria/utils" "^3.6.0"
     "@react-types/shared" "^3.4.0"
 
-"@react-aria/link@^3.1.2":
+"@react-aria/link@3.1.2":
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@react-aria/link/-/link-3.1.2.tgz#0a39e44fb1a7bb30e2ef0c88e0f248462998c87a"
   integrity sha512-ONAyB+2irMSNnv2qZKw51AwYv1GzFXAn+N4nWxreI+TIzhAA6JBkMYT9I6JFqx51UwvGI+ys0YXAMJVIBeZRvA==
@@ -2497,7 +2497,7 @@
     "@react-types/link" "^3.1.1"
     "@react-types/shared" "^3.2.1"
 
-"@react-aria/ssr@^3.0.1":
+"@react-aria/ssr@3.0.1", "@react-aria/ssr@^3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@react-aria/ssr/-/ssr-3.0.1.tgz#5f7c111f9ecd184b8f6140139703c1ee552dca30"
   integrity sha512-rweMNcSkUO4YkcmgFIoZFvgPyHN2P9DOjq3VOHnZ8SG3Y4TTvSY6Iv90KgzeEfmWCUqqt65FYH4JgrpGNToEMw==
