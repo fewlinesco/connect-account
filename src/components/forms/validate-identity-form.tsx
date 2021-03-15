@@ -60,8 +60,8 @@ const ValidateIdentityForm: React.FC<{
           onChange={(event) => setValidationCode(event.target.value)}
         />
         <Button
-          variant={ButtonVariant.PRIMARY}
           type="submit"
+          variant={ButtonVariant.PRIMARY}
         >{`Confirm ${type.toLowerCase()}`}</Button>
       </Form>
 
@@ -73,6 +73,7 @@ const ValidateIdentityForm: React.FC<{
 
       <DidntReceiveCode>Didn&apos;t receive code?</DidntReceiveCode>
       <Button
+        type="button"
         variant={ButtonVariant.SECONDARY}
         onClick={async () => {
           await fetchJson(

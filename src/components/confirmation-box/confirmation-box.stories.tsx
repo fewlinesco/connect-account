@@ -26,6 +26,7 @@ const PrimaryConfirmationBox = (): JSX.Element => {
   return (
     <ConfirmationStoryContainer>
       <Button
+        type="button"
         variant={ButtonVariant.PRIMARY}
         onClick={() => {
           setPreventAnimation(false);
@@ -72,6 +73,7 @@ const DangerConfirmationBox = (): JSX.Element => {
     <ConfirmationStoryContainer>
       <div>
         <Button
+          type="button"
           variant={ButtonVariant.PRIMARY}
           onClick={() => {
             setPreventAnimation(false);

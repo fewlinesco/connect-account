@@ -16,11 +16,7 @@ describe("Form", () => {
           return;
         }}
       >
-        <Button
-          className="send-button"
-          variant={ButtonVariant.PRIMARY}
-          type="submit"
-        >
+        <Button variant={ButtonVariant.PRIMARY} type="submit">
           Submit
         </Button>
       </Form>,

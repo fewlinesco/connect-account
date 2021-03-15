@@ -12,7 +12,8 @@ enum ButtonVariant {
 }
 
 interface ButtonProps {
-  onClick: (e?: React.MouseEvent<HTMLElement>) => void;
+  type: "button" | "submit" | "reset";
+  onClick?: (e?: React.MouseEvent<HTMLElement>) => void;
   variant?: ButtonVariant;
 }
 
