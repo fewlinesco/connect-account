@@ -1,0 +1,18 @@
+version: 1
+update_configs:
+  # Keep package.json (& lockfiles) up to date as soon as
+  # new versions are published to the npm registry
+  - package_manager: "javascript"
+    directory: "/"
+    pull-request-branch-name:
+      separator: "-"
+    labels:
+      - "dependabot"
+    reviewers:
+      - "Fuzznimp"
+      - "Oluane"
+    update_schedule: "live"
+    ignored_updates:
+      - match:
+          dependency_name: "express"
+          version_requirement: "5.x"
