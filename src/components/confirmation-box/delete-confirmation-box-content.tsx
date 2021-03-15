@@ -28,6 +28,7 @@ const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
         You are about to delete {value}
       </DeleteConfirmationText>
       <Button
+        type="button"
         variant={ButtonVariant.DANGER}
         onClick={async () =>
           await deleteIdentity(userId, type, value).then(() => {
@@ -40,7 +41,11 @@ const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
           ? "phone number"
           : "email address"}
       </Button>
-      <Button variant={ButtonVariant.SECONDARY} onClick={() => setOpen(false)}>
+      <Button
+        type="button"
+        variant={ButtonVariant.SECONDARY}
+        onClick={() => setOpen(false)}
+      >
         Keep{" "}
         {getIdentityType(type) === IdentityTypes.PHONE
           ? "phone number"
