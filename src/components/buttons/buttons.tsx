@@ -11,11 +11,11 @@ enum ButtonVariant {
   GHOST = "GHOST",
 }
 
-interface ButtonProps {
+type ButtonProps = {
   type: "button" | "submit" | "reset";
-  onClick?: (e?: React.MouseEvent<HTMLElement>) => void;
+  onClick?: (event?: React.MouseEvent<HTMLElement>) => void;
   variant?: ButtonVariant;
-}
+};
 
 const Button: React.FC<ButtonProps> = (props) => {
   const { variant, children } = props;
