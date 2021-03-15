@@ -357,8 +357,8 @@ When adding a new supported Social Identity to the application, remember to add 
 
 === Dev buttons
 
-To help with repetitive tasks during the development of a feature, or to help debug, we have added a set Dev button to trigger various action on press. You can find them inside `src/components/dev-buttons`.
-To enable them, you wil have to render `<DevButtons/>` inside `_app.tsx`, like this:
+To help with repetitive tasks during the development of a feature, or to help debugging, we have added a set dev buttons to trigger various action on press. You can find them inside `src/components/dev-buttons`.
+To enable them, you will have to render `<DevButtons/>` inside `_app.tsx`, like this:
 
 [source, typescript]
 ----
