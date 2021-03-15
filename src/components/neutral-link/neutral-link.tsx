@@ -1,33 +1,29 @@
 import Link, { LinkProps } from "next/link";
 import React from "react";
-import { useLink } from "react-aria";
 import style from "styled-components";
 
 interface ExtendedLinkProps extends LinkProps {
-  children: React.ReactNode;
   className?: string;
   onClick?: () => void;
 }
 
-const NeutralLink: React.FC<ExtendedLinkProps> = (props) => {
-  const { href, as, className, onClick, children } = props;
-  const linkRef = React.useRef(null);
-  const { linkProps } = useLink(props, linkRef);
+const NeutralLink: React.FC<ExtendedLinkProps> = ({
+  href,
+  as,
+  className,
+  onClick,
+  children,
+}) => {
   return (
     <Link href={href} as={as} passHref>
-      <NeutralAnchor
-        {...linkProps}
-        className={className}
-        onClick={onClick}
-        ref={linkRef}
-      >
+      <NeutralAnchor className={className} onClick={onClick}>
         {children}
       </NeutralAnchor>
     </Link>
   );
 };
 
-const NeutralAnchor = style.a<Record<string, unknown>>`
+const NeutralAnchor = style.a`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.black};
 
