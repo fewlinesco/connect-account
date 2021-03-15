@@ -50,7 +50,7 @@ export default class MyDocument extends Document {
 
   render(): JSX.Element {
     return (
-      <Html lang="en-US">
+      <Html lang="en">
         <Head>
           <link
             rel="apple-touch-icon"
