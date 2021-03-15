@@ -3,7 +3,6 @@ import Head from "next/head";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
-import { DevButtons } from "@src/components/dev-buttons/dev-buttons";
 import { GlobalStyle } from "@src/design-system/globals/global-style";
 import { theme } from "@src/design-system/theme";
 import "@src/utils/sentry";
@@ -25,7 +24,6 @@ const AccountApp: React.FC = ({ children }) => {
       </Head>
       <GlobalStyle />
       {children}
-      <DevButtons />
     </ThemeProvider>
   );
 };
