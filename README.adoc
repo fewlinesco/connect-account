@@ -361,7 +361,7 @@ To help with repetitive tasks during the development of a feature, or to help de
 To enable them, you will have to render `<DevButtons/>` inside `_app.tsx`, like this:
 
 [source, typescript]
-----
+---- 
 import { DevButtons } from "@src/components/dev-buttons/dev-buttons";
 
 const AccountApp: React.FC = ({ children }) => {
