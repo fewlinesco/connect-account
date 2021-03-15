@@ -5,7 +5,7 @@ import {
   GraphqlErrors,
   ConnectUnreachableError,
 } from "@fewlines/connect-management";
-import { getServerSideCookies } from "@fwl/web";
+import { getServerSideCookies, HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -65,7 +65,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     "/account/logins/[type]/[id]/update",
     async (request, response) => {
       if (!context?.params?.id) {
-        response.statusCode = 400;
+        response.statusCode = HttpStatus.NOT_FOUND;
         response.end();
         return;
       }
