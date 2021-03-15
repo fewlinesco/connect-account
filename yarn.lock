@@ -1885,10 +1885,10 @@
     node-fetch "2.6.1"
     node-jose "2.0.0"
 
-"@fewlines/connect-management@0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@fewlines/connect-management/-/connect-management-0.5.1.tgz#f96da902b3d4a750a91b26e75136cf7a5a03bc17"
-  integrity sha512-lcacRYDp84Rd53t+6h7VKc8DDjgbGiJ6Tsoq0taF4hk6rQiNu1UXVAofwuHWsxUF5CXJyLulAcJ2Pi0kCIBLsQ==
+"@fewlines/connect-management@0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@fewlines/connect-management/-/connect-management-0.6.0.tgz#1208b5dfa0aba32933b32a70c3527ac6182d2f6b"
+  integrity sha512-YXb7XORSXeQMyp/euaPf2lKWE/n7drUTykkpG1AOlvB9xYOX9mF3NLIraVvwEjgGj8gaL+lipEB1IBIju3t3pQ==
   dependencies:
     apollo-link "1.2.14"
     apollo-link-context "1.0.20"
@@ -6395,11 +6395,6 @@ depd@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
   integrity sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=
-
-dequal@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/dequal/-/dequal-2.0.2.tgz#85ca22025e3a87e65ef75a7a437b35284a7e319d"
-  integrity sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==
 
 des.js@^1.0.0:
   version "1.0.1"
@@ -14154,12 +14149,10 @@ supports-hyperlinks@^2.0.0:
     has-flag "^4.0.0"
     supports-color "^7.0.0"
 
-swr@0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/swr/-/swr-0.4.2.tgz#4a9ed5e9948088af145c79d716d294cb99712a29"
-  integrity sha512-SKGxcAfyijj/lE5ja5zVMDqJNudASH3WZPRUakDVOePTM18FnsXgugndjl9BSRwj+jokFCulMDe7F2pQL+VhEw==
-  dependencies:
-    dequal "2.0.2"
+swr@0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-0.5.3.tgz#7290a9a61329d930583ef365317e636b8dbaa8bb"
+  integrity sha512-RUE3RWn3jt9e4qLPat2A9vbHG/5N6konsc27xKjE65jFSiGv0P7HLD8IGvwAv6DRKktL7Od2UcayX0plKb2awg==
 
 symbol-tree@^3.2.4:
   version "3.2.4"
