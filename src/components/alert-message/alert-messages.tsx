@@ -6,29 +6,42 @@ import { CrossIcon } from "../icons/cross-icon/cross-icon";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const AlertMessages: React.FC<{
-  alertMessages?: AlertMessageDataStructure[];
-}> = ({ alertMessages }) => {
-  if (!alertMessages) {
-    return null;
-  }
+  alertMessages: AlertMessageDataStructure[];
+  setAlertMessages: React.Dispatch<
+    React.SetStateAction<AlertMessageDataStructure[]>
+  >;
+}> = ({ alertMessages, setAlertMessages }) => {
   if (alertMessages.length === 0) {
     return null;
   }
 
+  console.log(alertMessages);
+
   return (
     <Wrapper>
-      {alertMessages.map(({ text, expiresAt }) => {
+      {alertMessages.map(({ text, expiresAt }, index) => {
         if (expiresAt < Date.now()) {
           return null;
         }
 
-        return <AlertMessage key={"alertMessage" + Date.now()} text={text} />;
+        return (
+          <AlertMessage
+            key={"alertMessage" + Date.now() + index}
+            text={text}
+            setAlertMessages={setAlertMessages}
+          />
+        );
       })}
     </Wrapper>
   );
 };
 
-const AlertMessage: React.FC<{ text: string }> = ({ text }) => {
+const AlertMessage: React.FC<{
+  text: string;
+  setAlertMessages: React.Dispatch<
+    React.SetStateAction<AlertMessageDataStructure[]>
+  >;
+}> = ({ text, setAlertMessages }) => {
   const [showAlertMessage, setShowAlertMessage] = React.useState<boolean>(true);
   const animationDuration = 3;
 
@@ -37,7 +50,11 @@ const AlertMessage: React.FC<{ text: string }> = ({ text }) => {
       setShowAlertMessage(false);
     }, animationDuration * 1000);
 
-    return () => clearTimeout(timeoutId);
+    return () => {
+      setAlertMessages([]);
+
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   if (!showAlertMessage) {
@@ -57,8 +74,6 @@ const AlertMessage: React.FC<{ text: string }> = ({ text }) => {
 const Wrapper = styled.div`
   position: fixed;
   top: 1rem;
-  width: 100%;
-  max-width: 88rem;
   right: 50%;
   transform: translate(50%);
   display: flex;
@@ -78,12 +93,11 @@ const Alert = styled.div<{ animationDuration: number }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 60%;
   margin-right: 4.4rem;
   background-color: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.background};
   border-radius: ${({ theme }) => theme.radii[0]};
-  padding: 1.6rem;
+  padding: 1.6rem 3rem;
   visibility: hidden;
   opacity: 0;
   animation: fadeinout ${({ animationDuration }) => animationDuration}s;
