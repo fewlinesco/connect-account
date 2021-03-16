@@ -1,4 +1,4 @@
-import { AlertMessage } from "@fwl/web";
+import { AlertMessage as AlertMessageDataStructure } from "@fwl/web";
 import React from "react";
 import styled from "styled-components";
 
@@ -6,12 +6,8 @@ import { CrossIcon } from "../icons/cross-icon/cross-icon";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const AlertMessages: React.FC<{
-  alertMessages?: AlertMessage[];
+  alertMessages?: AlertMessageDataStructure[];
 }> = ({ alertMessages }) => {
-  const [showAlertMessages, setShowAlertMessages] = React.useState<boolean>(
-    true,
-  );
-
   if (!alertMessages) {
     return null;
   }
@@ -21,26 +17,31 @@ const AlertMessages: React.FC<{
 
   return (
     <Wrapper>
-      {showAlertMessages
-        ? alertMessages.map(({ text, expiresAt }) => {
-            if (expiresAt < Date.now()) {
-              return null;
-            }
+      {alertMessages.map(({ text, expiresAt }) => {
+        if (expiresAt < Date.now()) {
+          return null;
+        }
 
-            return (
-              <Alert key={"alertMessage" + Date.now()}>
-                <p>{text}</p>
-                <div
-                  className="cross"
-                  onClick={() => setShowAlertMessages(false)}
-                >
-                  <CrossIcon />
-                </div>
-              </Alert>
-            );
-          })
-        : null}
+        return <AlertMessage key={"alertMessage" + Date.now()} text={text} />;
+      })}
     </Wrapper>
+  );
+};
+
+const AlertMessage: React.FC<{ text: string }> = ({ text }) => {
+  const [showAlertMessage, setShowAlertMessage] = React.useState<boolean>(true);
+
+  if (!showAlertMessage) {
+    return null;
+  }
+
+  return (
+    <Alert>
+      <p>{text}</p>
+      <div className="cross" onClick={() => setShowAlertMessage(false)}>
+        <CrossIcon />
+      </div>
+    </Alert>
   );
 };
 
