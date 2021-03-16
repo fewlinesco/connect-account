@@ -13,7 +13,6 @@ import { HttpVerbs } from "@src/@types/http-verbs";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
-import { Input } from "@src/components/input/input";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { fetchJson } from "@src/utils/fetch-json";
 import { getIdentityType } from "@src/utils/get-identity-type";
@@ -99,7 +98,7 @@ const AddIdentityForm: React.FC<{
           </>
         )}
         <Label>
-          <Input
+          <input
             type="checkbox"
             name="primary"
             onChange={() => {
@@ -129,6 +128,13 @@ const Label = styled.label`
   display: flex;
   margin-bottom: ${({ theme }) => theme.spaces.xs};
   cursor: pointer;
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 1.6rem;
+    margin: 0 ${({ theme }) => theme.spaces.xxs} 0 0;
+    cursor: pointer;
+  }
 `;
 
 export { AddIdentityForm };
