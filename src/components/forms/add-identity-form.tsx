@@ -2,9 +2,9 @@ import "react-phone-number-input/style.css";
 import { IdentityTypes } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
-import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
+import { InputCheckbox } from "../input/input-checkbox";
 import { InputText } from "../input/input-text";
 import { StyledPhoneInput } from "../input/styled-phone-input";
 import { WrongInputError } from "../input/wrong-input-error";
@@ -98,19 +98,17 @@ const AddIdentityForm: React.FC<{
             />
           </>
         )}
-        <Label>
-          <input
-            type="checkbox"
-            name="primary"
-            onChange={() => {
-              setIdentity({
-                ...identity,
-                primary: !identity.primary,
-              });
-            }}
-          />
-          Mark this identity as my primary one
-        </Label>
+        <InputCheckbox
+          type="checkbox"
+          name="primary"
+          onChange={() => {
+            setIdentity({
+              ...identity,
+              primary: !identity.primary,
+            });
+          }}
+          label="Mark this identity as my primary one"
+        />
 
         <Button
           variant={ButtonVariant.PRIMARY}
@@ -124,18 +122,5 @@ const AddIdentityForm: React.FC<{
     </>
   );
 };
-
-const Label = styled.label`
-  display: flex;
-  margin-bottom: ${({ theme }) => theme.spaces.xs};
-  cursor: pointer;
-
-  input[type="checkbox"] {
-    width: 18px;
-    height: 1.6rem;
-    margin: 0 ${({ theme }) => theme.spaces.xxs} 0 0;
-    cursor: pointer;
-  }
-`;
 
 export { AddIdentityForm };

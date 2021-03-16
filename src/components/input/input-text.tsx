@@ -2,17 +2,16 @@ import { useTextField } from "@react-aria/textfield";
 import React from "react";
 import styled from "styled-components";
 
-interface InputProps {
+type InputTextProps = {
   type: string;
   name: string;
   label: string;
   onChange: (value: string) => void;
   value?: string;
   placeholder?: string;
-  defaultCountry?: string;
-}
+};
 
-const InputText: React.FC<InputProps> = (props) => {
+const InputText: React.FC<InputTextProps> = (props) => {
   const { label } = props;
 
   const inputRef = React.useRef(null);
@@ -39,13 +38,6 @@ const InputElement = styled.input<Record<string, unknown>>`
     color: ${({ theme }) => theme.colors.lightGrey};
     font-size: ${({ theme }) => theme.fontSizes.s};
   }
-
-  /* &[type="checkbox"] {
-    width: 18px;
-    height: 1.6rem;
-    margin: 0 ${({ theme }) => theme.spaces.xxs} 0 0;
-    cursor: pointer;
-  } */
 `;
 
 const Label = styled.label`
