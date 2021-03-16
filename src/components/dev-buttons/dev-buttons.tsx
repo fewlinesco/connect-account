@@ -2,11 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 const DevButtonAddAlertMessage: React.FC = () => {
-  const count = 0;
   const cookiesList = encodeURIComponent(
     JSON.stringify([
       {
-        text: `This is the alert message number ${count}`,
+        text: `This is an alert message`,
+        expiresAt: Date.now() + 300000,
+      },
+      {
+        text: `This is an alert message`,
         expiresAt: Date.now() + 300000,
       },
     ]),
