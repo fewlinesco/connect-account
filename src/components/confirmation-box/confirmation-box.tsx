@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { ClickAwayListener } from "../click-away-listener";
+import { CrossIcon } from "../icons/cross-icon/cross-icon";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 interface ConfirmationBoxProps {
@@ -28,6 +29,9 @@ const ConfirmationBox: React.FC<ConfirmationBoxProps> = ({
         />
       )}
       <Box open={open} preventAnimation={preventAnimation}>
+        <div className="cross" onClick={() => setOpen(false)}>
+          <CrossIcon />
+        </div>
         {children}
       </Box>
     </>
@@ -38,20 +42,31 @@ const Box = styled.div<Pick<ConfirmationBoxProps, "open" | "preventAnimation">>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4rem 2rem 3rem;
-  position: absolute;
-  bottom: 0;
+  padding: 4.8rem;
   width: calc(88rem * 60 / 100);
   background-color: ${({ theme }) => theme.colors.background};
+  position: absolute;
+  bottom: 50%;
   right: 50%;
-  transform: translate(50%);
+  transform: translate(50%, 50%);
+  border-radius: ${({ theme }) => theme.radii[0]};
   z-index: 3;
 
   @media ${deviceBreakpoints.m} {
     position: fixed;
     right: 0;
+    bottom: 0;
     width: 100%;
     transform: none;
+    padding: 4rem 4rem 2rem;
+    border-radius: 0;
+  }
+
+  .cross {
+    position: absolute;
+    top: ${({ theme }) => theme.spaces.xs};
+    right: ${({ theme }) => theme.spaces.xs};
+    cursor: pointer;
   }
 
   ${(props) =>

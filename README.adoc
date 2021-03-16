@@ -1,7 +1,7 @@
 = Connect Account
 :toc: preamble
 
-Connect Account is an open source app, which aims at providing all the business logic to handle Connect identities and profile data, and a default frontend for User to use it.
+Connect Account is an open source web application, which aims at providing all the business logic to handle Connect identities, profile and addresses data, and a default frontend for users to use.
 
 == Flows
 
