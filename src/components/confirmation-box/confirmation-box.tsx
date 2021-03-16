@@ -49,6 +49,7 @@ const Box = styled.div<Pick<ConfirmationBoxProps, "open" | "preventAnimation">>`
   bottom: 50%;
   right: 50%;
   transform: translate(50%, 50%);
+  border-radius: ${({ theme }) => theme.radii[0]};
   z-index: 3;
 
   @media ${deviceBreakpoints.m} {
@@ -58,6 +59,7 @@ const Box = styled.div<Pick<ConfirmationBoxProps, "open" | "preventAnimation">>`
     width: 100%;
     transform: none;
     padding: 4rem 4rem 2rem;
+    border-radius: 0;
   }
 
   .cross {
