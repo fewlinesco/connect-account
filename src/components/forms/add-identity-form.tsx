@@ -81,8 +81,9 @@ const AddIdentityForm: React.FC<{
           />
         ) : (
           <>
-            <p>Phone number *</p>
+            <label htmlFor="styled-phone-input">Phone number *</label>
             <StyledPhoneInput
+              id="styled-phone-input"
               placeholder="Enter your phone number"
               value={identity.value}
               defaultCountry="FR"
