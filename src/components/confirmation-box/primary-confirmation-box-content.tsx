@@ -52,6 +52,8 @@ const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxContentProps
 
 const PrimaryConfirmationText = styled.p`
   margin: 0 0 ${({ theme }) => theme.spaces.xs};
+  line-height: ${({ theme }) => theme.lineHeights.copy};
+  text-align: center;
 `;
 
 export { PrimaryConfirmationBoxContent, PrimaryConfirmationText };
