@@ -30,13 +30,22 @@ const AlertMessages: React.FC<{
 
 const AlertMessage: React.FC<{ text: string }> = ({ text }) => {
   const [showAlertMessage, setShowAlertMessage] = React.useState<boolean>(true);
+  const animationDuration = 3;
+
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setShowAlertMessage(false);
+    }, animationDuration * 1000);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   if (!showAlertMessage) {
     return null;
   }
 
   return (
-    <Alert>
+    <Alert animationDuration={animationDuration}>
       <p>{text}</p>
       <div className="cross" onClick={() => setShowAlertMessage(false)}>
         <CrossIcon />
@@ -47,12 +56,15 @@ const AlertMessage: React.FC<{ text: string }> = ({ text }) => {
 
 const Wrapper = styled.div`
   position: fixed;
-  top: 2rem;
+  top: 1rem;
   width: 100%;
   max-width: 88rem;
+  right: 50%;
+  transform: translate(50%);
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
   z-index: 1;
 
   @media ${deviceBreakpoints.m} {
@@ -62,7 +74,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Alert = styled.div`
+const Alert = styled.div<{ animationDuration: number }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -74,7 +86,7 @@ const Alert = styled.div`
   padding: 1.6rem;
   visibility: hidden;
   opacity: 0;
-  animation: fadeinout 3s;
+  animation: fadeinout ${({ animationDuration }) => animationDuration}s;
   border-bottom: 0.1rem solid white;
 
   @keyframes fadeinout {
