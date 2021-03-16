@@ -47,7 +47,7 @@
     "graphql": "15.5.0",
     "graphql-tag": "2.12.1",
     "js-cookie": "2.2.1",
-    "next": "10.0.8",
+    "next": "10.0.9",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-phone-number-input": "3.1.17",
