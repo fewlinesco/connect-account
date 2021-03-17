@@ -2,16 +2,27 @@ import React from "react";
 import styled from "styled-components";
 
 import { MagnifyingGlass } from "@src/components/icons/magnifying-glass/magnifying-glass";
-import { Input } from "@src/components/input/input";
+import { InputText } from "@src/components/input/input-text";
 import { RadioButton } from "@src/components/radio-button/radio-button";
 import { Separator } from "@src/components/separator/separator";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Locale: React.FC = () => {
+  const [searchValue, setSearchValue] = React.useState("");
+
   return (
     <>
       <SearchInputContainer>
-        <Input />
+        <InputText
+          type="text"
+          name="search"
+          value={searchValue}
+          onChange={(value) => {
+            setSearchValue(value);
+          }}
+          label=""
+          aria-label="Search language"
+        />
         <div className="magnifying-glass">
           <MagnifyingGlass />
         </div>
