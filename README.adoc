@@ -249,6 +249,10 @@ We are using the NextJS folder architecture (i.e. `/pages`) to utilize its route
 
 We are also using the `Command Query Responsibility Segregation`(CQRS) pattern to separate queries from mutations. They are located in the `queries/` and `command/` folder.
 
+=== .dependabot/
+
+Config files for dependabot.
+
 === .github/
 
 - */workflows*: GitHub Actions used to run tests during CI/CD process flow.
@@ -469,6 +473,40 @@ export const SvgIcon: React.FC = () => {
 }
 ----
 
+When SVG are monochromatics (i.e. _icons_) and to improve components reusability, we replace the `fill` attribute value of tags composing SVG, such as `path`, with the CSS variable `currentColor` instead of hardcoded color codes. 
+This way, the SVG will be rendered with the color inherited from its parent. 
+
+[source, jsx]
+----
+import React from 'react';
+import styled from "styled-components";
+
+export const CrossIcon: React.FC = () => {
+  return (
+    <svg>
+      <path fill="currentColor">...</path>
+      ...
+    </svg>
+  )
+}
+
+export const Modal: React.FC = () => {
+  return (
+    <div>
+      ...
+      <IconContainer>
+        <CrossIcon/>
+      </IconContainer>
+      ...
+    </div>
+  )
+}
+
+const IconContainer = styled.div`
+  color: #000;
+`;
+----
+
 When you use Figma to export SVG, be sure to export the upper component (i.e. *name 40x40*).
 
 Also remember to add a `<title/>` JSX tag under the `<svg/>` tag for accessibility.
@@ -502,6 +540,10 @@ export const SubNameOfTheStory = (): JSX.Element => {
 ----
 
 > Note that the story needs to be at the same level as the component.
+
+== Accessibility
+
+We want our application to be accessible. To do so, besides following good practices and standards, we chose to use https://react-spectrum.adobe.com/react-aria/index.html[@react-aria] external library to ease the accessibility implementation.
 
 == Testing
 
