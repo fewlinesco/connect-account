@@ -473,7 +473,7 @@ export const SvgIcon: React.FC = () => {
 }
 ----
 
-When SVG are monochromatics (i.e. icons) and to improve components reusability, we replace the `fill` attribute value of tags composing SVG, such as `path`, with the CSS variable `currentColor` instead of hardcoded color codes. 
+When SVG are monochromatics (i.e. _icons_) and to improve components reusability, we replace the `fill` attribute value of tags composing SVG, such as `path`, with the CSS variable `currentColor` instead of hardcoded color codes. 
 This way, the SVG will be rendered with the color inherited from its parent. 
 
 [source, jsx]
@@ -493,11 +493,11 @@ export const CrossIcon: React.FC = () => {
 export const Modal: React.FC = () => {
   return (
     <div>
-    // ...
+      ...
       <IconContainer>
         <CrossIcon/>
       </IconContainer>
-    //...
+      ...
     </div>
   )
 }
@@ -540,6 +540,10 @@ export const SubNameOfTheStory = (): JSX.Element => {
 ----
 
 > Note that the story needs to be at the same level as the component.
+
+== Accessibility
+
+We want our application to be accessible. To do so, besides following good practices and standards, we chose to use https://react-spectrum.adobe.com/react-aria/index.html[@react-aria] external library to ease the accessibility implementation.
 
 == Testing
 
