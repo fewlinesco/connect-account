@@ -1,21 +1,34 @@
-import { AlertMessage as AlertMessageDataStructure } from "@fwl/web";
+// import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
 import { CrossIcon } from "../icons/cross-icon/cross-icon";
+import { useAlertMessages } from "../react-contexts/alert-messages-context";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-const AlertMessages: React.FC<{
-  alertMessages: AlertMessageDataStructure[];
-  setAlertMessages: React.Dispatch<
-    React.SetStateAction<AlertMessageDataStructure[]>
-  >;
-}> = ({ alertMessages, setAlertMessages }) => {
+const AlertMessages: React.FC = () => {
+  const { alertMessages, setAlertMessages } = useAlertMessages();
+  // const router = useRouter();
+  console.log(alertMessages);
+
+  React.useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (document.cookie) {
+        setAlertMessages([
+          ...alertMessages,
+          ...JSON.parse(decodeURIComponent(document.cookie).split("=")[1]),
+        ]);
+
+        document.cookie = "alert-messages=; max-age=0; path=/;";
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   if (alertMessages.length === 0) {
     return null;
   }
-
-  console.log(alertMessages);
 
   return (
     <Wrapper>
@@ -25,11 +38,7 @@ const AlertMessages: React.FC<{
         }
 
         return (
-          <AlertMessage
-            key={"alertMessage" + Date.now() + index}
-            text={text}
-            setAlertMessages={setAlertMessages}
-          />
+          <AlertMessage key={"alertMessage" + Date.now() + index} text={text} />
         );
       })}
     </Wrapper>
@@ -38,10 +47,8 @@ const AlertMessages: React.FC<{
 
 const AlertMessage: React.FC<{
   text: string;
-  setAlertMessages: React.Dispatch<
-    React.SetStateAction<AlertMessageDataStructure[]>
-  >;
-}> = ({ text, setAlertMessages }) => {
+}> = ({ text }) => {
+  const { setAlertMessages } = useAlertMessages();
   const [showAlertMessage, setShowAlertMessage] = React.useState<boolean>(true);
   const animationDuration = 3;
 

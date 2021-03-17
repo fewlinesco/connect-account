@@ -1,10 +1,12 @@
-import { AlertMessage } from "@fwl/web";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
 import { AlertMessages } from "@src/components/alert-message/alert-messages";
+import { DevButtons } from "@src/components/dev-buttons/dev-buttons";
+import { AlertMessageProvider } from "@src/components/react-contexts/alert-messages-context";
+// import { AlertMessagesPortal } from "@src/components/react-portals/alert-messages-portal";
 import { GlobalStyle } from "@src/design-system/globals/global-style";
 import { theme } from "@src/design-system/theme";
 import "@src/utils/sentry";
@@ -18,23 +20,6 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
 };
 
 const AccountApp: React.FC = ({ children }) => {
-  const [alertMessages, setAlertMessages] = React.useState<AlertMessage[]>([]);
-
-  React.useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (document.cookie) {
-        setAlertMessages([
-          ...alertMessages,
-          ...JSON.parse(decodeURIComponent(document.cookie).split("=")[1]),
-        ]);
-
-        document.cookie = "alert-messages=; max-age=0; path=/;";
-      }
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
   return (
     <ThemeProvider theme={theme}>
       <Head>
@@ -42,8 +27,13 @@ const AccountApp: React.FC = ({ children }) => {
         <title>Connect Account</title>
       </Head>
       <GlobalStyle />
-      <AlertMessages alertMessages={alertMessages} />
+      {/* <AlertMessagesPortal> */}
+      <AlertMessageProvider>
+        <AlertMessages />
+      </AlertMessageProvider>
+      {/* </AlertMessagesPortal> */}
       {children}
+      <DevButtons />
     </ThemeProvider>
   );
 };

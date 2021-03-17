@@ -44,6 +44,7 @@ const DevButton = styled.button`
   padding: 1rem 2rem;
   border-radius: ${({ theme }) => theme.radii[0]};
   background-color: ${({ theme }) => theme.colors.boxShadow};
+  cursor: pointer;
 `;
 
 export { DevButtons };
