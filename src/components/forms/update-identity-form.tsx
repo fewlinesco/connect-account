@@ -5,6 +5,7 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
+import { InputText } from "../input/input-text";
 import { StyledPhoneInput } from "../input/styled-phone-input";
 import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
@@ -13,7 +14,6 @@ import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Box } from "@src/components/box/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
-import { Input } from "@src/components/input/input";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { fetchJson } from "@src/utils/fetch-json";
 import { getIdentityType } from "@src/utils/get-identity-type";
@@ -69,41 +69,40 @@ const UpdateIdentityForm: React.FC<{
             });
         }}
       >
-        <p>
-          New{" "}
-          {getIdentityType(currentIdentity.type) === IdentityTypes.PHONE
-            ? "Phone number *"
-            : "Email address *"}
-        </p>
         {getIdentityType(currentIdentity.type) === IdentityTypes.EMAIL ? (
-          <Input
+          <InputText
             type="text"
             name="value"
             placeholder={`Enter your ${currentIdentity.type}`}
             value={identity.value}
-            onChange={(event) =>
+            onChange={(value) =>
               setIdentity({
-                value: event.target.value,
+                value,
                 type: currentIdentity.type,
                 expiresAt: Date.now() + 300000,
                 primary: currentIdentity.primary,
               })
             }
+            label="New email address *"
           />
         ) : (
-          <StyledPhoneInput
-            placeholder="Enter your phone number"
-            value={identity.value}
-            defaultCountry="FR"
-            onChange={(value) => {
-              setIdentity({
-                value,
-                type: currentIdentity.type,
-                expiresAt: Date.now() + 300000,
-                primary: identity.primary,
-              });
-            }}
-          />
+          <>
+            <label htmlFor="styled-phone-input">Phone number *</label>
+            <StyledPhoneInput
+              id="styled-phone-input"
+              placeholder="Enter your phone number"
+              value={identity.value}
+              defaultCountry="FR"
+              onChange={(value) => {
+                setIdentity({
+                  value,
+                  type: currentIdentity.type,
+                  expiresAt: Date.now() + 300000,
+                  primary: identity.primary,
+                });
+              }}
+            />
+          </>
         )}
         <Button type="submit" variant={ButtonVariant.PRIMARY}>
           Update {currentIdentity.type}

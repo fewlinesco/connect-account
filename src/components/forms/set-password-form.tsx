@@ -2,11 +2,11 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
+import { InputText } from "../input/input-text";
 import { WrongInputError } from "../input/wrong-input-error";
 import { StyledForm } from "./form";
 import { HttpVerbs } from "@src/@types/http-verbs";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
-import { Input } from "@src/components/input/input";
 import { PasswordRulesErrorList } from "@src/components/password-rules-error-list/password-rules-error-list";
 import { fetchJson } from "@src/utils/fetch-json";
 import { capitalizeFirstLetter } from "@src/utils/format";
@@ -83,7 +83,6 @@ const SetPasswordForm: React.FC<{
         </MismatchedPassword>
       ) : null}
       {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
-      <p>New password</p>
       <ExtendedInputStyle
         type="password"
         name="password-input"
@@ -91,15 +90,16 @@ const SetPasswordForm: React.FC<{
         value={passwordInput}
         passwordRestrictionError={passwordRestrictionError}
         passwordsNotMatching={passwordsNotMatching}
-        onChange={(event) => setPasswordInput(event.target.value)}
+        onChange={(value) => setPasswordInput(value)}
+        label="New password"
       />
-      <p>Confirm new password</p>
-      <Input
+      <InputText
         type="password"
         name="password-confirmation-input"
         placeholder="Confirm new password"
         value={passwordConfirmationInput}
-        onChange={(event) => setPasswordConfirmationInput(event.target.value)}
+        onChange={(value) => setPasswordConfirmationInput(value)}
+        label="Confirm new password"
       />
       <Button
         variant={ButtonVariant.PRIMARY}
@@ -114,7 +114,7 @@ const MismatchedPassword = styled.p`
   margin-bottom: 2rem;
 `;
 
-const ExtendedInputStyle = styled(Input)<{
+const ExtendedInputStyle = styled(InputText)<{
   passwordRestrictionError?: Record<string, string>;
   passwordsNotMatching?: boolean;
 }>`
