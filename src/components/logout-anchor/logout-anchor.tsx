@@ -7,7 +7,7 @@ import { FakeButton } from "@src/components/buttons/fake-button";
 const LogoutAnchor: React.FC = () => {
   return (
     <NeutralLink href="/api/logout">
-      <FakeButton variant={ButtonVariant.GREY}>Logout</FakeButton>
+      <FakeButton variant={ButtonVariant.LIGHT_GREY}>Logout</FakeButton>
     </NeutralLink>
   );
 };

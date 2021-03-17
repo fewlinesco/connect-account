@@ -8,7 +8,7 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 enum ButtonVariant {
   PRIMARY = "PRIMARY",
   SECONDARY = "SECONDARY",
-  GREY = "GREY",
+  LIGHT_GREY = "LIGHT_GREY",
   DANGER = "DANGER",
   GHOST = "GHOST",
 }
@@ -63,7 +63,7 @@ const StyledButton = styled.button<Record<string, unknown>>`
       `};
 
   ${({ theme, variant }) =>
-    variant === ButtonVariant.GREY &&
+    variant === ButtonVariant.LIGHT_GREY &&
     `
     color: ${theme.colors.black};
     background: #F0F1F3;

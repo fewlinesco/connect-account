@@ -23,10 +23,10 @@ const SecondaryButton = (): JSX.Element => {
   );
 };
 
-const GreyButton = (): JSX.Element => {
+const LightGreyButton = (): JSX.Element => {
   return (
     <StoriesContainer>
-      <Button type="button" variant={ButtonVariant.GREY}>
+      <Button type="button" variant={ButtonVariant.LIGHT_GREY}>
         Secondary
       </Button>
     </StoriesContainer>
@@ -56,7 +56,7 @@ const GhostButton = (): JSX.Element => {
 export {
   PrimaryButton,
   SecondaryButton,
-  GreyButton,
+  LightGreyButton,
   DangerButton,
   GhostButton,
 };
