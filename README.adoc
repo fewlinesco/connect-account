@@ -249,6 +249,10 @@ We are using the NextJS folder architecture (i.e. `/pages`) to utilize its route
 
 We are also using the `Command Query Responsibility Segregation`(CQRS) pattern to separate queries from mutations. They are located in the `queries/` and `command/` folder.
 
+=== .dependabot/
+
+Config files for dependabot.
+
 === .github/
 
 - */workflows*: GitHub Actions used to run tests during CI/CD process flow.
@@ -467,6 +471,40 @@ export const SvgIcon: React.FC = () => {
     </svg>
   )
 }
+----
+
+When SVG are monochromatics (i.e. icons) and to improve components reusability, we replace the `fill` attribute value of tags composing SVG, such as `path`, with the CSS variable `currentColor` instead of hardcoded color codes. 
+This way, the SVG will be rendered with the color inherited from its parent. 
+
+[source, jsx]
+----
+import React from 'react';
+import styled from "styled-components";
+
+export const CrossIcon: React.FC = () => {
+  return (
+    <svg>
+      <path fill="currentColor">...</path>
+      ...
+    </svg>
+  )
+}
+
+export const Modal: React.FC = () => {
+  return (
+    <div>
+    // ...
+      <IconContainer>
+        <CrossIcon/>
+      </IconContainer>
+    //...
+    </div>
+  )
+}
+
+const IconContainer = styled.div`
+  color: #000;
+`;
 ----
 
 When you use Figma to export SVG, be sure to export the upper component (i.e. *name 40x40*).
