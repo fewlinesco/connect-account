@@ -1839,10 +1839,10 @@
     node-fetch "2.6.1"
     node-jose "2.0.0"
 
-"@fewlines/connect-management@0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@fewlines/connect-management/-/connect-management-0.6.0.tgz#1208b5dfa0aba32933b32a70c3527ac6182d2f6b"
-  integrity sha512-YXb7XORSXeQMyp/euaPf2lKWE/n7drUTykkpG1AOlvB9xYOX9mF3NLIraVvwEjgGj8gaL+lipEB1IBIju3t3pQ==
+"@fewlines/connect-management@0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@fewlines/connect-management/-/connect-management-0.6.1.tgz#3b6a464c63b894e490fecd3cd92033f4686140f0"
+  integrity sha512-NOUdf672oPEG8LqQcUNdG/YnghpTQu8fKKI8/LBd0QQhgr+VVoxlQ88hF+TL1yvQAzL2xmf8tHYnYuvPiBA2AQ==
   dependencies:
     apollo-link "1.2.14"
     apollo-link-context "1.0.20"
@@ -3272,10 +3272,10 @@
     "@babel/runtime" "^7.12.5"
     "@testing-library/dom" "^7.28.1"
 
-"@testing-library/user-event@12.8.3":
-  version "12.8.3"
-  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-12.8.3.tgz#1aa3ed4b9f79340a1e1836bc7f57c501e838704a"
-  integrity sha512-IR0iWbFkgd56Bu5ZI/ej8yQwrkCv8Qydx6RzwbKz9faXazR/+5tvYKsZQgyXJiwgpcva127YO6JcWy7YlCfofQ==
+"@testing-library/user-event@13.0.0":
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-13.0.0.tgz#c39451b9c11ec2ef7ae0743dfda96decba1f3c56"
+  integrity sha512-At8SFGsb6kLgXU6NYU/IJGiKWULTklu8FlqTtaxvR9emnGDYlVhQ1xxjchpOifh1Ao6SjKu5vgDc7ioiUfw5oQ==
   dependencies:
     "@babel/runtime" "^7.12.5"
 
