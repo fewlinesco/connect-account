@@ -3,10 +3,12 @@ import React from "react";
 import styled from "styled-components";
 
 import { Triangle } from "../icons/triangle/triangle";
+import { deviceBreakpoints } from "@src/design-system/theme";
 
 enum ButtonVariant {
   PRIMARY = "PRIMARY",
   SECONDARY = "SECONDARY",
+  GREY = "GREY",
   DANGER = "DANGER",
   GHOST = "GHOST",
 }
@@ -41,45 +43,65 @@ const StyledButton = styled.button<Record<string, unknown>>`
     background-color: ${({ theme }) => theme.colors.secondary};
   }
 
-  ${(props) =>
-    props.variant === ButtonVariant.PRIMARY &&
+  ${({ theme, variant }) =>
+    variant === ButtonVariant.PRIMARY &&
     `
-      background: ${props.theme.colors.primary};
-      color: ${props.theme.colors.background};
+      background: ${theme.colors.primary};
+      color: ${theme.colors.background};
     `};
 
-  ${(props) =>
-    props.variant === ButtonVariant.SECONDARY &&
+  ${({ theme, variant }) =>
+    variant === ButtonVariant.SECONDARY &&
     `
-      background: ${props.theme.colors.background};
-      border: 0.1rem solid ${props.theme.colors.primary};
-      color: ${props.theme.colors.primary};
-
-      &:hover {
-        background: ${props.theme.colors.background};
-      }
-    `};
-
-  ${(props) =>
-    props.variant === ButtonVariant.DANGER &&
-    `
-      background: ${props.theme.colors.red};
-      color: ${props.theme.colors.background};
+      background: ${theme.colors.background};
+      border: 0.1rem solid ${theme.colors.primary};
+      color: ${theme.colors.primary};
       
       &:hover {
-        background: ${props.theme.colors.red};
+        background: ${theme.colors.background};
+      }
+      `};
+
+  ${({ theme, variant }) =>
+    variant === ButtonVariant.GREY &&
+    `
+    color: ${theme.colors.black};
+    background: #F0F1F3;
+    font-size: ${theme.fontSizes.paragraph};
+
+      &:hover {
+        background: #F0F1F3;
+      }
+
+      @media ${deviceBreakpoints.m} {
+      margin-bottom: 0;
+      padding: 3rem 4rem;
+      width: 100%;
+      background: ${theme.colors.background};
+      border-top: ${theme.colors.blacks[0]} ${theme.borders.thin};
+  }
+    `};
+
+  ${({ theme, variant }) =>
+    variant === ButtonVariant.DANGER &&
+    `
+      background: ${theme.colors.red};
+      color: ${theme.colors.background};
+      
+      &:hover {
+        background: ${theme.colors.red};
       }
 
     `};
 
-  ${(props) =>
-    props.variant === ButtonVariant.GHOST &&
+  ${({ theme, variant }) =>
+    variant === ButtonVariant.GHOST &&
     `
-      background: ${props.theme.colors.background};
-      color: ${props.theme.colors.red};
+      background: ${theme.colors.background};
+      color: ${theme.colors.red};
 
       &:hover {
-        background: ${props.theme.colors.background};
+        background: ${theme.colors.background};
       }
     `};
 `;
