@@ -14,6 +14,7 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
+import { v4 as uuidv4 } from "uuid";
 
 import { Handler } from "@src/@types/handler";
 import { config } from "@src/config";
@@ -54,6 +55,7 @@ const handler: Handler = (request, response): Promise<void> => {
             : "Phone number"
         } has been deleted`;
         const newCookie = {
+          id: uuidv4(),
           text: deleteMessage,
           expiresAt: Date.now() + 300000,
         };

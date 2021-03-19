@@ -1,4 +1,5 @@
 // import { useRouter } from "next/router";
+import { AlertMessage as AlertMessageDataStructure } from "@fwl/web";
 import React from "react";
 import styled from "styled-components";
 
@@ -8,8 +9,8 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 
 const AlertMessages: React.FC = () => {
   const { alertMessages, setAlertMessages } = useAlertMessages();
-  // const router = useRouter();
-  console.log(alertMessages);
+
+  console.log({ alertMessages });
 
   React.useEffect(() => {
     const intervalId = setInterval(() => {
@@ -32,23 +33,22 @@ const AlertMessages: React.FC = () => {
 
   return (
     <Wrapper>
-      {alertMessages.map(({ text, expiresAt }, index) => {
+      {alertMessages.map(({ id, text, expiresAt }) => {
         if (expiresAt < Date.now()) {
           return null;
         }
 
-        return (
-          <AlertMessage key={"alertMessage" + Date.now() + index} text={text} />
-        );
+        return <AlertMessage key={id} id={id} text={text} />;
       })}
     </Wrapper>
   );
 };
 
-const AlertMessage: React.FC<{
-  text: string;
-}> = ({ text }) => {
-  const { setAlertMessages } = useAlertMessages();
+const AlertMessage: React.FC<Omit<AlertMessageDataStructure, "expiresAt">> = ({
+  id,
+  text,
+}) => {
+  const { alertMessages, setAlertMessages } = useAlertMessages();
   const [showAlertMessage, setShowAlertMessage] = React.useState<boolean>(true);
   const animationDuration = 3;
 
@@ -58,7 +58,9 @@ const AlertMessage: React.FC<{
     }, animationDuration * 1000);
 
     return () => {
-      setAlertMessages([]);
+      setAlertMessages(
+        [...alertMessages].filter((alertMessage) => alertMessage.id !== id),
+      );
 
       clearTimeout(timeoutId);
     };
@@ -96,6 +98,7 @@ const Wrapper = styled.div`
   }
 `;
 
+// Replace animation with opacity transition + className.
 const Alert = styled.div<{ animationDuration: number }>`
   display: flex;
   align-items: center;
@@ -105,24 +108,10 @@ const Alert = styled.div<{ animationDuration: number }>`
   color: ${({ theme }) => theme.colors.background};
   border-radius: ${({ theme }) => theme.radii[0]};
   padding: 1.6rem 3rem;
-  visibility: hidden;
-  opacity: 0;
-  animation: fadeinout ${({ animationDuration }) => animationDuration}s;
+  visibility: visible;
+  opacity: 1;
+  animation: opacity 3s;
   border-bottom: 0.1rem solid white;
-
-  @keyframes fadeinout {
-    0%,
-    100% {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    10%,
-    90% {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
 
   p {
     font-size: ${({ theme }) => theme.fontSizes.s};

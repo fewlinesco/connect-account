@@ -6,7 +6,6 @@ import { ThemeProvider } from "styled-components";
 import { AlertMessages } from "@src/components/alert-message/alert-messages";
 import { DevButtons } from "@src/components/dev-buttons/dev-buttons";
 import { AlertMessageProvider } from "@src/components/react-contexts/alert-messages-context";
-// import { AlertMessagesPortal } from "@src/components/react-portals/alert-messages-portal";
 import { GlobalStyle } from "@src/design-system/globals/global-style";
 import { theme } from "@src/design-system/theme";
 import "@src/utils/sentry";
@@ -27,11 +26,9 @@ const AccountApp: React.FC = ({ children }) => {
         <title>Connect Account</title>
       </Head>
       <GlobalStyle />
-      {/* <AlertMessagesPortal> */}
       <AlertMessageProvider>
         <AlertMessages />
       </AlertMessageProvider>
-      {/* </AlertMessagesPortal> */}
       {children}
       <DevButtons />
     </ThemeProvider>

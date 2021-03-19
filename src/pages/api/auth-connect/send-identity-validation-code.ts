@@ -22,6 +22,7 @@ import {
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 import { isValidPhoneNumber } from "react-phone-number-input";
+import { v4 as uuidv4 } from "uuid";
 
 import { Handler } from "@src/@types/handler";
 import { TemporaryIdentity } from "@src/@types/temporary-identity";
@@ -127,6 +128,7 @@ const handler: Handler = (request, response): Promise<void> => {
               ? "A confirmation email has been sent"
               : "A confirmation SMS has been sent";
           const newCookie = {
+            id: uuidv4(),
             text: verificationCodeMessage,
             expiresAt: Date.now() + 300000,
           };

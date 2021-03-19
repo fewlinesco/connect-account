@@ -1,15 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 
 const DevButtonAddAlertMessage: React.FC = () => {
   const cookiesList = encodeURIComponent(
     JSON.stringify([
       {
-        text: `This is an alert message`,
+        id: uuidv4(),
+        text: "This is an alert message",
         expiresAt: Date.now() + 300000,
       },
       {
-        text: `This is an alert message`,
+        id: uuidv4(),
+        text: "This is an alert message",
         expiresAt: Date.now() + 300000,
       },
     ]),
