@@ -22,7 +22,6 @@ import {
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 import { isValidPhoneNumber } from "react-phone-number-input";
-import { v4 as uuidv4 } from "uuid";
 
 import { Handler } from "@src/@types/handler";
 import { TemporaryIdentity } from "@src/@types/temporary-identity";
@@ -33,6 +32,7 @@ import { NoUserFoundError } from "@src/errors";
 import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { generateAlertMessage } from "@src/utils/generateAlertMessage";
 import { getIdentityType } from "@src/utils/get-identity-type";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
@@ -127,12 +127,10 @@ const handler: Handler = (request, response): Promise<void> => {
             getIdentityType(identityInput.type) === IdentityTypes.EMAIL
               ? "A confirmation email has been sent"
               : "A confirmation SMS has been sent";
-          const newCookie = {
-            id: uuidv4(),
-            text: verificationCodeMessage,
-            expiresAt: Date.now() + 300000,
-          };
-          setAlertMessagesCookie(response, [newCookie]);
+
+          setAlertMessagesCookie(response, [
+            generateAlertMessage(verificationCodeMessage),
+          ]);
 
           response.statusCode = HttpStatus.OK;
           response.setHeader("Content-Type", "application/json");

@@ -21,7 +21,6 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
-import { v4 as uuidv4 } from "uuid";
 
 import { Handler } from "@src/@types/handler";
 import { TemporaryIdentity } from "@src/@types/temporary-identity";
@@ -33,6 +32,7 @@ import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
+import { generateAlertMessage } from "@src/utils/generateAlertMessage";
 import { getIdentityType } from "@src/utils/get-identity-type";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
@@ -159,13 +159,10 @@ const handler: Handler = (request, response): Promise<void> => {
             getIdentityType(type) === IdentityTypes.EMAIL
               ? "A new confirmation email has been sent"
               : "A new confirmation SMS has been sent";
-          const newCookie = {
-            id: uuidv4(),
-            text: verificationCodeMessage,
-            expiresAt: Date.now() + 300000,
-          };
 
-          setAlertMessagesCookie(response, [newCookie]);
+          setAlertMessagesCookie(response, [
+            generateAlertMessage(verificationCodeMessage),
+          ]);
 
           response.statusCode = HttpStatus.OK;
           response.setHeader("Content-Type", "application/json");
