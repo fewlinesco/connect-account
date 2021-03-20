@@ -53,7 +53,7 @@
     "react-dom": "17.0.1",
     "react-phone-number-input": "3.1.17",
     "styled-components": "5.2.1",
-    "swr": "0.5.3",
+    "swr": "0.5.4",
     "uuid": "8.3.2"
   },
   "devDependencies": {
