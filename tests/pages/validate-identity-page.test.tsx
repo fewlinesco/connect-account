@@ -17,17 +17,6 @@ jest.mock("@src/db-client", () => {
 
 const eventId = "foo";
 
-const alertMessages = {
-  email: {
-    text: "Confirmation email has been sent",
-    expiresAt: Date.now() + 300000,
-  },
-  phone: {
-    text: "Confirmation SMS has been sent",
-    expiresAt: Date.now() + 300000,
-  },
-};
-
 describe("ValidateIdentityPage", () => {
   describe("Identity type : EMAIL", () => {
     it("should render proper email form elements ", () => {
