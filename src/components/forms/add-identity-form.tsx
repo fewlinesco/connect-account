@@ -99,7 +99,6 @@ const AddIdentityForm: React.FC<{
           </>
         )}
         <InputCheckbox
-          type="checkbox"
           name="primary"
           onChange={() => {
             setIdentity({

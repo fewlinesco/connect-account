@@ -2,13 +2,16 @@ import React from "react";
 import styled from "styled-components";
 
 import { MagnifyingGlass } from "@src/components/icons/magnifying-glass/magnifying-glass";
+import { InputsRadio } from "@src/components/input/input-radio-button";
 import { InputText } from "@src/components/input/input-text";
-import { RadioButton } from "@src/components/radio-button/radio-button";
-import { Separator } from "@src/components/separator/separator";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Locale: React.FC = () => {
+  const availableLanguage = ["English"];
   const [searchValue, setSearchValue] = React.useState("");
+  const [selectedLanguage, setSelectedLanguage] = React.useState<string>(
+    availableLanguage[0],
+  );
 
   return (
     <>
@@ -29,11 +32,12 @@ const Locale: React.FC = () => {
       </SearchInputContainer>
 
       <LanguagesList>
-        <ListItem>
-          <Value>English</Value>
-          <RadioButton name="locale" checked={true} />
-        </ListItem>
-        <Separator />
+        <InputsRadio
+          groupName="language"
+          inputsValues={availableLanguage}
+          selectedInput={selectedLanguage}
+          onChange={({ target }) => setSelectedLanguage(target.value)}
+        />
       </LanguagesList>
     </>
   );
@@ -69,10 +73,6 @@ const ListItem = styled.div`
   width: 100%;
   margin: ${({ theme }) => theme.spaces.xxs} 0;
   height: 4.8rem;
-`;
-
-const Value = styled.div`
-  margin-left: ${({ theme }) => theme.spaces.xxs};
 `;
 
 export { Locale, ListItem };

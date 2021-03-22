@@ -2,18 +2,17 @@ import React from "react";
 import styled from "styled-components";
 
 type CheckboxProps = {
-  type: string;
   name: string;
   onChange: () => void;
   label: string;
 };
 
 const InputCheckbox: React.FC<CheckboxProps> = (props) => {
-  const { type, label, name, onChange } = props;
+  const { label, name, onChange } = props;
 
   return (
     <Label>
-      <CheckboxElement type={type} name={name} onChange={onChange} />
+      <CheckboxElement type="checkbox" name={name} onChange={onChange} />
       {label}
     </Label>
   );
