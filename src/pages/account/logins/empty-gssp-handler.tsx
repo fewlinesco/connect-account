@@ -43,7 +43,7 @@ const IDENTITIES_SECTION_CONTENT = {
   },
 };
 
-const LoginsOverviewTest: React.FC = () => {
+const LoginsOverview: React.FC = () => {
   const { data, error } = useSWR("/api/get-sorted-identities", (url) =>
     fetch(url).then((response) => response.json()),
   );
@@ -104,14 +104,14 @@ const LoginsOverviewTest: React.FC = () => {
   );
 };
 
-const TestPage: React.FC = () => {
+const EmptyGSSPHandlerPage: React.FC = () => {
   return (
     <Layout
       title="Logins"
       breadcrumbs={["Your emails, phones and social logins"]}
     >
       <Container>
-        <LoginsOverviewTest />
+        <LoginsOverview />
       </Container>
     </Layout>
   );
@@ -151,4 +151,4 @@ const Section = styled.div<{
 `;
 
 export { getServerSideProps };
-export default TestPage;
+export default EmptyGSSPHandlerPage;

@@ -4,11 +4,11 @@ import styled from "styled-components";
 
 import { generateAlertMessage } from "@src/utils/generateAlertMessage";
 
-const DevButtonAddAlertMessage: React.FC = () => {
+const AddAlertMessage: React.FC = () => {
   const cookiesList = encodeURIComponent(
     JSON.stringify([
       generateAlertMessage("This is an alert message"),
-      generateAlertMessage("This is an alert message"),
+      generateAlertMessage("This is another alert message"),
     ]),
   );
 
@@ -23,21 +23,28 @@ const DevButtonAddAlertMessage: React.FC = () => {
   );
 };
 
-const DevButtonNavigation: React.FC = () => {
+const Navigation: React.FC = () => {
   return (
-    <DevButton>
-      <Link href="/account/logins/test">
-        <a>/account/logins/test</a>
-      </Link>
-    </DevButton>
+    <>
+      <DevButton>
+        <Link href="/account/logins/no-gssp">
+          <a>/account/logins/no-gssp</a>
+        </Link>
+      </DevButton>
+      <DevButton>
+        <Link href="/account/logins/empty-gssp-handler">
+          <a>/account/logins/empty-gssp-handler</a>
+        </Link>
+      </DevButton>
+    </>
   );
 };
 
 const DevButtons: React.FC = () => {
   return (
     <DevSection>
-      <DevButtonAddAlertMessage />
-      <DevButtonNavigation />
+      <AddAlertMessage />
+      <Navigation />
     </DevSection>
   );
 };
