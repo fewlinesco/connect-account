@@ -6,11 +6,7 @@ update_configs:
       - "Fuzznimp"
       - "Oluane"
     update_schedule: "live"
-    automerged_updates:
-      - match:
-          dependency_type: "all"
-          update_type: "all"
     ignored_updates:
       - match:
-          dependency_name: "express"
+          dependency_name: "husky"
           version_requirement: "5.x"

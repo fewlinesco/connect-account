@@ -1,32 +1,15 @@
 import React from "react";
-import styled from "styled-components";
 
+import { ButtonVariant } from "../buttons/buttons";
 import { NeutralLink } from "../neutral-link/neutral-link";
-import { deviceBreakpoints } from "@src/design-system/theme";
+import { FakeButton } from "@src/components/buttons/fake-button";
 
 const LogoutAnchor: React.FC = () => {
   return (
-    <LogoutStyle>
-      <NeutralLink href="/api/logout">Logout</NeutralLink>
-    </LogoutStyle>
+    <NeutralLink href="/api/logout">
+      <FakeButton variant={ButtonVariant.LIGHT_GREY}>Logout</FakeButton>
+    </NeutralLink>
   );
 };
-
-const LogoutStyle = styled.div`
-  margin: 2rem 0 0 2rem;
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-
-  @media ${deviceBreakpoints.m} {
-    padding-bottom: 2rem;
-  }
-
-  a {
-    color: ${({ theme }) => theme.colors.lightGrey};
-
-    &:hover {
-      color: ${({ theme }) => theme.colors.black};
-    }
-  }
-`;
 
 export { LogoutAnchor };

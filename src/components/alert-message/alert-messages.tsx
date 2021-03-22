@@ -110,6 +110,7 @@ const Alert = styled.div`
   }
 
   .cross {
+    color: ${({ theme }) => theme.colors.background};
     margin: 0 0 0 ${({ theme }) => theme.spaces.xxs};
     cursor: pointer;
   }
