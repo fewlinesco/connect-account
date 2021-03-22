@@ -69,7 +69,15 @@ const AlertMessage: React.FC<Omit<AlertMessageDataStructure, "expiresAt">> = ({
   return (
     <Alert>
       <p>{text}</p>
-      <div className="cross" onClick={() => setShowAlertMessage(false)}>
+      <div
+        className="cross"
+        onClick={() => {
+          setShowAlertMessage(false);
+          setAlertMessages(
+            [...alertMessages].filter((alertMessage) => alertMessage.id !== id),
+          );
+        }}
+      >
         <CrossIcon />
       </div>
     </Alert>

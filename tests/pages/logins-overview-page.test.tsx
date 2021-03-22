@@ -4,7 +4,10 @@ import React from "react";
 import { render, screen } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
 import { SortedIdentities } from "@src/@types/sorted-identities";
+import { AlertMessages } from "@src/components/alert-message/alert-messages";
+import { useAlertMessages } from "@src/components/react-contexts/alert-messages-context";
 import LoginsOverviewPage from "@src/pages/account/logins";
+import { generateAlertMessage } from "@src/utils/generateAlertMessage";
 
 jest.mock("@src/db-client", () => {
   return {
@@ -305,7 +308,7 @@ describe("LoginsOverviewPage", () => {
     });
   });
 
-  describe("Alert message", () => {
+  describe("Alert messages", () => {
     it("should display an alert message if there's one in the cookies", async () => {
       expect.assertions(3);
 
@@ -315,18 +318,16 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
-      const alertMessages = [
-        {
-          text: "Email address has been deleted",
-          expiresAt: Date.now() + 300000,
-        },
-      ];
+      const { setAlertMessages } = useAlertMessages();
+      setAlertMessages([
+        generateAlertMessage("Email address has been deleted"),
+      ]);
 
       render(
-        <LoginsOverviewPage
-          sortedIdentities={sortedIdentities}
-          alertMessages={alertMessages}
-        />,
+        <>
+          <AlertMessages />
+          <LoginsOverviewPage sortedIdentities={sortedIdentities} />
+        </>,
       );
 
       expect(
@@ -350,22 +351,17 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
-      const alertMessages = [
-        {
-          text: "This is not expired",
-          expiresAt: Date.now() + 300000,
-        },
-        {
-          text: "This is expired",
-          expiresAt: Date.now() - 300000,
-        },
-      ];
+      const { setAlertMessages } = useAlertMessages();
+      setAlertMessages([
+        generateAlertMessage("This is not expired"),
+        generateAlertMessage("This is expired", Date.now() - 300000),
+      ]);
 
       render(
-        <LoginsOverviewPage
-          sortedIdentities={sortedIdentities}
-          alertMessages={alertMessages}
-        />,
+        <>
+          <AlertMessages />
+          <LoginsOverviewPage sortedIdentities={sortedIdentities} />
+        </>,
       );
 
       expect(
