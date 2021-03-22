@@ -11,6 +11,7 @@ import React from "react";
 
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
+import { Sudo } from "@src/components/pages/sudo/sudo";
 import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
@@ -19,7 +20,9 @@ import getTracer from "@src/tracer";
 const SudoPage: React.FC = () => {
   return (
     <Layout title="Security">
-      <Container></Container>
+      <Container>
+        <Sudo />
+      </Container>
     </Layout>
   );
 };
