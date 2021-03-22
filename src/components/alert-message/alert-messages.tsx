@@ -9,8 +9,6 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 const AlertMessages: React.FC = () => {
   const { alertMessages, setAlertMessages } = useAlertMessages();
 
-  console.log({ alertMessages });
-
   React.useEffect(() => {
     const intervalId = setInterval(() => {
       if (document.cookie) {
@@ -49,12 +47,11 @@ const AlertMessage: React.FC<Omit<AlertMessageDataStructure, "expiresAt">> = ({
 }) => {
   const { alertMessages, setAlertMessages } = useAlertMessages();
   const [showAlertMessage, setShowAlertMessage] = React.useState<boolean>(true);
-  const animationDuration = 3;
 
   React.useEffect(() => {
     const timeoutId = setTimeout(() => {
       setShowAlertMessage(false);
-    }, animationDuration * 1000);
+    }, 3000);
 
     return () => {
       setAlertMessages(
@@ -70,7 +67,7 @@ const AlertMessage: React.FC<Omit<AlertMessageDataStructure, "expiresAt">> = ({
   }
 
   return (
-    <Alert animationDuration={animationDuration}>
+    <Alert>
       <p>{text}</p>
       <div className="cross" onClick={() => setShowAlertMessage(false)}>
         <CrossIcon />
@@ -97,8 +94,7 @@ const Wrapper = styled.div`
   }
 `;
 
-// Replace animation with opacity transition + className.
-const Alert = styled.div<{ animationDuration: number }>`
+const Alert = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -107,9 +103,6 @@ const Alert = styled.div<{ animationDuration: number }>`
   color: ${({ theme }) => theme.colors.background};
   border-radius: ${({ theme }) => theme.radii[0]};
   padding: 1.6rem 3rem;
-  visibility: visible;
-  opacity: 1;
-  animation: opacity 3s;
   border-bottom: 0.1rem solid white;
 
   p {
