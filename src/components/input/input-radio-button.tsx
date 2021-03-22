@@ -1,32 +1,31 @@
 import React from "react";
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 
 import { Separator } from "@src/components/separator/separator";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-type InputRadioProps = {
-  name: string;
-  value: string;
-  onChange: () => void;
-};
-
-const InputRadio: React.FC<{ inputsData: InputRadioProps[] }> = ({
-  inputsData,
-}) => {
+const InputsRadio: React.FC<{
+  groupName: string;
+  inputsValues: string[];
+  selectedInput: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}> = ({ groupName, inputsValues, selectedInput, onChange }) => {
   return (
-    <div role="radiogroup" aria-label={inputsData[0].name}>
-      {inputsData.map((input, index) => {
+    <div role="radiogroup" aria-label={groupName}>
+      {inputsValues.map((inputValue) => {
+        const inputId = uuidv4();
         return (
-          <React.Fragment key={"radioInput" + Date.now() + index}>
-            <Label htmlFor={"radioInput" + input.name + index}>
-              {input.value}
+          <React.Fragment key={inputId}>
+            <Label htmlFor={inputId}>
+              {inputValue}
               <RadioInputElement
                 type="radio"
-                id={"radioInput" + input.name + index}
-                name={input.name}
-                onChange={input.onChange}
-                value={input.value}
-                defaultChecked={index === 0 ? true : false}
+                id={inputId}
+                name={groupName}
+                onChange={onChange}
+                value={inputValue}
+                checked={selectedInput === inputValue ? true : false}
               />
               <span />
             </Label>
@@ -46,6 +45,7 @@ const Label = styled.label`
   width: 100%;
   padding: 0 ${({ theme }) => theme.spaces.xs};
   height: 6.8rem;
+  cursor: pointer;
 
   @media ${deviceBreakpoints.m} {
     padding: 0 ${({ theme }) => theme.spaces.xxs};
@@ -77,9 +77,7 @@ const Label = styled.label`
   }
 
   input:focus + span {
-    // This line is for mimicking Firefox native focus style on custom radios
-    box-shadow: 0 0 5px 0 Highlight;
-    // And this one for Chrome & Safari native focus style on custom radios
+    outline: Highlight auto 1px;
     outline: -webkit-focus-ring-color auto 1px;
   }
 `;
@@ -95,6 +93,4 @@ const RadioInputElement = styled.input`
   width: 1px;
 `;
 
-export type { InputRadioProps };
-
-export { InputRadio };
+export { InputsRadio };

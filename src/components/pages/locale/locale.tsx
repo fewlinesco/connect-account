@@ -2,12 +2,16 @@ import React from "react";
 import styled from "styled-components";
 
 import { MagnifyingGlass } from "@src/components/icons/magnifying-glass/magnifying-glass";
-import { InputRadio } from "@src/components/input/input-radio-button";
+import { InputsRadio } from "@src/components/input/input-radio-button";
 import { InputText } from "@src/components/input/input-text";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Locale: React.FC = () => {
+  const availableLanguage = ["English"];
   const [searchValue, setSearchValue] = React.useState("");
+  const [selectedLanguage, setSelectedLanguage] = React.useState<string>(
+    availableLanguage[0],
+  );
 
   return (
     <>
@@ -28,23 +32,11 @@ const Locale: React.FC = () => {
       </SearchInputContainer>
 
       <LanguagesList>
-        <InputRadio
-          inputsData={[
-            {
-              name: "language",
-              value: "English",
-              onChange: () => {
-                return;
-              },
-            },
-            {
-              name: "language",
-              value: "Français",
-              onChange: () => {
-                return;
-              },
-            },
-          ]}
+        <InputsRadio
+          groupName="language"
+          inputsValues={availableLanguage}
+          selectedInput={selectedLanguage}
+          onChange={({ target }) => setSelectedLanguage(target.value)}
         />
       </LanguagesList>
     </>
