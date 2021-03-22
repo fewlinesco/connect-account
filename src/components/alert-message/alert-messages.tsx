@@ -3,11 +3,12 @@ import React from "react";
 import styled from "styled-components";
 
 import { CrossIcon } from "../icons/cross-icon/cross-icon";
-import { useAlertMessages } from "../react-contexts/alert-messages-context";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const AlertMessages: React.FC = () => {
-  const { alertMessages, setAlertMessages } = useAlertMessages();
+  const [alertMessages, setAlertMessages] = React.useState<
+    AlertMessageDataStructure[]
+  >([]);
 
   React.useEffect(() => {
     const intervalId = setInterval(() => {
@@ -35,17 +36,28 @@ const AlertMessages: React.FC = () => {
           return null;
         }
 
-        return <AlertMessage key={id} id={id} text={text} />;
+        return (
+          <AlertMessage
+            key={id}
+            id={id}
+            text={text}
+            alertMessages={alertMessages}
+            setAlertMessages={setAlertMessages}
+          />
+        );
       })}
     </Wrapper>
   );
 };
 
-const AlertMessage: React.FC<Omit<AlertMessageDataStructure, "expiresAt">> = ({
-  id,
-  text,
-}) => {
-  const { alertMessages, setAlertMessages } = useAlertMessages();
+const AlertMessage: React.FC<
+  Omit<AlertMessageDataStructure, "expiresAt"> & {
+    alertMessages: AlertMessageDataStructure[];
+    setAlertMessages: React.Dispatch<
+      React.SetStateAction<AlertMessageDataStructure[]>
+    >;
+  }
+> = ({ id, text, alertMessages, setAlertMessages }) => {
   const [showAlertMessage, setShowAlertMessage] = React.useState<boolean>(true);
 
   React.useEffect(() => {
@@ -129,4 +141,4 @@ const Alert = styled.div`
   }
 `;
 
-export { AlertMessages };
+export { AlertMessages, AlertMessage };
