@@ -3,7 +3,6 @@ import { RouterContext } from "next/dist/next-server/lib/router-context";
 import { NextRouter } from "next/router";
 import React from "react";
 
-import { AlertMessageProvider } from "@src/components/react-contexts/alert-messages-context";
 import { AccountApp } from "@src/pages/_app";
 
 const mockLink = ({
@@ -45,9 +44,7 @@ const mockedNextRouter: NextRouter = {
 const AllTheProviders: React.ComponentType = ({ children }) => {
   return (
     <RouterContext.Provider value={{ ...mockedNextRouter }}>
-      <AlertMessageProvider>
-        <AccountApp>{children}</AccountApp>
-      </AlertMessageProvider>
+      <AccountApp>{children}</AccountApp>
     </RouterContext.Provider>
   );
 };

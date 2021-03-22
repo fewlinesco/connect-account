@@ -34,4 +34,4 @@ function useAlertMessages(): AlertMessagesContextDataStructure {
   return context;
 }
 
-export { AlertMessageProvider, useAlertMessages };
+export { AlertMessageProvider, useAlertMessages, AlertMessagesContext };

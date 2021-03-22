@@ -4,10 +4,7 @@ import React from "react";
 import { render, screen } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
 import { SortedIdentities } from "@src/@types/sorted-identities";
-import { AlertMessages } from "@src/components/alert-message/alert-messages";
-import { useAlertMessages } from "@src/components/react-contexts/alert-messages-context";
 import LoginsOverviewPage from "@src/pages/account/logins";
-import { generateAlertMessage } from "@src/utils/generateAlertMessage";
 
 jest.mock("@src/db-client", () => {
   return {
@@ -305,79 +302,6 @@ describe("LoginsOverviewPage", () => {
       ).toBeInTheDocument();
 
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
-    });
-  });
-
-  describe("Alert messages", () => {
-    it("should display an alert message if there's one in the cookies", async () => {
-      expect.assertions(3);
-
-      const sortedIdentities: SortedIdentities = {
-        emailIdentities: [mockIdentities.primaryEmailIdentity],
-        phoneIdentities: [],
-        socialIdentities: [],
-      };
-
-      const { setAlertMessages } = useAlertMessages();
-      setAlertMessages([
-        generateAlertMessage("Email address has been deleted"),
-      ]);
-
-      render(
-        <>
-          <AlertMessages />
-          <LoginsOverviewPage sortedIdentities={sortedIdentities} />
-        </>,
-      );
-
-      expect(
-        await screen.findByText("Email address has been deleted"),
-      ).toBeInTheDocument();
-
-      expect(await screen.findByTitle("Closing cross")).toBeInTheDocument();
-      userEvent.click(screen.getByTitle("Closing cross"));
-
-      expect(
-        screen.queryByText("Email address has been deleted"),
-      ).not.toBeInTheDocument();
-    });
-
-    it("should not render expired alert messages ", async () => {
-      expect.assertions(4);
-
-      const sortedIdentities: SortedIdentities = {
-        emailIdentities: [mockIdentities.primaryEmailIdentity],
-        phoneIdentities: [],
-        socialIdentities: [],
-      };
-
-      const { setAlertMessages } = useAlertMessages();
-      setAlertMessages([
-        generateAlertMessage("This is not expired"),
-        generateAlertMessage("This is expired", Date.now() - 300000),
-      ]);
-
-      render(
-        <>
-          <AlertMessages />
-          <LoginsOverviewPage sortedIdentities={sortedIdentities} />
-        </>,
-      );
-
-      expect(
-        await screen.findByText("This is not expired"),
-      ).toBeInTheDocument();
-
-      expect(
-        await screen.queryByText("This is expired"),
-      ).not.toBeInTheDocument();
-
-      expect(await screen.findByTitle("Closing cross")).toBeInTheDocument();
-      userEvent.click(screen.getByTitle("Closing cross"));
-
-      expect(
-        screen.queryByText("Email address has been deleted"),
-      ).not.toBeInTheDocument();
     });
   });
 });
