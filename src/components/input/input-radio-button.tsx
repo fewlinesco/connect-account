@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Separator } from "@src/components/separator/separator";
+import { deviceBreakpoints } from "@src/design-system/theme";
 
 type InputRadioProps = {
   name: string;
@@ -13,7 +14,7 @@ const InputRadio: React.FC<{ inputsData: InputRadioProps[] }> = ({
   inputsData,
 }) => {
   return (
-    <>
+    <div role="radiogroup" aria-label={inputsData[0].name}>
       {inputsData.map((input, index) => {
         return (
           <React.Fragment key={"radioInput" + Date.now() + index}>
@@ -25,9 +26,7 @@ const InputRadio: React.FC<{ inputsData: InputRadioProps[] }> = ({
                 name={input.name}
                 onChange={input.onChange}
                 value={input.value}
-                defaultChecked={
-                  inputsData.length > 1 && index === 0 ? true : false
-                }
+                defaultChecked={index === 0 ? true : false}
               />
               <span />
             </Label>
@@ -35,7 +34,7 @@ const InputRadio: React.FC<{ inputsData: InputRadioProps[] }> = ({
           </React.Fragment>
         );
       })}
-    </>
+    </div>
   );
 };
 
@@ -45,12 +44,11 @@ const Label = styled.label`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: ${({ theme }) => theme.spaces.xxs} 0;
   padding: 0 ${({ theme }) => theme.spaces.xs};
-  height: 4.8rem;
+  height: 6.8rem;
 
-  &:focus {
-    background-color: lavender;
+  @media ${deviceBreakpoints.m} {
+    padding: 0 ${({ theme }) => theme.spaces.xxs};
   }
 
   span {
@@ -78,11 +76,11 @@ const Label = styled.label`
     transform: translate(-50%, -50%);
   }
 
-  &:focus + span:before {
-    content: "";
-    height: 1rem;
-    width: 1rem;
-    background-color: ${({ theme }) => theme.colors.primary};
+  input:focus + span {
+    // This line is for mimicking Firefox native focus style on custom radios
+    box-shadow: 0 0 5px 0 Highlight;
+    // And this one for Chrome & Safari native focus style on custom radios
+    outline: -webkit-focus-ring-color auto 1px;
   }
 `;
 
