@@ -1879,10 +1879,10 @@
     "@opentelemetry/plugin-https" "0.16.0"
     "@opentelemetry/tracing" "0.16.0"
 
-"@fwl/web@0.11.2":
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/@fwl/web/-/web-0.11.2.tgz#81f1c5db2198906f6ef077c2d79e90c2ff4841ec"
-  integrity sha512-m+6BOPIY8w15T0eUpSria63H5ffWrSzpncgQUU3VhYzxhSk1b4E9DOpp4hVLwk7UlsK8PQo+r+W9l3Evc6yulg==
+"@fwl/web@0.11.3":
+  version "0.11.3"
+  resolved "https://registry.yarnpkg.com/@fwl/web/-/web-0.11.3.tgz#23083ebf834df570927be835e52579ef19bf2dec"
+  integrity sha512-SCPCXE3mQ4xwkijdWrAujy1S+NG5n+v30/YVi0z5hydoBZb0jwOxVdBophtMneiK+akWNQpk+eYqZWFZQZGT8A==
   dependencies:
     "@fwl/logging" "0.1.1"
     "@fwl/tracing" "0.9.0"
