@@ -21,6 +21,7 @@ import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
+import { generateAlertMessage } from "@src/utils/generateAlertMessage";
 import { getIdentityType } from "@src/utils/get-identity-type";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
@@ -53,12 +54,8 @@ const handler: Handler = (request, response): Promise<void> => {
             ? "Email address"
             : "Phone number"
         } has been deleted`;
-        const newCookie = {
-          text: deleteMessage,
-          expiresAt: Date.now() + 300000,
-        };
 
-        setAlertMessagesCookie(response, [newCookie]);
+        setAlertMessagesCookie(response, [generateAlertMessage(deleteMessage)]);
 
         response.statusCode = HttpStatus.ACCEPTED;
         response.setHeader("Content-Type", "application/json");

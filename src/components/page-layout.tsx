@@ -1,8 +1,6 @@
-import { AlertMessage } from "@fwl/web";
 import React from "react";
 import styled from "styled-components";
 
-import { AlertMessages } from "./alert-message/alert-messages";
 import { Header } from "./header/header";
 import { DesktopNavigationBar } from "./navigation-bars/desktop-navigation-bar";
 import { MobileNavigationBar } from "./navigation-bars/mobile-navigation-bar";
@@ -10,19 +8,11 @@ import { NavigationBreadcrumbs } from "./navigation-breadcrumbs/navigation-bread
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Layout: React.FC<{
-  alertMessages?: AlertMessage[];
   title?: string;
   breadcrumbs?: string[];
-}> = ({ children, alertMessages, title, breadcrumbs }) => {
-  React.useEffect(() => {
-    if (alertMessages) {
-      document.cookie = "alert-messages=; max-age=0; path=/;";
-    }
-  }, []);
-
+}> = ({ children, title, breadcrumbs }) => {
   return (
     <Main>
-      <AlertMessages alertMessages={alertMessages} />
       <MobileDisplayOnly>
         <Header />
         <MobileNavigationBar />
