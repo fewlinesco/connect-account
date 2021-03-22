@@ -31,10 +31,9 @@ import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 const LoginsOverviewPage: React.FC<{
   sortedIdentities: SortedIdentities;
   alertMessages?: AlertMessage[];
-}> = ({ sortedIdentities, alertMessages }) => {
+}> = ({ sortedIdentities }) => {
   return (
     <Layout
-      alertMessages={alertMessages}
       title="Logins"
       breadcrumbs={["Your emails, phones and social logins"]}
     >
@@ -100,20 +99,6 @@ const getServerSideProps: GetServerSideProps = async (context) => {
 
             throw error;
           });
-
-        const alertMessages = await getServerSideCookies(request, {
-          cookieName: "alert-messages",
-          isCookieSealed: false,
-        });
-
-        if (alertMessages) {
-          return {
-            props: {
-              sortedIdentities,
-              alertMessages,
-            },
-          };
-        }
 
         return {
           props: {
