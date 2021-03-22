@@ -37,13 +37,13 @@ const DesktopNavigationBar: React.FC = () => {
 const ListItem = styled(NeutralLink)`
   display: flex;
   align-items: center;
-  padding-top: ${({ theme }) => theme.spaces.xs};
-  padding-bottom: ${({ theme }) => theme.spaces.xs};
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
   padding-right: 0;
   padding-left: ${({ theme }) => theme.spaces.xs};
 
   p {
-    margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
+    margin: 0 0 0 1.5rem;
   }
 `;
 
