@@ -2,7 +2,7 @@ import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { StoriesContainer } from "../containers/stories-container";
-import { AlertMessages, AlertMessage } from "./alert-messages";
+import { AlertMessage } from "./alert-messages";
 import { generateAlertMessage } from "@src/utils/generateAlertMessage";
 
 const EmailValidationAlertMessage = (): JSX.Element => {
@@ -96,5 +96,5 @@ export {
 
 export default {
   title: "components/Alert Messages",
-  component: AlertMessages,
+  component: AlertMessage,
 };

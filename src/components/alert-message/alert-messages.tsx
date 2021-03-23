@@ -63,6 +63,10 @@ const AlertMessage: React.FC<
   React.useEffect(() => {
     const timeoutId = setTimeout(() => {
       setShowAlertMessage(false);
+
+      setAlertMessages(
+        alertMessages.filter((alertMessage) => alertMessage.id !== id),
+      );
     }, 3000);
 
     return () => {
@@ -86,7 +90,7 @@ const AlertMessage: React.FC<
         onClick={() => {
           setShowAlertMessage(false);
           setAlertMessages(
-            [...alertMessages].filter((alertMessage) => alertMessage.id !== id),
+            alertMessages.filter((alertMessage) => alertMessage.id !== id),
           );
         }}
       >
