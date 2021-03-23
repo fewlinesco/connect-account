@@ -9,6 +9,8 @@ import { Separator } from "@src/components/separator/separator";
 const TwoFA: React.FC<{ primaryIdentities: Identity[] }> = ({
   primaryIdentities,
 }) => {
+  const [isCodeSent, setIsCodeSent] = React.useState<boolean>(false);
+
   return (
     <Wrapper>
       <SecurityMessage>
@@ -16,7 +18,16 @@ const TwoFA: React.FC<{ primaryIdentities: Identity[] }> = ({
         <p>You need double factor authentication to access this page</p>
       </SecurityMessage>
       <Separator />
-      <TwoFAForm primaryIdentities={primaryIdentities} />
+      <TwoFAForm
+        primaryIdentities={primaryIdentities}
+        isCodeSent={isCodeSent}
+        setIsCodeSent={setIsCodeSent}
+      />
+      {isCodeSent ? (
+        <>
+          <Separator />
+        </>
+      ) : null}
     </Wrapper>
   );
 };

@@ -1,5 +1,3 @@
-import "react-phone-number-input/style.css";
-
 import { Identity } from "@fewlines/connect-management";
 import React from "react";
 import styled from "styled-components";
@@ -7,11 +5,15 @@ import { v4 as uuidv4 } from "uuid";
 
 import { InputsRadio } from "../input/input-radio-button";
 import { Form } from "./form";
+import { HttpVerbs } from "@src/@types/http-verbs";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { fetchJson } from "@src/utils/fetch-json";
 
 const TwoFAForm: React.FC<{
   primaryIdentities: Identity[];
-}> = ({ primaryIdentities }) => {
+  isCodeSent: boolean;
+  setIsCodeSent: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ primaryIdentities, isCodeSent, setIsCodeSent }) => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
   const [selectedIdentity, setSelectedIdentity] = React.useState<Identity>(
     primaryIdentities[0],
@@ -23,8 +25,19 @@ const TwoFAForm: React.FC<{
     <ContactChoiceForm
       formID={formID}
       onSubmit={async () => {
-        setFormID(uuidv4());
-        return;
+        const body = {
+          callbackUrl: "/",
+          identityInput: selectedIdentity,
+        };
+
+        await fetchJson(
+          "/api/auth-connect/send-two-fa-validation-code",
+          HttpVerbs.POST,
+          body,
+        ).then(() => {
+          setFormID(uuidv4());
+          setIsCodeSent(true);
+        });
       }}
     >
       <p>
@@ -44,8 +57,11 @@ const TwoFAForm: React.FC<{
           }
         }}
       />
-      <Button variant={ButtonVariant.PRIMARY} type="submit">
-        Send confirmation code
+      <Button
+        variant={isCodeSent ? ButtonVariant.SECONDARY : ButtonVariant.PRIMARY}
+        type="submit"
+      >
+        {isCodeSent ? "Resend confirmation code" : "Send confirmation code"}
       </Button>
     </ContactChoiceForm>
   );
@@ -53,14 +69,13 @@ const TwoFAForm: React.FC<{
 
 const ContactChoiceForm = styled(Form)`
   padding: ${({ theme }) => theme.spaces.xs} 0;
-
   p {
     padding-bottom: ${({ theme }) => theme.spaces.xs};
     padding-left: ${({ theme }) => theme.spaces.xs};
   }
 
   button {
-    margin-top: ${({ theme }) => theme.spaces.xs};
+    margin: ${({ theme }) => theme.spaces.xs} 0 0 0;
   }
 `;
 
