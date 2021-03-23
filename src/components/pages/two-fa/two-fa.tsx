@@ -2,7 +2,7 @@ import { Identity } from "@fewlines/connect-management";
 import React from "react";
 import styled from "styled-components";
 
-import { TwoFAForm } from "@src/components/forms/two-fa-form";
+import { SendTwoFACodeForm } from "@src/components/forms/send-two-fa-code-form";
 import { LockIcon } from "@src/components/icons/lock-icon/lock-icon";
 import { Separator } from "@src/components/separator/separator";
 
@@ -18,7 +18,7 @@ const TwoFA: React.FC<{ primaryIdentities: Identity[] }> = ({
         <p>You need double factor authentication to access this page</p>
       </SecurityMessage>
       <Separator />
-      <TwoFAForm
+      <SendTwoFACodeForm
         primaryIdentities={primaryIdentities}
         isCodeSent={isCodeSent}
         setIsCodeSent={setIsCodeSent}

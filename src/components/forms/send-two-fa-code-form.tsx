@@ -9,7 +9,7 @@ import { HttpVerbs } from "@src/@types/http-verbs";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { fetchJson } from "@src/utils/fetch-json";
 
-const TwoFAForm: React.FC<{
+const SendTwoFACodeForm: React.FC<{
   primaryIdentities: Identity[];
   isCodeSent: boolean;
   setIsCodeSent: React.Dispatch<React.SetStateAction<boolean>>;
@@ -79,4 +79,4 @@ const ContactChoiceForm = styled(Form)`
   }
 `;
 
-export { TwoFAForm };
+export { SendTwoFACodeForm };
