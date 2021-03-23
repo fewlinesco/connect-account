@@ -20,7 +20,7 @@ import React from "react";
 import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
-import { Sudo } from "@src/components/pages/sudo/sudo";
+import { TwoFA } from "@src/components/pages/two-fa/two-fa";
 import { config } from "@src/config";
 import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
@@ -31,11 +31,10 @@ import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 const SudoPage: React.FC<{ primaryIdentities: Identity[] }> = ({
   primaryIdentities,
 }) => {
-  console.log(primaryIdentities);
   return (
     <Layout title="Security">
       <Container>
-        <Sudo primaryIdentities={primaryIdentities} />
+        <TwoFA primaryIdentities={primaryIdentities} />
       </Container>
     </Layout>
   );
