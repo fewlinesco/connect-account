@@ -9,10 +9,11 @@ type InputTextProps = {
   onChange: (value: string) => void;
   value?: string;
   placeholder?: string;
+  className?: string;
 };
 
 const InputText: React.FC<InputTextProps> = (props) => {
-  const { label } = props;
+  const { label, className } = props;
 
   const inputRef = React.useRef(null);
   const { labelProps, inputProps } = useTextField(props, inputRef);
@@ -20,7 +21,7 @@ const InputText: React.FC<InputTextProps> = (props) => {
   return (
     <Label {...labelProps}>
       {label}
-      <InputElement {...inputProps} ref={inputRef} />
+      <InputElement {...inputProps} ref={inputRef} className={className} />
     </Label>
   );
 };
