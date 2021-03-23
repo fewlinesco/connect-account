@@ -20,7 +20,7 @@ const AlertMessages: React.FC = () => {
 
         document.cookie = "alert-messages=; max-age=0; path=/;";
       }
-    }, 1000);
+    }, 500);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -67,7 +67,7 @@ const AlertMessage: React.FC<
 
     return () => {
       setAlertMessages(
-        [...alertMessages].filter((alertMessage) => alertMessage.id !== id),
+        alertMessages.filter((alertMessage) => alertMessage.id !== id),
       );
 
       clearTimeout(timeoutId);
