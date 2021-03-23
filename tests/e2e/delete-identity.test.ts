@@ -30,7 +30,7 @@ describe("Delete Identity", () => {
   });
 
   test("It should navigate to the show of the Identity, and delete it", async (done) => {
-    expect.assertions(12);
+    expect.assertions(13);
 
     try {
       await authenticateToConnect();
@@ -55,6 +55,11 @@ describe("Delete Identity", () => {
       expect(await text("You are about to delete").exists()).toBeTruthy();
       expect(await text("Delete this email address").exists()).toBeTruthy();
       await click("Delete this email address");
+
+      await waitFor("Email address has been deleted");
+      expect(
+        await text("Email address has been deleted").exists(),
+      ).toBeTruthy();
 
       await waitFor("Show");
       expect(await text("Show").exists()).toBeTruthy();

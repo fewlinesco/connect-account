@@ -5,7 +5,6 @@ import React from "react";
 import { ThemeProvider } from "styled-components";
 
 import { AlertMessages } from "@src/components/alert-message/alert-messages";
-import { AlertMessageProvider } from "@src/components/react-contexts/alert-messages-context";
 import { GlobalStyle } from "@src/design-system/globals/global-style";
 import { theme } from "@src/design-system/theme";
 
@@ -31,9 +30,7 @@ const AccountApp: React.FC = ({ children }) => {
           <title>Connect Account</title>
         </Head>
         <GlobalStyle />
-        <AlertMessageProvider>
-          <AlertMessages />
-        </AlertMessageProvider>
+        <AlertMessages />
         {children}
       </ThemeProvider>
     </SSRProvider>
