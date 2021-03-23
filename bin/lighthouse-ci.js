@@ -78,7 +78,7 @@ async function main() {
   }
 
   const PORT = 8041;
-  const hostname = process.env.CONNECT_TEST_ACCOUNT_PASSWORD;
+  const hostname = process.env.CONNECT_TEST_ACCOUNT_URL;
   const url = `${hostname}/account/logins`;
   const browser = await puppeteer.launch({
     args: [`--remote-debugging-port=${PORT}`],
