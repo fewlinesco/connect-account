@@ -1,10 +1,11 @@
-name: CI
+name: Lighthouse reports
 
 on:
   deployment_status:
 
 jobs:
   lighthouse:
+    if: ${{ contains(github.event.deployment_status.target_url, 'heroku') && github.event.deployment_status.state == 'success'}}
     runs-on: ubuntu-latest
 
     container:
@@ -12,6 +13,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: chmod
+        run: chmod o+w ./connect-account
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
