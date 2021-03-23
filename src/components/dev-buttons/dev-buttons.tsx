@@ -1,14 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
+import { generateAlertMessage } from "@src/utils/generateAlertMessage";
+
 const DevButtonAddAlertMessage: React.FC = () => {
-  const count = 0;
   const cookiesList = encodeURIComponent(
     JSON.stringify([
-      {
-        text: `This is the alert message number ${count}`,
-        expiresAt: Date.now() + 300000,
-      },
+      generateAlertMessage("This is an alert message"),
+      generateAlertMessage("This is an alert message"),
     ]),
   );
 
@@ -41,6 +40,7 @@ const DevButton = styled.button`
   padding: 1rem 2rem;
   border-radius: ${({ theme }) => theme.radii[0]};
   background-color: ${({ theme }) => theme.colors.boxShadow};
+  cursor: pointer;
 `;
 
 export { DevButtons };

@@ -1,5 +1,5 @@
 import { IdentityTypes } from "@fewlines/connect-management";
-import { AlertMessage, getServerSideCookies, HttpStatus } from "@fwl/web";
+import { AlertMessage, HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -24,10 +24,9 @@ const ValidateIdentityPage: React.FC<{
   type: IdentityTypes;
   eventId: string;
   alertMessages?: AlertMessage[];
-}> = ({ type, eventId, alertMessages }) => {
+}> = ({ type, eventId }) => {
   return (
     <Layout
-      alertMessages={alertMessages}
       title="Logins"
       breadcrumbs={[
         type.toUpperCase() === IdentityTypes.EMAIL
@@ -69,24 +68,6 @@ const getServerSideProps: GetServerSideProps = async (context) => {
         response.statusCode = HttpStatus.NOT_FOUND;
         response.end();
         return;
-      }
-
-      const alertMessages = await getServerSideCookies<string | undefined>(
-        request,
-        {
-          cookieName: "alert-messages",
-          isCookieSealed: false,
-        },
-      );
-
-      if (alertMessages) {
-        return {
-          props: {
-            type: context.params.type,
-            eventId: context.params.eventId,
-            alertMessages,
-          },
-        };
       }
 
       return {

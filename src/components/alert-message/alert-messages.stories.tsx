@@ -1,67 +1,74 @@
-import React from "react";
+// import { AlertMessage } from "@fwl/web";
+// import React from "react";
+// import { withReactContext } from "storybook-react-context";
 
-import { AlertMessages } from "./alert-messages";
+// import { AlertMessageProvider } from "../react-contexts/alert-messages-context";
+// import { AlertMessages } from "./alert-messages";
+// import { generateAlertMessage } from "@src/utils/generateAlertMessage";
 
-const EmailValidationAlertMessage = (): JSX.Element => {
-  return (
-    <AlertMessages
-      alertMessages={[
-        {
-          text: "Confirmation email has been sent",
-          expiresAt: Date.now() + 300000,
-        },
-      ]}
-    />
-  );
-};
+// type UseState = [
+//   AlertMessage[],
+//   React.Dispatch<React.SetStateAction<AlertMessage[]>>,
+// ];
 
-const PhoneValidationAlertMessage = (): JSX.Element => {
-  return (
-    <AlertMessages
-      alertMessages={[
-        {
-          text: "Confirmation SMS has been sent",
-          expiresAt: Date.now() + 300000,
-        },
-      ]}
-    />
-  );
-};
+// function AlertMessageJSX(
+//   value: AlertMessage,
+//   dispatch: React.Dispatch<React.SetStateAction<AlertMessage[]>>,
+// ): JSX.Element {
+//   return (
+//     <AlertMessageProvider>
+//       <AlertMessages />
+//       <button onClick={() => dispatch([value])}>
+//         Click to trigger an alert message
+//       </button>
+//     </AlertMessageProvider>
+//   );
+// }
 
-const EmailDeleteAlertMessage = (): JSX.Element => {
-  return (
-    <AlertMessages
-      alertMessages={[
-        {
-          text: "Email has been deleted",
-          expiresAt: Date.now() + 300000,
-        },
-      ]}
-    />
-  );
-};
+// const EmailValidationAlertMessage = (
+//   _: unknown,
+//   { context: [_state, dispatch] }: { context: UseState },
+// ): JSX.Element =>
+//   AlertMessageJSX(
+//     generateAlertMessage("Confirmation email has been sent"),
+//     dispatch,
+//   );
 
-const PhoneDeleteAlertMessage = (): JSX.Element => {
-  return (
-    <AlertMessages
-      alertMessages={[
-        {
-          text: "Phone number has been deleted",
-          expiresAt: Date.now() + 300000,
-        },
-      ]}
-    />
-  );
-};
+// const PhoneValidationAlertMessage = (
+//   _: unknown,
+//   { context: [_state, dispatch] }: { context: UseState },
+// ): JSX.Element =>
+//   AlertMessageJSX(
+//     generateAlertMessage("Confirmation SMS has been sent"),
+//     dispatch,
+//   );
 
-export {
-  EmailValidationAlertMessage,
-  PhoneValidationAlertMessage,
-  EmailDeleteAlertMessage,
-  PhoneDeleteAlertMessage,
-};
+// const EmailDeleteAlertMessage = (
+//   _: unknown,
+//   { context: [_state, dispatch] }: { context: UseState },
+// ): JSX.Element =>
+//   AlertMessageJSX(generateAlertMessage("Email has been deleted"), dispatch);
 
-export default {
-  title: "components/Alert Bar",
-  component: AlertMessages,
-};
+// const PhoneDeleteAlertMessage = (
+//   _: unknown,
+//   { context: [_state, dispatch] }: { context: UseState },
+// ): JSX.Element =>
+//   AlertMessageJSX(
+//     generateAlertMessage("Phone number has been deleted"),
+//     dispatch,
+//   );
+
+// export {
+//   EmailValidationAlertMessage,
+//   PhoneValidationAlertMessage,
+//   EmailDeleteAlertMessage,
+//   PhoneDeleteAlertMessage,
+// };
+
+// export default {
+//   title: "components/Alert Messages",
+//   component: AlertMessages,
+//   decorators: [withReactContext],
+// };
+
+export {};
