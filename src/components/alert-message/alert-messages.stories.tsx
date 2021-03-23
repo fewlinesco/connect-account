@@ -1,74 +1,100 @@
-// import { AlertMessage } from "@fwl/web";
-// import React from "react";
-// import { withReactContext } from "storybook-react-context";
+import React from "react";
+import { v4 as uuidv4 } from "uuid";
 
-// import { AlertMessageProvider } from "../react-contexts/alert-messages-context";
-// import { AlertMessages } from "./alert-messages";
-// import { generateAlertMessage } from "@src/utils/generateAlertMessage";
+import { StoriesContainer } from "../containers/stories-container";
+import { AlertMessage } from "./alert-messages";
+import { generateAlertMessage } from "@src/utils/generateAlertMessage";
 
-// type UseState = [
-//   AlertMessage[],
-//   React.Dispatch<React.SetStateAction<AlertMessage[]>>,
-// ];
+const EmailValidationAlertMessage = (): JSX.Element => {
+  const generatedAlertMessage = generateAlertMessage(
+    "Confirmation email has been sent",
+  );
+  const alertMessageID = uuidv4();
 
-// function AlertMessageJSX(
-//   value: AlertMessage,
-//   dispatch: React.Dispatch<React.SetStateAction<AlertMessage[]>>,
-// ): JSX.Element {
-//   return (
-//     <AlertMessageProvider>
-//       <AlertMessages />
-//       <button onClick={() => dispatch([value])}>
-//         Click to trigger an alert message
-//       </button>
-//     </AlertMessageProvider>
-//   );
-// }
+  return (
+    <StoriesContainer>
+      <AlertMessage
+        key={alertMessageID}
+        id={alertMessageID}
+        text={generatedAlertMessage.text}
+        alertMessages={[generatedAlertMessage]}
+        setAlertMessages={() => {
+          return;
+        }}
+      />
+    </StoriesContainer>
+  );
+};
 
-// const EmailValidationAlertMessage = (
-//   _: unknown,
-//   { context: [_state, dispatch] }: { context: UseState },
-// ): JSX.Element =>
-//   AlertMessageJSX(
-//     generateAlertMessage("Confirmation email has been sent"),
-//     dispatch,
-//   );
+const PhoneValidationAlertMessage = (): JSX.Element => {
+  const generatedAlertMessage = generateAlertMessage(
+    "Confirmation SMS has been sent",
+  );
+  const alertMessageID = uuidv4();
 
-// const PhoneValidationAlertMessage = (
-//   _: unknown,
-//   { context: [_state, dispatch] }: { context: UseState },
-// ): JSX.Element =>
-//   AlertMessageJSX(
-//     generateAlertMessage("Confirmation SMS has been sent"),
-//     dispatch,
-//   );
+  return (
+    <StoriesContainer>
+      <AlertMessage
+        key={alertMessageID}
+        id={alertMessageID}
+        text={generatedAlertMessage.text}
+        alertMessages={[generatedAlertMessage]}
+        setAlertMessages={() => {
+          return;
+        }}
+      />
+    </StoriesContainer>
+  );
+};
 
-// const EmailDeleteAlertMessage = (
-//   _: unknown,
-//   { context: [_state, dispatch] }: { context: UseState },
-// ): JSX.Element =>
-//   AlertMessageJSX(generateAlertMessage("Email has been deleted"), dispatch);
+const EmailDeleteAlertMessage = (): JSX.Element => {
+  const generatedAlertMessage = generateAlertMessage("Email has been deleted");
+  const alertMessageID = uuidv4();
 
-// const PhoneDeleteAlertMessage = (
-//   _: unknown,
-//   { context: [_state, dispatch] }: { context: UseState },
-// ): JSX.Element =>
-//   AlertMessageJSX(
-//     generateAlertMessage("Phone number has been deleted"),
-//     dispatch,
-//   );
+  return (
+    <StoriesContainer>
+      <AlertMessage
+        key={alertMessageID}
+        id={alertMessageID}
+        text={generatedAlertMessage.text}
+        alertMessages={[generatedAlertMessage]}
+        setAlertMessages={() => {
+          return;
+        }}
+      />
+    </StoriesContainer>
+  );
+};
 
-// export {
-//   EmailValidationAlertMessage,
-//   PhoneValidationAlertMessage,
-//   EmailDeleteAlertMessage,
-//   PhoneDeleteAlertMessage,
-// };
+const PhoneDeleteAlertMessage = (): JSX.Element => {
+  const generatedAlertMessage = generateAlertMessage(
+    "Phone number has been deleted",
+  );
+  const alertMessageID = uuidv4();
 
-// export default {
-//   title: "components/Alert Messages",
-//   component: AlertMessages,
-//   decorators: [withReactContext],
-// };
+  return (
+    <StoriesContainer>
+      <AlertMessage
+        key={alertMessageID}
+        id={alertMessageID}
+        text={generatedAlertMessage.text}
+        alertMessages={[generatedAlertMessage]}
+        setAlertMessages={() => {
+          return;
+        }}
+      />
+    </StoriesContainer>
+  );
+};
 
-export {};
+export {
+  EmailValidationAlertMessage,
+  PhoneValidationAlertMessage,
+  EmailDeleteAlertMessage,
+  PhoneDeleteAlertMessage,
+};
+
+export default {
+  title: "components/Alert Messages",
+  component: AlertMessage,
+};
