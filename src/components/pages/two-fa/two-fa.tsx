@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { SendTwoFACodeForm } from "@src/components/forms/send-two-fa-code-form";
+import { VerifyTwoFACodeForm } from "@src/components/forms/verify-two-fa-code-form";
 import { LockIcon } from "@src/components/icons/lock-icon/lock-icon";
 import { Separator } from "@src/components/separator/separator";
 
@@ -23,9 +24,11 @@ const TwoFA: React.FC<{ primaryIdentities: Identity[] }> = ({
         isCodeSent={isCodeSent}
         setIsCodeSent={setIsCodeSent}
       />
+
       {isCodeSent ? (
         <>
           <Separator />
+          <VerifyTwoFACodeForm />
         </>
       ) : null}
     </Wrapper>

@@ -10,6 +10,7 @@ type InputTextProps = {
   value?: string;
   placeholder?: string;
   className?: string;
+  maxLength?: number;
 };
 
 const InputText: React.FC<InputTextProps> = (props) => {
