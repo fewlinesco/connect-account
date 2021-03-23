@@ -31,9 +31,10 @@ async function createE2eStatusCheck(): Promise<void> {
       check.name === "e2e-tests" && check.conclusion !== "skipped",
   );
 
-  const pullRequestNumber = e2eCheckRun[0].pull_requests[0].number
-    ? e2eCheckRun[0].pull_requests[0].number
-    : undefined;
+  const pullRequestNumber =
+    e2eCheckRun[0].pull_requests.length > 0
+      ? e2eCheckRun[0].pull_requests[0].number
+      : undefined;
 
   const statusCheckBody: Record<string, unknown> = {
     context: "e2e tests",
