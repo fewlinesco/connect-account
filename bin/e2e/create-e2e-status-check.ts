@@ -31,15 +31,22 @@ async function createE2eStatusCheck(): Promise<void> {
       check.name === "e2e-tests" && check.conclusion !== "skipped",
   );
 
-  const target_url = hasDeploymentFailed
-    ? githubActionsContext.deployment_status.target_url
-    : `https://github.com/fewlinesco/connect-account/pull/${e2eCheckRun[0].pull_requests[0].number}/checks?check_run_id=${e2eCheckRun[0].id}`;
+  const pullRequestNumber =
+    e2eCheckRun[0].pull_requests.length > 0
+      ? e2eCheckRun[0].pull_requests[0].number
+      : undefined;
 
-  const statusCheckBody = {
+  const statusCheckBody: Record<string, unknown> = {
     context: "e2e tests",
     state: hasDeploymentFailed ? "failure" : e2eCheckRun[0].conclusion,
-    target_url,
   };
+
+  if (hasDeploymentFailed) {
+    statusCheckBody.target_url =
+      githubActionsContext.deployment_status.target_url;
+  } else if (pullRequestNumber) {
+    statusCheckBody.target_url = `https://github.com/fewlinesco/connect-account/pull/${pullRequestNumber}/checks?check_run_id=${e2eCheckRun[0].id}`;
+  }
 
   await fetch(
     `https://api.github.com/repos/fewlinesco/connect-account/statuses/${githubActionsContext.deployment.sha}`,
