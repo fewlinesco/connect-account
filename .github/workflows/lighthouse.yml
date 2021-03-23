@@ -1,23 +1,55 @@
 name: CI
 
-on: [push]
+on:
+  deployment_status:
 
 jobs:
-  lhci:
-    name: Lighthouse
+  lighthouse:
     runs-on: ubuntu-latest
+
+    container:
+      image: femtopixel/google-lighthouse-puppeteer
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 10.x
-        uses: actions/setup-node@v1
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache
         with:
-          node-version: 10.x
-      - name: npm install, build
-        run: |
-          npm install
-          npm run build
-      - name: run Lighthouse CI
-        run: |
-          npm install -g @lhci/cli@0.7.x
-          lhci autorun
+          path: |
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+            **/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - name: creating test user
+        env:
+          CONNECT_TEST_ACCOUNT_EMAIL: "lighthouse@e2e.test"
+          CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
+          CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
+          CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
+        run: yarn e2e:create-test-user
+
+      - name: run lighthouse script
+        env:
+          CONNECT_TEST_ACCOUNT_EMAIL: 'taiko_${{ github.event.deployment.sha }}@e2e.test'
+          CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
+          CONNECT_TEST_ACCOUNT_URL: ${{ github.event.deployment.payload.web_url }}
+        run: yarn lighthouse
+
+      - name: removing test user
+        if: ${{ always() }}
+        env:
+          CONNECT_TEST_ACCOUNT_EMAIL: "lighthouse@e2e.test"
+          CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
+          CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
+        run: yarn e2e:remove-test-user
