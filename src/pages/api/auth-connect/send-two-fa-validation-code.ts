@@ -3,6 +3,7 @@ import {
   IdentityTypes,
   ConnectUnreachableError,
   sendTwoFAVerificationCode,
+  InvalidIdentityTypeError,
 } from "@fewlines/connect-management";
 import { getTracer } from "@fwl/tracing";
 import {
@@ -40,6 +41,7 @@ const handler: Handler = (request, response): Promise<void> => {
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
     noUserFound: ERRORS_DATA.NO_USER_FOUND,
+    invalidIdentityType: ERRORS_DATA.INVALID_IDENTITY_TYPE,
   };
 
   return getTracer().span(
@@ -117,6 +119,10 @@ const handler: Handler = (request, response): Promise<void> => {
         })
         .catch((error) => {
           span.setDisclosedAttribute("is verification code sent", false);
+
+          if (error instanceof InvalidIdentityTypeError) {
+            throw webErrorFactory(webErrors.invalidIdentityType);
+          }
 
           if (error instanceof IdentityValueCantBeBlankError) {
             throw webErrorFactory(webErrors.identityInputCantBeBlank);
