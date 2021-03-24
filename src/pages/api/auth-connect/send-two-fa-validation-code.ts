@@ -72,7 +72,7 @@ const handler: Handler = (request, response): Promise<void> => {
       };
 
       return await sendTwoFAVerificationCode(config.managementCredentials, {
-        callbackUrl,
+        callbackUrl: callbackUrl || "/",
         identity,
         localeCodeOverride: "en-EN",
         userId: userCookie.sub,

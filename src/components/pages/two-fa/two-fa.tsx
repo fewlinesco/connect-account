@@ -24,7 +24,6 @@ const TwoFA: React.FC<{ primaryIdentities: Identity[] }> = ({
         isCodeSent={isCodeSent}
         setIsCodeSent={setIsCodeSent}
       />
-
       {isCodeSent ? (
         <>
           <Separator />
