@@ -54,6 +54,11 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: "Temporary Identity expired",
   },
+  NOT_FOUND: {
+    code: "not_found",
+    httpStatus: HttpStatus.NOT_FOUND,
+    message: "Ressource not found",
+  },
   INVALID_PASSWORD_INPUT: {
     code: "invalid_password_input",
     httpStatus: HttpStatus.UNPROCESSABLE_ENTITY,
