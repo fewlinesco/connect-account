@@ -45,13 +45,11 @@ async function authentication(
       span.setDisclosedAttribute("user cookie found", false);
       response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
       response.setHeader("location", "/");
-      response.end();
       return;
     }
-
     span.setDisclosedAttribute("user cookie found", true);
-    const { access_token: currentAccessToken, sub } = userCookie;
 
+    const { access_token: currentAccessToken, sub } = userCookie;
     const user = await getDBUserFromSub(sub).catch((error) => {
       span.setDisclosedAttribute("database reachable", false);
       throw webErrorFactory({
@@ -64,11 +62,10 @@ async function authentication(
       span.setDisclosedAttribute("db user found", false);
       response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
       response.setHeader("location", "/");
-      response.end();
       return;
     }
-
     span.setDisclosedAttribute("db user found", true);
+
     await decryptVerifyAccessToken(currentAccessToken).catch(async (error) => {
       if (error.name === "TokenExpiredError") {
         span.setDisclosedAttribute("is access_token expired", true);
