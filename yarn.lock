@@ -1848,10 +1848,10 @@
     node-fetch "2.6.1"
     node-jose "2.0.0"
 
-"@fewlines/connect-management@0.6.1":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@fewlines/connect-management/-/connect-management-0.6.1.tgz#3b6a464c63b894e490fecd3cd92033f4686140f0"
-  integrity sha512-NOUdf672oPEG8LqQcUNdG/YnghpTQu8fKKI8/LBd0QQhgr+VVoxlQ88hF+TL1yvQAzL2xmf8tHYnYuvPiBA2AQ==
+"@fewlines/connect-management@0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@fewlines/connect-management/-/connect-management-0.6.2.tgz#3fd9ecf0e6fe7f06e505fe9fa52ebb8113bdbdc6"
+  integrity sha512-xzka9EhkiUfYfjp3sCAkO34Uk+McHahjRDMTYriLi3j3h0wRysvCrCjELvtq9mkC4o2I0OoTO408D0DEPvib7g==
   dependencies:
     apollo-link "1.2.14"
     apollo-link-context "1.0.20"
