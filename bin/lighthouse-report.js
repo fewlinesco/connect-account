@@ -1,5 +1,11 @@
 class LighthouseReport {
   getUrls() {
+    if (process.env.CONNECT_TEST_ACCOUNT_URL === undefined) {
+      throw new Error(
+        "CONNECT_TEST_ACCOUNT_URL environment variable is undefined",
+      );
+    }
+
     const reviewAppURL = process.env.CONNECT_TEST_ACCOUNT_URL;
     console.log("getUrls", reviewAppURL);
     return [reviewAppURL];
@@ -7,6 +13,24 @@ class LighthouseReport {
 
   /* eslint-disable no-async-promise-executor */
   connect(browser) {
+    if (process.env.CONNECT_TEST_ACCOUNT_URL === undefined) {
+      throw new Error(
+        "CONNECT_TEST_ACCOUNT_URL environment variable is undefined",
+      );
+    }
+
+    if (process.env.CONNECT_TEST_ACCOUNT_EMAIL === undefined) {
+      throw new Error(
+        "CONNECT_TEST_ACCOUNT_EMAIL environment variable is undefined",
+      );
+    }
+
+    if (process.env.CONNECT_TEST_ACCOUNT_PASSWORD === undefined) {
+      throw new Error(
+        "CONNECT_TEST_ACCOUNT_PASSWORD environment variable is undefined",
+      );
+    }
+
     return new Promise(async (resolve, _reject) => {
       const reviewAppURL = process.env.CONNECT_TEST_ACCOUNT_URL;
       console.log(reviewAppURL);
