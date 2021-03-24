@@ -39,12 +39,13 @@ class LighthouseReport {
       await page.goto(reviewAppURL);
       console.log("Production open");
 
-      // await page.waitForNavigation();
+      await page.waitForNavigation();
       console.log("waitForNavigation open");
-      await page.click("Access my account");
+      await page.click("a");
       console.log("Login button clicked");
       await page.waitForTimeout(5000);
 
+      console.log(await page.content());
       await page.waitForNavigation();
       await page.click(".login-button");
       await page.waitForTimeout(5000);
