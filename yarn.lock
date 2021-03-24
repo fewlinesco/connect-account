@@ -5487,10 +5487,10 @@ chownr@^2.0.0:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-2.0.0.tgz#15bfbe53d2eab4cf70f18a8cd68ebe5b3cb1dece"
   integrity sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==
 
-chrome-remote-interface@^0.29.0:
-  version "0.29.0"
-  resolved "https://registry.yarnpkg.com/chrome-remote-interface/-/chrome-remote-interface-0.29.0.tgz#4f9089f37aa2281e0e8b2d5bf03749f56f1cc85f"
-  integrity sha512-/XJCFa03p7fxZJt/Zn7eFlS6KWkghEUDRmj9hqnlUg98HYvrH+yoPMoh3IyM5M9bWs7k0noynXanhBzKrdjOoA==
+chrome-remote-interface@^0.30.0:
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/chrome-remote-interface/-/chrome-remote-interface-0.30.0.tgz#b9367142b362668ca7c84d642318053ac6f51495"
+  integrity sha512-krIHiWQCRvlLhHmjWuGgHJfqhj2Jcj3mtVebq3c/Pwv4RF7P0A2eSy6YRqrBPwcziYJrtsPGR0rm7uCe4987rQ==
   dependencies:
     commander "2.11.x"
     ws "^7.2.0"
@@ -7190,10 +7190,10 @@ eslint-plugin-prettier@3.3.1:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-react@7.23.0:
-  version "7.23.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.23.0.tgz#082512fc3538c7a688b24ea2f407cba1e9a7f463"
-  integrity sha512-5rfsRiHKIAdhxv3NxrzE+dBC7BFsNhuErL+Fy940oD1cau55JVTnuL25sqXqD7XY0OkYCRsKEqxZVwezE5ol5w==
+eslint-plugin-react@7.23.1:
+  version "7.23.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.23.1.tgz#f1a2e844c0d1967c822388204a8bc4dee8415b11"
+  integrity sha512-MvFGhZjI8Z4HusajmSw0ougGrq3Gs4vT/0WgwksZgf5RrLrRa2oYAw56okU4tZJl8+j7IYNuTM+2RnFEuTSdRQ==
   dependencies:
     array-includes "^3.1.3"
     array.prototype.flatmap "^1.2.4"
@@ -14326,13 +14326,13 @@ table@^6.0.4:
     slice-ansi "^4.0.0"
     string-width "^4.2.0"
 
-taiko@1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/taiko/-/taiko-1.2.2.tgz#84f20c9b3b786eee22878fadfb787ce9f3ad0308"
-  integrity sha512-oopQqb7UYrdXcNjx4dUSPVL6Yh+NRyT4GdnZFYgSxxYUNIdrsVxYX2cRlesokQANK7JGEQlqvxn2LFrnZK+1yQ==
+taiko@1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/taiko/-/taiko-1.2.3.tgz#b611ee81d93bad7dfa11076ff3d48d36c4d4e637"
+  integrity sha512-ow8JUjDCRh0YVPe+bJTx5Jttec479kZrDRKzESoYbm7nRpN0sF3yVJ/GSZ1Uf3RSRLV5Y5uc9Zcbk3bd5w/nQw==
   dependencies:
     "@babel/parser" "^7.12.7"
-    chrome-remote-interface "^0.29.0"
+    chrome-remote-interface "^0.30.0"
     commander "^7.0.0"
     debug "^4.3.1"
     documentation "^13.0.2"
