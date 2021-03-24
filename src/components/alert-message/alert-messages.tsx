@@ -101,20 +101,19 @@ const AlertMessage: React.FC<
 };
 
 const Wrapper = styled.div`
-  position: fixed;
+  position: absolute;
   top: 1rem;
   right: 50%;
   transform: translate(50%);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   z-index: 1;
+  width: 88rem;
 
   @media ${deviceBreakpoints.m} {
-    max-width: 100%;
-    left: 0;
-    margin-left: 0;
+    width: 100%;
   }
 `;
 
@@ -128,6 +127,7 @@ const Alert = styled.div`
   border-radius: ${({ theme }) => theme.radii[0]};
   padding: 1.6rem 3rem;
   border-bottom: 0.1rem solid white;
+  width: 60%;
 
   p {
     font-size: ${({ theme }) => theme.fontSizes.s};
