@@ -43,8 +43,11 @@ const Label = styled.label`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 ${({ theme }) => theme.spaces.xs};
   height: 6.8rem;
+  padding: 0 ${({ theme }) => theme.spaces.xs};
+  background-color: ${({ theme }) => theme.colors.background};
+
+  box-shadow: ${({ theme }) => theme.shadows.box};
   cursor: pointer;
 
   @media ${deviceBreakpoints.m} {
