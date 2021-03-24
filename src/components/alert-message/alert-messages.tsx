@@ -3,11 +3,12 @@ import React from "react";
 import styled from "styled-components";
 
 import { CrossIcon } from "../icons/cross-icon/cross-icon";
-import { useAlertMessages } from "../react-contexts/alert-messages-context";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const AlertMessages: React.FC = () => {
-  const { alertMessages, setAlertMessages } = useAlertMessages();
+  const [alertMessages, setAlertMessages] = React.useState<
+    AlertMessageDataStructure[]
+  >([]);
 
   React.useEffect(() => {
     const intervalId = setInterval(() => {
@@ -19,7 +20,7 @@ const AlertMessages: React.FC = () => {
 
         document.cookie = "alert-messages=; max-age=0; path=/;";
       }
-    }, 1000);
+    }, 500);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -35,27 +36,42 @@ const AlertMessages: React.FC = () => {
           return null;
         }
 
-        return <AlertMessage key={id} id={id} text={text} />;
+        return (
+          <AlertMessage
+            key={id}
+            id={id}
+            text={text}
+            alertMessages={alertMessages}
+            setAlertMessages={setAlertMessages}
+          />
+        );
       })}
     </Wrapper>
   );
 };
 
-const AlertMessage: React.FC<Omit<AlertMessageDataStructure, "expiresAt">> = ({
-  id,
-  text,
-}) => {
-  const { alertMessages, setAlertMessages } = useAlertMessages();
+const AlertMessage: React.FC<
+  Omit<AlertMessageDataStructure, "expiresAt"> & {
+    alertMessages: AlertMessageDataStructure[];
+    setAlertMessages: React.Dispatch<
+      React.SetStateAction<AlertMessageDataStructure[]>
+    >;
+  }
+> = ({ id, text, alertMessages, setAlertMessages }) => {
   const [showAlertMessage, setShowAlertMessage] = React.useState<boolean>(true);
 
   React.useEffect(() => {
     const timeoutId = setTimeout(() => {
       setShowAlertMessage(false);
+
+      setAlertMessages(
+        alertMessages.filter((alertMessage) => alertMessage.id !== id),
+      );
     }, 3000);
 
     return () => {
       setAlertMessages(
-        [...alertMessages].filter((alertMessage) => alertMessage.id !== id),
+        alertMessages.filter((alertMessage) => alertMessage.id !== id),
       );
 
       clearTimeout(timeoutId);
@@ -74,7 +90,7 @@ const AlertMessage: React.FC<Omit<AlertMessageDataStructure, "expiresAt">> = ({
         onClick={() => {
           setShowAlertMessage(false);
           setAlertMessages(
-            [...alertMessages].filter((alertMessage) => alertMessage.id !== id),
+            alertMessages.filter((alertMessage) => alertMessage.id !== id),
           );
         }}
       >
@@ -85,20 +101,19 @@ const AlertMessage: React.FC<Omit<AlertMessageDataStructure, "expiresAt">> = ({
 };
 
 const Wrapper = styled.div`
-  position: fixed;
+  position: absolute;
   top: 1rem;
   right: 50%;
   transform: translate(50%);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   z-index: 1;
+  width: 88rem;
 
   @media ${deviceBreakpoints.m} {
-    max-width: 100%;
-    left: 0;
-    margin-left: 0;
+    width: 100%;
   }
 `;
 
@@ -112,6 +127,7 @@ const Alert = styled.div`
   border-radius: ${({ theme }) => theme.radii[0]};
   padding: 1.6rem 3rem;
   border-bottom: 0.1rem solid white;
+  width: 60%;
 
   p {
     font-size: ${({ theme }) => theme.fontSizes.s};
@@ -129,4 +145,4 @@ const Alert = styled.div`
   }
 `;
 
-export { AlertMessages };
+export { AlertMessages, AlertMessage };
