@@ -33,15 +33,16 @@ class LighthouseReport {
 
     return new Promise(async (resolve, _reject) => {
       const reviewAppURL = process.env.CONNECT_TEST_ACCOUNT_URL;
-      console.log(reviewAppURL);
 
       const page = await browser.newPage();
       console.log("Page open");
       await page.goto(reviewAppURL);
       console.log("Production open");
 
-      await page.waitForNavigation();
+      // await page.waitForNavigation();
+      console.log("waitForNavigation open");
       await page.click("Access my account");
+      console.log("Login button clicked");
       await page.waitForTimeout(5000);
 
       await page.waitForNavigation();
