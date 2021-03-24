@@ -12,7 +12,6 @@ async function insertSudoEventId(
   const user = await getDBUserFromSub(sub);
 
   if (user) {
-    console.log(user);
     const updatedUser = {
       ...user,
       sudo_event_ids: [...user.sudo_event_ids, sudoEventId],
