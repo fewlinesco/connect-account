@@ -1,7 +1,7 @@
 class LighthouseReport {
   getUrls() {
     const reviewAppURL = process.env.CONNECT_TEST_ACCOUNT_URL;
-    console.log(reviewAppURL);
+    console.log("getUrls", reviewAppURL);
     return [reviewAppURL];
   }
 
