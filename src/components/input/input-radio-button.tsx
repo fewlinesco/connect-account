@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { v4 as uuidv4 } from "uuid";
 
 import { Separator } from "@src/components/separator/separator";
 import { deviceBreakpoints } from "@src/design-system/theme";
@@ -14,14 +13,13 @@ const InputsRadio: React.FC<{
   return (
     <div role="radiogroup" aria-label={groupName}>
       {inputsValues.map((inputValue) => {
-        const inputId = uuidv4();
         return (
-          <React.Fragment key={inputId}>
-            <Label htmlFor={inputId}>
+          <React.Fragment key={groupName + inputValue}>
+            <Label htmlFor={groupName + inputValue}>
               {inputValue}
               <RadioInputElement
                 type="radio"
-                id={inputId}
+                id={groupName + inputValue}
                 name={groupName}
                 onChange={onChange}
                 value={inputValue}
