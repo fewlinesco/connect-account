@@ -193,11 +193,16 @@ function authMiddleware(
       return await authentication(tracer, request, response)
         .then(() => handler(request, response))
         .catch((error) => {
-          if (error instanceof NoDBUserFoundError || NoUserCookieFoundError) {
+          if (
+            error instanceof NoDBUserFoundError ||
+            error instanceof NoUserCookieFoundError
+          ) {
             response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
             response.setHeader("location", "/");
-            return;
+            return { props: {} };
           }
+
+          throw error;
         });
     };
   };
