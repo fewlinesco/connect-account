@@ -190,15 +190,15 @@ function authMiddleware(
       request: NextApiRequest,
       response: NextApiResponse,
     ): Promise<void> => {
-      await authentication(tracer, request, response).catch((error) => {
-        if (error instanceof NoDBUserFoundError || NoUserCookieFoundError) {
-          response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-          response.setHeader("location", "/");
-          return;
-        }
-      });
-
-      return handler(request, response);
+      return await authentication(tracer, request, response)
+        .then(() => handler(request, response))
+        .catch((error) => {
+          if (error instanceof NoDBUserFoundError || NoUserCookieFoundError) {
+            response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+            response.setHeader("location", "/");
+            return;
+          }
+        });
     };
   };
 }
