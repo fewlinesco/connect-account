@@ -18,7 +18,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { UserCookie } from "@src/@types/user-cookie";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
-import { UnhandledTokenType } from "@src/errors";
+import {
+  NoDBUserFoundError,
+  NoUserCookieFoundError,
+  UnhandledTokenType,
+} from "@src/errors";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
@@ -43,9 +47,7 @@ async function authentication(
 
     if (!userCookie) {
       span.setDisclosedAttribute("user cookie found", false);
-      response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-      response.setHeader("location", "/");
-      return;
+      throw new NoUserCookieFoundError();
     }
     span.setDisclosedAttribute("user cookie found", true);
 
@@ -66,9 +68,7 @@ async function authentication(
 
         if (!user) {
           span.setDisclosedAttribute("user found on DB", false);
-          response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-          response.setHeader("location", "/");
-          return;
+          throw new NoDBUserFoundError();
         }
         span.setDisclosedAttribute("user found on DB", true);
 
@@ -190,7 +190,13 @@ function authMiddleware(
       request: NextApiRequest,
       response: NextApiResponse,
     ): Promise<void> => {
-      await authentication(tracer, request, response);
+      await authentication(tracer, request, response).catch((error) => {
+        if (error instanceof NoDBUserFoundError || NoUserCookieFoundError) {
+          response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+          response.setHeader("location", "/");
+          return;
+        }
+      });
 
       return handler(request, response);
     };
