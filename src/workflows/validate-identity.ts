@@ -14,7 +14,10 @@ async function validateIdentity(
     if (response.status >= 400) {
       const { code } = await response.json();
 
-      if (code === ERRORS_DATA.INVALID_VALIDATION_CODE.code) {
+      if (
+        code === ERRORS_DATA.INVALID_VALIDATION_CODE.code ||
+        code === ERRORS_DATA.INVALID_BODY.code
+      ) {
         throw new InvalidValidationCode("Invalid validation code");
       }
 
