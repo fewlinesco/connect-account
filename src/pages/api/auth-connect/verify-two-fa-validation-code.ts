@@ -17,7 +17,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
+import { removeExpiredSudoEventIds } from "@src/commands/remove-expired-sudo-event-ids";
 import { config } from "@src/config";
+import { NoUserFoundError } from "@src/errors";
 import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
@@ -85,6 +87,24 @@ const handler: Handler = async (request, response) => {
         throw webErrorFactory(webErrors.sudoEventIdsNotFound);
       }
       span.setDisclosedAttribute("are valid sudo event ids found", true);
+
+      await removeExpiredSudoEventIds(userCookie.sub, validEventIds).catch(
+        (error) => {
+          if (error instanceof NoUserFoundError) {
+            span.setDisclosedAttribute("user found", false);
+            throw webErrorFactory({
+              ...webErrors.noUserFound,
+              parentError: error,
+            });
+          }
+
+          span.setDisclosedAttribute("database reachable", false);
+          throw webErrorFactory({
+            ...webErrors.databaseUnreachable,
+            parentError: error,
+          });
+        },
+      );
 
       let validationStatus: CheckVerificationCodeStatus.VALID | undefined;
 
