@@ -1,21 +1,33 @@
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import { InputText } from "../input/input-text";
 import { Form } from "./form";
+import { HttpVerbs } from "@src/@types/http-verbs";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { fetchJson } from "@src/utils/fetch-json";
 
 const VerifyTwoFACodeForm: React.FC = () => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
   const [verificationCode, setVerificationCode] = React.useState<string>("");
+
+  const router = useRouter();
 
   return (
     <ExtendedStyledForm
       formID={formID}
       onSubmit={async () => {
         setFormID(uuidv4());
-        return;
+
+        await fetchJson(
+          "/api/auth-connect/verify-two-fa-validation-code",
+          HttpVerbs.POST,
+          { verificationCode },
+        ).then(() => {
+          router && router.push("/account/security/update");
+        });
       }}
     >
       <InputText

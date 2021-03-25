@@ -30,6 +30,9 @@ const SendTwoFACodeForm: React.FC<{
           identityInput: selectedIdentity,
         };
 
+        // setFormID(uuidv4());
+        // setIsCodeSent(true);
+
         await fetchJson(
           "/api/auth-connect/send-two-fa-validation-code",
           HttpVerbs.POST,

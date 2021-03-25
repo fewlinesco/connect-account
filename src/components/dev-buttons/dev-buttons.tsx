@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
@@ -23,9 +24,18 @@ const DevButtonAddAlertMessage: React.FC = () => {
 };
 
 const DevButtons: React.FC = () => {
+  const router = useRouter();
+
   return (
     <DevSection>
       <DevButtonAddAlertMessage />
+      <DevButton
+        onClick={() => {
+          router && router.push("/account/security/sudo");
+        }}
+      >
+        Go to sudo page
+      </DevButton>
     </DevSection>
   );
 };
@@ -38,6 +48,7 @@ const DevSection = styled.div`
 
 const DevButton = styled.button`
   padding: 1rem 2rem;
+  margin: 0 1rem;
   border-radius: ${({ theme }) => theme.radii[0]};
   background-color: ${({ theme }) => theme.colors.boxShadow};
   cursor: pointer;
