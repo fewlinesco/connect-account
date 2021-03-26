@@ -4,7 +4,12 @@ import {
   ConnectUnreachableError,
   GraphqlErrors,
 } from "@fewlines/connect-management";
-import { Endpoint, getServerSideCookies, HttpStatus } from "@fwl/web";
+import {
+  Endpoint,
+  getServerSideCookies,
+  HttpStatus,
+  setAlertMessagesCookie,
+} from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -25,6 +30,7 @@ import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import getTracer from "@src/tracer";
+import { generateAlertMessage } from "@src/utils/generateAlertMessage";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = async (request, response) => {
@@ -36,7 +42,6 @@ const handler: Handler = async (request, response) => {
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
     invalidBody: ERRORS_DATA.INVALID_BODY,
     invalidValidationCode: ERRORS_DATA.INVALID_VALIDATION_CODE,
-    temporaryIdentityExpired: ERRORS_DATA.TEMPORARY_IDENTITY_EXPIRED,
     noUserFound: ERRORS_DATA.NO_USER_FOUND,
   };
 
@@ -67,7 +72,6 @@ const handler: Handler = async (request, response) => {
         span.setDisclosedAttribute("user found", false);
         throw webErrorFactory(webErrors.noUserFound);
       }
-
       span.setDisclosedAttribute("user found", true);
 
       if (!user.sudo_event_ids) {
@@ -82,14 +86,13 @@ const handler: Handler = async (request, response) => {
         },
       );
 
-      if (!validEventIds.length) {
-        span.setDisclosedAttribute("are valid sudo event ids found", false);
-        throw webErrorFactory(webErrors.sudoEventIdsNotFound);
-      }
-      span.setDisclosedAttribute("are valid sudo event ids found", true);
-
       await removeExpiredSudoEventIds(userCookie.sub, validEventIds).catch(
         (error) => {
+          span.setDisclosedAttribute(
+            "are expired sudo event ids removed",
+            false,
+          );
+
           if (error instanceof NoUserFoundError) {
             span.setDisclosedAttribute("user found", false);
             throw webErrorFactory({
@@ -105,6 +108,16 @@ const handler: Handler = async (request, response) => {
           });
         },
       );
+      span.setDisclosedAttribute("are expired sudo event ids removed", true);
+
+      if (!validEventIds.length) {
+        span.setDisclosedAttribute("are valid sudo event ids found", false);
+        setAlertMessagesCookie(response, [
+          generateAlertMessage("Validation code has expired"),
+        ]);
+        throw webErrorFactory(webErrors.sudoEventIdsNotFound);
+      }
+      span.setDisclosedAttribute("are valid sudo event ids found", true);
 
       let validationStatus: CheckVerificationCodeStatus.VALID | undefined;
 
@@ -143,8 +156,10 @@ const handler: Handler = async (request, response) => {
       }
 
       if (!validationStatus) {
+        span.setDisclosedAttribute("is vadalidation code valid", false);
         throw webErrorFactory(webErrors.invalidValidationCode);
       }
+      span.setDisclosedAttribute("is vadalidation code valid", true);
 
       response.statusCode = HttpStatus.OK;
       response.end();
