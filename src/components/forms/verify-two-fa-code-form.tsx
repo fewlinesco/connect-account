@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
@@ -11,12 +11,14 @@ import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { fetchJson } from "@src/utils/fetch-json";
 import { ERRORS_DATA } from "@src/web-errors";
 
-const VerifyTwoFACodeForm: React.FC = () => {
+const VerifyTwoFACodeForm: React.FC<{
+  setIsCodeSent: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ setIsCodeSent }) => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
   const [verificationCode, setVerificationCode] = React.useState<string>("");
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <ExtendedStyledForm
@@ -40,6 +42,14 @@ const VerifyTwoFACodeForm: React.FC = () => {
               ) {
                 setFormID(uuidv4());
                 setErrorMessage("Invalid validation code");
+              }
+
+              if (
+                parsedResponse.message ===
+                ERRORS_DATA.SUDO_EVENT_IDS_NOT_FOUND.message
+              ) {
+                setFormID(uuidv4());
+                setIsCodeSent(false);
               }
             }
 
@@ -66,6 +76,10 @@ const VerifyTwoFACodeForm: React.FC = () => {
 
 const ExtendedStyledForm = styled(Form)`
   padding: ${({ theme }) => theme.spaces.xs} 0 0 0;
+
+  p {
+    margin-bottom: ${({ theme }) => theme.spaces.xs};
+  }
 
   button {
     margin-bottom: 0;

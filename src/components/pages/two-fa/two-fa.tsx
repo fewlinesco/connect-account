@@ -27,7 +27,7 @@ const TwoFA: React.FC<{ primaryIdentities: Identity[] }> = ({
       {isCodeSent ? (
         <>
           <Separator />
-          <VerifyTwoFACodeForm />
+          <VerifyTwoFACodeForm setIsCodeSent={setIsCodeSent} />
         </>
       ) : null}
     </Wrapper>
