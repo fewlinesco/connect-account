@@ -48,7 +48,7 @@ const handler: Handler = async (request, response) => {
   return getTracer().span("verify-validation-code handler", async (span) => {
     const { validationCode, eventId } = request.body;
 
-    if ([validationCode, eventId].includes(undefined)) {
+    if (!validationCode || !eventId) {
       throw webErrorFactory(webErrors.invalidBody);
     }
 
@@ -184,6 +184,10 @@ const handler: Handler = async (request, response) => {
         identityValue: value,
       },
     ).catch((error) => {
+      if (error instanceof InvalidValidationCodeError) {
+        throw webErrorFactory(webErrors.invalidValidationCode);
+      }
+
       if (error instanceof GraphqlErrors) {
         throw webErrorFactory({
           ...webErrors.identityNotFound,
