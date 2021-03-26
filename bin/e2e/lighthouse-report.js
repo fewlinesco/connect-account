@@ -37,17 +37,10 @@ class LighthouseReport {
       const page = await browser.newPage();
       console.log("Page open");
       await page.goto(reviewAppURL);
-      console.log("Production open");
+      console.log("App loaded");
 
-      // await page.waitForNavigation();
-      console.log("waitForNavigation open");
       await page.click("a");
       console.log("Login button clicked");
-      await page.waitForTimeout(5000);
-
-      console.log(await page.content());
-      // await page.waitForNavigation();
-      await page.click(".login-button");
       await page.waitForTimeout(5000);
 
       await page.waitForSelector("input[type=email]", {
@@ -77,6 +70,8 @@ class LighthouseReport {
       );
       await page.click("[type=submit]");
       await page.waitForTimeout(10000);
+
+      console.log(await page.content());
 
       resolve(browser);
     });

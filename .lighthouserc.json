@@ -3,6 +3,7 @@
     "assert": {
       "preset": "lighthouse:recommended"
     },
+    "chromium": "--no-sandbox --disable-setuid-sandbox --ssl-version-max=tls1.1",
     "upload": {
       "target": "temporary-public-storage"
     }
