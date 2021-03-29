@@ -27,7 +27,7 @@ import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertSudoEventId } from "@src/commands/insert-sudo-event-id";
 import { config } from "@src/config";
-import { NoUserFoundError } from "@src/errors";
+import { NoDBUserFoundError } from "@src/errors";
 import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
@@ -87,7 +87,7 @@ const handler: Handler = (request, response): Promise<void> => {
 
           await insertSudoEventId(userCookie.sub, sudoEventId).catch(
             (error) => {
-              if (error instanceof NoUserFoundError) {
+              if (error instanceof NoDBUserFoundError) {
                 span.setDisclosedAttribute("user found", false);
                 throw webErrorFactory({
                   ...webErrors.noUserFound,

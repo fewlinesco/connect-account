@@ -37,7 +37,11 @@ class InvalidValidationCode extends Error {
   }
 }
 
-class NoUserFoundError extends Error {
+class NoDBUserFoundError extends Error {
+  readonly message = "No User found";
+}
+
+class NoUserCookieFoundError extends Error {
   readonly message = "No User found";
 }
 
@@ -62,7 +66,8 @@ export {
   IdentityAlreadyUsed,
   UnhandledIdentityType,
   InvalidValidationCode,
-  NoUserFoundError,
+  NoDBUserFoundError,
+  NoUserCookieFoundError,
   TemporaryIdentityExpired,
   DeleteUserCookieError,
 };
