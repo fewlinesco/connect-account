@@ -8,6 +8,7 @@ import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
 import { HttpVerbs } from "@src/@types/http-verbs";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { deviceBreakpoints } from "@src/design-system/theme";
 import { fetchJson } from "@src/utils/fetch-json";
 import { ERRORS_DATA } from "@src/web-errors";
 
@@ -33,7 +34,6 @@ const VerifyTwoFACodeForm: React.FC<{
         )
           .then((response) => response.json())
           .then((parsedResponse) => {
-            console.log(parsedResponse);
             if ("message" in parsedResponse) {
               if (
                 parsedResponse.message === ERRORS_DATA.INVALID_BODY.message ||
@@ -104,6 +104,13 @@ const MultipleInputsMasked = styled(InputText)`
   caret-color: transparent;
   position: relative;
   left: 2rem;
+
+  @media ${deviceBreakpoints.m} {
+    letter-spacing: 3.3rem;
+    width: 270px;
+    left: 1rem;
+    padding-left: 1.5rem;
+  }
 `;
 
 const InputMask = styled.div`
@@ -121,6 +128,14 @@ const InputMask = styled.div`
     border-radius: ${({ theme }) => theme.radii[0]};
     width: 40px;
     z-index: 0;
+  }
+
+  @media ${deviceBreakpoints.m} {
+    width: 248px;
+
+    span {
+      width: 35px;
+    }
   }
 `;
 

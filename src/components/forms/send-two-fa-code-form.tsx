@@ -7,6 +7,7 @@ import { InputsRadio } from "../input/input-radio-button";
 import { Form } from "./form";
 import { HttpVerbs } from "@src/@types/http-verbs";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { deviceBreakpoints } from "@src/design-system/theme";
 import { fetchJson } from "@src/utils/fetch-json";
 
 const SendTwoFACodeForm: React.FC<{
@@ -72,6 +73,7 @@ const SendTwoFACodeForm: React.FC<{
 
 const ContactChoiceForm = styled(Form)`
   padding: ${({ theme }) => theme.spaces.xs} 0;
+
   p {
     padding-bottom: ${({ theme }) => theme.spaces.xs};
     padding-left: ${({ theme }) => theme.spaces.xs};
@@ -79,6 +81,12 @@ const ContactChoiceForm = styled(Form)`
 
   button {
     margin: ${({ theme }) => theme.spaces.xs} 0 0 0;
+  }
+
+  @media ${deviceBreakpoints.m} {
+    p {
+      padding-left: 0;
+    }
   }
 `;
 
