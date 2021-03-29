@@ -46,21 +46,21 @@ const AddIdentityForm: React.FC<{
             "/api/auth-connect/send-identity-validation-code",
             HttpVerbs.POST,
             body,
-          )
-            .then((response) => response.json())
-            .then((parsedResponse) => {
-              if ("message" in parsedResponse) {
-                setFormID(uuidv4());
-                setErrorMessage(parsedResponse.message);
-              }
+          ).then(async (response) => {
+            const parsedResponse = await response.json();
 
-              if ("eventId" in parsedResponse) {
-                router &&
-                  router.push(
-                    `/account/logins/${type}/validation/${parsedResponse.eventId}`,
-                  );
-              }
-            });
+            if ("message" in parsedResponse) {
+              setFormID(uuidv4());
+              setErrorMessage(parsedResponse.message);
+            }
+
+            if ("eventId" in parsedResponse) {
+              router &&
+                router.push(
+                  `/account/logins/${type}/validation/${parsedResponse.eventId}`,
+                );
+            }
+          });
         }}
       >
         {getIdentityType(type) === IdentityTypes.EMAIL ? (
