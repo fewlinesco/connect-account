@@ -58,14 +58,23 @@ const VerifyTwoFACodeForm: React.FC<{
       }}
     >
       {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
-      <InputText
+      <MultipleInputsMasked
         type="text"
         name="verificationCode"
         onChange={(value) => setVerificationCode(value)}
         value={verificationCode}
         label="Enter received code here:"
         maxLength={6}
-      />
+      >
+        <InputMask>
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+        </InputMask>
+      </MultipleInputsMasked>
 
       <Button variant={ButtonVariant.PRIMARY} type="submit">
         Confirm
@@ -83,6 +92,35 @@ const ExtendedStyledForm = styled(Form)`
 
   button {
     margin-bottom: 0;
+  }
+`;
+
+const MultipleInputsMasked = styled(InputText)`
+  border: 0;
+  background: none;
+  letter-spacing: 4.4rem;
+  width: 85%;
+  font-size: 16px;
+  caret-color: transparent;
+  position: relative;
+  left: 2rem;
+`;
+
+const InputMask = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 75%;
+  position: absolute;
+  top: 0;
+  margin: ${({ theme }) => theme.spaces.xxs} 0 ${({ theme }) => theme.spaces.xs};
+
+  span {
+    background: ${({ theme }) => theme.colors.background};
+    border: 0.1rem solid ${({ theme }) => theme.colors.blacks[2]};
+    height: 4rem;
+    border-radius: ${({ theme }) => theme.radii[0]};
+    width: 40px;
+    z-index: 0;
   }
 `;
 
