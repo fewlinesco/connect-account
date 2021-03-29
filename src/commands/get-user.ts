@@ -1,6 +1,6 @@
 import { GetItemCommand, GetItemCommandOutput } from "@aws-sdk/client-dynamodb";
 
-import { dynamoDbClient } from "../db-client";
+import { dynamoDbClient } from "../config/db-client";
 import { config } from "@src/config";
 
 async function getUser(sub: string): Promise<GetItemCommandOutput> {
