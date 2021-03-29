@@ -1,7 +1,7 @@
 import { GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 
-import { DynamoUser } from "@src/@types/dynamo-user";
+import { DynamoUser, SudoEventId } from "@src/@types/dynamo-user";
 import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { config } from "@src/config";
 import { dynamoDbClient } from "@src/db-client";
@@ -17,7 +17,12 @@ async function getDBUserFromSub(sub: string): Promise<DynamoUser | null> {
   const { Item } = await dynamoDbClient.send(new GetItemCommand(getItem));
 
   if (Item) {
-    const { sub, refresh_token, temporary_identities } = unmarshall(Item);
+    const {
+      sub,
+      refresh_token,
+      temporary_identities,
+      sudo_event_ids,
+    } = unmarshall(Item);
 
     return {
       sub: sub as string,
@@ -25,6 +30,7 @@ async function getDBUserFromSub(sub: string): Promise<DynamoUser | null> {
       temporary_identities: temporary_identities
         ? (temporary_identities as TemporaryIdentity[])
         : [],
+      sudo_event_ids: sudo_event_ids ? (sudo_event_ids as SudoEventId[]) : [],
     };
   }
 

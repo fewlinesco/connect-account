@@ -29,6 +29,11 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: "Invalid phone number format input",
   },
+  INVALID_IDENTITY_TYPE: {
+    code: "invalid_identity_type",
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: "Invalid identity type",
+  },
   INVALID_BODY: {
     code: "invalid_body",
     httpStatus: HttpStatus.BAD_REQUEST,
@@ -48,6 +53,11 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     code: "temporary_identity_expired",
     httpStatus: HttpStatus.BAD_REQUEST,
     message: "Temporary Identity expired",
+  },
+  NOT_FOUND: {
+    code: "not_found",
+    httpStatus: HttpStatus.NOT_FOUND,
+    message: "Ressource not found",
   },
   INVALID_PASSWORD_INPUT: {
     code: "invalid_password_input",

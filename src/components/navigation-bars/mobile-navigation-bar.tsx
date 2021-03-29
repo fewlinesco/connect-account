@@ -157,7 +157,7 @@ const ListItem = styled(NeutralLink)`
   padding: 0 ${({ theme }) => theme.spaces.xs};
 
   p {
-    margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
+    margin: 0 0 0 1.5rem;
   }
 `;
 

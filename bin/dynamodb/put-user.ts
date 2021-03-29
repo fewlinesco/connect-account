@@ -35,6 +35,7 @@ const Item = {
       expires_at: 42,
     },
   ],
+  sudo_event_ids: [{ event_id: "value", expires_at: 42 }],
 };
 
 putUser(Item);
