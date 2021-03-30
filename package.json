@@ -65,7 +65,7 @@
     "@storybook/addon-links": "6.1.21",
     "@storybook/react": "6.1.21",
     "@testing-library/jest-dom": "5.11.10",
-    "@testing-library/react": "11.2.5",
+    "@testing-library/react": "11.2.6",
     "@testing-library/user-event": "13.0.16",
     "@types/cookie": "0.4.0",
     "@types/jest": "26.0.22",
