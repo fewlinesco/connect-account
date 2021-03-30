@@ -3,11 +3,13 @@ import React from "react";
 import { Security } from "./security";
 
 const PasswordSet = (): JSX.Element => {
-  return <Security isPasswordSet={true} />;
+  // return <Security />;
+  return <React.Fragment />;
 };
 
 const PasswordNotSet = (): JSX.Element => {
-  return <Security isPasswordSet={false} />;
+  // return <Security />;
+  return <React.Fragment />;
 };
 
 export { PasswordSet, PasswordNotSet };

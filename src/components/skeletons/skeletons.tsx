@@ -12,6 +12,14 @@ const LoginsSkeleton: React.FC = () => {
   );
 };
 
+const SecuritySkeleton: React.FC = () => {
+  return (
+    <SkeletonBody>
+      <SkeletonSection />
+    </SkeletonBody>
+  );
+};
+
 const SkeletonBody = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
   height: auto;
@@ -60,4 +68,12 @@ const SkeletonBlock = styled(SkeletonAnimation)`
   margin-bottom: 5rem;
 `;
 
-export { LoginsSkeleton };
+const SkeletonSection = styled(SkeletonAnimation)`
+  border-radius: ${({ theme }) => theme.radii[1]};
+  padding: 3.4rem 0;
+  position: relative;
+  background-color: #e2e2e2;
+  margin-bottom: 5rem;
+`;
+
+export { LoginsSkeleton, SecuritySkeleton };
