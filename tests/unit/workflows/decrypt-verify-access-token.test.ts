@@ -2,7 +2,7 @@ import { oauth2Client, config } from "@src/config";
 import {
   EnvVar_IsJweSigned_MustBeABoolean,
   UnhandledTokenType,
-} from "@src/errors";
+} from "@src/errors/errors";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
 const mockConfigGetter = jest.fn();

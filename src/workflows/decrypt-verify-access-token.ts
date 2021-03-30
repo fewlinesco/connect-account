@@ -4,7 +4,7 @@ import { oauth2Client, config } from "@src/config";
 import {
   EnvVar_IsJweSigned_MustBeABoolean,
   UnhandledTokenType,
-} from "@src/errors";
+} from "@src/errors/errors";
 
 async function decryptVerifyAccessToken(
   accessToken: string,

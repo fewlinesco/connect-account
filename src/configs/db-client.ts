@@ -1,8 +1,8 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 
-import { config } from "./config";
+import { config } from "../config";
 
-export const dynamoDbClient = new DynamoDBClient({
+const dynamoDbClient = new DynamoDBClient({
   region: config.dynamoRegion,
   endpoint: config.dynamoDbEndpoint,
   credentials: {
@@ -10,3 +10,5 @@ export const dynamoDbClient = new DynamoDBClient({
     secretAccessKey: config.dynamoSecretAccessKey,
   },
 });
+
+export { dynamoDbClient };

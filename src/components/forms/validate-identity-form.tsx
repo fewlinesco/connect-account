@@ -12,9 +12,8 @@ import { Box } from "@src/components/box/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
-import { InvalidValidationCode, TemporaryIdentityExpired } from "@src/errors";
+import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
-import { validateIdentity } from "@src/workflows/validate-identity";
 
 const ValidateIdentityForm: React.FC<{
   type: IdentityTypes;
@@ -32,20 +31,39 @@ const ValidateIdentityForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
-          await validateIdentity(validationCode, eventId)
-            .then((path) => {
-              router && router.push(path);
-            })
-            .catch((error) => {
-              if (error instanceof InvalidValidationCode) {
-                setFormID(uuidv4());
-                setFlashMessage(error.message);
-              } else if (error instanceof TemporaryIdentityExpired) {
-                router && router.push("/account/logins/email/new");
-              } else {
-                throw error;
+          await fetchJson(
+            "/api/auth-connect/verify-validation-code",
+            HttpVerbs.POST,
+            {
+              validationCode,
+              eventId,
+            },
+          ).then(async (response) => {
+            if (response.status >= 400) {
+              const parsedResponse = await response.json();
+
+              if ("message" in parsedResponse) {
+                if (
+                  parsedResponse.message ===
+                    ERRORS_DATA.INVALID_VALIDATION_CODE.message ||
+                  parsedResponse.message === ERRORS_DATA.INVALID_BODY.message
+                ) {
+                  setFormID(uuidv4());
+                  setFlashMessage(parsedResponse.message);
+                  return;
+                }
+
+                if (
+                  parsedResponse.message ===
+                  ERRORS_DATA.TEMPORARY_IDENTITY_EXPIRED.message
+                ) {
+                  router && router.push("/account/logins/email/new");
+                }
               }
-            });
+            }
+
+            router && router.push("/account/logins");
+          });
         }}
       >
         <Box>
@@ -57,7 +75,7 @@ const ValidateIdentityForm: React.FC<{
           placeholder="012345"
           value={validationCode}
           onChange={(value) => setValidationCode(value)}
-          label="Validaton code"
+          label="Validation code"
         />
         <Button
           type="submit"

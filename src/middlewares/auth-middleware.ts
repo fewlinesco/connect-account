@@ -22,9 +22,9 @@ import {
   NoDBUserFoundError,
   NoUserCookieFoundError,
   UnhandledTokenType,
-} from "@src/errors";
+} from "@src/errors/errors";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
 async function authentication(
