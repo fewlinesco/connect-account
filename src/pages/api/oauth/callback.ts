@@ -22,9 +22,9 @@ import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { oauth2Client, config } from "@src/config";
 import { logger } from "@src/config/logger";
 import getTracer from "@src/config/tracer";
-import { UnhandledTokenType } from "@src/errors";
+import { UnhandledTokenType } from "@src/errors/errors";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
 const handler: Handler = (request, response): Promise<void> => {

@@ -22,9 +22,9 @@ import { Layout } from "@src/components/page-layout";
 import { config } from "@src/config";
 import { logger } from "@src/config/logger";
 import getTracer from "@src/config/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const SecurityUpdatePage: React.FC<{
   isPasswordSet: boolean;

@@ -12,8 +12,8 @@ import { Box } from "@src/components/box/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
-import { ERRORS_DATA } from "@src/web-errors";
 
 const ValidateIdentityForm: React.FC<{
   type: IdentityTypes;

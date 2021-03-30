@@ -19,11 +19,11 @@ import { Handler } from "@src/@types/handler";
 import { config } from "@src/config";
 import { logger } from "@src/config/logger";
 import getTracer from "@src/config/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { generateAlertMessage } from "@src/utils/generateAlertMessage";
 import { getIdentityType } from "@src/utils/get-identity-type";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = (request, response): Promise<void> => {
   const webErrors = {

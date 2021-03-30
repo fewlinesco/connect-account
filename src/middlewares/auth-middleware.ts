@@ -18,9 +18,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { UserCookie } from "@src/@types/user-cookie";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { config, oauth2Client } from "@src/config";
-import { UnhandledTokenType } from "@src/errors";
+import { UnhandledTokenType } from "@src/errors/errors";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
 async function authentication(

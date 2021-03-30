@@ -24,12 +24,12 @@ import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity
 import { config } from "@src/config";
 import { logger } from "@src/config/logger";
 import getTracer from "@src/config/tracer";
-import { NoUserFoundError } from "@src/errors";
+import { NoUserFoundError } from "@src/errors/errors";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import { getIdentityType } from "@src/utils/get-identity-type";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = async (request, response) => {
   const webErrors = {

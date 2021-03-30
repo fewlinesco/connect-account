@@ -23,10 +23,10 @@ import { LoginsOverview } from "@src/components/pages/logins-overview/logins-ove
 import { config } from "@src/config";
 import { logger } from "@src/config/logger";
 import getTracer from "@src/config/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { sortIdentities } from "@src/utils/sort-identities";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const LoginsOverviewPage: React.FC<{
   sortedIdentities: SortedIdentities;
