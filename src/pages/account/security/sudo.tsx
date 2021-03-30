@@ -14,9 +14,9 @@ import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { TwoFA } from "@src/components/pages/two-fa/two-fa";
 import { logger } from "@src/config/logger";
+import getTracer from "@src/config/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import getTracer from "@src/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const SudoPage: React.FC<{ primaryIdentities: Identity[] }> = ({

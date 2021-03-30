@@ -15,9 +15,9 @@ import { Container } from "@src/components/containers/container";
 import { AddIdentityForm } from "@src/components/forms/add-identity-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/config/logger";
+import getTracer from "@src/config/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import getTracer from "@src/tracer";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
