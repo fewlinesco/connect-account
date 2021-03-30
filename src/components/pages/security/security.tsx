@@ -9,7 +9,6 @@ import { SecuritySkeleton } from "@src/components/skeletons/skeletons";
 import { config } from "@src/config";
 
 const Security: React.FC = () => {
-  console.log(config.connectAccountURL);
   const { data, error } = useSWR<{ isPasswordSet: boolean }, Error>(
     `${config.connectAccountURL}/api/auth-connect/is-password-set`,
     (url) => fetch(url).then((response) => response.json()),
@@ -18,6 +17,8 @@ const Security: React.FC = () => {
   if (error) {
     throw error;
   }
+
+  console.log("YYOYOYOYOYOYYO", data && data.isPasswordSet);
 
   return (
     <>
