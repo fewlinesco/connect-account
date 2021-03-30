@@ -103,7 +103,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
             throw error;
           });
 
-        if (primaryIdentities.length > 1) {
+        if (primaryIdentities.length > 0) {
           return {
             props: {
               primaryIdentities,

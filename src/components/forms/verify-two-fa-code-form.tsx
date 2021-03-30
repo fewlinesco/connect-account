@@ -31,9 +31,9 @@ const VerifyTwoFACodeForm: React.FC<{
           "/api/auth-connect/verify-two-fa-validation-code",
           HttpVerbs.POST,
           { verificationCode },
-        )
-          .then((response) => response.json())
-          .then((parsedResponse) => {
+        ).then(async (response) => {
+          if (response.status >= 400) {
+            const parsedResponse = await response.json();
             if ("message" in parsedResponse) {
               if (
                 parsedResponse.message === ERRORS_DATA.INVALID_BODY.message ||
@@ -52,9 +52,10 @@ const VerifyTwoFACodeForm: React.FC<{
                 setIsCodeSent(false);
               }
             }
+          }
 
-            // router && router.push("/account/security/update");
-          });
+          // router && router.push("/account/security/update");
+        });
       }}
     >
       {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
