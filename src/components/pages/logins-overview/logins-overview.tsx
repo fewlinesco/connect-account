@@ -1,6 +1,11 @@
 import { Identity, IdentityTypes } from "@fewlines/connect-management";
+import {
+  ConnectUnreachableError,
+  GraphqlErrors,
+} from "@fewlines/connect-management";
 import React from "react";
 import styled from "styled-components";
+import useSWR from "swr";
 
 import { ButtonVariant, ShowMoreButton } from "../../buttons/buttons";
 import { FakeButton } from "../../buttons/fake-button";
@@ -10,6 +15,8 @@ import { Separator } from "../../separator/separator";
 import { SectionBox } from "../../shadow-box/section-box";
 import { TimelineEnd, Timeline } from "../../timelines/timelines";
 import { SortedIdentities } from "@src/@types/sorted-identities";
+import { LoginsSkeleton } from "@src/components/skeletons/skeletons";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import {
   capitalizeFirstLetter,
   formatSpecialSocialIdentities,
@@ -33,14 +40,44 @@ const IDENTITIES_SECTION_CONTENT = {
   },
 };
 
-const LoginsOverview: React.FC<{
-  sortedIdentities: SortedIdentities;
-}> = ({ sortedIdentities }) => {
+const LoginsOverview: React.FC = () => {
+  const webErrors = {
+    identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
+    connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+  };
+
+  const { data, error } = useSWR<{ sortedIdentities: SortedIdentities }, Error>(
+    "/api/get-sorted-identities",
+    (url) => fetch(url).then((response) => response.json()),
+  );
+
+  if (error) {
+    if (error instanceof GraphqlErrors) {
+      throw webErrorFactory({
+        ...webErrors.identityNotFound,
+        parentError: error,
+      });
+    }
+
+    if (error instanceof ConnectUnreachableError) {
+      throw webErrorFactory({
+        ...webErrors.connectUnreachable,
+        parentError: error,
+      });
+    }
+
+    throw error;
+  }
+
+  if (!data) {
+    return <LoginsSkeleton />;
+  }
+
   const {
     emailIdentities,
     phoneIdentities,
     socialIdentities,
-  } = sortedIdentities;
+  } = data.sortedIdentities;
 
   const identitiesSectionList = Object.entries(IDENTITIES_SECTION_CONTENT);
 
