@@ -24,7 +24,7 @@ import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { removeExpiredSudoEventIds } from "@src/commands/remove-expired-sudo-event-ids";
 import { config } from "@src/config";
-import { NoUserFoundError } from "@src/errors";
+import { NoDBUserFoundError } from "@src/errors";
 import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
@@ -93,7 +93,7 @@ const handler: Handler = async (request, response) => {
             false,
           );
 
-          if (error instanceof NoUserFoundError) {
+          if (error instanceof NoDBUserFoundError) {
             span.setDisclosedAttribute("user found", false);
             throw webErrorFactory({
               ...webErrors.noUserFound,
@@ -121,7 +121,7 @@ const handler: Handler = async (request, response) => {
 
       let validationStatus: CheckVerificationCodeStatus.VALID | undefined;
 
-      for await (const { event_id } of validEventIds.reverse()) {
+      for await (const { event_id } of validEventIds) {
         if (validationStatus === CheckVerificationCodeStatus.VALID) {
           break;
         }
