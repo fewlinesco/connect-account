@@ -52,11 +52,18 @@ const handler: Handler = async (request, response) => {
       throw webErrorFactory(webErrors.invalidBody);
     }
 
-    const userCookie = (await getServerSideCookies<UserCookie>(request, {
+    const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
       cookieSalt: config.cookieSalt,
-    })) as UserCookie;
+    });
+
+    if (!userCookie) {
+      response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+      response.setHeader("location", "/");
+      response.end();
+      return;
+    }
 
     const user = await getDBUserFromSub(userCookie.sub).catch((error) => {
       span.setDisclosedAttribute("database reachable", false);
