@@ -58,11 +58,22 @@ const config: Config = {
   },
 };
 
+function getConnectAccountURL(): string {
+  if (process.env.CONNECT_ACCOUNT_HOSTNAME) {
+    return `https://${process.env.CONNECT_ACCOUNT_HOSTNAME}`;
+  }
+
+  if (process.env.HEROKU_APP_NAME) {
+    return `https://${process.env.HEROKU_APP_NAME}.herokuapp.com`;
+  }
+
+  return "https://connect-account.local:29704";
+}
+
 function handleEnvVars(): void {
-  const appHostname =
-    process.env.CONNECT_ACCOUNT_HOSTNAME ||
-    `${process.env.HEROKU_APP_NAME}.herokuapp.com`;
-  config.connectAccountURL = appHostname ? `https://${appHostname}` : "";
+  const connectAccountURL = getConnectAccountURL();
+
+  config.connectAccountURL = connectAccountURL;
   config.dynamoRegion = process.env.DYNAMODB_REGION || "";
   config.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";
   config.dynamoAccessKeyID = process.env.DYNAMODB_ACCESS_KEY_ID || "";
@@ -78,9 +89,7 @@ function handleEnvVars(): void {
   config.cookieSalt = process.env.CONNECT_ACCOUNT_SESSION_SALT || "";
   config.connectOpenIdConfigurationUrl =
     process.env.CONNECT_OPEN_ID_CONFIGURATION_URL || "";
-  config.connectAccountRedirectURI = appHostname
-    ? `https://${appHostname}/api/oauth/callback`
-    : "";
+  config.connectAccountRedirectURI = `${connectAccountURL}/api/oauth/callback`;
   config.connectAudience = process.env.CONNECT_AUDIENCE || "";
   config.connectJwtAlgorithm = process.env.CONNECT_JWT_ALGORITHM || "";
   config.accountJwePrivateKey = process.env.ACCOUNT_JWE_PRIVATE_KEY || "";
