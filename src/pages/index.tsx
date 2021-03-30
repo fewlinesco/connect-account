@@ -20,9 +20,9 @@ import React from "react";
 
 import { Main } from "@src/components/page-layout";
 import { Home } from "@src/components/pages/home/home";
-import { config } from "@src/config";
-import { oauth2Client } from "@src/config";
+import { config } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
+import { oauth2Client } from "@src/configs/oauth2-client";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";

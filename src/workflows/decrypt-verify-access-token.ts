@@ -1,6 +1,7 @@
 import { JWTPayload } from "@fewlines/connect-client";
 
-import { oauth2Client, config } from "@src/config";
+import { config } from "@src/configs/config-variables";
+import { oauth2Client } from "@src/configs/oauth2-client";
 import {
   EnvVar_IsJweSigned_MustBeABoolean,
   UnhandledTokenType,

@@ -17,7 +17,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { UserCookie } from "@src/@types/user-cookie";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
-import { config, oauth2Client } from "@src/config";
+import { config } from "@src/configs/config-variables";
+import { oauth2Client } from "@src/configs/oauth2-client";
 import {
   NoDBUserFoundError,
   NoUserCookieFoundError,

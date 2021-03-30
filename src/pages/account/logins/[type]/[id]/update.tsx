@@ -21,7 +21,7 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
 import { UpdateIdentityForm } from "@src/components/forms/update-identity-form";
 import { Layout } from "@src/components/page-layout";
-import { config } from "@src/config";
+import { config } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { NoDBUserFoundError } from "@src/errors/errors";

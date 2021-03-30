@@ -1,7 +1,3 @@
-import OAuth2Client, {
-  OAuth2ClientConstructor,
-} from "@fewlines/connect-client";
-
 type Config = {
   connectAccountURL: string;
   dynamoRegion: string;
@@ -107,15 +103,4 @@ function handleEnvVars(): void {
 
 handleEnvVars();
 
-const oauth2ClientConstructorProps: OAuth2ClientConstructor = {
-  openIDConfigurationURL: config.connectOpenIdConfigurationUrl,
-  clientID: config.connectApplicationClientId,
-  clientSecret: config.connectApplicationClientSecret,
-  redirectURI: config.connectAccountRedirectURI,
-  audience: config.connectAudience,
-  scopes: config.connectApplicationScopes.split(" "),
-};
-
-const oauth2Client = new OAuth2Client(oauth2ClientConstructorProps);
-
-export { config, oauth2Client };
+export { config };

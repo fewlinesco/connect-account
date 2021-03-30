@@ -1,6 +1,6 @@
 import { getTracer, startTracer, Tracer } from "@fwl/tracing";
 
-import { config } from "@src/config";
+import { config } from "@src/configs/config-variables";
 
 const options = config.lightstepAccessToken
   ? {

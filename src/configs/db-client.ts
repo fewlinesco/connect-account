@@ -1,6 +1,6 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 
-import { config } from "../config";
+import { config } from "./config-variables";
 
 const dynamoDbClient = new DynamoDBClient({
   region: config.dynamoRegion,

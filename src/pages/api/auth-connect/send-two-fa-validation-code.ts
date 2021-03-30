@@ -26,7 +26,7 @@ import { SudoEventId } from "@src/@types/dynamo-user";
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertSudoEventId } from "@src/commands/insert-sudo-event-id";
-import { config } from "@src/config";
+import { config } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import { NoDBUserFoundError } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";

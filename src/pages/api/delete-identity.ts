@@ -16,7 +16,7 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
-import { config } from "@src/config";
+import { config } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";

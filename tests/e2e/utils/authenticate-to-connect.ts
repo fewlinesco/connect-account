@@ -9,7 +9,7 @@ import {
   setConfig,
 } from "taiko";
 
-import { config } from "@src/config";
+import { config } from "@src/configs/config-variables";
 
 async function authenticateToConnect(): Promise<void> {
   try {

@@ -9,7 +9,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import * as getAndPutUser from "@src/commands/get-and-put-user";
-import { config, oauth2Client } from "@src/config";
+import { config, oauth2Client } from "@src/configs/config-variables";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import * as getDBUserFromSub from "@src/queries/get-db-user-from-sub";
 import * as decryptVerifyAccessToken from "@src/workflows/decrypt-verify-access-token";

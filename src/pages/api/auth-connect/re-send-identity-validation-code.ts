@@ -26,7 +26,7 @@ import { Handler } from "@src/@types/handler";
 import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
-import { config } from "@src/config";
+import { config } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import { NoDBUserFoundError } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";

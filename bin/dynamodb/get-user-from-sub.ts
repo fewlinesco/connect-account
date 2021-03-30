@@ -1,7 +1,7 @@
 import { GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 
-import { config } from "../../src/config";
+import { config } from "../../src/configs/config-variables";
 import { dynamoDbClient } from "../../src/configs/db-client";
 
 const errors = {

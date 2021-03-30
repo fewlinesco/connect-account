@@ -1,6 +1,6 @@
 import { CreateTableCommand } from "@aws-sdk/client-dynamodb";
 
-import { config } from "../../src/config";
+import { config } from "../../src/configs/config-variables";
 import { dynamoDbClient } from "../../src/configs/db-client";
 
 const usersTableSchema = {

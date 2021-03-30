@@ -1,6 +1,6 @@
 import { getIdentities } from "@fewlines/connect-management";
 
-import { config } from "@src/config";
+import { config } from "@src/configs/config-variables";
 
 async function isMarkingIdentityAsPrimaryAuthorized(
   sub: string,

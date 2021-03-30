@@ -23,7 +23,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { removeExpiredSudoEventIds } from "@src/commands/remove-expired-sudo-event-ids";
-import { config } from "@src/config";
+import { config } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { NoDBUserFoundError } from "@src/errors/errors";

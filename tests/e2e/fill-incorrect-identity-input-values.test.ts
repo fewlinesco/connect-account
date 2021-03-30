@@ -12,7 +12,7 @@ import {
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
-import { config } from "@src/config";
+import { config } from "@src/configs/config-variables";
 
 describe("Account Web Application add identity", () => {
   jest.setTimeout(60000);
