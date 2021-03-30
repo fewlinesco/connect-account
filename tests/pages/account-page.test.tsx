@@ -4,7 +4,7 @@ import { render, screen } from "../config/testing-library-config";
 import { SECTION_LIST_CONTENT } from "@src/components/pages/account-overview/account-overview";
 import AccountPage from "@src/pages/account/index";
 
-jest.mock("@src/config/db-client", () => {
+jest.mock("@src/configs/db-client", () => {
   return {
     dynamoDbClient: {
       send: () => {

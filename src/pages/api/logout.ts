@@ -10,8 +10,8 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
-import { logger } from "@src/config/logger";
-import getTracer from "@src/config/tracer";
+import { logger } from "@src/configs/logger";
+import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 

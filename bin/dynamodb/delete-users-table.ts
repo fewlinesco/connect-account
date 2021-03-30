@@ -1,7 +1,7 @@
 import { DeleteTableCommand } from "@aws-sdk/client-dynamodb";
 
 import { config } from "../../src/config";
-import { dynamoDbClient } from "../../src/config/db-client";
+import { dynamoDbClient } from "../../src/configs/db-client";
 
 async function deleteUsersTable(): Promise<void> {
   try {

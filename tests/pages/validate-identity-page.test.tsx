@@ -5,7 +5,7 @@ import React from "react";
 import { render, screen } from "../config/testing-library-config";
 import ValidateIdentityPage from "@src/pages/account/logins/[type]/validation/[eventId]";
 
-jest.mock("@src/config/db-client", () => {
+jest.mock("@src/configs/db-client", () => {
   return {
     dynamoDbClient: {
       send: () => {

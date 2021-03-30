@@ -22,8 +22,8 @@ import { Main } from "@src/components/page-layout";
 import { Home } from "@src/components/pages/home/home";
 import { config } from "@src/config";
 import { oauth2Client } from "@src/config";
-import { logger } from "@src/config/logger";
-import getTracer from "@src/config/tracer";
+import { logger } from "@src/configs/logger";
+import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 

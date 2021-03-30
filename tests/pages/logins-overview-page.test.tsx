@@ -6,7 +6,7 @@ import * as mockIdentities from "../mocks/identities";
 import { SortedIdentities } from "@src/@types/sorted-identities";
 import LoginsOverviewPage from "@src/pages/account/logins";
 
-jest.mock("@src/config/db-client", () => {
+jest.mock("@src/configs/db-client", () => {
   return {
     dynamoDbClient: {
       send: () => {
