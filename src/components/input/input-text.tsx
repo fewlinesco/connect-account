@@ -62,6 +62,15 @@ const ChildrenWrapper = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
+
+  input {
+    outline: none;
+  }
+
+  :focus-within span {
+    outline: Highlight auto 1px;
+    outline: -webkit-focus-ring-color auto 1px;
+  }
 `;
 
 export { InputText };
