@@ -5,10 +5,11 @@ enableFetchMocks();
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
-import { act, render, screen } from "../config/testing-library-config";
+import { render, screen } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
 import { SortedIdentities } from "@src/@types/sorted-identities";
-import { LoginsOverview } from "@src/components/pages/logins-overview/logins-overview";
+import { findByTextContent } from "../utils/find-by-text-content";
+import LoginsOverviewPage from "@src/pages/account/logins";
 
 jest.mock("@src/configs/db-client", () => {
   return {
@@ -20,10 +21,14 @@ jest.mock("@src/configs/db-client", () => {
   };
 });
 
-describe("LoginsOverview", () => {
+describe("LoginsOverviewPage", () => {
+  beforeEach(() => {
+    fetch.resetMocks();
+  });
+
   describe("Identity type: EMAIL", () => {
-    it("should display primary email identity first and all of them when clicking on the show more button", async () => {
-      // expect.assertions(7);
+    test("LoginsOverview should display primary email identity first and all of them when clicking on the show more button", async () => {
+      expect.assertions(7);
 
       const sortedIdentities: SortedIdentities = {
         emailIdentities: [
@@ -34,15 +39,13 @@ describe("LoginsOverview", () => {
         socialIdentities: [],
       };
 
-      fetch.once(JSON.stringify(sortedIdentities));
+      fetch.mockResponseOnce(JSON.stringify({ sortedIdentities }));
 
-      render(<LoginsOverview />);
+      render(<LoginsOverviewPage />);
 
       expect(
-        screen.getByRole("link", {
-          name: mockIdentities.primaryEmailIdentity.value,
-        }),
-      ).toBeInTheDocument();
+        await findByTextContent(mockIdentities.primaryEmailIdentity.value),
+      ).toBeTruthy();
 
       expect(
         screen.getByRole("link", {
@@ -61,13 +64,11 @@ describe("LoginsOverview", () => {
         }),
       ).not.toBeInTheDocument();
 
-      await act(() => {
-        userEvent.click(
-          screen.getByText(
-            `Show ${sortedIdentities.emailIdentities.length - 1} more`,
-          ),
-        );
-      });
+      userEvent.click(
+        screen.getByText(
+          `Show ${sortedIdentities.emailIdentities.length - 1} more`,
+        ),
+      );
 
       expect(
         screen.getByRole("link", {

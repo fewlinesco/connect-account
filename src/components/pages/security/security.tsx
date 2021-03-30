@@ -18,8 +18,6 @@ const Security: React.FC = () => {
     throw error;
   }
 
-  console.log("YYOYOYOYOYOYYO", data && data.isPasswordSet);
-
   return (
     <>
       <h2>Password</h2>
