@@ -10,7 +10,7 @@ import * as fetchJson from "@src/utils/fetch-json";
 
 enableFetchMocks();
 
-jest.mock("@src/db-client", () => {
+jest.mock("@src/configs/db-client", () => {
   return {
     dynamoDbClient: {
       send: () => {
