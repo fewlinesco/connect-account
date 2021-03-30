@@ -56,54 +56,54 @@ const getServerSideProps: GetServerSideProps = async (context) => {
 
       throw webErrorFactory(webErrors.notFound);
 
-      // const userCookie = await getServerSideCookies<UserCookie>(request, {
-      //   cookieName: "user-cookie",
-      //   isCookieSealed: true,
-      //   cookieSalt: config.cookieSalt,
-      // });
+      //   const userCookie = await getServerSideCookies<UserCookie>(request, {
+      //     cookieName: "user-cookie",
+      //     isCookieSealed: true,
+      //     cookieSalt: config.cookieSalt,
+      //   });
 
-      // if (userCookie) {
-      //   const primaryIdentities = await getIdentities(
-      //     config.managementCredentials,
-      //     userCookie.sub,
-      //   )
-      //     .then((identities) => {
-      //       return identities.filter((identity) => {
-      //         return (
-      //           identity.primary &&
-      //           (identity.type == IdentityTypes.EMAIL.toLowerCase() ||
-      //             identity.type == IdentityTypes.PHONE.toLowerCase())
-      //         );
+      //   if (userCookie) {
+      //     const primaryIdentities = await getIdentities(
+      //       config.managementCredentials,
+      //       userCookie.sub,
+      //     )
+      //       .then((identities) => {
+      //         return identities.filter((identity) => {
+      //           return (
+      //             identity.primary &&
+      //             (identity.type == IdentityTypes.EMAIL.toLowerCase() ||
+      //               identity.type == IdentityTypes.PHONE.toLowerCase())
+      //           );
+      //         });
+      //       })
+      //       .catch((error) => {
+      //         if (error instanceof GraphqlErrors) {
+      //           throw webErrorFactory({
+      //             ...webErrors.identityNotFound,
+      //             parentError: error,
+      //           });
+      //         }
+
+      //         if (error instanceof ConnectUnreachableError) {
+      //           throw webErrorFactory({
+      //             ...webErrors.connectUnreachable,
+      //             parentError: error,
+      //           });
+      //         }
+
+      //         throw error;
       //       });
-      //     })
-      //     .catch((error) => {
-      //       if (error instanceof GraphqlErrors) {
-      //         throw webErrorFactory({
-      //           ...webErrors.identityNotFound,
-      //           parentError: error,
-      //         });
-      //       }
 
-      //       if (error instanceof ConnectUnreachableError) {
-      //         throw webErrorFactory({
-      //           ...webErrors.connectUnreachable,
-      //           parentError: error,
-      //         });
-      //       }
-
-      //       throw error;
-      //     });
-
-      //   if (primaryIdentities.length > 1) {
-      //     return {
-      //       props: {
-      //         primaryIdentities,
-      //       },
-      //     };
+      //     if (primaryIdentities.length > 0) {
+      //       return {
+      //         props: {
+      //           primaryIdentities,
+      //         },
+      //       };
+      //     }
       //   }
-      // }
 
-      // return { props: {} };
+      //   return { props: {} };
     },
   );
 };

@@ -6,6 +6,7 @@ import { SendTwoFACodeForm } from "@src/components/forms/send-two-fa-code-form";
 import { VerifyTwoFACodeForm } from "@src/components/forms/verify-two-fa-code-form";
 import { LockIcon } from "@src/components/icons/lock-icon/lock-icon";
 import { Separator } from "@src/components/separator/separator";
+import { deviceBreakpoints } from "@src/design-system/theme";
 
 const TwoFA: React.FC<{ primaryIdentities: Identity[] }> = ({
   primaryIdentities,
@@ -27,7 +28,7 @@ const TwoFA: React.FC<{ primaryIdentities: Identity[] }> = ({
       {isCodeSent ? (
         <>
           <Separator />
-          <VerifyTwoFACodeForm />
+          <VerifyTwoFACodeForm setIsCodeSent={setIsCodeSent} />
         </>
       ) : null}
     </Wrapper>
@@ -40,6 +41,10 @@ const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.box};
   padding: ${({ theme }) => theme.spaces.s} 6rem;
   border-radius: ${({ theme }) => theme.radii[0]};
+
+  @media ${deviceBreakpoints.m} {
+    padding: 3rem ${({ theme }) => theme.spaces.xs};
+  }
 `;
 
 const SecurityMessage = styled.div`
@@ -54,6 +59,12 @@ const SecurityMessage = styled.div`
 
   p {
     margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
+  }
+
+  @media ${deviceBreakpoints.m} {
+    p {
+      line-height: 22px;
+    }
   }
 `;
 
