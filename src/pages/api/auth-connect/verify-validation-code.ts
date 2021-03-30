@@ -22,7 +22,7 @@ import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
 import { config } from "@src/config";
-import { NoUserFoundError } from "@src/errors";
+import { NoDBUserFoundError } from "@src/errors";
 import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
@@ -48,7 +48,7 @@ const handler: Handler = async (request, response) => {
   return getTracer().span("verify-validation-code handler", async (span) => {
     const { validationCode, eventId } = request.body;
 
-    if ([validationCode, eventId].includes(undefined)) {
+    if (!validationCode || !eventId) {
       throw webErrorFactory(webErrors.invalidBody);
     }
 
@@ -123,7 +123,7 @@ const handler: Handler = async (request, response) => {
             userCookie.sub,
             temporaryIdentity,
           ).catch((error) => {
-            if (error instanceof NoUserFoundError) {
+            if (error instanceof NoDBUserFoundError) {
               span.setDisclosedAttribute("user found", false);
               throw webErrorFactory({
                 ...webErrors.noUserFound,
@@ -184,6 +184,10 @@ const handler: Handler = async (request, response) => {
         identityValue: value,
       },
     ).catch((error) => {
+      if (error instanceof InvalidValidationCodeError) {
+        throw webErrorFactory(webErrors.invalidValidationCode);
+      }
+
       if (error instanceof GraphqlErrors) {
         throw webErrorFactory({
           ...webErrors.identityNotFound,

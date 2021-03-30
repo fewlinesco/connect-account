@@ -35,7 +35,7 @@ const handler: Handler = (request, response): Promise<void> => {
   return getTracer().span("delete-identity handler", async (span) => {
     const { userId, type, value } = request.body;
 
-    if ([userId, type, value].includes(undefined)) {
+    if (!userId || !type || !value) {
       throw webErrorFactory(webErrors.badRequest);
     }
 

@@ -22,7 +22,7 @@ import { Container } from "@src/components/containers/container";
 import { UpdateIdentityForm } from "@src/components/forms/update-identity-form";
 import { Layout } from "@src/components/page-layout";
 import { config } from "@src/config";
-import { NoUserFoundError } from "@src/errors";
+import { NoDBUserFoundError } from "@src/errors";
 import { logger } from "@src/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
@@ -124,7 +124,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
           },
         };
       } else {
-        throw new NoUserFoundError();
+        throw new NoDBUserFoundError();
       }
     },
   );
