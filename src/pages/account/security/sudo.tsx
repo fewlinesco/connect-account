@@ -21,6 +21,7 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { TwoFA } from "@src/components/pages/two-fa/two-fa";
+import { config } from "@src/config";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";

@@ -1,6 +1,6 @@
 import { putUser } from "./put-user";
 import { SudoEventId } from "@src/@types/dynamo-user";
-import { NoDBUserFoundError } from "@src/errors";
+import { NoDBUserFoundError } from "@src/errors/errors";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 
 async function removeExpiredSudoEventIds(

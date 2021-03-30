@@ -9,8 +9,8 @@ import { Form } from "./form";
 import { HttpVerbs } from "@src/@types/http-verbs";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { deviceBreakpoints } from "@src/design-system/theme";
+import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
-import { ERRORS_DATA } from "@src/web-errors";
 
 const VerifyTwoFACodeForm: React.FC<{
   setIsCodeSent: React.Dispatch<React.SetStateAction<boolean>>;
