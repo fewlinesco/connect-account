@@ -15,7 +15,7 @@ import React from "react";
 import { Container } from "@src/components/containers/container";
 import { ValidateIdentityForm } from "@src/components/forms/validate-identity-form";
 import { Layout } from "@src/components/page-layout";
-import { logger } from "@src/logger";
+import { logger } from "@src/config/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";

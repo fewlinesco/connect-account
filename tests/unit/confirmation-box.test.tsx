@@ -14,7 +14,7 @@ function makeAsPrimaryRegExFactory(identity: Identity): RegExp {
   );
 }
 
-jest.mock("@src/db-client", () => {
+jest.mock("@src/config/db-client", () => {
   return {
     dynamoDbClient: {
       send: () => {

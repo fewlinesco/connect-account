@@ -3,7 +3,7 @@ import React from "react";
 import { render, screen } from "../config/testing-library-config";
 import LocalePage from "@src/pages/account/locale";
 
-jest.mock("@src/db-client", () => {
+jest.mock("@src/config/db-client", () => {
   return {
     dynamoDbClient: {
       send: () => {

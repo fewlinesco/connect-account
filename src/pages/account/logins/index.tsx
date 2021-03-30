@@ -21,7 +21,7 @@ import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { LoginsOverview } from "@src/components/pages/logins-overview/logins-overview";
 import { config } from "@src/config";
-import { logger } from "@src/logger";
+import { logger } from "@src/config/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";

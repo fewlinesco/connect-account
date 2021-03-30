@@ -22,7 +22,7 @@ import { Main } from "@src/components/page-layout";
 import { Home } from "@src/components/pages/home/home";
 import { config } from "@src/config";
 import { oauth2Client } from "@src/config";
-import { logger } from "@src/logger";
+import { logger } from "@src/config/logger";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";

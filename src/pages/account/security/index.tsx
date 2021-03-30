@@ -20,7 +20,7 @@ import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { Security } from "@src/components/pages/security/security";
 import { config } from "@src/config";
-import { logger } from "@src/logger";
+import { logger } from "@src/config/logger";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import getTracer from "@src/tracer";
