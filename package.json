@@ -12,7 +12,7 @@
     "build": "next build",
     "lint": "eslint \"{src,pages}/**/*.{js,ts,jsx,tsx}\"",
     "start": "next start -p $PORT",
-    "test": "jest --testPathIgnorePatterns=e2e",
+    "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest --testPathIgnorePatterns=e2e",
     "test:e2e": "jest --testPathPattern=e2e --runInBand",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
