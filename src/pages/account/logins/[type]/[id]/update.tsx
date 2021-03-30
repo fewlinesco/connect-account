@@ -22,12 +22,12 @@ import { Container } from "@src/components/containers/container";
 import { UpdateIdentityForm } from "@src/components/forms/update-identity-form";
 import { Layout } from "@src/components/page-layout";
 import { config } from "@src/config";
-import { NoDBUserFoundError } from "@src/errors";
-import { logger } from "@src/logger";
+import { logger } from "@src/configs/logger";
+import getTracer from "@src/configs/tracer";
+import { NoDBUserFoundError } from "@src/errors/errors";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import getTracer from "@src/tracer";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
   return (

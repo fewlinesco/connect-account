@@ -4,7 +4,7 @@ import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { DynamoUser, SudoEventId } from "@src/@types/dynamo-user";
 import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { config } from "@src/config";
-import { dynamoDbClient } from "@src/db-client";
+import { dynamoDbClient } from "@src/configs/db-client";
 
 async function getDBUserFromSub(sub: string): Promise<DynamoUser | null> {
   const getItem = {

@@ -4,7 +4,8 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../buttons/buttons";
-import { markIdentityAsPrimaryCall } from "@src/workflows/mark-identity-as-primary";
+import { HttpVerbs } from "@src/@types/http-verbs";
+import { fetchJson } from "@src/utils/fetch-json";
 
 interface PrimaryConfirmationBoxContentProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,11 +29,15 @@ const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxContentProps
       <Button
         type="button"
         variant={ButtonVariant.PRIMARY}
-        onClick={async () =>
-          await markIdentityAsPrimaryCall(id).then(() => {
+        onClick={async () => {
+          fetchJson(
+            "/api/auth-connect/mark-identity-as-primary",
+            HttpVerbs.POST,
+            { identityId: id },
+          ).then(() => {
             router && router.push("/account/logins");
-          })
-        }
+          });
+        }}
       >
         Confirm
       </Button>

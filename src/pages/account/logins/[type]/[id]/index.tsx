@@ -22,11 +22,11 @@ import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { IdentityOverview } from "@src/components/pages/identity-overview/identity-overview";
 import { config } from "@src/config";
-import { logger } from "@src/logger";
+import { logger } from "@src/configs/logger";
+import getTracer from "@src/configs/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import getTracer from "@src/tracer";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const IdentityOverviewPage: React.FC<{
   identity: Identity;

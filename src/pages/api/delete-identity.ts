@@ -17,13 +17,13 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import { config } from "@src/config";
-import { logger } from "@src/logger";
+import { logger } from "@src/configs/logger";
+import getTracer from "@src/configs/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import getTracer from "@src/tracer";
 import { generateAlertMessage } from "@src/utils/generateAlertMessage";
 import { getIdentityType } from "@src/utils/get-identity-type";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = (request, response): Promise<void> => {
   const webErrors = {

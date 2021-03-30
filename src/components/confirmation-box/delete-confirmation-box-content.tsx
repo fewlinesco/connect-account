@@ -4,8 +4,9 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../buttons/buttons";
+import { HttpVerbs } from "@src/@types/http-verbs";
+import { fetchJson } from "@src/utils/fetch-json";
 import { getIdentityType } from "@src/utils/get-identity-type";
-import { deleteIdentity } from "@src/workflows/delete-identity";
 
 interface DeleteIdentityProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,11 +31,21 @@ const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
       <Button
         type="button"
         variant={ButtonVariant.DANGER}
-        onClick={async () =>
-          await deleteIdentity(userId, type, value).then(() => {
+        onClick={async () => {
+          const requestData = {
+            userId,
+            type: getIdentityType(type),
+            value,
+          };
+
+          await fetchJson(
+            "/api/delete-identity",
+            HttpVerbs.DELETE,
+            requestData,
+          ).then(() => {
             router && router.push("/account/logins");
-          })
-        }
+          });
+        }}
       >
         Delete this{" "}
         {getIdentityType(type) === IdentityTypes.PHONE
