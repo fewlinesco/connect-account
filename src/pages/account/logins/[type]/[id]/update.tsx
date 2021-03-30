@@ -24,7 +24,7 @@ import { Layout } from "@src/components/page-layout";
 import { config } from "@src/config";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
-import { NoUserFoundError } from "@src/errors/errors";
+import { NoDBUserFoundError } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
@@ -124,7 +124,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
           },
         };
       } else {
-        throw new NoUserFoundError();
+        throw new NoDBUserFoundError();
       }
     },
   );

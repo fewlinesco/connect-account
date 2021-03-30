@@ -28,7 +28,7 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
 import { config } from "@src/config";
 import { logger } from "@src/configs/logger";
-import { NoUserFoundError } from "@src/errors/errors";
+import { NoDBUserFoundError } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
@@ -140,7 +140,7 @@ const handler: Handler = (request, response): Promise<void> => {
             userCookie.sub,
             temporaryIdentity,
           ).catch((error) => {
-            if (error instanceof NoUserFoundError) {
+            if (error instanceof NoDBUserFoundError) {
               span.setDisclosedAttribute("user found", false);
               throw webErrorFactory({
                 ...webErrors.noUserFound,
