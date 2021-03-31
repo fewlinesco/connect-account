@@ -12,7 +12,7 @@ import {
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
-import { config } from "@src/config";
+import { configVariables } from "@src/configs/config-variables";
 
 describe("Account Web Application add identity", () => {
   jest.setTimeout(60000);
@@ -53,7 +53,8 @@ describe("Account Web Application add identity", () => {
       expect(await text("Identity input can't be blank").exists()).toBeTruthy();
 
       const baseUrl =
-        process.env.CONNECT_TEST_ACCOUNT_URL || config.connectAccountURL + "/";
+        process.env.CONNECT_TEST_ACCOUNT_URL ||
+        configVariables.connectAccountURL + "/";
 
       await goto(`${baseUrl}account/logins/phone/new`);
 

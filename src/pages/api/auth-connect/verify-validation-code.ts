@@ -21,7 +21,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
-import { config } from "@src/config";
+import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { NoDBUserFoundError } from "@src/errors/errors";
@@ -55,7 +55,7 @@ const handler: Handler = async (request, response) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
-      cookieSalt: config.cookieSalt,
+      cookieSalt: configVariables.cookieSalt,
     });
 
     if (!userCookie) {
@@ -116,7 +116,7 @@ const handler: Handler = async (request, response) => {
 
     if (identityToUpdateId) {
       return await updateIdentityFromUser(
-        config.managementCredentials,
+        configVariables.managementCredentials,
         user.sub,
         validationCode,
         eventIds,
@@ -182,7 +182,7 @@ const handler: Handler = async (request, response) => {
     }
 
     const { id: identityId } = await addIdentityToUser(
-      config.managementCredentials,
+      configVariables.managementCredentials,
       validationCode,
       eventIds,
       {
@@ -216,7 +216,7 @@ const handler: Handler = async (request, response) => {
       span.setDisclosedAttribute("is temporary Identity primary", true);
 
       await markIdentityAsPrimary(
-        config.managementCredentials,
+        configVariables.managementCredentials,
         identityId,
       ).catch((error) => {
         if (error instanceof GraphqlErrors) {

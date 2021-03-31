@@ -55,7 +55,6 @@ describe("Account Web Application re-send Identity validation code", () => {
 
       const firstURL = await currentURL();
 
-      await waitFor("Resend validation code");
       expect(await text("Resend validation code").exists()).toBeTruthy();
       await click("Resend validation code");
 
