@@ -71,6 +71,8 @@ const UpdateIdentityForm: React.FC<{
                 setFormID(uuidv4());
                 setErrorMessage("Something went wrong");
               }
+
+              setErrorMessage("Something went wrong. Please try again later");
             }
 
             if ("eventId" in parsedResponse) {

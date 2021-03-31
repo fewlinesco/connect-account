@@ -66,12 +66,14 @@ const AddIdentityForm: React.FC<{
                 setErrorMessage("Something went wrong");
               }
 
-              if ("eventId" in parsedResponse) {
-                router &&
-                  router.push(
-                    `/account/logins/${type}/validation/${parsedResponse.eventId}`,
-                  );
-              }
+              setErrorMessage("Something went wrong. Please try again later");
+            }
+
+            if ("eventId" in parsedResponse) {
+              router &&
+                router.push(
+                  `/account/logins/${type}/validation/${parsedResponse.eventId}`,
+                );
             }
           });
         }}

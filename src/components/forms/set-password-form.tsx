@@ -62,6 +62,10 @@ const SetPasswordForm: React.FC<{
                     setErrorMessage("Password can't be blank");
                     setIsNotSubmitted(true);
                   }
+
+                  setErrorMessage(
+                    "Something went wrong. Please try again later",
+                  );
                 }
 
                 if ("isUpdated" in parsedResponse) {
