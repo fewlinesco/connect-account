@@ -16,7 +16,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
-import { config } from "@src/config";
+import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
@@ -35,7 +35,7 @@ const handler: Handler = (request, response): Promise<void> => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
-      cookieSalt: config.cookieSalt,
+      cookieSalt: configVariables.cookieSalt,
     });
 
     if (!userCookie) {
@@ -46,7 +46,7 @@ const handler: Handler = (request, response): Promise<void> => {
     }
 
     const sortedIdentities = await getIdentities(
-      config.managementCredentials,
+      configVariables.managementCredentials,
       userCookie.sub,
     )
       .then((identities) => {

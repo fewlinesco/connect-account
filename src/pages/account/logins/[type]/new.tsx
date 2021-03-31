@@ -1,5 +1,4 @@
 import { IdentityTypes } from "@fewlines/connect-management";
-import { HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -56,9 +55,9 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     "/account/logins/[type]/new",
     async () => {
       if (!context?.params?.type) {
-        context.res.statusCode = HttpStatus.NOT_FOUND;
-        context.res.end();
-        return;
+        return {
+          notFound: true,
+        };
       }
 
       if (!["email", "phone"].includes(context.params.type.toString())) {

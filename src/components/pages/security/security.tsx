@@ -6,11 +6,11 @@ import { RightChevron } from "@src/components/icons/right-chevron/right-chevron"
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SectionBox } from "@src/components/shadow-box/section-box";
 import { SecuritySkeleton } from "@src/components/skeletons/skeletons";
-import { config } from "@src/config";
+import { configVariables } from "@src/configs/config-variables";
 
 const Security: React.FC = () => {
   const { data, error } = useSWR<{ isPasswordSet: boolean }, Error>(
-    `${config.connectAccountURL}/api/auth-connect/is-password-set`,
+    `${configVariables.connectAccountURL}/api/auth-connect/is-password-set`,
     (url) => fetch(url).then((response) => response.json()),
   );
 
