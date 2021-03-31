@@ -21,7 +21,7 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
 import { UpdateIdentityForm } from "@src/components/forms/update-identity-form";
 import { Layout } from "@src/components/page-layout";
-import { config } from "@src/config";
+import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { NoDBUserFoundError } from "@src/errors/errors";
@@ -80,12 +80,12 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
         isCookieSealed: true,
-        cookieSalt: config.cookieSalt,
+        cookieSalt: configVariables.cookieSalt,
       });
 
       if (userCookie) {
         const identity = await getIdentities(
-          config.managementCredentials,
+          configVariables.managementCredentials,
           userCookie.sub,
         )
           .then((identities) => {

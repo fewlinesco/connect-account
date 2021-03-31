@@ -9,16 +9,15 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import * as getAndPutUser from "@src/commands/get-and-put-user";
-import { config, oauth2Client } from "@src/config";
+import { configVariables } from "@src/configs/config-variables";
+import { oauth2Client } from "@src/configs/oauth2-client";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import * as getDBUserFromSub from "@src/queries/get-db-user-from-sub";
 import * as decryptVerifyAccessToken from "@src/workflows/decrypt-verify-access-token";
 
-jest.mock("@src/config", () => {
-  const configFile = jest.requireActual("@src/config");
-
+jest.mock("@src/configs/config-variables", () => {
   return {
-    config: {
+    configVariables: {
       cookieSalt: "#*b+x3ZXE3-h[E+Q5YC5`jr~y%CA~R-[",
       connectOpenIdConfigurationUrl: "",
       connectApplicationClientId: "",
@@ -30,7 +29,6 @@ jest.mock("@src/config", () => {
       connectAccountURL: "http://foo.test",
       dynamoRegion: "eu-west-3",
     },
-    oauth2Client: configFile.oauth2Client,
   };
 });
 
@@ -80,7 +78,7 @@ async function sealJWS(access_token: string, salt?: string): Promise<string> {
       access_token,
       sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
     }),
-    salt || config.cookieSalt,
+    salt || configVariables.cookieSalt,
     defaults,
   );
 }

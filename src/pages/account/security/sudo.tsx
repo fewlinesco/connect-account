@@ -59,12 +59,12 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       //   const userCookie = await getServerSideCookies<UserCookie>(request, {
       //     cookieName: "user-cookie",
       //     isCookieSealed: true,
-      //     cookieSalt: config.cookieSalt,
+      //     cookieSalt: configVariables.cookieSalt,
       //   });
 
       //   if (userCookie) {
       //     const primaryIdentities = await getIdentities(
-      //       config.managementCredentials,
+      //       configVariables.managementCredentials,
       //       userCookie.sub,
       //     )
       //       .then((identities) => {
