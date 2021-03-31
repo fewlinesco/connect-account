@@ -1,7 +1,7 @@
 import { GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 
-import { config } from "../../src/config";
+import { configVariables } from "../../src/configs/config-variables";
 import { dynamoDbClient } from "../../src/configs/db-client";
 
 const errors = {
@@ -17,7 +17,7 @@ async function getUserFromSub(): Promise<void> {
     if (args.length > 0) {
       if (args.length === 1) {
         const getItem = {
-          TableName: config.dynamoTableName,
+          TableName: configVariables.dynamoTableName,
           Key: {
             sub: { S: args[0] },
           },

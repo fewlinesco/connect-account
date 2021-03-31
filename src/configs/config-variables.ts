@@ -1,8 +1,4 @@
-import OAuth2Client, {
-  OAuth2ClientConstructor,
-} from "@fewlines/connect-client";
-
-type Config = {
+type ConfigVariables = {
   connectAccountURL: string;
   dynamoRegion: string;
   dynamoDbEndpoint: string;
@@ -30,7 +26,7 @@ type Config = {
   };
 };
 
-const config: Config = {
+const configVariables: ConfigVariables = {
   connectAccountURL: "",
   dynamoRegion: "",
   dynamoDbEndpoint: "",
@@ -73,33 +69,37 @@ function getConnectAccountURL(): string {
 function handleEnvVars(): void {
   const connectAccountURL = getConnectAccountURL();
 
-  config.connectAccountURL = connectAccountURL;
-  config.dynamoRegion = process.env.DYNAMODB_REGION || "";
-  config.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";
-  config.dynamoAccessKeyID = process.env.DYNAMODB_ACCESS_KEY_ID || "";
-  config.dynamoSecretAccessKey = process.env.DYNAMODB_SECRET_ACCESS_KEY || "";
-  config.dynamoTableName = process.env.DYNAMODB_TABLE_NAME || "";
-  config.connectProviderUrl = process.env.CONNECT_PROVIDER_URL || "";
-  config.connectApplicationClientId =
+  configVariables.connectAccountURL = connectAccountURL;
+  configVariables.dynamoRegion = process.env.DYNAMODB_REGION || "";
+  configVariables.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";
+  configVariables.dynamoAccessKeyID = process.env.DYNAMODB_ACCESS_KEY_ID || "";
+  configVariables.dynamoSecretAccessKey =
+    process.env.DYNAMODB_SECRET_ACCESS_KEY || "";
+  configVariables.dynamoTableName = process.env.DYNAMODB_TABLE_NAME || "";
+  configVariables.connectProviderUrl = process.env.CONNECT_PROVIDER_URL || "";
+  configVariables.connectApplicationClientId =
     process.env.CONNECT_APPLICATION_CLIENT_ID || "";
-  config.connectApplicationClientSecret =
+  configVariables.connectApplicationClientSecret =
     process.env.CONNECT_APPLICATION_CLIENT_SECRET || "";
-  config.connectApplicationScopes =
+  configVariables.connectApplicationScopes =
     process.env.CONNECT_APPLICATION_SCOPES || "";
-  config.cookieSalt = process.env.CONNECT_ACCOUNT_SESSION_SALT || "";
-  config.connectOpenIdConfigurationUrl =
+  configVariables.cookieSalt = process.env.CONNECT_ACCOUNT_SESSION_SALT || "";
+  configVariables.connectOpenIdConfigurationUrl =
     process.env.CONNECT_OPEN_ID_CONFIGURATION_URL || "";
-  config.connectAccountRedirectURI = `${connectAccountURL}/api/oauth/callback`;
-  config.connectAudience = process.env.CONNECT_AUDIENCE || "";
-  config.connectJwtAlgorithm = process.env.CONNECT_JWT_ALGORITHM || "";
-  config.accountJwePrivateKey = process.env.ACCOUNT_JWE_PRIVATE_KEY || "";
-  config.isJweSigned = process.env.IS_JWE_SIGNED || "";
-  config.connectTestAccountEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL || "";
-  config.connectTestAccountPassword =
+  configVariables.connectAccountRedirectURI = `${connectAccountURL}/api/oauth/callback`;
+  configVariables.connectAudience = process.env.CONNECT_AUDIENCE || "";
+  configVariables.connectJwtAlgorithm = process.env.CONNECT_JWT_ALGORITHM || "";
+  configVariables.accountJwePrivateKey =
+    process.env.ACCOUNT_JWE_PRIVATE_KEY || "";
+  configVariables.isJweSigned = process.env.IS_JWE_SIGNED || "";
+  configVariables.connectTestAccountEmail =
+    process.env.CONNECT_TEST_ACCOUNT_EMAIL || "";
+  configVariables.connectTestAccountPassword =
     process.env.CONNECT_TEST_ACCOUNT_PASSWORD || "";
-  config.serviceName = process.env.SERVICE_NAME || "Connect.Account";
-  config.lightstepAccessToken = process.env.LIGHTSTEP_ACCESS_TOKEN || "";
-  config.managementCredentials = {
+  configVariables.serviceName = process.env.SERVICE_NAME || "Connect.Account";
+  configVariables.lightstepAccessToken =
+    process.env.LIGHTSTEP_ACCESS_TOKEN || "";
+  configVariables.managementCredentials = {
     URI: process.env.CONNECT_MANAGEMENT_URL || "",
     APIKey: process.env.CONNECT_MANAGEMENT_API_KEY || "",
   };
@@ -107,15 +107,4 @@ function handleEnvVars(): void {
 
 handleEnvVars();
 
-const oauth2ClientConstructorProps: OAuth2ClientConstructor = {
-  openIDConfigurationURL: config.connectOpenIdConfigurationUrl,
-  clientID: config.connectApplicationClientId,
-  clientSecret: config.connectApplicationClientSecret,
-  redirectURI: config.connectAccountRedirectURI,
-  audience: config.connectAudience,
-  scopes: config.connectApplicationScopes.split(" "),
-};
-
-const oauth2Client = new OAuth2Client(oauth2ClientConstructorProps);
-
-export { config, oauth2Client };
+export { configVariables };

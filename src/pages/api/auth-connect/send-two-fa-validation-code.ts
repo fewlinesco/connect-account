@@ -26,7 +26,7 @@ import { SudoEventId } from "@src/@types/dynamo-user";
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertSudoEventId } from "@src/commands/insert-sudo-event-id";
-import { config } from "@src/config";
+import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import { NoDBUserFoundError } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
@@ -56,7 +56,7 @@ const handler: Handler = (request, response): Promise<void> => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
         isCookieSealed: true,
-        cookieSalt: config.cookieSalt,
+        cookieSalt: configVariables.cookieSalt,
       });
 
       if (!userCookie) {
@@ -71,12 +71,15 @@ const handler: Handler = (request, response): Promise<void> => {
         value: identityInput.value,
       };
 
-      return await sendTwoFAVerificationCode(config.managementCredentials, {
-        callbackUrl: callbackUrl || "/",
-        identity,
-        localeCodeOverride: "en-EN",
-        userId: userCookie.sub,
-      })
+      return await sendTwoFAVerificationCode(
+        configVariables.managementCredentials,
+        {
+          callbackUrl: callbackUrl || "/",
+          identity,
+          localeCodeOverride: "en-EN",
+          userId: userCookie.sub,
+        },
+      )
         .then(async ({ eventId }) => {
           span.setDisclosedAttribute("is verification code sent", true);
 
