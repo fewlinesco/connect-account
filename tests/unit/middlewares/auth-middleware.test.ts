@@ -55,6 +55,7 @@ const spiedOnGetDBUserFromSub = jest
       sub: defaultPayload.sub,
       refresh_token: "refresh_token",
       temporary_identities: [],
+      sudo_event_ids: [],
     };
   });
 
