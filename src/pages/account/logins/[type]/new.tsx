@@ -68,7 +68,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
 
       return {
         props: {
-          type: context.params?.type?.toString(),
+          type: context.params.type.toString(),
         },
       };
     },
