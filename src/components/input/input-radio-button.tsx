@@ -49,7 +49,7 @@ const Label = styled.label`
   cursor: pointer;
 
   @media ${deviceBreakpoints.m} {
-    padding: 0 ${({ theme }) => theme.spaces.xxs};
+    padding: 0 1.5rem;
   }
 
   span {

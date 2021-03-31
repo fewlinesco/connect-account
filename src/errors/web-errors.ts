@@ -99,6 +99,16 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
     message: "Temporary Identity list not found",
   },
+  SUDO_EVENT_IDS_NOT_FOUND: {
+    code: "sudo_event_ids_not_found",
+    httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
+    message: "Sudo event ids not found",
+  },
+  SUDO_EVENT_IDS_LIST_NOT_FOUND: {
+    code: "sudo_event_ids_list_not_found",
+    httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
+    message: "Sudo event ids list not found",
+  },
   NO_USER_FOUND: {
     code: "no_user_found",
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
