@@ -55,11 +55,6 @@ describe("Account Web Application add identity", () => {
       const baseUrl =
         process.env.CONNECT_TEST_ACCOUNT_URL || config.connectAccountURL + "/";
 
-      console.log(
-        "process.env.CONNECT_TEST_ACCOUNT_URL",
-        process.env.CONNECT_TEST_ACCOUNT_URL,
-      );
-
       await goto(`${baseUrl}account/logins/phone/new`);
 
       await waitFor("Phone number *");
