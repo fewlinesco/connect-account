@@ -17,7 +17,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { UserCookie } from "@src/@types/user-cookie";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
-import { config } from "@src/configs/config-variables";
+import { configVariables } from "@src/configs/config-variables";
 import { oauth2Client } from "@src/configs/oauth2-client";
 import {
   NoDBUserFoundError,
@@ -43,7 +43,7 @@ async function authentication(
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
-      cookieSalt: config.cookieSalt,
+      cookieSalt: configVariables.cookieSalt,
     });
 
     if (!userCookie) {
@@ -126,7 +126,7 @@ async function authentication(
           },
           {
             shouldCookieBeSealed: true,
-            cookieSalt: config.cookieSalt,
+            cookieSalt: configVariables.cookieSalt,
             maxAge: 24 * 60 * 60,
             path: "/",
             httpOnly: true,

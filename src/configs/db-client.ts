@@ -1,13 +1,13 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 
-import { config } from "./config-variables";
+import { configVariables } from "./config-variables";
 
 const dynamoDbClient = new DynamoDBClient({
-  region: config.dynamoRegion,
-  endpoint: config.dynamoDbEndpoint,
+  region: configVariables.dynamoRegion,
+  endpoint: configVariables.dynamoDbEndpoint,
   credentials: {
-    accessKeyId: config.dynamoAccessKeyID,
-    secretAccessKey: config.dynamoSecretAccessKey,
+    accessKeyId: configVariables.dynamoAccessKeyID,
+    secretAccessKey: configVariables.dynamoSecretAccessKey,
   },
 });
 

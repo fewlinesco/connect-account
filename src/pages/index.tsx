@@ -20,7 +20,7 @@ import React from "react";
 
 import { Main } from "@src/components/page-layout";
 import { Home } from "@src/components/pages/home/home";
-import { config } from "@src/configs/config-variables";
+import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import { oauth2Client } from "@src/configs/oauth2-client";
 import getTracer from "@src/configs/tracer";
@@ -81,7 +81,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
         });
 
       const providerName = await getProviderName(
-        config.managementCredentials,
+        configVariables.managementCredentials,
       ).catch((error) => {
         if (error instanceof GraphqlErrors) {
           throw webErrorFactory({

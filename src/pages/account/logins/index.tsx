@@ -20,7 +20,7 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { LoginsOverview } from "@src/components/pages/logins-overview/logins-overview";
-import { config } from "@src/configs/config-variables";
+import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
@@ -71,12 +71,12 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
         isCookieSealed: true,
-        cookieSalt: config.cookieSalt,
+        cookieSalt: configVariables.cookieSalt,
       });
 
       if (userCookie) {
         const sortedIdentities = await getIdentities(
-          config.managementCredentials,
+          configVariables.managementCredentials,
           userCookie.sub,
         )
           .then((identities) => {

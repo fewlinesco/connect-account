@@ -16,7 +16,7 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
-import { config } from "@src/configs/config-variables";
+import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
@@ -41,7 +41,7 @@ const handler: Handler = (request, response): Promise<void> => {
 
     span.setDisclosedAttribute("Identity type", type);
 
-    return removeIdentityFromUser(config.managementCredentials, {
+    return removeIdentityFromUser(configVariables.managementCredentials, {
       userId,
       identityType: type,
       identityValue: value,

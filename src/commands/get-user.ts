@@ -1,11 +1,11 @@
 import { GetItemCommand, GetItemCommandOutput } from "@aws-sdk/client-dynamodb";
 
 import { dynamoDbClient } from "../configs/db-client";
-import { config } from "@src/configs/config-variables";
+import { configVariables } from "@src/configs/config-variables";
 
 async function getUser(sub: string): Promise<GetItemCommandOutput> {
   const getItem = {
-    TableName: config.dynamoTableName,
+    TableName: configVariables.dynamoTableName,
     Key: {
       sub: { S: sub },
     },

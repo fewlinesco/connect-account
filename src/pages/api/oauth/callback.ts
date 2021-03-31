@@ -19,7 +19,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
-import { config } from "@src/configs/config-variables";
+import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import { oauth2Client } from "@src/configs/oauth2-client";
 import getTracer from "@src/configs/tracer";
@@ -106,7 +106,7 @@ const handler: Handler = (request, response): Promise<void> => {
       },
       {
         shouldCookieBeSealed: true,
-        cookieSalt: config.cookieSalt,
+        cookieSalt: configVariables.cookieSalt,
         maxAge: 24 * 60 * 60,
         path: "/",
         httpOnly: true,
