@@ -8,6 +8,7 @@ import { StyledForm } from "./form";
 import { HttpVerbs } from "@src/@types/http-verbs";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { PasswordRulesErrorList } from "@src/components/password-rules-error-list/password-rules-error-list";
+import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
 import { capitalizeFirstLetter } from "@src/utils/format";
 
@@ -46,21 +47,24 @@ const SetPasswordForm: React.FC<{
             await fetchJson("/api/auth-connect/set-password", HttpVerbs.POST, {
               passwordInput,
             })
-              .then((response) => {
-                return response.json();
-              })
-              .then((result) => {
-                if ("details" in result) {
-                  setPasswordRestrictionError(result.details);
+              .then(async (response) => {
+                const parsedResponse = await response.json();
+
+                if ("details" in parsedResponse) {
+                  setPasswordRestrictionError(parsedResponse.details);
                   setIsNotSubmitted(true);
                 }
 
-                if ("message" in result && result.code === "invalid_body") {
-                  setErrorMessage("Password can't be blank");
-                  setIsNotSubmitted(true);
+                if ("message" in parsedResponse) {
+                  if (
+                    parsedResponse.message === ERRORS_DATA.INVALID_BODY.message
+                  ) {
+                    setErrorMessage("Password can't be blank");
+                    setIsNotSubmitted(true);
+                  }
                 }
 
-                if ("isUpdated" in result) {
+                if ("isUpdated" in parsedResponse) {
                   router && router.push("/account/security");
                 }
               })
