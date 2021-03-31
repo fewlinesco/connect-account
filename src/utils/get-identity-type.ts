@@ -3,6 +3,10 @@ import { IdentityTypes } from "@fewlines/connect-management";
 import { UnhandledIdentityType } from "@src/errors/errors";
 
 function getIdentityType(type: string): IdentityTypes {
+  if (typeof type !== "string") {
+    throw new UnhandledIdentityType(`Can't deal with identity type ${type}`);
+  }
+
   switch (type.toUpperCase()) {
     case "EMAIL":
       return IdentityTypes.EMAIL;
