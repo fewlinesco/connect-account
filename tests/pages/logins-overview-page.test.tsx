@@ -27,7 +27,7 @@ describe("LoginsOverviewPage", () => {
   });
 
   describe("Identity type: EMAIL", () => {
-    test("LoginsOverview should display primary email identity first and all of them when clicking on the show more button", async () => {
+    it("should display primary email identity first and all of them when clicking on the show more button", async () => {
       expect.assertions(7);
 
       const sortedIdentities: SortedIdentities = {
@@ -39,7 +39,7 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
-      fetch.mockResponseOnce(JSON.stringify({ sortedIdentities }));
+      fetch.once(JSON.stringify({ sortedIdentities }));
 
       render(<LoginsOverviewPage />);
 
@@ -98,219 +98,216 @@ describe("LoginsOverviewPage", () => {
       ).toBeInTheDocument();
     });
 
-    // it("should display primary email identity without show more button if provided 1 identity", () => {
-    //   const sortedIdentities: SortedIdentities = {
-    //     emailIdentities: [mockIdentities.primaryEmailIdentity],
-    //     phoneIdentities: [],
-    //     socialIdentities: [],
-    //   };
+    it("should display primary email identity without show more button if provided 1 identity", async () => {
+      expect.assertions(4);
 
-    //   render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
+      const sortedIdentities: SortedIdentities = {
+        emailIdentities: [mockIdentities.primaryEmailIdentity],
+        phoneIdentities: [],
+        socialIdentities: [],
+      };
 
-    //   expect(
-    //     screen.getByRole("link", {
-    //       name: mockIdentities.primaryEmailIdentity.value,
-    //     }),
-    //   ).toBeInTheDocument();
+      fetch.once(JSON.stringify({ sortedIdentities }));
 
-    //   expect(
-    //     screen.getByRole("link", {
-    //       name: mockIdentities.primaryEmailIdentity.value,
-    //     }),
-    //   ).toHaveAttribute(
-    //     "href",
-    //     `/account/logins/${mockIdentities.primaryEmailIdentity.type.toLowerCase()}/${
-    //       mockIdentities.primaryEmailIdentity.id
-    //     }`,
-    //   );
+      render(<LoginsOverviewPage />);
 
-    //   expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+      expect(
+        await screen.findByRole("link", {
+          name: mockIdentities.primaryEmailIdentity.value,
+        }),
+      ).toBeInTheDocument();
 
-    //   expect(
-    //     screen.getByRole("link", { name: "+ Add new email address" }),
-    //   ).toBeInTheDocument();
-    // });
+      expect(
+        screen.getByRole("link", {
+          name: mockIdentities.primaryEmailIdentity.value,
+        }),
+      ).toHaveAttribute(
+        "href",
+        `/account/logins/${mockIdentities.primaryEmailIdentity.type.toLowerCase()}/${
+          mockIdentities.primaryEmailIdentity.id
+        }`,
+      );
 
-    // it("should display default message when no identity is provided", () => {
+      expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+
+      expect(
+        screen.getByRole("link", { name: "+ Add new email address" }),
+      ).toBeInTheDocument();
+    });
+
+    // it("should display default message when no identity is provided", async () => {
     //   const sortedIdentities: SortedIdentities = {
     //     emailIdentities: [],
     //     phoneIdentities: [],
     //     socialIdentities: [],
     //   };
 
-    //   render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
+    //   fetch.once(JSON.stringify({ sortedIdentities }));
 
-    //   expect(screen.getByText("No email added yet.")).toBeInTheDocument();
-    //   expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+    //   render(<LoginsOverviewPage />);
 
     //   expect(
-    //     screen.getByRole("link", { name: "+ Add new phone number" }),
+    //     await findByTextContent("No email added yet."),
     //   ).toBeInTheDocument();
+
+    // expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+
+    // expect(
+    //   screen.getByRole("link", { name: "+ Add new phone number" }),
+    // ).toBeInTheDocument();
     // });
   });
 
   // describe("Identity type: PHONE", () => {
-  //   it("should display primary phone identity first and all of them when clicking on the show more button", () => {
-  //     expect.assertions(7);
+  // it("should display primary phone identity first and all of them when clicking on the show more button", async () => {
+  // expect.assertions(7);
 
-  //     const sortedIdentities: SortedIdentities = {
-  //       emailIdentities: [],
-  //       phoneIdentities: [
-  //         mockIdentities.primaryPhoneIdentity,
-  //         mockIdentities.nonPrimaryPhoneIdentity,
-  //       ],
-  //       socialIdentities: [],
-  //     };
+  // const sortedPhoneIdentities: SortedIdentities = {
+  //   emailIdentities: [],
+  //   phoneIdentities: [
+  //     mockIdentities.primaryPhoneIdentity,
+  //     mockIdentities.nonPrimaryPhoneIdentity,
+  //   ],
+  //   socialIdentities: [],
+  // };
 
-  //     render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
+  // fetch.mockResponseOnce(
+  //   JSON.stringify({ sortedIdentities: sortedPhoneIdentities }),
+  // );
 
-  //     expect(
-  //       screen.getByRole("link", {
-  //         name: mockIdentities.primaryPhoneIdentity.value,
-  //       }),
-  //     ).toBeInTheDocument();
+  // render(<LoginsOverviewPage />);
 
-  //     expect(
-  //       screen.getByRole("link", {
-  //         name: mockIdentities.primaryPhoneIdentity.value,
-  //       }),
-  //     ).toHaveAttribute(
-  //       "href",
-  //       `/account/logins/${mockIdentities.primaryPhoneIdentity.type.toLowerCase()}/${
-  //         mockIdentities.primaryPhoneIdentity.id
-  //       }`,
-  //     );
+  // expect(
+  //   await findByTextContent(mockIdentities.primaryPhoneIdentity.value),
+  // ).toBeTruthy();
 
-  //     expect(
-  //       screen.queryByRole("link", {
-  //         name: mockIdentities.nonPrimaryPhoneIdentity.value,
-  //       }),
-  //     ).not.toBeInTheDocument();
+  // expect(
+  //   screen.getByRole("link", {
+  //     name: mockIdentities.primaryPhoneIdentity.value,
+  //   }),
+  // ).toHaveAttribute(
+  //   "href",
+  //   `/account/logins/${mockIdentities.primaryPhoneIdentity.type.toLowerCase()}/${
+  //     mockIdentities.primaryPhoneIdentity.id
+  //   }`,
+  // );
 
-  //     userEvent.click(
-  //       screen.getByText(
-  //         `Show ${sortedIdentities.phoneIdentities.length - 1} more`,
-  //       ),
-  //     );
+  // expect(
+  //   screen.queryByRole("link", {
+  //     name: mockIdentities.nonPrimaryPhoneIdentity.value,
+  //   }),
+  // ).not.toBeInTheDocument();
 
-  //     expect(
-  //       screen.getByRole("link", {
-  //         name: mockIdentities.primaryPhoneIdentity.value,
-  //       }),
-  //     ).toBeInTheDocument();
+  // userEvent.click(
+  //   screen.getByText(
+  //     `Show ${sortedIdentities.phoneIdentities.length - 1} more`,
+  //   ),
+  // );
 
-  //     expect(
-  //       screen.getByRole("link", {
-  //         name: mockIdentities.nonPrimaryPhoneIdentity.value,
-  //       }),
-  //     ).toBeInTheDocument();
+  // expect(
+  //   screen.getByRole("link", {
+  //     name: mockIdentities.primaryPhoneIdentity.value,
+  //   }),
+  // ).toBeInTheDocument();
 
-  //     expect(
-  //       screen.getByRole("link", {
-  //         name: mockIdentities.nonPrimaryPhoneIdentity.value,
-  //       }),
-  //     ).toHaveAttribute(
-  //       "href",
-  //       `/account/logins/${mockIdentities.nonPrimaryPhoneIdentity.type.toLowerCase()}/${
-  //         mockIdentities.nonPrimaryPhoneIdentity.id
-  //       }`,
-  //     );
+  // expect(
+  //   screen.getByRole("link", {
+  //     name: mockIdentities.nonPrimaryPhoneIdentity.value,
+  //   }),
+  // ).toBeInTheDocument();
 
-  //     expect(
-  //       screen.getByRole("link", { name: "+ Add new phone number" }),
-  //     ).toBeInTheDocument();
-  //   });
+  // expect(
+  //   screen.getByRole("link", {
+  //     name: mockIdentities.nonPrimaryPhoneIdentity.value,
+  //   }),
+  // ).toHaveAttribute(
+  //   "href",
+  //   `/account/logins/${mockIdentities.nonPrimaryPhoneIdentity.type.toLowerCase()}/${
+  //     mockIdentities.nonPrimaryPhoneIdentity.id
+  //   }`,
+  // );
 
-  //   it("should display primary phone identity without show more button if provided 1 identity", () => {
-  //     expect.assertions(4);
+  // expect(
+  //   screen.getByRole("link", { name: "+ Add new phone number" }),
+  // ).toBeInTheDocument();
+  // });
 
-  //     const sortedIdentities: SortedIdentities = {
-  //       emailIdentities: [],
-  //       phoneIdentities: [mockIdentities.primaryPhoneIdentity],
-  //       socialIdentities: [],
-  //     };
+  // it("should display primary phone identity without show more button if provided 1 identity", () => {
+  //   expect.assertions(4);
+  //   const sortedIdentities: SortedIdentities = {
+  //     emailIdentities: [],
+  //     phoneIdentities: [mockIdentities.primaryPhoneIdentity],
+  //     socialIdentities: [],
+  //   };
+  //   fetch.mockResponseOnce(JSON.stringify({ sortedIdentities }));
+  //   render(<LoginsOverviewPage />);
+  //   expect(
+  //     screen.getByRole("link", {
+  //       name: mockIdentities.primaryPhoneIdentity.value,
+  //     }),
+  //   ).toBeInTheDocument();
+  //   expect(
+  //     screen.getByRole("link", {
+  //       name: mockIdentities.primaryPhoneIdentity.value,
+  //     }),
+  //   ).toHaveAttribute(
+  //     "href",
+  //     `/account/logins/${mockIdentities.primaryPhoneIdentity.type.toLowerCase()}/${
+  //       mockIdentities.primaryPhoneIdentity.id
+  //     }`,
+  //   );
+  //   expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+  //   expect(
+  //     screen.getByRole("link", { name: "+ Add new phone number" }),
+  //   ).toBeInTheDocument();
+  // });
 
-  //     render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
-
-  //     expect(
-  //       screen.getByRole("link", {
-  //         name: mockIdentities.primaryPhoneIdentity.value,
-  //       }),
-  //     ).toBeInTheDocument();
-
-  //     expect(
-  //       screen.getByRole("link", {
-  //         name: mockIdentities.primaryPhoneIdentity.value,
-  //       }),
-  //     ).toHaveAttribute(
-  //       "href",
-  //       `/account/logins/${mockIdentities.primaryPhoneIdentity.type.toLowerCase()}/${
-  //         mockIdentities.primaryPhoneIdentity.id
-  //       }`,
-  //     );
-  //     expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
-
-  //     expect(
-  //       screen.getByRole("link", { name: "+ Add new phone number" }),
-  //     ).toBeInTheDocument();
-  //   });
-
-  //   it("should display default message when no identity is provided", () => {
-  //     expect.assertions(3);
-
-  //     const sortedIdentities: SortedIdentities = {
-  //       emailIdentities: [],
-  //       phoneIdentities: [],
-  //       socialIdentities: [],
-  //     };
-
-  //     render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
-
-  //     expect(
-  //       screen.getByText("No phone number added yet."),
-  //     ).toBeInTheDocument();
-
-  //     expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
-
-  //     expect(
-  //       screen.getByRole("link", { name: "+ Add new phone number" }),
-  //     ).toBeInTheDocument();
-  //   });
+  // it("should display default message when no identity is provided", () => {
+  //   expect.assertions(3);
+  //   const sortedIdentities: SortedIdentities = {
+  //     emailIdentities: [],
+  //     phoneIdentities: [],
+  //     socialIdentities: [],
+  //   };
+  //   fetch.mockResponseOnce(JSON.stringify({ sortedIdentities }));
+  //   render(<LoginsOverviewPage />);
+  //   expect(
+  //     screen.getByText("No phone number added yet."),
+  //   ).toBeInTheDocument();
+  //   expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+  //   expect(
+  //     screen.getByRole("link", { name: "+ Add new phone number" }),
+  //   ).toBeInTheDocument();
+  // });
   // });
 
   // describe("Identity type: SOCIAL", () => {
-  //   it("should display all social identities provided without the show more button", () => {
-  //     expect.assertions(3);
-
-  //     const sortedIdentities: SortedIdentities = {
-  //       emailIdentities: [],
-  //       phoneIdentities: [],
-  //       socialIdentities: [
-  //         mockIdentities.primarySocialIdentity,
-  //         mockIdentities.nonPrimarySocialIdentity,
-  //       ],
-  //     };
-
-  //     render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
-  //     expect(screen.getByText("Github")).toBeInTheDocument();
-  //     expect(screen.getByText("Facebook")).toBeInTheDocument();
-  //     expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
-  //   });
-
-  //   it("should display default message when no identity is provided", () => {
-  //     const sortedIdentities: SortedIdentities = {
-  //       emailIdentities: [],
-  //       phoneIdentities: [],
-  //       socialIdentities: [],
-  //     };
-
-  //     render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
-
-  //     expect(
-  //       screen.getByText("No social logins added yet."),
-  //     ).toBeInTheDocument();
-
-  //     expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
-  //   });
+  //   //   it("should display all social identities provided without the show more button", () => {
+  //   //     expect.assertions(3);
+  //   //     const sortedIdentities: SortedIdentities = {
+  //   //       emailIdentities: [],
+  //   //       phoneIdentities: [],
+  //   //       socialIdentities: [
+  //   //         mockIdentities.primarySocialIdentity,
+  //   //         mockIdentities.nonPrimarySocialIdentity,
+  //   //       ],
+  //   //     };
+  //   //     render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
+  //   //     expect(screen.getByText("Github")).toBeInTheDocument();
+  //   //     expect(screen.getByText("Facebook")).toBeInTheDocument();
+  //   //     expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+  //   //   });
+  //   //   it("should display default message when no identity is provided", () => {
+  //   //     const sortedIdentities: SortedIdentities = {
+  //   //       emailIdentities: [],
+  //   //       phoneIdentities: [],
+  //   //       socialIdentities: [],
+  //   //     };
+  //   //     render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
+  //   //     expect(
+  //   //       screen.getByText("No social logins added yet."),
+  //   //     ).toBeInTheDocument();
+  //   //     expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+  //   //   });
   // });
 });

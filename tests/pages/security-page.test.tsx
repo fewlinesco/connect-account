@@ -4,9 +4,9 @@ enableFetchMocks();
 
 import React from "react";
 
-import SecurityPage from "@src/pages/account/security/index";
 import { render, screen } from "../config/testing-library-config";
-// import { findByTextContent } from "../utils/find-by-text-content";
+import { findByTextContent } from "../utils/find-by-text-content";
+import SecurityPage from "@src/pages/account/security";
 
 jest.mock("@src/configs/db-client", () => {
   return {
@@ -26,7 +26,7 @@ describe("SecurityPage", () => {
   test("It should render the security layout", async () => {
     expect.assertions(3);
 
-    fetch.mockResponseOnce(JSON.stringify({ isPasswordSet: false }));
+    fetch.once(JSON.stringify({ isPasswordSet: false }));
 
     render(<SecurityPage />);
 
@@ -41,25 +41,24 @@ describe("SecurityPage", () => {
     expect(await screen.findByText("Password")).toBeInTheDocument();
   });
 
-  // Mock do not reset for some reasons.
+  test("The anchor should render 'Set your password' if isPasswordSet is false", async () => {
+    expect.assertions(1);
 
-  // test("The anchor should render 'Set your password' if isPasswordSet is false", async () => {
-  //   expect.assertions(1);
+    fetch.once(JSON.stringify({ isPasswordSet: false }));
 
-  //   fetch.mockResponseOnce(JSON.stringify({ isPasswordSet: false }));
+    render(<SecurityPage />);
 
-  //   render(<SecurityPage />);
-  //   const securitySetAnchor = await findByTextContent("Set your password");
+    const securitySetAnchor = await findByTextContent("Set your password");
 
-  //   expect(securitySetAnchor).toBeTruthy();
-  // });
+    expect(securitySetAnchor).toBeTruthy();
+  });
+
+  // Mocked fetch do not reset for some reasons.
 
   // test("The anchor should render 'Update your password' if isPasswordSet is true", async () => {
   //   expect.assertions(1);
 
-  //   fetch.mockResponseOnce(JSON.stringify({ isPasswordSet: true }), {
-  //     status: 200,
-  //   });
+  //   fetch.once(JSON.stringify({ isPasswordSet: true }));
 
   //   render(<SecurityPage />);
   //   await findByTextContent(
