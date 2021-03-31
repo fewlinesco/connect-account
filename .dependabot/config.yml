@@ -10,3 +10,6 @@ update_configs:
       - match:
           dependency_name: "husky"
           version_requirement: "5.x"
+      - match:
+          dependency_name: "husky"
+          version_requirement: "6.x"
