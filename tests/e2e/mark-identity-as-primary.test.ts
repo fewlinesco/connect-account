@@ -4,7 +4,6 @@ import {
   text,
   click,
   screenshot,
-  waitFor,
   link,
   below,
   above,
@@ -24,6 +23,8 @@ describe("Mark Identity as primary", () => {
         "--disable-dev-shm",
       ],
       headless: true,
+      observe: false,
+      observeTime: 2000,
     });
   });
 
@@ -54,9 +55,10 @@ describe("Mark Identity as primary", () => {
       expect(await text("Confirm").exists()).toBeTruthy();
       await click("Confirm");
 
-      expect(await link(".test", below("Email addresses")).text()).toEqual(
-        nonPrimaryYet,
-      );
+      click(link(".test", below("Email addresses")), {
+        waitForEvents: ["loadEventFired"],
+      });
+      expect(text(nonPrimaryYet)).toBeTruthy();
 
       done();
     } catch (error) {

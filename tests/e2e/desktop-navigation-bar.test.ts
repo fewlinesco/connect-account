@@ -1,11 +1,4 @@
-import {
-  openBrowser,
-  closeBrowser,
-  text,
-  click,
-  screenshot,
-  waitFor,
-} from "taiko";
+import { openBrowser, closeBrowser, text, click, screenshot } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
@@ -21,6 +14,8 @@ describe("DesktopNavigationBar", () => {
         "--disable-dev-shm",
       ],
       headless: true,
+      observe: false,
+      observeTime: 2000,
     });
   });
 
@@ -34,15 +29,12 @@ describe("DesktopNavigationBar", () => {
     try {
       await authenticateToConnect();
 
-      await waitFor("Logins");
       expect(await text("Logins").exists()).toBeTruthy();
 
       await click("Logins");
-      await waitFor("Email addresses");
       expect(await text("Email addresses").exists()).toBeTruthy();
 
       await click("Home");
-      await waitFor("LOGINS");
       expect(await text("LOGINS").exists()).toBeTruthy();
 
       done();

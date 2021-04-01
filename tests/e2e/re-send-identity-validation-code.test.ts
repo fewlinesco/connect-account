@@ -4,10 +4,8 @@ import {
   text,
   click,
   screenshot,
-  waitFor,
   link,
   textBox,
-  focus,
   write,
   currentURL,
   into,
@@ -27,6 +25,8 @@ describe("Account Web Application re-send Identity validation code", () => {
         "--disable-dev-shm",
       ],
       headless: true,
+      observe: false,
+      observeTime: 2000,
     });
   });
 
