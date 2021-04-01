@@ -35,7 +35,7 @@ describe("Account Web Application add identity", () => {
   });
 
   test("It should show error messages if Identity inputs are filled incorrectly in add identity", async (done) => {
-    expect.assertions(8);
+    expect.assertions(10);
 
     try {
       await authenticateToConnect();
@@ -69,8 +69,8 @@ describe("Account Web Application add identity", () => {
       expect(await text("Phone number *").exists()).toBeTruthy();
 
       await click("Add phone");
-      await waitFor("Something went wrong");
-      expect(await text("Something went wrong").exists()).toBeTruthy();
+      await waitFor("Identity input can't be blank");
+      expect(await text("Identity input can't be blank").exists()).toBeTruthy();
 
       await write(
         "000000000000000000000000000000",
@@ -94,7 +94,7 @@ describe("Account Web Application add identity", () => {
   });
 
   test("It should show error messages if Identity inputs are filled incorrectly in update identity", async (done) => {
-    expect.assertions(8);
+    expect.assertions(6);
 
     try {
       await waitFor("LOGINS");
