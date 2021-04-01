@@ -53,6 +53,7 @@ const SetPasswordForm: React.FC<{
                 if ("details" in parsedResponse) {
                   setPasswordRestrictionError(parsedResponse.details);
                   setIsNotSubmitted(true);
+                  return;
                 }
 
                 if ("message" in parsedResponse) {
@@ -61,6 +62,7 @@ const SetPasswordForm: React.FC<{
                   ) {
                     setErrorMessage("Password can't be blank");
                     setIsNotSubmitted(true);
+                    return;
                   }
 
                   setErrorMessage(

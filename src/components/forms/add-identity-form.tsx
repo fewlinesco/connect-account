@@ -59,11 +59,13 @@ const AddIdentityForm: React.FC<{
               ) {
                 setFormID(uuidv4());
                 setErrorMessage(parsedResponse.message);
+                return;
               }
 
               if (parsedResponse.message === ERRORS_DATA.BAD_REQUEST.message) {
                 setFormID(uuidv4());
                 setErrorMessage("Something went wrong");
+                return;
               }
 
               setErrorMessage("Something went wrong. Please try again later");
