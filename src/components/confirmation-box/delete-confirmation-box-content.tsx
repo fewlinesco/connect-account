@@ -39,7 +39,7 @@ const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
           };
 
           await fetchJson(
-            "/api/delete-identity",
+            "/api/identity/delete-identity",
             HttpVerbs.DELETE,
             requestData,
           ).then(() => {

@@ -116,7 +116,7 @@ const wrappedHandler = wrapMiddlewares(
     authMiddleware(getTracer()),
   ],
   handler,
-  "/api/auth-connect/mark-identity-as-primary",
+  "/api/identity/mark-identity-as-primary",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
