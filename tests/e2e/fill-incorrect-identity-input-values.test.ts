@@ -1,14 +1,15 @@
 import {
   openBrowser,
   closeBrowser,
-  goto,
   text,
   click,
   screenshot,
   waitFor,
   textBox,
-  focus,
   write,
+  into,
+  link,
+  above,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
@@ -33,8 +34,8 @@ describe("Account Web Application add identity", () => {
     await closeBrowser();
   });
 
-  test("It should show error messages if Identity inputs are filled incorrectly", async (done) => {
-    expect.assertions(8);
+  test("It should show error messages if Identity inputs are filled incorrectly in add identity", async (done) => {
+    expect.assertions(10);
 
     try {
       await authenticateToConnect();
@@ -52,16 +53,29 @@ describe("Account Web Application add identity", () => {
       await waitFor("Identity input can't be blank");
       expect(await text("Identity input can't be blank").exists()).toBeTruthy();
 
-      const baseUrl =
-        process.env.CONNECT_TEST_ACCOUNT_URL ||
-        configVariables.connectAccountURL + "/";
+      await write(
+        process.env.CONNECT_TEST_ACCOUNT_EMAIL ||
+          configVariables.connectTestAccountEmail,
+        into(textBox({ placeholder: "Enter your email" })),
+      );
+      await click("Add email");
+      await waitFor("Something went wrong");
+      expect(await text("Something went wrong").exists()).toBeTruthy();
 
-      await goto(`${baseUrl}account/logins/phone/new`);
+      await click("LOGINS");
+      await click("+ Add new phone number");
 
       await waitFor("Phone number *");
       expect(await text("Phone number *").exists()).toBeTruthy();
-      await focus(textBox({ placeholder: "Enter your phone number" }));
-      await write("000000000000000000000000000000");
+
+      await click("Add phone");
+      await waitFor("Identity input can't be blank");
+      expect(await text("Identity input can't be blank").exists()).toBeTruthy();
+
+      await write(
+        "000000000000000000000000000000",
+        into(textBox({ placeholder: "Enter your phone number" })),
+      );
       await click("Add phone");
       await waitFor("Invalid phone number format input.");
       expect(
@@ -72,7 +86,51 @@ describe("Account Web Application add identity", () => {
     } catch (error) {
       await screenshot({
         path:
-          "tests/e2e/screenshots/fill-incorrect-identity-input-values.test.png",
+          "tests/e2e/screenshots/fill-incorrect-add-identity-input-values.test.png",
+      });
+
+      done(error);
+    }
+  });
+
+  test("It should show error messages if Identity inputs are filled incorrectly in update identity", async (done) => {
+    expect.assertions(6);
+
+    try {
+      await waitFor("LOGINS");
+      expect(await text("LOGINS").exists()).toBeTruthy();
+      await click("LOGINS");
+
+      await click("Show");
+      expect(await text("Hide").exists()).toBeTruthy();
+      const nonPrimaryYet = await link(".test", above("Hide")).text();
+      await click(nonPrimaryYet);
+
+      expect(await text("Update this email address").exists()).toBeTruthy();
+      await click("Update this email address");
+
+      await waitFor("New email address *");
+
+      await click("Update email");
+      await waitFor("Identity input can't be blank");
+      expect(await text("Identity input can't be blank").exists()).toBeTruthy();
+
+      await write(
+        nonPrimaryYet,
+        into(textBox({ placeholder: "Enter your email" })),
+      );
+
+      expect(await text("Update email").exists()).toBeTruthy();
+      await click("Update email");
+
+      await waitFor("Something went wrong");
+      expect(await text("Something went wrong").exists()).toBeTruthy();
+
+      done();
+    } catch (error) {
+      await screenshot({
+        path:
+          "tests/e2e/screenshots/fill-incorrect-update-identity-input-values.test.png",
       });
 
       done(error);
