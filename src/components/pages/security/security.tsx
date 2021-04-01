@@ -11,7 +11,6 @@ import { configVariables } from "@src/configs/config-variables";
 const Security: React.FC = () => {
   const { data, error } = useSWR<{ isPasswordSet: boolean }, Error>(
     `${configVariables.connectAccountURL}/api/auth-connect/is-password-set`,
-    (url) => fetch(url).then((response) => response.json()),
   );
 
   if (error) {

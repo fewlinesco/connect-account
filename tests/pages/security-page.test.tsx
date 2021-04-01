@@ -1,8 +1,5 @@
-/* eslint-disable import/order */
-import fetch, { enableFetchMocks } from "jest-fetch-mock";
-enableFetchMocks();
-
 import React from "react";
+import { cache, SWRConfig } from "swr";
 
 import { render, screen } from "../config/testing-library-config";
 import { findByTextContent } from "../utils/find-by-text-content";
@@ -19,16 +16,25 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("SecurityPage", () => {
-  beforeEach(() => {
-    fetch.resetMocks();
+  afterEach(() => {
+    cache.clear();
   });
 
   test("It should render the security layout", async () => {
     expect.assertions(3);
 
-    fetch.once(JSON.stringify({ isPasswordSet: false }));
-
-    render(<SecurityPage />);
+    render(
+      <SWRConfig
+        value={{
+          dedupingInterval: 0,
+          fetcher: () => {
+            return { isPasswordSet: false };
+          },
+        }}
+      >
+        <SecurityPage />
+      </SWRConfig>,
+    );
 
     await screen
       .findAllByText("Security")
@@ -44,25 +50,40 @@ describe("SecurityPage", () => {
   test("The anchor should render 'Set your password' if isPasswordSet is false", async () => {
     expect.assertions(1);
 
-    fetch.once(JSON.stringify({ isPasswordSet: false }));
-
-    render(<SecurityPage />);
+    render(
+      <SWRConfig
+        value={{
+          dedupingInterval: 0,
+          fetcher: () => {
+            return { isPasswordSet: false };
+          },
+        }}
+      >
+        <SecurityPage />
+      </SWRConfig>,
+    );
 
     const securitySetAnchor = await findByTextContent("Set your password");
-
     expect(securitySetAnchor).toBeTruthy();
   });
 
-  // Mocked fetch do not reset for some reasons.
+  test("The anchor should render 'Update your password' if isPasswordSet is true", async () => {
+    expect.assertions(1);
 
-  // test("The anchor should render 'Update your password' if isPasswordSet is true", async () => {
-  //   expect.assertions(1);
+    render(
+      <SWRConfig
+        value={{
+          dedupingInterval: 0,
+          fetcher: () => {
+            return { isPasswordSet: true };
+          },
+        }}
+      >
+        <SecurityPage />
+      </SWRConfig>,
+    );
 
-  //   fetch.once(JSON.stringify({ isPasswordSet: true }));
-
-  //   render(<SecurityPage />);
-  //   await findByTextContent(
-  //     "Update your password",
-  //   ).then((securityUpdateAnchor) => expect(securityUpdateAnchor).toBeTruthy());
-  // });
+    const securitySetAnchor = await findByTextContent("Update your password");
+    expect(securitySetAnchor).toBeTruthy();
+  });
 });
