@@ -4,7 +4,6 @@ import {
   text,
   click,
   screenshot,
-  waitFor,
   textBox,
   write,
   into,
@@ -27,6 +26,8 @@ describe("Account Web Application add identity", () => {
         "--disable-dev-shm",
       ],
       headless: true,
+      observe: false,
+      observeTime: 2000,
     });
   });
 
@@ -40,17 +41,13 @@ describe("Account Web Application add identity", () => {
     try {
       await authenticateToConnect();
 
-      await waitFor("LOGINS");
       expect(await text("LOGINS").exists()).toBeTruthy();
       await click("LOGINS");
 
-      await waitFor("Add new email address");
       await click("Add new email address");
-      await waitFor("Email address *");
       expect(await text("Email address *").exists()).toBeTruthy();
 
       await click("Add email");
-      await waitFor("Identity input can't be blank");
       expect(await text("Identity input can't be blank").exists()).toBeTruthy();
 
       await write(
@@ -59,17 +56,13 @@ describe("Account Web Application add identity", () => {
         into(textBox({ placeholder: "Enter your email" })),
       );
       await click("Add email");
-      await waitFor("Something went wrong");
       expect(await text("Something went wrong").exists()).toBeTruthy();
 
       await click("LOGINS");
       await click("+ Add new phone number");
-
-      await waitFor("Phone number *");
       expect(await text("Phone number *").exists()).toBeTruthy();
 
       await click("Add phone");
-      await waitFor("Identity input can't be blank");
       expect(await text("Identity input can't be blank").exists()).toBeTruthy();
 
       await write(
@@ -77,7 +70,6 @@ describe("Account Web Application add identity", () => {
         into(textBox({ placeholder: "Enter your phone number" })),
       );
       await click("Add phone");
-      await waitFor("Invalid phone number format input.");
       expect(
         await text("Invalid phone number format input.").exists(),
       ).toBeTruthy();
@@ -97,7 +89,6 @@ describe("Account Web Application add identity", () => {
     expect.assertions(6);
 
     try {
-      await waitFor("LOGINS");
       expect(await text("LOGINS").exists()).toBeTruthy();
       await click("LOGINS");
 
@@ -109,10 +100,7 @@ describe("Account Web Application add identity", () => {
       expect(await text("Update this email address").exists()).toBeTruthy();
       await click("Update this email address");
 
-      await waitFor("New email address *");
-
       await click("Update email");
-      await waitFor("Identity input can't be blank");
       expect(await text("Identity input can't be blank").exists()).toBeTruthy();
 
       await write(
@@ -123,7 +111,6 @@ describe("Account Web Application add identity", () => {
       expect(await text("Update email").exists()).toBeTruthy();
       await click("Update email");
 
-      await waitFor("Something went wrong");
       expect(await text("Something went wrong").exists()).toBeTruthy();
 
       done();

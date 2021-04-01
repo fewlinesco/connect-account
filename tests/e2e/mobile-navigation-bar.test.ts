@@ -1,11 +1,4 @@
-import {
-  openBrowser,
-  closeBrowser,
-  text,
-  click,
-  screenshot,
-  waitFor,
-} from "taiko";
+import { openBrowser, closeBrowser, text, click, screenshot } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
@@ -21,6 +14,8 @@ describe("Log in with a smart phone, open and close the navigation bar", () => {
         "--disable-dev-shm",
       ],
       headless: true,
+      observe: false,
+      observeTime: 2000,
     });
   });
 
@@ -34,16 +29,13 @@ describe("Log in with a smart phone, open and close the navigation bar", () => {
     try {
       await authenticateToConnect();
 
-      await waitFor("Menu");
       expect(await text("Menu").exists()).toBeTruthy();
 
       await click("Menu");
-      await waitFor("Close");
       expect(await text("Close").exists()).toBeTruthy();
       expect(await text("Home").exists()).toBeTruthy();
 
       await click("Close");
-      await waitFor("Menu");
       expect(await text("Menu").exists()).toBeTruthy();
 
       done();

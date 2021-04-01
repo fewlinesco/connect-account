@@ -1,8 +1,10 @@
 import userEvent from "@testing-library/user-event";
 import React from "react";
+import { cache, SWRConfig } from "swr";
 
 import { render, screen } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
+import { findByTextContent } from "../utils/find-by-text-content";
 import { SortedIdentities } from "@src/@types/sorted-identities";
 import LoginsOverviewPage from "@src/pages/account/logins";
 
@@ -17,8 +19,16 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("LoginsOverviewPage", () => {
+  afterEach(() => {
+    cache.clear();
+  });
+
   describe("Identity type: EMAIL", () => {
-    it("should display primary email identity first and all of them when clicking on the show more button", () => {
+    afterEach(() => {
+      cache.clear();
+    });
+
+    it("should display primary email identity first and all of them when clicking on the show more button", async () => {
       expect.assertions(7);
 
       const sortedIdentities: SortedIdentities = {
@@ -30,14 +40,22 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
-      render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
 
       expect(
-        screen.getByRole("link", {
-          name: mockIdentities.primaryEmailIdentity.value,
-        }),
-      ).toBeInTheDocument();
-
+        await findByTextContent(mockIdentities.primaryEmailIdentity.value),
+      ).toBeTruthy();
       expect(
         screen.getByRole("link", {
           name: mockIdentities.primaryEmailIdentity.value,
@@ -48,7 +66,6 @@ describe("LoginsOverviewPage", () => {
           mockIdentities.primaryEmailIdentity.id
         }`,
       );
-
       expect(
         screen.queryByRole("link", {
           name: mockIdentities.nonPrimaryEmailIdentity.value,
@@ -66,13 +83,11 @@ describe("LoginsOverviewPage", () => {
           name: mockIdentities.primaryEmailIdentity.value,
         }),
       ).toBeInTheDocument();
-
       expect(
         screen.getByRole("link", {
           name: mockIdentities.nonPrimaryEmailIdentity.value,
         }),
       ).toBeInTheDocument();
-
       expect(
         screen.getByRole("link", {
           name: mockIdentities.nonPrimaryEmailIdentity.value,
@@ -89,21 +104,34 @@ describe("LoginsOverviewPage", () => {
       ).toBeInTheDocument();
     });
 
-    it("should display primary email identity without show more button if provided 1 identity", () => {
+    it("should display primary email identity without show more button if provided 1 identity", async () => {
+      expect.assertions(4);
+
       const sortedIdentities: SortedIdentities = {
         emailIdentities: [mockIdentities.primaryEmailIdentity],
         phoneIdentities: [],
         socialIdentities: [],
       };
 
-      render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
+      cache.set("/api/get-sorted-identities", { sortedIdentities });
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
 
       expect(
-        screen.getByRole("link", {
+        await screen.findByRole("link", {
           name: mockIdentities.primaryEmailIdentity.value,
         }),
       ).toBeInTheDocument();
-
       expect(
         screen.getByRole("link", {
           name: mockIdentities.primaryEmailIdentity.value,
@@ -114,7 +142,6 @@ describe("LoginsOverviewPage", () => {
           mockIdentities.primaryEmailIdentity.id
         }`,
       );
-
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
 
       expect(
@@ -122,26 +149,45 @@ describe("LoginsOverviewPage", () => {
       ).toBeInTheDocument();
     });
 
-    it("should display default message when no identity is provided", () => {
+    it("should display default message when no identity is provided", async () => {
+      expect.assertions(3);
+
       const sortedIdentities: SortedIdentities = {
         emailIdentities: [],
         phoneIdentities: [],
         socialIdentities: [],
       };
 
-      render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
-
-      expect(screen.getByText("No email added yet.")).toBeInTheDocument();
-      expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+      cache.set("/api/get-sorted-identities", { sortedIdentities });
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
 
       expect(
-        screen.getByRole("link", { name: "+ Add new phone number" }),
+        await findByTextContent("No email added yet."),
+      ).toBeInTheDocument();
+      expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+      expect(
+        screen.getByRole("link", { name: "+ Add new email address" }),
       ).toBeInTheDocument();
     });
   });
 
   describe("Identity type: PHONE", () => {
-    it("should display primary phone identity first and all of them when clicking on the show more button", () => {
+    afterEach(() => {
+      cache.clear();
+    });
+
+    it("should display primary phone identity first and all of them when clicking on the show more button", async () => {
       expect.assertions(7);
 
       const sortedIdentities: SortedIdentities = {
@@ -153,14 +199,22 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
-      render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
 
       expect(
-        screen.getByRole("link", {
-          name: mockIdentities.primaryPhoneIdentity.value,
-        }),
-      ).toBeInTheDocument();
-
+        await findByTextContent(mockIdentities.primaryPhoneIdentity.value),
+      ).toBeTruthy();
       expect(
         screen.getByRole("link", {
           name: mockIdentities.primaryPhoneIdentity.value,
@@ -171,7 +225,6 @@ describe("LoginsOverviewPage", () => {
           mockIdentities.primaryPhoneIdentity.id
         }`,
       );
-
       expect(
         screen.queryByRole("link", {
           name: mockIdentities.nonPrimaryPhoneIdentity.value,
@@ -189,13 +242,11 @@ describe("LoginsOverviewPage", () => {
           name: mockIdentities.primaryPhoneIdentity.value,
         }),
       ).toBeInTheDocument();
-
       expect(
         screen.getByRole("link", {
           name: mockIdentities.nonPrimaryPhoneIdentity.value,
         }),
       ).toBeInTheDocument();
-
       expect(
         screen.getByRole("link", {
           name: mockIdentities.nonPrimaryPhoneIdentity.value,
@@ -206,13 +257,12 @@ describe("LoginsOverviewPage", () => {
           mockIdentities.nonPrimaryPhoneIdentity.id
         }`,
       );
-
       expect(
         screen.getByRole("link", { name: "+ Add new phone number" }),
       ).toBeInTheDocument();
     });
 
-    it("should display primary phone identity without show more button if provided 1 identity", () => {
+    it("should display primary phone identity without show more button if provided 1 identity", async () => {
       expect.assertions(4);
 
       const sortedIdentities: SortedIdentities = {
@@ -221,14 +271,24 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
-      render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
 
       expect(
-        screen.getByRole("link", {
+        await screen.findByRole("link", {
           name: mockIdentities.primaryPhoneIdentity.value,
         }),
       ).toBeInTheDocument();
-
       expect(
         screen.getByRole("link", {
           name: mockIdentities.primaryPhoneIdentity.value,
@@ -240,13 +300,12 @@ describe("LoginsOverviewPage", () => {
         }`,
       );
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
-
       expect(
         screen.getByRole("link", { name: "+ Add new phone number" }),
       ).toBeInTheDocument();
     });
 
-    it("should display default message when no identity is provided", () => {
+    it("should display default message when no identity is provided", async () => {
       expect.assertions(3);
 
       const sortedIdentities: SortedIdentities = {
@@ -255,14 +314,23 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
-      render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
 
       expect(
-        screen.getByText("No phone number added yet."),
+        await findByTextContent("No phone number added yet."),
       ).toBeInTheDocument();
-
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
-
       expect(
         screen.getByRole("link", { name: "+ Add new phone number" }),
       ).toBeInTheDocument();
@@ -270,7 +338,11 @@ describe("LoginsOverviewPage", () => {
   });
 
   describe("Identity type: SOCIAL", () => {
-    it("should display all social identities provided without the show more button", () => {
+    afterEach(() => {
+      cache.clear();
+    });
+
+    it("should display all social identities provided without the show more button", async () => {
       expect.assertions(3);
 
       const sortedIdentities: SortedIdentities = {
@@ -282,25 +354,49 @@ describe("LoginsOverviewPage", () => {
         ],
       };
 
-      render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
-      expect(screen.getByText("Github")).toBeInTheDocument();
-      expect(screen.getByText("Facebook")).toBeInTheDocument();
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
+
+      expect(await findByTextContent("Github")).toBeTruthy();
+      expect(await findByTextContent("Facebook")).toBeTruthy();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
     });
 
-    it("should display default message when no identity is provided", () => {
+    it("should display default message when no identity is provided", async () => {
+      expect.assertions(2);
+
       const sortedIdentities: SortedIdentities = {
         emailIdentities: [],
         phoneIdentities: [],
         socialIdentities: [],
       };
 
-      render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
 
       expect(
-        screen.getByText("No social logins added yet."),
-      ).toBeInTheDocument();
-
+        await findByTextContent("No social logins added yet."),
+      ).toBeTruthy();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
     });
   });
