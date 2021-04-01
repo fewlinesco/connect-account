@@ -38,7 +38,6 @@ const IDENTITIES_SECTION_CONTENT = {
 const LoginsOverview: React.FC = () => {
   const { data, error } = useSWR<{ sortedIdentities: SortedIdentities }, Error>(
     "/api/get-sorted-identities",
-    (url) => fetch(url).then((response) => response.json()),
   );
 
   if (error) {

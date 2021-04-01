@@ -1,14 +1,11 @@
-/* eslint-disable import/order */
-import fetch, { enableFetchMocks } from "jest-fetch-mock";
-enableFetchMocks();
-
 import userEvent from "@testing-library/user-event";
 import React from "react";
+import { cache, SWRConfig } from "swr";
 
 import { render, screen } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
-import { SortedIdentities } from "@src/@types/sorted-identities";
 import { findByTextContent } from "../utils/find-by-text-content";
+import { SortedIdentities } from "@src/@types/sorted-identities";
 import LoginsOverviewPage from "@src/pages/account/logins";
 
 jest.mock("@src/configs/db-client", () => {
@@ -22,11 +19,15 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("LoginsOverviewPage", () => {
-  beforeEach(() => {
-    fetch.resetMocks();
+  afterEach(() => {
+    cache.clear();
   });
 
   describe("Identity type: EMAIL", () => {
+    afterEach(() => {
+      cache.clear();
+    });
+
     it("should display primary email identity first and all of them when clicking on the show more button", async () => {
       expect.assertions(7);
 
@@ -39,14 +40,22 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
-      fetch.once(JSON.stringify({ sortedIdentities }));
-
-      render(<LoginsOverviewPage />);
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
 
       expect(
         await findByTextContent(mockIdentities.primaryEmailIdentity.value),
       ).toBeTruthy();
-
       expect(
         screen.getByRole("link", {
           name: mockIdentities.primaryEmailIdentity.value,
@@ -57,7 +66,6 @@ describe("LoginsOverviewPage", () => {
           mockIdentities.primaryEmailIdentity.id
         }`,
       );
-
       expect(
         screen.queryByRole("link", {
           name: mockIdentities.nonPrimaryEmailIdentity.value,
@@ -75,13 +83,11 @@ describe("LoginsOverviewPage", () => {
           name: mockIdentities.primaryEmailIdentity.value,
         }),
       ).toBeInTheDocument();
-
       expect(
         screen.getByRole("link", {
           name: mockIdentities.nonPrimaryEmailIdentity.value,
         }),
       ).toBeInTheDocument();
-
       expect(
         screen.getByRole("link", {
           name: mockIdentities.nonPrimaryEmailIdentity.value,
@@ -107,16 +113,25 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
-      fetch.once(JSON.stringify({ sortedIdentities }));
-
-      render(<LoginsOverviewPage />);
+      cache.set("/api/get-sorted-identities", { sortedIdentities });
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
 
       expect(
         await screen.findByRole("link", {
           name: mockIdentities.primaryEmailIdentity.value,
         }),
       ).toBeInTheDocument();
-
       expect(
         screen.getByRole("link", {
           name: mockIdentities.primaryEmailIdentity.value,
@@ -127,7 +142,6 @@ describe("LoginsOverviewPage", () => {
           mockIdentities.primaryEmailIdentity.id
         }`,
       );
-
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
 
       expect(
@@ -135,179 +149,255 @@ describe("LoginsOverviewPage", () => {
       ).toBeInTheDocument();
     });
 
-    // it("should display default message when no identity is provided", async () => {
-    //   const sortedIdentities: SortedIdentities = {
-    //     emailIdentities: [],
-    //     phoneIdentities: [],
-    //     socialIdentities: [],
-    //   };
+    it("should display default message when no identity is provided", async () => {
+      expect.assertions(3);
 
-    //   fetch.once(JSON.stringify({ sortedIdentities }));
+      const sortedIdentities: SortedIdentities = {
+        emailIdentities: [],
+        phoneIdentities: [],
+        socialIdentities: [],
+      };
 
-    //   render(<LoginsOverviewPage />);
+      cache.set("/api/get-sorted-identities", { sortedIdentities });
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
 
-    //   expect(
-    //     await findByTextContent("No email added yet."),
-    //   ).toBeInTheDocument();
-
-    // expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
-
-    // expect(
-    //   screen.getByRole("link", { name: "+ Add new phone number" }),
-    // ).toBeInTheDocument();
-    // });
+      expect(
+        await findByTextContent("No email added yet."),
+      ).toBeInTheDocument();
+      expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+      expect(
+        screen.getByRole("link", { name: "+ Add new email address" }),
+      ).toBeInTheDocument();
+    });
   });
 
-  // describe("Identity type: PHONE", () => {
-  // it("should display primary phone identity first and all of them when clicking on the show more button", async () => {
-  // expect.assertions(7);
+  describe("Identity type: PHONE", () => {
+    afterEach(() => {
+      cache.clear();
+    });
 
-  // const sortedPhoneIdentities: SortedIdentities = {
-  //   emailIdentities: [],
-  //   phoneIdentities: [
-  //     mockIdentities.primaryPhoneIdentity,
-  //     mockIdentities.nonPrimaryPhoneIdentity,
-  //   ],
-  //   socialIdentities: [],
-  // };
+    it("should display primary phone identity first and all of them when clicking on the show more button", async () => {
+      expect.assertions(7);
 
-  // fetch.mockResponseOnce(
-  //   JSON.stringify({ sortedIdentities: sortedPhoneIdentities }),
-  // );
+      const sortedIdentities: SortedIdentities = {
+        emailIdentities: [],
+        phoneIdentities: [
+          mockIdentities.primaryPhoneIdentity,
+          mockIdentities.nonPrimaryPhoneIdentity,
+        ],
+        socialIdentities: [],
+      };
 
-  // render(<LoginsOverviewPage />);
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
 
-  // expect(
-  //   await findByTextContent(mockIdentities.primaryPhoneIdentity.value),
-  // ).toBeTruthy();
+      expect(
+        await findByTextContent(mockIdentities.primaryPhoneIdentity.value),
+      ).toBeTruthy();
+      expect(
+        screen.getByRole("link", {
+          name: mockIdentities.primaryPhoneIdentity.value,
+        }),
+      ).toHaveAttribute(
+        "href",
+        `/account/logins/${mockIdentities.primaryPhoneIdentity.type.toLowerCase()}/${
+          mockIdentities.primaryPhoneIdentity.id
+        }`,
+      );
+      expect(
+        screen.queryByRole("link", {
+          name: mockIdentities.nonPrimaryPhoneIdentity.value,
+        }),
+      ).not.toBeInTheDocument();
 
-  // expect(
-  //   screen.getByRole("link", {
-  //     name: mockIdentities.primaryPhoneIdentity.value,
-  //   }),
-  // ).toHaveAttribute(
-  //   "href",
-  //   `/account/logins/${mockIdentities.primaryPhoneIdentity.type.toLowerCase()}/${
-  //     mockIdentities.primaryPhoneIdentity.id
-  //   }`,
-  // );
+      userEvent.click(
+        screen.getByText(
+          `Show ${sortedIdentities.phoneIdentities.length - 1} more`,
+        ),
+      );
 
-  // expect(
-  //   screen.queryByRole("link", {
-  //     name: mockIdentities.nonPrimaryPhoneIdentity.value,
-  //   }),
-  // ).not.toBeInTheDocument();
+      expect(
+        screen.getByRole("link", {
+          name: mockIdentities.primaryPhoneIdentity.value,
+        }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("link", {
+          name: mockIdentities.nonPrimaryPhoneIdentity.value,
+        }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("link", {
+          name: mockIdentities.nonPrimaryPhoneIdentity.value,
+        }),
+      ).toHaveAttribute(
+        "href",
+        `/account/logins/${mockIdentities.nonPrimaryPhoneIdentity.type.toLowerCase()}/${
+          mockIdentities.nonPrimaryPhoneIdentity.id
+        }`,
+      );
+      expect(
+        screen.getByRole("link", { name: "+ Add new phone number" }),
+      ).toBeInTheDocument();
+    });
 
-  // userEvent.click(
-  //   screen.getByText(
-  //     `Show ${sortedIdentities.phoneIdentities.length - 1} more`,
-  //   ),
-  // );
+    it("should display primary phone identity without show more button if provided 1 identity", async () => {
+      expect.assertions(4);
 
-  // expect(
-  //   screen.getByRole("link", {
-  //     name: mockIdentities.primaryPhoneIdentity.value,
-  //   }),
-  // ).toBeInTheDocument();
+      const sortedIdentities: SortedIdentities = {
+        emailIdentities: [],
+        phoneIdentities: [mockIdentities.primaryPhoneIdentity],
+        socialIdentities: [],
+      };
 
-  // expect(
-  //   screen.getByRole("link", {
-  //     name: mockIdentities.nonPrimaryPhoneIdentity.value,
-  //   }),
-  // ).toBeInTheDocument();
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
 
-  // expect(
-  //   screen.getByRole("link", {
-  //     name: mockIdentities.nonPrimaryPhoneIdentity.value,
-  //   }),
-  // ).toHaveAttribute(
-  //   "href",
-  //   `/account/logins/${mockIdentities.nonPrimaryPhoneIdentity.type.toLowerCase()}/${
-  //     mockIdentities.nonPrimaryPhoneIdentity.id
-  //   }`,
-  // );
+      expect(
+        await screen.findByRole("link", {
+          name: mockIdentities.primaryPhoneIdentity.value,
+        }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("link", {
+          name: mockIdentities.primaryPhoneIdentity.value,
+        }),
+      ).toHaveAttribute(
+        "href",
+        `/account/logins/${mockIdentities.primaryPhoneIdentity.type.toLowerCase()}/${
+          mockIdentities.primaryPhoneIdentity.id
+        }`,
+      );
+      expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+      expect(
+        screen.getByRole("link", { name: "+ Add new phone number" }),
+      ).toBeInTheDocument();
+    });
 
-  // expect(
-  //   screen.getByRole("link", { name: "+ Add new phone number" }),
-  // ).toBeInTheDocument();
-  // });
+    it("should display default message when no identity is provided", async () => {
+      expect.assertions(3);
 
-  // it("should display primary phone identity without show more button if provided 1 identity", () => {
-  //   expect.assertions(4);
-  //   const sortedIdentities: SortedIdentities = {
-  //     emailIdentities: [],
-  //     phoneIdentities: [mockIdentities.primaryPhoneIdentity],
-  //     socialIdentities: [],
-  //   };
-  //   fetch.mockResponseOnce(JSON.stringify({ sortedIdentities }));
-  //   render(<LoginsOverviewPage />);
-  //   expect(
-  //     screen.getByRole("link", {
-  //       name: mockIdentities.primaryPhoneIdentity.value,
-  //     }),
-  //   ).toBeInTheDocument();
-  //   expect(
-  //     screen.getByRole("link", {
-  //       name: mockIdentities.primaryPhoneIdentity.value,
-  //     }),
-  //   ).toHaveAttribute(
-  //     "href",
-  //     `/account/logins/${mockIdentities.primaryPhoneIdentity.type.toLowerCase()}/${
-  //       mockIdentities.primaryPhoneIdentity.id
-  //     }`,
-  //   );
-  //   expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
-  //   expect(
-  //     screen.getByRole("link", { name: "+ Add new phone number" }),
-  //   ).toBeInTheDocument();
-  // });
+      const sortedIdentities: SortedIdentities = {
+        emailIdentities: [],
+        phoneIdentities: [],
+        socialIdentities: [],
+      };
 
-  // it("should display default message when no identity is provided", () => {
-  //   expect.assertions(3);
-  //   const sortedIdentities: SortedIdentities = {
-  //     emailIdentities: [],
-  //     phoneIdentities: [],
-  //     socialIdentities: [],
-  //   };
-  //   fetch.mockResponseOnce(JSON.stringify({ sortedIdentities }));
-  //   render(<LoginsOverviewPage />);
-  //   expect(
-  //     screen.getByText("No phone number added yet."),
-  //   ).toBeInTheDocument();
-  //   expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
-  //   expect(
-  //     screen.getByRole("link", { name: "+ Add new phone number" }),
-  //   ).toBeInTheDocument();
-  // });
-  // });
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
 
-  // describe("Identity type: SOCIAL", () => {
-  //   //   it("should display all social identities provided without the show more button", () => {
-  //   //     expect.assertions(3);
-  //   //     const sortedIdentities: SortedIdentities = {
-  //   //       emailIdentities: [],
-  //   //       phoneIdentities: [],
-  //   //       socialIdentities: [
-  //   //         mockIdentities.primarySocialIdentity,
-  //   //         mockIdentities.nonPrimarySocialIdentity,
-  //   //       ],
-  //   //     };
-  //   //     render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
-  //   //     expect(screen.getByText("Github")).toBeInTheDocument();
-  //   //     expect(screen.getByText("Facebook")).toBeInTheDocument();
-  //   //     expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
-  //   //   });
-  //   //   it("should display default message when no identity is provided", () => {
-  //   //     const sortedIdentities: SortedIdentities = {
-  //   //       emailIdentities: [],
-  //   //       phoneIdentities: [],
-  //   //       socialIdentities: [],
-  //   //     };
-  //   //     render(<LoginsOverviewPage sortedIdentities={sortedIdentities} />);
-  //   //     expect(
-  //   //       screen.getByText("No social logins added yet."),
-  //   //     ).toBeInTheDocument();
-  //   //     expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
-  //   //   });
-  // });
+      expect(
+        await findByTextContent("No phone number added yet."),
+      ).toBeInTheDocument();
+      expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+      expect(
+        screen.getByRole("link", { name: "+ Add new phone number" }),
+      ).toBeInTheDocument();
+    });
+  });
+
+  describe("Identity type: SOCIAL", () => {
+    afterEach(() => {
+      cache.clear();
+    });
+
+    it("should display all social identities provided without the show more button", async () => {
+      expect.assertions(3);
+
+      const sortedIdentities: SortedIdentities = {
+        emailIdentities: [],
+        phoneIdentities: [],
+        socialIdentities: [
+          mockIdentities.primarySocialIdentity,
+          mockIdentities.nonPrimarySocialIdentity,
+        ],
+      };
+
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
+
+      expect(await findByTextContent("Github")).toBeTruthy();
+      expect(await findByTextContent("Facebook")).toBeTruthy();
+      expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+    });
+
+    it("should display default message when no identity is provided", async () => {
+      expect.assertions(2);
+
+      const sortedIdentities: SortedIdentities = {
+        emailIdentities: [],
+        phoneIdentities: [],
+        socialIdentities: [],
+      };
+
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { sortedIdentities };
+            },
+          }}
+        >
+          <LoginsOverviewPage />
+        </SWRConfig>,
+      );
+
+      expect(
+        await findByTextContent("No social logins added yet."),
+      ).toBeTruthy();
+      expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+    });
+  });
 });
