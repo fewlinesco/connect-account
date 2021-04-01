@@ -12,7 +12,7 @@ import {
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
-describe("Marking another identity as the primary one on connect account", () => {
+describe("Mark Identity as primary", () => {
   jest.setTimeout(60000);
 
   beforeAll(async () => {
@@ -37,26 +37,23 @@ describe("Marking another identity as the primary one on connect account", () =>
     try {
       await authenticateToConnect();
 
-      await waitFor("LOGINS");
       expect(await text("LOGINS").exists()).toBeTruthy();
       await click("LOGINS");
 
-      await waitFor("Show");
       expect(await text("Show").exists()).toBeTruthy();
       await click("Show");
 
-      await waitFor("Hide");
       expect(await text("Hide").exists()).toBeTruthy();
+
       const nonPrimaryYet = await link(".test", above("Hide")).text();
       await click(nonPrimaryYet);
 
-      await waitFor("Make");
       expect(await text("Make").exists()).toBeTruthy();
       await click("Make");
 
-      await waitFor("Confirm");
       expect(await text("Confirm").exists()).toBeTruthy();
       await click("Confirm");
+
       expect(await link(".test", below("Email addresses")).text()).toEqual(
         nonPrimaryYet,
       );
