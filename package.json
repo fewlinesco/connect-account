@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.10.0",
-    "@aws-sdk/util-dynamodb": "3.10.0",
+    "@aws-sdk/util-dynamodb": "3.11.0",
     "@fewlines/connect-client": "0.4.1",
     "@fewlines/connect-management": "0.6.2",
     "@fwl/logging": "0.1.1",
