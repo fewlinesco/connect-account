@@ -23,7 +23,7 @@ describe("Delete Identity", () => {
       ],
       headless: true,
       observe: false,
-      observeTime: 2000,
+      observeTime: 1000,
     });
   });
 
@@ -49,9 +49,6 @@ describe("Delete Identity", () => {
       expect(await text("Delete this email address").exists()).toBeTruthy();
       await click(text("Delete this email address"));
 
-      // Waiting to remove SWR cache.
-      await waitFor(2000);
-
       expect(await text("You are about to delete").exists()).toBeTruthy();
       expect(await text("Delete this email address").exists()).toBeTruthy();
       await click("Delete this email address");
@@ -60,11 +57,18 @@ describe("Delete Identity", () => {
         await text("Email address has been deleted").exists(),
       ).toBeTruthy();
 
+      console.log("before: ", Date.now());
+
+      // Waiting to remove SWR cache.
+      await waitFor(2000);
+
+      console.log("after: ", Date.now());
+
       expect(await text("Show").exists()).toBeTruthy();
       await click("Show");
 
       expect(await text("Hide").exists()).toBeTruthy();
-      expect(!(await link("_delete_").exists())).toBeTruthy();
+      expect(!(await link("_delete_").exists(50000, 50))).toBeTruthy();
 
       done();
     } catch (error) {
