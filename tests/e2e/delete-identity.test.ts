@@ -43,6 +43,8 @@ describe("Delete Identity", () => {
       expect(await text("Show").exists()).toBeTruthy();
       await click("Show");
 
+      // const identityToDeleteText = await link("_delete_").text();
+
       expect(await link("_delete_").exists()).toBeTruthy();
       await click(link("_delete_"));
 
@@ -57,18 +59,52 @@ describe("Delete Identity", () => {
         await text("Email address has been deleted").exists(),
       ).toBeTruthy();
 
-      console.log("before: ", Date.now());
+      // console.log("before: ", Date.now());
 
       // Waiting to remove SWR cache.
-      await waitFor(2000);
+      // await waitFor(2000);
 
-      console.log("after: ", Date.now());
+      // console.log("after: ", Date.now());
+
+      // console.log(getConfig());
+
+      await waitFor("Show 1 more");
 
       expect(await text("Show").exists()).toBeTruthy();
       await click("Show");
-
+      // await click("Show", {
+      //   waitForEvents: ["loadEventFired"],
+      //   navigationTimeout: 50000,
+      //   waitForStart: 3000,
+      // });
       expect(await text("Hide").exists()).toBeTruthy();
-      expect(!(await link("_delete_").exists(50000, 50))).toBeTruthy();
+
+      // const identities = await $(
+      //   "a",
+      //   below("Email addresses"),
+      //   above("Hide"),
+      // ).elements();
+
+      // const linksInnerText = await Promise.all(
+      //   identities.map((el) => {
+      //     return evaluate(el, (elem) => {
+      //       return elem.innerText;
+      //     });
+      //   }),
+      // );
+
+      // console.log(linksInnerText);
+
+      // console.log(identityToDeleteText);
+
+      // console.log(
+      //   linksInnerText.every((linkText) => linkText !== identityToDeleteText),
+      // );
+
+      // expect(
+      //   linksInnerText.every((linkText) => linkText !== identityToDeleteText),
+      // ).toBeTruthy();
+      expect(!(await link("_delete_").exists(0, 0))).toBeTruthy();
 
       done();
     } catch (error) {
