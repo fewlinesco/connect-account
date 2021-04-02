@@ -62,13 +62,13 @@ describe("Delete Identity", () => {
       // console.log("before: ", Date.now());
 
       // Waiting to remove SWR cache.
-      // await waitFor(2000);
+      await waitFor(2000);
 
       // console.log("after: ", Date.now());
 
       // console.log(getConfig());
 
-      await waitFor("Show 1 more");
+      // await waitFor("Show 1 more");
 
       expect(await text("Show").exists()).toBeTruthy();
       await click("Show");

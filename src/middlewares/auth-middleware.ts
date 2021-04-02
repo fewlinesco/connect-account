@@ -198,9 +198,12 @@ function authMiddleware(
             error instanceof NoDBUserFoundError ||
             error instanceof NoUserCookieFoundError
           ) {
-            response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-            response.setHeader("location", "/");
-            return { props: {} };
+            return {
+              redirect: {
+                destination: "/",
+                permanent: false,
+              },
+            };
           }
 
           throw error;
