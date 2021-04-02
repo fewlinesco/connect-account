@@ -49,6 +49,9 @@ describe("Delete Identity", () => {
       expect(await text("Delete this email address").exists()).toBeTruthy();
       await click(text("Delete this email address"));
 
+      // Waiting to remove SWR cache.
+      await waitFor(2000);
+
       expect(await text("You are about to delete").exists()).toBeTruthy();
       expect(await text("Delete this email address").exists()).toBeTruthy();
       await click("Delete this email address");
@@ -58,7 +61,7 @@ describe("Delete Identity", () => {
       ).toBeTruthy();
 
       // Waiting to remove SWR cache.
-      await waitFor(4000);
+      await waitFor(2000);
 
       expect(await text("Show").exists()).toBeTruthy();
       await click("Show");
