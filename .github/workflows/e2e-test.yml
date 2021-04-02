@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: fewlines/taiko:0.1.0
+      image: buildkite/puppeteer:8.0.0
 
     env:
       GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
@@ -34,6 +34,10 @@ jobs:
       - name: dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install
+
+      - name: taiko
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn add -D taiko
 
       - name: creating test user
         env:
