@@ -23,7 +23,7 @@ describe("Delete Identity", () => {
       ],
       headless: true,
       observe: false,
-      observeTime: 1000,
+      observeTime: 2000,
     });
   });
 
@@ -43,13 +43,14 @@ describe("Delete Identity", () => {
       expect(await text("Show").exists()).toBeTruthy();
       await click("Show");
 
-      // const identityToDeleteText = await link("_delete_").text();
-
       expect(await link("_delete_").exists()).toBeTruthy();
       await click(link("_delete_"));
 
       expect(await text("Delete this email address").exists()).toBeTruthy();
       await click(text("Delete this email address"));
+
+      // Waiting to remove SWR cache.
+      await waitFor(2000);
 
       expect(await text("You are about to delete").exists()).toBeTruthy();
       expect(await text("Delete this email address").exists()).toBeTruthy();
@@ -59,52 +60,15 @@ describe("Delete Identity", () => {
         await text("Email address has been deleted").exists(),
       ).toBeTruthy();
 
-      // console.log("before: ", Date.now());
-
-      // Waiting to remove SWR cache.
-      await waitFor(2000);
-
-      // console.log("after: ", Date.now());
-
-      // console.log(getConfig());
-
-      // await waitFor("Show 1 more");
+      // // Waiting to remove SWR cache.
+      // await waitFor(2000);
 
       expect(await text("Show").exists()).toBeTruthy();
       await click("Show");
-      // await click("Show", {
-      //   waitForEvents: ["loadEventFired"],
-      //   navigationTimeout: 50000,
-      //   waitForStart: 3000,
-      // });
+
       expect(await text("Hide").exists()).toBeTruthy();
 
-      // const identities = await $(
-      //   "a",
-      //   below("Email addresses"),
-      //   above("Hide"),
-      // ).elements();
-
-      // const linksInnerText = await Promise.all(
-      //   identities.map((el) => {
-      //     return evaluate(el, (elem) => {
-      //       return elem.innerText;
-      //     });
-      //   }),
-      // );
-
-      // console.log(linksInnerText);
-
-      // console.log(identityToDeleteText);
-
-      // console.log(
-      //   linksInnerText.every((linkText) => linkText !== identityToDeleteText),
-      // );
-
-      // expect(
-      //   linksInnerText.every((linkText) => linkText !== identityToDeleteText),
-      // ).toBeTruthy();
-      expect(!(await link("_delete_").exists(0, 0))).toBeTruthy();
+      expect(!(await link("_delete_").exists())).toBeTruthy();
 
       done();
     } catch (error) {
