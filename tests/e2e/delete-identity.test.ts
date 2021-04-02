@@ -61,7 +61,7 @@ describe("Delete Identity", () => {
       ).toBeTruthy();
 
       // // Waiting to remove SWR cache.
-      // await waitFor(2000);
+      await waitFor(2000);
 
       expect(await text("Show").exists()).toBeTruthy();
       await click("Show");
