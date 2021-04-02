@@ -20,6 +20,14 @@ const SecuritySkeleton: React.FC = () => {
   );
 };
 
+const TwoFASkeleton: React.FC = () => {
+  return (
+    <SkeletonBody>
+      <SkeletonBlock />
+    </SkeletonBody>
+  );
+};
+
 const SkeletonBody = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
   height: auto;
@@ -76,4 +84,4 @@ const SkeletonSection = styled(SkeletonAnimation)`
   margin-bottom: 5rem;
 `;
 
-export { LoginsSkeleton, SecuritySkeleton };
+export { LoginsSkeleton, SecuritySkeleton, TwoFASkeleton };
