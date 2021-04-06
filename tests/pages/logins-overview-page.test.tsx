@@ -271,6 +271,7 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
+      cache.set("/api/get-sorted-identities", { sortedIdentities });
       render(
         <SWRConfig
           value={{
@@ -314,6 +315,7 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
+      cache.set("/api/get-sorted-identities", { sortedIdentities });
       render(
         <SWRConfig
           value={{
