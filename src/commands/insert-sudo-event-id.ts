@@ -14,8 +14,13 @@ async function insertSudoEventId(
   if (user) {
     const updatedUser = {
       ...user,
-      sudo_event_ids: [...user.sudo_event_ids, sudoEventId],
+      sudo: {
+        ...user.sudo,
+        sudo_event_ids: [...user.sudo.sudo_event_ids, sudoEventId],
+      },
     };
+
+    console.log("updatedUser: ", updatedUser);
 
     return await putUser(updatedUser);
   }

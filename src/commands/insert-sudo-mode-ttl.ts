@@ -1,12 +1,10 @@
+import { PutItemCommandOutput } from "@aws-sdk/client-dynamodb";
+
 import { putUser } from "./put-user";
-import { SudoEventId } from "@src/@types/dynamo-user";
 import { NoDBUserFoundError } from "@src/errors/errors";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 
-async function removeExpiredSudoEventIds(
-  sub: string,
-  sudoEventIds: SudoEventId[],
-): Promise<void> {
+async function insertSudoModeTTL(sub: string): Promise<PutItemCommandOutput> {
   const user = await getDBUserFromSub(sub);
 
   if (user) {
@@ -14,15 +12,14 @@ async function removeExpiredSudoEventIds(
       ...user,
       sudo: {
         ...user.sudo,
-        sudo_event_ids: sudoEventIds,
+        sudo_mode_ttl: Date.now() + 300000,
       },
     };
 
-    await putUser(updatedUser);
-    return;
+    return await putUser(updatedUser);
   }
 
   throw new NoDBUserFoundError();
 }
 
-export { removeExpiredSudoEventIds };
+export { insertSudoModeTTL };

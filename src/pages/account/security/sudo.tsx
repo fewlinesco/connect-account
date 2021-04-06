@@ -14,7 +14,6 @@ import { Layout } from "@src/components/page-layout";
 import { TwoFA } from "@src/components/pages/two-fa/two-fa";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
-import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
@@ -44,12 +43,12 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       authMiddleware(getTracer()),
     ],
     "/account/security/sudo",
-    async () => {
-      const webErrors = {
-        notFound: ERRORS_DATA.NOT_FOUND,
-      };
-      throw webErrorFactory(webErrors.notFound);
-    },
+    // async () => {
+    //   const webErrors = {
+    //     notFound: ERRORS_DATA.NOT_FOUND,
+    //   };
+    //   throw webErrorFactory(webErrors.notFound);
+    // },
   );
 };
 

@@ -7,6 +7,7 @@ import {
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 import React from "react";
 import useSWR from "swr";
 
@@ -19,22 +20,37 @@ import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const SecurityUpdatePage: React.FC = () => {
-  const { data, error } = useSWR<{ isPasswordSet: boolean }, Error>(
-    "/api/auth-connect/is-password-set",
+  const router = useRouter();
+
+  const { data: isPasswordSet, error: isPasswordSetError } = useSWR<
+    { isPasswordSet: boolean },
+    Error
+  >("/api/auth-connect/is-password-set");
+
+  const {
+    data: isSudoModeAuthorized,
+    error: isSudoModeAuthorizedError,
+  } = useSWR<{ isSudoModeAuthorized: boolean }, Error>(
+    "/api/auth-connect/is-sudo-mode-authorized",
   );
 
-  if (error) {
-    throw error;
+  if (isPasswordSetError || isSudoModeAuthorizedError) {
+    throw isPasswordSetError || isSudoModeAuthorizedError;
   }
+
+  if (!isSudoModeAuthorized) {
+    console.log("unauthorized");
+    router && router.push("/account/security/sudo");
+  }
+
+  console.log("authorized");
 
   let conditionalBreadcrumb;
 
-  if (!data) {
+  if (!isPasswordSet) {
     conditionalBreadcrumb = "";
   } else {
-    conditionalBreadcrumb = `Password | ${
-      data.isPasswordSet ? "update" : "set"
-    }`;
+    conditionalBreadcrumb = `Password | ${isPasswordSet ? "update" : "set"}`;
   }
 
   return (
@@ -42,7 +58,7 @@ const SecurityUpdatePage: React.FC = () => {
       <Container>
         <SetPasswordForm
           conditionalBreadcrumbItem={
-            !data ? "" : data.isPasswordSet ? "update" : "set"
+            !isPasswordSet ? "" : isPasswordSet ? "update" : "set"
           }
         />
       </Container>
@@ -66,49 +82,6 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       authMiddleware(getTracer()),
     ],
     "/account/security/update",
-    // async (request) => {
-    //   const webErrors = {
-    //     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
-    //     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
-    //   };
-
-    //   const userCookie = await getServerSideCookies<UserCookie>(request, {
-    //     cookieName: "user-cookie",
-    //     isCookieSealed: true,
-    //     cookieSalt: configVariables.cookieSalt,
-    //   });
-
-    //   if (userCookie) {
-    //     const isPasswordSet = await isUserPasswordSet(
-    //       configVariables.managementCredentials,
-    //       userCookie.sub,
-    //     ).catch((error) => {
-    //       if (error instanceof GraphqlErrors) {
-    //         throw webErrorFactory({
-    //           ...webErrors.identityNotFound,
-    //           parentError: error,
-    //         });
-    //       }
-
-    //       if (error instanceof ConnectUnreachableError) {
-    //         throw webErrorFactory({
-    //           ...webErrors.connectUnreachable,
-    //           parentError: error,
-    //         });
-    //       }
-
-    //       throw error;
-    //     });
-
-    //     return {
-    //       props: {
-    //         isPasswordSet,
-    //       },
-    //     };
-    //   }
-
-    //   return { props: {} };
-    // },
   );
 };
 

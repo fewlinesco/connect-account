@@ -1,4 +1,5 @@
 // import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
@@ -19,7 +20,7 @@ const VerifyTwoFACodeForm: React.FC<{
   const [verificationCode, setVerificationCode] = React.useState<string>("");
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
-  // const router = useRouter();
+  const router = useRouter();
 
   return (
     <ExtendedStyledForm
@@ -34,6 +35,7 @@ const VerifyTwoFACodeForm: React.FC<{
         ).then(async (response) => {
           if (response.status >= 400) {
             const parsedResponse = await response.json();
+            console.log(parsedResponse);
             if ("message" in parsedResponse) {
               if (
                 parsedResponse.message === ERRORS_DATA.INVALID_BODY.message ||
@@ -42,6 +44,7 @@ const VerifyTwoFACodeForm: React.FC<{
               ) {
                 setFormID(uuidv4());
                 setErrorMessage("Invalid validation code");
+                return;
               }
 
               if (
@@ -50,11 +53,12 @@ const VerifyTwoFACodeForm: React.FC<{
               ) {
                 setFormID(uuidv4());
                 setIsCodeSent(false);
+                return;
               }
             }
           }
 
-          // router && router.push("/account/security/update");
+          router && router.push("/account/security/update");
         });
       }}
     >
