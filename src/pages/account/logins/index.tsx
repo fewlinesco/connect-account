@@ -9,7 +9,6 @@ import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { GetServerSideProps } from "next";
 import React from "react";
 
-import type { SortedIdentities } from "@src/@types/sorted-identities";
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { LoginsOverview } from "@src/components/pages/logins-overview/logins-overview";
@@ -32,9 +31,7 @@ const LoginsOverviewPage: React.FC = () => {
 };
 
 const getServerSideProps: GetServerSideProps = async (context) => {
-  return getServerSidePropsWithMiddlewares<{
-    sortedIdentities: SortedIdentities;
-  }>(
+  return getServerSidePropsWithMiddlewares(
     context,
     [
       tracingMiddleware(getTracer()),

@@ -46,7 +46,7 @@ const IdentityOverviewPage: React.FC<{
 };
 
 const getServerSideProps: GetServerSideProps = async (context) => {
-  return getServerSidePropsWithMiddlewares<{ type: string }>(
+  return getServerSidePropsWithMiddlewares<{ identityId: string }>(
     context,
     [
       tracingMiddleware(getTracer()),
@@ -61,7 +61,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       authMiddleware(getTracer()),
     ],
     "/account/logins/[type]/[id]",
-    async () => {
+    () => {
       if (!context?.params?.id) {
         return {
           notFound: true,

@@ -1,11 +1,4 @@
-import {
-  Identity,
-  IdentityTypes,
-  getIdentities,
-  GraphqlErrors,
-  ConnectUnreachableError,
-} from "@fewlines/connect-management";
-import { getServerSideCookies, HttpStatus } from "@fwl/web";
+import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -16,30 +9,34 @@ import {
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { GetServerSideProps } from "next";
 import React from "react";
+import useSWR from "swr";
 
-import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
 import { UpdateIdentityForm } from "@src/components/forms/update-identity-form";
 import { Layout } from "@src/components/page-layout";
-import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
-import { NoDBUserFoundError } from "@src/errors/errors";
-import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
-const UpdateIdentityPage: React.FC<{ identity: Identity }> = ({ identity }) => {
+const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
+  identityId,
+}) => {
+  const { data, error } = useSWR<{ identity: Identity }, Error>(
+    `/api/identity/get-identity?identityId=${identityId}`,
+  );
+
+  if (error) {
+    throw error;
+  }
+
+  const breadcrumbs = data
+    ? data.identity.type.toUpperCase() === IdentityTypes.EMAIL
+      ? "Email address"
+      : "Phone number"
+    : "";
   return (
-    <Layout
-      title="Logins"
-      breadcrumbs={[
-        identity.type.toUpperCase() === IdentityTypes.EMAIL
-          ? "Email address"
-          : "Phone number",
-        "edit",
-      ]}
-    >
+    <Layout title="Logins" breadcrumbs={`${breadcrumbs} | edit`}>
       <Container>
         <UpdateIdentityForm currentIdentity={identity} />
       </Container>
@@ -63,69 +60,18 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       authMiddleware(getTracer()),
     ],
     "/account/logins/[type]/[id]/update",
-    async (request, response) => {
+    () => {
       if (!context?.params?.id) {
-        response.statusCode = HttpStatus.NOT_FOUND;
-        response.end();
-        return;
-      }
-
-      const webErrors = {
-        identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
-        connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
-      };
-
-      const identityId = context.params.id.toString();
-
-      const userCookie = await getServerSideCookies<UserCookie>(request, {
-        cookieName: "user-cookie",
-        isCookieSealed: true,
-        cookieSalt: configVariables.cookieSalt,
-      });
-
-      if (userCookie) {
-        const identity = await getIdentities(
-          configVariables.managementCredentials,
-          userCookie.sub,
-        )
-          .then((identities) => {
-            return identities.find(
-              (userIdentity) => userIdentity.id === identityId,
-            );
-          })
-          .catch((error) => {
-            if (error instanceof GraphqlErrors) {
-              throw webErrorFactory({
-                ...webErrors.identityNotFound,
-                parentError: error,
-              });
-            }
-
-            if (error instanceof ConnectUnreachableError) {
-              throw webErrorFactory({
-                ...webErrors.connectUnreachable,
-                parentError: error,
-              });
-            }
-
-            throw error;
-          });
-
-        if (!identity) {
-          return {
-            notFound: true,
-          };
-        }
-
         return {
-          props: {
-            identity,
-            userId: userCookie.sub,
-          },
+          notFound: true,
         };
-      } else {
-        throw new NoDBUserFoundError();
       }
+
+      return {
+        props: {
+          identityId: context.params.id,
+        },
+      };
     },
   );
 };

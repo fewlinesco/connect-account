@@ -41,7 +41,10 @@ const ValidateIdentityPage: React.FC<{
 };
 
 const getServerSideProps: GetServerSideProps = async (context) => {
-  return getServerSidePropsWithMiddlewares<{ type: string }>(
+  return getServerSidePropsWithMiddlewares<{
+    type: string;
+    identityId: string;
+  }>(
     context,
     [
       tracingMiddleware(getTracer()),
@@ -56,7 +59,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       authMiddleware(getTracer()),
     ],
     "/account/logins/[type]/validation/[eventId]",
-    async () => {
+    () => {
       if (!context?.params?.type) {
         return {
           notFound: true,
