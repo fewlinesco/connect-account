@@ -9,7 +9,7 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Layout: React.FC<{
   title?: string;
-  breadcrumbs?: string[];
+  breadcrumbs?: string[] | string;
 }> = ({ children, title, breadcrumbs }) => {
   return (
     <Main>
