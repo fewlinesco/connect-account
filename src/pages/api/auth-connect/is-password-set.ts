@@ -29,7 +29,7 @@ const handler: Handler = (request, response): Promise<void> => {
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
   };
 
-  return getTracer().span("is-password-set handler", async (_span) => {
+  return getTracer().span("is-password-set handler", async (span) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
@@ -47,6 +47,7 @@ const handler: Handler = (request, response): Promise<void> => {
       configVariables.managementCredentials,
       userCookie.sub,
     ).catch((error) => {
+      span.setDisclosedAttribute("is password set info found", false);
       if (error instanceof GraphqlErrors) {
         throw webErrorFactory({
           ...webErrors.identityNotFound,
@@ -64,6 +65,7 @@ const handler: Handler = (request, response): Promise<void> => {
       throw error;
     });
 
+    span.setDisclosedAttribute("is password set info found", true);
     response.statusCode = HttpStatus.OK;
     response.json({ isPasswordSet });
   });
