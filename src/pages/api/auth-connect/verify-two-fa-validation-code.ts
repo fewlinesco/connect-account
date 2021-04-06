@@ -163,10 +163,10 @@ const handler: Handler = async (request, response) => {
       }
 
       if (!validationStatus) {
-        span.setDisclosedAttribute("is vadalidation code valid", false);
+        span.setDisclosedAttribute("is validation code valid", false);
         throw webErrorFactory(webErrors.invalidValidationCode);
       }
-      span.setDisclosedAttribute("is vadalidation code valid", true);
+      span.setDisclosedAttribute("is validation code valid", true);
 
       response.statusCode = HttpStatus.OK;
       response.end();
