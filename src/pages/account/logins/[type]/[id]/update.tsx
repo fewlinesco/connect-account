@@ -14,6 +14,7 @@ import useSWR from "swr";
 import { Container } from "@src/components/containers/container";
 import { UpdateIdentityForm } from "@src/components/forms/update-identity-form";
 import { Layout } from "@src/components/page-layout";
+import { UpdateIdentitySkeleton } from "@src/components/skeletons/skeletons";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
@@ -32,20 +33,25 @@ const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
 
   const breadcrumbs = data
     ? data.identity.type.toUpperCase() === IdentityTypes.EMAIL
-      ? "Email address"
-      : "Phone number"
+      ? "Email address | edit"
+      : "Phone number | edit"
     : "";
+
   return (
-    <Layout title="Logins" breadcrumbs={`${breadcrumbs} | edit`}>
+    <Layout title="Logins" breadcrumbs={breadcrumbs}>
       <Container>
-        <UpdateIdentityForm currentIdentity={identity} />
+        {data ? (
+          <UpdateIdentityForm currentIdentity={data.identity} />
+        ) : (
+          <UpdateIdentitySkeleton />
+        )}
       </Container>
     </Layout>
   );
 };
 
 const getServerSideProps: GetServerSideProps = async (context) => {
-  return getServerSidePropsWithMiddlewares<{ type: string }>(
+  return getServerSidePropsWithMiddlewares<{ identityId: string }>(
     context,
     [
       tracingMiddleware(getTracer()),

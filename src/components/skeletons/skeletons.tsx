@@ -21,6 +21,16 @@ const IdentityOverviewSkeleton: React.FC = () => {
   );
 };
 
+const UpdateIdentitySkeleton: React.FC = () => {
+  return (
+    <SkeletonBody>
+      <SkeletonSection />
+      <SkeletonBlock />
+      <SkeletonLine />
+    </SkeletonBody>
+  );
+};
+
 const SecuritySkeleton: React.FC = () => {
   return (
     <SkeletonBody>
@@ -113,6 +123,7 @@ const SkeletonSection = styled(SkeletonAnimation)`
 export {
   LoginsSkeleton,
   IdentityOverviewSkeleton,
+  UpdateIdentitySkeleton,
   SecuritySkeleton,
   TwoFASkeleton,
   BreadcrumbsSkeleton,
