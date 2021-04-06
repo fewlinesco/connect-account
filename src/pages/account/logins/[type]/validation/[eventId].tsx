@@ -1,5 +1,5 @@
 import { IdentityTypes } from "@fewlines/connect-management";
-import { AlertMessage, HttpStatus } from "@fwl/web";
+import { AlertMessage } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -8,7 +8,6 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
-import { ServerResponse } from "http";
 import { GetServerSideProps } from "next";
 import React from "react";
 
@@ -28,12 +27,11 @@ const ValidateIdentityPage: React.FC<{
   return (
     <Layout
       title="Logins"
-      breadcrumbs={[
+      breadcrumbs={`${
         type.toUpperCase() === IdentityTypes.EMAIL
           ? "Email address"
-          : "Phone number",
-        "validation",
-      ]}
+          : "Phone number"
+      } | validation`}
     >
       <Container>
         <ValidateIdentityForm type={type} eventId={eventId} />
@@ -58,16 +56,17 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       authMiddleware(getTracer()),
     ],
     "/account/logins/[type]/validation/[eventId]",
-    async (request, response: ServerResponse) => {
+    async () => {
       if (!context?.params?.type) {
-        response.statusCode = HttpStatus.NOT_FOUND;
-        response.end();
-        return;
+        return {
+          notFound: true,
+        };
       }
+
       if (!context?.params?.eventId) {
-        response.statusCode = HttpStatus.NOT_FOUND;
-        response.end();
-        return;
+        return {
+          notFound: true,
+        };
       }
 
       return {
