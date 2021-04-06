@@ -29,7 +29,6 @@ async function decryptVerifyAccessToken(
       configVariables.accountJwePrivateKey,
       isAccessTokenSigned,
     );
-    console.log(decodedToken);
 
     if (isAccessTokenSigned && typeof decodedToken === "string") {
       return oauth2Client.verifyJWT<JWTPayload>(
