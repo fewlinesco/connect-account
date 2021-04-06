@@ -13,12 +13,12 @@ import { ConfirmationBox } from "@src/components/confirmation-box/confirmation-b
 import { DeleteConfirmationBoxContent } from "@src/components/confirmation-box/delete-confirmation-box-content";
 import { PrimaryConfirmationBoxContent } from "@src/components/confirmation-box/primary-confirmation-box-content";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { IdentityOverviewSkeleton } from "@src/components/skeletons/skeletons";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const IdentityOverview: React.FC<{
-  identity: Identity;
-  userId: string;
-}> = ({ identity, userId }) => {
+  data?: { identity: Identity };
+}> = ({ data }) => {
   const [confirmationBoxOpen, setConfirmationBoxOpen] = React.useState<boolean>(
     false,
   );
@@ -28,7 +28,11 @@ const IdentityOverview: React.FC<{
     setConfirmationBoxContent,
   ] = React.useState<JSX.Element>(<React.Fragment />);
 
-  const { id, primary, status, type, value } = identity;
+  if (!data) {
+    return <IdentityOverviewSkeleton />;
+  }
+
+  const { id, primary, status, type, value } = data.identity;
 
   return (
     <>
@@ -51,7 +55,7 @@ const IdentityOverview: React.FC<{
         </NeutralLink>
       )}
       {status === "validated" && (
-        <NeutralLink href={`/account/logins/${type}/${identity.id}/update`}>
+        <NeutralLink href={`/account/logins/${type}/${id}/update`}>
           <FakeButton variant={ButtonVariant.PRIMARY}>
             Update this{" "}
             {getIdentityType(type) === IdentityTypes.PHONE
@@ -90,7 +94,6 @@ const IdentityOverview: React.FC<{
                 setOpen={setConfirmationBoxOpen}
                 value={value}
                 type={type}
-                userId={userId}
               />,
             );
             setConfirmationBoxOpen(true);
