@@ -27,7 +27,7 @@ const handler: Handler = async (request, response) => {
   const webErrors = {
     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
-    invalidBody: ERRORS_DATA.INVALID_BODY,
+    invalidQueryString: ERRORS_DATA.INVALID_QUERY_STRING,
   };
 
   return getTracer().span("get-identity handler", async (span) => {
@@ -44,7 +44,11 @@ const handler: Handler = async (request, response) => {
       return;
     }
 
-    const identityId = request.query.identityId as string;
+    const identityId = request.query.identityId;
+
+    if (!identityId || typeof identityId !== "string") {
+      throw webErrorFactory(webErrors.invalidQueryString);
+    }
 
     const identity = await getIdentity(configVariables.managementCredentials, {
       userId: userCookie.sub,
