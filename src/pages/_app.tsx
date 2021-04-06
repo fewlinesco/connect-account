@@ -3,6 +3,7 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
 import { ThemeProvider } from "styled-components";
+import { SWRConfig } from "swr";
 
 import { AlertMessages } from "@src/components/alert-message/alert-messages";
 import { GlobalStyle } from "@src/design-system/globals/global-style";
@@ -31,7 +32,14 @@ const AccountApp: React.FC = ({ children }) => {
         </Head>
         <GlobalStyle />
         <AlertMessages />
-        {children}
+        <SWRConfig
+          value={{
+            fetcher: (url) => fetch(url).then((response) => response.json()),
+            revalidateOnFocus: true,
+          }}
+        >
+          {children}
+        </SWRConfig>
       </ThemeProvider>
     </SSRProvider>
   );

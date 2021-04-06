@@ -5,7 +5,6 @@ import {
   click,
   write,
   screenshot,
-  waitFor,
   focus,
   textBox,
   clear,
@@ -25,6 +24,8 @@ describe("Account Web Application update password", () => {
         "--disable-dev-shm",
       ],
       headless: true,
+      observe: false,
+      observeTime: 2000,
     });
   });
 
@@ -38,15 +39,12 @@ describe("Account Web Application update password", () => {
     try {
       await authenticateToConnect();
 
-      await waitFor("SECURITY");
       expect(await text("SECURITY").exists()).toBeTruthy();
       await click("SECURITY");
 
-      await waitFor("Update your password");
       expect(await text("Update your password").exists()).toBeTruthy();
       await click("Update your password");
 
-      await waitFor("New password");
       expect(await text("New password").exists()).toBeTruthy();
 
       await focus(textBox({ placeholder: "New password" }));
@@ -56,9 +54,6 @@ describe("Account Web Application update password", () => {
       await write("qq");
 
       await click("Update password");
-      await waitFor(
-        "Your password confirmation do not match your new password.",
-      );
       expect(
         await text(
           "Your password confirmation do not match your new password.",
@@ -74,7 +69,6 @@ describe("Account Web Application update password", () => {
       await write("q");
 
       await click("Update password");
-      await waitFor("The password you enter does not meet the criteria.");
       expect(
         await text(
           "The password you enter does not meet the criteria.",
@@ -91,7 +85,6 @@ describe("Account Web Application update password", () => {
       await clear(textBox({ placeholder: "Confirm new password" }));
       await write("");
       await click("Update password");
-      await waitFor("Password can't be blank.");
       expect(await text("Password can't be blank.").exists()).toBeTruthy();
 
       done();

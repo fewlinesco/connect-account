@@ -14,6 +14,7 @@ import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
@@ -46,21 +47,37 @@ const AddIdentityForm: React.FC<{
             "/api/auth-connect/send-identity-validation-code",
             HttpVerbs.POST,
             body,
-          )
-            .then((response) => response.json())
-            .then((parsedResponse) => {
-              if ("message" in parsedResponse) {
+          ).then(async (response) => {
+            const parsedResponse = await response.json();
+
+            if ("message" in parsedResponse) {
+              if (
+                parsedResponse.message ===
+                  ERRORS_DATA.IDENTITY_INPUT_CANT_BE_BLANK.message ||
+                parsedResponse.message ===
+                  ERRORS_DATA.INVALID_PHONE_NUMBER_INPUT.message
+              ) {
                 setFormID(uuidv4());
                 setErrorMessage(parsedResponse.message);
+                return;
               }
 
-              if ("eventId" in parsedResponse) {
-                router &&
-                  router.push(
-                    `/account/logins/${type}/validation/${parsedResponse.eventId}`,
-                  );
+              if (parsedResponse.message === ERRORS_DATA.BAD_REQUEST.message) {
+                setFormID(uuidv4());
+                setErrorMessage("Something went wrong");
+                return;
               }
-            });
+
+              setErrorMessage("Something went wrong. Please try again later");
+            }
+
+            if ("eventId" in parsedResponse) {
+              router &&
+                router.push(
+                  `/account/logins/${type}/validation/${parsedResponse.eventId}`,
+                );
+            }
+          });
         }}
       >
         {getIdentityType(type) === IdentityTypes.EMAIL ? (

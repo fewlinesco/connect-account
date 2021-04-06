@@ -1,4 +1,5 @@
 import { AlertMessage as AlertMessageDataStructure } from "@fwl/web";
+import Cookies from "js-cookie";
 import React from "react";
 import styled from "styled-components";
 
@@ -12,13 +13,13 @@ const AlertMessages: React.FC = () => {
 
   React.useEffect(() => {
     const intervalId = setInterval(() => {
-      if (document.cookie) {
-        setAlertMessages([
-          ...alertMessages,
-          ...JSON.parse(decodeURIComponent(document.cookie).split("=")[1]),
-        ]);
+      const newAlertMessages = Cookies.get("alert-messages");
 
-        document.cookie = "alert-messages=; max-age=0; path=/;";
+      if (newAlertMessages) {
+        const parsedAlertMessages = JSON.parse(newAlertMessages);
+        setAlertMessages([...alertMessages, ...parsedAlertMessages]);
+
+        Cookies.remove("alert-messages");
       }
     }, 500);
 

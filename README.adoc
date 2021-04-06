@@ -148,7 +148,7 @@ if you want to automatically fix linting issues.
 
 === Pre-push trigger
 
-We are using `Husky` to trigger the linting and building of the app before pushing the code to GitHub to prevent unnecessary `Heroku` builds. We do not plan to migrate from version `4.x` to `5.x`.
+We are using `husky 6.x` to trigger the linting and building of the app before pushing the code to GitHub to prevent unnecessary `Heroku` builds.
 
 == Environment variables
 
@@ -281,20 +281,23 @@ Favicons for various OS.
 - *@types/*: Type declaration used in multiple places.
 - *commands/*: Write (e.g. `POST`) database actions.
 - *components/*: React functional components used to render, with their respective stories.
+- *configs/*: 
+  * *config-variables.ts*: Entry point used to verify env vars sourcing, and prevent the app to run if forgotten.
+  * *db-client.ts*: Singleton of the DynamoDB client.
+  * *logger.ts*: Singleton of the logger client provided by `@fwl/web`.
+  * *oauth2-client.ts*: Singleton of the OAuth2 Client provided by `@fewlines/connect-client`.
+  * *tracer.ts*: Singleton of the tracer client provided by `@fwl/web`.
 - *design-system/*:
-  - *globals/*: Global style components.
-  - *theme/*: `styled-components` related theme files.
-- *middleware/*: Reusable wrappers to add various features to server side actions.
+  * *globals/*: Global style components.
+  * *theme/*: `styled-components` related theme files.
+- *errors/*:
+  * *errors.ts*: List of exceptions related to Connect.Account.
+  * *web-errors.ts*: List of exceptions related to `@fwl/web` WebErrors.
+- *middlewares/*: Reusable wrappers to add various features to server side actions.
 - *pages/*: NextJS router.
 - *queries/*: Read (i.e. `GET`) database actions.
 - *utils/*: Small snippets/functions used multiple times throughout the application
 - *workflows/*: workflows used in multiples places.
-- *config.ts*: Entry point used to verify env vars sourcing, and prevent the app to run if forgotten.
-- *db-client.ts*: Singleton of the DynamoDB client.
-- *errors.ts*: List of exceptions related to Connect.Account.
-- *logger.ts*: Singleton of the logger client provided by `@fwl/web`.
-- *tracer.ts*: Singleton of the tracer client provided by `@fwl/web`.
-- *web-errors.ts*: List of exceptions related to `@fwl/web` WebErrors.
 
 === tests/
 - *config/*: Config files for the different libraries used to test, and import fix files.
@@ -311,7 +314,7 @@ Favicons for various OS.
 - *app.json*: Building instructions for Heroku.
 - *assets.d.ts*: Type declaration allowing the import of assets in TypeScript files.
 - *Brewfile*: Tools needed that will be installed via Brew for MacOS users.
-- *docker-compose*: Instructions to launch DynamoDB and the observability tools.
+- *docker-compose.yml*: Instructions to launch DynamoDB and the observability tools.
 - *Dockerfile*: Instructions for Docker image build process.
 - *next-env.d.ts*: Adds NextJS types globally.
 - *next.config.js*: Extended webpack compiler config used by NextJS.

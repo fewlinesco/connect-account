@@ -1,6 +1,7 @@
 import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 import styled from "styled-components";
+import useSWR from "swr";
 
 import { ButtonVariant, ShowMoreButton } from "../../buttons/buttons";
 import { FakeButton } from "../../buttons/fake-button";
@@ -10,6 +11,7 @@ import { Separator } from "../../separator/separator";
 import { SectionBox } from "../../shadow-box/section-box";
 import { TimelineEnd, Timeline } from "../../timelines/timelines";
 import { SortedIdentities } from "@src/@types/sorted-identities";
+import { LoginsSkeleton } from "@src/components/skeletons/skeletons";
 import {
   capitalizeFirstLetter,
   formatSpecialSocialIdentities,
@@ -33,14 +35,24 @@ const IDENTITIES_SECTION_CONTENT = {
   },
 };
 
-const LoginsOverview: React.FC<{
-  sortedIdentities: SortedIdentities;
-}> = ({ sortedIdentities }) => {
+const LoginsOverview: React.FC = () => {
+  const { data, error } = useSWR<{ sortedIdentities: SortedIdentities }, Error>(
+    "/api/get-sorted-identities",
+  );
+
+  if (error) {
+    throw error;
+  }
+
+  if (!data) {
+    return <LoginsSkeleton />;
+  }
+
   const {
     emailIdentities,
     phoneIdentities,
     socialIdentities,
-  } = sortedIdentities;
+  } = data.sortedIdentities;
 
   const identitiesSectionList = Object.entries(IDENTITIES_SECTION_CONTENT);
 

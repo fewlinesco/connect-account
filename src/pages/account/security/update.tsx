@@ -19,12 +19,12 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
 import { SetPasswordForm } from "@src/components/forms/set-password-form";
 import { Layout } from "@src/components/page-layout";
-import { config } from "@src/config";
-import { logger } from "@src/logger";
+import { configVariables } from "@src/configs/config-variables";
+import { logger } from "@src/configs/logger";
+import getTracer from "@src/configs/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import getTracer from "@src/tracer";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const SecurityUpdatePage: React.FC<{
   isPasswordSet: boolean;
@@ -70,12 +70,12 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
         isCookieSealed: true,
-        cookieSalt: config.cookieSalt,
+        cookieSalt: configVariables.cookieSalt,
       });
 
       if (userCookie) {
         const isPasswordSet = await isUserPasswordSet(
-          config.managementCredentials,
+          configVariables.managementCredentials,
           userCookie.sub,
         ).catch((error) => {
           if (error instanceof GraphqlErrors) {

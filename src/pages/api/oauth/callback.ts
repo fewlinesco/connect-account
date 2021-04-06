@@ -19,12 +19,13 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
-import { oauth2Client, config } from "@src/config";
-import { UnhandledTokenType } from "@src/errors";
-import { logger } from "@src/logger";
+import { configVariables } from "@src/configs/config-variables";
+import { logger } from "@src/configs/logger";
+import { oauth2Client } from "@src/configs/oauth2-client";
+import getTracer from "@src/configs/tracer";
+import { UnhandledTokenType } from "@src/errors/errors";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import getTracer from "@src/tracer";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
 const handler: Handler = (request, response): Promise<void> => {
@@ -105,7 +106,7 @@ const handler: Handler = (request, response): Promise<void> => {
       },
       {
         shouldCookieBeSealed: true,
-        cookieSalt: config.cookieSalt,
+        cookieSalt: configVariables.cookieSalt,
         maxAge: 24 * 60 * 60,
         path: "/",
         httpOnly: true,

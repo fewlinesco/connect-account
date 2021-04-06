@@ -16,14 +16,14 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
-import { config } from "@src/config";
-import { logger } from "@src/logger";
+import { configVariables } from "@src/configs/config-variables";
+import { logger } from "@src/configs/logger";
+import getTracer from "@src/configs/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import getTracer from "@src/tracer";
 import { generateAlertMessage } from "@src/utils/generateAlertMessage";
 import { getIdentityType } from "@src/utils/get-identity-type";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = (request, response): Promise<void> => {
   const webErrors = {
@@ -35,13 +35,13 @@ const handler: Handler = (request, response): Promise<void> => {
   return getTracer().span("delete-identity handler", async (span) => {
     const { userId, type, value } = request.body;
 
-    if ([userId, type, value].includes(undefined)) {
+    if (!userId || !type || !value) {
       throw webErrorFactory(webErrors.badRequest);
     }
 
     span.setDisclosedAttribute("Identity type", type);
 
-    return removeIdentityFromUser(config.managementCredentials, {
+    return removeIdentityFromUser(configVariables.managementCredentials, {
       userId,
       identityType: type,
       identityValue: value,

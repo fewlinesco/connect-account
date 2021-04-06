@@ -21,15 +21,15 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
-import { config } from "@src/config";
-import { NoUserFoundError } from "@src/errors";
-import { logger } from "@src/logger";
+import { configVariables } from "@src/configs/config-variables";
+import { logger } from "@src/configs/logger";
+import getTracer from "@src/configs/tracer";
+import { NoDBUserFoundError } from "@src/errors/errors";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
-import getTracer from "@src/tracer";
 import { getIdentityType } from "@src/utils/get-identity-type";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = async (request, response) => {
   const webErrors = {
@@ -48,15 +48,22 @@ const handler: Handler = async (request, response) => {
   return getTracer().span("verify-validation-code handler", async (span) => {
     const { validationCode, eventId } = request.body;
 
-    if ([validationCode, eventId].includes(undefined)) {
+    if (!validationCode || !eventId) {
       throw webErrorFactory(webErrors.invalidBody);
     }
 
-    const userCookie = (await getServerSideCookies<UserCookie>(request, {
+    const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
-      cookieSalt: config.cookieSalt,
-    })) as UserCookie;
+      cookieSalt: configVariables.cookieSalt,
+    });
+
+    if (!userCookie) {
+      response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+      response.setHeader("location", "/");
+      response.end();
+      return;
+    }
 
     const user = await getDBUserFromSub(userCookie.sub).catch((error) => {
       span.setDisclosedAttribute("database reachable", false);
@@ -109,7 +116,7 @@ const handler: Handler = async (request, response) => {
 
     if (identityToUpdateId) {
       return await updateIdentityFromUser(
-        config.managementCredentials,
+        configVariables.managementCredentials,
         user.sub,
         validationCode,
         eventIds,
@@ -123,7 +130,7 @@ const handler: Handler = async (request, response) => {
             userCookie.sub,
             temporaryIdentity,
           ).catch((error) => {
-            if (error instanceof NoUserFoundError) {
+            if (error instanceof NoDBUserFoundError) {
               span.setDisclosedAttribute("user found", false);
               throw webErrorFactory({
                 ...webErrors.noUserFound,
@@ -175,7 +182,7 @@ const handler: Handler = async (request, response) => {
     }
 
     const { id: identityId } = await addIdentityToUser(
-      config.managementCredentials,
+      configVariables.managementCredentials,
       validationCode,
       eventIds,
       {
@@ -184,6 +191,10 @@ const handler: Handler = async (request, response) => {
         identityValue: value,
       },
     ).catch((error) => {
+      if (error instanceof InvalidValidationCodeError) {
+        throw webErrorFactory(webErrors.invalidValidationCode);
+      }
+
       if (error instanceof GraphqlErrors) {
         throw webErrorFactory({
           ...webErrors.identityNotFound,
@@ -205,7 +216,7 @@ const handler: Handler = async (request, response) => {
       span.setDisclosedAttribute("is temporary Identity primary", true);
 
       await markIdentityAsPrimary(
-        config.managementCredentials,
+        configVariables.managementCredentials,
         identityId,
       ).catch((error) => {
         if (error instanceof GraphqlErrors) {

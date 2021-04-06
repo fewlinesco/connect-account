@@ -4,12 +4,11 @@ import {
   text,
   click,
   screenshot,
-  waitFor,
   link,
   textBox,
-  focus,
   write,
   currentURL,
+  into,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
@@ -26,6 +25,8 @@ describe("Account Web Application re-send Identity validation code", () => {
         "--disable-dev-shm",
       ],
       headless: true,
+      observe: false,
+      observeTime: 2000,
     });
   });
 
@@ -39,27 +40,24 @@ describe("Account Web Application re-send Identity validation code", () => {
     try {
       await authenticateToConnect();
 
-      await waitFor("LOGINS");
       expect(await text("LOGINS").exists()).toBeTruthy();
-
       await click("LOGINS");
-      await waitFor("+ Add new email address");
+
       expect(await text("+ Add new email address").exists()).toBeTruthy();
       await click(link("+ Add new email address"));
 
-      await waitFor("Email address *");
       expect(await text("Email address *").exists()).toBeTruthy();
-      await focus(textBox({ placeholder: "Enter your email" }));
-      await write("resend-validation-code@taiko.test");
+      await write(
+        "resend-validation-code@taiko.test",
+        into(textBox({ placeholder: "Enter your email" })),
+      );
       await click("Add email");
 
       const firstURL = await currentURL();
 
-      await waitFor("Resend validation code");
       expect(await text("Resend validation code").exists()).toBeTruthy();
       await click("Resend validation code");
 
-      await waitFor("A confirmation email has been sent");
       expect(
         await text("A confirmation email has been sent").exists(),
       ).toBeTruthy();

@@ -1,17 +1,17 @@
 import { getTracer, startTracer, Tracer } from "@fwl/tracing";
 
-import { config } from "@src/config";
+import { configVariables } from "@src/configs/config-variables";
 
-const options = config.lightstepAccessToken
+const options = configVariables.lightstepAccessToken
   ? {
       lightstepPublicSatelliteCollector: {
-        serviceName: config.serviceName,
-        accessToken: config.lightstepAccessToken,
+        serviceName: configVariables.serviceName,
+        accessToken: configVariables.lightstepAccessToken,
       },
     }
   : {
       simpleCollector: {
-        serviceName: config.serviceName,
+        serviceName: configVariables.serviceName,
         url: "http://localhost:55681/v1/traces",
       },
     };

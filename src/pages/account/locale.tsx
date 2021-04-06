@@ -12,10 +12,10 @@ import React from "react";
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { Locale } from "@src/components/pages/locale/locale";
-import { logger } from "@src/logger";
+import { logger } from "@src/configs/logger";
+import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import getTracer from "@src/tracer";
 
 const LocalePage: React.FC = () => {
   return (

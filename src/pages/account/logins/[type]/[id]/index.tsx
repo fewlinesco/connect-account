@@ -21,12 +21,12 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { IdentityOverview } from "@src/components/pages/identity-overview/identity-overview";
-import { config } from "@src/config";
-import { logger } from "@src/logger";
+import { configVariables } from "@src/configs/config-variables";
+import { logger } from "@src/configs/logger";
+import getTracer from "@src/configs/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import getTracer from "@src/tracer";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const IdentityOverviewPage: React.FC<{
   identity: Identity;
@@ -81,14 +81,17 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
         isCookieSealed: true,
-        cookieSalt: config.cookieSalt,
+        cookieSalt: configVariables.cookieSalt,
       });
 
       if (userCookie) {
-        const identity = await getIdentity(config.managementCredentials, {
-          userId: userCookie.sub,
-          identityId: context.params.id.toString(),
-        }).catch((error) => {
+        const identity = await getIdentity(
+          configVariables.managementCredentials,
+          {
+            userId: userCookie.sub,
+            identityId: context.params.id.toString(),
+          },
+        ).catch((error) => {
           if (error instanceof GraphqlErrors) {
             throw webErrorFactory({
               ...webErrors.identityNotFound,

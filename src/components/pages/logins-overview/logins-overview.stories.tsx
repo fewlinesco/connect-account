@@ -1,12 +1,13 @@
 import { IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
+import { SWRConfig } from "swr";
 
 import { LoginsOverview } from "./logins-overview";
 import { SortedIdentities } from "@src/@types/sorted-identities";
 import { StoriesContainer } from "@src/components/containers/stories-container";
 
 const LoginsOverviewPage = (): JSX.Element => {
-  const mockedSortedResponse: SortedIdentities = {
+  const sortedIdentities: SortedIdentities = {
     phoneIdentities: [
       {
         id: "8f79dcc1-530b-4982-878d-33f0def6a7cf",
@@ -72,9 +73,18 @@ const LoginsOverviewPage = (): JSX.Element => {
   };
 
   return (
-    <StoriesContainer>
-      <LoginsOverview sortedIdentities={mockedSortedResponse} />
-    </StoriesContainer>
+    <SWRConfig
+      value={{
+        dedupingInterval: 0,
+        fetcher: () => {
+          return { sortedIdentities };
+        },
+      }}
+    >
+      <StoriesContainer>
+        <LoginsOverview />
+      </StoriesContainer>
+    </SWRConfig>
   );
 };
 

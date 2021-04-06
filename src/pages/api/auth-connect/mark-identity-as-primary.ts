@@ -16,13 +16,13 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
-import { config } from "@src/config";
-import { logger } from "@src/logger";
+import { configVariables } from "@src/configs/config-variables";
+import { logger } from "@src/configs/logger";
+import getTracer from "@src/configs/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import getTracer from "@src/tracer";
 import { isMarkingIdentityAsPrimaryAuthorized } from "@src/utils/is-marking-identity-as-primary-authorized";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = async (request, response) => {
   const webErrors = {
@@ -42,7 +42,7 @@ const handler: Handler = async (request, response) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
-      cookieSalt: config.cookieSalt,
+      cookieSalt: configVariables.cookieSalt,
     });
 
     if (!userCookie) {
@@ -68,7 +68,10 @@ const handler: Handler = async (request, response) => {
 
     span.setDisclosedAttribute("is mark Identity as primary authorized", true);
 
-    return markIdentityAsPrimary(config.managementCredentials, identityId)
+    return markIdentityAsPrimary(
+      configVariables.managementCredentials,
+      identityId,
+    )
       .then(() => {
         span.setDisclosedAttribute("is Identity marked as primary", true);
 

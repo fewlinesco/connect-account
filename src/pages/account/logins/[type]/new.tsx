@@ -1,5 +1,4 @@
 import { IdentityTypes } from "@fewlines/connect-management";
-import { HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -14,10 +13,10 @@ import React from "react";
 import { Container } from "@src/components/containers/container";
 import { AddIdentityForm } from "@src/components/forms/add-identity-form";
 import { Layout } from "@src/components/page-layout";
-import { logger } from "@src/logger";
+import { logger } from "@src/configs/logger";
+import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import getTracer from "@src/tracer";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
@@ -56,9 +55,9 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     "/account/logins/[type]/new",
     async () => {
       if (!context?.params?.type) {
-        context.res.statusCode = HttpStatus.NOT_FOUND;
-        context.res.end();
-        return;
+        return {
+          notFound: true,
+        };
       }
 
       if (!["email", "phone"].includes(context.params.type.toString())) {
@@ -69,7 +68,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
 
       return {
         props: {
-          type: context.params?.type?.toString(),
+          type: context.params.type.toString(),
         },
       };
     },

@@ -52,14 +52,14 @@ async function createTestUser(): Promise<void> {
       status: IdentityStatus.VALIDATED,
       type: IdentityTypes.EMAIL,
       value: process.env.CONNECT_TEST_ACCOUNT_EMAIL.split("@").join(
-        "2_" + githubActionsContext.deployment.sha + "@",
+        "_delete_" + githubActionsContext.deployment.sha + "@",
       ),
     },
     {
       status: IdentityStatus.VALIDATED,
       type: IdentityTypes.EMAIL,
       value: process.env.CONNECT_TEST_ACCOUNT_EMAIL.split("@").join(
-        "_delete_" + githubActionsContext.deployment.sha + "@",
+        "2_" + githubActionsContext.deployment.sha + "@",
       ),
     },
   ];

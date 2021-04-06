@@ -1,8 +1,14 @@
 import { IdentityTypes } from "@fewlines/connect-management";
 
-import { UnhandledIdentityType } from "@src/errors";
+import { UnhandledIdentityType } from "@src/errors/errors";
 
 function getIdentityType(type: string): IdentityTypes {
+  // This check is due to Next's internals causing issue with params when navigating directly to an url.
+  // It will be removed when issue will be fixed.
+  if (typeof type !== "string") {
+    throw new UnhandledIdentityType(`Can't deal with identity type ${type}`);
+  }
+
   switch (type.toUpperCase()) {
     case "EMAIL":
       return IdentityTypes.EMAIL;

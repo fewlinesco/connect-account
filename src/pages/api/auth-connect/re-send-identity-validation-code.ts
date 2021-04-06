@@ -26,15 +26,15 @@ import { Handler } from "@src/@types/handler";
 import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
-import { config } from "@src/config";
-import { NoUserFoundError } from "@src/errors";
-import { logger } from "@src/logger";
+import { configVariables } from "@src/configs/config-variables";
+import { logger } from "@src/configs/logger";
+import { NoDBUserFoundError } from "@src/errors/errors";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import { generateAlertMessage } from "@src/utils/generateAlertMessage";
 import { getIdentityType } from "@src/utils/get-identity-type";
-import { ERRORS_DATA, webErrorFactory } from "@src/web-errors";
 
 const handler: Handler = (request, response): Promise<void> => {
   const webErrors = {
@@ -59,7 +59,7 @@ const handler: Handler = (request, response): Promise<void> => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
         isCookieSealed: true,
-        cookieSalt: config.cookieSalt,
+        cookieSalt: configVariables.cookieSalt,
       });
 
       if (!userCookie) {
@@ -113,12 +113,15 @@ const handler: Handler = (request, response): Promise<void> => {
         value: value,
       };
 
-      return await sendIdentityValidationCode(config.managementCredentials, {
-        callbackUrl: "/",
-        identity,
-        localeCodeOverride: "en-EN",
-        userId: userCookie.sub,
-      })
+      return await sendIdentityValidationCode(
+        configVariables.managementCredentials,
+        {
+          callbackUrl: "/",
+          identity,
+          localeCodeOverride: "en-EN",
+          userId: userCookie.sub,
+        },
+      )
         .then(async ({ eventId }) => {
           span.setDisclosedAttribute("is validation code sent", true);
           let temporaryIdentity: TemporaryIdentity = {
@@ -140,7 +143,7 @@ const handler: Handler = (request, response): Promise<void> => {
             userCookie.sub,
             temporaryIdentity,
           ).catch((error) => {
-            if (error instanceof NoUserFoundError) {
+            if (error instanceof NoDBUserFoundError) {
               span.setDisclosedAttribute("user found", false);
               throw webErrorFactory({
                 ...webErrors.noUserFound,
