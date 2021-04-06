@@ -30,11 +30,9 @@ const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxContentProps
         type="button"
         variant={ButtonVariant.PRIMARY}
         onClick={async () => {
-          fetchJson(
-            "/api/auth-connect/mark-identity-as-primary",
-            HttpVerbs.POST,
-            { identityId: id },
-          ).then(() => {
+          fetchJson("/api/identity/mark-identity-as-primary", HttpVerbs.POST, {
+            identityId: id,
+          }).then(() => {
             router && router.push("/account/logins");
           });
         }}

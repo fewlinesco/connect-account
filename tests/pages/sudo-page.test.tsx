@@ -2,6 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import userEvent from "@testing-library/user-event";
 import fetch, { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
+import { cache, SWRConfig } from "swr";
 
 import { render, screen } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
@@ -33,16 +34,25 @@ describe("SudoPage", () => {
     it("should render proper form elements and submit button text should update after first submit", async () => {
       expect.assertions(11);
 
+      const primaryIdentities = [
+        mockIdentities.primaryEmailIdentity,
+        mockIdentities.primaryPhoneIdentity,
+      ];
+
       render(
-        <SudoPage
-          primaryIdentities={[
-            mockIdentities.primaryEmailIdentity,
-            mockIdentities.primaryPhoneIdentity,
-          ]}
-        />,
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { primaryIdentities };
+            },
+          }}
+        >
+          <SudoPage />
+        </SWRConfig>,
       );
 
-      const contactChoiceRadioInputs = screen.getAllByRole("radio");
+      const contactChoiceRadioInputs = await screen.findAllByRole("radio");
       expect(contactChoiceRadioInputs).toHaveLength(2);
 
       expect(contactChoiceRadioInputs[0]).toBeInTheDocument();
@@ -83,11 +93,24 @@ describe("SudoPage", () => {
     it("should render proper form elements", async () => {
       expect.assertions(8);
 
+      const primaryIdentities = [mockIdentities.primaryPhoneIdentity];
+
+      cache.set("/api/identity/get-primary-identities", { primaryIdentities });
+
       render(
-        <SudoPage primaryIdentities={[mockIdentities.primaryPhoneIdentity]} />,
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { primaryIdentities };
+            },
+          }}
+        >
+          <SudoPage />
+        </SWRConfig>,
       );
 
-      const contactChoiceRadioInput = screen.getByRole("radio");
+      const contactChoiceRadioInput = await screen.findByRole("radio");
 
       expect(contactChoiceRadioInput).toBeInTheDocument();
       expect(contactChoiceRadioInput).toBeChecked();
