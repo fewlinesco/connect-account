@@ -148,7 +148,7 @@ if you want to automatically fix linting issues.
 
 === Pre-push trigger
 
-We are using `Husky` to trigger the linting and building of the app before pushing the code to GitHub to prevent unnecessary `Heroku` builds. We do not plan to migrate from version `4.x` to `5.x`.
+We are using `husky 6.x` to trigger the linting and building of the app before pushing the code to GitHub to prevent unnecessary `Heroku` builds.
 
 == Environment variables
 

@@ -60,10 +60,14 @@ describe("Delete Identity", () => {
         await text("Email address has been deleted").exists(),
       ).toBeTruthy();
 
+      // Waiting to remove SWR cache.
+      await waitFor(2000);
+
       expect(await text("Show").exists()).toBeTruthy();
       await click("Show");
 
       expect(await text("Hide").exists()).toBeTruthy();
+
       expect(!(await link("_delete_").exists())).toBeTruthy();
 
       done();
