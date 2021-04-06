@@ -43,57 +43,6 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       authMiddleware(getTracer()),
     ],
     "/account/security/sudo",
-    // async () => {
-    //   const webErrors = {
-    //     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
-    //     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
-    //     notFound: ERRORS_DATA.NOT_FOUND,
-    //   };
-    //   throw webErrorFactory(webErrors.notFound);
-    //   const userCookie = await getServerSideCookies<UserCookie>(request, {
-    //     cookieName: "user-cookie",
-    //     isCookieSealed: true,
-    //     cookieSalt: configVariables.cookieSalt,
-    //   });
-    //   if (userCookie) {
-    //     const primaryIdentities = await getIdentities(
-    //       configVariables.managementCredentials,
-    //       userCookie.sub,
-    //     )
-    //       .then((identities) => {
-    //         return identities.filter((identity) => {
-    //           return (
-    //             identity.primary &&
-    //             (identity.type == IdentityTypes.EMAIL.toLowerCase() ||
-    //               identity.type == IdentityTypes.PHONE.toLowerCase())
-    //           );
-    //         });
-    //       })
-    //       .catch((error) => {
-    //         if (error instanceof GraphqlErrors) {
-    //           throw webErrorFactory({
-    //             ...webErrors.identityNotFound,
-    //             parentError: error,
-    //           });
-    //         }
-    //         if (error instanceof ConnectUnreachableError) {
-    //           throw webErrorFactory({
-    //             ...webErrors.connectUnreachable,
-    //             parentError: error,
-    //           });
-    //         }
-    //         throw error;
-    //       });
-    //     if (primaryIdentities.length > 0) {
-    //       return {
-    //         props: {
-    //           primaryIdentities,
-    //         },
-    //       };
-    //     }
-    //   }
-    //   return { props: {} };
-    // },
   );
 };
 

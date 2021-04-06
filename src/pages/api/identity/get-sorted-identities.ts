@@ -31,7 +31,7 @@ const handler: Handler = (request, response): Promise<void> => {
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
   };
 
-  return getTracer().span("get-sorted-identities handler", async (_span) => {
+  return getTracer().span("get-sorted-identities handler", async (span) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
@@ -53,17 +53,23 @@ const handler: Handler = (request, response): Promise<void> => {
         return sortIdentities(identities);
       })
       .catch((error) => {
+        span.setDisclosedAttribute("identities found", false);
         if (error instanceof GraphqlErrors) {
-          throw webErrorFactory(webErrors.identityNotFound);
+          throw webErrorFactory({
+            ...webErrors.identityNotFound,
+            parentError: error,
+          });
         }
-
         if (error instanceof ConnectUnreachableError) {
-          throw webErrorFactory(webErrors.connectUnreachable);
+          throw webErrorFactory({
+            ...webErrors.connectUnreachable,
+            parentError: error,
+          });
         }
-
         throw error;
       });
 
+    span.setDisclosedAttribute("identities found", true);
     response.statusCode = HttpStatus.OK;
     response.json({ sortedIdentities });
   });
