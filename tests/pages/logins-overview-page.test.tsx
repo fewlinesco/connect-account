@@ -113,7 +113,8 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
-      cache.set("/api/get-sorted-identities", { sortedIdentities });
+      cache.set("/api/identity/get-sorted-identities", { sortedIdentities });
+
       render(
         <SWRConfig
           value={{
@@ -158,7 +159,8 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
-      cache.set("/api/get-sorted-identities", { sortedIdentities });
+      cache.set("/api/identity/get-sorted-identities", { sortedIdentities });
+
       render(
         <SWRConfig
           value={{
@@ -271,7 +273,8 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
-      cache.set("/api/get-sorted-identities", { sortedIdentities });
+      cache.set("/api/identity/get-sorted-identities", { sortedIdentities });
+
       render(
         <SWRConfig
           value={{
@@ -315,7 +318,8 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
-      cache.set("/api/get-sorted-identities", { sortedIdentities });
+      cache.set("/api/identity/get-sorted-identities", { sortedIdentities });
+
       render(
         <SWRConfig
           value={{
