@@ -54,8 +54,10 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        await findByTextContent(mockIdentities.primaryEmailIdentity.value),
-      ).toBeTruthy();
+        await screen.findByRole("link", {
+          name: new RegExp(`${mockIdentities.primaryEmailIdentity.value}`, "i"),
+        }),
+      ).toBeInTheDocument();
       expect(
         screen.getByRole("link", {
           name: mockIdentities.primaryEmailIdentity.value,
@@ -215,8 +217,10 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        await findByTextContent(mockIdentities.primaryPhoneIdentity.value),
-      ).toBeTruthy();
+        await screen.findByRole("link", {
+          name: new RegExp(`${mockIdentities.primaryPhoneIdentity.value}`, "i"),
+        }),
+      ).toBeInTheDocument();
       expect(
         screen.getByRole("link", {
           name: mockIdentities.primaryPhoneIdentity.value,
