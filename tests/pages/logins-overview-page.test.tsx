@@ -4,7 +4,6 @@ import { cache, SWRConfig } from "swr";
 
 import { render, screen } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
-import { findByTextContent } from "../utils/find-by-text-content";
 import { SortedIdentities } from "@src/@types/sorted-identities";
 import LoginsOverviewPage from "@src/pages/account/logins";
 
@@ -177,7 +176,7 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        await findByTextContent("No email added yet."),
+        await screen.findByText(new RegExp("No email added yet.", "i")),
       ).toBeInTheDocument();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
       expect(
@@ -338,7 +337,7 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        await findByTextContent("No phone number added yet."),
+        await screen.findByText(new RegExp("No phone number added yet.", "i")),
       ).toBeInTheDocument();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
       expect(
@@ -377,8 +376,10 @@ describe("LoginsOverviewPage", () => {
         </SWRConfig>,
       );
 
-      expect(await findByTextContent("Github")).toBeTruthy();
-      expect(await findByTextContent("Facebook")).toBeTruthy();
+      const gitHub = await screen.findAllByText(new RegExp("Github", "i"));
+      expect(gitHub[1].innerHTML).toBe("Github");
+      const facebook = await screen.findAllByText(new RegExp("Facebook", "i"));
+      expect(facebook[1].innerHTML).toBe("Facebook");
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
     });
 
@@ -405,8 +406,8 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        await findByTextContent("No social logins added yet."),
-      ).toBeTruthy();
+        await screen.findByText(new RegExp("No social logins added yet.", "i")),
+      ).toBeInTheDocument();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
     });
   });

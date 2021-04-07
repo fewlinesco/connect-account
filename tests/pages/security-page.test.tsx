@@ -2,7 +2,6 @@ import React from "react";
 import { cache, SWRConfig } from "swr";
 
 import { render, screen } from "../config/testing-library-config";
-import { findByTextContent } from "../utils/find-by-text-content";
 import SecurityPage from "@src/pages/account/security";
 
 jest.mock("@src/configs/db-client", () => {
@@ -63,8 +62,7 @@ describe("SecurityPage", () => {
       </SWRConfig>,
     );
 
-    const securitySetAnchor = await findByTextContent("Set your password");
-    expect(securitySetAnchor).toBeTruthy();
+    expect(await screen.findByText(/Set your password/i)).toBeTruthy();
   });
 
   test("The anchor should render 'Update your password' if isPasswordSet is true", async () => {
@@ -83,7 +81,6 @@ describe("SecurityPage", () => {
       </SWRConfig>,
     );
 
-    const securitySetAnchor = await findByTextContent("Update your password");
-    expect(securitySetAnchor).toBeTruthy();
+    expect(await screen.findByText(/Update your password/i)).toBeTruthy();
   });
 });

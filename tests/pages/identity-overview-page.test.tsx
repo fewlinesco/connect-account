@@ -5,7 +5,6 @@ import { cache, SWRConfig } from "swr";
 
 import { render, screen, waitFor } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
-import { findByTextContent } from "../utils/find-by-text-content";
 import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
 
 jest.mock("@src/configs/db-client", () => {
@@ -177,7 +176,7 @@ describe("IdentityOverviewPage", () => {
       );
 
       expect(
-        await findByTextContent(mockIdentities.primaryEmailIdentity.value),
+        await screen.findByText(mockIdentities.primaryEmailIdentity.value),
       ).toBeTruthy();
       expect(screen.queryByText("Awaiting validation")).not.toBeInTheDocument();
     });
@@ -386,7 +385,7 @@ describe("IdentityOverviewPage", () => {
         </SWRConfig>,
       );
 
-      expect(await findByTextContent("Primary")).toBeTruthy();
+      expect(await screen.findByText("Primary")).toBeTruthy();
       expect(screen.queryByText("Awaiting validation")).not.toBeInTheDocument();
     });
 
