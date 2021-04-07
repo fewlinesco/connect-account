@@ -28,7 +28,7 @@ describe("ConfirmationBox", () => {
     cache.clear();
   });
 
-  it("shouldn't display any confirmation box on first render", () => {
+  it("shouldn't display any confirmation box on first render", async () => {
     expect.assertions(2);
 
     render(
@@ -46,20 +46,26 @@ describe("ConfirmationBox", () => {
       </SWRConfig>,
     );
 
-    expect(
-      screen.queryByText(
-        `You are about to set ${mockIdentities.nonPrimaryEmailIdentity.value} as primary.`,
-      ),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByText(
-        `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
-      ),
-    ).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.queryByText(
+          `You are about to set ${mockIdentities.nonPrimaryEmailIdentity.value} as primary.`,
+        ),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByText(
+          `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
+        ),
+      ).not.toBeInTheDocument();
+    });
   });
 
-  it("should display primary confirmation box after clicking on mark as primary button & close it by clicking on cancel button", async () => {
+  it.only("should display primary confirmation box after clicking on mark as primary button & close it by clicking on cancel button", async () => {
     expect.assertions(3);
+
+    cache.set("/api/identity/get-identity", {
+      identity: mockIdentities.nonPrimaryEmailIdentity,
+    });
 
     render(
       <SWRConfig
@@ -77,13 +83,13 @@ describe("ConfirmationBox", () => {
     );
 
     userEvent.click(
-      screen.getByRole("button", {
+      await screen.findByRole("button", {
         name: makeAsPrimaryRegExFactory(mockIdentities.nonPrimaryEmailIdentity),
       }),
     );
 
     expect(
-      screen.queryByText(
+      await screen.findByText(
         `You are about to set ${mockIdentities.nonPrimaryEmailIdentity.value} as primary.`,
       ),
     ).toBeInTheDocument();
@@ -127,13 +133,13 @@ describe("ConfirmationBox", () => {
     );
 
     userEvent.click(
-      screen.getByRole("button", {
+      await screen.findByRole("button", {
         name: /Delete this email address/i,
       }),
     );
 
     expect(
-      screen.queryByText(
+      await screen.findByText(
         `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
       ),
     ).toBeInTheDocument();
@@ -177,13 +183,13 @@ describe("ConfirmationBox", () => {
     );
 
     userEvent.click(
-      screen.getByRole("button", {
+      await screen.findByRole("button", {
         name: /Delete this email address/i,
       }),
     );
 
     expect(
-      screen.queryByText(
+      await screen.findByText(
         `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
       ),
     ).toBeInTheDocument();
