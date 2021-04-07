@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import { cache, SWRConfig } from "swr";
 
-import { render, screen } from "../config/testing-library-config";
+import { render, screen, waitFor } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
 import { findByTextContent } from "../utils/find-by-text-content";
 import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
@@ -21,12 +21,7 @@ jest.mock("@src/configs/db-client", () => {
 function makeAsPrimaryRegExFactory(identity: Identity): RegExp {
   return new RegExp(
     "Make " + identity.value + " my primary " + identity.type.toLowerCase(),
-  );
-}
-
-function makeAsPrimaryStringFactory(identity: Identity): string {
-  return (
-    "Make " + identity.value + " my primary " + identity.type.toLowerCase()
+    "i",
   );
 }
 
@@ -59,7 +54,9 @@ describe("IdentityOverviewPage", () => {
         </SWRConfig>,
       );
 
-      expect(await screen.findByText("Email address")).toBeInTheDocument();
+      expect(
+        await screen.findByRole("heading", { name: /email address/i }),
+      ).toBeInTheDocument();
     });
 
     it("should display the relevant delete & mark as primary buttons but not validate identity one for a non primary validated email address", async () => {
@@ -100,7 +97,7 @@ describe("IdentityOverviewPage", () => {
       ).not.toBeInTheDocument();
     });
 
-    it("shouldn't display primary badge nor the awaiting validation one for a non primary validated email", () => {
+    it("shouldn't display primary badge nor the awaiting validation one for a non primary validated email", async () => {
       expect.assertions(2);
 
       render(
@@ -118,11 +115,15 @@ describe("IdentityOverviewPage", () => {
         </SWRConfig>,
       );
 
-      expect(screen.queryByText("Primary")).not.toBeInTheDocument();
-      expect(screen.queryByText("Awaiting validation")).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByText("Primary")).not.toBeInTheDocument();
+        expect(
+          screen.queryByText("Awaiting validation"),
+        ).not.toBeInTheDocument();
+      });
     });
 
-    it("shouldn't display the delete, mark as primary & validate identity buttons for a primary email address", () => {
+    it("shouldn't display the delete, mark as primary & validate identity buttons for a primary email address", async () => {
       expect.assertions(3);
 
       render(
@@ -140,17 +141,21 @@ describe("IdentityOverviewPage", () => {
         </SWRConfig>,
       );
 
-      expect(
-        screen.queryByRole("button", {
-          name: makeAsPrimaryRegExFactory(mockIdentities.primaryEmailIdentity),
-        }),
-      ).not.toBeInTheDocument();
-      expect(
-        screen.queryByRole("button", { name: /Delete this email address/i }),
-      ).not.toBeInTheDocument();
-      expect(
-        screen.queryByRole("link", { name: "Proceed to validation" }),
-      ).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(
+          screen.queryByRole("button", {
+            name: makeAsPrimaryRegExFactory(
+              mockIdentities.primaryEmailIdentity,
+            ),
+          }),
+        ).not.toBeInTheDocument();
+        expect(
+          screen.queryByRole("button", { name: /Delete this email address/i }),
+        ).not.toBeInTheDocument();
+        expect(
+          screen.queryByRole("link", { name: "Proceed to validation" }),
+        ).not.toBeInTheDocument();
+      });
     });
 
     it("should display primary badge and not the awaiting validation one for a primary email", async () => {
@@ -196,7 +201,7 @@ describe("IdentityOverviewPage", () => {
       );
 
       expect(
-        await screen.findByRole("button", {
+        screen.queryByRole("button", {
           name: makeAsPrimaryRegExFactory(
             mockIdentities.unvalidatedEmailIdentity,
           ),
@@ -237,7 +242,7 @@ describe("IdentityOverviewPage", () => {
     });
   });
 
-  describe.only("Identity type: PHONE", () => {
+  describe("Identity type: PHONE", () => {
     afterEach(() => {
       cache.clear();
     });
@@ -260,11 +265,13 @@ describe("IdentityOverviewPage", () => {
         </SWRConfig>,
       );
 
-      expect(await screen.findByText("Phone number")).toBeInTheDocument();
+      expect(
+        await screen.findByRole("heading", { name: /phone number/i }),
+      ).toBeInTheDocument();
     });
 
     it("should display the relevant delete & mark as primary buttons but not validate identity one for a non primary validated phone number", async () => {
-      expect.assertions(2);
+      expect.assertions(3);
 
       render(
         <SWRConfig
@@ -288,18 +295,16 @@ describe("IdentityOverviewPage", () => {
           ),
         }),
       ).toBeInTheDocument();
-
       expect(
         screen.getByRole("button", { name: /Delete this phone number/i }),
       ).toBeInTheDocument();
-
       expect(
         screen.queryByRole("link", { name: "Proceed to validation" }),
       ).not.toBeInTheDocument();
     });
 
     it("shouldn't display primary badge nor the awaiting validation one for a non primary validated phone number", async () => {
-      // expect.assertions(1);
+      expect.assertions(2);
 
       render(
         <SWRConfig
@@ -316,12 +321,16 @@ describe("IdentityOverviewPage", () => {
         </SWRConfig>,
       );
 
-      expect(await findByTextContent("Primary")).toBeTruthy();
-      expect(screen.queryByText("Awaiting validation")).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByText("Primary")).not.toBeInTheDocument();
+        expect(
+          screen.queryByText("Awaiting validation"),
+        ).not.toBeInTheDocument();
+      });
     });
 
     it("shouldn't display the delete, mark as primary & validate identity buttons for a primary phone number", async () => {
-      // expect.assertions(1);
+      expect.assertions(3);
 
       render(
         <SWRConfig
@@ -338,13 +347,25 @@ describe("IdentityOverviewPage", () => {
         </SWRConfig>,
       );
 
-      expect(
-        await findByTextContent(
-          makeAsPrimaryStringFactory(mockIdentities.primaryPhoneIdentity),
-        ),
-      ).toBeFalsy();
-      expect(await findByTextContent("Delete this phone number")).toBeFalsy();
-      expect(await findByTextContent("Proceed to validation")).toBeFalsy();
+      await waitFor(() => {
+        expect(
+          screen.queryByRole("button", {
+            name: makeAsPrimaryRegExFactory(
+              mockIdentities.primaryPhoneIdentity,
+            ),
+          }),
+        ).not.toBeInTheDocument();
+        expect(
+          screen.queryByRole("button", {
+            name: /Delete this phone number/i,
+          }),
+        ).not.toBeInTheDocument();
+        expect(
+          screen.queryByRole("button", {
+            name: /Proceed to validation/i,
+          }),
+        ).not.toBeInTheDocument();
+      });
     });
 
     it("should display primary badge and not the awaiting validation one for a primary phone number", async () => {
@@ -388,10 +409,12 @@ describe("IdentityOverviewPage", () => {
       );
 
       expect(
-        await screen.findByRole("link", { name: "Proceed to validation" }),
+        await screen.findByRole("button", {
+          name: /Delete this phone number/i,
+        }),
       ).toBeInTheDocument();
       expect(
-        screen.getByRole("button", { name: /Delete this phone number/i }),
+        await screen.findByRole("link", { name: /Proceed to validation/i }),
       ).toBeInTheDocument();
       expect(
         screen.queryByRole("button", {

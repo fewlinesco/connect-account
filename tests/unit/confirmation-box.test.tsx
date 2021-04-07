@@ -1,12 +1,11 @@
 import { Identity } from "@fewlines/connect-management";
 import userEvent from "@testing-library/user-event";
 import React from "react";
+import { cache, SWRConfig } from "swr";
 
 import { render, screen, waitFor } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
 import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
-
-const userId = "ac3f358d-d2c9-487e-8387-2e6866b853c9";
 
 function makeAsPrimaryRegExFactory(identity: Identity): RegExp {
   return new RegExp(
@@ -25,12 +24,26 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("ConfirmationBox", () => {
+  afterEach(() => {
+    cache.clear();
+  });
+
   it("shouldn't display any confirmation box on first render", () => {
+    expect.assertions(2);
+
     render(
-      <IdentityOverviewPage
-        identity={mockIdentities.nonPrimaryEmailIdentity}
-        userId={userId}
-      />,
+      <SWRConfig
+        value={{
+          dedupingInterval: 0,
+          fetcher: () => {
+            return { identity: mockIdentities.nonPrimaryEmailIdentity };
+          },
+        }}
+      >
+        <IdentityOverviewPage
+          identityId={mockIdentities.nonPrimaryEmailIdentity.id}
+        />
+      </SWRConfig>,
     );
 
     expect(
@@ -38,7 +51,6 @@ describe("ConfirmationBox", () => {
         `You are about to set ${mockIdentities.nonPrimaryEmailIdentity.value} as primary.`,
       ),
     ).not.toBeInTheDocument();
-
     expect(
       screen.queryByText(
         `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
@@ -47,14 +59,22 @@ describe("ConfirmationBox", () => {
   });
 
   it("should display primary confirmation box after clicking on mark as primary button & close it by clicking on cancel button", async () => {
-    render(
-      <IdentityOverviewPage
-        identity={mockIdentities.nonPrimaryEmailIdentity}
-        userId={userId}
-      />,
-    );
-
     expect.assertions(3);
+
+    render(
+      <SWRConfig
+        value={{
+          dedupingInterval: 0,
+          fetcher: () => {
+            return { identity: mockIdentities.nonPrimaryEmailIdentity };
+          },
+        }}
+      >
+        <IdentityOverviewPage
+          identityId={mockIdentities.nonPrimaryEmailIdentity.id}
+        />
+      </SWRConfig>,
+    );
 
     userEvent.click(
       screen.getByRole("button", {
@@ -67,7 +87,6 @@ describe("ConfirmationBox", () => {
         `You are about to set ${mockIdentities.nonPrimaryEmailIdentity.value} as primary.`,
       ),
     ).toBeInTheDocument();
-
     expect(
       await screen.findByRole("button", {
         name: "Cancel",
@@ -80,7 +99,7 @@ describe("ConfirmationBox", () => {
       }),
     );
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(
         screen.queryByText(
           `You are about to set ${mockIdentities.nonPrimaryEmailIdentity.value} as primary.`,
@@ -90,14 +109,22 @@ describe("ConfirmationBox", () => {
   });
 
   it("should display delete confirmation box after clicking on delete button & close it by clicking on cancel button", async () => {
-    render(
-      <IdentityOverviewPage
-        identity={mockIdentities.nonPrimaryEmailIdentity}
-        userId={userId}
-      />,
-    );
-
     expect.assertions(3);
+
+    render(
+      <SWRConfig
+        value={{
+          dedupingInterval: 0,
+          fetcher: () => {
+            return { identity: mockIdentities.nonPrimaryEmailIdentity };
+          },
+        }}
+      >
+        <IdentityOverviewPage
+          identityId={mockIdentities.nonPrimaryEmailIdentity.id}
+        />
+      </SWRConfig>,
+    );
 
     userEvent.click(
       screen.getByRole("button", {
@@ -110,7 +137,6 @@ describe("ConfirmationBox", () => {
         `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
       ),
     ).toBeInTheDocument();
-
     expect(
       await screen.findByRole("button", {
         name: "Keep email address",
@@ -123,7 +149,7 @@ describe("ConfirmationBox", () => {
       }),
     );
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(
         screen.queryByText(
           `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
@@ -132,12 +158,22 @@ describe("ConfirmationBox", () => {
     });
   });
 
-  it("should close confirmation box when clicking outside of it", () => {
+  it("should close confirmation box when clicking outside of it", async () => {
+    expect.assertions(2);
+
     render(
-      <IdentityOverviewPage
-        identity={mockIdentities.nonPrimaryEmailIdentity}
-        userId={userId}
-      />,
+      <SWRConfig
+        value={{
+          dedupingInterval: 0,
+          fetcher: () => {
+            return { identity: mockIdentities.nonPrimaryEmailIdentity };
+          },
+        }}
+      >
+        <IdentityOverviewPage
+          identityId={mockIdentities.nonPrimaryEmailIdentity.id}
+        />
+      </SWRConfig>,
     );
 
     userEvent.click(
@@ -154,7 +190,7 @@ describe("ConfirmationBox", () => {
 
     userEvent.click(screen.getByTestId("clickAwayListener"));
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(
         screen.queryByText(
           `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,

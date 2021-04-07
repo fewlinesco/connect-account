@@ -1,9 +1,24 @@
-import { render, RenderOptions, RenderResult } from "@testing-library/react";
+import {
+  configure,
+  render,
+  RenderOptions,
+  RenderResult,
+} from "@testing-library/react";
 import { RouterContext } from "next/dist/next-server/lib/router-context";
 import { NextRouter } from "next/router";
 import React from "react";
 
 import { AccountApp } from "@src/pages/_app";
+
+// Used to remove DOM visualisation from le logs.
+configure({
+  throwSuggestions: true,
+  getElementError: (message) => {
+    const error = new Error(message as string);
+    error.name = "TestingLibraryElementError";
+    return error;
+  },
+});
 
 const mockLink = ({
   children,
