@@ -39,6 +39,11 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: "Invalid body",
   },
+  INVALID_QUERY_STRING: {
+    code: "invalid_query_string",
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: "Invalid query string",
+  },
   INVALID_VALIDATION_CODE: {
     code: "invalid_validation_code",
     httpStatus: HttpStatus.BAD_REQUEST,

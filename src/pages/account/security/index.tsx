@@ -28,7 +28,7 @@ const SecurityPage: React.FC = () => {
 };
 
 const getServerSideProps: GetServerSideProps = async (context) => {
-  return getServerSidePropsWithMiddlewares<{ type: string }>(
+  return getServerSidePropsWithMiddlewares(
     context,
     [
       tracingMiddleware(getTracer()),

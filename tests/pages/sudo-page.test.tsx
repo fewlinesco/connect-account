@@ -70,18 +70,21 @@ describe("SudoPage", () => {
       );
 
       userEvent.click(contactChoiceRadioInputs[1]);
+
       expect(contactChoiceRadioInputs[1]).toBeChecked();
       expect(contactChoiceRadioInputs[0]).not.toBeChecked();
 
-      const submitButton = screen.getByRole("button", {
+      const submitButton = await screen.findByRole("button", {
         name: "Send confirmation code",
       });
       expect(submitButton).toBeInTheDocument();
+
       userEvent.click(submitButton);
 
       const mockedFetchResponse = new Response(JSON.stringify({ eventId }), {
         status: HttpStatus.OK,
       });
+
       mockedFetchJson.mockResolvedValueOnce(mockedFetchResponse);
 
       expect(
@@ -89,6 +92,7 @@ describe("SudoPage", () => {
       ).toBeInTheDocument();
     });
   });
+
   describe("Verify validation code form", () => {
     it("should render proper form elements", async () => {
       expect.assertions(8);
@@ -123,25 +127,25 @@ describe("SudoPage", () => {
         name: "Send confirmation code",
       });
       expect(submitButton).toBeInTheDocument();
+
       userEvent.click(submitButton);
 
       const mockedFetchResponse = new Response(JSON.stringify({ eventId }), {
         status: HttpStatus.OK,
       });
+
       mockedFetchJson.mockResolvedValueOnce(mockedFetchResponse);
 
       expect(
         await screen.findByRole("button", { name: "Resend confirmation code" }),
       ).toBeInTheDocument();
 
-      const validationCodeInput = await screen.findByLabelText(
-        "Enter received code here:",
-      );
-
+      const validationCodeInput = await screen.findByRole("textbox", {
+        name: /enter received code here:/i,
+      });
       expect(validationCodeInput).toBeInTheDocument();
       userEvent.type(validationCodeInput, "123456");
       expect(validationCodeInput).toHaveDisplayValue("123456");
-
       expect(
         screen.getByRole("button", { name: "Confirm" }),
       ).toBeInTheDocument();
