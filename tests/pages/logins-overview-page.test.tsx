@@ -376,10 +376,16 @@ describe("LoginsOverviewPage", () => {
         </SWRConfig>,
       );
 
-      const gitHub = await screen.findAllByText(new RegExp("Github", "i"));
-      expect(gitHub[1].innerHTML).toBe("Github");
-      const facebook = await screen.findAllByText(new RegExp("Facebook", "i"));
-      expect(facebook[1].innerHTML).toBe("Facebook");
+      await screen
+        .findAllByText(new RegExp("Github", "i"))
+        .then((elementList) => {
+          expect(elementList[1].innerHTML).toBe("Github");
+        });
+      await screen
+        .findAllByText(new RegExp("Facebook", "i"))
+        .then((elementList) => {
+          expect(elementList[1].innerHTML).toBe("Facebook");
+        });
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
     });
 

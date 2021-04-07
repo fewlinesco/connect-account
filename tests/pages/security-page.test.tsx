@@ -41,9 +41,16 @@ describe("SecurityPage", () => {
         expect(securityElementList.length).toEqual(2),
       );
     expect(
-      await screen.findByText("Password, login history and more"),
+      await screen.findByRole("heading", {
+        name: /password, login history and more/i,
+      }),
     ).toBeInTheDocument();
-    expect(await screen.findByText("Password")).toBeInTheDocument();
+
+    await screen
+      .findAllByRole("heading", { name: /password/i })
+      .then((elementList) => {
+        expect(elementList[1].innerHTML).toBe("Password");
+      });
   });
 
   test("The anchor should render 'Set your password' if isPasswordSet is false", async () => {
