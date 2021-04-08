@@ -23,10 +23,6 @@ describe("LoginsOverviewPage", () => {
   });
 
   describe("Identity type: EMAIL", () => {
-    afterEach(() => {
-      cache.clear();
-    });
-
     it("should display primary email identity first and all of them when clicking on the show more button", async () => {
       expect.assertions(7);
 
@@ -186,10 +182,6 @@ describe("LoginsOverviewPage", () => {
   });
 
   describe("Identity type: PHONE", () => {
-    afterEach(() => {
-      cache.clear();
-    });
-
     it("should display primary phone identity first and all of them when clicking on the show more button", async () => {
       expect.assertions(7);
 
@@ -347,10 +339,6 @@ describe("LoginsOverviewPage", () => {
   });
 
   describe("Identity type: SOCIAL", () => {
-    afterEach(() => {
-      cache.clear();
-    });
-
     it("should display all social identities provided without the show more button", async () => {
       expect.assertions(3);
 
