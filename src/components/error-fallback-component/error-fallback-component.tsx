@@ -13,7 +13,8 @@ const ErrorFallbackComponent: React.FC<{
           <h1>We can&apos;t find the page you are looking for.</h1>
           <p>
             It may have expired, or there could be a typo. Maybe you can find
-            what you need on our <HomepageLink href="/">homepage</HomepageLink>.
+            what you need on our{" "}
+            <HomepageLink href="/account">homepage</HomepageLink>.
           </p>
         </>
       ) : (
