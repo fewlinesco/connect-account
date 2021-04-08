@@ -13,7 +13,7 @@ const ErrorFallbackComponent: React.FC<{
           <h1>We can&apos;t find the page you are looking for.</h1>
           <p>
             It may have expired, or there could be a typo. Maybe you can find
-            what you need on our <NeutralLink href="/">homepage</NeutralLink>.
+            what you need on our <HomepageLink href="/">homepage</HomepageLink>.
           </p>
         </>
       ) : (
@@ -39,6 +39,10 @@ const Wrapper = styled.div<{ statusCode: number }>`
   padding: ${({ theme }) => theme.spaces.xs};
   margin-top: ${({ statusCode, theme }) =>
     statusCode !== 404 ? theme.spaces.s : ""};
+`;
+
+const HomepageLink = styled(NeutralLink)`
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 export { ErrorFallbackComponent };
