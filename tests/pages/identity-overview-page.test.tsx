@@ -30,10 +30,6 @@ describe("IdentityOverviewPage", () => {
   });
 
   describe("Identity type: EMAIL", () => {
-    afterEach(() => {
-      cache.clear();
-    });
-
     it("should render proper email breadcrumbs", async () => {
       expect.assertions(1);
 
@@ -242,10 +238,6 @@ describe("IdentityOverviewPage", () => {
   });
 
   describe("Identity type: PHONE", () => {
-    afterEach(() => {
-      cache.clear();
-    });
-
     it("should render proper phone identity breadcrumbs", async () => {
       expect.assertions(1);
 
