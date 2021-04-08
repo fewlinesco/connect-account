@@ -1,23 +1,23 @@
 import React from "react";
-import styled from "styled-components";
 
-import { BreadcrumbsSkeleton } from "../skeletons/skeletons";
+import { SkeletonTextLine } from "../skeletons/skeletons";
 
 const NavigationBreadcrumbs: React.FC<{
   breadcrumbs: string[] | string;
 }> = ({ breadcrumbs }) => {
   if (breadcrumbs === "") {
-    return <BreadcrumbsSkeleton />;
+    return (
+      <h3>
+        <SkeletonTextLine fontSize={1.4} />
+      </h3>
+    );
   }
 
   if (typeof breadcrumbs === "string") {
-    return <Breadcrumbs>{breadcrumbs}</Breadcrumbs>;
+    return <h3>{breadcrumbs}</h3>;
   }
-  return <Breadcrumbs>{breadcrumbs.join(" | ")}</Breadcrumbs>;
+
+  return <h3>{breadcrumbs.join(" | ")}</h3>;
 };
 
-const Breadcrumbs = styled.h3`
-  font-size: ${({ theme }) => theme.fontSizes.s};
-`;
-
-export { NavigationBreadcrumbs, Breadcrumbs };
+export { NavigationBreadcrumbs };

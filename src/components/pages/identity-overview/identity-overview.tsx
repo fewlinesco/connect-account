@@ -13,7 +13,7 @@ import { ConfirmationBox } from "@src/components/confirmation-box/confirmation-b
 import { DeleteConfirmationBoxContent } from "@src/components/confirmation-box/delete-confirmation-box-content";
 import { PrimaryConfirmationBoxContent } from "@src/components/confirmation-box/primary-confirmation-box-content";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
-import { IdentityOverviewSkeleton } from "@src/components/skeletons/skeletons";
+import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const IdentityOverview: React.FC<{
@@ -28,83 +28,97 @@ const IdentityOverview: React.FC<{
     setConfirmationBoxContent,
   ] = React.useState<JSX.Element>(<React.Fragment />);
 
-  if (!data) {
-    return <IdentityOverviewSkeleton />;
-  }
-
-  const { id, primary, status, type, value } = data.identity;
-
   return (
     <>
       <Box>
-        <Flex>
-          <Value>{value}</Value>
-        </Flex>
-        {primary && status === "validated" && <PrimaryBadge />}
-        {status === "validated" ? (
-          <React.Fragment />
+        {!data ? (
+          <Value>
+            <SkeletonTextLine fontSize={1.6} />
+          </Value>
         ) : (
-          <AwaitingValidationBadge />
+          <>
+            <Value>
+              <p>{data.identity.value}</p>
+            </Value>
+            {data.identity.primary && data.identity.status === "validated" ? (
+              <PrimaryBadge />
+            ) : null}
+            {data.identity.status === "validated" ? (
+              <React.Fragment />
+            ) : (
+              <AwaitingValidationBadge />
+            )}
+          </>
         )}
       </Box>
-      {status === "unvalidated" && (
-        <NeutralLink href={`/account/logins/${type}/validation`}>
-          <FakeButton variant={ButtonVariant.PRIMARY}>
-            Proceed to validation
-          </FakeButton>
-        </NeutralLink>
-      )}
-      {status === "validated" && (
-        <NeutralLink href={`/account/logins/${type}/${id}/update`}>
-          <FakeButton variant={ButtonVariant.PRIMARY}>
-            Update this{" "}
-            {getIdentityType(type) === IdentityTypes.PHONE
-              ? "phone number"
-              : "email address"}
-          </FakeButton>
-        </NeutralLink>
-      )}
-      {!primary && status === "validated" && (
-        <Button
-          type="button"
-          variant={ButtonVariant.SECONDARY}
-          onClick={() => {
-            setPreventAnimation(false);
-            setConfirmationBoxContent(
-              <PrimaryConfirmationBoxContent
-                setOpen={setConfirmationBoxOpen}
-                value={value}
-                id={id}
-              />,
-            );
-            setConfirmationBoxOpen(true);
-          }}
-        >
-          Make {value} my primary {type.toLowerCase()}
-        </Button>
-      )}
-      {!primary && (
-        <Button
-          type="button"
-          variant={ButtonVariant.GHOST}
-          onClick={() => {
-            setPreventAnimation(false);
-            setConfirmationBoxContent(
-              <DeleteConfirmationBoxContent
-                setOpen={setConfirmationBoxOpen}
-                value={value}
-                type={type}
-              />,
-            );
-            setConfirmationBoxOpen(true);
-          }}
-        >
-          Delete this{" "}
-          {getIdentityType(type) === IdentityTypes.PHONE
-            ? "phone number"
-            : "email address"}
-        </Button>
-      )}
+      {data ? (
+        <>
+          {data.identity.status === "unvalidated" && (
+            <NeutralLink
+              href={`/account/logins/${data.identity.type}/validation`}
+            >
+              <FakeButton variant={ButtonVariant.PRIMARY}>
+                Proceed to validation
+              </FakeButton>
+            </NeutralLink>
+          )}
+          {data.identity.status === "validated" && (
+            <NeutralLink
+              href={`/account/logins/${data.identity.type}/${data.identity.id}/update`}
+            >
+              <FakeButton variant={ButtonVariant.PRIMARY}>
+                Update this{" "}
+                {getIdentityType(data.identity.type) === IdentityTypes.PHONE
+                  ? "phone number"
+                  : "email address"}
+              </FakeButton>
+            </NeutralLink>
+          )}
+          {!data.identity.primary && status === "validated" && (
+            <Button
+              type="button"
+              variant={ButtonVariant.SECONDARY}
+              onClick={() => {
+                setPreventAnimation(false);
+                setConfirmationBoxContent(
+                  <PrimaryConfirmationBoxContent
+                    setOpen={setConfirmationBoxOpen}
+                    value={data.identity.value}
+                    id={data.identity.id}
+                  />,
+                );
+                setConfirmationBoxOpen(true);
+              }}
+            >
+              Make {data.identity.value} my primary{" "}
+              {data.identity.type.toLowerCase()}
+            </Button>
+          )}
+          {!data.identity.primary && (
+            <Button
+              type="button"
+              variant={ButtonVariant.GHOST}
+              onClick={() => {
+                setPreventAnimation(false);
+                setConfirmationBoxContent(
+                  <DeleteConfirmationBoxContent
+                    setOpen={setConfirmationBoxOpen}
+                    value={data.identity.value}
+                    type={data.identity.type}
+                  />,
+                );
+                setConfirmationBoxOpen(true);
+              }}
+            >
+              Delete this{" "}
+              {getIdentityType(data.identity.type) === IdentityTypes.PHONE
+                ? "phone number"
+                : "email address"}
+            </Button>
+          )}
+        </>
+      ) : null}
+
       <ConfirmationBox
         open={confirmationBoxOpen}
         setOpen={setConfirmationBoxOpen}
@@ -116,14 +130,9 @@ const IdentityOverview: React.FC<{
   );
 };
 
-const Value = styled.p`
+const Value = styled.div`
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   margin: ${({ theme }) => theme.spaces.xs} 0;
-`;
-
-const Flex = styled.div`
-  display: flex;
-  align-items: center;
 `;
 
 export { IdentityOverview };
