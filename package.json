@@ -91,6 +91,7 @@
     "jest-fetch-mock": "3.0.3",
     "jest-styled-components": "7.0.3",
     "prettier": "2.2.1",
+    "taiko": "1.2.3",
     "ts-jest": "26.5.4",
     "ts-node": "9.1.1",
     "tsconfig-paths-webpack-plugin": "3.5.1",
@@ -256,10 +257,5 @@
     "setupFilesAfterEnv": [
       "@testing-library/jest-dom/extend-expect"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "yarn lint && yarn build"
-    }
   }
 }
