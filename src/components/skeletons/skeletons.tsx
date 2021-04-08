@@ -81,7 +81,7 @@ const SkeletonAnimation = styled.div`
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(222, 222, 222, 0.3),
+      rgba(222, 222, 222, 0.6),
       transparent
     );
     animation: loading 1.5s infinite;
@@ -100,7 +100,7 @@ const SkeletonTextLine = styled(SkeletonAnimation)<{ fontSize: number }>`
   position: relative;
   height: ${({ fontSize }) => `${fontSize}rem`};
   width: 50%;
-  background-color: #f8f8f8;
+  background-color: ${({ theme }) => theme.colors.box};
   border-radius: ${({ theme }) => theme.radii[0]};
   overflow: hidden;
 
