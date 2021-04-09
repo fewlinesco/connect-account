@@ -4,7 +4,12 @@ import {
   IdentityTypes,
   removeIdentityFromUser,
 } from "@fewlines/connect-management";
-import { Endpoint, HttpStatus, setAlertMessagesCookie } from "@fwl/web";
+import {
+  Endpoint,
+  getServerSideCookies,
+  HttpStatus,
+  setAlertMessagesCookie,
+} from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -16,6 +21,7 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
+import { UserCookie } from "@src/@types/user-cookie";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
@@ -33,16 +39,29 @@ const handler: Handler = (request, response): Promise<void> => {
   };
 
   return getTracer().span("delete-identity handler", async (span) => {
-    const { userId, type, value } = request.body;
+    const { type, value } = request.body;
 
-    if (!userId || !type || !value) {
+    if (!type || !value) {
       throw webErrorFactory(webErrors.badRequest);
     }
 
     span.setDisclosedAttribute("Identity type", type);
 
+    const userCookie = await getServerSideCookies<UserCookie>(request, {
+      cookieName: "user-cookie",
+      isCookieSealed: true,
+      cookieSalt: configVariables.cookieSalt,
+    });
+
+    if (!userCookie) {
+      response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+      response.setHeader("location", "/");
+      response.end();
+      return;
+    }
+
     return removeIdentityFromUser(configVariables.managementCredentials, {
-      userId,
+      userId: userCookie.sub,
       identityType: type,
       identityValue: value,
     })

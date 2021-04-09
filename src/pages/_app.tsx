@@ -35,7 +35,6 @@ const AccountApp: React.FC = ({ children }) => {
         <SWRConfig
           value={{
             fetcher: (url) => fetch(url).then((response) => response.json()),
-            revalidateOnFocus: true,
           }}
         >
           {children}

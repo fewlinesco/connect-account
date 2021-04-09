@@ -4,7 +4,6 @@ import { cache, SWRConfig } from "swr";
 
 import { render, screen } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
-import { findByTextContent } from "../utils/find-by-text-content";
 import { SortedIdentities } from "@src/@types/sorted-identities";
 import LoginsOverviewPage from "@src/pages/account/logins";
 
@@ -24,10 +23,6 @@ describe("LoginsOverviewPage", () => {
   });
 
   describe("Identity type: EMAIL", () => {
-    afterEach(() => {
-      cache.clear();
-    });
-
     it("should display primary email identity first and all of them when clicking on the show more button", async () => {
       expect.assertions(7);
 
@@ -54,8 +49,10 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        await findByTextContent(mockIdentities.primaryEmailIdentity.value),
-      ).toBeTruthy();
+        await screen.findByRole("link", {
+          name: new RegExp(`${mockIdentities.primaryEmailIdentity.value}`, "i"),
+        }),
+      ).toBeInTheDocument();
       expect(
         screen.getByRole("link", {
           name: mockIdentities.primaryEmailIdentity.value,
@@ -113,7 +110,8 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
-      cache.set("/api/get-sorted-identities", { sortedIdentities });
+      cache.set("/api/identity/get-sorted-identities", { sortedIdentities });
+
       render(
         <SWRConfig
           value={{
@@ -158,7 +156,8 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
-      cache.set("/api/get-sorted-identities", { sortedIdentities });
+      cache.set("/api/identity/get-sorted-identities", { sortedIdentities });
+
       render(
         <SWRConfig
           value={{
@@ -173,7 +172,7 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        await findByTextContent("No email added yet."),
+        await screen.findByText(new RegExp("No email added yet.", "i")),
       ).toBeInTheDocument();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
       expect(
@@ -183,10 +182,6 @@ describe("LoginsOverviewPage", () => {
   });
 
   describe("Identity type: PHONE", () => {
-    afterEach(() => {
-      cache.clear();
-    });
-
     it("should display primary phone identity first and all of them when clicking on the show more button", async () => {
       expect.assertions(7);
 
@@ -213,8 +208,10 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        await findByTextContent(mockIdentities.primaryPhoneIdentity.value),
-      ).toBeTruthy();
+        await screen.findByRole("link", {
+          name: new RegExp(`${mockIdentities.primaryPhoneIdentity.value}`, "i"),
+        }),
+      ).toBeInTheDocument();
       expect(
         screen.getByRole("link", {
           name: mockIdentities.primaryPhoneIdentity.value,
@@ -271,6 +268,8 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
+      cache.set("/api/identity/get-sorted-identities", { sortedIdentities });
+
       render(
         <SWRConfig
           value={{
@@ -314,6 +313,8 @@ describe("LoginsOverviewPage", () => {
         socialIdentities: [],
       };
 
+      cache.set("/api/identity/get-sorted-identities", { sortedIdentities });
+
       render(
         <SWRConfig
           value={{
@@ -328,7 +329,7 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        await findByTextContent("No phone number added yet."),
+        await screen.findByText(new RegExp("No phone number added yet.", "i")),
       ).toBeInTheDocument();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
       expect(
@@ -338,10 +339,6 @@ describe("LoginsOverviewPage", () => {
   });
 
   describe("Identity type: SOCIAL", () => {
-    afterEach(() => {
-      cache.clear();
-    });
-
     it("should display all social identities provided without the show more button", async () => {
       expect.assertions(3);
 
@@ -367,8 +364,16 @@ describe("LoginsOverviewPage", () => {
         </SWRConfig>,
       );
 
-      expect(await findByTextContent("Github")).toBeTruthy();
-      expect(await findByTextContent("Facebook")).toBeTruthy();
+      await screen
+        .findAllByText(new RegExp("Github", "i"))
+        .then((elementList) => {
+          expect(elementList[1].innerHTML).toBe("Github");
+        });
+      await screen
+        .findAllByText(new RegExp("Facebook", "i"))
+        .then((elementList) => {
+          expect(elementList[1].innerHTML).toBe("Facebook");
+        });
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
     });
 
@@ -395,8 +400,8 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        await findByTextContent("No social logins added yet."),
-      ).toBeTruthy();
+        await screen.findByText(new RegExp("No social logins added yet.", "i")),
+      ).toBeInTheDocument();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
     });
   });

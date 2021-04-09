@@ -53,7 +53,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       authMiddleware(getTracer()),
     ],
     "/account/logins/[type]/new",
-    async () => {
+    () => {
       if (!context?.params?.type) {
         return {
           notFound: true,

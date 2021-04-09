@@ -18,12 +18,18 @@ jest.mock("@src/configs/db-client", () => {
 describe("AddIdentityPage", () => {
   describe("Identity type : EMAIL", () => {
     it("should render proper email breadcrumbs", () => {
+      expect.assertions(1);
+
       render(<AddIdentityPage type={IdentityTypes.EMAIL} />);
 
-      expect(screen.getByText("Email address | new")).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: /email address \| new/i }),
+      ).toBeInTheDocument();
     });
 
     it("should render proper email form elements ", () => {
+      expect.assertions(8);
+
       render(<AddIdentityPage type={IdentityTypes.EMAIL} />);
 
       const addIdentityInput = screen.getByRole("textbox");
@@ -56,12 +62,18 @@ describe("AddIdentityPage", () => {
 
   describe("Identity type : PHONE", () => {
     it("should render proper email breadcrumbs", () => {
+      expect.assertions(1);
+
       render(<AddIdentityPage type={IdentityTypes.PHONE} />);
 
-      expect(screen.getByText("Phone number | new")).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: /phone number \| new/i }),
+      ).toBeInTheDocument();
     });
 
     it("should render proper phone form elements ", () => {
+      expect.assertions(8);
+
       render(<AddIdentityPage type={IdentityTypes.PHONE} />);
 
       const addIdentityInputComponent = screen.getByRole("textbox");

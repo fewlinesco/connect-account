@@ -1,9 +1,15 @@
 import {
   ConnectUnreachableError,
   GraphqlErrors,
+  IdentityTypes,
   markIdentityAsPrimary,
 } from "@fewlines/connect-management";
-import { getServerSideCookies, Endpoint, HttpStatus } from "@fwl/web";
+import {
+  getServerSideCookies,
+  Endpoint,
+  HttpStatus,
+  setAlertMessagesCookie,
+} from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -22,6 +28,8 @@ import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { generateAlertMessage } from "@src/utils/generateAlertMessage";
+import { getIdentityType } from "@src/utils/get-identity-type";
 import { isMarkingIdentityAsPrimaryAuthorized } from "@src/utils/is-marking-identity-as-primary-authorized";
 
 const handler: Handler = async (request, response) => {
@@ -72,8 +80,15 @@ const handler: Handler = async (request, response) => {
       configVariables.managementCredentials,
       identityId,
     )
-      .then(() => {
+      .then((identity) => {
         span.setDisclosedAttribute("is Identity marked as primary", true);
+
+        const alertMessage =
+          getIdentityType(identity.type) === IdentityTypes.EMAIL
+            ? `${identity.value} is now your primary email`
+            : `${identity.value} is now your phone number`;
+
+        setAlertMessagesCookie(response, [generateAlertMessage(alertMessage)]);
 
         response.statusCode = HttpStatus.OK;
         response.setHeader("Content-type", "application/json");

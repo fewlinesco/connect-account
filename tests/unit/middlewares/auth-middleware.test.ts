@@ -1,6 +1,5 @@
 import { defaultPayload, generateHS256JWS } from "@fewlines/connect-client";
 import { getTracer } from "@fwl/tracing";
-import { HttpStatus } from "@fwl/web";
 import { wrapMiddlewares } from "@fwl/web/dist/middlewares";
 import { seal, defaults } from "@hapi/iron";
 import { IncomingMessage, ServerResponse } from "http";
@@ -116,7 +115,7 @@ describe("auth-middleware", () => {
 
   describe("Refresh tokens", () => {
     test("should refresh the user tokens if a `TokenExpiredError` exception is thrown and a user is provided, and should not redirect", async (done) => {
-      expect.assertions(7);
+      expect.assertions(5);
 
       const access_token = generateHS256JWS({
         ...defaultPayload,
@@ -150,8 +149,6 @@ describe("auth-middleware", () => {
       expect(spiedOnRefreshTokensFlow).toHaveBeenCalled();
       expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();
       expect(spiedOnGetAndPutUser).toHaveBeenCalled();
-      expect(mockedResponse.statusCode).toEqual(HttpStatus.OK);
-      expect(mockedResponse.getHeader("location")).toBe("referer/url");
 
       done();
     });

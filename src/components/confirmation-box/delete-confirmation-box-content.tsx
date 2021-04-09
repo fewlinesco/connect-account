@@ -10,7 +10,6 @@ import { getIdentityType } from "@src/utils/get-identity-type";
 
 interface DeleteIdentityProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  userId: string;
   type: IdentityTypes;
   value: string;
 }
@@ -19,7 +18,6 @@ const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
   setOpen,
   value,
   type,
-  userId,
 }) => {
   const router = useRouter();
 
@@ -33,7 +31,6 @@ const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
         variant={ButtonVariant.DANGER}
         onClick={async () => {
           const requestData = {
-            userId,
             type: getIdentityType(type),
             value,
           };

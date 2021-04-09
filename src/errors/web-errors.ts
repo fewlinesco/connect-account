@@ -39,15 +39,15 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: "Invalid body",
   },
+  INVALID_QUERY_STRING: {
+    code: "invalid_query_string",
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: "Invalid query string",
+  },
   INVALID_VALIDATION_CODE: {
     code: "invalid_validation_code",
     httpStatus: HttpStatus.BAD_REQUEST,
     message: "Invalid validation code",
-  },
-  EXPIRED_VALIDATION_CODE: {
-    code: "expired_validation_code",
-    httpStatus: HttpStatus.BAD_REQUEST,
-    message: "Expired validation code",
   },
   TEMPORARY_IDENTITY_EXPIRED: {
     code: "temporary_identity_expired",
@@ -63,11 +63,6 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     code: "invalid_password_input",
     httpStatus: HttpStatus.UNPROCESSABLE_ENTITY,
     message: "Invalid password input",
-  },
-  UNEXPECTED_ERROR: {
-    code: "unexpected_error",
-    httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
-    message: "An unexpected error occurred",
   },
   CONNECT_UNREACHABLE: {
     code: "connect_unreachable",

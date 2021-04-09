@@ -1,9 +1,9 @@
 import {
   ConnectUnreachableError,
+  getIdentity,
   GraphqlErrors,
-  isUserPasswordSet,
 } from "@fewlines/connect-management";
-import { Endpoint, getServerSideCookies, HttpStatus } from "@fwl/web";
+import { getServerSideCookies, Endpoint, HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -23,13 +23,14 @@ import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
-const handler: Handler = (request, response): Promise<void> => {
+const handler: Handler = async (request, response) => {
   const webErrors = {
     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+    invalidQueryString: ERRORS_DATA.INVALID_QUERY_STRING,
   };
 
-  return getTracer().span("is-password-set handler", async (span) => {
+  return getTracer().span("get-identity handler", async (span) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
@@ -43,11 +44,18 @@ const handler: Handler = (request, response): Promise<void> => {
       return;
     }
 
-    const isPasswordSet = await isUserPasswordSet(
-      configVariables.managementCredentials,
-      userCookie.sub,
-    ).catch((error) => {
-      span.setDisclosedAttribute("is password set info found", false);
+    const identityId = request.query.identityId;
+
+    if (!identityId || typeof identityId !== "string") {
+      throw webErrorFactory(webErrors.invalidQueryString);
+    }
+
+    const identity = await getIdentity(configVariables.managementCredentials, {
+      userId: userCookie.sub,
+      identityId,
+    }).catch((error) => {
+      span.setDisclosedAttribute("is Identity fetched", false);
+
       if (error instanceof GraphqlErrors) {
         throw webErrorFactory({
           ...webErrors.identityNotFound,
@@ -65,9 +73,9 @@ const handler: Handler = (request, response): Promise<void> => {
       throw error;
     });
 
-    span.setDisclosedAttribute("is password set info found", true);
+    span.setDisclosedAttribute("is Identity fetched", true);
     response.statusCode = HttpStatus.OK;
-    response.json({ isPasswordSet });
+    response.json({ identity });
   });
 };
 
@@ -85,7 +93,7 @@ const wrappedHandler = wrapMiddlewares(
     authMiddleware(getTracer()),
   ],
   handler,
-  "/api/auth-connect/is-password-set",
+  "/api/identity/get-identity",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

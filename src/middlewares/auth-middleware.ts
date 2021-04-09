@@ -7,11 +7,7 @@ import {
   UnreachableError,
 } from "@fewlines/connect-client";
 import { Tracer } from "@fwl/tracing";
-import {
-  HttpStatus,
-  getServerSideCookies,
-  setServerSideCookies,
-} from "@fwl/web";
+import { getServerSideCookies, setServerSideCookies } from "@fwl/web";
 import { Middleware } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -115,7 +111,7 @@ async function authentication(
             throw error;
           },
         );
-        span.setDisclosedAttribute("is access_token valid", true);
+        span.setDisclosedAttribute("is refresh access_token valid", true);
 
         await setServerSideCookies(
           response,
@@ -149,9 +145,6 @@ async function authentication(
 
         span.setDisclosedAttribute("user updated on DB", true);
 
-        response.statusCode = HttpStatus.OK;
-        response.setHeader("location", request.headers.referer || "");
-        response.end();
         return;
       }
 

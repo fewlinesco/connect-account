@@ -2,7 +2,6 @@ import React from "react";
 import { cache, SWRConfig } from "swr";
 
 import { render, screen } from "../config/testing-library-config";
-import { findByTextContent } from "../utils/find-by-text-content";
 import SecurityPage from "@src/pages/account/security";
 
 jest.mock("@src/configs/db-client", () => {
@@ -42,9 +41,16 @@ describe("SecurityPage", () => {
         expect(securityElementList.length).toEqual(2),
       );
     expect(
-      await screen.findByText("Password, login history and more"),
+      await screen.findByRole("heading", {
+        name: /password, login history and more/i,
+      }),
     ).toBeInTheDocument();
-    expect(await screen.findByText("Password")).toBeInTheDocument();
+
+    await screen
+      .findAllByRole("heading", { name: /password/i })
+      .then((elementList) => {
+        expect(elementList[1].innerHTML).toBe("Password");
+      });
   });
 
   test("The anchor should render 'Set your password' if isPasswordSet is false", async () => {
@@ -63,8 +69,7 @@ describe("SecurityPage", () => {
       </SWRConfig>,
     );
 
-    const securitySetAnchor = await findByTextContent("Set your password");
-    expect(securitySetAnchor).toBeTruthy();
+    expect(await screen.findByText(/Set your password/i)).toBeTruthy();
   });
 
   test("The anchor should render 'Update your password' if isPasswordSet is true", async () => {
@@ -83,7 +88,6 @@ describe("SecurityPage", () => {
       </SWRConfig>,
     );
 
-    const securitySetAnchor = await findByTextContent("Update your password");
-    expect(securitySetAnchor).toBeTruthy();
+    expect(await screen.findByText(/Update your password/i)).toBeTruthy();
   });
 });

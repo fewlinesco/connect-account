@@ -12,6 +12,25 @@ const LoginsSkeleton: React.FC = () => {
   );
 };
 
+const IdentityOverviewSkeleton: React.FC = () => {
+  return (
+    <SkeletonBody>
+      <SkeletonBlock />
+      <SkeletonLine />
+    </SkeletonBody>
+  );
+};
+
+const UpdateIdentitySkeleton: React.FC = () => {
+  return (
+    <SkeletonBody>
+      <SkeletonSection />
+      <SkeletonBlock />
+      <SkeletonLine />
+    </SkeletonBody>
+  );
+};
+
 const SecuritySkeleton: React.FC = () => {
   return (
     <SkeletonBody>
@@ -31,7 +50,7 @@ const TwoFASkeleton: React.FC = () => {
 const BreadcrumbsSkeleton: React.FC = () => {
   return (
     <SkeletonBody>
-      <SkeletonLine />
+      <SkeletonTextLine />
     </SkeletonBody>
   );
 };
@@ -42,6 +61,7 @@ const SkeletonBody = styled.div`
   width: auto;
   overflow: hidden;
   border-radius: ${({ theme }) => theme.radii[1]};
+
   @keyframes loading {
     100% {
       transform: translateX(100%);
@@ -76,6 +96,14 @@ const SkeletonLine = styled(SkeletonAnimation)`
   margin-bottom: 2rem;
 `;
 
+const SkeletonTextLine = styled(SkeletonAnimation)`
+  border-radius: ${({ theme }) => theme.radii[1]};
+  padding: 1rem 0;
+  position: relative;
+  background-color: #e2e2e2;
+  margin-bottom: 2rem;
+`;
+
 const SkeletonBlock = styled(SkeletonAnimation)`
   border-radius: ${({ theme }) => theme.radii[1]};
   padding: 8rem 0;
@@ -92,4 +120,11 @@ const SkeletonSection = styled(SkeletonAnimation)`
   margin-bottom: 5rem;
 `;
 
-export { LoginsSkeleton, SecuritySkeleton, TwoFASkeleton, BreadcrumbsSkeleton };
+export {
+  LoginsSkeleton,
+  IdentityOverviewSkeleton,
+  UpdateIdentitySkeleton,
+  SecuritySkeleton,
+  TwoFASkeleton,
+  BreadcrumbsSkeleton,
+};

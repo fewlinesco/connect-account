@@ -18,10 +18,7 @@ const PrimaryIdentityOverview = (): JSX.Element => {
 
   return (
     <StoriesContainer>
-      <IdentityOverview
-        identity={mockedResponse.identity}
-        userId={mockedResponse.userId}
-      />
+      <IdentityOverview data={{ identity: mockedResponse.identity }} />
     </StoriesContainer>
   );
 };
@@ -40,10 +37,7 @@ const NonPrimaryIdentityOverview = (): JSX.Element => {
 
   return (
     <StoriesContainer>
-      <IdentityOverview
-        identity={mockedResponse.identity}
-        userId={mockedResponse.userId}
-      />
+      <IdentityOverview data={{ identity: mockedResponse.identity }} />
     </StoriesContainer>
   );
 };
@@ -62,10 +56,7 @@ const NonValidatedIdentityOverview = (): JSX.Element => {
 
   return (
     <StoriesContainer>
-      <IdentityOverview
-        identity={mockedResponse.identity}
-        userId={mockedResponse.userId}
-      />
+      <IdentityOverview data={{ identity: mockedResponse.identity }} />
     </StoriesContainer>
   );
 };
