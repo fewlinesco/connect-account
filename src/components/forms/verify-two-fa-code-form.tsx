@@ -1,4 +1,3 @@
-// import { useRouter } from "next/router";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
@@ -33,8 +32,8 @@ const VerifyTwoFACodeForm: React.FC<{
           HttpVerbs.POST,
           { verificationCode },
         ).then(async (response) => {
+          const parsedResponse = await response.json();
           if (response.status >= 400) {
-            const parsedResponse = await response.json();
             console.log(parsedResponse);
             if ("message" in parsedResponse) {
               if (
@@ -58,7 +57,10 @@ const VerifyTwoFACodeForm: React.FC<{
             }
           }
 
-          router && router.push("/account/security/update");
+          if ("isCodeVerified" in parsedResponse) {
+            console.log("isAuthorized: ", true);
+            router && router.push("/account/security/update");
+          }
         });
       }}
     >

@@ -190,10 +190,10 @@ const handler: Handler = async (request, response) => {
           parentError: error,
         });
       });
-
       span.setDisclosedAttribute("is sudo mode ttl set", true);
+
       response.statusCode = HttpStatus.OK;
-      response.end();
+      response.json({ isCodeVerified: true });
       return;
     },
   );

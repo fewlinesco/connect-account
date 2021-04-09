@@ -19,18 +19,26 @@ async function getDBUserFromSub(sub: string): Promise<DynamoUser | null> {
   if (Item) {
     const { sub, refresh_token, temporary_identities, sudo } = unmarshall(Item);
 
+    let currentSudo;
+
+    if (!sudo) {
+      currentSudo = { sudo_mode_ttl: 0, sudo_event_ids: [] };
+    } else {
+      currentSudo = {
+        sudo_mode_ttl: sudo.sudo_mode_ttl ? (sudo.sudo_mode_ttl as number) : 0,
+        sudo_event_ids: sudo.sudo_event_ids
+          ? (sudo.sudo_event_ids as SudoEventId[])
+          : [],
+      };
+    }
+
     return {
       sub: sub as string,
       refresh_token: refresh_token as string,
       temporary_identities: temporary_identities
         ? (temporary_identities as TemporaryIdentity[])
         : [],
-      sudo: {
-        sudo_mode_ttl: sudo.sudo_mode_ttl ? (sudo.sudo_mode_ttl as number) : 0,
-        sudo_event_ids: sudo.sudo_event_ids
-          ? (sudo.sudo_event_ids as SudoEventId[])
-          : [],
-      },
+      sudo: currentSudo,
     };
   }
 

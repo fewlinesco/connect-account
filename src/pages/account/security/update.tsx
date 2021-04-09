@@ -22,35 +22,37 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 const SecurityUpdatePage: React.FC = () => {
   const router = useRouter();
 
-  const { data: isPasswordSet, error: isPasswordSetError } = useSWR<
+  const { data: passwordSetData, error: passwordSetError } = useSWR<
     { isPasswordSet: boolean },
     Error
   >("/api/auth-connect/is-password-set");
 
-  const {
-    data: isSudoModeAuthorized,
-    error: isSudoModeAuthorizedError,
-  } = useSWR<{ isSudoModeAuthorized: boolean }, Error>(
-    "/api/auth-connect/is-sudo-mode-authorized",
-  );
+  const { data: sudoModeAuthData, error: sudoModeAuthError } = useSWR<
+    { isSudoModeAuthorized: boolean },
+    Error
+  >("/api/auth-connect/is-sudo-mode-authorized");
 
-  if (isPasswordSetError || isSudoModeAuthorizedError) {
-    throw isPasswordSetError || isSudoModeAuthorizedError;
+  if (passwordSetError || sudoModeAuthError) {
+    throw passwordSetError || sudoModeAuthError;
   }
 
-  if (!isSudoModeAuthorized) {
-    console.log("unauthorized");
-    router && router.push("/account/security/sudo");
+  if (sudoModeAuthData) {
+    if (!sudoModeAuthData.isSudoModeAuthorized) {
+      console.log("unauthorized");
+      router && router.push("/account/security/sudo");
+    }
   }
 
   console.log("authorized");
 
   let conditionalBreadcrumb;
 
-  if (!isPasswordSet) {
+  if (!passwordSetData) {
     conditionalBreadcrumb = "";
   } else {
-    conditionalBreadcrumb = `Password | ${isPasswordSet ? "update" : "set"}`;
+    conditionalBreadcrumb = `Password | ${
+      passwordSetData.isPasswordSet ? "update" : "set"
+    }`;
   }
 
   return (
@@ -58,7 +60,11 @@ const SecurityUpdatePage: React.FC = () => {
       <Container>
         <SetPasswordForm
           conditionalBreadcrumbItem={
-            !isPasswordSet ? "" : isPasswordSet ? "update" : "set"
+            !passwordSetData
+              ? ""
+              : passwordSetData.isPasswordSet
+              ? "update"
+              : "set"
           }
         />
       </Container>
