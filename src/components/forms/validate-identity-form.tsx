@@ -58,6 +58,7 @@ const ValidateIdentityForm: React.FC<{
                   ERRORS_DATA.TEMPORARY_IDENTITY_EXPIRED.message
                 ) {
                   router && router.push("/account/logins/email/new");
+                  return;
                 }
               }
             }
