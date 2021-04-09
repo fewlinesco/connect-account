@@ -18,6 +18,7 @@ import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { getIdentityType } from "@src/utils/get-identity-type";
 
 const ValidateIdentityPage: React.FC<{
   type: IdentityTypes;
@@ -28,7 +29,7 @@ const ValidateIdentityPage: React.FC<{
     <Layout
       title="Logins"
       breadcrumbs={`${
-        type.toUpperCase() === IdentityTypes.EMAIL
+        getIdentityType(type) === IdentityTypes.EMAIL
           ? "Email address"
           : "Phone number"
       } | validation`}

@@ -23,12 +23,11 @@ const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   return (
     <Layout
       title="Logins"
-      breadcrumbs={[
+      breadcrumbs={`${
         getIdentityType(type) === IdentityTypes.EMAIL
           ? "Email address"
-          : "Phone number",
-        "new",
-      ]}
+          : "Phone number"
+      } | new`}
     >
       <Container>
         <AddIdentityForm type={type} />

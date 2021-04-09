@@ -19,6 +19,7 @@ import getTracer from "@src/configs/tracer";
 import { SWRError } from "@src/errors/errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { getIdentityType } from "@src/utils/get-identity-type";
 
 const IdentityOverviewPage: React.FC<{
   identityId: string;
@@ -32,7 +33,7 @@ const IdentityOverviewPage: React.FC<{
   }
 
   const breadcrumbs = data
-    ? data.identity.type.toUpperCase() === IdentityTypes.EMAIL
+    ? getIdentityType(data.identity.type) === IdentityTypes.EMAIL
       ? "Email address"
       : "Phone number"
     : "";

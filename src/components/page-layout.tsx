@@ -9,7 +9,7 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Layout: React.FC<{
   title?: string;
-  breadcrumbs?: string[] | string;
+  breadcrumbs?: string;
 }> = ({ children, title, breadcrumbs }) => {
   return (
     <Main>
@@ -75,9 +75,15 @@ const ChildrenContainer = styled.div<{
   breadcrumbs?: string;
 }>`
   width: 60%;
-  height: 100%;
-  margin: ${({ titleText, breadcrumbs }) =>
-    !titleText && !breadcrumbs ? "0 auto" : "5rem auto 0"};
+  margin: 0 auto;
+
+  ${({ titleText, breadcrumbs }) =>
+    !titleText &&
+    !breadcrumbs &&
+    `
+      display: flex;
+      align-items: center;
+    `};
 
   @media ${deviceBreakpoints.m} {
     width: 90%;
