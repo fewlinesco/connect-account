@@ -21,7 +21,7 @@ const Layout: React.FC<{
         <DesktopNavigationBarWrapper>
           <DesktopNavigationBar />
         </DesktopNavigationBarWrapper>
-        <ChildrenContainer>
+        <ChildrenContainer titleText={title} breadcrumbs={breadcrumbs}>
           {title ? (
             <MainTitle needSpacing={breadcrumbs ? false : true}>
               {title}
@@ -70,10 +70,14 @@ const DesktopNavigationBarWrapper = styled.div`
   }
 `;
 
-const ChildrenContainer = styled.div`
+const ChildrenContainer = styled.div<{
+  titleText?: string;
+  breadcrumbs?: string;
+}>`
   width: 60%;
   height: 100%;
-  margin: 0 auto;
+  margin: ${({ titleText, breadcrumbs }) =>
+    !titleText && !breadcrumbs ? "0 auto" : "5rem auto 0"};
 
   @media ${deviceBreakpoints.m} {
     width: 90%;
