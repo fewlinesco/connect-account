@@ -7,7 +7,7 @@ import {
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import React from "react";
 import useSWR from "swr";
 
@@ -20,7 +20,7 @@ import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const SecurityUpdatePage: React.FC = () => {
-  const router = useRouter();
+  // const router = useRouter();
 
   const { data: passwordSetData, error: passwordSetError } = useSWR<
     { isPasswordSet: boolean },
@@ -37,9 +37,10 @@ const SecurityUpdatePage: React.FC = () => {
   }
 
   if (sudoModeAuthData) {
-    if (!sudoModeAuthData.isSudoModeAuthorized) {
-      router && router.push("/account/security/sudo");
-    }
+    console.log(sudoModeAuthData);
+    // if (!sudoModeAuthData.isSudoModeAuthorized) {
+    //   router && router.push("/account/security/sudo");
+    // }
   }
 
   let conditionalBreadcrumb;
@@ -85,6 +86,13 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       authMiddleware(getTracer()),
     ],
     "/account/security/update",
+    // async (_request) => {
+    //   await fetch("/api/auth-connect/is-sudo-mode-authorized").then(
+    //     (response) => {
+    //       console.log("response: ", response);
+    //     },
+    //   );
+    // },
   );
 };
 
