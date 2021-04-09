@@ -20,8 +20,6 @@ async function insertSudoEventId(
       },
     };
 
-    console.log("updatedUser: ", updatedUser);
-
     return await putUser(updatedUser);
   }
 

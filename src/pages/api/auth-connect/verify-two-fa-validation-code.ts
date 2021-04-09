@@ -76,8 +76,6 @@ const handler: Handler = async (request, response) => {
         });
       });
 
-      console.log("user: ", user);
-
       if (!user) {
         span.setDisclosedAttribute("user found", false);
         throw webErrorFactory(webErrors.noUserFound);
@@ -95,8 +93,6 @@ const handler: Handler = async (request, response) => {
           return expires_at > Date.now() && event_id;
         },
       );
-
-      console.log("validEventIds :", validEventIds);
 
       await removeExpiredSudoEventIds(userCookie.sub, validEventIds).catch(
         (error) => {

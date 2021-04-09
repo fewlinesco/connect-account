@@ -38,12 +38,9 @@ const SecurityUpdatePage: React.FC = () => {
 
   if (sudoModeAuthData) {
     if (!sudoModeAuthData.isSudoModeAuthorized) {
-      console.log("unauthorized");
       router && router.push("/account/security/sudo");
     }
   }
-
-  console.log("authorized");
 
   let conditionalBreadcrumb;
 

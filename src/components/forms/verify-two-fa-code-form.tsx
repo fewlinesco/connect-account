@@ -34,7 +34,6 @@ const VerifyTwoFACodeForm: React.FC<{
         ).then(async (response) => {
           const parsedResponse = await response.json();
           if (response.status >= 400) {
-            console.log(parsedResponse);
             if ("message" in parsedResponse) {
               if (
                 parsedResponse.message === ERRORS_DATA.INVALID_BODY.message ||
@@ -58,7 +57,6 @@ const VerifyTwoFACodeForm: React.FC<{
           }
 
           if ("isCodeVerified" in parsedResponse) {
-            console.log("isAuthorized: ", true);
             router && router.push("/account/security/update");
           }
         });
