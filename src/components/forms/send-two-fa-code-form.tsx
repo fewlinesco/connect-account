@@ -53,6 +53,8 @@ const SendTwoFACodeForm: React.FC<{
             }
 
             setErrorMessage("Something went wrong. Please try again later");
+            setFormID(uuidv4());
+            setIsCodeSent(false);
           }
 
           if ("eventId" in parsedResponse) {
