@@ -12,7 +12,6 @@ import React from "react";
 import useSWR from "swr";
 
 import { Container } from "@src/components/containers/container";
-import { ErrorFallbackComponent } from "@src/components/error-fallback-component/error-fallback-component";
 import { Layout } from "@src/components/page-layout";
 import { IdentityOverview } from "@src/components/pages/identity-overview/identity-overview";
 import { logger } from "@src/configs/logger";
@@ -28,7 +27,7 @@ const IdentityOverviewPage: React.FC<{
     `/api/identity/get-identity?identityId=${identityId}`,
   );
 
-  if (error && error.statusCode !== 404) {
+  if (error) {
     throw error;
   }
 
@@ -41,11 +40,7 @@ const IdentityOverviewPage: React.FC<{
   return (
     <Layout title="Logins" breadcrumbs={breadcrumbs}>
       <Container>
-        {error && error.statusCode === 404 ? (
-          <ErrorFallbackComponent statusCode={error.statusCode} />
-        ) : (
-          <IdentityOverview data={data} />
-        )}
+        <IdentityOverview data={data} />
       </Container>
     </Layout>
   );

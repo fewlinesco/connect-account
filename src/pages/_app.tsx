@@ -42,7 +42,6 @@ const AccountApp: React.FC = ({ children }) => {
                     "An error occurred while fetching the data.",
                   );
 
-                  console.log(response);
                   error.info = await response.json();
                   error.statusCode = response.status;
                   throw error;
