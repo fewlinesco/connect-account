@@ -61,7 +61,6 @@ const handler: Handler = async (request, response) => {
       if (error instanceof IdentityNotFoundError) {
         throw webErrorFactory({
           ...webErrors.identityNotFound,
-          parentError: error,
         });
       }
 
