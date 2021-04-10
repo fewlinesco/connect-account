@@ -66,17 +66,18 @@ const handler: Handler = (request, response): Promise<void> => {
     span.setDisclosedAttribute("sudo mode ttl found", true);
 
     console.log("referrer: ", request.headers.referer);
+    console.log("sudoModeTTL: ", sudoModeTTL);
 
-    if (Date.now() < sudoModeTTL) {
-      response.statusCode = HttpStatus.OK;
-      response.json({ isSudoModeAuthorized: true });
-      return;
-    } else {
+    if (Date.now() > sudoModeTTL) {
       response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
       response.setHeader("location", request.headers.referer || "");
       response.json({ isSudoModeAuthorized: false });
       return;
     }
+
+    response.statusCode = HttpStatus.OK;
+    response.json({ isSudoModeAuthorized: true });
+    return;
   });
 };
 

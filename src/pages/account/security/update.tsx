@@ -1,3 +1,4 @@
+import { getServerSideCookies } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -7,17 +8,21 @@ import {
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
-// import { useRouter } from "next/router";
 import React from "react";
 import useSWR from "swr";
 
+import { UserCookie } from "@src/@types/user-cookie";
 import { Container } from "@src/components/containers/container";
 import { SetPasswordForm } from "@src/components/forms/set-password-form";
 import { Layout } from "@src/components/page-layout";
+import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
+import { NoUserCookieFoundError } from "@src/errors/errors";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 
 const SecurityUpdatePage: React.FC = () => {
   // const router = useRouter();
@@ -27,21 +32,25 @@ const SecurityUpdatePage: React.FC = () => {
     Error
   >("/api/auth-connect/is-password-set");
 
-  const { data: sudoModeAuthData, error: sudoModeAuthError } = useSWR<
-    { isSudoModeAuthorized: boolean },
-    Error
-  >("/api/auth-connect/is-sudo-mode-authorized");
+  // const { data: sudoModeAuthData, error: sudoModeAuthError } = useSWR<
+  //   { isSudoModeAuthorized: boolean },
+  //   Error
+  // >("/api/auth-connect/is-sudo-mode-authorized");
 
-  if (passwordSetError || sudoModeAuthError) {
-    throw passwordSetError || sudoModeAuthError;
+  // if (passwordSetError || sudoModeAuthError) {
+  //   throw passwordSetError || sudoModeAuthError;
+  // }
+
+  if (passwordSetError) {
+    throw passwordSetError;
   }
 
-  if (sudoModeAuthData) {
-    console.log(sudoModeAuthData);
-    // if (!sudoModeAuthData.isSudoModeAuthorized) {
-    //   router && router.push("/account/security/sudo");
-    // }
-  }
+  // if (sudoModeAuthData) {
+  //   console.log(sudoModeAuthData);
+  //   // if (!sudoModeAuthData.isSudoModeAuthorized) {
+  //   //   router && router.push("/account/security/sudo");
+  //   // }
+  // }
 
   let conditionalBreadcrumb;
 
@@ -71,7 +80,7 @@ const SecurityUpdatePage: React.FC = () => {
 };
 
 const getServerSideProps: GetServerSideProps = async (context) => {
-  return getServerSidePropsWithMiddlewares<{ type: string }>(
+  return getServerSidePropsWithMiddlewares(
     context,
     [
       tracingMiddleware(getTracer()),
@@ -86,13 +95,54 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       authMiddleware(getTracer()),
     ],
     "/account/security/update",
-    // async (_request) => {
-    //   await fetch("/api/auth-connect/is-sudo-mode-authorized").then(
-    //     (response) => {
-    //       console.log("response: ", response);
-    //     },
-    //   );
-    // },
+    async (request) => {
+      const webErrors = {
+        databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
+        noUserFound: ERRORS_DATA.NO_USER_FOUND,
+        sudoModeTTLNotFound: ERRORS_DATA.SUDO_MODE_TTL_NOT_FOUND,
+      };
+
+      const userCookie = await getServerSideCookies<UserCookie>(request, {
+        cookieName: "user-cookie",
+        isCookieSealed: true,
+        cookieSalt: configVariables.cookieSalt,
+      });
+
+      if (!userCookie) {
+        throw new NoUserCookieFoundError();
+      }
+
+      const user = await getDBUserFromSub(userCookie.sub).catch((error) => {
+        throw webErrorFactory({
+          ...webErrors.databaseUnreachable,
+          parentError: error,
+        });
+      });
+
+      if (!user) {
+        throw webErrorFactory(webErrors.noUserFound);
+      }
+
+      // console.log(user);
+
+      const sudoModeTTL = user.sudo.sudo_mode_ttl;
+
+      // console.log("referrer: ", request.headers.referer);
+      // console.log("sudoModeTTL: ", sudoModeTTL);
+
+      if (!sudoModeTTL || Date.now() > sudoModeTTL) {
+        return {
+          redirect: {
+            destination: "/account/security/sudo",
+            permanent: false,
+          },
+        };
+      }
+
+      return {
+        props: {},
+      };
+    },
   );
 };
 
