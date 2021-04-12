@@ -21,7 +21,7 @@ const LoginsOverviewPage: React.FC = () => {
   return (
     <Layout
       title="Logins"
-      breadcrumbs={["Your emails, phones and social logins"]}
+      breadcrumbs={"Your emails, phones and social logins"}
     >
       <Container>
         <LoginsOverview />

@@ -20,10 +20,20 @@ class NoUserCookieFoundError extends Error {
   readonly message = "No User found";
 }
 
+class SWRError extends Error {
+  info: Record<string, string> = {};
+  statusCode = 0;
+
+  constructor(message: string) {
+    super(message);
+  }
+}
+
 export {
   UnhandledTokenType,
   EnvVar_IsJweSigned_MustBeABoolean,
   UnhandledIdentityType,
   NoDBUserFoundError,
   NoUserCookieFoundError,
+  SWRError,
 };
