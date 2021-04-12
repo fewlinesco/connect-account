@@ -66,7 +66,7 @@ const SendTwoFACodeForm: React.FC<{
       }}
     >
       {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
-      <p>Chose a contact address below that we’ll send a validation code to:</p>
+      <p>Choose a contact means below that we’ll send a validation code to:</p>
       <InputsRadio
         groupName="contactChoice"
         inputsValues={inputsValues}

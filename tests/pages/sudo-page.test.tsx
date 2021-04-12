@@ -23,11 +23,6 @@ jest.mock("@src/configs/db-client", () => {
 
 const mockedFetchJson = jest.spyOn(fetchJson, "fetchJson");
 
-// const mockedSendTwoFAValidationCode = jest.spyOn(
-//   sendTwoFAValidationCode,
-//   "sendTwoFAValidationCode",
-// );
-
 const eventId = "5aebc079-c754-4324-93bb-af20d7015fbe";
 
 describe("SudoPage", () => {
