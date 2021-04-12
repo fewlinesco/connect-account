@@ -9,6 +9,7 @@ import {
   write,
   currentURL,
   into,
+  waitFor,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
@@ -26,7 +27,7 @@ describe("Account Web Application re-send Identity validation code", () => {
       ],
       headless: true,
       observe: false,
-      observeTime: 2000,
+      observeTime: 1000,
     });
   });
 
@@ -55,11 +56,13 @@ describe("Account Web Application re-send Identity validation code", () => {
 
       const firstURL = await currentURL();
 
+      await waitFor(3000);
+
       expect(await text("Resend validation code").exists()).toBeTruthy();
       await click("Resend validation code");
 
       expect(
-        await text("A confirmation email has been sent").exists(),
+        await text("A new confirmation email has been sent").exists(),
       ).toBeTruthy();
 
       const secondURL = await currentURL();

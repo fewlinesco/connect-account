@@ -4,10 +4,12 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import { InputsRadio } from "../input/input-radio-button";
+import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
 import { HttpVerbs } from "@src/@types/http-verbs";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { deviceBreakpoints } from "@src/design-system/theme";
+import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
 
 const SendTwoFACodeForm: React.FC<{
@@ -19,6 +21,7 @@ const SendTwoFACodeForm: React.FC<{
   const [selectedIdentity, setSelectedIdentity] = React.useState<Identity>(
     primaryIdentities[0],
   );
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const inputsValues = primaryIdentities.map((identity) => identity.value);
 
@@ -31,22 +34,39 @@ const SendTwoFACodeForm: React.FC<{
           identityInput: selectedIdentity,
         };
 
-        // setFormID(uuidv4());
-        // setIsCodeSent(true);
-
         await fetchJson(
           "/api/auth-connect/send-two-fa-validation-code",
           HttpVerbs.POST,
           body,
-        ).then(() => {
-          setFormID(uuidv4());
-          setIsCodeSent(true);
+        ).then(async (response) => {
+          const parsedResponse = await response.json();
+
+          if ("message" in parsedResponse) {
+            if (
+              parsedResponse.message ===
+              ERRORS_DATA.INVALID_IDENTITY_TYPE.message
+            ) {
+              setErrorMessage(parsedResponse.message);
+              setFormID(uuidv4());
+              setIsCodeSent(false);
+              return;
+            }
+
+            setErrorMessage("Something went wrong. Please try again later");
+            setFormID(uuidv4());
+            setIsCodeSent(false);
+          }
+
+          if ("eventId" in parsedResponse) {
+            setErrorMessage(null);
+            setFormID(uuidv4());
+            setIsCodeSent(true);
+          }
         });
       }}
     >
-      <p>
-        Chose a contact address below that we’ll send a confirmation code to:
-      </p>
+      {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
+      <p>Choose a contact means below that we’ll send a validation code to:</p>
       <InputsRadio
         groupName="contactChoice"
         inputsValues={inputsValues}
@@ -65,7 +85,7 @@ const SendTwoFACodeForm: React.FC<{
         variant={isCodeSent ? ButtonVariant.SECONDARY : ButtonVariant.PRIMARY}
         type="submit"
       >
-        {isCodeSent ? "Resend confirmation code" : "Send confirmation code"}
+        {isCodeSent ? "Resend validation code" : "Send validation code"}
       </Button>
     </ContactChoiceForm>
   );
