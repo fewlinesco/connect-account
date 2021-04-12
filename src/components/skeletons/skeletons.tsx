@@ -50,7 +50,7 @@ const TwoFASkeleton: React.FC = () => {
 const BreadcrumbsSkeleton: React.FC = () => {
   return (
     <SkeletonBody>
-      <SkeletonTextLine />
+      <SkeletonTextLine fontSize={1.4} />
     </SkeletonBody>
   );
 };
@@ -81,7 +81,7 @@ const SkeletonAnimation = styled.div`
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(255, 255, 255, 0.2),
+      rgba(222, 222, 222, 0.6),
       transparent
     );
     animation: loading 1.5s infinite;
@@ -96,12 +96,19 @@ const SkeletonLine = styled(SkeletonAnimation)`
   margin-bottom: 2rem;
 `;
 
-const SkeletonTextLine = styled(SkeletonAnimation)`
-  border-radius: ${({ theme }) => theme.radii[1]};
-  padding: 1rem 0;
+const SkeletonTextLine = styled(SkeletonAnimation)<{ fontSize: number }>`
   position: relative;
-  background-color: #e2e2e2;
-  margin-bottom: 2rem;
+  height: ${({ fontSize }) => `${fontSize}rem`};
+  width: 50%;
+  background-color: ${({ theme }) => theme.colors.box};
+  border-radius: ${({ theme }) => theme.radii[0]};
+  overflow: hidden;
+
+  @keyframes loading {
+    100% {
+      transform: translateX(100%);
+    }
+  }
 `;
 
 const SkeletonBlock = styled(SkeletonAnimation)`
@@ -127,4 +134,5 @@ export {
   SecuritySkeleton,
   TwoFASkeleton,
   BreadcrumbsSkeleton,
+  SkeletonTextLine,
 };
