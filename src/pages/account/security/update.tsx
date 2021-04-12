@@ -25,32 +25,14 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 
 const SecurityUpdatePage: React.FC = () => {
-  // const router = useRouter();
-
   const { data: passwordSetData, error: passwordSetError } = useSWR<
     { isPasswordSet: boolean },
     Error
   >("/api/auth-connect/is-password-set");
 
-  // const { data: sudoModeAuthData, error: sudoModeAuthError } = useSWR<
-  //   { isSudoModeAuthorized: boolean },
-  //   Error
-  // >("/api/auth-connect/is-sudo-mode-authorized");
-
-  // if (passwordSetError || sudoModeAuthError) {
-  //   throw passwordSetError || sudoModeAuthError;
-  // }
-
   if (passwordSetError) {
     throw passwordSetError;
   }
-
-  // if (sudoModeAuthData) {
-  //   console.log(sudoModeAuthData);
-  //   // if (!sudoModeAuthData.isSudoModeAuthorized) {
-  //   //   router && router.push("/account/security/sudo");
-  //   // }
-  // }
 
   let conditionalBreadcrumb;
 
@@ -123,12 +105,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
         throw webErrorFactory(webErrors.noUserFound);
       }
 
-      // console.log(user);
-
       const sudoModeTTL = user.sudo.sudo_mode_ttl;
-
-      // console.log("referrer: ", request.headers.referer);
-      // console.log("sudoModeTTL: ", sudoModeTTL);
 
       if (!sudoModeTTL || Date.now() > sudoModeTTL) {
         return {

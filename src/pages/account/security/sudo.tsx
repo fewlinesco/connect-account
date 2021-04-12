@@ -43,12 +43,6 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       authMiddleware(getTracer()),
     ],
     "/account/security/sudo",
-    // async () => {
-    //   const webErrors = {
-    //     notFound: ERRORS_DATA.NOT_FOUND,
-    //   };
-    //   throw webErrorFactory(webErrors.notFound);
-    // },
   );
 };
 
