@@ -9,7 +9,7 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Layout: React.FC<{
   title?: string;
-  breadcrumbs?: string[] | string;
+  breadcrumbs?: string;
 }> = ({ children, title, breadcrumbs }) => {
   return (
     <Main>
@@ -21,7 +21,7 @@ const Layout: React.FC<{
         <DesktopNavigationBarWrapper>
           <DesktopNavigationBar />
         </DesktopNavigationBarWrapper>
-        <ChildrenContainer>
+        <ChildrenContainer titleText={title} breadcrumbs={breadcrumbs}>
           {title ? (
             <MainTitle needSpacing={breadcrumbs ? false : true}>
               {title}
@@ -70,10 +70,20 @@ const DesktopNavigationBarWrapper = styled.div`
   }
 `;
 
-const ChildrenContainer = styled.div`
+const ChildrenContainer = styled.div<{
+  titleText?: string;
+  breadcrumbs?: string;
+}>`
   width: 60%;
-  height: 100%;
   margin: 0 auto;
+
+  ${({ titleText, breadcrumbs }) =>
+    !titleText &&
+    !breadcrumbs &&
+    `
+      display: flex;
+      align-items: center;
+    `};
 
   @media ${deviceBreakpoints.m} {
     width: 90%;

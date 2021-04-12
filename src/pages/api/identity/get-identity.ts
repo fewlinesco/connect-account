@@ -2,6 +2,7 @@ import {
   ConnectUnreachableError,
   getIdentity,
   GraphqlErrors,
+  IdentityNotFoundError,
 } from "@fewlines/connect-management";
 import { getServerSideCookies, Endpoint, HttpStatus } from "@fwl/web";
 import {
@@ -26,6 +27,7 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 const handler: Handler = async (request, response) => {
   const webErrors = {
     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
+    graphqlErrors: ERRORS_DATA.GRAPHQL_ERRORS,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
     invalidQueryString: ERRORS_DATA.INVALID_QUERY_STRING,
   };
@@ -56,9 +58,15 @@ const handler: Handler = async (request, response) => {
     }).catch((error) => {
       span.setDisclosedAttribute("is Identity fetched", false);
 
-      if (error instanceof GraphqlErrors) {
+      if (error instanceof IdentityNotFoundError) {
         throw webErrorFactory({
           ...webErrors.identityNotFound,
+        });
+      }
+
+      if (error instanceof GraphqlErrors) {
+        throw webErrorFactory({
+          ...webErrors.graphqlErrors,
           parentError: error,
         });
       }

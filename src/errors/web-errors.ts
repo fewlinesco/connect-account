@@ -59,6 +59,11 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     httpStatus: HttpStatus.NOT_FOUND,
     message: "Ressource not found",
   },
+  IDENTITY_NOT_FOUND: {
+    code: "identity_not_found",
+    httpStatus: HttpStatus.NOT_FOUND,
+    message: "Identity not found",
+  },
   INVALID_PASSWORD_INPUT: {
     code: "invalid_password_input",
     httpStatus: HttpStatus.UNPROCESSABLE_ENTITY,
@@ -78,11 +83,6 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     code: "database_unreachable",
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
     message: "Unable to reach database",
-  },
-  IDENTITY_NOT_FOUND: {
-    code: "identity_not_found",
-    httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
-    message: "Identity not found",
   },
   TEMPORARY_IDENTITY_NOT_FOUND: {
     code: "temporary_identity_not_found",
@@ -118,6 +118,11 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     code: "cookie_deletion_failed",
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
     message: "Cookie deletion failed",
+  },
+  GRAPHQL_ERRORS: {
+    code: "graphql_errors",
+    httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
+    message: "GraphQL errors thrown",
   },
 };
 
