@@ -19,7 +19,7 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const SecurityPage: React.FC = () => {
   return (
-    <Layout title="Security" breadcrumbs={["Password, login history and more"]}>
+    <Layout title="Security" breadcrumbs={"Password, login history and more"}>
       <Container>
         <Security />
       </Container>

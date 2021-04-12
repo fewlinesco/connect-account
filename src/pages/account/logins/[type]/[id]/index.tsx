@@ -16,13 +16,15 @@ import { Layout } from "@src/components/page-layout";
 import { IdentityOverview } from "@src/components/pages/identity-overview/identity-overview";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
+import { SWRError } from "@src/errors/errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { getIdentityType } from "@src/utils/get-identity-type";
 
 const IdentityOverviewPage: React.FC<{
   identityId: string;
 }> = ({ identityId }) => {
-  const { data, error } = useSWR<{ identity: Identity }, Error>(
+  const { data, error } = useSWR<{ identity: Identity }, SWRError>(
     `/api/identity/get-identity?identityId=${identityId}`,
   );
 
@@ -31,7 +33,7 @@ const IdentityOverviewPage: React.FC<{
   }
 
   const breadcrumbs = data
-    ? data.identity.type.toUpperCase() === IdentityTypes.EMAIL
+    ? getIdentityType(data.identity.type) === IdentityTypes.EMAIL
       ? "Email address"
       : "Phone number"
     : "";
