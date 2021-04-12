@@ -44,7 +44,10 @@ const spiedOnGetDBUserFromSub = jest
       sub: defaultPayload.sub,
       refresh_token: "refresh_token",
       temporary_identities: [],
-      sudo_event_ids: [],
+      sudo: {
+        sudo_mode_ttl: 42,
+        sudo_event_ids: [],
+      },
     };
   });
 

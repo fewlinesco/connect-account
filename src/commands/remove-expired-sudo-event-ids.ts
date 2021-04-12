@@ -12,7 +12,10 @@ async function removeExpiredSudoEventIds(
   if (user) {
     const updatedUser = {
       ...user,
-      sudo_event_ids: sudoEventIds,
+      sudo: {
+        ...user.sudo,
+        sudo_event_ids: sudoEventIds,
+      },
     };
 
     await putUser(updatedUser);

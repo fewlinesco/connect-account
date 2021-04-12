@@ -22,6 +22,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
+import { insertSudoModeTTL } from "@src/commands/insert-sudo-mode-ttl";
 import { removeExpiredSudoEventIds } from "@src/commands/remove-expired-sudo-event-ids";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
@@ -81,13 +82,13 @@ const handler: Handler = async (request, response) => {
       }
       span.setDisclosedAttribute("user found", true);
 
-      if (!user.sudo_event_ids) {
+      if (!user.sudo.sudo_event_ids) {
         span.setDisclosedAttribute("sudo event ids list found", false);
         throw webErrorFactory(webErrors.sudoEventIdsListNotFound);
       }
       span.setDisclosedAttribute("sudo event ids list found", true);
 
-      const validEventIds = user.sudo_event_ids.filter(
+      const validEventIds = user.sudo.sudo_event_ids.filter(
         ({ event_id, expires_at }) => {
           return expires_at > Date.now() && event_id;
         },
@@ -168,8 +169,27 @@ const handler: Handler = async (request, response) => {
       }
       span.setDisclosedAttribute("is validation code valid", true);
 
+      await insertSudoModeTTL(userCookie.sub).catch((error) => {
+        span.setDisclosedAttribute("is sudo mode ttl set", false);
+
+        if (error instanceof NoDBUserFoundError) {
+          span.setDisclosedAttribute("user found", false);
+          throw webErrorFactory({
+            ...webErrors.noUserFound,
+            parentError: error,
+          });
+        }
+
+        span.setDisclosedAttribute("database reachable", false);
+        throw webErrorFactory({
+          ...webErrors.databaseUnreachable,
+          parentError: error,
+        });
+      });
+      span.setDisclosedAttribute("is sudo mode ttl set", true);
+
       response.statusCode = HttpStatus.OK;
-      response.end();
+      response.json({ isCodeVerified: true });
       return;
     },
   );

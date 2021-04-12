@@ -63,7 +63,23 @@ const handler: Handler = async (request, response) => {
     const isAuthorized = await isMarkingIdentityAsPrimaryAuthorized(
       userCookie.sub,
       identityId,
-    );
+    ).catch((error) => {
+      if (error instanceof GraphqlErrors) {
+        throw webErrorFactory({
+          ...webErrors.identityNotFound,
+          parentError: error,
+        });
+      }
+
+      if (error instanceof ConnectUnreachableError) {
+        throw webErrorFactory({
+          ...webErrors.connectUnreachable,
+          parentError: error,
+        });
+      }
+
+      throw error;
+    });
 
     if (!isAuthorized) {
       span.setDisclosedAttribute(
