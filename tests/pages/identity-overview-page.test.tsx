@@ -1,5 +1,4 @@
 import { Identity } from "@fewlines/connect-management";
-import userEvent from "@testing-library/user-event";
 import React from "react";
 import { cache, SWRConfig } from "swr";
 
@@ -55,7 +54,7 @@ describe("IdentityOverviewPage", () => {
     });
 
     it("should display the relevant delete & mark as primary buttons but not validate identity one for a non primary validated email address", async () => {
-      expect.assertions(3);
+      expect.assertions(4);
 
       render(
         <SWRConfig
@@ -80,13 +79,13 @@ describe("IdentityOverviewPage", () => {
         }),
       ).toBeInTheDocument();
       expect(
+        await screen.findByRole("link", {
+          name: /Update this email address/i,
+        }),
+      ).toBeInTheDocument();
+      expect(
         screen.getByRole("button", { name: /Delete this email address/i }),
       ).toBeInTheDocument();
-
-      userEvent.click(
-        screen.getByRole("button", { name: /Delete this email address/i }),
-      );
-
       expect(
         screen.queryByRole("link", { name: "Proceed to validation" }),
       ).not.toBeInTheDocument();
@@ -262,7 +261,7 @@ describe("IdentityOverviewPage", () => {
     });
 
     it("should display the relevant delete & mark as primary buttons but not validate identity one for a non primary validated phone number", async () => {
-      expect.assertions(3);
+      expect.assertions(4);
 
       render(
         <SWRConfig
@@ -284,6 +283,11 @@ describe("IdentityOverviewPage", () => {
           name: makeAsPrimaryRegExFactory(
             mockIdentities.nonPrimaryPhoneIdentity,
           ),
+        }),
+      ).toBeInTheDocument();
+      expect(
+        await screen.findByRole("link", {
+          name: /Update this phone number/i,
         }),
       ).toBeInTheDocument();
       expect(
