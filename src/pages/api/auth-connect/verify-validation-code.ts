@@ -7,7 +7,12 @@ import {
   addIdentityToUser,
   markIdentityAsPrimary,
 } from "@fewlines/connect-management";
-import { Endpoint, getServerSideCookies, HttpStatus } from "@fwl/web";
+import {
+  Endpoint,
+  getServerSideCookies,
+  HttpStatus,
+  setAlertMessagesCookie,
+} from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -29,6 +34,7 @@ import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
+import { generateAlertMessage } from "@src/utils/generateAlertMessage";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const handler: Handler = async (request, response) => {
@@ -102,6 +108,9 @@ const handler: Handler = async (request, response) => {
 
     if (temporaryIdentity.expiresAt < Date.now()) {
       span.setDisclosedAttribute("is temporary Identity expired", true);
+      setAlertMessagesCookie(response, [
+        generateAlertMessage("Validation code has expired"),
+      ]);
       throw webErrorFactory(webErrors.temporaryIdentityExpired);
     }
     span.setDisclosedAttribute("is temporary Identity expired", false);

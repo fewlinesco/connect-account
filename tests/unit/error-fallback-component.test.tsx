@@ -14,7 +14,7 @@ describe("ErrorFallback component", () => {
     ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "homepage" })).toHaveAttribute(
       "href",
-      "/",
+      "/account",
     );
   });
 
