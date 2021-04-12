@@ -74,7 +74,7 @@ const IdentityOverview: React.FC<{
               </FakeButton>
             </NeutralLink>
           )}
-          {!data.identity.primary && status === "validated" && (
+          {!data.identity.primary && data.identity.status === "validated" && (
             <Button
               type="button"
               variant={ButtonVariant.SECONDARY}
