@@ -59,7 +59,7 @@ describe("Account Web Application re-send Identity validation code", () => {
       await click("Resend validation code");
 
       expect(
-        await text("A confirmation email has been sent").exists(),
+        await text("A new confirmation email has been sent").exists(),
       ).toBeTruthy();
 
       const secondURL = await currentURL();
