@@ -66,9 +66,7 @@ const SendTwoFACodeForm: React.FC<{
       }}
     >
       {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
-      <p>
-        Chose a contact address below that we’ll send a confirmation code to:
-      </p>
+      <p>Chose a contact address below that we’ll send a validation code to:</p>
       <InputsRadio
         groupName="contactChoice"
         inputsValues={inputsValues}
@@ -87,7 +85,7 @@ const SendTwoFACodeForm: React.FC<{
         variant={isCodeSent ? ButtonVariant.SECONDARY : ButtonVariant.PRIMARY}
         type="submit"
       >
-        {isCodeSent ? "Resend confirmation code" : "Send confirmation code"}
+        {isCodeSent ? "Resend validation code" : "Send validation code"}
       </Button>
     </ContactChoiceForm>
   );

@@ -103,12 +103,14 @@ const ExtendedStyledForm = styled(Form)`
 const MultipleInputsMasked = styled(InputText)`
   border: 0;
   background: none;
-  letter-spacing: 4.4rem;
+  letter-spacing: 4.35rem;
   width: 85%;
   font-size: 16px;
+  font-family: monospace;
   caret-color: transparent;
   position: relative;
-  left: 2rem;
+  left: 1.95rem;
+  margin: ${({ theme }) => theme.spaces.xs} 0;
 
   @media ${deviceBreakpoints.m} {
     letter-spacing: 3.3rem;
@@ -124,7 +126,7 @@ const InputMask = styled.div`
   width: 75%;
   position: absolute;
   top: 0;
-  margin: ${({ theme }) => theme.spaces.xxs} 0 ${({ theme }) => theme.spaces.xs};
+  margin: ${({ theme }) => theme.spaces.xs} 0;
 
   span {
     background: ${({ theme }) => theme.colors.background};

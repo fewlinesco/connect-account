@@ -87,7 +87,7 @@ describe("SudoPage", () => {
       expect(contactChoiceRadioInputs[0]).not.toBeChecked();
 
       const submitButton = await screen.findByRole("button", {
-        name: "Send confirmation code",
+        name: "Send validation code",
       });
       expect(submitButton).toBeInTheDocument();
 
@@ -95,7 +95,7 @@ describe("SudoPage", () => {
 
       expect(
         await screen.findByRole("button", {
-          name: "Resend confirmation code",
+          name: "Resend validation code",
         }),
       ).toBeInTheDocument();
     });
@@ -143,14 +143,14 @@ describe("SudoPage", () => {
       );
 
       const submitButton = screen.getByRole("button", {
-        name: "Send confirmation code",
+        name: "Send validation code",
       });
       expect(submitButton).toBeInTheDocument();
 
       userEvent.click(submitButton);
 
       expect(
-        await screen.findByRole("button", { name: "Resend confirmation code" }),
+        await screen.findByRole("button", { name: "Resend validation code" }),
       ).toBeInTheDocument();
 
       const validationCodeInput = await screen.findByRole("textbox", {
