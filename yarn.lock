@@ -1849,10 +1849,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fewlines/connect-client@0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@fewlines/connect-client/-/connect-client-0.4.1.tgz#fa351d6efb221159934b9a62ec712f54f0dad360"
-  integrity sha512-wM0pq016IYQQiWVlp3FfTuxBkR2N7GpjPUwuG0pj2eb3kF0MHho8LoWHwgny/5XF76Nq8OXqotBO9jjUjZa84w==
+"@fewlines/connect-client@0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@fewlines/connect-client/-/connect-client-0.4.2.tgz#db8a07574f9d2295323af9a24a1b2a92d5c9313f"
+  integrity sha512-9S0i8OTiIC0R5L6pkAQ71WmHqh99plftyD6HdiyqWgknEvllYPaEEuzMQ58afgyrrjaJwP9ILrJcGZl9fF480w==
   dependencies:
     jsonwebtoken "8.5.1"
     node-fetch "2.6.1"
