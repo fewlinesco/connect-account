@@ -9,7 +9,10 @@ type DynamoUser = {
   sub: string;
   refresh_token: string;
   temporary_identities: TemporaryIdentity[];
-  sudo_event_ids: SudoEventId[];
+  sudo: {
+    sudo_mode_ttl: number;
+    sudo_event_ids: SudoEventId[];
+  };
 };
 
 export type { DynamoUser, SudoEventId };

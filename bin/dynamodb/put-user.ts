@@ -35,7 +35,10 @@ const Item = {
       expires_at: 42,
     },
   ],
-  sudo_event_ids: [{ event_id: "value", expires_at: 42 }],
+  sudo: {
+    sudo_mode_ttl: 42,
+    sudo_event_ids: [{ event_id: "value", expires_at: 42 }],
+  },
 };
 
 putUser(Item);

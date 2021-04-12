@@ -1,6 +1,6 @@
 import { HttpStatus } from "@fwl/web";
 import userEvent from "@testing-library/user-event";
-import fetch, { enableFetchMocks } from "jest-fetch-mock";
+import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 import { cache, SWRConfig } from "swr";
 
@@ -23,16 +23,23 @@ jest.mock("@src/configs/db-client", () => {
 
 const mockedFetchJson = jest.spyOn(fetchJson, "fetchJson");
 
-beforeAll(() => {
-  fetch.resetMocks();
-});
-
 const eventId = "5aebc079-c754-4324-93bb-af20d7015fbe";
 
 describe("SudoPage", () => {
   describe("Contact identity choice form", () => {
     it("should render proper form elements and submit button text should update after first submit", async () => {
       expect.assertions(11);
+
+      const mockedFetchJSONResponse = new Response(
+        JSON.stringify({ eventId }),
+        {
+          status: HttpStatus.OK,
+        },
+      );
+
+      mockedFetchJson.mockImplementationOnce(async () => {
+        return Promise.resolve(mockedFetchJSONResponse);
+      });
 
       const primaryIdentities = [
         mockIdentities.primaryEmailIdentity,
@@ -75,20 +82,16 @@ describe("SudoPage", () => {
       expect(contactChoiceRadioInputs[0]).not.toBeChecked();
 
       const submitButton = await screen.findByRole("button", {
-        name: "Send confirmation code",
+        name: "Send validation code",
       });
       expect(submitButton).toBeInTheDocument();
 
       userEvent.click(submitButton);
 
-      const mockedFetchResponse = new Response(JSON.stringify({ eventId }), {
-        status: HttpStatus.OK,
-      });
-
-      mockedFetchJson.mockResolvedValueOnce(mockedFetchResponse);
-
       expect(
-        await screen.findByRole("button", { name: "Resend confirmation code" }),
+        await screen.findByRole("button", {
+          name: "Resend validation code",
+        }),
       ).toBeInTheDocument();
     });
   });
@@ -96,6 +99,17 @@ describe("SudoPage", () => {
   describe("Verify validation code form", () => {
     it("should render proper form elements", async () => {
       expect.assertions(8);
+
+      const mockedFetchJSONResponse = new Response(
+        JSON.stringify({ eventId }),
+        {
+          status: HttpStatus.OK,
+        },
+      );
+
+      mockedFetchJson.mockImplementationOnce(async () => {
+        return Promise.resolve(mockedFetchJSONResponse);
+      });
 
       const primaryIdentities = [mockIdentities.primaryPhoneIdentity];
 
@@ -124,20 +138,14 @@ describe("SudoPage", () => {
       );
 
       const submitButton = screen.getByRole("button", {
-        name: "Send confirmation code",
+        name: "Send validation code",
       });
       expect(submitButton).toBeInTheDocument();
 
       userEvent.click(submitButton);
 
-      const mockedFetchResponse = new Response(JSON.stringify({ eventId }), {
-        status: HttpStatus.OK,
-      });
-
-      mockedFetchJson.mockResolvedValueOnce(mockedFetchResponse);
-
       expect(
-        await screen.findByRole("button", { name: "Resend confirmation code" }),
+        await screen.findByRole("button", { name: "Resend validation code" }),
       ).toBeInTheDocument();
 
       const validationCodeInput = await screen.findByRole("textbox", {
