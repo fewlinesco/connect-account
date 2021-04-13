@@ -3,13 +3,13 @@ import React from "react";
 import { ShowMoreButton } from "./buttons";
 
 const StandardShowMoreButton = (): JSX.Element => {
-  const [hide, setHideSecondary] = React.useState<boolean>(true);
+  const [hideList, setHideList] = React.useState<boolean>(true);
 
   return (
     <ShowMoreButton
-      hide={hide}
+      hideList={hideList}
       quantity={4}
-      setHideSecondary={setHideSecondary}
+      setHideList={setHideList}
     />
   );
 };
