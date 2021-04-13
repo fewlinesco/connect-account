@@ -3,11 +3,11 @@ import React from "react";
 import { NavigationBreadcrumbs } from "./navigation-breadcrumbs";
 
 const OneLevelNavigationBreadcrumbs = (): JSX.Element => {
-  return <NavigationBreadcrumbs breadcrumbs={"Phone number"} />;
+  return <NavigationBreadcrumbs breadcrumbs="Phone number" />;
 };
 
 const TwoLevelsNavigationBreadcrumbs = (): JSX.Element => {
-  return <NavigationBreadcrumbs breadcrumbs={"Phone number | validation"} />;
+  return <NavigationBreadcrumbs breadcrumbs="Phone number | validation" />;
 };
 
 export { OneLevelNavigationBreadcrumbs, TwoLevelsNavigationBreadcrumbs };
