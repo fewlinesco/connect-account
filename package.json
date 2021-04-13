@@ -106,7 +106,14 @@
     "env": {
       "production": {
         "presets": [
-            "next/babel"
+            [
+              "next/babel", 
+              {
+                "preset-env" : {
+                  "targets": "defaults"
+                }
+              }
+            ]
         ],
         "plugins": [
           [
@@ -120,7 +127,14 @@
       },
       "development": {
         "presets": [
-            "next/babel"
+          [
+            "next/babel", 
+            {
+              "preset-env" : {
+                "targets": "defaults"
+              }
+            }
+          ]
         ],
         "plugins": [
           [
@@ -134,7 +148,14 @@
       },
       "test": {
         "presets": [
-          "next/babel"
+          [
+            "next/babel", 
+            {
+              "preset-env" : {
+                "targets": "defaults"
+              }
+            }
+          ]
         ],
         "plugins": [
           [
