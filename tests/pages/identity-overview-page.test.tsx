@@ -1,4 +1,3 @@
-import { Identity } from "@fewlines/connect-management";
 import React from "react";
 import { cache, SWRConfig } from "swr";
 
@@ -15,13 +14,6 @@ jest.mock("@src/configs/db-client", () => {
     },
   };
 });
-
-function makeAsPrimaryRegExFactory(identity: Identity): RegExp {
-  return new RegExp(
-    "Make " + identity.value + " my primary " + identity.type.toLowerCase(),
-    "i",
-  );
-}
 
 describe("IdentityOverviewPage", () => {
   afterEach(() => {
@@ -73,9 +65,7 @@ describe("IdentityOverviewPage", () => {
 
       expect(
         await screen.findByRole("button", {
-          name: makeAsPrimaryRegExFactory(
-            mockIdentities.nonPrimaryEmailIdentity,
-          ),
+          name: /Make this email address my primary one/i,
         }),
       ).toBeInTheDocument();
       expect(
@@ -138,9 +128,7 @@ describe("IdentityOverviewPage", () => {
       await waitFor(() => {
         expect(
           screen.queryByRole("button", {
-            name: makeAsPrimaryRegExFactory(
-              mockIdentities.primaryEmailIdentity,
-            ),
+            name: /Make this email address my primary one/i,
           }),
         ).not.toBeInTheDocument();
         expect(
@@ -196,9 +184,7 @@ describe("IdentityOverviewPage", () => {
 
       expect(
         screen.queryByRole("button", {
-          name: makeAsPrimaryRegExFactory(
-            mockIdentities.unvalidatedEmailIdentity,
-          ),
+          name: /Make this email address my primary one/i,
         }),
       ).not.toBeInTheDocument();
       expect(
@@ -280,9 +266,7 @@ describe("IdentityOverviewPage", () => {
 
       expect(
         await screen.findByRole("button", {
-          name: makeAsPrimaryRegExFactory(
-            mockIdentities.nonPrimaryPhoneIdentity,
-          ),
+          name: /Make this phone number my primary one/i,
         }),
       ).toBeInTheDocument();
       expect(
@@ -345,9 +329,7 @@ describe("IdentityOverviewPage", () => {
       await waitFor(() => {
         expect(
           screen.queryByRole("button", {
-            name: makeAsPrimaryRegExFactory(
-              mockIdentities.primaryPhoneIdentity,
-            ),
+            name: /Make this phone number my primary one/i,
           }),
         ).not.toBeInTheDocument();
         expect(
@@ -413,9 +395,7 @@ describe("IdentityOverviewPage", () => {
       ).toBeInTheDocument();
       expect(
         screen.queryByRole("button", {
-          name: makeAsPrimaryRegExFactory(
-            mockIdentities.unvalidatedPhoneIdentity,
-          ),
+          name: /Make this phone number my primary one/i,
         }),
       ).not.toBeInTheDocument();
     });
