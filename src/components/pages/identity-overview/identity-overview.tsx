@@ -133,6 +133,7 @@ const IdentityOverview: React.FC<{
 const Value = styled.div`
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   margin: ${({ theme }) => theme.spaces.xs} 0;
+  word-break: break-all;
 `;
 
 export { IdentityOverview };

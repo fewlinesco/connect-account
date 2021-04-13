@@ -74,7 +74,7 @@ const LineContainer = styled.div`
 
 const Line = styled.div`
   height: calc(100% - 0.6rem);
-  border-left: 1px solid ${({ theme }) => theme.colors.separator};
+  border-left: 0.1rem solid ${({ theme }) => theme.colors.separator};
 `;
 
 const GhostBulletPointContainer = styled.div`
@@ -84,7 +84,7 @@ const GhostBulletPointContainer = styled.div`
 
 const EndLine = styled.div`
   height: 100%;
-  border-left: 1px solid ${({ theme }) => theme.colors.separator};
+  border-left: 0.1rem solid ${({ theme }) => theme.colors.separator};
 `;
 
 export { Timeline, TimelineEnd, TimelineBulletPoint };

@@ -66,6 +66,8 @@ const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
 const DeleteConfirmationText = styled.p`
   margin: 0 0 ${({ theme }) => theme.spaces.xs};
   line-height: ${({ theme }) => theme.lineHeights.copy};
+  text-align: center;
+  word-break: break-word;
 `;
 
 export { DeleteConfirmationBoxContent, DeleteConfirmationText };

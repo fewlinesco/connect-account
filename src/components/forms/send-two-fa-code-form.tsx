@@ -94,7 +94,7 @@ const SendTwoFACodeForm: React.FC<{
 const ContactChoiceForm = styled(Form)`
   padding: ${({ theme }) => theme.spaces.xs} 0;
 
-  p {
+  & > p {
     padding-bottom: ${({ theme }) => theme.spaces.xs};
     padding-left: ${({ theme }) => theme.spaces.xs};
   }
