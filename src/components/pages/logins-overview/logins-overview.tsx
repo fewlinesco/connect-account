@@ -106,7 +106,7 @@ const LoginsOverview: React.FC = () => {
           </FakeButton>
         </NeutralLink>
       </SectionWrapper>
-      <SectionWrapper>
+      <SectionWrapper isLastOfTheList={true}>
         <TimelineEnd />
         <h2>{IDENTITIES_SECTION_CONTENT.SOCIAL.title}</h2>
         <SectionBox>
