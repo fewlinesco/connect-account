@@ -7,7 +7,6 @@ import { SendTwoFACodeForm } from "@src/components/forms/send-two-fa-code-form";
 import { VerifyTwoFACodeForm } from "@src/components/forms/verify-two-fa-code-form";
 import { LockIcon } from "@src/components/icons/lock-icon/lock-icon";
 import { Separator } from "@src/components/separator/separator";
-import { TwoFASkeleton } from "@src/components/skeletons/skeletons";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const TwoFA: React.FC = () => {
@@ -21,10 +20,6 @@ const TwoFA: React.FC = () => {
     throw error;
   }
 
-  if (!data) {
-    return <TwoFASkeleton />;
-  }
-
   return (
     <Wrapper>
       <SecurityMessage>
@@ -33,9 +28,9 @@ const TwoFA: React.FC = () => {
       </SecurityMessage>
       <Separator />
       <SendTwoFACodeForm
-        primaryIdentities={data.primaryIdentities}
         isCodeSent={isCodeSent}
         setIsCodeSent={setIsCodeSent}
+        data={data}
       />
       {isCodeSent ? (
         <>

@@ -3,8 +3,9 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
-import { InputsRadio } from "../input/input-radio-button";
+import { InputsRadio, Label } from "../input/input-radio-button";
 import { WrongInputError } from "../input/wrong-input-error";
+import { SkeletonTextLine } from "../skeletons/skeletons";
 import { Form } from "./form";
 import { HttpVerbs } from "@src/@types/http-verbs";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
@@ -13,17 +14,22 @@ import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
 
 const SendTwoFACodeForm: React.FC<{
-  primaryIdentities: Identity[];
   isCodeSent: boolean;
   setIsCodeSent: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ primaryIdentities, isCodeSent, setIsCodeSent }) => {
+  data?: { primaryIdentities: Identity[] };
+}> = ({ isCodeSent, setIsCodeSent, data }) => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
-  const [selectedIdentity, setSelectedIdentity] = React.useState<Identity>(
-    primaryIdentities[0],
-  );
+  const [
+    selectedIdentity,
+    setSelectedIdentity,
+  ] = React.useState<Identity | null>(null);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
-  const inputsValues = primaryIdentities.map((identity) => identity.value);
+  React.useEffect(() => {
+    if (data) {
+      setSelectedIdentity(data.primaryIdentities[0]);
+    }
+  }, [data]);
 
   return (
     <ContactChoiceForm
@@ -67,20 +73,30 @@ const SendTwoFACodeForm: React.FC<{
     >
       {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
       <p>Choose a contact means below that we’ll send a validation code to:</p>
-      <InputsRadio
-        groupName="contactChoice"
-        inputsValues={inputsValues}
-        selectedInput={selectedIdentity.value}
-        onChange={({ target }) => {
-          const newIdentity = primaryIdentities.find(
-            (identity) => identity.value === target.value,
-          );
+      {data ? (
+        <InputsRadio
+          groupName="contactChoice"
+          inputsValues={data.primaryIdentities.map(
+            (identity) => identity.value,
+          )}
+          selectedInput={selectedIdentity ? selectedIdentity.value : ""}
+          onChange={({ target }) => {
+            const newIdentity = data.primaryIdentities.find(
+              (identity) => identity.value === target.value,
+            );
 
-          if (newIdentity) {
-            setSelectedIdentity(newIdentity);
-          }
-        }}
-      />
+            if (newIdentity) {
+              setSelectedIdentity(newIdentity);
+            }
+          }}
+        />
+      ) : (
+        <InputRadioWrapper>
+          <SkeletonTextLine fontSize={1.6} />
+          <span />
+        </InputRadioWrapper>
+      )}
+
       <Button
         variant={isCodeSent ? ButtonVariant.SECONDARY : ButtonVariant.PRIMARY}
         type="submit"
@@ -107,6 +123,24 @@ const ContactChoiceForm = styled(Form)`
     p {
       padding-left: 0;
     }
+  }
+`;
+
+const InputRadioWrapper = styled(Label)`
+  span {
+    border: ${({ theme }) => theme.borders.normal};
+  }
+
+  span:after {
+    content: "";
+    height: 1rem;
+    width: 1rem;
+    background-color: ${({ theme }) => theme.colors.primary};
+    position: absolute;
+    border-radius: ${({ theme }) => theme.radii[3]};
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 `;
 
