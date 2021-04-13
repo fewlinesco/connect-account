@@ -8,7 +8,7 @@ import { NavigationBreadcrumbs } from "./navigation-breadcrumbs/navigation-bread
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Layout: React.FC<{
-  breadcrumbs: string | boolean;
+  breadcrumbs: string | false;
   title?: string;
 }> = ({ children, title, breadcrumbs }) => {
   return (
@@ -71,7 +71,7 @@ const DesktopNavigationBarWrapper = styled.div`
 `;
 
 const ChildrenContainer = styled.div<{
-  breadcrumbs: string | boolean;
+  breadcrumbs: string | false;
   titleText?: string;
 }>`
   width: 60%;
