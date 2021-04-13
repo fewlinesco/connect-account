@@ -100,4 +100,4 @@ const RadioInputElement = styled.input`
   width: 1px;
 `;
 
-export { InputsRadio };
+export { InputsRadio, Label };
