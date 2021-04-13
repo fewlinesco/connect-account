@@ -84,8 +84,8 @@ const Label = styled.label`
   }
 
   input:focus + span {
-    outline: Highlight auto 1px;
-    outline: -webkit-focus-ring-color auto 1px;
+    outline: Highlight auto 0.1rem;
+    outline: -webkit-focus-ring-color auto 0.1rem;
   }
 `;
 
