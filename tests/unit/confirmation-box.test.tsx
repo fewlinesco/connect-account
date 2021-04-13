@@ -1,4 +1,3 @@
-import { Identity } from "@fewlines/connect-management";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import { cache, SWRConfig } from "swr";
@@ -6,12 +5,6 @@ import { cache, SWRConfig } from "swr";
 import { render, screen, waitFor } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
 import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
-
-function makeAsPrimaryRegExFactory(identity: Identity): RegExp {
-  return new RegExp(
-    "Make " + identity.value + " my primary " + identity.type.toLowerCase(),
-  );
-}
 
 jest.mock("@src/configs/db-client", () => {
   return {
@@ -80,7 +73,7 @@ describe("ConfirmationBox", () => {
 
     userEvent.click(
       await screen.findByRole("button", {
-        name: makeAsPrimaryRegExFactory(mockIdentities.nonPrimaryEmailIdentity),
+        name: /Make this email address my primary one/i,
       }),
     );
 

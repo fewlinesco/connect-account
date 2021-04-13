@@ -19,7 +19,7 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const SudoPage: React.FC = () => {
   return (
-    <Layout title="Security">
+    <Layout breadcrumbs={false} title="Security">
       <Container>
         <TwoFA />
       </Container>

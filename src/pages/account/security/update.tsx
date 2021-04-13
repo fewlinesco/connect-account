@@ -45,7 +45,7 @@ const SecurityUpdatePage: React.FC = () => {
   }
 
   return (
-    <Layout title="Security" breadcrumbs={conditionalBreadcrumb}>
+    <Layout breadcrumbs={conditionalBreadcrumb} title="Security">
       <Container>
         <SetPasswordForm
           conditionalBreadcrumbItem={

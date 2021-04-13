@@ -90,8 +90,11 @@ const IdentityOverview: React.FC<{
                 setConfirmationBoxOpen(true);
               }}
             >
-              Make {data.identity.value} my primary{" "}
-              {data.identity.type.toLowerCase()}
+              Make this{" "}
+              {getIdentityType(data.identity.type) === IdentityTypes.EMAIL
+                ? "email address"
+                : "phone number"}{" "}
+              my primary one
             </Button>
           )}
           {!data.identity.primary && (

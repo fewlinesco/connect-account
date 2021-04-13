@@ -5,6 +5,7 @@ import { cache, SWRConfig } from "swr";
 import { render, screen } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
 import { SortedIdentities } from "@src/@types/sorted-identities";
+import { IDENTITIES_SECTION_CONTENT } from "@src/components/pages/logins-overview/logins-overview";
 import LoginsOverviewPage from "@src/pages/account/logins";
 
 jest.mock("@src/configs/db-client", () => {
@@ -97,7 +98,9 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        screen.getByRole("link", { name: "+ Add new email address" }),
+        screen.getByRole("link", {
+          name: `+ ${IDENTITIES_SECTION_CONTENT.EMAIL.addNewIdentityMessage}`,
+        }),
       ).toBeInTheDocument();
     });
 
@@ -143,7 +146,9 @@ describe("LoginsOverviewPage", () => {
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
 
       expect(
-        screen.getByRole("link", { name: "+ Add new email address" }),
+        screen.getByRole("link", {
+          name: `+ ${IDENTITIES_SECTION_CONTENT.EMAIL.addNewIdentityMessage}`,
+        }),
       ).toBeInTheDocument();
     });
 
@@ -172,11 +177,15 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        await screen.findByText(new RegExp("No email added yet.", "i")),
+        await screen.findByText(
+          new RegExp(IDENTITIES_SECTION_CONTENT.EMAIL.noIdentityMessage, "i"),
+        ),
       ).toBeInTheDocument();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
       expect(
-        screen.getByRole("link", { name: "+ Add new email address" }),
+        screen.getByRole("link", {
+          name: `+ ${IDENTITIES_SECTION_CONTENT.EMAIL.addNewIdentityMessage}`,
+        }),
       ).toBeInTheDocument();
     });
   });
@@ -255,7 +264,9 @@ describe("LoginsOverviewPage", () => {
         }`,
       );
       expect(
-        screen.getByRole("link", { name: "+ Add new phone number" }),
+        screen.getByRole("link", {
+          name: `+ ${IDENTITIES_SECTION_CONTENT.PHONE.addNewIdentityMessage}`,
+        }),
       ).toBeInTheDocument();
     });
 
@@ -300,7 +311,9 @@ describe("LoginsOverviewPage", () => {
       );
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
       expect(
-        screen.getByRole("link", { name: "+ Add new phone number" }),
+        screen.getByRole("link", {
+          name: `+ ${IDENTITIES_SECTION_CONTENT.PHONE.addNewIdentityMessage}`,
+        }),
       ).toBeInTheDocument();
     });
 
@@ -329,11 +342,15 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        await screen.findByText(new RegExp("No phone number added yet.", "i")),
+        await screen.findByText(
+          new RegExp(IDENTITIES_SECTION_CONTENT.PHONE.noIdentityMessage, "i"),
+        ),
       ).toBeInTheDocument();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
       expect(
-        screen.getByRole("link", { name: "+ Add new phone number" }),
+        screen.getByRole("link", {
+          name: `+ ${IDENTITIES_SECTION_CONTENT.PHONE.addNewIdentityMessage}`,
+        }),
       ).toBeInTheDocument();
     });
   });
@@ -400,7 +417,9 @@ describe("LoginsOverviewPage", () => {
       );
 
       expect(
-        await screen.findByText(new RegExp("No social logins added yet.", "i")),
+        await screen.findByText(
+          new RegExp(IDENTITIES_SECTION_CONTENT.SOCIAL.noIdentityMessage, "i"),
+        ),
       ).toBeInTheDocument();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
     });

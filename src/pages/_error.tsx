@@ -28,7 +28,7 @@ const CustomErrorComponent = (
   }
 
   return (
-    <Layout>
+    <Layout breadcrumbs={false}>
       <ErrorFallbackComponent statusCode={statusCode} />
     </Layout>
   );

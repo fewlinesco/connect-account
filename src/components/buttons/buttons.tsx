@@ -108,11 +108,11 @@ const StyledButton = styled.button<Record<string, unknown>>`
 `;
 
 const ShowMoreButton: React.FC<{
-  hide: boolean;
+  hideList: boolean;
   quantity: number;
-  setHideSecondary: (value: boolean) => void;
+  setHideList: React.Dispatch<React.SetStateAction<boolean>>;
 }> = (props) => {
-  const { hide, quantity, setHideSecondary } = props;
+  const { hideList, quantity, setHideList } = props;
   const showMoreButtonRef = React.useRef(null);
   const { buttonProps } = useButton(
     { ...props, elementType: "div" },
@@ -122,15 +122,15 @@ const ShowMoreButton: React.FC<{
   return (
     <ShowMoreButtonStyle
       {...buttonProps}
-      onClick={() => setHideSecondary(!hide)}
+      onClick={() => setHideList(!hideList)}
     >
-      {hide ? (
+      {hideList ? (
         <div>
-          Show {quantity} more <Triangle rotate={hide} />
+          Show {quantity} more <Triangle rotate={hideList} />
         </div>
       ) : (
         <div>
-          Hide {quantity} <Triangle rotate={hide} />
+          Hide {quantity} <Triangle rotate={hideList} />
         </div>
       )}
     </ShowMoreButtonStyle>
@@ -143,6 +143,7 @@ const ShowMoreButtonStyle = styled.div`
   align-items: center;
   height: 4.5rem;
   margin-bottom: 2rem;
+  padding: 0 2rem;
   cursor: pointer;
 `;
 
