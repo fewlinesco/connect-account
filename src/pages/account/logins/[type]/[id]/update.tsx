@@ -37,7 +37,7 @@ const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
     : "";
 
   return (
-    <Layout title="Logins" breadcrumbs={breadcrumbs}>
+    <Layout breadcrumbs={breadcrumbs} title="Logins">
       <Container>
         <UpdateIdentityForm data={data} />
       </Container>

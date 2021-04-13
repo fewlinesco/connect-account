@@ -19,10 +19,7 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const LoginsOverviewPage: React.FC = () => {
   return (
-    <Layout
-      title="Logins"
-      breadcrumbs={"Your emails, phones and social logins"}
-    >
+    <Layout breadcrumbs="Your emails, phones and social logins" title="Logins">
       <Container>
         <LoginsOverview />
       </Container>
