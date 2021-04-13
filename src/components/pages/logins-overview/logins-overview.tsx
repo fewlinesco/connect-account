@@ -254,6 +254,11 @@ const SocialIdentityBox = styled.div`
 `;
 
 const IdentityValue = styled.p<Pick<Identity, "primary" | "status">>`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 90%;
+
   ${(props) =>
     props.primary &&
     `

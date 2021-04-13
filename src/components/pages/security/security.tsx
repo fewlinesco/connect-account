@@ -43,10 +43,9 @@ const SecurityLink = styled(NeutralLink)`
   cursor: pointer;
 `;
 
-const TextBox = styled.div`
+const TextBox = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.s};
   line-height: ${({ theme }) => theme.lineHeights.title};
-  max-width: 50%;
 `;
 
 export { Security };

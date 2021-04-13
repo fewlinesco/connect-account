@@ -136,6 +136,7 @@ const UpdateIdentityForm: React.FC<{
 const Value = styled.p`
   margin-right: 0.5rem;
   font-weight: ${({ theme }) => theme.fontWeights.bold};
+  word-break: break-all;
 `;
 
 export { UpdateIdentityForm };

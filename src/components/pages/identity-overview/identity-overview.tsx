@@ -80,7 +80,11 @@ const IdentityOverview: React.FC<{
             setConfirmationBoxOpen(true);
           }}
         >
-          Make {value} my primary {type.toLowerCase()}
+          Make this{" "}
+          {getIdentityType(type) === IdentityTypes.EMAIL
+            ? "email address"
+            : "phone number"}{" "}
+          my primary one
         </Button>
       )}
       {!primary && (
@@ -119,6 +123,7 @@ const IdentityOverview: React.FC<{
 const Value = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   margin: ${({ theme }) => theme.spaces.xs} 0;
+  word-break: break-all;
 `;
 
 const Flex = styled.div`
