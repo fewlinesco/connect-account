@@ -5,7 +5,7 @@ const nonPrimaryEmailIdentity: Identity = {
   primary: false,
   status: "validated",
   type: IdentityTypes.EMAIL,
-  value: "Test@test.test",
+  value: "test@test.test",
 };
 
 const primaryEmailIdentity: Identity = {

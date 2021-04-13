@@ -14,7 +14,6 @@ import useSWR from "swr";
 import { Container } from "@src/components/containers/container";
 import { UpdateIdentityForm } from "@src/components/forms/update-identity-form";
 import { Layout } from "@src/components/page-layout";
-import { UpdateIdentitySkeleton } from "@src/components/skeletons/skeletons";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
@@ -40,11 +39,7 @@ const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
   return (
     <Layout title="Logins" breadcrumbs={breadcrumbs}>
       <Container>
-        {data ? (
-          <UpdateIdentityForm currentIdentity={data.identity} />
-        ) : (
-          <UpdateIdentitySkeleton />
-        )}
+        <UpdateIdentityForm data={data} />
       </Container>
     </Layout>
   );
