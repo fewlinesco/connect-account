@@ -418,10 +418,7 @@ describe("LoginsOverviewPage", () => {
 
       expect(
         await screen.findByText(
-          new RegExp(
-            `+ ${IDENTITIES_SECTION_CONTENT.SOCIAL.noIdentityMessage}`,
-            "i",
-          ),
+          new RegExp(IDENTITIES_SECTION_CONTENT.SOCIAL.noIdentityMessage, "i"),
         ),
       ).toBeInTheDocument();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
