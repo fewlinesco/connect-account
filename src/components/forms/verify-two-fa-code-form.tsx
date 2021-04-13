@@ -105,7 +105,7 @@ const MultipleInputsMasked = styled(InputText)`
   background: none;
   letter-spacing: 4.35rem;
   width: 85%;
-  font-size: 1.6rem;
+  font-size: ${({ theme }) => theme.fontSizes.paragraph};
   font-family: monospace;
   caret-color: transparent;
   position: relative;
