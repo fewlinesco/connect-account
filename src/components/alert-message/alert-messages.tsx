@@ -132,6 +132,8 @@ const Alert = styled.div`
 
   p {
     font-size: ${({ theme }) => theme.fontSizes.s};
+    word-break: break-word;
+    line-height: 1.6rem;
   }
 
   .cross {

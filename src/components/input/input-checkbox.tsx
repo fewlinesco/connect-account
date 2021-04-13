@@ -19,7 +19,7 @@ const InputCheckbox: React.FC<CheckboxProps> = (props) => {
 };
 
 const CheckboxElement = styled.input<Record<string, unknown>>`
-  width: 18px;
+  width: 1.8rem;
   height: 1.6rem;
   margin: 0 ${({ theme }) => theme.spaces.xxs} 0 0;
   cursor: pointer;

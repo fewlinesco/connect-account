@@ -105,7 +105,7 @@ const MultipleInputsMasked = styled(InputText)`
   background: none;
   letter-spacing: 4.35rem;
   width: 85%;
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.fontSizes.paragraph};
   font-family: monospace;
   caret-color: transparent;
   position: relative;
@@ -114,7 +114,7 @@ const MultipleInputsMasked = styled(InputText)`
 
   @media ${deviceBreakpoints.m} {
     letter-spacing: 3.3rem;
-    width: 270px;
+    width: 27rem;
     left: 1rem;
     padding-left: 1.5rem;
   }
@@ -133,15 +133,15 @@ const InputMask = styled.div`
     border: 0.1rem solid ${({ theme }) => theme.colors.blacks[2]};
     height: 4rem;
     border-radius: ${({ theme }) => theme.radii[0]};
-    width: 40px;
+    width: 4rem;
     z-index: 0;
   }
 
   @media ${deviceBreakpoints.m} {
-    width: 248px;
+    width: 24.8rem;
 
     span {
-      width: 35px;
+      width: 3.5rem;
     }
   }
 `;

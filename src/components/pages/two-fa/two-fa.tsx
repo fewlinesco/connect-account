@@ -75,7 +75,7 @@ const SecurityMessage = styled.div`
 
   @media ${deviceBreakpoints.m} {
     p {
-      line-height: 22px;
+      line-height: 2.2rem;
     }
   }
 `;

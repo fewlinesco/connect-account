@@ -38,6 +38,7 @@ const StyledButton = styled.button<Record<string, unknown>>`
   cursor: pointer;
   margin-bottom: ${({ theme }) => theme.spaces.xxs};
   width: 100%;
+  word-break: break-all;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.secondary};
