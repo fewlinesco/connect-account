@@ -27,12 +27,12 @@ const ValidateIdentityPage: React.FC<{
 }> = ({ type, eventId }) => {
   return (
     <Layout
-      title="Logins"
       breadcrumbs={`${
         getIdentityType(type) === IdentityTypes.EMAIL
           ? "Email address"
           : "Phone number"
       } | validation`}
+      title="Logins"
     >
       <Container>
         <ValidateIdentityForm type={type} eventId={eventId} />

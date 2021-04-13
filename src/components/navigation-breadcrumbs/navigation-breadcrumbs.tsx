@@ -3,7 +3,7 @@ import React from "react";
 import { SkeletonTextLine } from "../skeletons/skeletons";
 
 const NavigationBreadcrumbs: React.FC<{
-  breadcrumbs: string;
+  breadcrumbs: string | boolean;
 }> = ({ breadcrumbs }) => {
   if (breadcrumbs === "") {
     return (
@@ -11,6 +11,10 @@ const NavigationBreadcrumbs: React.FC<{
         <SkeletonTextLine fontSize={1.4} />
       </h3>
     );
+  }
+
+  if (!breadcrumbs) {
+    return null;
   }
 
   return <h3>{breadcrumbs}</h3>;
