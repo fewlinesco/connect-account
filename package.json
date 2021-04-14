@@ -103,72 +103,25 @@
     "yarn": ">=1.22.4"
   },
   "babel": {
-    "env": {
-      "production": {
-        "presets": [
-            [
-              "next/babel", 
-              {
-                "preset-env" : {
-                  "targets": "defaults"
-                }
-              }
-            ]
-        ],
-        "plugins": [
-          [
-            "styled-components",
-            {
-              "ssr": true,
-              "displayName": true
-            }
-          ]
-        ]
-      },
-      "development": {
-        "presets": [
-          [
-            "next/babel", 
-            {
-              "preset-env" : {
-                "targets": "defaults"
-              }
-            }
-          ]
-        ],
-        "plugins": [
-          [
-            "styled-components",
-            {
-              "ssr": true,
-              "displayName": true
-            }
-          ]
-        ]
-      },
-      "test": {
-        "presets": [
-          [
-            "next/babel", 
-            {
-              "preset-env" : {
-                "targets": "defaults"
-              }
-            }
-          ]
-        ],
-        "plugins": [
-          [
-            "styled-components",
-            {
-              "ssr": true,
-              "displayName": true
-            }
-          ],
-          "@babel/plugin-transform-react-jsx"
-        ]
-      }
-    }
+    "presets": [
+      [
+        "next/babel", 
+        {
+          "preset-env" : {
+            "targets": "defaults"
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      [
+        "styled-components",
+        {
+          "ssr": true,
+          "displayName": true
+        }
+      ]
+    ]
   },
   "eslintConfig": {
     "extends": [
