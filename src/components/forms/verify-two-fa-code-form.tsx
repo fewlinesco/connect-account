@@ -1,4 +1,4 @@
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
@@ -19,7 +19,7 @@ const VerifyTwoFACodeForm: React.FC<{
   const [verificationCode, setVerificationCode] = React.useState<string>("");
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
-  // const router = useRouter();
+  const router = useRouter();
 
   return (
     <ExtendedStyledForm
@@ -32,8 +32,8 @@ const VerifyTwoFACodeForm: React.FC<{
           HttpVerbs.POST,
           { verificationCode },
         ).then(async (response) => {
+          const parsedResponse = await response.json();
           if (response.status >= 400) {
-            const parsedResponse = await response.json();
             if ("message" in parsedResponse) {
               if (
                 parsedResponse.message === ERRORS_DATA.INVALID_BODY.message ||
@@ -42,6 +42,7 @@ const VerifyTwoFACodeForm: React.FC<{
               ) {
                 setFormID(uuidv4());
                 setErrorMessage("Invalid validation code");
+                return;
               }
 
               if (
@@ -50,11 +51,14 @@ const VerifyTwoFACodeForm: React.FC<{
               ) {
                 setFormID(uuidv4());
                 setIsCodeSent(false);
+                return;
               }
             }
           }
 
-          // router && router.push("/account/security/update");
+          if ("isCodeVerified" in parsedResponse) {
+            router && router.push("/account/security/update");
+          }
         });
       }}
     >
@@ -99,16 +103,18 @@ const ExtendedStyledForm = styled(Form)`
 const MultipleInputsMasked = styled(InputText)`
   border: 0;
   background: none;
-  letter-spacing: 4.4rem;
+  letter-spacing: 4.35rem;
   width: 85%;
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.fontSizes.paragraph};
+  font-family: monospace;
   caret-color: transparent;
   position: relative;
-  left: 2rem;
+  left: 1.95rem;
+  margin: ${({ theme }) => theme.spaces.xs} 0;
 
   @media ${deviceBreakpoints.m} {
     letter-spacing: 3.3rem;
-    width: 270px;
+    width: 27rem;
     left: 1rem;
     padding-left: 1.5rem;
   }
@@ -120,22 +126,22 @@ const InputMask = styled.div`
   width: 75%;
   position: absolute;
   top: 0;
-  margin: ${({ theme }) => theme.spaces.xxs} 0 ${({ theme }) => theme.spaces.xs};
+  margin: ${({ theme }) => theme.spaces.xs} 0;
 
   span {
     background: ${({ theme }) => theme.colors.background};
     border: 0.1rem solid ${({ theme }) => theme.colors.blacks[2]};
     height: 4rem;
     border-radius: ${({ theme }) => theme.radii[0]};
-    width: 40px;
+    width: 4rem;
     z-index: 0;
   }
 
   @media ${deviceBreakpoints.m} {
-    width: 248px;
+    width: 24.8rem;
 
     span {
-      width: 35px;
+      width: 3.5rem;
     }
   }
 `;

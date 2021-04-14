@@ -22,13 +22,12 @@ import { getIdentityType } from "@src/utils/get-identity-type";
 const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
   return (
     <Layout
-      title="Logins"
-      breadcrumbs={[
+      breadcrumbs={`${
         getIdentityType(type) === IdentityTypes.EMAIL
           ? "Email address"
-          : "Phone number",
-        "new",
-      ]}
+          : "Phone number"
+      } | new`}
+      title="Logins"
     >
       <Container>
         <AddIdentityForm type={type} />
@@ -53,7 +52,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       authMiddleware(getTracer()),
     ],
     "/account/logins/[type]/new",
-    async () => {
+    () => {
       if (!context?.params?.type) {
         return {
           notFound: true,

@@ -19,7 +19,7 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const LocalePage: React.FC = () => {
   return (
-    <Layout title="Switch Language">
+    <Layout breadcrumbs={false} title="Switch Language">
       <Container>
         <Locale />
       </Container>

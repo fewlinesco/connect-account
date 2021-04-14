@@ -9,7 +9,6 @@ import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { GetServerSideProps } from "next";
 import React from "react";
 
-import type { SortedIdentities } from "@src/@types/sorted-identities";
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { LoginsOverview } from "@src/components/pages/logins-overview/logins-overview";
@@ -20,10 +19,7 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const LoginsOverviewPage: React.FC = () => {
   return (
-    <Layout
-      title="Logins"
-      breadcrumbs={["Your emails, phones and social logins"]}
-    >
+    <Layout breadcrumbs="Your emails, phones and social logins" title="Logins">
       <Container>
         <LoginsOverview />
       </Container>
@@ -32,9 +28,7 @@ const LoginsOverviewPage: React.FC = () => {
 };
 
 const getServerSideProps: GetServerSideProps = async (context) => {
-  return getServerSidePropsWithMiddlewares<{
-    sortedIdentities: SortedIdentities;
-  }>(
+  return getServerSidePropsWithMiddlewares(
     context,
     [
       tracingMiddleware(getTracer()),

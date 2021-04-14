@@ -23,7 +23,7 @@
 
 <!--- if appropriate, otherwise the section can be removed -->
 
-## Checklist:
+## Checklist
 
 <!--- To tick the checkbox, put an `x` inside the `[ ]` -->
 

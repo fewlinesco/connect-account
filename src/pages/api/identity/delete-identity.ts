@@ -1,9 +1,15 @@
 import {
   ConnectUnreachableError,
-  getIdentities,
   GraphqlErrors,
+  IdentityTypes,
+  removeIdentityFromUser,
 } from "@fewlines/connect-management";
-import { Endpoint, getServerSideCookies, HttpStatus } from "@fwl/web";
+import {
+  Endpoint,
+  getServerSideCookies,
+  HttpStatus,
+  setAlertMessagesCookie,
+} from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -22,7 +28,8 @@ import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import { sortIdentities } from "@src/utils/sort-identities";
+import { generateAlertMessage } from "@src/utils/generateAlertMessage";
+import { getIdentityType } from "@src/utils/get-identity-type";
 
 const handler: Handler = (request, response): Promise<void> => {
   const webErrors = {
@@ -31,7 +38,15 @@ const handler: Handler = (request, response): Promise<void> => {
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
   };
 
-  return getTracer().span("get-sorted-identities handler", async (_span) => {
+  return getTracer().span("delete-identity handler", async (span) => {
+    const { type, value } = request.body;
+
+    if (!type || !value) {
+      throw webErrorFactory(webErrors.badRequest);
+    }
+
+    span.setDisclosedAttribute("Identity type", type);
+
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
@@ -45,27 +60,45 @@ const handler: Handler = (request, response): Promise<void> => {
       return;
     }
 
-    const sortedIdentities = await getIdentities(
-      configVariables.managementCredentials,
-      userCookie.sub,
-    )
-      .then((identities) => {
-        return sortIdentities(identities);
+    return removeIdentityFromUser(configVariables.managementCredentials, {
+      userId: userCookie.sub,
+      identityType: type,
+      identityValue: value,
+    })
+      .then(() => {
+        span.setDisclosedAttribute("is Identity removed", true);
+
+        const deleteMessage = `${
+          getIdentityType(type) === IdentityTypes.EMAIL
+            ? "Email address"
+            : "Phone number"
+        } has been deleted`;
+
+        setAlertMessagesCookie(response, [generateAlertMessage(deleteMessage)]);
+
+        response.statusCode = HttpStatus.ACCEPTED;
+        response.setHeader("Content-Type", "application/json");
+        response.end();
+        return;
       })
       .catch((error) => {
+        span.setDisclosedAttribute("is Identity removed", false);
         if (error instanceof GraphqlErrors) {
-          throw webErrorFactory(webErrors.identityNotFound);
+          throw webErrorFactory({
+            ...webErrors.identityNotFound,
+            parentError: error,
+          });
         }
 
         if (error instanceof ConnectUnreachableError) {
-          throw webErrorFactory(webErrors.connectUnreachable);
+          throw webErrorFactory({
+            ...webErrors.connectUnreachable,
+            parentError: error,
+          });
         }
 
         throw error;
       });
-
-    response.statusCode = HttpStatus.OK;
-    response.json({ sortedIdentities });
   });
 };
 
@@ -83,9 +116,9 @@ const wrappedHandler = wrapMiddlewares(
     authMiddleware(getTracer()),
   ],
   handler,
-  "/api/get-sorted-identities",
+  "/api/identity/delete-identity",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .get(wrappedHandler)
+  .delete(wrappedHandler)
   .getHandler();

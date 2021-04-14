@@ -33,6 +33,7 @@ async function getUserFromSub(): Promise<void> {
             "\nTemporary Identities:\n",
             unmarshall(Item).temporary_identities,
           );
+          console.log("\nSudo:\n", unmarshall(Item).sudo);
         }
       } else {
         throw new Error(errors.tooManyArgs);

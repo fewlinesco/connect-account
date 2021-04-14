@@ -52,7 +52,7 @@ describe("ValidateIdentityPage", () => {
       );
 
       expect(
-        screen.getByText("Email address | validation"),
+        screen.getByRole("heading", { name: /email address \| validation/i }),
       ).toBeInTheDocument();
     });
   });
@@ -90,7 +90,9 @@ describe("ValidateIdentityPage", () => {
         <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />,
       );
 
-      expect(screen.getByText("Phone number | validation")).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: /phone number \| validation/i }),
+      ).toBeInTheDocument();
     });
   });
 });

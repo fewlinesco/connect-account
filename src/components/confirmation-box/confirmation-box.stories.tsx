@@ -61,8 +61,6 @@ const DangerConfirmationBox = (): JSX.Element => {
     setConfirmationBoxContent,
   ] = React.useState<JSX.Element>(<React.Fragment />);
 
-  const userId = "12345-67890-e1234-ad67890-az12345";
-
   const identity = {
     type: IdentityTypes.EMAIL,
     value: "test@fewlines.test",
@@ -83,7 +81,6 @@ const DangerConfirmationBox = (): JSX.Element => {
                 setOpen={setOpen}
                 value={identity.value}
                 type={identity.type}
-                userId={userId}
               />,
             );
           }}

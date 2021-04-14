@@ -16,7 +16,7 @@ const InputsRadio: React.FC<{
         return (
           <React.Fragment key={groupName + inputValue}>
             <Label htmlFor={groupName + inputValue}>
-              {inputValue}
+              <p>{inputValue}</p>
               <RadioInputElement
                 type="radio"
                 id={groupName + inputValue}
@@ -44,9 +44,15 @@ const Label = styled.label`
   height: 6.8rem;
   padding: 0 ${({ theme }) => theme.spaces.xs};
   background-color: ${({ theme }) => theme.colors.background};
-
   box-shadow: ${({ theme }) => theme.shadows.box};
   cursor: pointer;
+
+  p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 90%;
+  }
 
   @media ${deviceBreakpoints.m} {
     padding: 0 1.5rem;
@@ -78,8 +84,8 @@ const Label = styled.label`
   }
 
   input:focus + span {
-    outline: Highlight auto 1px;
-    outline: -webkit-focus-ring-color auto 1px;
+    outline: Highlight auto 0.1rem;
+    outline: -webkit-focus-ring-color auto 0.1rem;
   }
 `;
 
@@ -94,4 +100,4 @@ const RadioInputElement = styled.input`
   width: 1px;
 `;
 
-export { InputsRadio };
+export { InputsRadio, Label };

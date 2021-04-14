@@ -8,8 +8,8 @@ import { NavigationBreadcrumbs } from "./navigation-breadcrumbs/navigation-bread
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Layout: React.FC<{
+  breadcrumbs: string | false;
   title?: string;
-  breadcrumbs?: string[];
 }> = ({ children, title, breadcrumbs }) => {
   return (
     <Main>
@@ -21,15 +21,15 @@ const Layout: React.FC<{
         <DesktopNavigationBarWrapper>
           <DesktopNavigationBar />
         </DesktopNavigationBarWrapper>
-        <ChildrenContainer>
+        <ChildrenContainer titleText={title} breadcrumbs={breadcrumbs}>
           {title ? (
-            <MainTitle needSpacing={breadcrumbs ? false : true}>
+            <MainTitle
+              needSpacing={breadcrumbs || breadcrumbs === "" ? false : true}
+            >
               {title}
             </MainTitle>
           ) : null}
-          {breadcrumbs ? (
-            <NavigationBreadcrumbs breadcrumbs={breadcrumbs} />
-          ) : null}
+          <NavigationBreadcrumbs breadcrumbs={breadcrumbs} />
           {children}
         </ChildrenContainer>
       </Flex>
@@ -70,10 +70,20 @@ const DesktopNavigationBarWrapper = styled.div`
   }
 `;
 
-const ChildrenContainer = styled.div`
+const ChildrenContainer = styled.div<{
+  breadcrumbs: string | false;
+  titleText?: string;
+}>`
   width: 60%;
-  height: 100%;
   margin: 0 auto;
+
+  ${({ titleText, breadcrumbs }) =>
+    !titleText &&
+    !breadcrumbs &&
+    `
+      display: flex;
+      align-items: center;
+    `};
 
   @media ${deviceBreakpoints.m} {
     width: 90%;

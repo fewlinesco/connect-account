@@ -30,11 +30,9 @@ const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxContentProps
         type="button"
         variant={ButtonVariant.PRIMARY}
         onClick={async () => {
-          fetchJson(
-            "/api/auth-connect/mark-identity-as-primary",
-            HttpVerbs.POST,
-            { identityId: id },
-          ).then(() => {
+          fetchJson("/api/identity/mark-identity-as-primary", HttpVerbs.POST, {
+            identityId: id,
+          }).then(() => {
             router && router.push("/account/logins");
           });
         }}
@@ -59,6 +57,7 @@ const PrimaryConfirmationText = styled.p`
   margin: 0 0 ${({ theme }) => theme.spaces.xs};
   line-height: ${({ theme }) => theme.lineHeights.copy};
   text-align: center;
+  word-break: break-word;
 `;
 
 export { PrimaryConfirmationBoxContent, PrimaryConfirmationText };

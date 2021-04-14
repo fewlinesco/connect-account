@@ -1,7 +1,8 @@
 import { HttpStatus } from "@fwl/web";
 import userEvent from "@testing-library/user-event";
-import fetch, { enableFetchMocks } from "jest-fetch-mock";
+import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
+import { cache, SWRConfig } from "swr";
 
 import { render, screen } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
@@ -22,10 +23,6 @@ jest.mock("@src/configs/db-client", () => {
 
 const mockedFetchJson = jest.spyOn(fetchJson, "fetchJson");
 
-beforeAll(() => {
-  fetch.resetMocks();
-});
-
 const eventId = "5aebc079-c754-4324-93bb-af20d7015fbe";
 
 describe("SudoPage", () => {
@@ -33,16 +30,36 @@ describe("SudoPage", () => {
     it("should render proper form elements and submit button text should update after first submit", async () => {
       expect.assertions(11);
 
-      render(
-        <SudoPage
-          primaryIdentities={[
-            mockIdentities.primaryEmailIdentity,
-            mockIdentities.primaryPhoneIdentity,
-          ]}
-        />,
+      const mockedFetchJSONResponse = new Response(
+        JSON.stringify({ eventId }),
+        {
+          status: HttpStatus.OK,
+        },
       );
 
-      const contactChoiceRadioInputs = screen.getAllByRole("radio");
+      mockedFetchJson.mockImplementationOnce(async () => {
+        return Promise.resolve(mockedFetchJSONResponse);
+      });
+
+      const primaryIdentities = [
+        mockIdentities.primaryEmailIdentity,
+        mockIdentities.primaryPhoneIdentity,
+      ];
+
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { primaryIdentities };
+            },
+          }}
+        >
+          <SudoPage />
+        </SWRConfig>,
+      );
+
+      const contactChoiceRadioInputs = await screen.findAllByRole("radio");
       expect(contactChoiceRadioInputs).toHaveLength(2);
 
       expect(contactChoiceRadioInputs[0]).toBeInTheDocument();
@@ -60,34 +77,58 @@ describe("SudoPage", () => {
       );
 
       userEvent.click(contactChoiceRadioInputs[1]);
+
       expect(contactChoiceRadioInputs[1]).toBeChecked();
       expect(contactChoiceRadioInputs[0]).not.toBeChecked();
 
-      const submitButton = screen.getByRole("button", {
-        name: "Send confirmation code",
+      const submitButton = await screen.findByRole("button", {
+        name: "Send validation code",
       });
       expect(submitButton).toBeInTheDocument();
+
       userEvent.click(submitButton);
 
-      const mockedFetchResponse = new Response(JSON.stringify({ eventId }), {
-        status: HttpStatus.OK,
-      });
-      mockedFetchJson.mockResolvedValueOnce(mockedFetchResponse);
-
       expect(
-        await screen.findByRole("button", { name: "Resend confirmation code" }),
+        await screen.findByRole("button", {
+          name: "Resend validation code",
+        }),
       ).toBeInTheDocument();
     });
   });
+
   describe("Verify validation code form", () => {
     it("should render proper form elements", async () => {
       expect.assertions(8);
 
-      render(
-        <SudoPage primaryIdentities={[mockIdentities.primaryPhoneIdentity]} />,
+      const mockedFetchJSONResponse = new Response(
+        JSON.stringify({ eventId }),
+        {
+          status: HttpStatus.OK,
+        },
       );
 
-      const contactChoiceRadioInput = screen.getByRole("radio");
+      mockedFetchJson.mockImplementationOnce(async () => {
+        return Promise.resolve(mockedFetchJSONResponse);
+      });
+
+      const primaryIdentities = [mockIdentities.primaryPhoneIdentity];
+
+      cache.set("/api/identity/get-primary-identities", { primaryIdentities });
+
+      render(
+        <SWRConfig
+          value={{
+            dedupingInterval: 0,
+            fetcher: () => {
+              return { primaryIdentities };
+            },
+          }}
+        >
+          <SudoPage />
+        </SWRConfig>,
+      );
+
+      const contactChoiceRadioInput = await screen.findByRole("radio");
 
       expect(contactChoiceRadioInput).toBeInTheDocument();
       expect(contactChoiceRadioInput).toBeChecked();
@@ -97,28 +138,22 @@ describe("SudoPage", () => {
       );
 
       const submitButton = screen.getByRole("button", {
-        name: "Send confirmation code",
+        name: "Send validation code",
       });
       expect(submitButton).toBeInTheDocument();
+
       userEvent.click(submitButton);
 
-      const mockedFetchResponse = new Response(JSON.stringify({ eventId }), {
-        status: HttpStatus.OK,
-      });
-      mockedFetchJson.mockResolvedValueOnce(mockedFetchResponse);
-
       expect(
-        await screen.findByRole("button", { name: "Resend confirmation code" }),
+        await screen.findByRole("button", { name: "Resend validation code" }),
       ).toBeInTheDocument();
 
-      const validationCodeInput = await screen.findByLabelText(
-        "Enter received code here:",
-      );
-
+      const validationCodeInput = await screen.findByRole("textbox", {
+        name: /enter received code here:/i,
+      });
       expect(validationCodeInput).toBeInTheDocument();
       userEvent.type(validationCodeInput, "123456");
       expect(validationCodeInput).toHaveDisplayValue("123456");
-
       expect(
         screen.getByRole("button", { name: "Confirm" }),
       ).toBeInTheDocument();

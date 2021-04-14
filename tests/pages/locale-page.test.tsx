@@ -18,6 +18,6 @@ describe("LocalePage", () => {
     render(<LocalePage />);
 
     expect(screen.getByRole("textbox")).toBeInTheDocument();
-    expect(screen.getByTitle("Magnifying glass")).toBeInTheDocument();
+    expect(screen.getByText(/magnifying glass/i)).toBeInTheDocument();
   });
 });

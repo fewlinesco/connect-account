@@ -1,6 +1,7 @@
 import { Identity } from "@fewlines/connect-management";
 import React from "react";
 import styled from "styled-components";
+import useSWR from "swr";
 
 import { SendTwoFACodeForm } from "@src/components/forms/send-two-fa-code-form";
 import { VerifyTwoFACodeForm } from "@src/components/forms/verify-two-fa-code-form";
@@ -8,10 +9,16 @@ import { LockIcon } from "@src/components/icons/lock-icon/lock-icon";
 import { Separator } from "@src/components/separator/separator";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-const TwoFA: React.FC<{ primaryIdentities: Identity[] }> = ({
-  primaryIdentities,
-}) => {
+const TwoFA: React.FC = () => {
   const [isCodeSent, setIsCodeSent] = React.useState<boolean>(false);
+
+  const { data, error } = useSWR<{ primaryIdentities: Identity[] }, Error>(
+    "/api/identity/get-primary-identities",
+  );
+
+  if (error) {
+    throw error;
+  }
 
   return (
     <Wrapper>
@@ -21,9 +28,9 @@ const TwoFA: React.FC<{ primaryIdentities: Identity[] }> = ({
       </SecurityMessage>
       <Separator />
       <SendTwoFACodeForm
-        primaryIdentities={primaryIdentities}
         isCodeSent={isCodeSent}
         setIsCodeSent={setIsCodeSent}
+        data={data}
       />
       {isCodeSent ? (
         <>
@@ -63,7 +70,7 @@ const SecurityMessage = styled.div`
 
   @media ${deviceBreakpoints.m} {
     p {
-      line-height: 22px;
+      line-height: 2.2rem;
     }
   }
 `;

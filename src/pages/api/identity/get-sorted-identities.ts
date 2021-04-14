@@ -1,7 +1,7 @@
 import {
   ConnectUnreachableError,
+  getIdentities,
   GraphqlErrors,
-  isUserPasswordSet,
 } from "@fewlines/connect-management";
 import { Endpoint, getServerSideCookies, HttpStatus } from "@fwl/web";
 import {
@@ -22,14 +22,16 @@ import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { sortIdentities } from "@src/utils/sort-identities";
 
 const handler: Handler = (request, response): Promise<void> => {
   const webErrors = {
+    badRequest: ERRORS_DATA.BAD_REQUEST,
     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
   };
 
-  return getTracer().span("is-password-set handler", async (span) => {
+  return getTracer().span("get-sorted-identities handler", async (span) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
@@ -43,31 +45,33 @@ const handler: Handler = (request, response): Promise<void> => {
       return;
     }
 
-    const isPasswordSet = await isUserPasswordSet(
+    const sortedIdentities = await getIdentities(
       configVariables.managementCredentials,
       userCookie.sub,
-    ).catch((error) => {
-      span.setDisclosedAttribute("is password set info found", false);
-      if (error instanceof GraphqlErrors) {
-        throw webErrorFactory({
-          ...webErrors.identityNotFound,
-          parentError: error,
-        });
-      }
+    )
+      .then((identities) => {
+        return sortIdentities(identities);
+      })
+      .catch((error) => {
+        span.setDisclosedAttribute("identities found", false);
+        if (error instanceof GraphqlErrors) {
+          throw webErrorFactory({
+            ...webErrors.identityNotFound,
+            parentError: error,
+          });
+        }
+        if (error instanceof ConnectUnreachableError) {
+          throw webErrorFactory({
+            ...webErrors.connectUnreachable,
+            parentError: error,
+          });
+        }
+        throw error;
+      });
 
-      if (error instanceof ConnectUnreachableError) {
-        throw webErrorFactory({
-          ...webErrors.connectUnreachable,
-          parentError: error,
-        });
-      }
-
-      throw error;
-    });
-
-    span.setDisclosedAttribute("is password set info found", true);
+    span.setDisclosedAttribute("identities found", true);
     response.statusCode = HttpStatus.OK;
-    response.json({ isPasswordSet });
+    response.json({ sortedIdentities });
   });
 };
 
@@ -85,7 +89,7 @@ const wrappedHandler = wrapMiddlewares(
     authMiddleware(getTracer()),
   ],
   handler,
-  "/api/auth-connect/is-password-set",
+  "/api/identity/get-sorted-identities",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

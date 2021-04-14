@@ -1,7 +1,8 @@
 import {
   ConnectUnreachableError,
+  getIdentity,
   GraphqlErrors,
-  markIdentityAsPrimary,
+  IdentityNotFoundError,
 } from "@fewlines/connect-management";
 import { getServerSideCookies, Endpoint, HttpStatus } from "@fwl/web";
 import {
@@ -22,23 +23,16 @@ import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import { isMarkingIdentityAsPrimaryAuthorized } from "@src/utils/is-marking-identity-as-primary-authorized";
 
 const handler: Handler = async (request, response) => {
   const webErrors = {
-    badRequest: ERRORS_DATA.BAD_REQUEST,
     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
+    graphqlErrors: ERRORS_DATA.GRAPHQL_ERRORS,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
-    invalidBody: ERRORS_DATA.INVALID_BODY,
+    invalidQueryString: ERRORS_DATA.INVALID_QUERY_STRING,
   };
 
-  return getTracer().span("mark-identity-as-primary handler", async (span) => {
-    const { identityId } = request.body;
-
-    if (!identityId) {
-      throw webErrorFactory(webErrors.invalidBody);
-    }
-
+  return getTracer().span("get-identity handler", async (span) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
@@ -52,53 +46,44 @@ const handler: Handler = async (request, response) => {
       return;
     }
 
-    const isAuthorized = await isMarkingIdentityAsPrimaryAuthorized(
-      userCookie.sub,
-      identityId,
-    );
+    const identityId = request.query.identityId;
 
-    if (!isAuthorized) {
-      span.setDisclosedAttribute(
-        "is mark Identity as primary authorized",
-        false,
-      );
-
-      throw webErrorFactory(webErrors.badRequest);
+    if (!identityId || typeof identityId !== "string") {
+      throw webErrorFactory(webErrors.invalidQueryString);
     }
 
-    span.setDisclosedAttribute("is mark Identity as primary authorized", true);
-
-    return markIdentityAsPrimary(
-      configVariables.managementCredentials,
+    const identity = await getIdentity(configVariables.managementCredentials, {
+      userId: userCookie.sub,
       identityId,
-    )
-      .then(() => {
-        span.setDisclosedAttribute("is Identity marked as primary", true);
+    }).catch((error) => {
+      span.setDisclosedAttribute("is Identity fetched", false);
 
-        response.statusCode = HttpStatus.OK;
-        response.setHeader("Content-type", "application/json");
-        response.end();
-        return;
-      })
-      .catch((error) => {
-        span.setDisclosedAttribute("is Identity marked as primary", false);
+      if (error instanceof IdentityNotFoundError) {
+        throw webErrorFactory({
+          ...webErrors.identityNotFound,
+        });
+      }
 
-        if (error instanceof GraphqlErrors) {
-          throw webErrorFactory({
-            ...webErrors.identityNotFound,
-            parentError: error,
-          });
-        }
+      if (error instanceof GraphqlErrors) {
+        throw webErrorFactory({
+          ...webErrors.graphqlErrors,
+          parentError: error,
+        });
+      }
 
-        if (error instanceof ConnectUnreachableError) {
-          throw webErrorFactory({
-            ...webErrors.connectUnreachable,
-            parentError: error,
-          });
-        }
+      if (error instanceof ConnectUnreachableError) {
+        throw webErrorFactory({
+          ...webErrors.connectUnreachable,
+          parentError: error,
+        });
+      }
 
-        throw error;
-      });
+      throw error;
+    });
+
+    span.setDisclosedAttribute("is Identity fetched", true);
+    response.statusCode = HttpStatus.OK;
+    response.json({ identity });
   });
 };
 
@@ -116,9 +101,9 @@ const wrappedHandler = wrapMiddlewares(
     authMiddleware(getTracer()),
   ],
   handler,
-  "/api/auth-connect/mark-identity-as-primary",
+  "/api/identity/get-identity",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .post(wrappedHandler)
+  .get(wrappedHandler)
   .getHandler();

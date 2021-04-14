@@ -1,10 +1,10 @@
 import {
   ConnectUnreachableError,
+  getIdentities,
   GraphqlErrors,
   IdentityTypes,
-  removeIdentityFromUser,
 } from "@fewlines/connect-management";
-import { Endpoint, HttpStatus, setAlertMessagesCookie } from "@fwl/web";
+import { Endpoint, getServerSideCookies, HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -16,14 +16,13 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
+import { UserCookie } from "@src/@types/user-cookie";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import { generateAlertMessage } from "@src/utils/generateAlertMessage";
-import { getIdentityType } from "@src/utils/get-identity-type";
 
 const handler: Handler = (request, response): Promise<void> => {
   const webErrors = {
@@ -32,38 +31,35 @@ const handler: Handler = (request, response): Promise<void> => {
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
   };
 
-  return getTracer().span("delete-identity handler", async (span) => {
-    const { userId, type, value } = request.body;
+  return getTracer().span("get-primary-identities handler", async (span) => {
+    const userCookie = await getServerSideCookies<UserCookie>(request, {
+      cookieName: "user-cookie",
+      isCookieSealed: true,
+      cookieSalt: configVariables.cookieSalt,
+    });
 
-    if (!userId || !type || !value) {
-      throw webErrorFactory(webErrors.badRequest);
+    if (!userCookie) {
+      response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+      response.setHeader("location", "/");
+      response.end();
+      return;
     }
 
-    span.setDisclosedAttribute("Identity type", type);
-
-    return removeIdentityFromUser(configVariables.managementCredentials, {
-      userId,
-      identityType: type,
-      identityValue: value,
-    })
-      .then(() => {
-        span.setDisclosedAttribute("is Identity removed", true);
-
-        const deleteMessage = `${
-          getIdentityType(type) === IdentityTypes.EMAIL
-            ? "Email address"
-            : "Phone number"
-        } has been deleted`;
-
-        setAlertMessagesCookie(response, [generateAlertMessage(deleteMessage)]);
-
-        response.statusCode = HttpStatus.ACCEPTED;
-        response.setHeader("Content-Type", "application/json");
-        response.end();
-        return;
+    const primaryIdentities = await getIdentities(
+      configVariables.managementCredentials,
+      userCookie.sub,
+    )
+      .then((identities) => {
+        return identities.filter((identity) => {
+          return (
+            identity.primary &&
+            (identity.type == IdentityTypes.EMAIL.toLowerCase() ||
+              identity.type == IdentityTypes.PHONE.toLowerCase())
+          );
+        });
       })
       .catch((error) => {
-        span.setDisclosedAttribute("is Identity removed", false);
+        span.setDisclosedAttribute("primary identities found", false);
         if (error instanceof GraphqlErrors) {
           throw webErrorFactory({
             ...webErrors.identityNotFound,
@@ -80,6 +76,10 @@ const handler: Handler = (request, response): Promise<void> => {
 
         throw error;
       });
+
+    span.setDisclosedAttribute("primary identities found", true);
+    response.statusCode = HttpStatus.OK;
+    response.json({ primaryIdentities });
   });
 };
 
@@ -97,9 +97,9 @@ const wrappedHandler = wrapMiddlewares(
     authMiddleware(getTracer()),
   ],
   handler,
-  "/api/delete-identity",
+  "/api/identity/get-primary-identities",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .delete(wrappedHandler)
+  .get(wrappedHandler)
   .getHandler();

@@ -12,10 +12,45 @@ const LoginsSkeleton: React.FC = () => {
   );
 };
 
+const IdentityOverviewSkeleton: React.FC = () => {
+  return (
+    <SkeletonBody>
+      <SkeletonBlock />
+      <SkeletonLine />
+    </SkeletonBody>
+  );
+};
+
+const UpdateIdentitySkeleton: React.FC = () => {
+  return (
+    <SkeletonBody>
+      <SkeletonSection />
+      <SkeletonBlock />
+      <SkeletonLine />
+    </SkeletonBody>
+  );
+};
+
 const SecuritySkeleton: React.FC = () => {
   return (
     <SkeletonBody>
       <SkeletonSection />
+    </SkeletonBody>
+  );
+};
+
+const TwoFASkeleton: React.FC = () => {
+  return (
+    <SkeletonBody>
+      <SkeletonBlock />
+    </SkeletonBody>
+  );
+};
+
+const BreadcrumbsSkeleton: React.FC = () => {
+  return (
+    <SkeletonBody>
+      <SkeletonTextLine fontSize={1.4} />
     </SkeletonBody>
   );
 };
@@ -26,6 +61,7 @@ const SkeletonBody = styled.div`
   width: auto;
   overflow: hidden;
   border-radius: ${({ theme }) => theme.radii[1]};
+
   @keyframes loading {
     100% {
       transform: translateX(100%);
@@ -45,7 +81,7 @@ const SkeletonAnimation = styled.div`
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(255, 255, 255, 0.2),
+      rgba(222, 222, 222, 0.6),
       transparent
     );
     animation: loading 1.5s infinite;
@@ -58,6 +94,21 @@ const SkeletonLine = styled(SkeletonAnimation)`
   position: relative;
   background-color: #e2e2e2;
   margin-bottom: 2rem;
+`;
+
+const SkeletonTextLine = styled(SkeletonAnimation)<{ fontSize: number }>`
+  position: relative;
+  height: ${({ fontSize }) => `${fontSize}rem`};
+  width: 50%;
+  background-color: ${({ theme }) => theme.colors.box};
+  border-radius: ${({ theme }) => theme.radii[0]};
+  overflow: hidden;
+
+  @keyframes loading {
+    100% {
+      transform: translateX(100%);
+    }
+  }
 `;
 
 const SkeletonBlock = styled(SkeletonAnimation)`
@@ -76,4 +127,12 @@ const SkeletonSection = styled(SkeletonAnimation)`
   margin-bottom: 5rem;
 `;
 
-export { LoginsSkeleton, SecuritySkeleton };
+export {
+  LoginsSkeleton,
+  IdentityOverviewSkeleton,
+  UpdateIdentitySkeleton,
+  SecuritySkeleton,
+  TwoFASkeleton,
+  BreadcrumbsSkeleton,
+  SkeletonTextLine,
+};

@@ -1,5 +1,5 @@
 import { IdentityTypes } from "@fewlines/connect-management";
-import { AlertMessage, HttpStatus } from "@fwl/web";
+import { AlertMessage } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -8,7 +8,6 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
-import { ServerResponse } from "http";
 import { GetServerSideProps } from "next";
 import React from "react";
 
@@ -19,6 +18,7 @@ import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { getIdentityType } from "@src/utils/get-identity-type";
 
 const ValidateIdentityPage: React.FC<{
   type: IdentityTypes;
@@ -27,13 +27,12 @@ const ValidateIdentityPage: React.FC<{
 }> = ({ type, eventId }) => {
   return (
     <Layout
-      title="Logins"
-      breadcrumbs={[
-        type.toUpperCase() === IdentityTypes.EMAIL
+      breadcrumbs={`${
+        getIdentityType(type) === IdentityTypes.EMAIL
           ? "Email address"
-          : "Phone number",
-        "validation",
-      ]}
+          : "Phone number"
+      } | validation`}
+      title="Logins"
     >
       <Container>
         <ValidateIdentityForm type={type} eventId={eventId} />
@@ -43,7 +42,10 @@ const ValidateIdentityPage: React.FC<{
 };
 
 const getServerSideProps: GetServerSideProps = async (context) => {
-  return getServerSidePropsWithMiddlewares<{ type: string }>(
+  return getServerSidePropsWithMiddlewares<{
+    type: string;
+    identityId: string;
+  }>(
     context,
     [
       tracingMiddleware(getTracer()),
@@ -58,16 +60,17 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       authMiddleware(getTracer()),
     ],
     "/account/logins/[type]/validation/[eventId]",
-    async (request, response: ServerResponse) => {
+    () => {
       if (!context?.params?.type) {
-        response.statusCode = HttpStatus.NOT_FOUND;
-        response.end();
-        return;
+        return {
+          notFound: true,
+        };
       }
+
       if (!context?.params?.eventId) {
-        response.statusCode = HttpStatus.NOT_FOUND;
-        response.end();
-        return;
+        return {
+          notFound: true,
+        };
       }
 
       return {

@@ -43,6 +43,8 @@ const handler: Handler = (request, response): Promise<void> => {
       .getTokensFromAuthorizationCode(`${request.query.code}`)
       .catch((error) => {
         if (error instanceof UnreachableError) {
+          span.setAttribute("authorization_code", "failed");
+
           throw webErrorFactory({
             ...webErrors.unreachable,
             parentError: error,

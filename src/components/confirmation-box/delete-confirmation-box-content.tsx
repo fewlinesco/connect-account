@@ -10,7 +10,6 @@ import { getIdentityType } from "@src/utils/get-identity-type";
 
 interface DeleteIdentityProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  userId: string;
   type: IdentityTypes;
   value: string;
 }
@@ -19,7 +18,6 @@ const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
   setOpen,
   value,
   type,
-  userId,
 }) => {
   const router = useRouter();
 
@@ -33,13 +31,12 @@ const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
         variant={ButtonVariant.DANGER}
         onClick={async () => {
           const requestData = {
-            userId,
             type: getIdentityType(type),
             value,
           };
 
           await fetchJson(
-            "/api/delete-identity",
+            "/api/identity/delete-identity",
             HttpVerbs.DELETE,
             requestData,
           ).then(() => {
@@ -69,6 +66,8 @@ const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
 const DeleteConfirmationText = styled.p`
   margin: 0 0 ${({ theme }) => theme.spaces.xs};
   line-height: ${({ theme }) => theme.lineHeights.copy};
+  text-align: center;
+  word-break: break-word;
 `;
 
 export { DeleteConfirmationBoxContent, DeleteConfirmationText };
