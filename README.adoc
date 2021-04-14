@@ -81,7 +81,7 @@ echo "127.0.0.1 connect-account.local" | sudo tee -a /etc/hosts
 echo "::1 connect-account.local" | sudo tee -a /etc/hosts
 ----
 
-=== Development Process
+== Development Process
 
 [source, shell]
 ----
@@ -325,6 +325,15 @@ Favicons for various OS.
 - *README.adoc*: Connect.Account documentation, written in AsciiDoc.
 - *tsconfig.json*: TypeScript compiler options.
 - *yarn.lock*: Package manager instructions.
+
+== GitHub Actions
+
+To trigger script in the CI context, we chose GitHub Actions.
+
+=== Lighthouse reports
+
+- Docker image: https://github.com/femtopixel/docker-google-lighthouse-puppeteer
+- Package: https://github.com/femtopixel/google-lighthouse-puppeteer
 
 == TypeScript
 

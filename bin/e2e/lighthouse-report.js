@@ -7,7 +7,7 @@ class LighthouseReport {
     }
 
     const reviewAppURL = process.env.CONNECT_TEST_ACCOUNT_URL;
-    console.log("getUrls", reviewAppURL);
+
     return [reviewAppURL];
   }
 
@@ -70,8 +70,6 @@ class LighthouseReport {
       );
       await page.click("[type=submit]");
       await page.waitForTimeout(10000);
-
-      console.log(await page.content());
 
       resolve(browser);
     });
