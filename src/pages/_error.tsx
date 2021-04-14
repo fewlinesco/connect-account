@@ -43,7 +43,7 @@ CustomErrorComponent.getInitialProps = async (
     res,
     err,
   } as NextPageContext)) as ErrorProps;
-
+  console.log("FUCK YEAH");
   // Workaround for https://github.com/vercel/next.js/issues/8592.
   errorInitialProps.isReadyToRender = true;
 

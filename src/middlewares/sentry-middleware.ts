@@ -9,12 +9,17 @@ async function sentryReport(
   error: Record<string, unknown>,
   request: NextApiRequest,
 ): Promise<void> {
+  console.log("??");
   return tracer.span("sentry-middleware", async (span) => {
     addRequestScopeToSentry(request);
 
     span.setDisclosedAttribute("http.status_code", error.httpStatus);
     span.setDisclosedAttribute("error.name", error.name);
     span.setDisclosedAttribute("error.message", error.message);
+
+    if ("statusCode" in error && error.statusCode === 404) {
+      throw error;
+    }
 
     Sentry.withScope((scope) => {
       scope.setTag(request.url || "no URL found", error.name as string);

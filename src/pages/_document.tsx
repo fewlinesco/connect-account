@@ -9,6 +9,7 @@ import React from "react";
 import { ServerStyleSheet } from "styled-components";
 
 process.on("unhandledRejection", (error: Error): void => {
+  console.log("lol");
   Sentry.captureException(error);
 });
 
