@@ -8,20 +8,28 @@ import {
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
+import useSWR from "swr";
 
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
+import { SWRError } from "@src/errors/errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
-const LocalePage: React.FC<{ joke: string }> = ({ joke }) => {
+const LocalePage: React.FC = () => {
+  const { data, error } = useSWR<Record<string, string>, SWRError>(
+    "https://api.chucknorris.io/jokes/random",
+  );
+
+  if (error) {
+    throw error;
+  }
+
   return (
     <Layout breadcrumbs={false} title="Test">
-      <Container>
-        <h1>{joke}</h1>
-      </Container>
+      <Container>{data ? <h1>{data.value}</h1> : <h1>Nope</h1>}</Container>
     </Layout>
   );
 };
@@ -42,20 +50,20 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       authMiddleware(getTracer()),
     ],
     "/account/test",
-    async () => {
-      const res = await fetch("https://api.chucknorris.io/jokes/random");
-      const data = await res.json();
+    // async () => {
+    //   const res = await fetch("https://api.chucknorris.io/jokes/random");
+    //   const data = await res.json();
 
-      if (!data) {
-        return {
-          notFound: true,
-        };
-      }
+    //   if (!data) {
+    //     return {
+    //       notFound: true,
+    //     };
+    //   }
 
-      return {
-        props: { joke: data.value },
-      };
-    },
+    //   return {
+    //     props: { joke: data.value },
+    //   };
+    // },
   );
 };
 
