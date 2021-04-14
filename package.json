@@ -207,5 +207,5 @@
       "@testing-library/jest-dom/extend-expect"
     ]
   }, 
-  "browserslist": "> 0.25%, not dead"
+  "browserslist": ["last 2 versions, > 0.25%, not dead"]
 }
