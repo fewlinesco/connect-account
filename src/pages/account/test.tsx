@@ -31,9 +31,12 @@ const TestPage: React.FC = () => {
 
   React.useEffect(() => {
     async function getJoke(): Promise<void> {
-      const result = await fetch(
-        "https://api.chucknorris.io/jokes/random",
-      ).then((data) => data.json());
+      const result = await fetch("https://api.chucknorris.io/jokes/random")
+        .then((data) => {
+          console.log(data);
+          return data.json();
+        })
+        .catch((error) => console.log(error));
 
       console.log(result);
 
