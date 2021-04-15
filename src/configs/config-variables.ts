@@ -1,4 +1,5 @@
 type ConfigVariables = {
+  featureFlag: string;
   connectAccountURL: string;
   dynamoRegion: string;
   dynamoDbEndpoint: string;
@@ -27,6 +28,7 @@ type ConfigVariables = {
 };
 
 const configVariables: ConfigVariables = {
+  featureFlag: "",
   connectAccountURL: "",
   dynamoRegion: "",
   dynamoDbEndpoint: "",
@@ -69,6 +71,7 @@ function getConnectAccountURL(): string {
 function handleEnvVars(): void {
   const connectAccountURL = getConnectAccountURL();
 
+  configVariables.featureFlag === process.env.FEATURE_FLAG;
   configVariables.connectAccountURL = connectAccountURL;
   configVariables.dynamoRegion = process.env.DYNAMODB_REGION || "";
   configVariables.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";

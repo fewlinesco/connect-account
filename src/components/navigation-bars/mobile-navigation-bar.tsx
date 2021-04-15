@@ -12,6 +12,7 @@ import { WhiteWorldIcon } from "../icons/world-icon/white-world-icon/white-world
 import { LogoutAnchor } from "../logout-anchor/logout-anchor";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { NAVIGATION_SECTIONS } from "./navigation-sections";
+import { configVariables } from "@src/configs/config-variables";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const MobileNavigationBar: React.FC = () => {
@@ -26,6 +27,13 @@ const MobileNavigationBar: React.FC = () => {
           <MenuList>
             {Object.entries(NAVIGATION_SECTIONS).map(
               ([title, { href, icon }]) => {
+                if (
+                  !configVariables.featureFlag &&
+                  href === "/account/profile"
+                ) {
+                  return <React.Fragment key={title + href} />;
+                }
+
                 return (
                   <ListItem
                     href={href}

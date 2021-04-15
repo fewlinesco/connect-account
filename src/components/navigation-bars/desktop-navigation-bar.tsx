@@ -8,12 +8,17 @@ import { LogoutAnchor } from "../logout-anchor/logout-anchor";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { Separator } from "../separator/separator";
 import { NAVIGATION_SECTIONS } from "./navigation-sections";
+import { configVariables } from "@src/configs/config-variables";
 
 const DesktopNavigationBar: React.FC = () => {
   return (
     <>
       <Header />
       {Object.entries(NAVIGATION_SECTIONS).map(([title, { href, icon }]) => {
+        if (!configVariables.featureFlag && href === "/account/profile") {
+          return <React.Fragment key={title + href} />;
+        }
+
         return (
           <ListItem href={href} key={title + href}>
             {icon}
