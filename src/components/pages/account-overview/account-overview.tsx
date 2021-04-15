@@ -11,7 +11,8 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 
 const SECTION_LIST_CONTENT = {
   PERSONAL_INFORMATION: {
-    text: "NEED REFINEMENT",
+    text:
+      "NEED REFINEMENT - Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
     icon: <ProfileIcon />,
   },
   LOGINS: {
@@ -31,12 +32,17 @@ const AccountOverview: React.FC = () => {
     <>
       {Object.entries(SECTION_LIST_CONTENT).map(
         ([sectionName, { text, icon }]) => {
+          const sectionHref =
+            sectionName.toLocaleLowerCase() === "personal_information"
+              ? "/account/profile"
+              : `/account/${sectionName.toLocaleLowerCase()}`;
+
           return (
             <SectionBox key={sectionName}>
-              <SectionLink href={`/account/${sectionName.toLocaleLowerCase()}`}>
+              <SectionLink href={sectionHref}>
                 {icon}
                 <TextBox>
-                  <SectionName>{sectionName}</SectionName>
+                  <SectionName>{sectionName.replace("_", " ")}</SectionName>
                   {text}
                 </TextBox>
                 <RightChevron />

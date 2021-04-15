@@ -34,7 +34,7 @@ const MobileNavigationBar: React.FC = () => {
                   >
                     <ListItemLabel>
                       {icon}
-                      <p>{title}</p>
+                      <p>{title.replace("_", " ")}</p>
                     </ListItemLabel>
                     <RightChevron />
                   </ListItem>

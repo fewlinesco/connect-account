@@ -17,7 +17,7 @@ const DesktopNavigationBar: React.FC = () => {
         return (
           <ListItem href={href} key={title + href}>
             {icon}
-            <p>{title}</p>
+            <p>{title.replace("_", " ")}</p>
           </ListItem>
         );
       })}
