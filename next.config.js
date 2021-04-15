@@ -1,4 +1,11 @@
-module.exports = {
+/* eslint-disable @typescript-eslint/no-var-requires */
+const withTM = require("next-transpile-modules")([
+  "@react-aria/ssr",
+  "@react-aria/link",
+  "@react-aria/button",
+]);
+
+module.exports = withTM({
   webpack(config, options) {
     const { isServer } = options;
 
@@ -29,4 +36,4 @@ module.exports = {
 
     return config;
   },
-};
+});
