@@ -25,6 +25,8 @@ module.exports = {
       config.resolve.alias["@sentry/node"] = "@sentry/browser";
     }
 
+    config.optimization.minimize = false;
+
     return config;
   },
 };

@@ -13,7 +13,6 @@ import { SWRError } from "@src/errors/errors";
 import "@src/utils/sentry";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
-  console.log(fetch);
   return (
     <AccountApp>
       <Component {...pageProps} />
