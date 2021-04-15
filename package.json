@@ -44,6 +44,7 @@
     "@sentry/node": "6.2.5",
     "apollo-link-context": "1.0.20",
     "apollo-link-http": "1.5.17",
+    "core-js": "3.10.1",
     "cross-fetch": "3.1.4",
     "graphql": "15.5.0",
     "graphql-tag": "2.12.3",
@@ -82,7 +83,6 @@
     "babel-jest": "26.6.3",
     "babel-loader": "8.2.2",
     "babel-plugin-styled-components": "1.12.0",
-
     "eslint": "7.24.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-import": "2.22.1",
@@ -107,11 +107,17 @@
   },
   "babel": {
     "presets": [
-      ["next/babel", {
-        "preset-env" : {
-          "useBuiltIns": "entry"
+      [
+        "next/babel",
+        {
+          "preset-env": {
+            "useBuiltIns": "entry",
+            "corejs": {
+              "version": "3.10"
+            }
+          }
         }
-      }]
+      ]
     ],
     "plugins": [
       [

@@ -1,3 +1,4 @@
+import "core-js";
 import { SSRProvider } from "@react-aria/ssr";
 import { AppProps } from "next/app";
 import Head from "next/head";
