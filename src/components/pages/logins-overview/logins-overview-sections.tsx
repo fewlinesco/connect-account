@@ -153,13 +153,13 @@ const IdentityValue = styled.p<Pick<Identity, "primary" | "status">>`
   overflow: hidden;
   text-overflow: ellipsis;
   width: 90%;
+  line-height: ${({ theme }) => theme.lineHeights.copy};
 
   ${(props) =>
     props.primary &&
     `
       font-weight: ${props.theme.fontWeights.semibold};
     `}
-
   ${(props) =>
     props.status === "unvalidated" &&
     `
