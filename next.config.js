@@ -9,6 +9,15 @@ module.exports = withTM({
   webpack(config, options) {
     const { isServer } = options;
 
+    const originalEntry = config.entry;
+    config.entry = async () => {
+      const entries = await originalEntry();
+      if (entries["main.js"]) {
+        entries["main.js"].unshift("./polyfills.js");
+      }
+      return entries;
+    };
+
     config.module.rules.push({
       test: /\.(png|svg|jpg|gif|eot|ttf|woff|woff2)$/,
       use: {
