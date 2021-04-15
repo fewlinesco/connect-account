@@ -1,22 +1,24 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const withTM = require("next-transpile-modules")([
-  "@react-aria/ssr",
-  "@react-aria/link",
-  "@react-aria/button",
-]);
+// /* eslint-disable @typescript-eslint/no-var-requires */
+// const withTM = require("next-transpile-modules")([
+//   "@react-aria/ssr",
+//   "@react-aria/link",
+//   "@react-aria/button",
+//   "@react-aria/textfield",
+// ]);
 
-module.exports = withTM({
+module.exports = {
   webpack(config, options) {
     const { isServer } = options;
 
-    const originalEntry = config.entry;
-    config.entry = async () => {
-      const entries = await originalEntry();
-      if (entries["main.js"]) {
-        entries["main.js"].unshift("./polyfills.js");
-      }
-      return entries;
-    };
+    // const originalEntry = config.entry;
+    // config.entry = async () => {
+    //   const entries = await originalEntry();
+    //   if (entries["main.js"]) {
+    //     console.log("passed in");
+    //     entries["main.js"].unshift("./polyfills.js");
+    //   }
+    //   return entries;
+    // };
 
     config.module.rules.push({
       test: /\.(png|svg|jpg|gif|eot|ttf|woff|woff2)$/,
@@ -45,4 +47,4 @@ module.exports = withTM({
 
     return config;
   },
-});
+};

@@ -112,10 +112,12 @@
         "next/babel",
         {
           "preset-env": {
-            "useBuiltIns": "entry",
+            "targets" : "last 2 versions, > 0.25%, not dead",
+            "useBuiltIns": "usage",
             "corejs": {
               "version": "3.10"
-            }
+            }, 
+            "debug": true
           }
         }
       ]
