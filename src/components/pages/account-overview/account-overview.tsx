@@ -7,6 +7,7 @@ import { RightChevron } from "@src/components/icons/right-chevron/right-chevron"
 import { SecurityIcon } from "@src/components/icons/security-icon/security-icon";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SectionBox } from "@src/components/shadow-box/section-box";
+import { configVariables } from "@src/configs/config-variables";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const SECTION_LIST_CONTENT = {
@@ -36,6 +37,13 @@ const AccountOverview: React.FC = () => {
             sectionName.toLocaleLowerCase() === "personal_information"
               ? "/account/profile"
               : `/account/${sectionName.toLocaleLowerCase()}`;
+
+          if (
+            !configVariables.featureFlag &&
+            sectionHref === "/account/profile"
+          ) {
+            return <React.Fragment key={sectionName} />;
+          }
 
           return (
             <SectionBox key={sectionName}>
