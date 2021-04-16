@@ -6,6 +6,7 @@ import {
   GraphqlErrors,
   addIdentityToUser,
   markIdentityAsPrimary,
+  IdentityTypes,
 } from "@fewlines/connect-management";
 import {
   Endpoint,
@@ -154,10 +155,19 @@ const handler: Handler = async (request, response) => {
             });
           });
 
+          const updateMessage = `${
+            getIdentityType(type) === IdentityTypes.EMAIL
+              ? "Email address"
+              : "Phone number"
+          } has been updated`;
+
+          setAlertMessagesCookie(response, [
+            generateAlertMessage(updateMessage),
+          ]);
+
           response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
             Location: "/account/logins",
           });
-
           response.end();
           return;
         })
@@ -256,6 +266,14 @@ const handler: Handler = async (request, response) => {
         });
       },
     );
+
+    const addMessage = `${
+      getIdentityType(type) === IdentityTypes.EMAIL
+        ? "New email address"
+        : "New phone number"
+    } has been added`;
+
+    setAlertMessagesCookie(response, [generateAlertMessage(addMessage)]);
 
     response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
       Location: "/account/logins",
