@@ -49,7 +49,6 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     ],
     "/profile/birthdate/update",
     () => {
-      console.log(!configVariables.featureFlag);
       if (!configVariables.featureFlag) {
         return {
           redirect: {
