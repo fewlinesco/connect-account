@@ -15,7 +15,7 @@ const DesktopNavigationBar: React.FC = () => {
     <>
       <Header />
       {Object.entries(NAVIGATION_SECTIONS).map(([title, { href, icon }]) => {
-        if (!configVariables.featureFlag && href === "/account/profile") {
+        if (configVariables.featureFlag && href === "/account/profile") {
           return <React.Fragment key={title + href} />;
         }
 
