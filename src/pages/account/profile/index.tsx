@@ -37,7 +37,10 @@ const AccountPage: React.FC = () => {
   }
 
   return (
-    <Layout breadcrumbs={false} title="Personal information">
+    <Layout
+      breadcrumbs="Basic information about you"
+      title="Personal information"
+    >
       <Container>
         <UserInfoOverview data={data} />
       </Container>
