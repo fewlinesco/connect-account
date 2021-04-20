@@ -35,7 +35,6 @@ const UpdateNamesForm: React.FC<{ profileNames?: ProfileNames }> = ({
       <Form
         formID={formID}
         onSubmit={async () => {
-          console.log(profileNames);
           setFormID(uuidv4());
           return;
         }}

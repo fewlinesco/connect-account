@@ -31,24 +31,18 @@ const UpdateNamePage: React.FC = () => {
     Error
   >("/api/profile/get-user-info");
 
-  let namesData;
-
   if (error) {
     throw error;
   }
 
+  let namesData;
+
   if (data) {
-    const {
-      name,
-      family_name,
-      given_name,
-      middle_name,
-    } = data.userInfo.profile;
     namesData = {
-      name,
-      family_name,
-      given_name,
-      middle_name,
+      name: data.userInfo.profile.name,
+      family_name: data.userInfo.profile.family_name,
+      given_name: data.userInfo.profile.given_name,
+      middle_name: data.userInfo.profile.middle_name,
     };
   }
 
