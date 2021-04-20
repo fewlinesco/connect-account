@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import { BoxedLink } from "../logins-overview/logins-overview";
 import { Address, Profile } from "@src/@types/profile";
+import { PrimaryBadge } from "@src/components/badges/badges";
+import { ShowMoreButton } from "@src/components/buttons/buttons";
 import { DefaultProfilePictureIcon } from "@src/components/icons/default-profile-picture/default-profile-picture";
 import { PlusIcon } from "@src/components/icons/plus-icon/plus-icon";
 import { RightChevron } from "@src/components/icons/right-chevron/right-chevron";
@@ -18,6 +20,8 @@ const UserInfoOverview: React.FC<{
     };
   };
 }> = ({ data }) => {
+  const [hideAddressList, setHideAddressList] = React.useState<boolean>(true);
+
   return (
     <>
       <h2>Basic information</h2>
@@ -98,6 +102,28 @@ const UserInfoOverview: React.FC<{
           )}
         </UserInfoSection>
       </SectionBox>
+      <AddressesSectionTitle>Addresses</AddressesSectionTitle>
+      <SectionBox>
+        {!data ? (
+          <BoxedLink disableClick={true} href="#">
+            <SkeletonTextLine fontSize={1.6} />
+          </BoxedLink>
+        ) : (
+          <UserAddresses
+            hideAddressList={hideAddressList}
+            addressList={data.userInfo.addresses}
+          />
+        )}
+      </SectionBox>
+      {data && data.userInfo.addresses.length > 1 ? (
+        <Flex>
+          <ShowMoreButton
+            hideList={hideAddressList}
+            quantity={data.userInfo.addresses.length - 1}
+            setHideList={setHideAddressList}
+          />
+        </Flex>
+      ) : null}
     </>
   );
 };
@@ -120,13 +146,93 @@ const UserInfoSection: React.FC<{
   );
 };
 
+const UserAddresses: React.FC<{
+  hideAddressList: boolean;
+  addressList: Address[];
+}> = ({ hideAddressList, addressList }) => {
+  const primaryAddress = addressList.find((address) => address.primary);
+  const secondaryAddresses = addressList.filter(
+    (address) => address.primary === false,
+  );
+
+  return !primaryAddress ? (
+    <NoAddressesParagraph>No addresses added yet</NoAddressesParagraph>
+  ) : (
+    <>
+      <AddressBoxedLink
+        disableClick={false}
+        href="#"
+        primary={primaryAddress.primary}
+      >
+        <AddressContent>
+          <CategoryName>{primaryAddress.kind}</CategoryName>
+          <AddressValue>{`${primaryAddress.street_address}, ${primaryAddress.street_address_2}`}</AddressValue>
+          <AddressValue>{`${primaryAddress.postal_code}, ${primaryAddress.region}, ${primaryAddress.locality}, ${primaryAddress.country}`}</AddressValue>
+          <PrimaryBadge />
+        </AddressContent>
+        <RightChevron />
+      </AddressBoxedLink>
+      {!hideAddressList && addressList.length > 0 ? (
+        <>
+          {secondaryAddresses.map(
+            ({
+              id,
+              sub,
+              street_address,
+              street_address_2,
+              locality,
+              region,
+              postal_code,
+              country,
+              kind,
+              primary,
+            }) => {
+              return (
+                <React.Fragment key={id + sub}>
+                  <Separator />
+                  <AddressBoxedLink
+                    disableClick={false}
+                    href="#"
+                    primary={primary}
+                  >
+                    <AddressContent>
+                      <CategoryName>{kind}</CategoryName>
+                      <AddressValue>{`${street_address}, ${street_address_2}`}</AddressValue>
+                      <AddressValue>{`${postal_code}, ${region}, ${locality}, ${country}`}</AddressValue>
+                    </AddressContent>
+                    <RightChevron />
+                  </AddressBoxedLink>
+                </React.Fragment>
+              );
+            },
+          )}
+        </>
+      ) : null}
+    </>
+  );
+};
+
 const Flex = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 
 const PictureBoxedLink = styled(BoxedLink)`
   height: 8rem !important;
+`;
+
+const AddressBoxedLink = styled(BoxedLink)<{
+  primary: boolean;
+}>`
+  height: auto !important;
+  padding-top: 1.5rem;
+
+  ${(props) =>
+    !props.primary &&
+    `
+      padding-bottom: 1.5rem;
+    `}
 `;
 
 const UserPicture = styled.img`
@@ -147,6 +253,32 @@ const CategoryName = styled.p`
 const CategoryContent = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const AddressContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const NoAddressesParagraph = styled.p`
+  display: flex;
+  align-items: center;
+  height: 7.2rem;
+  margin-right: 0.5rem;
+  padding: 0 2rem;
+`;
+
+const AddressValue = styled.p`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 90%;
+  line-height: ${({ theme }) => theme.lineHeights.copy};
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
+`;
+
+const AddressesSectionTitle = styled.h2`
+  margin-top: 3rem !important;
 `;
 
 export { UserInfoOverview };
