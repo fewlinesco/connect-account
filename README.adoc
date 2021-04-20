@@ -81,7 +81,7 @@ echo "127.0.0.1 connect-account.local" | sudo tee -a /etc/hosts
 echo "::1 connect-account.local" | sudo tee -a /etc/hosts
 ----
 
-=== Development Process
+== Development Process
 
 [source, shell]
 ----
