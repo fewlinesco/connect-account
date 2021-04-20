@@ -8,9 +8,9 @@ import {
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
-import styled from "styled-components";
 
 import { Container } from "@src/components/containers/container";
+import { UpdateNamesForm } from "@src/components/forms/update-names-form";
 import { Layout } from "@src/components/page-layout";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
@@ -22,15 +22,11 @@ const UpdateNamePage: React.FC = () => {
   return (
     <Layout breadcrumbs={"Name | edit"} title="Personal information">
       <Container>
-        <WIP>🏗</WIP>
+        <UpdateNamesForm />
       </Container>
     </Layout>
   );
 };
-
-const WIP = styled.div`
-  font-size: 20rem;
-`;
 
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
