@@ -8,7 +8,9 @@ import {
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
+import useSWR from "swr";
 
+import { Address, Profile } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
 import { UpdateNamesForm } from "@src/components/forms/update-names-form";
 import { Layout } from "@src/components/page-layout";
@@ -19,10 +21,41 @@ import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const UpdateNamePage: React.FC = () => {
+  const { data, error } = useSWR<
+    {
+      userInfo: {
+        profile: Profile;
+        addresses: Address[];
+      };
+    },
+    Error
+  >("/api/profile/get-user-info");
+
+  let namesData;
+
+  if (error) {
+    throw error;
+  }
+
+  if (data) {
+    const {
+      name,
+      family_name,
+      given_name,
+      middle_name,
+    } = data.userInfo.profile;
+    namesData = {
+      name,
+      family_name,
+      given_name,
+      middle_name,
+    };
+  }
+
   return (
     <Layout breadcrumbs={"Name | edit"} title="Personal information">
       <Container>
-        <UpdateNamesForm />
+        <UpdateNamesForm profileNames={namesData} />
       </Container>
     </Layout>
   );

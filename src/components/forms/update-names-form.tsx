@@ -2,32 +2,36 @@ import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { InputText } from "../input/input-text";
-import { WrongInputError } from "../input/wrong-input-error";
+// import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
+import { Profile } from "@src/@types/profile";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 
-type ProfileNames = {
-  firstName: string;
-  lastName: string;
-  givenName?: string;
-  middleName?: string;
-};
+type ProfileNames = Pick<
+  Profile,
+  "name" | "family_name" | "given_name" | "middle_name"
+>;
 
-const UpdateNamesForm: React.FC = () => {
+const UpdateNamesForm: React.FC<{ profileNames?: ProfileNames }> = ({
+  profileNames,
+}) => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
-  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
-  const [profileNames, setProfileNames] = React.useState<ProfileNames>({
-    firstName: "",
-    lastName: "",
-    givenName: "",
-    middleName: "",
+  // const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [
+    updatedProfileNames,
+    setupdatedProfileNames,
+  ] = React.useState<ProfileNames>({
+    name: profileNames ? profileNames.name : "",
+    family_name: profileNames ? profileNames.family_name : "",
+    given_name: profileNames ? profileNames.given_name : "",
+    middle_name: profileNames ? profileNames.middle_name : "",
   });
 
   return (
     <>
-      {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
+      {/* {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null} */}
       <Form
         formID={formID}
         onSubmit={async () => {
@@ -40,11 +44,11 @@ const UpdateNamesForm: React.FC = () => {
           type="text"
           name="value"
           placeholder="First name"
-          value={profileNames.firstName}
+          value={updatedProfileNames.name}
           onChange={(value) => {
-            setProfileNames({
-              ...profileNames,
-              firstName: value,
+            setupdatedProfileNames({
+              ...updatedProfileNames,
+              name: value,
             });
           }}
           label="First name *"
@@ -53,11 +57,11 @@ const UpdateNamesForm: React.FC = () => {
           type="text"
           name="value"
           placeholder="Last name"
-          value={profileNames.lastName}
+          value={updatedProfileNames.family_name}
           onChange={(value) => {
-            setProfileNames({
-              ...profileNames,
-              lastName: value,
+            setupdatedProfileNames({
+              ...updatedProfileNames,
+              family_name: value,
             });
           }}
           label="Last name *"
@@ -66,11 +70,11 @@ const UpdateNamesForm: React.FC = () => {
           type="text"
           name="value"
           placeholder="Given name"
-          value={profileNames.givenName}
+          value={updatedProfileNames.given_name}
           onChange={(value) => {
-            setProfileNames({
-              ...profileNames,
-              givenName: value,
+            setupdatedProfileNames({
+              ...updatedProfileNames,
+              given_name: value,
             });
           }}
           label="Given name"
@@ -79,11 +83,11 @@ const UpdateNamesForm: React.FC = () => {
           type="text"
           name="value"
           placeholder="Middle name"
-          value={profileNames.middleName}
+          value={updatedProfileNames.middle_name}
           onChange={(value) => {
-            setProfileNames({
-              ...profileNames,
-              middleName: value,
+            setupdatedProfileNames({
+              ...updatedProfileNames,
+              middle_name: value,
             });
           }}
           label="Middle name"
