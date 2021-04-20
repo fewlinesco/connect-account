@@ -146,17 +146,13 @@ const SectionWrapper = styled.div<{
 const BoxedLink = styled(NeutralLink)<{
   disableClick?: boolean;
 }>`
-  height: 7.2rem;
+  min-height: 7.2rem;
   padding: 0 ${({ theme }) => theme.spaces.xs};
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  ${({ disableClick }) =>
-    disableClick &&
-    `
-        cursor: default;
-      `}
+  ${({ disableClick }) => disableClick && `cursor: default;`}
 `;
 
 export { LoginsOverview, IDENTITIES_SECTION_CONTENT, BoxedLink };

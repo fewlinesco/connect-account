@@ -29,11 +29,13 @@ const UserInfoOverview: React.FC<{
         <PictureBoxedLink disableClick={false} href="#">
           <Flex>
             {!data ? (
-              <DefaultProfilePictureIcon />
+              <DefaultProfilePictureIconWrapper>
+                <DefaultProfilePictureIcon />
+              </DefaultProfilePictureIconWrapper>
             ) : (
               <UserPicture src={data.userInfo.profile.picture} alt="user" />
             )}
-            <CategoryName>PROFILE PICTURE</CategoryName>
+            <PictureCategoryName>PROFILE PICTURE</PictureCategoryName>
           </Flex>
           <PlusIcon />
         </PictureBoxedLink>
@@ -218,15 +220,19 @@ const Flex = styled.div`
   justify-content: center;
 `;
 
+const DefaultProfilePictureIconWrapper = styled.div`
+  margin-right: 1.6rem;
+`;
+
 const PictureBoxedLink = styled(BoxedLink)`
-  height: 8rem !important;
+  /* height: 8rem; */
 `;
 
 const AddressBoxedLink = styled(BoxedLink)<{
   primary: boolean;
 }>`
   height: auto !important;
-  padding-top: 1.5rem;
+  padding: ${({ theme }) => `1.5rem ${theme.spaces.xs} 0 ${theme.spaces.xs}`};
 
   ${(props) =>
     !props.primary &&
@@ -240,6 +246,13 @@ const UserPicture = styled.img`
   height: 6.4rem;
   border-radius: ${({ theme }) => theme.radii[2]};
   margin-right: 1.6rem;
+`;
+
+const PictureCategoryName = styled.p`
+  color: ${({ theme }) => theme.colors.lightGrey};
+  font-size: ${({ theme }) => theme.fontSizes.s};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+  letter-spacing: 0.2rem;
 `;
 
 const CategoryName = styled.p`
@@ -258,6 +271,7 @@ const CategoryContent = styled.div`
 const AddressContent = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const NoAddressesParagraph = styled.p`

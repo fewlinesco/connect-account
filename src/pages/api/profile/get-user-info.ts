@@ -45,7 +45,7 @@ const handler: Handler = async (request, response) => {
         nickname: "Kaleb",
         preferred_username: "Jovani",
         profile: "https://danielle.biz",
-        picture: "http://placeimg.com/640/480",
+        picture: "//placeimg.com/640/480",
         website: "https://eileen.biz",
         gender: "female",
         birthdate: "2020-10-19",

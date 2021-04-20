@@ -21,7 +21,7 @@ import { SWRError } from "@src/errors/errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
-const AccountPage: React.FC = () => {
+const ProfilePage: React.FC = () => {
   const { data, error } = useSWR<
     {
       userInfo: {
@@ -63,7 +63,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       loggingMiddleware(getTracer(), logger),
       authMiddleware(getTracer()),
     ],
-    "/profile",
+    "/account/profile",
     () => {
       if (!configVariables.featureFlag) {
         return {
@@ -80,4 +80,4 @@ const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export { getServerSideProps };
-export default AccountPage;
+export default ProfilePage;
