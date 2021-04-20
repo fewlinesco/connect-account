@@ -8,29 +8,42 @@ import {
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
-import styled from "styled-components";
+import useSWR from "swr";
 
+import { Address, Profile } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
+import { UserInfoOverview } from "@src/components/pages/user-info-overview/user-info-overview";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
+import { SWRError } from "@src/errors/errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const AccountPage: React.FC = () => {
+  const { data, error } = useSWR<
+    {
+      userInfo: {
+        profile: Profile;
+        addresses: Address[];
+      };
+    },
+    SWRError
+  >(`/api/profile/user-info`);
+
+  if (error) {
+    throw error;
+  }
+
   return (
-    <Layout breadcrumbs={false} title="Welcome to your account">
+    <Layout breadcrumbs={false} title="Personal information">
       <Container>
-        <WIP>🏗</WIP>
+        <UserInfoOverview data={data} />
       </Container>
     </Layout>
   );
 };
-
-const WIP = styled.div`
-  font-size: 20rem;
-`;
 
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
