@@ -38,7 +38,63 @@ const UserInfoOverview: React.FC<{
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            `${data.userInfo.profile.name} ${data.userInfo.profile.family_name}`
+            `${data.userInfo.profile.name} ${data.userInfo.profile.middle_name} ${data.userInfo.profile.family_name}`
+          )}
+        </UserInfoSection>
+        <UserInfoSection categoryName="PREFERRED USERNAME" href="#">
+          {!data ? (
+            <SkeletonTextLine fontSize={1.6} />
+          ) : (
+            data.userInfo.profile.preferred_username
+          )}
+        </UserInfoSection>
+        <UserInfoSection categoryName="NICKNAME" href="#">
+          {!data ? (
+            <SkeletonTextLine fontSize={1.6} />
+          ) : (
+            data.userInfo.profile.nickname
+          )}
+        </UserInfoSection>
+        <UserInfoSection categoryName="GENDER" href="#">
+          {!data ? (
+            <SkeletonTextLine fontSize={1.6} />
+          ) : (
+            data.userInfo.profile.gender
+          )}
+        </UserInfoSection>
+        <UserInfoSection categoryName="BIRTH DATE" href="#">
+          {!data ? (
+            <SkeletonTextLine fontSize={1.6} />
+          ) : (
+            data.userInfo.profile.birthdate
+          )}
+        </UserInfoSection>
+        <UserInfoSection categoryName="TIME ZONE" href="#">
+          {!data ? (
+            <SkeletonTextLine fontSize={1.6} />
+          ) : (
+            data.userInfo.profile.zoneinfo
+          )}
+        </UserInfoSection>
+        <UserInfoSection categoryName="LOCALE" href="#">
+          {!data ? (
+            <SkeletonTextLine fontSize={1.6} />
+          ) : (
+            data.userInfo.profile.locale
+          )}
+        </UserInfoSection>
+        <UserInfoSection categoryName="WEBSITE" href="#">
+          {!data ? (
+            <SkeletonTextLine fontSize={1.6} />
+          ) : (
+            data.userInfo.profile.website
+          )}
+        </UserInfoSection>
+        <UserInfoSection categoryName="PROFILE" href="#">
+          {!data ? (
+            <SkeletonTextLine fontSize={1.6} />
+          ) : (
+            data.userInfo.profile.profile
           )}
         </UserInfoSection>
       </SectionBox>
@@ -51,13 +107,16 @@ const UserInfoSection: React.FC<{
   href: string;
 }> = ({ categoryName, href, children }) => {
   return (
-    <BoxedLink disableClick={false} href={href}>
-      <CategoryContent>
-        <CategoryName>{categoryName}</CategoryName>
-        {children}
-      </CategoryContent>
-      <RightChevron />
-    </BoxedLink>
+    <>
+      <BoxedLink disableClick={false} href={href}>
+        <CategoryContent>
+          <CategoryName>{categoryName}</CategoryName>
+          {children}
+        </CategoryContent>
+        <RightChevron />
+      </BoxedLink>
+      <Separator />
+    </>
   );
 };
 
