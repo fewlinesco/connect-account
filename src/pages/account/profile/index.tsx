@@ -30,7 +30,7 @@ const AccountPage: React.FC = () => {
       };
     },
     SWRError
-  >(`/api/profile/user-info`);
+  >(`/api/profile/get-user-info`);
 
   if (error) {
     throw error;
