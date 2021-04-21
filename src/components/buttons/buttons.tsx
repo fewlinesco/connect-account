@@ -40,16 +40,12 @@ const StyledButton = styled.button<Record<string, unknown>>`
   width: 100%;
   word-break: break-all;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.secondary};
-  }
-
   ${({ theme, variant }) =>
     variant === ButtonVariant.PRIMARY &&
     `
       background: ${theme.colors.primary};
       color: ${theme.colors.background};
-    `};
+  `};
 
   ${({ theme, variant }) =>
     variant === ButtonVariant.SECONDARY &&
@@ -57,11 +53,7 @@ const StyledButton = styled.button<Record<string, unknown>>`
       background: ${theme.colors.background};
       border: 0.1rem solid ${theme.colors.primary};
       color: ${theme.colors.primary};
-      
-      &:hover {
-        background: ${theme.colors.background};
-      }
-      `};
+  `};
 
   ${({ theme, variant }) =>
     variant === ButtonVariant.LIGHT_GREY &&
@@ -70,41 +62,28 @@ const StyledButton = styled.button<Record<string, unknown>>`
     background: #F0F1F3;
     font-size: ${theme.fontSizes.paragraph};
 
-      &:hover {
-        background: #F0F1F3;
-      }
-
-      @media ${deviceBreakpoints.m} {
+    @media ${deviceBreakpoints.m} {
       margin-bottom: 0;
       padding: 3rem 4rem;
       width: 100%;
       background: ${theme.colors.background};
       border-top: ${theme.colors.blacks[0]} ${theme.borders.thin};
-  }
-    `};
+    }
+  `};
 
   ${({ theme, variant }) =>
     variant === ButtonVariant.DANGER &&
     `
       background: ${theme.colors.red};
       color: ${theme.colors.background};
-      
-      &:hover {
-        background: ${theme.colors.red};
-      }
-
-    `};
+  `};
 
   ${({ theme, variant }) =>
     variant === ButtonVariant.GHOST &&
     `
       background: ${theme.colors.background};
       color: ${theme.colors.red};
-
-      &:hover {
-        background: ${theme.colors.background};
-      }
-    `};
+  `};
 `;
 
 const ShowMoreButton: React.FC<{

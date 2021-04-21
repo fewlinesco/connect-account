@@ -155,16 +155,11 @@ const IdentityValue = styled.p<Pick<Identity, "primary" | "status">>`
   width: 90%;
   line-height: ${({ theme }) => theme.lineHeights.copy};
 
-  ${(props) =>
-    props.primary &&
-    `
-      font-weight: ${props.theme.fontWeights.semibold};
-    `}
-  ${(props) =>
-    props.status === "unvalidated" &&
-    `
-      color: ${props.theme.colors.lightGrey};
-    `};
+  ${({ primary, theme }) =>
+    primary && `font-weight: ${theme.fontWeights.semibold};`}
+
+  ${({ status, theme }) =>
+    status === "unvalidated" && `color: ${theme.colors.lightGrey};`};
 `;
 
 const NoIdentitiesParagraph = styled.p`
