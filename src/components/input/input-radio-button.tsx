@@ -9,9 +9,10 @@ const InputsRadio: React.FC<{
   inputsValues: string[];
   selectedInput: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}> = ({ groupName, inputsValues, selectedInput, onChange }) => {
+  className?: string;
+}> = ({ groupName, inputsValues, selectedInput, onChange, className }) => {
   return (
-    <div role="radiogroup" aria-label={groupName}>
+    <div role="radiogroup" className={className} aria-label={groupName}>
       {inputsValues.map((inputValue) => {
         return (
           <React.Fragment key={groupName + inputValue}>
@@ -52,6 +53,7 @@ const Label = styled.label`
     overflow: hidden;
     text-overflow: ellipsis;
     width: 90%;
+    line-height: ${({ theme }) => theme.lineHeights.copy};
   }
 
   @media ${deviceBreakpoints.m} {
