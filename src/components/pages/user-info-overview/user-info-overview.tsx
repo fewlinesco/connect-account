@@ -220,7 +220,7 @@ const AddressBoxedLink = styled(BoxedLink)<{
   height: auto !important;
   padding: ${({ theme }) => `1.5rem ${theme.spaces.xs} 0 ${theme.spaces.xs}`};
 
-  ${({primary}) => !primary && `padding-bottom: 1.5rem !important;`}
+  ${({ primary }) => !primary && `padding-bottom: 1.5rem !important;`}
 `;
 
 const UserPicture = styled.img`
