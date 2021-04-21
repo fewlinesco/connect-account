@@ -136,17 +136,13 @@ const SectionWrapper = styled.div<{
   padding: 0 0 ${({ theme }) => theme.spaces.s} 0;
   position: relative;
 
-  ${({ isLastOfTheList }) =>
-    isLastOfTheList &&
-    `
-      padding: 0;
-    `}
+  ${({ isLastOfTheList }) => isLastOfTheList && `padding: 0;`}
 `;
 
 const BoxedLink = styled(NeutralLink)<{
   disableClick?: boolean;
 }>`
-  min-height: 7.2rem;
+  height: 7.2rem;
   padding: 0 ${({ theme }) => theme.spaces.xs};
   display: flex;
   align-items: center;

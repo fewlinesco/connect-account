@@ -54,20 +54,6 @@ const UserInfoOverview: React.FC<{
             data.userInfo.profile.preferred_username
           )}
         </UserInfoSection>
-        <UserInfoSection categoryName="NICKNAME" href="#">
-          {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
-          ) : (
-            data.userInfo.profile.nickname
-          )}
-        </UserInfoSection>
-        <UserInfoSection categoryName="GENDER" href="#">
-          {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
-          ) : (
-            data.userInfo.profile.gender
-          )}
-        </UserInfoSection>
         <UserInfoSection categoryName="BIRTH DATE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
@@ -225,7 +211,7 @@ const DefaultProfilePictureIconWrapper = styled.div`
 `;
 
 const PictureBoxedLink = styled(BoxedLink)`
-  /* height: 8rem; */
+  height: 8rem;
 `;
 
 const AddressBoxedLink = styled(BoxedLink)<{
@@ -234,11 +220,7 @@ const AddressBoxedLink = styled(BoxedLink)<{
   height: auto !important;
   padding: ${({ theme }) => `1.5rem ${theme.spaces.xs} 0 ${theme.spaces.xs}`};
 
-  ${(props) =>
-    !props.primary &&
-    `
-      padding-bottom: 1.5rem;
-    `}
+  ${({primary}) => !primary && `padding-bottom: 1.5rem !important;`}
 `;
 
 const UserPicture = styled.img`
