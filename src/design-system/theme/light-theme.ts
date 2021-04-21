@@ -1,6 +1,6 @@
 import { DefaultTheme } from "styled-components";
 
-// Based on Bootstrap breakpoints
+// Based on Bootstrap breakpoints.
 const breakpoints = {
   xs: 576,
   s: 768,
@@ -32,16 +32,16 @@ const borders = {
 };
 
 const colors = {
-  primary: "#1825aa",
-  secondary: "#1825aa",
-  background: "#FFFFFF",
-  boxShadow: "rgba(24, 37, 170, 0.08)",
-  black: "#03083C",
-  red: "#EB5757",
-  lightGrey: "#8b90a0",
-  separator: "#F0F1F3",
-  box: "#FAFAFC",
-  breadcrumbs: "#505556",
+  primary: "hsl(235, 75%, 38%)",
+  secondary: "hsl(234, 45%, 91%)",
+  background: "hsl(0, 0%, 100%)",
+  boxShadow: "hsla(235, 75%, 38%, 0.08)",
+  black: "hsl(235, 90%, 12%)",
+  red: "hsl(0, 79%, 63%)",
+  lightGrey: "hsl(226, 10%, 59%)",
+  separator: "hsl(220, 11%, 95%)",
+  box: "hsl(240, 25%, 98%)",
+  breadcrumbs: "hsl(190, 4%, 33%)",
   blacks: [
     "hsl(0, 0%, 90%)", // 0
     "hsl(0, 0%, 75%)", // 1
@@ -96,11 +96,12 @@ const lineHeights = {
 const radii = ["0.4rem", "0.5rem", "55.5rem", "50%"];
 
 const shadows = {
-  xs: "0 0 0 1px rgba(0, 0, 0, 0.05)",
-  sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-  base: "0 1px 3px rgba(63,63,68,0.15), 0 20px 30px rgba(63,63,68,0.07)",
-  left: `5px 0 5px -5px ${colors.blacks[1]}`,
-  box: `0px 0px 16px ${colors.boxShadow}`,
+  xs: "0 0 0 0.1rem hsla(0, 0%, 0%, 0.05)",
+  sm: "0 0.1rem 0.2rem 0 hsla(0, 0%, 0%, 0.05)",
+  base:
+    "0 0.1rem 0.3rem hsla(240, 4%, 26%, 0.15), 0 2rem 3rem hsla(240, 4%, 26%, 0.07)",
+  left: `0.5rem 0 0.5rem -0.5rem ${colors.blacks[1]}`,
+  box: `0 0 1.6rem ${colors.boxShadow}`,
 };
 
 function spacer(n: number): string {

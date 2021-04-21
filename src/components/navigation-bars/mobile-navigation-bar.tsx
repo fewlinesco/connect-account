@@ -120,17 +120,17 @@ const MenuItem = styled.div<{
   width: 100%;
   background-color: ${({ theme }) => theme.colors.box};
 
-  ${(props) =>
-    props.color === "primary" &&
+  ${({ color, theme }) =>
+    color === "primary" &&
     `
-    background-color: ${props.theme.colors.primary};
-    color: ${props.theme.colors.background}
+    background-color: ${theme.colors.primary};
+    color: ${theme.colors.background}
   `};
 
-  ${(props) =>
-    props.borderLeft &&
+  ${({ borderLeft, theme }) =>
+    borderLeft &&
     `
-    border-left: 0.1rem solid ${props.theme.colors.separator};
+    border-left: 0.1rem solid ${theme.colors.separator};
   `};
 `;
 

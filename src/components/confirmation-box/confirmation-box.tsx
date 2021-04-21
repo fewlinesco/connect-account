@@ -69,18 +69,14 @@ const Box = styled.div<Pick<ConfirmationBoxProps, "open" | "preventAnimation">>`
     cursor: pointer;
   }
 
-  ${(props) =>
-    props.open &&
+  ${({ open }) =>
+    open &&
     `
     visibility: visible;
     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
   `}
 
-  ${(props) =>
-    !props.open &&
-    `
-    visibility: hidden;
-  `};
+  ${({ open }) => !open && `visibility: hidden;`};
 `;
 
 export { ConfirmationBox };
