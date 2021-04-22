@@ -287,6 +287,9 @@ components:
         - $ref: "#/components/schemas/AddressData"
         - type: object
           properties:
+            id:
+              type: string
+              description: Unique address identifier
             primary:
               type: boolean
               description: Set to true means this is the user's primary address.
@@ -643,6 +646,8 @@ components:
           primary: true
           kind: delivery
           updated_at: 1570550562
+          id: "7EE16370-2438-4876-9D00-C9E52ACA38C9"
+          sub: "899DFFBD-5DCF-4550-8F42-E67C6E43BDB1"
         - street_address: "355, 1000 Broadway"
           locality: Metropolis
           postal_code: 62960
@@ -651,6 +656,8 @@ components:
           primary: false
           kind: work
           updated_at: 1570550562
+          id: "E1B6E5EE-B289-4FBF-830A-1A12095CE3E1"
+          sub: "899DFFBD-5DCF-4550-8F42-E67C6E43BDB1"
 
     supermanProfile:
       value:

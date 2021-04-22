@@ -119,6 +119,12 @@ export interface AddressResponse {
      */
     kind?: string;
     /**
+     * Unique address identifier
+     * @type {string}
+     * @memberof AddressResponse
+     */
+    id?: string;
+    /**
      * Set to true means this is the user\'s primary address.
      * @type {boolean}
      * @memberof AddressResponse
@@ -143,6 +149,12 @@ export interface AddressResponse {
  * @interface AddressResponseAllOf
  */
 export interface AddressResponseAllOf {
+    /**
+     * Unique address identifier
+     * @type {string}
+     * @memberof AddressResponseAllOf
+     */
+    id?: string;
     /**
      * Set to true means this is the user\'s primary address.
      * @type {boolean}
