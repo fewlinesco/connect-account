@@ -57,3 +57,5 @@ jobs:
 
     - name: test
       run: yarn test
+      env:
+        PROFILE_MOCK_SERVER_URL: "http://localhost:29712"
