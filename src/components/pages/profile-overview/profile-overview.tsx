@@ -40,55 +40,55 @@ const ProfileOverview: React.FC<{
           <PlusIcon />
         </PictureBoxedLink>
         <Separator />
-        <ProfileSection categoryName="NAME" href="#">
+        <UserInfoSection categoryName="NAME" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
             `${data.userInfo.profile.name} ${data.userInfo.profile.middle_name} ${data.userInfo.profile.family_name}`
           )}
-        </ProfileSection>
-        <ProfileSection categoryName="PREFERRED USERNAME" href="#">
+        </UserInfoSection>
+        <UserInfoSection categoryName="PREFERRED USERNAME" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
             data.userInfo.profile.preferred_username
           )}
-        </ProfileSection>
-        <ProfileSection categoryName="BIRTH DATE" href="#">
+        </UserInfoSection>
+        <UserInfoSection categoryName="BIRTH DATE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
             data.userInfo.profile.birthdate
           )}
-        </ProfileSection>
-        <ProfileSection categoryName="TIME ZONE" href="#">
+        </UserInfoSection>
+        <UserInfoSection categoryName="TIME ZONE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
             data.userInfo.profile.zoneinfo
           )}
-        </ProfileSection>
-        <ProfileSection categoryName="LOCALE" href="#">
+        </UserInfoSection>
+        <UserInfoSection categoryName="LOCALE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
             data.userInfo.profile.locale
           )}
-        </ProfileSection>
-        <ProfileSection categoryName="WEBSITE" href="#">
+        </UserInfoSection>
+        <UserInfoSection categoryName="WEBSITE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
             data.userInfo.profile.website
           )}
-        </ProfileSection>
-        <ProfileSection categoryName="PROFILE" href="#">
+        </UserInfoSection>
+        <UserInfoSection categoryName="PROFILE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
             data.userInfo.profile.profile
           )}
-        </ProfileSection>
+        </UserInfoSection>
       </SectionBox>
       <AddressesSectionTitle>Addresses</AddressesSectionTitle>
       <SectionBox>
@@ -116,7 +116,7 @@ const ProfileOverview: React.FC<{
   );
 };
 
-const ProfileSection: React.FC<{
+const UserInfoSection: React.FC<{
   categoryName: string;
   href: string;
 }> = ({ categoryName, href, children }) => {
