@@ -142,8 +142,6 @@ const UserAddresses: React.FC<{
     (address) => address.primary === false,
   );
 
-  console.log(primaryAddress && primaryAddress.primary);
-
   return !primaryAddress ? (
     <NoAddressesParagraph>No addresses added yet</NoAddressesParagraph>
   ) : (
