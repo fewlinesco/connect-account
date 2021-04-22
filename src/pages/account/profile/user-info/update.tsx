@@ -29,7 +29,7 @@ const UpdateUserInfoPage: React.FC = () => {
       };
     },
     Error
-  >("/api/profile/get-user-info");
+  >("/api/profile/get-profile");
 
   if (error) {
     throw error;
@@ -38,7 +38,7 @@ const UpdateUserInfoPage: React.FC = () => {
   return (
     <Layout breadcrumbs={"Profile | edit"} title="Personal information">
       <Container>
-        <UpdateUserInfoForm profileData={data && data.userInfo.profile} />
+        <UpdateUserInfoForm userInfoData={data && data.userInfo.profile} />
       </Container>
     </Layout>
   );
@@ -59,7 +59,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       loggingMiddleware(getTracer(), logger),
       authMiddleware(getTracer()),
     ],
-    "/profile/name/update",
+    "/profile/user-info/update",
     () => {
       if (!configVariables.featureFlag) {
         return {

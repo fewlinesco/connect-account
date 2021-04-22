@@ -9,8 +9,8 @@ import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 
-const UpdateUserInfoForm: React.FC<{ profileData?: Profile }> = ({
-  profileData,
+const UpdateUserInfoForm: React.FC<{ userInfoData?: Profile }> = ({
+  userInfoData,
 }) => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
   // const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
@@ -19,13 +19,13 @@ const UpdateUserInfoForm: React.FC<{ profileData?: Profile }> = ({
   const [updatedUsername, setUpdatedUsername] = React.useState<string>("");
 
   React.useEffect(() => {
-    if (profileData) {
+    if (userInfoData) {
       setUpdatedName(
-        `${profileData.name} ${profileData.middle_name} ${profileData.family_name}`,
+        `${userInfoData.name} ${userInfoData.middle_name} ${userInfoData.family_name}`,
       );
-      setUpdatedUsername(profileData.preferred_username);
+      setUpdatedUsername(userInfoData.preferred_username);
     }
-  }, [profileData]);
+  }, [userInfoData]);
 
   return (
     <>
