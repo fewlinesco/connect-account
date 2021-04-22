@@ -147,7 +147,7 @@ const UserAddresses: React.FC<{
   ) : (
     <>
       <BoxedLink disableClick={false} href="#">
-        <AddressContent>
+        <CategoryContent>
           <CategoryName>{primaryAddress.kind}</CategoryName>
           <AddressValue
             isPrimary={primaryAddress.primary}
@@ -155,7 +155,7 @@ const UserAddresses: React.FC<{
           <AddressValue
             isPrimary={primaryAddress.primary}
           >{`${primaryAddress.postal_code}, ${primaryAddress.region}, ${primaryAddress.locality}, ${primaryAddress.country}`}</AddressValue>
-        </AddressContent>
+        </CategoryContent>
         <RightChevron />
       </BoxedLink>
       {!hideAddressList && addressList.length > 0 ? (
@@ -177,7 +177,7 @@ const UserAddresses: React.FC<{
                 <React.Fragment key={id + sub}>
                   <Separator />
                   <BoxedLink disableClick={false} href="#">
-                    <AddressContent>
+                    <CategoryContent>
                       <CategoryName>{kind}</CategoryName>
                       <AddressValue
                         isPrimary={primary}
@@ -185,7 +185,7 @@ const UserAddresses: React.FC<{
                       <AddressValue
                         isPrimary={primary}
                       >{`${postal_code}, ${region}, ${locality}, ${country}`}</AddressValue>
-                    </AddressContent>
+                    </CategoryContent>
                     <RightChevron />
                   </BoxedLink>
                 </React.Fragment>
@@ -231,14 +231,9 @@ const CategoryName = styled.p`
 `;
 
 const CategoryContent = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const AddressContent = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const NoAddressesParagraph = styled.p`
