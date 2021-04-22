@@ -56,6 +56,6 @@ jobs:
       run: yarn install
 
     - name: test
-      run: yarn test
+      run: docker-compose up -d && yarn test
       env:
         PROFILE_MOCK_SERVER_URL: "http://localhost:29712"
