@@ -12,7 +12,7 @@ import useSWR from "swr";
 
 import { Address, Profile } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
-import { UpdateNamesForm } from "@src/components/forms/update-names-form";
+import { UpdateUserInfoForm } from "@src/components/forms/update-user-info-form";
 import { Layout } from "@src/components/page-layout";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
@@ -20,7 +20,7 @@ import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
-const UpdateNamePage: React.FC = () => {
+const UpdateUserInfoPage: React.FC = () => {
   const { data, error } = useSWR<
     {
       userInfo: {
@@ -35,21 +35,10 @@ const UpdateNamePage: React.FC = () => {
     throw error;
   }
 
-  let namesData;
-
-  if (data) {
-    namesData = {
-      name: data.userInfo.profile.name,
-      family_name: data.userInfo.profile.family_name,
-      given_name: data.userInfo.profile.given_name,
-      middle_name: data.userInfo.profile.middle_name,
-    };
-  }
-
   return (
-    <Layout breadcrumbs={"Name | edit"} title="Personal information">
+    <Layout breadcrumbs={"Profile | edit"} title="Personal information">
       <Container>
-        <UpdateNamesForm profileNames={namesData} />
+        <UpdateUserInfoForm userInfoData={data && data.userInfo.profile} />
       </Container>
     </Layout>
   );
@@ -70,7 +59,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       loggingMiddleware(getTracer(), logger),
       authMiddleware(getTracer()),
     ],
-    "/profile/name/update",
+    "/profile/user-info/update",
     () => {
       if (!configVariables.featureFlag) {
         return {
@@ -87,4 +76,4 @@ const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export { getServerSideProps };
-export default UpdateNamePage;
+export default UpdateUserInfoPage;
