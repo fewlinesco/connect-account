@@ -90,7 +90,7 @@ const ProfileOverview: React.FC<{
           )}
         </UserInfoSection>
       </SectionBox>
-      <AddressesSectionTitle>Addresses</AddressesSectionTitle>
+      <h2>Addresses</h2>
       <SectionBox>
         {!data ? (
           <BoxedLink disableClick={true} href="#">
@@ -271,10 +271,6 @@ const AddressValue = styled.p`
   width: 90%;
   line-height: ${({ theme }) => theme.lineHeights.copy};
   font-weight: ${({ theme }) => theme.fontWeights.semibold};
-`;
-
-const AddressesSectionTitle = styled.h2`
-  margin-top: 3rem !important;
 `;
 
 export { ProfileOverview };

@@ -46,14 +46,6 @@ const Main = styled.main`
   @media ${deviceBreakpoints.m} {
     height: auto;
   }
-
-  h2 {
-    margin: 0 0 ${({ theme }) => theme.spaces.xxs} 0;
-  }
-
-  h3 {
-    margin: 0 0 ${({ theme }) => theme.spaces.s} 0;
-  }
 `;
 
 const Flex = styled.div`
