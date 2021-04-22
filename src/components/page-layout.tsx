@@ -83,7 +83,7 @@ const ChildrenContainer = styled.div<{
     `
       display: flex;
       align-items: center;
-    `};
+  `};
 
   @media ${deviceBreakpoints.m} {
     width: 90%;

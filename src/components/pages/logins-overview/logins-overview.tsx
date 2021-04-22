@@ -136,11 +136,7 @@ const SectionWrapper = styled.div<{
   padding: 0 0 ${({ theme }) => theme.spaces.s} 0;
   position: relative;
 
-  ${({ isLastOfTheList }) =>
-    isLastOfTheList &&
-    `
-      padding: 0;
-    `}
+  ${({ isLastOfTheList }) => isLastOfTheList && `padding: 0;`}
 `;
 
 const BoxedLink = styled(NeutralLink)<{
@@ -152,11 +148,7 @@ const BoxedLink = styled(NeutralLink)<{
   align-items: center;
   justify-content: space-between;
 
-  ${({ disableClick }) =>
-    disableClick &&
-    `
-        cursor: default;
-      `}
+  ${({ disableClick }) => disableClick && `cursor: default;`}
 `;
 
 export { LoginsOverview, IDENTITIES_SECTION_CONTENT, BoxedLink };
