@@ -19,7 +19,7 @@ import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const handler: Handler = async (request, response) => {
-  return getTracer().span("get-user-info handler", async (span) => {
+  return getTracer().span("get-profile handler", async (span) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
@@ -45,7 +45,7 @@ const handler: Handler = async (request, response) => {
         nickname: "Kaleb",
         preferred_username: "Jovani",
         profile: "https://danielle.biz",
-        picture: "http://placeimg.com/640/480",
+        picture: "//placeimg.com/640/480",
         website: "https://eileen.biz",
         gender: "female",
         birthdate: "2020-10-19",
@@ -105,7 +105,7 @@ const wrappedHandler = wrapMiddlewares(
     authMiddleware(getTracer()),
   ],
   handler,
-  "/api/profile/get-user-info",
+  "/api/profile/get-profile",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
