@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 import { Address, Profile } from "@src/@types/profile";
-import { PrimaryBadge } from "@src/components/badges/badges";
 import { BoxedLink } from "@src/components/boxed-link/boxed-link";
 import { ShowMoreButton } from "@src/components/buttons/buttons";
 import { DefaultProfilePictureIcon } from "@src/components/icons/default-profile-picture/default-profile-picture";
@@ -26,7 +25,7 @@ const ProfileOverview: React.FC<{
     <>
       <h2>Basic information</h2>
       <SectionBox>
-        <PictureBoxedLink disableClick={false} href="#">
+        <BoxedLink disableClick={false} href="#">
           <Flex>
             {!data ? (
               <DefaultProfilePictureIconWrapper>
@@ -38,7 +37,7 @@ const ProfileOverview: React.FC<{
             <PictureCategoryName>PROFILE PICTURE</PictureCategoryName>
           </Flex>
           <PlusIcon />
-        </PictureBoxedLink>
+        </BoxedLink>
         <Separator />
         <UserInfoSection categoryName="NAME" href="#">
           {!data ? (
@@ -143,23 +142,24 @@ const UserAddresses: React.FC<{
     (address) => address.primary === false,
   );
 
+  console.log(primaryAddress && primaryAddress.primary);
+
   return !primaryAddress ? (
     <NoAddressesParagraph>No addresses added yet</NoAddressesParagraph>
   ) : (
     <>
-      <AddressBoxedLink
-        disableClick={false}
-        href="#"
-        primary={primaryAddress.primary}
-      >
+      <BoxedLink disableClick={false} href="#">
         <AddressContent>
           <CategoryName>{primaryAddress.kind}</CategoryName>
-          <AddressValue>{`${primaryAddress.street_address}, ${primaryAddress.street_address_2}`}</AddressValue>
-          <AddressValue>{`${primaryAddress.postal_code}, ${primaryAddress.region}, ${primaryAddress.locality}, ${primaryAddress.country}`}</AddressValue>
-          <PrimaryBadge />
+          <AddressValue
+            isPrimary={primaryAddress.primary}
+          >{`${primaryAddress.street_address}, ${primaryAddress.street_address_2}`}</AddressValue>
+          <AddressValue
+            isPrimary={primaryAddress.primary}
+          >{`${primaryAddress.postal_code}, ${primaryAddress.region}, ${primaryAddress.locality}, ${primaryAddress.country}`}</AddressValue>
         </AddressContent>
         <RightChevron />
-      </AddressBoxedLink>
+      </BoxedLink>
       {!hideAddressList && addressList.length > 0 ? (
         <>
           {secondaryAddresses.map(
@@ -178,18 +178,18 @@ const UserAddresses: React.FC<{
               return (
                 <React.Fragment key={id + sub}>
                   <Separator />
-                  <AddressBoxedLink
-                    disableClick={false}
-                    href="#"
-                    primary={primary}
-                  >
+                  <BoxedLink disableClick={false} href="#">
                     <AddressContent>
                       <CategoryName>{kind}</CategoryName>
-                      <AddressValue>{`${street_address}, ${street_address_2}`}</AddressValue>
-                      <AddressValue>{`${postal_code}, ${region}, ${locality}, ${country}`}</AddressValue>
+                      <AddressValue
+                        isPrimary={primary}
+                      >{`${street_address}, ${street_address_2}`}</AddressValue>
+                      <AddressValue
+                        isPrimary={primary}
+                      >{`${postal_code}, ${region}, ${locality}, ${country}`}</AddressValue>
                     </AddressContent>
                     <RightChevron />
-                  </AddressBoxedLink>
+                  </BoxedLink>
                 </React.Fragment>
               );
             },
@@ -208,19 +208,6 @@ const Flex = styled.div`
 
 const DefaultProfilePictureIconWrapper = styled.div`
   margin-right: 1.6rem;
-`;
-
-const PictureBoxedLink = styled(BoxedLink)`
-  height: 8rem;
-`;
-
-const AddressBoxedLink = styled(BoxedLink)<{
-  primary: boolean;
-}>`
-  height: auto !important;
-  padding: ${({ theme }) => `1.5rem ${theme.spaces.xs} 0 ${theme.spaces.xs}`};
-
-  ${({ primary }) => !primary && `padding-bottom: 1.5rem !important;`}
 `;
 
 const UserPicture = styled.img`
@@ -264,13 +251,14 @@ const NoAddressesParagraph = styled.p`
   padding: 0 2rem;
 `;
 
-const AddressValue = styled.p`
+const AddressValue = styled.p<{ isPrimary: boolean }>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 90%;
   line-height: ${({ theme }) => theme.lineHeights.copy};
-  font-weight: ${({ theme }) => theme.fontWeights.semibold};
+
+  ${({ isPrimary, theme }) => isPrimary && theme.fontWeights.semibold}
 `;
 
 export { ProfileOverview };
