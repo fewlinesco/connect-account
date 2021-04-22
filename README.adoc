@@ -58,6 +58,13 @@ To install them on MacOS, you can run the following:
 brew bundle install --file Brewfile
 ----
 
+Then, install dependencies and prepare database:
+[source, shell]
+----
+yarn install
+yarn db:create-users-table
+----
+
 == HTTPS certificates
 
 To allow TLS locally, we are using a `nginx` proxy. The proxy listens port 29704, and redirects — with the certificates — on port 29703.
