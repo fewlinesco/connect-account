@@ -4,7 +4,8 @@ import styled from "styled-components";
 
 import { RightChevron } from "../../icons/right-chevron/right-chevron";
 import { Separator } from "../../separator/separator";
-import { BoxedLink, IDENTITIES_SECTION_CONTENT } from "./logins-overview";
+import { IDENTITIES_SECTION_CONTENT } from "./logins-overview";
+import { BoxedLink } from "@src/components/boxed-link/boxed-link";
 import {
   capitalizeFirstLetter,
   formatSpecialSocialIdentities,

@@ -13,6 +13,7 @@ import {
   SocialSection,
 } from "./logins-overview-sections";
 import { SortedIdentities } from "@src/@types/sorted-identities";
+import { BoxedLink } from "@src/components/boxed-link/boxed-link";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 
 const IDENTITIES_SECTION_CONTENT = {
@@ -124,16 +125,4 @@ const Flex = styled.div`
   justify-content: center;
 `;
 
-const BoxedLink = styled(NeutralLink)<{
-  disableClick?: boolean;
-}>`
-  height: 7.2rem;
-  padding: 0 ${({ theme }) => theme.spaces.xs};
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  ${({ disableClick }) => disableClick && `cursor: default;`}
-`;
-
-export { LoginsOverview, IDENTITIES_SECTION_CONTENT, BoxedLink };
+export { LoginsOverview, IDENTITIES_SECTION_CONTENT };

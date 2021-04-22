@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import { BoxedLink } from "../logins-overview/logins-overview";
 import { Address, Profile } from "@src/@types/profile";
 import { PrimaryBadge } from "@src/components/badges/badges";
+import { BoxedLink } from "@src/components/boxed-link/boxed-link";
 import { ShowMoreButton } from "@src/components/buttons/buttons";
 import { DefaultProfilePictureIcon } from "@src/components/icons/default-profile-picture/default-profile-picture";
 import { PlusIcon } from "@src/components/icons/plus-icon/plus-icon";
