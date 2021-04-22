@@ -1,4 +1,4 @@
-import { sign } from "jsonwebtoken";
+import { generateHS256JWS } from "@fewlines/connect-client";
 
 import {
   ConnectProfileApi,
@@ -11,7 +11,7 @@ const getAccessToken = (
   scope = "openid address profile",
 ): string => {
   const jwtPayload = { sub, scope };
-  return sign(jwtPayload, clientSecret);
+  return generateHS256JWS(jwtPayload, clientSecret);
 };
 
 const initClient = (accessToken?: string): ConnectProfileApi => {

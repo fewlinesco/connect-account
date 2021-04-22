@@ -28,9 +28,9 @@ services:
 
   profile_mock_server:
     image: stoplight/prism:4
-    command: -p 29712 mock --host 0.0.0.0 "/etc/openapi.yml"
+    command: -p 29712 mock --host 0.0.0.0 "/etc/connect-profile-openapi.yml"
     volumes:
-      - ./openapi.yml:/etc/openapi.yml
+      - ./connect-profile-openapi.yml:/etc/connect-profile-openapi.yml
     ports:
       - "29712:29712"
 

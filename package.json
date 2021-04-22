@@ -25,7 +25,7 @@
     "e2e:create-test-user": "ts-node bin/e2e/create-test-user.ts",
     "e2e:remove-test-user": "ts-node bin/e2e/remove-test-user.ts",
     "e2e:create-status-check": "ts-node bin/e2e/create-e2e-status-check.ts",
-    "generate-connect-profile-client": "docker run --rm -v ${PWD}/:/local openapitools/openapi-generator-cli generate --input-spec /local/openapi.yml --generator-name typescript-axios --additional-properties supportsES6=true --output /local/connect-profile-client",
+    "generate-connect-profile-client": "docker run --rm -v ${PWD}/:/local openapitools/openapi-generator-cli generate --input-spec /local/connect-profile-openapi.yml --generator-name typescript-axios --additional-properties supportsES6=true --output /local/connect-profile-client",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -71,7 +71,6 @@
     "@types/axios": "0.14.0",
     "@types/jest": "26.0.22",
     "@types/js-cookie": "2.2.6",
-    "@types/jsonwebtoken": "8.5.1",
     "@types/node": "14.14.39",
     "@types/react": "17.0.3",
     "@types/react-dom": "17.0.3",
@@ -94,7 +93,6 @@
     "jest": "26.6.3",
     "jest-fetch-mock": "3.0.3",
     "jest-styled-components": "7.0.3",
-    "jsonwebtoken": "8.5.1",
     "prettier": "2.2.1",
     "taiko": "1.2.3",
     "ts-jest": "26.5.4",
