@@ -19,6 +19,7 @@
     "db:put-user": "ts-node bin/dynamodb/put-user.ts",
     "db:create-users-table": "ts-node bin/dynamodb/create-users-table.ts",
     "db:delete-users-table": "ts-node bin/dynamodb/delete-users-table.ts",
+    "db:reset-users-table": "yarn db:delete-users-table && yarn db:create-users-table",
     "db:get-user-from-sub": "ts-node bin/dynamodb/get-user-from-sub.ts",
     "e2e:add-heroku-redirect-uri": "node bin/e2e/add-heroku-redirect-uri-to-connect.mjs",
     "e2e:remove-heroku-redirect-uri": "node bin/e2e/remove-heroku-redirect-uri-from-connect.mjs",
