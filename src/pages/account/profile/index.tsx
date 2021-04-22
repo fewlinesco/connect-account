@@ -13,7 +13,7 @@ import useSWR from "swr";
 import { Address, Profile } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
-import { UserInfoOverview } from "@src/components/pages/user-info-overview/user-info-overview";
+import { ProfileOverview } from "@src/components/pages/profile-overview/profile-overview";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
@@ -30,7 +30,7 @@ const ProfilePage: React.FC = () => {
       };
     },
     SWRError
-  >(`/api/profile/get-user-info`);
+  >(`/api/profile/get-profile`);
 
   if (error) {
     throw error;
@@ -42,7 +42,7 @@ const ProfilePage: React.FC = () => {
       title="Personal information"
     >
       <Container>
-        <UserInfoOverview data={data} />
+        <ProfileOverview data={data} />
       </Container>
     </Layout>
   );

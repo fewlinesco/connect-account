@@ -29,7 +29,7 @@ const UpdateNamePage: React.FC = () => {
       };
     },
     Error
-  >("/api/profile/get-user-info");
+  >("/api/profile/get-profile");
 
   if (error) {
     throw error;
