@@ -12,16 +12,15 @@ import useSWR from "swr";
 
 import { Address, Profile } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
+import { UpdateUserInfoForm } from "@src/components/forms/update-user-info-form";
 import { Layout } from "@src/components/page-layout";
-import { ProfileOverview } from "@src/components/pages/profile-overview/profile-overview";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
-import { SWRError } from "@src/errors/errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
-const ProfilePage: React.FC = () => {
+const UpdateUserInfoPage: React.FC = () => {
   const { data, error } = useSWR<
     {
       userInfo: {
@@ -29,20 +28,17 @@ const ProfilePage: React.FC = () => {
         addresses: Address[];
       };
     },
-    SWRError
-  >(`/api/profile/get-profile`);
+    Error
+  >("/api/profile/get-profile");
 
   if (error) {
     throw error;
   }
 
   return (
-    <Layout
-      breadcrumbs="Basic information about you"
-      title="Personal information"
-    >
+    <Layout breadcrumbs={"Profile | edit"} title="Personal information">
       <Container>
-        <ProfileOverview data={data} />
+        <UpdateUserInfoForm userInfoData={data && data.userInfo.profile} />
       </Container>
     </Layout>
   );
@@ -63,7 +59,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       loggingMiddleware(getTracer(), logger),
       authMiddleware(getTracer()),
     ],
-    "/account/profile",
+    "/profile/user-info/update",
     () => {
       if (!configVariables.featureFlag) {
         return {
@@ -80,4 +76,4 @@ const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export { getServerSideProps };
-export default ProfilePage;
+export default UpdateUserInfoPage;

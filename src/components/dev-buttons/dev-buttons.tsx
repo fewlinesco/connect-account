@@ -52,7 +52,7 @@ const DevButton = styled.button`
   padding: 1rem 2rem;
   margin: 0 1rem;
   border-radius: ${({ theme }) => theme.radii[0]};
-  background-color: ${({ theme }) => theme.colors.boxShadow};
+  background-color: ${({ theme }) => theme.colors.secondary};
   cursor: pointer;
 `;
 
