@@ -14494,10 +14494,10 @@ table@^6.0.4:
     slice-ansi "^4.0.0"
     string-width "^4.2.0"
 
-taiko@1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/taiko/-/taiko-1.2.3.tgz#b611ee81d93bad7dfa11076ff3d48d36c4d4e637"
-  integrity sha512-ow8JUjDCRh0YVPe+bJTx5Jttec479kZrDRKzESoYbm7nRpN0sF3yVJ/GSZ1Uf3RSRLV5Y5uc9Zcbk3bd5w/nQw==
+taiko@1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/taiko/-/taiko-1.2.4.tgz#2a5ec4013a46bdd41d7b5fe5fee9a470b6614cee"
+  integrity sha512-HZxEnjPGOaa3w19v364A60UUqOSWAHjCv4AjaltjIrv9cYQ0B4j5qsJzFKE4BsP6WqYMZq7RlkTd4l26HyN9Pg==
   dependencies:
     "@babel/parser" "^7.12.7"
     chrome-remote-interface "^0.30.0"
