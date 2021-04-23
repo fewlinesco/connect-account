@@ -6,6 +6,7 @@ type InputTextProps = {
   type: string;
   name: string;
   label: string;
+  autoFocus?: boolean;
   onChange: (value: string) => void;
   value?: string;
   placeholder?: string;
