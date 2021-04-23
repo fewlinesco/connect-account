@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 type FormProps = {
   formID?: string;
-  autoComplete?: string;
   onSubmit: (event?: React.FormEvent<HTMLFormElement>) => Promise<void>;
   children: React.ReactNode | React.ReactNode[];
   className?: string;
@@ -12,7 +11,6 @@ type FormProps = {
 const Form: React.FC<FormProps> = ({
   formID,
   onSubmit,
-  autoComplete,
   children,
   className,
 }) => {
@@ -26,7 +24,6 @@ const Form: React.FC<FormProps> = ({
     <StyledForm
       method="post"
       className={className}
-      autoComplete={autoComplete}
       onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 

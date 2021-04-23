@@ -72,8 +72,11 @@ const ValidateIdentityForm: React.FC<{
         </Box>
         <InputText
           type="text"
-          name="value"
+          inputMode="numeric"
+          name="verification-code"
+          pattern="\d{6}"
           autoComplete="one-time-code"
+          autoFocus={true}
           placeholder="012345"
           value={validationCode}
           onChange={(value) => setValidationCode(value)}
