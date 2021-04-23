@@ -8,7 +8,6 @@ type InputTextProps = {
   label: string;
   onChange: (value: string) => void;
   autoComplete?: string;
-  autoFocus?: boolean;
   inputMode?:
     | "text"
     | "search"
