@@ -63,7 +63,7 @@ const VerifyTwoFACodeForm: React.FC<{
       }}
     >
       {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
-      <MultipleInputsMasked
+      {/* <MultipleInputsMasked
         type="text"
         inputMode="numeric"
         name="verification-code"
@@ -83,8 +83,19 @@ const VerifyTwoFACodeForm: React.FC<{
           <span />
           <span />
         </InputMask>
-      </MultipleInputsMasked>
-
+      </MultipleInputsMasked> */}
+      <input
+        id="otp-text-field"
+        type="text"
+        inputMode="numeric"
+        name="verification-code"
+        autoComplete="one-time-code"
+        pattern="\d{6}"
+        autoFocus={true}
+        onChange={(event) => setVerificationCode(event.target.value)}
+        value={verificationCode}
+        maxLength={6}
+      />
       <Button variant={ButtonVariant.PRIMARY} type="submit">
         Confirm
       </Button>
