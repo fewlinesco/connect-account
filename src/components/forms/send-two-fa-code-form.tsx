@@ -96,7 +96,6 @@ const SendTwoFACodeForm: React.FC<{
           <span />
         </InputRadioWrapper>
       )}
-
       <Button
         variant={isCodeSent ? ButtonVariant.SECONDARY : ButtonVariant.PRIMARY}
         type="submit"

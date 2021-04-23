@@ -7,6 +7,17 @@ type InputTextProps = {
   name: string;
   label: string;
   onChange: (value: string) => void;
+  autoComplete?: string;
+  inputMode?:
+    | "text"
+    | "search"
+    | "none"
+    | "tel"
+    | "url"
+    | "email"
+    | "numeric"
+    | "decimal";
+  pattern?: string;
   value?: string;
   placeholder?: string;
   className?: string;

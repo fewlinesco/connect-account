@@ -24,6 +24,7 @@ const VerifyTwoFACodeForm: React.FC<{
   return (
     <ExtendedStyledForm
       formID={formID}
+      // autoComplete="on"
       onSubmit={async () => {
         setFormID(uuidv4());
 
@@ -65,7 +66,10 @@ const VerifyTwoFACodeForm: React.FC<{
       {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
       <MultipleInputsMasked
         type="text"
+        inputMode="numeric"
         name="verificationCode"
+        autoComplete="one-time-code"
+        pattern="\d{6}"
         onChange={(value) => setVerificationCode(value)}
         value={verificationCode}
         label="Enter received code here:"

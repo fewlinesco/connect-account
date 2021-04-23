@@ -73,6 +73,7 @@ const ValidateIdentityForm: React.FC<{
         <InputText
           type="text"
           name="value"
+          autoComplete="one-time-code"
           placeholder="012345"
           value={validationCode}
           onChange={(value) => setValidationCode(value)}
@@ -83,13 +84,11 @@ const ValidateIdentityForm: React.FC<{
           variant={ButtonVariant.PRIMARY}
         >{`Confirm ${type.toLowerCase()}`}</Button>
       </Form>
-
       <NeutralLink href="/account/logins">
         <FakeButton variant={ButtonVariant.SECONDARY}>
           Discard all changes
         </FakeButton>
       </NeutralLink>
-
       <DidntReceiveCode>Didn&apos;t receive code?</DidntReceiveCode>
       <Button
         type="button"
