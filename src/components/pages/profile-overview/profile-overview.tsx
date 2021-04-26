@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import { BoxedLink } from "../logins-overview/logins-overview";
 import { Address, Profile } from "@src/@types/profile";
-import { PrimaryBadge } from "@src/components/badges/badges";
+import { BoxedLink } from "@src/components/boxed-link/boxed-link";
 import { ShowMoreButton } from "@src/components/buttons/buttons";
 import { DefaultProfilePictureIcon } from "@src/components/icons/default-profile-picture/default-profile-picture";
 import { PlusIcon } from "@src/components/icons/plus-icon/plus-icon";
@@ -26,7 +25,7 @@ const ProfileOverview: React.FC<{
     <>
       <h2>Basic information</h2>
       <SectionBox>
-        <PictureBoxedLink disableClick={false} href="#">
+        <BoxedLink disableClick={false} href="#">
           <Flex>
             {!data ? (
               <DefaultProfilePictureIconWrapper>
@@ -38,7 +37,7 @@ const ProfileOverview: React.FC<{
             <PictureCategoryName>PROFILE PICTURE</PictureCategoryName>
           </Flex>
           <PlusIcon />
-        </PictureBoxedLink>
+        </BoxedLink>
         <Separator />
         <UserInfoSection categoryName="NAME" href="#">
           {!data ? (
@@ -90,7 +89,7 @@ const ProfileOverview: React.FC<{
           )}
         </UserInfoSection>
       </SectionBox>
-      <AddressesSectionTitle>Addresses</AddressesSectionTitle>
+      <h2>Addresses</h2>
       <SectionBox>
         {!data ? (
           <BoxedLink disableClick={true} href="#">
@@ -147,19 +146,18 @@ const UserAddresses: React.FC<{
     <NoAddressesParagraph>No addresses added yet</NoAddressesParagraph>
   ) : (
     <>
-      <AddressBoxedLink
-        disableClick={false}
-        href="#"
-        primary={primaryAddress.primary}
-      >
-        <AddressContent>
+      <BoxedLink disableClick={false} href="#">
+        <CategoryContent>
           <CategoryName>{primaryAddress.kind}</CategoryName>
-          <AddressValue>{`${primaryAddress.street_address}, ${primaryAddress.street_address_2}`}</AddressValue>
-          <AddressValue>{`${primaryAddress.postal_code}, ${primaryAddress.region}, ${primaryAddress.locality}, ${primaryAddress.country}`}</AddressValue>
-          <PrimaryBadge />
-        </AddressContent>
+          <AddressValue
+            isPrimary={primaryAddress.primary}
+          >{`${primaryAddress.street_address}, ${primaryAddress.street_address_2}`}</AddressValue>
+          <AddressValue
+            isPrimary={primaryAddress.primary}
+          >{`${primaryAddress.postal_code}, ${primaryAddress.region}, ${primaryAddress.locality}, ${primaryAddress.country}`}</AddressValue>
+        </CategoryContent>
         <RightChevron />
-      </AddressBoxedLink>
+      </BoxedLink>
       {!hideAddressList && addressList.length > 0 ? (
         <>
           {secondaryAddresses.map(
@@ -178,18 +176,18 @@ const UserAddresses: React.FC<{
               return (
                 <React.Fragment key={id + sub}>
                   <Separator />
-                  <AddressBoxedLink
-                    disableClick={false}
-                    href="#"
-                    primary={primary}
-                  >
-                    <AddressContent>
+                  <BoxedLink disableClick={false} href="#">
+                    <CategoryContent>
                       <CategoryName>{kind}</CategoryName>
-                      <AddressValue>{`${street_address}, ${street_address_2}`}</AddressValue>
-                      <AddressValue>{`${postal_code}, ${region}, ${locality}, ${country}`}</AddressValue>
-                    </AddressContent>
+                      <AddressValue
+                        isPrimary={primary}
+                      >{`${street_address}, ${street_address_2}`}</AddressValue>
+                      <AddressValue
+                        isPrimary={primary}
+                      >{`${postal_code}, ${region}, ${locality}, ${country}`}</AddressValue>
+                    </CategoryContent>
                     <RightChevron />
-                  </AddressBoxedLink>
+                  </BoxedLink>
                 </React.Fragment>
               );
             },
@@ -208,19 +206,6 @@ const Flex = styled.div`
 
 const DefaultProfilePictureIconWrapper = styled.div`
   margin-right: 1.6rem;
-`;
-
-const PictureBoxedLink = styled(BoxedLink)`
-  height: 8rem;
-`;
-
-const AddressBoxedLink = styled(BoxedLink)<{
-  primary: boolean;
-}>`
-  height: auto !important;
-  padding: ${({ theme }) => `1.5rem ${theme.spaces.xs} 0 ${theme.spaces.xs}`};
-
-  ${({ primary }) => !primary && `padding-bottom: 1.5rem !important;`}
 `;
 
 const UserPicture = styled.img`
@@ -246,14 +231,9 @@ const CategoryName = styled.p`
 `;
 
 const CategoryContent = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const AddressContent = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const NoAddressesParagraph = styled.p`
@@ -264,17 +244,14 @@ const NoAddressesParagraph = styled.p`
   padding: 0 2rem;
 `;
 
-const AddressValue = styled.p`
+const AddressValue = styled.p<{ isPrimary: boolean }>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 90%;
   line-height: ${({ theme }) => theme.lineHeights.copy};
-  font-weight: ${({ theme }) => theme.fontWeights.semibold};
-`;
 
-const AddressesSectionTitle = styled.h2`
-  margin-top: 3rem !important;
+  ${({ isPrimary, theme }) => isPrimary && theme.fontWeights.semibold}
 `;
 
 export { ProfileOverview };

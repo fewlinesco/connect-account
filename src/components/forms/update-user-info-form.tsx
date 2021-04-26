@@ -33,7 +33,6 @@ const UpdateUserInfoForm: React.FC<{ userInfoData?: Profile }> = ({
       <Form
         formID={formID}
         onSubmit={async () => {
-          console.log(updatedUsername);
           setFormID(uuidv4());
           return;
         }}
