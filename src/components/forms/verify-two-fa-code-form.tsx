@@ -70,6 +70,7 @@ const VerifyTwoFACodeForm: React.FC<{
         value={verificationCode}
         label="Enter received code here:"
         maxLength={6}
+        autoFocus={true}
       >
         <InputMask>
           <span />
@@ -80,7 +81,6 @@ const VerifyTwoFACodeForm: React.FC<{
           <span />
         </InputMask>
       </MultipleInputsMasked>
-
       <Button variant={ButtonVariant.PRIMARY} type="submit">
         Confirm
       </Button>
