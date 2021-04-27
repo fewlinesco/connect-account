@@ -1,5 +1,6 @@
 import "react-day-picker/lib/style.css";
 import React from "react";
+import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -54,7 +55,6 @@ const UpdateUserInfoForm: React.FC<{ userInfoData?: Profile }> = ({
           }}
           label="Name *"
         />
-
         <InputText
           type="text"
           name="username"
@@ -65,7 +65,6 @@ const UpdateUserInfoForm: React.FC<{ userInfoData?: Profile }> = ({
           }}
           label="Username"
         />
-
         <InputDatePicker
           label={"react-datepicker"}
           selected={birthdate !== "" ? birthdate : undefined}
@@ -77,11 +76,17 @@ const UpdateUserInfoForm: React.FC<{ userInfoData?: Profile }> = ({
           label={"react-day-picker"}
           selected={birthdate !== "" ? birthdate : undefined}
           onChange={(date) => {
-            console.log(date);
             setBirthdate(date.toLocaleDateString("en-EN"));
           }}
         />
-
+        <Label>
+          Native input element
+          <input
+            type="date"
+            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+            placeholder="YYYY-MM-DD"
+          />
+        </Label>
         <Button type="submit" variant={ButtonVariant.PRIMARY}>
           Update my information
         </Button>
@@ -92,5 +97,22 @@ const UpdateUserInfoForm: React.FC<{ userInfoData?: Profile }> = ({
     </>
   );
 };
+
+const Label = styled.label`
+  display: flex;
+  flex-direction: column;
+  input {
+    margin-top: 1rem;
+    background: ${({ theme }) => theme.colors.background};
+    border: 0.1rem solid ${({ theme }) => theme.colors.blacks[2]};
+    border-radius: ${({ theme }) => theme.radii[0]};
+    height: 4rem;
+    padding-left: 1.6rem;
+    width: 100%;
+    margin: ${({ theme }) => theme.spaces.xxs} 0 0;
+    z-index: 1;
+    position: relative;
+  }
+`;
 
 export { UpdateUserInfoForm };
