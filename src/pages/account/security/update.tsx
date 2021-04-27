@@ -108,9 +108,10 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       const sudoModeTTL = user.sudo.sudo_mode_ttl;
 
       if (!sudoModeTTL || Date.now() > sudoModeTTL) {
+        const urlBeforeRedirect = context.resolvedUrl;
         return {
           redirect: {
-            destination: "/account/security/sudo",
+            destination: `/account/security/sudo?next=${urlBeforeRedirect}`,
             permanent: false,
           },
         };
