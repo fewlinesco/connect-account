@@ -34,4 +34,4 @@
 - [ ] My changes generate no new warnings.
 - [ ] I have added tests that prove my fix is effective or that my feature works.
 
-[contributing_file]: https://github.com/fewlinesco/connect-account/blob/master/README.adoc
+[contributing_file]: https://github.com/fewlinesco/guidelines#readme
