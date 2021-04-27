@@ -3,8 +3,26 @@ import { IncomingMessage, ServerResponse } from "http";
 import { Socket } from "net";
 import { NextApiRequest, NextApiResponse } from "next";
 
+import "@src/configs/config-variables";
 import { verifySudoMode } from "@src/middlewares/verify-sudo-mode-middleware";
 import * as query from "@src/workflows/get-db-user-from-user-cookie";
+
+jest.mock("@src/configs/config-variables", () => {
+  return {
+    configVariables: {
+      cookieSalt: "#*b+x3ZXE3-h[E+Q5YC5`jr~y%CA~R-[",
+      connectOpenIdConfigurationUrl: "",
+      connectApplicationClientId: "",
+      connectApplicationClientSecret: "c9ab0fdc-b2dc-47ad-933b-87cf1b180ab5",
+      connectAccountRedirectUri: "",
+      connectAudience: "",
+      connectApplicationScopes: "",
+      connectProviderUrl: "http://foo.test",
+      connectAccountURL: "http://foo.test",
+      dynamoRegion: "eu-west-3",
+    },
+  };
+});
 
 jest.mock("@src/workflows/get-db-user-from-user-cookie");
 
