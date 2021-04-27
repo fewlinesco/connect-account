@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-import { generateAlertMessage } from "@src/utils/generateAlertMessage";
+import { generateAlertMessage } from "@src/utils/generate-alert-message";
 
 const AddAlertMessage: React.FC = () => {
   const cookiesList = encodeURIComponent(
