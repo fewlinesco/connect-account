@@ -2,7 +2,7 @@ import { Tracer } from "@fwl/tracing";
 import { Middleware } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { getUserFromCookie } from "@src/queries/get-user-from-cookie";
+import { getUserFromCookie } from "@src/workflows/get-user-from-cookie";
 
 function verifySudoMode(
   tracer: Tracer,
