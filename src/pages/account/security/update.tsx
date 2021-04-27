@@ -73,11 +73,6 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       verifySudoMode(getTracer(), context.resolvedUrl),
     ],
     "/account/security/update",
-    async () => {
-      return {
-        props: {},
-      };
-    },
   );
 };
 

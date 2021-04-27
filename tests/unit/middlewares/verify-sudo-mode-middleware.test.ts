@@ -4,9 +4,9 @@ import { Socket } from "net";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { verifySudoMode } from "@src/middlewares/verify-sudo-mode-middleware";
-import * as query from "@src/workflows/get-user-from-cookie";
+import * as query from "@src/workflows/get-db-user-from-user-cookie";
 
-jest.mock("@src/workflows/get-user-from-cookie");
+jest.mock("@src/workflows/get-db-user-from-user-cookie");
 
 const mockedRequest = new IncomingMessage(new Socket());
 const mockedResponse = new ServerResponse(mockedRequest) as NextApiResponse;
@@ -46,7 +46,7 @@ describe("#Verify Sudo Middleware", () => {
   });
 
   it("Should return the handler if the sudo ttl is valid", async () => {
-    expect.assertions(1);
+    expect.assertions(2);
     jest.spyOn(query, "getUserFromCookie").mockImplementationOnce(() => {
       return Promise.resolve({
         sub: "fake-sub",
@@ -59,13 +59,13 @@ describe("#Verify Sudo Middleware", () => {
       });
     });
 
-    mockedHandler.mockImplementation(() => {
-      const handlerHasBeenCalled = true;
-      expect(handlerHasBeenCalled).toBe(true);
-    });
-
     const middleware = verifySudoMode(new InMemoryTracer(), "/fake-url");
     const handler = middleware(mockedHandler);
-    await handler(mockedRequest as NextApiRequest, mockedResponse);
+    const result = await handler(
+      mockedRequest as NextApiRequest,
+      mockedResponse,
+    );
+    expect(typeof result).not.toBe("object");
+    expect(result).not.toBeDefined();
   });
 });
