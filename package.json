@@ -32,7 +32,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.13.1",
     "@aws-sdk/util-dynamodb": "3.13.1",
-    "@fewlines/connect-client": "0.4.2",
+    "@fewlines/connect-client": "0.4.5",
     "@fewlines/connect-management": "0.6.3",
     "@fwl/logging": "0.1.1",
     "@fwl/tracing": "0.9.0",
@@ -71,7 +71,7 @@
     "@testing-library/jest-dom": "5.12.0",
     "@testing-library/react": "11.2.6",
     "@testing-library/user-event": "13.1.5",
-    "@types/jest": "26.0.22",
+    "@types/jest": "26.0.23",
     "@types/js-cookie": "2.2.6",
     "@types/node": "14.14.41",
     "@types/react": "17.0.4",
