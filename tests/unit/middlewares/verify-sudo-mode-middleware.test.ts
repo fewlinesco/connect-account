@@ -4,7 +4,7 @@ import { Socket } from "net";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import "@src/configs/config-variables";
-import { verifySudoMode } from "@src/middlewares/verify-sudo-mode-middleware";
+import { verifySudoModeMiddleware } from "@src/middlewares/verify-sudo-mode-middleware";
 import * as query from "@src/workflows/get-db-user-from-user-cookie";
 
 jest.mock("@src/configs/config-variables", () => {
@@ -50,7 +50,10 @@ describe("#Verify Sudo Middleware", () => {
       });
     });
 
-    const middleware = verifySudoMode(new InMemoryTracer(), "/fake-url");
+    const middleware = verifySudoModeMiddleware(
+      new InMemoryTracer(),
+      "/fake-url",
+    );
     const handler = middleware(mockedHandler);
     const result = await handler(
       mockedRequest as NextApiRequest,
@@ -77,7 +80,10 @@ describe("#Verify Sudo Middleware", () => {
       });
     });
 
-    const middleware = verifySudoMode(new InMemoryTracer(), "/fake-url");
+    const middleware = verifySudoModeMiddleware(
+      new InMemoryTracer(),
+      "/fake-url",
+    );
     const handler = middleware(mockedHandler);
     const result = await handler(
       mockedRequest as NextApiRequest,

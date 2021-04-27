@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { getUserFromCookie } from "@src/workflows/get-db-user-from-user-cookie";
 
-function verifySudoMode(
+function verifySudoModeMiddleware(
   tracer: Tracer,
   urlBeforeRedirect: string,
 ): Middleware<NextApiRequest, NextApiResponse> {
@@ -31,4 +31,4 @@ function verifySudoMode(
   };
 }
 
-export { verifySudoMode };
+export { verifySudoModeMiddleware };

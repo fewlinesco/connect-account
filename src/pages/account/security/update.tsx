@@ -17,7 +17,7 @@ import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import { verifySudoMode } from "@src/middlewares/verify-sudo-mode-middleware";
+import { verifySudoModeMiddleware } from "@src/middlewares/verify-sudo-mode-middleware";
 
 const SecurityUpdatePage: React.FC = () => {
   const { data: passwordSetData, error: passwordSetError } = useSWR<
@@ -70,7 +70,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       errorMiddleware(getTracer()),
       loggingMiddleware(getTracer(), logger),
       authMiddleware(getTracer()),
-      verifySudoMode(getTracer(), context.resolvedUrl),
+      verifySudoModeMiddleware(getTracer(), context.resolvedUrl),
     ],
     "/account/security/update",
   );
