@@ -10,17 +10,24 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
-// import { Address, Profile } from "@src/@types/profile";
 import { UserCookie } from "@src/@types/user-cookie";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import { initProfileClient } from "@src/configs/profile-client";
 import getTracer from "@src/configs/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getProfileAccessToken } from "@src/utils/get-profile-access-token";
 
 const handler: Handler = async (request, response) => {
+  const webErrors = {
+    invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
+    invalidScopes: ERRORS_DATA.INVALID_SCOPES,
+    profileUserNotFound: ERRORS_DATA.PROFILE_USER_NOT_FOUND,
+    unreachable: ERRORS_DATA.UNREACHABLE,
+  };
+
   return getTracer().span("get-profile handler", async (span) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
@@ -43,15 +50,46 @@ const handler: Handler = async (request, response) => {
 
     const profileClient = initProfileClient(profileAccessToken);
 
-    const { data: profileUserInfo } = await profileClient.getProfile();
+    const { data: profileUserInfo } = await profileClient
+      .getProfile()
+      .catch((error) => {
+        span.setDisclosedAttribute("is profile user info fetched", false);
+
+        if (error.response.status === HttpStatus.UNAUTHORIZED) {
+          throw webErrorFactory(webErrors.invalidProfileToken);
+        }
+
+        if (error.response.status === HttpStatus.FORBIDDEN) {
+          throw webErrorFactory(webErrors.invalidScopes);
+        }
+
+        if (error.response.status === HttpStatus.NOT_FOUND) {
+          throw webErrorFactory(webErrors.profileUserNotFound);
+        }
+
+        throw webErrorFactory(webErrors.unreachable);
+      });
 
     span.setDisclosedAttribute("is profile user info fetched", true);
 
-    const { data: profileAddresses } = await profileClient.getAddresses();
+    const { data: profileAddresses } = await profileClient
+      .getAddresses()
+      .catch((error) => {
+        span.setDisclosedAttribute("is profile addresses fetched", false);
+
+        if (error.response.status === HttpStatus.UNAUTHORIZED) {
+          throw webErrorFactory(webErrors.invalidProfileToken);
+        }
+
+        if (error.response.status === HttpStatus.FORBIDDEN) {
+          throw webErrorFactory(webErrors.invalidScopes);
+        }
+
+        throw webErrorFactory(webErrors.unreachable);
+      });
 
     span.setDisclosedAttribute("is profile addresses fetched", true);
 
-    span.setDisclosedAttribute("is full profile data fetched", true);
     response.statusCode = HttpStatus.OK;
     response.json({
       profileData: {
