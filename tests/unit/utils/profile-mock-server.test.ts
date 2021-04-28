@@ -1,9 +1,7 @@
 import { generateHS256JWS } from "@fewlines/connect-client";
 
-import {
-  ConnectProfileApi,
-  Configuration,
-} from "../../../connect-profile-client";
+import { ConnectProfileApi } from "../../../connect-profile-client";
+import { initProfileClient } from "@src/configs/profile-client";
 
 const getAccessToken = (
   sub: string,
@@ -14,20 +12,12 @@ const getAccessToken = (
   return generateHS256JWS(jwtPayload, clientSecret);
 };
 
-const initClient = (accessToken?: string): ConnectProfileApi => {
-  const clientConfig = new Configuration({
-    accessToken,
-    basePath: process.env.PROFILE_MOCK_SERVER_URL,
-  });
-  return new ConnectProfileApi(clientConfig);
-};
-
 describe("Mock Server", () => {
   let client: ConnectProfileApi;
   const clientSecret = "fake-client-secret";
   const accessToken = getAccessToken("fake-sub", clientSecret);
   beforeAll(() => {
-    client = initClient(accessToken);
+    client = initProfileClient(accessToken);
   });
 
   describe("Profiles domain's happy paths", () => {
@@ -103,7 +93,7 @@ describe("Mock Server", () => {
     it("Should respond with 401 when no provided with an accessToken", async () => {
       expect.assertions(2);
 
-      const noAuthToken = initClient();
+      const noAuthToken = initProfileClient();
 
       try {
         await noAuthToken.getProfile();
