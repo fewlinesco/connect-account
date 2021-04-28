@@ -2,7 +2,6 @@ import { IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 
 import { AppleIcon } from "@src/components/icons/apple-icon/apple-icon";
-import { DecathlonIcon } from "@src/components/icons/decathlon-icon/decathlon-icon";
 import { FacebookIcon } from "@src/components/icons/facebook-icon/facebook-icon";
 import { GithubIcon } from "@src/components/icons/github-icon/github-icon";
 import { GoogleIcon } from "@src/components/icons/google-icon/google-icon";
@@ -26,7 +25,6 @@ const SOCIAL_IDENTITIES_ICONS = {
   STRAVA: <StravaIcon />,
   VKONTAKTE: <VKontakteIcon />,
   MICROSOFT: <MicrosoftIcon />,
-  DECATHLON: <DecathlonIcon />,
 };
 
 const getSocialIdentityIcon = (type: IdentityTypes): JSX.Element => {
@@ -53,8 +51,6 @@ const getSocialIdentityIcon = (type: IdentityTypes): JSX.Element => {
       return SOCIAL_IDENTITIES_ICONS.VKONTAKTE;
     case IdentityTypes["MICROSOFT"]:
       return SOCIAL_IDENTITIES_ICONS.MICROSOFT;
-    case IdentityTypes["DECATHLON"]:
-      return SOCIAL_IDENTITIES_ICONS.DECATHLON;
     default:
       return <React.Fragment />;
   }
