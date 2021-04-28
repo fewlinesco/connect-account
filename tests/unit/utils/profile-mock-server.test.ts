@@ -1,6 +1,9 @@
 import { generateHS256JWS } from "@fewlines/connect-client";
 
-import { ConnectProfileApi } from "../../../connect-profile-client";
+import {
+  Configuration,
+  ConnectProfileApi,
+} from "../../../connect-profile-client";
 import { initProfileClient } from "@src/configs/profile-client";
 
 const getAccessToken = (
@@ -93,7 +96,11 @@ describe("Mock Server", () => {
     it("Should respond with 401 when no provided with an accessToken", async () => {
       expect.assertions(2);
 
-      const noAuthToken = initProfileClient();
+      const noAuthToken = new ConnectProfileApi(
+        new Configuration({
+          basePath: process.env.PROFILE_MOCK_SERVER_URL,
+        }),
+      );
 
       try {
         await noAuthToken.getProfile();
