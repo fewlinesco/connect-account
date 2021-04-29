@@ -10,15 +10,24 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
-import { Address, Profile } from "@src/@types/profile";
 import { UserCookie } from "@src/@types/user-cookie";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
+import { initProfileClient } from "@src/configs/profile-client";
 import getTracer from "@src/configs/tracer";
+import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { getProfileAccessToken } from "@src/utils/get-profile-access-token";
 
 const handler: Handler = async (request, response) => {
+  const webErrors = {
+    invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
+    invalidScopes: ERRORS_DATA.INVALID_SCOPES,
+    profileUserNotFound: ERRORS_DATA.PROFILE_USER_NOT_FOUND,
+    unreachable: ERRORS_DATA.UNREACHABLE,
+  };
+
   return getTracer().span("get-profile handler", async (span) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
@@ -32,62 +41,60 @@ const handler: Handler = async (request, response) => {
       response.end();
       return;
     }
-    const mockedUserInfo: {
-      profile: Profile;
-      addresses: Address[];
-    } = {
-      profile: {
-        sub: "edc29cc7-35d5-4409-850a-dab5e19beb58",
-        name: "Luz",
-        family_name: "Reinger",
-        given_name: "Sim",
-        middle_name: "Nikolas",
-        nickname: "Kaleb",
-        preferred_username: "Jovani",
-        profile: "https://danielle.biz",
-        picture: "//placeimg.com/640/480",
-        website: "https://eileen.biz",
-        gender: "female",
-        birthdate: "2020-10-19",
-        zoneinfo: "FAKE/zone_info",
-        locale: "ro",
-        updated_at: "2021-04-15T07:30:49.924Z",
-      },
-      addresses: [
-        {
-          id: "0087969e-9a0e-4e24-b38c-45a7e89f2bc1",
-          sub: "edc29cc7-35d5-4409-850a-dab5e19beb58",
-          street_address: "905 Macejkovic Prairie",
-          locality: "Kautzerbury",
-          region: "Massachusetts",
-          postal_code: "76369-4333",
-          country: "Gambia",
-          kind: "nemo",
-          created_at: "2021-04-15T07:35:28.614Z",
-          updated_at: "2021-04-15T07:35:28.614Z",
-          street_address_2: "Suite 309",
-          primary: false,
-        },
-        {
-          id: "3bb53df5-3cfb-480b-8667-7e0f092c6ac1",
-          sub: "edc29cc7-35d5-4409-850a-dab5e19beb58",
-          street_address: "46974 Price Drives",
-          locality: "Port Jasminshire",
-          region: "Washington",
-          postal_code: "35501-1717",
-          country: "Western Sahara",
-          kind: "labore",
-          created_at: "2021-04-15T07:35:28.599Z",
-          updated_at: "2021-04-15T07:35:28.599Z",
-          street_address_2: "Apt. 098",
-          primary: true,
-        },
-      ],
-    };
 
-    span.setDisclosedAttribute("is user info fetched", true);
+    const profileAccessToken = await getProfileAccessToken(
+      userCookie.access_token,
+    );
+
+    span.setDisclosedAttribute("is profile access token available", true);
+
+    const profileClient = initProfileClient(profileAccessToken);
+
+    const { data: profileUserInfo } = await profileClient
+      .getProfile()
+      .catch((error) => {
+        span.setDisclosedAttribute("is profile user info fetched", false);
+
+        if (error.response.status === HttpStatus.UNAUTHORIZED) {
+          throw webErrorFactory(webErrors.invalidProfileToken);
+        }
+
+        if (error.response.status === HttpStatus.FORBIDDEN) {
+          throw webErrorFactory(webErrors.invalidScopes);
+        }
+
+        if (error.response.status === HttpStatus.NOT_FOUND) {
+          throw webErrorFactory(webErrors.profileUserNotFound);
+        }
+
+        throw webErrorFactory(webErrors.unreachable);
+      });
+
+    span.setDisclosedAttribute("is profile user info fetched", true);
+
+    const { data: profileAddresses } = await profileClient
+      .getAddresses()
+      .catch((error) => {
+        span.setDisclosedAttribute("is profile addresses fetched", false);
+
+        if (error.response.status === HttpStatus.UNAUTHORIZED) {
+          throw webErrorFactory(webErrors.invalidProfileToken);
+        }
+
+        if (error.response.status === HttpStatus.FORBIDDEN) {
+          throw webErrorFactory(webErrors.invalidScopes);
+        }
+
+        throw webErrorFactory(webErrors.unreachable);
+      });
+
+    span.setDisclosedAttribute("is profile addresses fetched", true);
+
     response.statusCode = HttpStatus.OK;
-    response.json({ userInfo: mockedUserInfo });
+    response.json({
+      profileUserInfo,
+      profileAddresses,
+    });
   });
 };
 
