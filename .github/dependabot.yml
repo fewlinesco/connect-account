@@ -10,6 +10,7 @@ updates:
   reviewers:
   - Fuzznimp
   - Oluane
+  - Meyclem
 
 - package-ecosystem: "github-actions"
   directory: "/"
@@ -21,3 +22,4 @@ updates:
   reviewers:
   - Fuzznimp
   - Oluane
+  - Meyclem
