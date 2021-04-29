@@ -54,6 +54,16 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: "Temporary Identity expired",
   },
+  INVALID_PROFILE_TOKEN: {
+    code: "invalid_profile_token",
+    httpStatus: HttpStatus.UNAUTHORIZED,
+    message: "Invalid Profile token",
+  },
+  INVALID_SCOPES: {
+    code: "invalid_scopes",
+    httpStatus: HttpStatus.FORBIDDEN,
+    message: "Invalid scopes",
+  },
   NOT_FOUND: {
     code: "not_found",
     httpStatus: HttpStatus.NOT_FOUND,
@@ -63,6 +73,11 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     code: "identity_not_found",
     httpStatus: HttpStatus.NOT_FOUND,
     message: "Identity not found",
+  },
+  PROFILE_USER_NOT_FOUND: {
+    code: "profile_user_not_found",
+    httpStatus: HttpStatus.NOT_FOUND,
+    message: "Profile user not found",
   },
   INVALID_PASSWORD_INPUT: {
     code: "invalid_password_input",
