@@ -57,7 +57,7 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
   INVALID_PROFILE_TOKEN: {
     code: "invalid_profile_token",
     httpStatus: HttpStatus.UNAUTHORIZED,
-    message: "Invalid Profile token",
+    message: "Invalid Connect.Profile access token",
   },
   INVALID_SCOPES: {
     code: "invalid_scopes",
@@ -67,17 +67,17 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
   NOT_FOUND: {
     code: "not_found",
     httpStatus: HttpStatus.NOT_FOUND,
-    message: "Ressource not found",
+    message: "Resource not found",
   },
   IDENTITY_NOT_FOUND: {
     code: "identity_not_found",
     httpStatus: HttpStatus.NOT_FOUND,
     message: "Identity not found",
   },
-  PROFILE_USER_NOT_FOUND: {
-    code: "profile_user_not_found",
+  PROFILE_DATA_NOT_FOUND: {
+    code: "profile_data_not_found",
     httpStatus: HttpStatus.NOT_FOUND,
-    message: "Profile user not found",
+    message: "Connect.Profile data not found",
   },
   INVALID_PASSWORD_INPUT: {
     code: "invalid_password_input",

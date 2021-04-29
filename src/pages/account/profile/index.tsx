@@ -24,13 +24,11 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 const ProfilePage: React.FC = () => {
   const { data, error } = useSWR<
     {
-      userInfo: {
-        profile: Profile;
-        addresses: Address[];
-      };
+      profileUserInfo: Profile;
+      profileAddresses: Address[];
     },
     SWRError
-  >(`/api/profile/get-profile-fake`);
+  >(`/api/profile/get-profile`);
 
   if (error) {
     throw error;

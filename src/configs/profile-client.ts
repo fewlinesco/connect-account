@@ -5,7 +5,7 @@ function initProfileClient(accessToken: string): ConnectProfileApi {
   return new ConnectProfileApi(
     new Configuration({
       accessToken,
-      basePath: configVariables.profileMockServerUrl,
+      basePath: configVariables.connectProfileUrl,
     }),
   );
 }

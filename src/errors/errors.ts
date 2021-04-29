@@ -29,6 +29,10 @@ class SWRError extends Error {
   }
 }
 
+class MissingConnectProfileScopes extends Error {
+  readonly message = "Missing Connect.Profile scopes";
+}
+
 export {
   UnhandledTokenType,
   EnvVar_IsJweSigned_MustBeABoolean,
@@ -36,4 +40,5 @@ export {
   NoDBUserFoundError,
   NoUserCookieFoundError,
   SWRError,
+  MissingConnectProfileScopes,
 };

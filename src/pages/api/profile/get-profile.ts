@@ -24,7 +24,7 @@ const handler: Handler = async (request, response) => {
   const webErrors = {
     invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
     invalidScopes: ERRORS_DATA.INVALID_SCOPES,
-    profileUserNotFound: ERRORS_DATA.PROFILE_USER_NOT_FOUND,
+    profileDataNotFound: ERRORS_DATA.PROFILE_DATA_NOT_FOUND,
     unreachable: ERRORS_DATA.UNREACHABLE,
   };
 
@@ -46,14 +46,20 @@ const handler: Handler = async (request, response) => {
       userCookie.access_token,
     );
 
-    span.setDisclosedAttribute("is profile access token available", true);
+    span.setDisclosedAttribute(
+      "is Connect.Profile access token available",
+      true,
+    );
 
     const profileClient = initProfileClient(profileAccessToken);
 
     const { data: profileUserInfo } = await profileClient
       .getProfile()
       .catch((error) => {
-        span.setDisclosedAttribute("is profile user info fetched", false);
+        span.setDisclosedAttribute(
+          "is Connect.Profile user info fetched",
+          false,
+        );
 
         if (error.response.status === HttpStatus.UNAUTHORIZED) {
           throw webErrorFactory(webErrors.invalidProfileToken);
@@ -64,18 +70,21 @@ const handler: Handler = async (request, response) => {
         }
 
         if (error.response.status === HttpStatus.NOT_FOUND) {
-          throw webErrorFactory(webErrors.profileUserNotFound);
+          throw webErrorFactory(webErrors.profileDataNotFound);
         }
 
         throw webErrorFactory(webErrors.unreachable);
       });
 
-    span.setDisclosedAttribute("is profile user info fetched", true);
+    span.setDisclosedAttribute("is Connect.Profile user info fetched", true);
 
     const { data: profileAddresses } = await profileClient
       .getAddresses()
       .catch((error) => {
-        span.setDisclosedAttribute("is profile addresses fetched", false);
+        span.setDisclosedAttribute(
+          "is Connect.Profile addresses fetched",
+          false,
+        );
 
         if (error.response.status === HttpStatus.UNAUTHORIZED) {
           throw webErrorFactory(webErrors.invalidProfileToken);
@@ -88,7 +97,7 @@ const handler: Handler = async (request, response) => {
         throw webErrorFactory(webErrors.unreachable);
       });
 
-    span.setDisclosedAttribute("is profile addresses fetched", true);
+    span.setDisclosedAttribute("is Connect.Profile addresses fetched", true);
 
     response.statusCode = HttpStatus.OK;
     response.json({
