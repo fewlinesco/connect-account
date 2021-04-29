@@ -46,7 +46,10 @@ const handler: Handler = async (request, response) => {
       userCookie.access_token,
     );
 
-    span.setDisclosedAttribute("is profile access token available", true);
+    span.setDisclosedAttribute(
+      "is Connect.Profile access token available",
+      true,
+    );
 
     const profileClient = initProfileClient(profileAccessToken);
 
@@ -73,12 +76,15 @@ const handler: Handler = async (request, response) => {
         throw webErrorFactory(webErrors.unreachable);
       });
 
-    span.setDisclosedAttribute("is profile user info fetched", true);
+    span.setDisclosedAttribute("is Connect.Profile user info fetched", true);
 
     const { data: profileAddresses } = await profileClient
       .getAddresses()
       .catch((error) => {
-        span.setDisclosedAttribute("is profile addresses fetched", false);
+        span.setDisclosedAttribute(
+          "is Connect.Profile addresses fetched",
+          false,
+        );
 
         if (error.response.status === HttpStatus.UNAUTHORIZED) {
           throw webErrorFactory(webErrors.invalidProfileToken);
@@ -91,7 +97,7 @@ const handler: Handler = async (request, response) => {
         throw webErrorFactory(webErrors.unreachable);
       });
 
-    span.setDisclosedAttribute("is profile addresses fetched", true);
+    span.setDisclosedAttribute("is Connect.Profile addresses fetched", true);
 
     response.statusCode = HttpStatus.OK;
     response.json({
