@@ -92,10 +92,8 @@ const handler: Handler = async (request, response) => {
 
     response.statusCode = HttpStatus.OK;
     response.json({
-      profileData: {
-        profileUserInfo,
-        profileAddresses,
-      },
+      profileUserInfo,
+      profileAddresses,
     });
   });
 };
