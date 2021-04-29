@@ -30,7 +30,7 @@ const ProfilePage: React.FC = () => {
       };
     },
     SWRError
-  >(`/api/profile/get-profile`);
+  >(`/api/profile/get-profile-fake`);
 
   if (error) {
     throw error;
