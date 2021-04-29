@@ -24,7 +24,7 @@ const handler: Handler = async (request, response) => {
   const webErrors = {
     invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
     invalidScopes: ERRORS_DATA.INVALID_SCOPES,
-    profileUserNotFound: ERRORS_DATA.PROFILE_USER_NOT_FOUND,
+    profileDataNotFound: ERRORS_DATA.PROFILE_DATA_NOT_FOUND,
     unreachable: ERRORS_DATA.UNREACHABLE,
   };
 
@@ -53,7 +53,10 @@ const handler: Handler = async (request, response) => {
     const { data: profileUserInfo } = await profileClient
       .getProfile()
       .catch((error) => {
-        span.setDisclosedAttribute("is profile user info fetched", false);
+        span.setDisclosedAttribute(
+          "is Connect.Profile user info fetched",
+          false,
+        );
 
         if (error.response.status === HttpStatus.UNAUTHORIZED) {
           throw webErrorFactory(webErrors.invalidProfileToken);
@@ -64,7 +67,7 @@ const handler: Handler = async (request, response) => {
         }
 
         if (error.response.status === HttpStatus.NOT_FOUND) {
-          throw webErrorFactory(webErrors.profileUserNotFound);
+          throw webErrorFactory(webErrors.profileDataNotFound);
         }
 
         throw webErrorFactory(webErrors.unreachable);
