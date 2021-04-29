@@ -13,8 +13,8 @@ import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 
 const ProfileOverview: React.FC<{
   data?: {
-    profileUserInfo: Profile;
-    profileAddresses: Address[];
+    userProfile: Profile;
+    userAddresses: Address[];
   };
 }> = ({ data }) => {
   const [hideAddressList, setHideAddressList] = React.useState<boolean>(true);
@@ -30,7 +30,7 @@ const ProfileOverview: React.FC<{
                 <DefaultProfilePictureIcon />
               </DefaultProfilePictureIconWrapper>
             ) : (
-              <UserPicture src={data.profileUserInfo.picture} alt="user" />
+              <UserPicture src={data.userProfile.picture} alt="user" />
             )}
             <PictureCategoryName>PROFILE PICTURE</PictureCategoryName>
           </Flex>
@@ -41,49 +41,49 @@ const ProfileOverview: React.FC<{
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            `${data.profileUserInfo.name} ${data.profileUserInfo.middle_name} ${data.profileUserInfo.family_name}`
+            `${data.userProfile.name} ${data.userProfile.middle_name} ${data.userProfile.family_name}`
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="PREFERRED USERNAME" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            data.profileUserInfo.preferred_username
+            data.userProfile.preferred_username
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="BIRTH DATE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            data.profileUserInfo.birthdate
+            data.userProfile.birthdate
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="TIME ZONE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            data.profileUserInfo.zoneinfo
+            data.userProfile.zoneinfo
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="LOCALE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            data.profileUserInfo.locale
+            data.userProfile.locale
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="WEBSITE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            data.profileUserInfo.website
+            data.userProfile.website
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="PROFILE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            data.profileUserInfo.profile
+            data.userProfile.profile
           )}
         </UserInfoSection>
       </SectionBox>
@@ -96,15 +96,15 @@ const ProfileOverview: React.FC<{
         ) : (
           <UserAddresses
             hideAddressList={hideAddressList}
-            addressList={data.profileAddresses}
+            addressList={data.userAddresses}
           />
         )}
       </SectionBox>
-      {data && data.profileAddresses.length > 1 ? (
+      {data && data.userAddresses.length > 1 ? (
         <Flex>
           <ShowMoreButton
             hideList={hideAddressList}
-            quantity={data.profileAddresses.length - 1}
+            quantity={data.userAddresses.length - 1}
             setHideList={setHideAddressList}
           />
         </Flex>

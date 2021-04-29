@@ -12,7 +12,7 @@ import useSWR from "swr";
 
 import { Address, Profile } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
-import { UpdateUserInfoForm } from "@src/components/forms/update-user-info-form";
+import { UpdateUserProfileForm } from "@src/components/forms/update-user-profile-form";
 import { Layout } from "@src/components/page-layout";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
@@ -20,7 +20,7 @@ import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
-const UpdateUserInfoPage: React.FC = () => {
+const UpdateUserProfilePage: React.FC = () => {
   const { data, error } = useSWR<
     {
       userInfo: {
@@ -38,7 +38,9 @@ const UpdateUserInfoPage: React.FC = () => {
   return (
     <Layout breadcrumbs={"Profile | edit"} title="Personal information">
       <Container>
-        <UpdateUserInfoForm userInfoData={data && data.userInfo.profile} />
+        <UpdateUserProfileForm
+          userProfileData={data && data.userInfo.profile}
+        />
       </Container>
     </Layout>
   );
@@ -59,7 +61,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       loggingMiddleware(getTracer(), logger),
       authMiddleware(getTracer()),
     ],
-    "/profile/user-info/update",
+    "/profile/user-profile/update",
     () => {
       if (!configVariables.featureFlag) {
         return {
@@ -76,4 +78,4 @@ const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export { getServerSideProps };
-export default UpdateUserInfoPage;
+export default UpdateUserProfilePage;
