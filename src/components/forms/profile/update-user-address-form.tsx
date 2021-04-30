@@ -2,7 +2,6 @@ import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { InputText } from "../../input/input-text";
-// import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "../form";
 import { Address } from "@src/@types/profile";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
@@ -59,7 +58,7 @@ const UpdateUserAddressForm: React.FC<{
         />
         <InputText
           type="text"
-          name="street-address2"
+          name="street-address-2"
           placeholder="Enter your complementary street address"
           value={updatedAddress.street_address_2}
           onChange={(value) => {
@@ -85,7 +84,7 @@ const UpdateUserAddressForm: React.FC<{
         />
         <InputText
           type="text"
-          name="locality"
+          name="region"
           placeholder="Enter your region"
           value={updatedAddress.region}
           onChange={(value) => {
@@ -98,7 +97,7 @@ const UpdateUserAddressForm: React.FC<{
         />
         <InputText
           type="text"
-          name="locality"
+          name="postal-code"
           placeholder="Enter your postal code"
           value={updatedAddress.postal_code}
           onChange={(value) => {
@@ -111,7 +110,7 @@ const UpdateUserAddressForm: React.FC<{
         />
         <InputText
           type="text"
-          name="locality"
+          name="country"
           placeholder="Enter your country"
           value={updatedAddress.country}
           onChange={(value) => {
