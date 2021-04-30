@@ -12,7 +12,7 @@ import useSWR from "swr";
 
 import { Address, Profile } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
-import { UpdateUserProfileForm } from "@src/components/forms/update-user-profile-form";
+import { UpdateUserProfileForm } from "@src/components/forms/profile/update-user-profile-form";
 import { Layout } from "@src/components/page-layout";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
