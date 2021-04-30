@@ -62,7 +62,7 @@ const UpdateUserProfileForm: React.FC<{ userProfileData?: Profile }> = ({
           label="Username"
         />
         <InputDatePicker
-          label={"react-datepicker"}
+          label="Birthdate"
           selected={birthdate !== "" ? birthdate : undefined}
           onChange={(date) => {
             setBirthdate(date.toLocaleDateString("en-EN"));
