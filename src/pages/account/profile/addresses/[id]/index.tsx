@@ -24,7 +24,7 @@ const AddressOverviewPage: React.FC<{ addressId: string }> = ({
   addressId,
 }) => {
   const { error } = useSWR<{ address: Address }, Error>(
-    `/api/profile/address?addressId=${addressId}`,
+    `/api/profile/get-address?addressId=${addressId}`,
   );
 
   if (error) {
@@ -78,7 +78,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
 
       return {
         props: {
-          identityId: context.params.id,
+          addressId: context.params.id,
         },
       };
     },
