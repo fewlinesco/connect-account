@@ -13,6 +13,7 @@ import useSWR from "swr";
 
 import { Address } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
+import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { Layout } from "@src/components/page-layout";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
@@ -35,6 +36,9 @@ const AddressOverviewPage: React.FC<{ addressId: string }> = ({
     <Layout breadcrumbs={false} title="Personal information">
       <Container>
         <WIP>🏗</WIP>
+        <NeutralLink href={`/account/profile/addresses/${addressId}/update`}>
+          Update this address
+        </NeutralLink>
       </Container>
     </Layout>
   );
