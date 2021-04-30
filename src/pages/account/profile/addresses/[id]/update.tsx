@@ -9,7 +9,9 @@ import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
 import styled from "styled-components";
+import useSWR from "swr";
 
+import { Address } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { configVariables } from "@src/configs/config-variables";
@@ -18,13 +20,17 @@ import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
-const UpdateAddressPage: React.FC = () => {
-  const { data, error } = useSWR<{ identity: Identity }, Error>(
-    `/api/identity/get-identity?identityId=${identityId}`,
+const UpdateAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
+  const { error } = useSWR<{ address: Address }, Error>(
+    `/api/profile/address?addressId=${addressId}`,
   );
 
+  if (error) {
+    throw error;
+  }
+
   return (
-    <Layout breadcrumbs={false} title="Personal information">
+    <Layout breadcrumbs={"Address | edit"} title="Personal information">
       <Container>
         <WIP>🏗</WIP>
       </Container>

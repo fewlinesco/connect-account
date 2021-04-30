@@ -8,6 +8,7 @@ import {
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
+import styled from "styled-components";
 import useSWR from "swr";
 
 import { Address } from "@src/@types/profile";
@@ -19,11 +20,11 @@ import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
-const AddressOverviewPage: React.FC<{ addressID: string }> = ({
-  addressID,
+const AddressOverviewPage: React.FC<{ addressId: string }> = ({
+  addressId,
 }) => {
-  const { data, error } = useSWR<{ address: Address }, Error>(
-    `/api/profile/get-address?identityId=${addressID}`,
+  const { error } = useSWR<{ address: Address }, Error>(
+    `/api/profile/address?addressId=${addressId}`,
   );
 
   if (error) {
@@ -32,10 +33,16 @@ const AddressOverviewPage: React.FC<{ addressID: string }> = ({
 
   return (
     <Layout breadcrumbs={false} title="Personal information">
-      <Container></Container>
+      <Container>
+        <WIP>🏗</WIP>
+      </Container>
     </Layout>
   );
 };
+
+const WIP = styled.div`
+  font-size: 20rem;
+`;
 
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
