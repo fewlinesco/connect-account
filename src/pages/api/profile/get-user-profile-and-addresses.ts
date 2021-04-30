@@ -17,7 +17,6 @@ import { initProfileClient } from "@src/configs/profile-client";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getProfileAccessToken } from "@src/utils/get-profile-access-token";
 
 const handler: Handler = async (request, response) => {
@@ -124,7 +123,6 @@ const wrappedHandler = wrapMiddlewares(
       requestsUntilBlock: 200,
     }),
     recoveryMiddleware(getTracer()),
-    sentryMiddleware(getTracer()),
     errorMiddleware(getTracer()),
     loggingMiddleware(getTracer(), logger),
     authMiddleware(getTracer()),

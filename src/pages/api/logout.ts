@@ -13,7 +13,6 @@ import { Handler } from "@src/@types/handler";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const handler: Handler = (_request, response): Promise<void> => {
   const webErrors = {
@@ -44,7 +43,7 @@ const wrappedHandler = wrapMiddlewares(
       requestsUntilBlock: 200,
     }),
     recoveryMiddleware(getTracer()),
-    sentryMiddleware(getTracer()),
+
     errorMiddleware(getTracer()),
     loggingMiddleware(getTracer(), logger),
   ],

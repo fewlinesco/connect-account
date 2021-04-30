@@ -30,7 +30,6 @@ import getTracer from "@src/configs/tracer";
 import { NoDBUserFoundError } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import { generateAlertMessage } from "@src/utils/generate-alert-message";
 
@@ -203,7 +202,7 @@ const wrappedHandler = wrapMiddlewares(
       requestsUntilBlock: 200,
     }),
     recoveryMiddleware(getTracer()),
-    sentryMiddleware(getTracer()),
+
     errorMiddleware(getTracer()),
     loggingMiddleware(getTracer(), logger),
     authMiddleware(getTracer()),

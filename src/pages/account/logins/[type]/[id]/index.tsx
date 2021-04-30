@@ -18,7 +18,6 @@ import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { SWRError } from "@src/errors/errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const IdentityOverviewPage: React.FC<{
@@ -57,7 +56,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
         requestsUntilBlock: 200,
       }),
       recoveryMiddleware(getTracer()),
-      sentryMiddleware(getTracer()),
+
       errorMiddleware(getTracer()),
       loggingMiddleware(getTracer(), logger),
       authMiddleware(getTracer()),

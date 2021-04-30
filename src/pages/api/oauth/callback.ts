@@ -25,7 +25,6 @@ import { oauth2Client } from "@src/configs/oauth2-client";
 import getTracer from "@src/configs/tracer";
 import { UnhandledTokenType } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
 const handler: Handler = (request, response): Promise<void> => {
@@ -135,7 +134,7 @@ const wrappedHandler = wrapMiddlewares(
       requestsUntilBlock: 200,
     }),
     recoveryMiddleware(getTracer()),
-    sentryMiddleware(getTracer()),
+
     errorMiddleware(getTracer()),
     loggingMiddleware(getTracer(), logger),
   ],

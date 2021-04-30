@@ -25,7 +25,6 @@ import { logger } from "@src/configs/logger";
 import { oauth2Client } from "@src/configs/oauth2-client";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 type HomePageProps = { authorizeURL: string; providerName: string };
 
@@ -50,7 +49,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
         requestsUntilBlock: 200,
       }),
       recoveryMiddleware(getTracer()),
-      sentryMiddleware(getTracer()),
+
       errorMiddleware(getTracer()),
       loggingMiddleware(getTracer(), logger),
     ],

@@ -10,8 +10,6 @@ import { GlobalStyle } from "@src/design-system/globals/global-style";
 import { theme } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
 
-import "@src/utils/sentry";
-
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <AccountApp>

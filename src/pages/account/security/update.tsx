@@ -16,7 +16,6 @@ import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { verifySudoModeMiddleware } from "@src/middlewares/verify-sudo-mode-middleware";
 
 const SecurityUpdatePage: React.FC = () => {
@@ -66,7 +65,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
         requestsUntilBlock: 200,
       }),
       recoveryMiddleware(getTracer()),
-      sentryMiddleware(getTracer()),
+
       errorMiddleware(getTracer()),
       loggingMiddleware(getTracer(), logger),
       authMiddleware(getTracer()),
