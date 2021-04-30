@@ -25,6 +25,7 @@ type ConfigVariables = {
     URI: string;
     APIKey: string;
   };
+  connectProfileUrl: string;
 };
 
 const configVariables: ConfigVariables = {
@@ -54,6 +55,7 @@ const configVariables: ConfigVariables = {
     URI: "",
     APIKey: "",
   },
+  connectProfileUrl: "",
 };
 
 function getConnectAccountURL(): string {
@@ -106,6 +108,7 @@ function handleEnvVars(): void {
     URI: process.env.CONNECT_MANAGEMENT_URL || "",
     APIKey: process.env.CONNECT_MANAGEMENT_API_KEY || "",
   };
+  configVariables.connectProfileUrl = process.env.PROFILE_MOCK_SERVER_URL || "";
 }
 
 handleEnvVars();

@@ -38,8 +38,6 @@ function getIdentityType(type: string): IdentityTypes {
       return IdentityTypes.MICROSOFT;
     case "PROVIDER":
       return IdentityTypes.PROVIDER;
-    case "DECATHLON":
-      return IdentityTypes.DECATHLON;
     default:
       throw new UnhandledIdentityType(`Can't deal with identity type ${type}`);
   }

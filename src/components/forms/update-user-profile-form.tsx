@@ -14,8 +14,8 @@ import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 
-const UpdateUserInfoForm: React.FC<{ userInfoData?: Profile }> = ({
-  userInfoData,
+const UpdateUserProfileForm: React.FC<{ userProfileData?: Profile }> = ({
+  userProfileData,
 }) => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
   // const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
@@ -25,14 +25,14 @@ const UpdateUserInfoForm: React.FC<{ userInfoData?: Profile }> = ({
   const [birthdate, setBirthdate] = React.useState<string>("");
 
   React.useEffect(() => {
-    if (userInfoData) {
+    if (userProfileData) {
       setUpdatedName(
-        `${userInfoData.name} ${userInfoData.middle_name} ${userInfoData.family_name}`,
+        `${userProfileData.name} ${userProfileData.middle_name} ${userProfileData.family_name}`,
       );
-      setUpdatedUsername(userInfoData.preferred_username);
-      setBirthdate(userInfoData.birthdate);
+      setUpdatedUsername(userProfileData.preferred_username);
+      setBirthdate(userProfileData.birthdate);
     }
-  }, [userInfoData]);
+  }, [userProfileData]);
 
   return (
     <>
@@ -40,7 +40,6 @@ const UpdateUserInfoForm: React.FC<{ userInfoData?: Profile }> = ({
       <Form
         formID={formID}
         onSubmit={async () => {
-          console.log(updatedUsername);
           setFormID(uuidv4());
           return;
         }}
@@ -115,4 +114,4 @@ const Label = styled.label`
   }
 `;
 
-export { UpdateUserInfoForm };
+export { UpdateUserProfileForm };

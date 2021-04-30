@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import { BoxedLink } from "../logins-overview/logins-overview";
 import { Address, Profile } from "@src/@types/profile";
-import { PrimaryBadge } from "@src/components/badges/badges";
+import { BoxedLink } from "@src/components/boxed-link/boxed-link";
 import { ShowMoreButton } from "@src/components/buttons/buttons";
 import { DefaultProfilePictureIcon } from "@src/components/icons/default-profile-picture/default-profile-picture";
 import { PlusIcon } from "@src/components/icons/plus-icon/plus-icon";
@@ -14,10 +13,8 @@ import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 
 const ProfileOverview: React.FC<{
   data?: {
-    userInfo: {
-      profile: Profile;
-      addresses: Address[];
-    };
+    userProfile: Profile;
+    userAddresses: Address[];
   };
 }> = ({ data }) => {
   const [hideAddressList, setHideAddressList] = React.useState<boolean>(true);
@@ -26,71 +23,71 @@ const ProfileOverview: React.FC<{
     <>
       <h2>Basic information</h2>
       <SectionBox>
-        <PictureBoxedLink disableClick={false} href="#">
+        <BoxedLink disableClick={false} href="#">
           <Flex>
             {!data ? (
               <DefaultProfilePictureIconWrapper>
                 <DefaultProfilePictureIcon />
               </DefaultProfilePictureIconWrapper>
             ) : (
-              <UserPicture src={data.userInfo.profile.picture} alt="user" />
+              <UserPicture src={data.userProfile.picture} alt="user" />
             )}
             <PictureCategoryName>PROFILE PICTURE</PictureCategoryName>
           </Flex>
           <PlusIcon />
-        </PictureBoxedLink>
+        </BoxedLink>
         <Separator />
         <UserInfoSection categoryName="NAME" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            `${data.userInfo.profile.name} ${data.userInfo.profile.middle_name} ${data.userInfo.profile.family_name}`
+            `${data.userProfile.name} ${data.userProfile.middle_name} ${data.userProfile.family_name}`
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="PREFERRED USERNAME" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            data.userInfo.profile.preferred_username
+            data.userProfile.preferred_username
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="BIRTH DATE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            data.userInfo.profile.birthdate
+            data.userProfile.birthdate
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="TIME ZONE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            data.userInfo.profile.zoneinfo
+            data.userProfile.zoneinfo
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="LOCALE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            data.userInfo.profile.locale
+            data.userProfile.locale
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="WEBSITE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            data.userInfo.profile.website
+            data.userProfile.website
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="PROFILE" href="#">
           {!data ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            data.userInfo.profile.profile
+            data.userProfile.profile
           )}
         </UserInfoSection>
       </SectionBox>
-      <AddressesSectionTitle>Addresses</AddressesSectionTitle>
+      <h2>Addresses</h2>
       <SectionBox>
         {!data ? (
           <BoxedLink disableClick={true} href="#">
@@ -99,15 +96,15 @@ const ProfileOverview: React.FC<{
         ) : (
           <UserAddresses
             hideAddressList={hideAddressList}
-            addressList={data.userInfo.addresses}
+            addressList={data.userAddresses}
           />
         )}
       </SectionBox>
-      {data && data.userInfo.addresses.length > 1 ? (
+      {data && data.userAddresses.length > 1 ? (
         <Flex>
           <ShowMoreButton
             hideList={hideAddressList}
-            quantity={data.userInfo.addresses.length - 1}
+            quantity={data.userAddresses.length - 1}
             setHideList={setHideAddressList}
           />
         </Flex>
@@ -147,19 +144,18 @@ const UserAddresses: React.FC<{
     <NoAddressesParagraph>No addresses added yet</NoAddressesParagraph>
   ) : (
     <>
-      <AddressBoxedLink
-        disableClick={false}
-        href="#"
-        primary={primaryAddress.primary}
-      >
-        <AddressContent>
+      <BoxedLink disableClick={false} href="#">
+        <CategoryContent>
           <CategoryName>{primaryAddress.kind}</CategoryName>
-          <AddressValue>{`${primaryAddress.street_address}, ${primaryAddress.street_address_2}`}</AddressValue>
-          <AddressValue>{`${primaryAddress.postal_code}, ${primaryAddress.region}, ${primaryAddress.locality}, ${primaryAddress.country}`}</AddressValue>
-          <PrimaryBadge />
-        </AddressContent>
+          <AddressValue
+            isPrimary={primaryAddress.primary}
+          >{`${primaryAddress.street_address}, ${primaryAddress.street_address_2}`}</AddressValue>
+          <AddressValue
+            isPrimary={primaryAddress.primary}
+          >{`${primaryAddress.postal_code}, ${primaryAddress.region}, ${primaryAddress.locality}, ${primaryAddress.country}`}</AddressValue>
+        </CategoryContent>
         <RightChevron />
-      </AddressBoxedLink>
+      </BoxedLink>
       {!hideAddressList && addressList.length > 0 ? (
         <>
           {secondaryAddresses.map(
@@ -178,18 +174,18 @@ const UserAddresses: React.FC<{
               return (
                 <React.Fragment key={id + sub}>
                   <Separator />
-                  <AddressBoxedLink
-                    disableClick={false}
-                    href="#"
-                    primary={primary}
-                  >
-                    <AddressContent>
+                  <BoxedLink disableClick={false} href="#">
+                    <CategoryContent>
                       <CategoryName>{kind}</CategoryName>
-                      <AddressValue>{`${street_address}, ${street_address_2}`}</AddressValue>
-                      <AddressValue>{`${postal_code}, ${region}, ${locality}, ${country}`}</AddressValue>
-                    </AddressContent>
+                      <AddressValue
+                        isPrimary={primary}
+                      >{`${street_address}, ${street_address_2}`}</AddressValue>
+                      <AddressValue
+                        isPrimary={primary}
+                      >{`${postal_code}, ${region}, ${locality}, ${country}`}</AddressValue>
+                    </CategoryContent>
                     <RightChevron />
-                  </AddressBoxedLink>
+                  </BoxedLink>
                 </React.Fragment>
               );
             },
@@ -208,19 +204,6 @@ const Flex = styled.div`
 
 const DefaultProfilePictureIconWrapper = styled.div`
   margin-right: 1.6rem;
-`;
-
-const PictureBoxedLink = styled(BoxedLink)`
-  height: 8rem;
-`;
-
-const AddressBoxedLink = styled(BoxedLink)<{
-  primary: boolean;
-}>`
-  height: auto !important;
-  padding: ${({ theme }) => `1.5rem ${theme.spaces.xs} 0 ${theme.spaces.xs}`};
-
-  ${({ primary }) => !primary && `padding-bottom: 1.5rem !important;`}
 `;
 
 const UserPicture = styled.img`
@@ -246,14 +229,9 @@ const CategoryName = styled.p`
 `;
 
 const CategoryContent = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const AddressContent = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const NoAddressesParagraph = styled.p`
@@ -264,17 +242,14 @@ const NoAddressesParagraph = styled.p`
   padding: 0 2rem;
 `;
 
-const AddressValue = styled.p`
+const AddressValue = styled.p<{ isPrimary: boolean }>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 90%;
   line-height: ${({ theme }) => theme.lineHeights.copy};
-  font-weight: ${({ theme }) => theme.fontWeights.semibold};
-`;
 
-const AddressesSectionTitle = styled.h2`
-  margin-top: 3rem !important;
+  ${({ isPrimary, theme }) => isPrimary && theme.fontWeights.semibold}
 `;
 
 export { ProfileOverview };

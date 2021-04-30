@@ -58,6 +58,12 @@ To install them on MacOS, you can run the following:
 brew bundle install --file Brewfile
 ----
 
+Then, install dependencies:
+[source, shell]
+----
+yarn install
+----
+
 == HTTPS certificates
 
 To allow TLS locally, we are using a `nginx` proxy. The proxy listens port 29704, and redirects — with the certificates — on port 29703.
@@ -98,6 +104,26 @@ If you want to build and start the application, you should run the following:
 [source, shell]
 ----
 yarn build && yarn start [-p 29703]
+----
+
+=== Database
+
+To prepare the `users` table you'll need to run:
+[source, shell]
+----
+yarn db:create-users-table
+----
+
+If you want to reset the `users` table, run:
+[source, shell]
+----
+yarn db:reset-users-table
+----
+
+If you want to delete the `users` table, run:
+[source, shell]
+----
+yarn db:delete-users-table
 ----
 
 === Testing

@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { StoriesContainer } from "../containers/stories-container";
 import { AlertMessage } from "./alert-messages";
-import { generateAlertMessage } from "@src/utils/generateAlertMessage";
+import { generateAlertMessage } from "@src/utils/generate-alert-message";
 
 const EmailValidationAlertMessage = (): JSX.Element => {
   const generatedAlertMessage = generateAlertMessage(

@@ -57,7 +57,11 @@ const VerifyTwoFACodeForm: React.FC<{
           }
 
           if ("isCodeVerified" in parsedResponse) {
-            router && router.push("/account/security/update");
+            if (router.query.next && typeof router.query.next === "string") {
+              router.push(router.query.next);
+            } else {
+              router.push("/account");
+            }
           }
         });
       }}
@@ -70,6 +74,7 @@ const VerifyTwoFACodeForm: React.FC<{
         value={verificationCode}
         label="Enter received code here:"
         maxLength={6}
+        autoFocus={true}
       >
         <InputMask>
           <span />
@@ -80,7 +85,6 @@ const VerifyTwoFACodeForm: React.FC<{
           <span />
         </InputMask>
       </MultipleInputsMasked>
-
       <Button variant={ButtonVariant.PRIMARY} type="submit">
         Confirm
       </Button>
