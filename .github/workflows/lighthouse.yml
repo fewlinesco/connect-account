@@ -8,6 +8,9 @@ jobs:
     if: ${{ contains(github.event.deployment_status.target_url, 'heroku') && github.event.deployment_status.state == 'success'}}
     runs-on: ubuntu-latest
 
+    container:
+      image: femtopixel/google-lighthouse:v7.3.0
+
     env:
       GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
 
@@ -45,16 +48,7 @@ jobs:
           CONNECT_TEST_ACCOUNT_EMAIL: 'lighthouse_${{ github.event.deployment.sha }}@e2e.test'
           CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
           CONNECT_TEST_ACCOUNT_URL: ${{ github.event.deployment.payload.web_url }}
-        run: |
-          wget https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/docker/seccomp/chrome.json -O ~/chrome.json
-          docker run --rm --name perf \
-          -e CONNECT_TEST_ACCOUNT_EMAIL='lighthouse_${{ github.event.deployment.sha }}@e2e.test' \
-          -e CONNECT_TEST_ACCOUNT_PASSWORD=${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }} \
-          -e CONNECT_TEST_ACCOUNT_URL=${{ github.event.deployment.payload.web_url }} \
-          -v $(pwd)/lighthouse-reports:/home/chrome/reports \
-          -v $(pwd)/bin:/home/chrome/testcases \
-          --security-opt seccomp=$HOME/chrome.json \
-          fewlines/docker-lighthouse-puppeteer:CU-ht6h0f_43f62408f74e e2e/lighthouse-report
+        run: e2e/lighthouse-report
 
       - name: Remove test user
         if: ${{ always() }}
