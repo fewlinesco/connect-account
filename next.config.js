@@ -7,6 +7,9 @@ const { withSentryConfig } = require("@sentry/nextjs");
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 const moduleExports = {
+  future: {
+    webpack5: true,
+  },
   webpack(config, options) {
     const { isServer } = options;
 
@@ -44,8 +47,6 @@ const SentryWebpackPluginOptions = {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
   project: "Connect.Account",
-  url:
-    "https://6baf0213093a428d9e9ec7ae0979868c@o287463.ingest.sentry.io/5387583",
 };
 
 // Make sure adding Sentry options is the last code to run before exporting, to
