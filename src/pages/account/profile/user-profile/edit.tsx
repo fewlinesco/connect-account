@@ -57,7 +57,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       loggingMiddleware(getTracer(), logger),
       authMiddleware(getTracer()),
     ],
-    "/profile/user-profile/update",
+    "/profile/user-profile/edit",
     () => {
       if (!configVariables.featureFlag) {
         return {
