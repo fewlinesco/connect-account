@@ -20,6 +20,13 @@ async function authenticateToConnect(): Promise<void> {
     expect(await text("Password").exists()).toBeTruthy();
     await write(configVariables.connectTestAccountPassword);
     await press("Enter", { navigationTimeout: 60000 });
+
+    expect(
+      await text(
+        "would like to have access to these information about you",
+      ).exists(),
+    ).toBeTruthy();
+    await click("Accept");
   } catch (error) {
     await screenshot({
       path: "tests/e2e/screenshots/authenticate-to-connect.png",
