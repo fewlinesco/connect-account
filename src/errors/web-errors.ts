@@ -79,6 +79,11 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     httpStatus: HttpStatus.NOT_FOUND,
     message: "Connect.Profile data not found",
   },
+  ADDRESS_NOT_FOUND: {
+    code: "address_not_found",
+    httpStatus: HttpStatus.NOT_FOUND,
+    message: "Address not found",
+  },
   INVALID_PASSWORD_INPUT: {
     code: "invalid_password_input",
     httpStatus: HttpStatus.UNPROCESSABLE_ENTITY,

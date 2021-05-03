@@ -1,9 +1,9 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { InputText } from "../input/input-text";
+import { InputText } from "../../input/input-text";
 // import { WrongInputError } from "../input/wrong-input-error";
-import { Form } from "./form";
+import { Form } from "../form";
 import { Profile } from "@src/@types/profile";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
