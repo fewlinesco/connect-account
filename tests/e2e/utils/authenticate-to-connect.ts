@@ -23,7 +23,7 @@ async function authenticateToConnect(): Promise<void> {
 
     const needScopeAcceptance = await text(
       "would like to have access to these information about you",
-    ).exists();
+    ).exists(10000, 50);
 
     if (needScopeAcceptance) {
       await click("Accept");

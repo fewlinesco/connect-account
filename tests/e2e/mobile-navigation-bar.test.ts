@@ -24,7 +24,7 @@ describe("Log in with a smart phone, open and close the navigation bar", () => {
   });
 
   test("Launch the browser with a smartphone, open and close the navigation bar", async (done) => {
-    expect.assertions(8);
+    expect.assertions(7);
 
     try {
       await authenticateToConnect();
