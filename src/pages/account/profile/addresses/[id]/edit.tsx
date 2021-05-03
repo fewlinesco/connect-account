@@ -12,7 +12,7 @@ import useSWR from "swr";
 
 import { Address } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
-import { EditUserAddressForm } from "@src/components/forms/profile/edit-user-address-form";
+import { UpdateUserAddressForm } from "@src/components/forms/profile/update-user-address-form";
 import { Layout } from "@src/components/page-layout";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
@@ -32,7 +32,7 @@ const EditAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
   return (
     <Layout breadcrumbs={"Address | edit"} title="Personal information">
       <Container>
-        <EditUserAddressForm userAddress={data ? data.address : undefined} />
+        <UpdateUserAddressForm userAddress={data ? data.address : undefined} />
       </Container>
     </Layout>
   );
