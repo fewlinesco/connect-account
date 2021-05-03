@@ -52,6 +52,21 @@ const Label = styled.label`
       position: relative;
     }
   }
+
+  .react-datepicker {
+    font-size: ${({ theme }) => theme.fontSizes.xxs};
+    z-index: 2;
+  }
+
+  .react-datepicker__day-name,
+  .react-datepicker__day {
+    width: 2.5rem;
+    line-height: 2.5rem;
+  }
+
+  .react-datepicker__current-month {
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+  }
 `;
 
 export { InputDatePicker };
