@@ -23,13 +23,11 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 const UpdateUserProfilePage: React.FC = () => {
   const { data, error } = useSWR<
     {
-      userInfo: {
-        profile: Profile;
-        addresses: Address[];
-      };
+      userProfile: Profile;
+      userAddresses: Address[];
     },
     Error
-  >("/api/profile/get-profile");
+  >("/api/profile/get-user-profile-and-addresses");
 
   if (error) {
     throw error;
@@ -38,9 +36,7 @@ const UpdateUserProfilePage: React.FC = () => {
   return (
     <Layout breadcrumbs={"Profile | edit"} title="Personal information">
       <Container>
-        <UpdateUserProfileForm
-          userProfileData={data && data.userInfo.profile}
-        />
+        <UpdateUserProfileForm userProfileData={data && data.userProfile} />
       </Container>
     </Layout>
   );
@@ -61,7 +57,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       loggingMiddleware(getTracer(), logger),
       authMiddleware(getTracer()),
     ],
-    "/profile/user-profile/update",
+    "/profile/user-profile/edit",
     () => {
       if (!configVariables.featureFlag) {
         return {
