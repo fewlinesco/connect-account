@@ -12,7 +12,7 @@ import useSWR from "swr";
 
 import { Address } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
-import { UpdateUserAddressForm } from "@src/components/forms/profile/update-user-address-form";
+import { EditUserAddressForm } from "@src/components/forms/profile/edit-user-address-form";
 import { Layout } from "@src/components/page-layout";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
@@ -20,7 +20,7 @@ import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
-const UpdateAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
+const EditAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
   const { data, error } = useSWR<{ address: Address }, Error>(
     `/api/profile/addresses/${addressId}`,
   );
@@ -32,7 +32,7 @@ const UpdateAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
   return (
     <Layout breadcrumbs={"Address | edit"} title="Personal information">
       <Container>
-        <UpdateUserAddressForm userAddress={data ? data.address : undefined} />
+        <EditUserAddressForm userAddress={data ? data.address : undefined} />
       </Container>
     </Layout>
   );
@@ -53,7 +53,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       loggingMiddleware(getTracer(), logger),
       authMiddleware(getTracer()),
     ],
-    "/account/profile/address/[id]/update",
+    "/account/profile/address/[id]/edit",
     () => {
       if (!configVariables.featureFlag) {
         return {
@@ -80,4 +80,4 @@ const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export { getServerSideProps };
-export default UpdateAddressPage;
+export default EditAddressPage;

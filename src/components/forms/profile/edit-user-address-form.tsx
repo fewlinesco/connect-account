@@ -8,7 +8,7 @@ import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 
-const UpdateUserAddressForm: React.FC<{
+const EditUserAddressForm: React.FC<{
   userAddress?: Address;
 }> = ({ userAddress }) => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
@@ -132,4 +132,4 @@ const UpdateUserAddressForm: React.FC<{
   );
 };
 
-export { UpdateUserAddressForm };
+export { EditUserAddressForm };
