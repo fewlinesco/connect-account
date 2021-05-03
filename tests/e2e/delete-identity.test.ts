@@ -32,7 +32,7 @@ describe("Delete Identity", () => {
   });
 
   test("It should navigate to the show of the Identity, and delete it", async (done) => {
-    expect.assertions(13);
+    expect.assertions(14);
 
     try {
       await authenticateToConnect();
