@@ -22,7 +22,7 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const UpdateAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
   const { data, error } = useSWR<{ address: Address }, Error>(
-    `/api/profile/get-address?addressId=${addressId}`,
+    `/api/profile/addresses/${addressId}`,
   );
 
   if (error) {

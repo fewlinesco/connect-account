@@ -20,7 +20,7 @@ import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getProfileAccessToken } from "@src/utils/get-profile-access-token";
 
-const handler: Handler = async (request, response) => {
+const getHandler: Handler = async (request, response) => {
   const webErrors = {
     invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
     invalidScopes: ERRORS_DATA.INVALID_SCOPES,
@@ -30,39 +30,41 @@ const handler: Handler = async (request, response) => {
     addressNotFound: ERRORS_DATA.ADDRESS_NOT_FOUND,
   };
 
-  return getTracer().span("get-address handler", async (span) => {
-    const userCookie = await getServerSideCookies<UserCookie>(request, {
-      cookieName: "user-cookie",
-      isCookieSealed: true,
-      cookieSalt: configVariables.cookieSalt,
-    });
+  return getTracer().span(
+    "/api/profile/addresses/[id] getHandler",
+    async (span) => {
+      const userCookie = await getServerSideCookies<UserCookie>(request, {
+        cookieName: "user-cookie",
+        isCookieSealed: true,
+        cookieSalt: configVariables.cookieSalt,
+      });
 
-    if (!userCookie) {
-      response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-      response.setHeader("location", "/");
-      response.end();
-      return;
-    }
+      if (!userCookie) {
+        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+        response.setHeader("location", "/");
+        response.end();
+        return;
+      }
 
-    const addressId = request.query.addressId;
+      const addressId = request.query.addressId;
 
-    if (!addressId || typeof addressId !== "string") {
-      throw webErrorFactory(webErrors.invalidQueryString);
-    }
+      if (!addressId || typeof addressId !== "string") {
+        throw webErrorFactory(webErrors.invalidQueryString);
+      }
 
-    const profileAccessToken = await getProfileAccessToken(
-      userCookie.access_token,
-    );
-    span.setDisclosedAttribute(
-      "is Connect.Profile access token available",
-      true,
-    );
+      const profileAccessToken = await getProfileAccessToken(
+        userCookie.access_token,
+      );
+      span.setDisclosedAttribute(
+        "is Connect.Profile access token available",
+        true,
+      );
 
-    const profileClient = initProfileClient(profileAccessToken);
+      const profileClient = initProfileClient(profileAccessToken);
 
-    const { data: profileAddresses } = await profileClient
-      .getAddresses()
-      .catch((error) => {
+      const {
+        data: profileAddresses,
+      } = await profileClient.getAddresses().catch((error) => {
         span.setDisclosedAttribute(
           "is Connect.Profile addresses fetched",
           false,
@@ -78,22 +80,23 @@ const handler: Handler = async (request, response) => {
 
         throw webErrorFactory(webErrors.unreachable);
       });
-    span.setDisclosedAttribute("is Connect.Profile addresses fetched", true);
+      span.setDisclosedAttribute("is Connect.Profile addresses fetched", true);
 
-    const address = profileAddresses.find(
-      (address) => address.id === addressId,
-    );
+      const address = profileAddresses.find(
+        (address) => address.id === addressId,
+      );
 
-    if (!address) {
-      throw webErrorFactory(webErrors.addressNotFound);
-    }
+      if (!address) {
+        throw webErrorFactory(webErrors.addressNotFound);
+      }
 
-    response.statusCode = HttpStatus.OK;
-    response.json({ address });
-  });
+      response.statusCode = HttpStatus.OK;
+      response.json({ address });
+    },
+  );
 };
 
-const wrappedHandler = wrapMiddlewares(
+const wrappedGetHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
     rateLimitingMiddleware(getTracer(), logger, {
@@ -106,10 +109,10 @@ const wrappedHandler = wrapMiddlewares(
     loggingMiddleware(getTracer(), logger),
     authMiddleware(getTracer()),
   ],
-  handler,
-  "/api/profile/get-address",
+  getHandler,
+  "GET /api/profile/addresses/[id]",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .get(wrappedHandler)
+  .get(wrappedGetHandler)
   .getHandler();
