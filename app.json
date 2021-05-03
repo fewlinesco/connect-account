@@ -23,7 +23,7 @@
     "NEXT_TELEMETRY_DISABLED": "true",
     "SENTRY_ENVIRONMENT": "preview",
     "NEXT_PUBLIC_FEATURE_FLAG": "false",
-    "PROFILE_MOCK_SERVER_URL": "http://localhost:29712"
+    "PROFILE_MOCK_SERVER_URL": "https://stoplight.io/mocks/fewlines/profile-test/68676/"
   },
   "environments": {
     "review": {
