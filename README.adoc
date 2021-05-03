@@ -58,6 +58,12 @@ To install them on MacOS, you can run the following:
 brew bundle install --file Brewfile
 ----
 
+Then, install dependencies:
+[source, shell]
+----
+yarn install
+----
+
 == HTTPS certificates
 
 To allow TLS locally, we are using a `nginx` proxy. The proxy listens port 29704, and redirects — with the certificates — on port 29703.
@@ -98,6 +104,26 @@ If you want to build and start the application, you should run the following:
 [source, shell]
 ----
 yarn build && yarn start [-p 29703]
+----
+
+=== Database
+
+To prepare the `users` table you'll need to run:
+[source, shell]
+----
+yarn db:create-users-table
+----
+
+If you want to reset the `users` table, run:
+[source, shell]
+----
+yarn db:reset-users-table
+----
+
+If you want to delete the `users` table, run:
+[source, shell]
+----
+yarn db:delete-users-table
 ----
 
 === Testing
@@ -351,12 +377,14 @@ We chose to type React component like so:
 import React from "react";
 
 // Without props.
-export const Foo: React.FC = () => { return ;}
+const Foo: React.FC = () => {
+  return <React.Fragment />;
+};
 
 // With props.
-type BarProps = { foo: "bar" }
-
-export const Bar: React.FC<BarProps> = ({ foo }) => { return <div>{ foo }</div>}
+const Bar: React.FC<{ foo: "bar" }> = ({ foo }) => {
+  return <div>{foo}</div>;
+};
 ----
 
 If you are not familiar with TypeScript generic types, please take a look at the https://www.typescriptlang.org/docs/handbook/generics.html[documentation].
@@ -382,15 +410,27 @@ import { DevButtons } from "@src/components/dev-buttons/dev-buttons";
 
 const AccountApp: React.FC = ({ children }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <Head>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <title>Connect Account</title>
-      </Head>
-      <GlobalStyle />
-      {children}
-      <DevButtons/>
-    </ThemeProvider>
+    <SSRProvider>
+      <ThemeProvider theme={theme}>
+        <Head>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+          <title>Connect Account</title>
+        </Head>
+        <GlobalStyle />
+        <AlertMessages />
+        <SWRConfig
+          value={{
+            // ...
+          }}
+        >
+          {children}
+        </SWRConfig>
+        <DevButtons/>
+      </ThemeProvider>
+    </SSRProvider>
   );
 };
 ----
@@ -423,10 +463,10 @@ You can access the theme properties and values inside a `styled` component by ca
 ----
 import styled from "styled-components";
 
-// Note that styled component are PascalCase.
+// Note that styled component are PascalCased.
 const StyledComponent = styled.div`
   css-property: ${({ theme }) => theme.themeKey};
-`
+`;
 ----
 
 You can access the theme properties and values from everywhere else with the custom `useTheme` hook:
@@ -452,7 +492,7 @@ const StyledComponent = styled.div {
   @media ${deviceBreakpoints.m} {}
 
   @media ${deviceBreakpoints.l} {}
-}
+};
 ----
 
 Our chosen viewport breakpoints are : `576px` | `768px` | `992px` | `1200px`.
@@ -461,10 +501,9 @@ Sometimes, you want to pass custom props to your styled component. Here is the w
 
 [source, typescript]
 ----
-type StyledButtonProps = { isActive: boolean };
-
-const StyledComponent = styled.button<StyledButtonProps>`
-  ${({ isActive, theme }) => `color: ${isActive ? theme.green : theme.grey}`};
+const StyledComponent = styled.button<{ isActive: boolean }>`
+  ${({ isActive, theme }) =>
+    `color: ${isActive ? theme.colors.primary : theme.colors.secondary}`};
 `;
 ----
 
@@ -476,16 +515,18 @@ If you want to use SVGs in your application, we recommend to render them as a Re
 ----
 import React from 'react'
 
-export const SvgIcon: React.FC = () => {
+const SVGIcon: React.FC = () => {
   return (
     <svg>
-      ...
+      // ...
     </svg>
   )
-}
+};
+
+export { SVGIcon };
 ----
 
-When SVG are monochromatics (i.e. _icons_) and to improve components reusability, we replace the `fill` attribute value of tags composing SVG, such as `path`, with the CSS variable `currentColor` instead of hardcoded color codes. 
+When SVG are monochromatic (i.e. _icons_) and to improve components reusability, we replace the `fill` attribute value of tags composing SVG, such as `path`, with the CSS variable `currentColor` instead of hardcoded color codes. 
 This way, the SVG will be rendered with the color inherited from its parent. 
 
 [source, jsx]
@@ -493,26 +534,26 @@ This way, the SVG will be rendered with the color inherited from its parent.
 import React from 'react';
 import styled from "styled-components";
 
-export const CrossIcon: React.FC = () => {
+const CrossIcon: React.FC = () => {
   return (
     <svg>
       <path fill="currentColor">...</path>
-      ...
+      // ...
     </svg>
   )
-}
+};
 
-export const Modal: React.FC = () => {
+const Modal: React.FC = () => {
   return (
     <div>
-      ...
+      // ...
       <IconContainer>
         <CrossIcon/>
       </IconContainer>
-      ...
+      // ...
     </div>
   )
-}
+};
 
 const IconContainer = styled.div`
   color: #000;
@@ -544,10 +585,14 @@ import React from "react";
 
 import { Component } from "./Component";
 
-export default { title: "Title you want to display, usually the name of the component", component: Component };
-
-export const SubNameOfTheStory = (): JSX.Element => {
+const SubNameOfTheStory = (): JSX.Element => {
   return <Component />;
+};
+
+export { SubNameOfTheStory };
+export default {
+  title: "Title you want to display, usually the name of the component",
+  component: Component,
 };
 ----
 

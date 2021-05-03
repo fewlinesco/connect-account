@@ -12,6 +12,7 @@ import { WhiteWorldIcon } from "../icons/world-icon/white-world-icon/white-world
 import { LogoutAnchor } from "../logout-anchor/logout-anchor";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { NAVIGATION_SECTIONS } from "./navigation-sections";
+import { configVariables } from "@src/configs/config-variables";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const MobileNavigationBar: React.FC = () => {
@@ -26,6 +27,13 @@ const MobileNavigationBar: React.FC = () => {
           <MenuList>
             {Object.entries(NAVIGATION_SECTIONS).map(
               ([title, { href, icon }]) => {
+                if (
+                  !configVariables.featureFlag &&
+                  href === "/account/profile"
+                ) {
+                  return <React.Fragment key={title + href} />;
+                }
+
                 return (
                   <ListItem
                     href={href}
@@ -34,7 +42,7 @@ const MobileNavigationBar: React.FC = () => {
                   >
                     <ListItemLabel>
                       {icon}
-                      <p>{title}</p>
+                      <p>{title.replace("_", " ")}</p>
                     </ListItemLabel>
                     <RightChevron />
                   </ListItem>
@@ -112,17 +120,17 @@ const MenuItem = styled.div<{
   width: 100%;
   background-color: ${({ theme }) => theme.colors.box};
 
-  ${(props) =>
-    props.color === "primary" &&
+  ${({ color, theme }) =>
+    color === "primary" &&
     `
-    background-color: ${props.theme.colors.primary};
-    color: ${props.theme.colors.background}
+    background-color: ${theme.colors.primary};
+    color: ${theme.colors.background}
   `};
 
-  ${(props) =>
-    props.borderLeft &&
+  ${({ borderLeft, theme }) =>
+    borderLeft &&
     `
-    border-left: 0.1rem solid ${props.theme.colors.separator};
+    border-left: 0.1rem solid ${theme.colors.separator};
   `};
 `;
 

@@ -1,4 +1,5 @@
 type ConfigVariables = {
+  featureFlag: string;
   connectAccountURL: string;
   dynamoRegion: string;
   dynamoDbEndpoint: string;
@@ -24,9 +25,11 @@ type ConfigVariables = {
     URI: string;
     APIKey: string;
   };
+  connectProfileUrl: string;
 };
 
 const configVariables: ConfigVariables = {
+  featureFlag: "",
   connectAccountURL: "",
   dynamoRegion: "",
   dynamoDbEndpoint: "",
@@ -52,6 +55,7 @@ const configVariables: ConfigVariables = {
     URI: "",
     APIKey: "",
   },
+  connectProfileUrl: "",
 };
 
 function getConnectAccountURL(): string {
@@ -69,6 +73,7 @@ function getConnectAccountURL(): string {
 function handleEnvVars(): void {
   const connectAccountURL = getConnectAccountURL();
 
+  configVariables.featureFlag = process.env.NEXT_PUBLIC_FEATURE_FLAG || "";
   configVariables.connectAccountURL = connectAccountURL;
   configVariables.dynamoRegion = process.env.DYNAMODB_REGION || "";
   configVariables.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";
@@ -103,6 +108,7 @@ function handleEnvVars(): void {
     URI: process.env.CONNECT_MANAGEMENT_URL || "",
     APIKey: process.env.CONNECT_MANAGEMENT_API_KEY || "",
   };
+  configVariables.connectProfileUrl = process.env.PROFILE_MOCK_SERVER_URL || "";
 }
 
 handleEnvVars();

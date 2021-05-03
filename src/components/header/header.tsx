@@ -10,7 +10,7 @@ const Header: React.FC = () => {
       <NeutralLink href="/account">
         <Logo />
       </NeutralLink>
-      <p>Account</p>
+      <AppName>Account</AppName>
     </Flex>
   );
 };
@@ -19,18 +19,18 @@ const Flex = styled.div`
   display: flex;
   align-items: center;
   margin: ${({ theme }) => `${theme.spaces.xs} ${theme.spaces.xs}`};
+`;
 
-  p {
-    display: flex;
-    align-items: center;
-    height: ${({ theme }) => theme.spaces.s};
-    padding-left: ${({ theme }) => theme.spaces.xxs};
-    margin-left: ${({ theme }) => theme.spaces.xxs};
-    border-left: ${({ theme }) =>
-      `${theme.colors.blacks[0]} ${theme.borders.thin}`};
-    font-weight: ${({ theme }) => theme.fontWeights.normal};
-    font-size: ${({ theme }) => theme.fontSizes.s};
-  }
+const AppName = styled.p`
+  display: flex;
+  align-items: center;
+  height: ${({ theme }) => theme.spaces.s};
+  padding-left: ${({ theme }) => theme.spaces.xxs};
+  margin-left: ${({ theme }) => theme.spaces.xxs};
+  border-left: ${({ theme }) =>
+    `${theme.colors.blacks[0]} ${theme.borders.thin}`};
+  font-weight: ${({ theme }) => theme.fontWeights.normal};
+  font-size: ${({ theme }) => theme.fontSizes.s};
 `;
 
 export { Header };

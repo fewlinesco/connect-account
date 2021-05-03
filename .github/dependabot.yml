@@ -1,0 +1,25 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "10:00"
+    timezone: "Europe/Paris"
+  open-pull-requests-limit: 10
+  reviewers:
+  - Fuzznimp
+  - Oluane
+  - Meyclem
+
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: "daily"
+    time: "10:00"
+    timezone: "Europe/Paris"
+  open-pull-requests-limit: 10
+  reviewers:
+  - Fuzznimp
+  - Oluane
+  - Meyclem

@@ -46,12 +46,18 @@ const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
 
 	h2 {
 		font-size: ${({ theme }) => theme.fontSizes.h2};
+    margin: 0 0 ${({ theme }) => theme.spaces.xs} 0;
+	}
+
+	h2:not(:first-of-type) {
+    margin: ${({ theme }) => `${theme.spaces.s} 0 ${theme.spaces.xs} 0`};
 	}
 	
 	h3 {
 		font-size: ${({ theme }) => theme.fontSizes.h3};
 		font-weight: ${({ theme }) => theme.fontWeights.normal};
 		color: ${({ theme }) => theme.colors.breadcrumbs};
+    margin: 0 0 ${({ theme }) => theme.spaces.s} 0;
 	}
 
 	p {

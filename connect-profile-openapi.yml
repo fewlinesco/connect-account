@@ -1,0 +1,505 @@
+openapi: 3.0.0
+
+info:
+  contact:
+    email: info@fewlines.co
+  description: 'The application stores user profile information, it is meant to be compliant with OpenID Connect specification'
+  version: 0.2.0
+  title: Connect Profile
+
+tags:
+  - name: Connect Profile
+    description: An API for user OpenID Connect profile storage
+
+servers:
+  - url: 'http://localhost:4008'
+
+paths:
+  /users/me/addresses:
+    get:
+      tags:
+        - Connect Profile
+      description: Retrieve all user's addresses based on the provided bearer token
+      operationId: getAddresses
+      security:
+        - bearer: []
+      responses:
+        '200':
+          $ref: '#/components/responses/GetAddressesSuccess'
+        '401':
+          $ref: '#/components/responses/EndUserUnauthorized'
+        '403':
+          $ref: '#/components/responses/MissingScope'
+
+    post:
+      tags:
+        - Connect Profile
+      description: Register user's address based on the provided bearer token
+      operationId: createAddress
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressPayload'
+            examples:
+              superman:
+                $ref: '#/components/examples/supermanAddressPayload'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateAddressSuccess'
+        '401':
+          $ref: '#/components/responses/EndUserUnauthorized'
+        '403':
+          $ref: '#/components/responses/MissingScope'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+
+  /users/me/addresses/{id}/primary:
+    post:
+      tags:
+        - Connect Profile
+      description: Mark a user's address as primary
+      operationId: markUserAddressAsPrimary
+      security:
+        - bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: the Address ID identifier of the requested Address
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateAddressSuccess'
+        '401':
+          $ref: '#/components/responses/EndUserUnauthorized'
+        '403':
+          $ref: '#/components/responses/MissingScope'
+        '404':
+          $ref: '#/components/responses/AddressNotFound'
+
+  /users/me/profile:
+    get:
+      tags:
+        - Connect Profile
+      description: Retrieve a user's profile based on the provided bearer token
+      operationId: getProfile
+      security:
+        - bearer: []
+      responses:
+        '200':
+          $ref: '#/components/responses/GetProfileSuccess'
+        '401':
+          $ref: '#/components/responses/EndUserUnauthorized'
+        '403':
+          $ref: '#/components/responses/MissingScope'
+        '404':
+          $ref: '#/components/responses/UserNotFound'
+
+    post:
+      tags:
+        - Connect Profile
+      description: Register a user's profile based on the provided bearer token
+      operationId: createProfile
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileData'
+            examples:
+              superman:
+                $ref: '#/components/examples/supermanProfilePayload'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateProfileSuccess'
+        '401':
+          $ref: '#/components/responses/EndUserUnauthorized'
+        '403':
+          $ref: '#/components/responses/MissingScope'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+
+    patch:
+      tags:
+        - Connect Profile
+      description: Update a user's profile based on the provided bearer token
+      operationId: patchProfile
+      security:
+        - bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileData'
+            examples:
+              superman:
+                $ref: '#/components/examples/supermanProfilePayload'
+      responses:
+        '200':
+          $ref: '#/components/responses/PatchProfileSuccess'
+        '401':
+          $ref: '#/components/responses/EndUserUnauthorized'
+        '403':
+          $ref: '#/components/responses/MissingScope'
+        '404':
+          $ref: '#/components/responses/UserNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      bearerFormat: JWT
+      scheme: bearer
+
+  schemas:
+
+    AddressData:
+      type: object
+      description: An object representing the User's address
+      properties:
+        street_address:
+          type: string
+          description: 'Full street address of the End-User, which MAY include house number, street name, Post Office Box, and multi-line extended street address information. This field MAY contain multiple lines, separated by newlines. Newlines can be represented either as a carriage return/line feed pair ("\r\n") or as a single line feed character ("\n")'
+        street_address_2:
+          type: string
+          description: 'Optional additional component for the street address, e.g: floor number, door number, ...'
+        locality:
+          type: string
+          description: City or locality of the End-User.
+        region:
+          type: string
+          description: 'State, province, prefecture, or region of the End-User.'
+        postal_code:
+          type: string
+          description: Zip code or postal code of the End-User.
+        country:
+          type: string
+          description: Country name of the End-User.
+        kind:
+          type: string
+          description: 'The type of the End-User''s address, e.g: billing, delivery, ...'
+
+    AddressPayload:
+      allOf:
+        - $ref: '#/components/schemas/AddressData'
+      required:
+        - locality
+        - postal_code
+        - country
+
+    AddressesResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/AddressResponse'
+
+    AddressResponse:
+      allOf:
+        - $ref: '#/components/schemas/AddressData'
+        - type: object
+          properties:
+            primary:
+              type: boolean
+              description: Set to true means this is the user's primary address.
+            updated_at:
+              type: integer
+              description: Time the End-User's information was last updated. Its value is a JSON number representing the number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time.
+            id:
+              type: string
+              description: Address's unique identifier.
+
+    ProfileData:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'End-User''s full name in displayable form including all name parts, possibly including titles and suffixes, ordered according to the End-User''s preferences.'
+        family_name:
+          type: string
+          description: 'Surname(s) or last name(s) of the End-User. Note that in some cultures, people can have multiple family names or no family name; all can be present, with the names being separated by space characters.'
+        given_name:
+          type: string
+          description: 'Given name(s) or first name(s) of the End-User. Note that in some cultures, people can have multiple given names; all can be present, with the names being separated by space characters.'
+        middle_name:
+          type: string
+          description: 'Middle name(s) of the End-User. Note that in some cultures, people can have multiple middle names; all can be present, with the names being separated by space characters. Also note that in some cultures, middle names are not used.'
+        nickname:
+          type: string
+          description: 'Casual name of the End-User that may or may not be the same as the given_name. For instance, a nickname value of Mike might be returned alongside a given_name value of Michael.'
+        preferred_username:
+          type: string
+          description: 'Shorthand name by which the End-User wishes to be referred to by the Provider, such as janedoe or j.doe. This value MAY be any valid JSON string including special characters such as @, /, or whitespace. The Provider MUST NOT rely upon this value being unique.'
+        profile:
+          type: string
+          description: URL of the End-User's profile page. The contents of this Web page SHOULD be about the End-User.
+        picture:
+          type: string
+          description: 'URL of the End-User''s profile picture. This URL MUST refer to an image file (for example, a PNG, JPEG, or GIF image file), rather than to a Web page containing an image. Note that this URL SHOULD specifically reference a profile photo of the End-User suitable for displaying when describing the End-User, rather than an arbitrary photo taken by the End-User.'
+        website:
+          type: string
+          description: URL of the End-User's Web page or blog. This Web page SHOULD contain information published by the End-User or an organization that the End-User is affiliated with.
+        gender:
+          type: string
+          description: End-User's gender. Values defined by this specification are female and male. Other values MAY be used when neither of the defined values are applicable.
+        birthdate:
+          type: string
+          description: 'End-User''s birthday, represented as an ISO 8601:2004 [ISO8601‑2004] YYYY-MM-DD format. The year MAY be 0000, indicating that it is omitted. To represent only the year, YYYY format is allowed. Note that depending on the underlying platform''s date related function, providing just year can result in varying month and day, so the implementers need to take this factor into account to correctly process the dates.'
+        zoneinfo:
+          type: string
+          description: 'String from zoneinfo [zoneinfo] time zone database representing the End-User''s time zone. For example, Europe/Paris or America/Los_Angeles.'
+        locale:
+          type: string
+          description: End-User's locale.
+
+    ProfileResponse:
+      allOf:
+        - $ref: '#/components/schemas/ProfileData'
+        - type: object
+          properties:
+            sub:
+              type: string
+              description: Identifier for the End-User at the Issuer.
+            updated_at:
+              type: integer
+              description: 'Time the End-User''s information was last updated. Its value is a JSON number representing the number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time.'
+
+  responses:
+
+    # ERRORS
+
+    EndUserUnauthorized:
+      description: Unauthorized request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                default: Without a valid bearer token you are not allowed to access this endpoint
+
+    MissingScope:
+      description: The endpoint needs some specific scopes.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: an english message describing the error
+                enum:
+                  - The given scopes don't allow you to perform this action
+              errors:
+                type: object
+                description: an object representing invalid scopes
+                properties:
+                  address:
+                    type: string
+                    default: Must be present
+                  openid:
+                    type: string
+                    default: Must be present
+                  profile:
+                    type: string
+                    default: Must be present
+
+    UnprocessableEntity:
+      description: Invalid input parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: an english message describing the error
+                enum:
+                  - Invalid User data
+              errors:
+                type: object
+                description: an object representing invalid fields
+                properties:
+                  sub:
+                    type: string
+                    default: can't be blank
+                  birthdate:
+                    type: string
+                    default: Must be an ISO8601 date
+    
+    AddressNotFound:
+      description: Address Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                default: Address not found
+
+    # USERS
+
+    UserNotFound:
+      description: User Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                default: User not found
+
+    # ADDRESSES
+
+    GetAddressesSuccess:
+      description: Successful Get Addresses Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AddressesResponse'
+          examples:
+            'Superman addresses':
+              $ref: '#/components/examples/supermanAddresses'
+
+    CreateAddressSuccess:
+      description: A successful User Address creation response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AddressResponse'
+          examples:
+            Superman:
+              $ref: '#/components/examples/supermanPrimaryAddress'
+
+    MarkAddressAsPrimarySuccess:
+      description: A successful mark User Address as primary response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AddressResponse'
+          examples:
+            "Superman's primary address":
+              $ref: '#/components/examples/supermanPrimaryAddress'
+
+    # PROFILE
+
+    GetProfileSuccess:
+      description: Successful Get Profile Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProfileResponse'
+          examples:
+            "Superman's profile":
+              $ref: '#/components/examples/supermanProfile'
+
+    CreateProfileSuccess:
+      description: A successful User Profile creation response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProfileResponse'
+          examples:
+            superman:
+              $ref: '#/components/examples/supermanProfile'
+
+    PatchProfileSuccess:
+      description: Successful Patch User's Profile Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProfileResponse'
+          examples:
+            superman:
+              $ref: '#/components/examples/supermanProfile'
+
+  examples:
+
+    supermanAddressPayload:
+      value:
+        street_address: 344 Clinton St.
+        street_address_2: 'Apt. #3B'
+        locality: Metropolis
+        postal_code: '62960'
+        region: Delaware
+        country: United States of America
+        kind: delivery
+
+    supermanPrimaryAddress:
+      value:
+        id: CD333E28-4647-48E3-A036-DAFA9D8ED1BB
+        street_address: 344 Clinton St.
+        street_address_2: 'Apt. #3B'
+        locality: Metropolis
+        postal_code: '62960'
+        region: Delaware
+        country: United States of America
+        primary: true
+        kind: delivery
+        updated_at: 1570550562
+
+    supermanAddresses:
+      value:
+        - id: CD333E28-4647-48E3-A036-DAFA9D8ED1BB
+          street_address: 344 Clinton St.
+          street_address_2: 'Apt. #3B'
+          locality: Metropolis
+          postal_code: '62960'
+          region: Delaware
+          country: United States of America
+          primary: true
+          kind: delivery
+          updated_at: 1570550562
+        - id: 83FE11B6-E035-443C-9DB1-A4236E314176
+          street_address: '355, 1000 Broadway'
+          locality: Metropolis
+          postal_code: '62960'
+          region: Delaware
+          country: United States of America
+          primary: false
+          kind: work
+          updated_at: 1570550562
+
+    supermanProfilePayload:
+      value:
+        name: Clark Kent
+        family_name: Kent
+        given_name: Kal-El
+        middle_name: Joseph
+        nickname: Superman
+        preferred_username: Clark
+        profile: 'https://www.dccomics.com/characters/superman'
+        picture: 'https://www.dccomics.com/sites/default/files/styles/character_thumb_160x160/public/Char_Profile_Superman_20190116_5c3fc2758f6a12.2513240.jpg'
+        website: 'https://superman.com'
+        gender: male
+        birthdate: '1938-04-01'
+        zoneinfo: America/Los_Angeles
+        locale: EN-us
+
+    supermanProfile:
+      value:
+        name: Clark Kent
+        family_name: Kent
+        given_name: Kal-El
+        middle_name: Joseph
+        nickname: Superman
+        preferred_username: Clark
+        profile: 'https://www.dccomics.com/characters/superman'
+        picture: 'https://www.dccomics.com/sites/default/files/styles/character_thumb_160x160/public/Char_Profile_Superman_20190116_5c3fc2758f6a12.2513240.jpg'
+        website: 'https://superman.com'
+        gender: male
+        birthdate: '1938-04-01'
+        zoneinfo: America/Los_Angeles
+        locale: EN-us
+        updated_at: 1570550562

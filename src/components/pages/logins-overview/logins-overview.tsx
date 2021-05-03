@@ -13,6 +13,7 @@ import {
   SocialSection,
 } from "./logins-overview-sections";
 import { SortedIdentities } from "@src/@types/sorted-identities";
+import { BoxedLink } from "@src/components/boxed-link/boxed-link";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 
 const IDENTITIES_SECTION_CONTENT = {
@@ -46,81 +47,75 @@ const LoginsOverview: React.FC = () => {
 
   return (
     <>
-      <SectionWrapper>
-        <Timeline />
-        <h2>{IDENTITIES_SECTION_CONTENT.EMAIL.title}</h2>
-        <SectionBox>
-          {!data ? (
-            <BoxedLink disableClick={true} href="#">
-              <SkeletonTextLine fontSize={1.6} />
-            </BoxedLink>
-          ) : (
-            <EmailSection
-              identityList={data.sortedIdentities.emailIdentities}
-              hideEmailList={hideEmailList}
-            />
-          )}
-        </SectionBox>
-        {data && data.sortedIdentities.emailIdentities.length > 1 ? (
-          <Flex>
-            <ShowMoreButton
-              hideList={hideEmailList}
-              quantity={data.sortedIdentities.emailIdentities.length - 1}
-              setHideList={setHideEmailList}
-            />
-          </Flex>
-        ) : null}
-        <NeutralLink href={`/account/logins/email/new`}>
-          <FakeButton variant={ButtonVariant.SECONDARY}>
-            {`+ ${IDENTITIES_SECTION_CONTENT.EMAIL.addNewIdentityMessage}`}
-          </FakeButton>
-        </NeutralLink>
-      </SectionWrapper>
-      <SectionWrapper>
-        <Timeline />
-        <h2>{IDENTITIES_SECTION_CONTENT.PHONE.title}</h2>
-        <SectionBox>
-          {!data ? (
-            <BoxedLink disableClick={true} href="#">
-              <SkeletonTextLine fontSize={1.6} />
-            </BoxedLink>
-          ) : (
-            <PhoneSection
-              identityList={data.sortedIdentities.phoneIdentities}
-              hideEmailList={hidePhoneList}
-            />
-          )}
-        </SectionBox>
-        {data && data.sortedIdentities.phoneIdentities.length > 1 ? (
-          <Flex>
-            <ShowMoreButton
-              hideList={hidePhoneList}
-              quantity={data.sortedIdentities.phoneIdentities.length - 1}
-              setHideList={setHidePhoneList}
-            />
-          </Flex>
-        ) : null}
-        <NeutralLink href={`/account/logins/phone/new`}>
-          <FakeButton variant={ButtonVariant.SECONDARY}>
-            {`+ ${IDENTITIES_SECTION_CONTENT.PHONE.addNewIdentityMessage}`}
-          </FakeButton>
-        </NeutralLink>
-      </SectionWrapper>
-      <SectionWrapper isLastOfTheList={true}>
-        <TimelineEnd />
-        <h2>{IDENTITIES_SECTION_CONTENT.SOCIAL.title}</h2>
-        <SectionBox>
-          {!data ? (
-            <BoxedLink disableClick={true} href="#">
-              <SkeletonTextLine fontSize={1.6} />
-            </BoxedLink>
-          ) : (
-            <SocialSection
-              identityList={data.sortedIdentities.socialIdentities}
-            />
-          )}
-        </SectionBox>
-      </SectionWrapper>
+      <Timeline />
+      <h2>{IDENTITIES_SECTION_CONTENT.EMAIL.title}</h2>
+      <SectionBox>
+        {!data ? (
+          <BoxedLink disableClick={true} href="#">
+            <SkeletonTextLine fontSize={1.6} />
+          </BoxedLink>
+        ) : (
+          <EmailSection
+            identityList={data.sortedIdentities.emailIdentities}
+            hideEmailList={hideEmailList}
+          />
+        )}
+      </SectionBox>
+      {data && data.sortedIdentities.emailIdentities.length > 1 ? (
+        <Flex>
+          <ShowMoreButton
+            hideList={hideEmailList}
+            quantity={data.sortedIdentities.emailIdentities.length - 1}
+            setHideList={setHideEmailList}
+          />
+        </Flex>
+      ) : null}
+      <NeutralLink href={`/account/logins/email/new`}>
+        <FakeButton variant={ButtonVariant.SECONDARY}>
+          {`+ ${IDENTITIES_SECTION_CONTENT.EMAIL.addNewIdentityMessage}`}
+        </FakeButton>
+      </NeutralLink>
+      <Timeline />
+      <h2>{IDENTITIES_SECTION_CONTENT.PHONE.title}</h2>
+      <SectionBox>
+        {!data ? (
+          <BoxedLink disableClick={true} href="#">
+            <SkeletonTextLine fontSize={1.6} />
+          </BoxedLink>
+        ) : (
+          <PhoneSection
+            identityList={data.sortedIdentities.phoneIdentities}
+            hideEmailList={hidePhoneList}
+          />
+        )}
+      </SectionBox>
+      {data && data.sortedIdentities.phoneIdentities.length > 1 ? (
+        <Flex>
+          <ShowMoreButton
+            hideList={hidePhoneList}
+            quantity={data.sortedIdentities.phoneIdentities.length - 1}
+            setHideList={setHidePhoneList}
+          />
+        </Flex>
+      ) : null}
+      <NeutralLink href={`/account/logins/phone/new`}>
+        <FakeButton variant={ButtonVariant.SECONDARY}>
+          {`+ ${IDENTITIES_SECTION_CONTENT.PHONE.addNewIdentityMessage}`}
+        </FakeButton>
+      </NeutralLink>
+      <TimelineEnd />
+      <h2>{IDENTITIES_SECTION_CONTENT.SOCIAL.title}</h2>
+      <SectionBox>
+        {!data ? (
+          <BoxedLink disableClick={true} href="#">
+            <SkeletonTextLine fontSize={1.6} />
+          </BoxedLink>
+        ) : (
+          <SocialSection
+            identityList={data.sortedIdentities.socialIdentities}
+          />
+        )}
+      </SectionBox>
     </>
   );
 };
@@ -130,33 +125,4 @@ const Flex = styled.div`
   justify-content: center;
 `;
 
-const SectionWrapper = styled.div<{
-  isLastOfTheList?: boolean;
-}>`
-  padding: 0 0 ${({ theme }) => theme.spaces.s} 0;
-  position: relative;
-
-  ${({ isLastOfTheList }) =>
-    isLastOfTheList &&
-    `
-      padding: 0;
-    `}
-`;
-
-const BoxedLink = styled(NeutralLink)<{
-  disableClick?: boolean;
-}>`
-  height: 7.2rem;
-  padding: 0 ${({ theme }) => theme.spaces.xs};
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  ${({ disableClick }) =>
-    disableClick &&
-    `
-        cursor: default;
-      `}
-`;
-
-export { LoginsOverview, IDENTITIES_SECTION_CONTENT, BoxedLink };
+export { LoginsOverview, IDENTITIES_SECTION_CONTENT };

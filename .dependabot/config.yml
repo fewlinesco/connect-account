@@ -1,8 +1,0 @@
-version: 1
-update_configs:
-  - package_manager: "javascript"
-    directory: "/"
-    default_reviewers:
-      - "Fuzznimp"
-      - "Oluane"
-    update_schedule: "live"

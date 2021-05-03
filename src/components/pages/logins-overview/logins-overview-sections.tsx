@@ -4,7 +4,8 @@ import styled from "styled-components";
 
 import { RightChevron } from "../../icons/right-chevron/right-chevron";
 import { Separator } from "../../separator/separator";
-import { BoxedLink, IDENTITIES_SECTION_CONTENT } from "./logins-overview";
+import { IDENTITIES_SECTION_CONTENT } from "./logins-overview";
+import { BoxedLink } from "@src/components/boxed-link/boxed-link";
 import {
   capitalizeFirstLetter,
   formatSpecialSocialIdentities,
@@ -153,18 +154,13 @@ const IdentityValue = styled.p<Pick<Identity, "primary" | "status">>`
   overflow: hidden;
   text-overflow: ellipsis;
   width: 90%;
+  line-height: ${({ theme }) => theme.lineHeights.copy};
 
-  ${(props) =>
-    props.primary &&
-    `
-      font-weight: ${props.theme.fontWeights.semibold};
-    `}
+  ${({ primary, theme }) =>
+    primary && `font-weight: ${theme.fontWeights.semibold};`}
 
-  ${(props) =>
-    props.status === "unvalidated" &&
-    `
-      color: ${props.theme.colors.lightGrey};
-    `};
+  ${({ status, theme }) =>
+    status === "unvalidated" && `color: ${theme.colors.lightGrey};`};
 `;
 
 const NoIdentitiesParagraph = styled.p`
