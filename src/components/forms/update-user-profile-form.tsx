@@ -4,7 +4,6 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { InputDatePicker } from "../input/input-date-picker";
 import { InputText } from "../input/input-text";
-// import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
 import { Profile } from "@src/@types/profile";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
@@ -15,7 +14,6 @@ const UpdateUserProfileForm: React.FC<{ userProfileData?: Profile }> = ({
   userProfileData,
 }) => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
-  // const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const [updatedName, setUpdatedName] = React.useState<string>("");
   const [updatedUsername, setUpdatedUsername] = React.useState<string>("");
@@ -33,7 +31,6 @@ const UpdateUserProfileForm: React.FC<{ userProfileData?: Profile }> = ({
 
   return (
     <>
-      {/* {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null} */}
       <Form
         formID={formID}
         onSubmit={async () => {

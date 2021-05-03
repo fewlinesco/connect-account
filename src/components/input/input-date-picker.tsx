@@ -39,8 +39,7 @@ const Label = styled.label`
   flex-direction: column;
   margin-bottom: 1rem;
 
-  .react-datepicker-wrapper,
-  .DayPickerInput {
+  .react-datepicker-wrapper {
     width: 100%;
     input {
       width: 100%;
