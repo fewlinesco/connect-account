@@ -3709,7 +3709,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-datepicker@^3.1.8":
+"@types/react-datepicker@3.1.8":
   version "3.1.8"
   resolved "https://registry.yarnpkg.com/@types/react-datepicker/-/react-datepicker-3.1.8.tgz#642b0d5f2c30f53d7940b1771d5fb11b646bb7fb"
   integrity sha512-RFEg7++xhosMq02i2lsuaUPEbZGn66U3dxtvw9LU/ZRqLkBGr9Ft2LTz6vbeYYVtaBdOr0NcQatOLnlfUaS8kw==

@@ -144,7 +144,10 @@ const UserAddresses: React.FC<{
     <NoAddressesParagraph>No addresses added yet</NoAddressesParagraph>
   ) : (
     <>
-      <BoxedLink disableClick={false} href="#">
+      <BoxedLink
+        disableClick={false}
+        href={`/account/profile/addresses/${primaryAddress.id}`}
+      >
         <CategoryContent>
           <CategoryName>{primaryAddress.kind}</CategoryName>
           <AddressValue
@@ -174,7 +177,10 @@ const UserAddresses: React.FC<{
               return (
                 <React.Fragment key={id + sub}>
                   <Separator />
-                  <BoxedLink disableClick={false} href="#">
+                  <BoxedLink
+                    disableClick={false}
+                    href={`/account/profile/addresses/${id}`}
+                  >
                     <CategoryContent>
                       <CategoryName>{kind}</CategoryName>
                       <AddressValue
