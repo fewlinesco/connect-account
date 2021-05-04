@@ -500,10 +500,10 @@
     "@aws-sdk/is-array-buffer" "3.13.1"
     tslib "^2.0.0"
 
-"@aws-sdk/util-dynamodb@3.13.1":
-  version "3.13.1"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/util-dynamodb/-/util-dynamodb-3.13.1.tgz#7599dc196c6a7d4b49b9c83baf23447d297075bf"
-  integrity sha512-HYPUGcN470YNDs6qvGBA8xvZ8NQ1IU4na9lMzeTvf3xGWBz2tFHeYiYVtwYhd1hVZWDkSKOmXYRocLSJoTlhFA==
+"@aws-sdk/util-dynamodb@3.14.0":
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/util-dynamodb/-/util-dynamodb-3.14.0.tgz#4f06fdc6d31ab143cd5b8449373329479c114529"
+  integrity sha512-47BvV6xGbXkqZ0RX//xfqdRmMmnEFs0YxyATrXKiIRFv+Z9q3mgeyOuLW1BQg7v3vkMXtljSSAn1O73hnsH82g==
   dependencies:
     tslib "^2.0.0"
 
