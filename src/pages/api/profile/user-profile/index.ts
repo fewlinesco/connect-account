@@ -20,16 +20,17 @@ import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getProfileAccessToken } from "@src/utils/get-profile-access-token";
 
-const handler: Handler = async (request, response) => {
+const patchHandler: Handler = async (request, response) => {
   const webErrors = {
     invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
     invalidScopes: ERRORS_DATA.INVALID_SCOPES,
-    profileDataNotFound: ERRORS_DATA.PROFILE_DATA_NOT_FOUND,
+    userProfileNotFound: ERRORS_DATA.USER_PROFILE_NOT_FOUND,
+    invalidUserProfilePayload: ERRORS_DATA.INVALID_USER_PROFILE_PAYLOAD,
     unreachable: ERRORS_DATA.UNREACHABLE,
   };
 
   return getTracer().span(
-    "GET get-user-profile-and-addresses handler",
+    "PATCH /api/profile/user-profile handler",
     async (span) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
@@ -44,10 +45,11 @@ const handler: Handler = async (request, response) => {
         return;
       }
 
+      const { userProfilePayload } = request.body;
+
       const profileAccessToken = await getProfileAccessToken(
         userCookie.access_token,
       );
-
       span.setDisclosedAttribute(
         "is Connect.Profile access token available",
         true,
@@ -55,11 +57,11 @@ const handler: Handler = async (request, response) => {
 
       const profileClient = initProfileClient(profileAccessToken);
 
-      const { data: userProfile } = await profileClient
-        .getProfile()
+      const { data: updatedUserProfile } = await profileClient
+        .patchProfile(userProfilePayload)
         .catch((error) => {
           span.setDisclosedAttribute(
-            "is Connect.Profile UserProfile fetched",
+            "is Connect.Profile UserProfile updated",
             false,
           );
 
@@ -72,51 +74,27 @@ const handler: Handler = async (request, response) => {
           }
 
           if (error.response.status === HttpStatus.NOT_FOUND) {
-            throw webErrorFactory(webErrors.profileDataNotFound);
+            throw webErrorFactory(webErrors.userProfileNotFound);
+          }
+
+          if (error.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
+            throw webErrorFactory(webErrors.invalidUserProfilePayload);
           }
 
           throw webErrorFactory(webErrors.unreachable);
         });
-
       span.setDisclosedAttribute(
-        "is Connect.Profile UserProfile fetched",
-        true,
-      );
-
-      const { data: userAddresses } = await profileClient
-        .getAddresses()
-        .catch((error) => {
-          span.setDisclosedAttribute(
-            "is Connect.Profile UserAddresses fetched",
-            false,
-          );
-
-          if (error.response.status === HttpStatus.UNAUTHORIZED) {
-            throw webErrorFactory(webErrors.invalidProfileToken);
-          }
-
-          if (error.response.status === HttpStatus.FORBIDDEN) {
-            throw webErrorFactory(webErrors.invalidScopes);
-          }
-
-          throw webErrorFactory(webErrors.unreachable);
-        });
-
-      span.setDisclosedAttribute(
-        "is Connect.Profile UserAddresses fetched",
+        "is Connect.Profile UserProfile updated",
         true,
       );
 
       response.statusCode = HttpStatus.OK;
-      response.json({
-        userProfile,
-        userAddresses,
-      });
+      response.json({ updatedUserProfile });
     },
   );
 };
 
-const wrappedHandler = wrapMiddlewares(
+const wrappedPatchHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
     rateLimitingMiddleware(getTracer(), logger, {
@@ -129,10 +107,10 @@ const wrappedHandler = wrapMiddlewares(
     loggingMiddleware(getTracer(), logger),
     authMiddleware(getTracer()),
   ],
-  handler,
-  "GET /api/profile/get-user-profile-and-addresses",
+  patchHandler,
+  "PATCH /api/profile/user-profile",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .get(wrappedHandler)
+  .patch(wrappedPatchHandler)
   .getHandler();

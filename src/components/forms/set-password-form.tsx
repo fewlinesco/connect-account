@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { InputText } from "../input/input-text";
 import { WrongInputError } from "../input/wrong-input-error";
 import { StyledForm } from "./form";
-import { HttpVerbs } from "@src/@types/http-verbs";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { PasswordRulesErrorList } from "@src/components/password-rules-error-list/password-rules-error-list";
 import { ERRORS_DATA } from "@src/errors/web-errors";
@@ -44,7 +43,7 @@ const SetPasswordForm: React.FC<{
 
         if (isNotSubmitted) {
           if (passwordInput === passwordConfirmationInput) {
-            await fetchJson("/api/auth-connect/set-password", HttpVerbs.POST, {
+            await fetchJson("/api/auth-connect/set-password", "POST", {
               passwordInput,
             })
               .then(async (response) => {

@@ -3,10 +3,12 @@ import styled from "styled-components";
 
 import { Address, Profile } from "@src/@types/profile";
 import { BoxedLink } from "@src/components/boxed-link/boxed-link";
-import { ShowMoreButton } from "@src/components/buttons/buttons";
+import { ButtonVariant, ShowMoreButton } from "@src/components/buttons/buttons";
+import { FakeButton } from "@src/components/buttons/fake-button";
 import { DefaultProfilePictureIcon } from "@src/components/icons/default-profile-picture/default-profile-picture";
 import { PlusIcon } from "@src/components/icons/plus-icon/plus-icon";
 import { RightChevron } from "@src/components/icons/right-chevron/right-chevron";
+import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { Separator } from "@src/components/separator/separator";
 import { SectionBox } from "@src/components/shadow-box/section-box";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
@@ -87,6 +89,11 @@ const ProfileOverview: React.FC<{
           )}
         </UserInfoSection>
       </SectionBox>
+      <NeutralLink href={"/account/profile/user-profile/edit"}>
+        <FakeButton variant={ButtonVariant.PRIMARY}>
+          Update your personal information
+        </FakeButton>
+      </NeutralLink>
       <h2>Addresses</h2>
       <SectionBox>
         {!data ? (

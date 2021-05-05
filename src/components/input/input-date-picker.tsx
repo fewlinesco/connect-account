@@ -3,8 +3,6 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import styled from "styled-components";
 
-import { SkeletonTextLine } from "../skeletons/skeletons";
-
 type InputDatePickerProps = {
   label: string;
   selected?: string;
@@ -19,15 +17,11 @@ const InputDatePicker: React.FC<InputDatePickerProps> = ({
   return (
     <Label>
       {label}
-      {selected ? (
-        <DatePicker
-          selected={new Date(selected)}
-          onChange={onChange}
-          dateFormat={"yyyy-MM-dd"}
-        />
-      ) : (
-        <SkeletonTextLine fontSize={1.4} />
-      )}
+      <DatePicker
+        selected={selected ? new Date(selected) : new Date()}
+        onChange={onChange}
+        dateFormat={"yyyy-MM-dd"}
+      />
     </Label>
   );
 };

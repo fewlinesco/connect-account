@@ -4,7 +4,6 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../buttons/buttons";
-import { HttpVerbs } from "@src/@types/http-verbs";
 import { fetchJson } from "@src/utils/fetch-json";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
@@ -37,7 +36,7 @@ const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
 
           await fetchJson(
             "/api/identity/delete-identity",
-            HttpVerbs.DELETE,
+            "DELETE",
             requestData,
           ).then(() => {
             router && router.push("/account/logins");

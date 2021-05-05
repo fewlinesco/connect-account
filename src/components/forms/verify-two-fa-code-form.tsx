@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 import { InputText } from "../input/input-text";
 import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
-import { HttpVerbs } from "@src/@types/http-verbs";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { ERRORS_DATA } from "@src/errors/web-errors";
@@ -29,7 +28,7 @@ const VerifyTwoFACodeForm: React.FC<{
 
         await fetchJson(
           "/api/auth-connect/verify-two-fa-validation-code",
-          HttpVerbs.POST,
+          "POST",
           { verificationCode },
         ).then(async (response) => {
           const parsedResponse = await response.json();
