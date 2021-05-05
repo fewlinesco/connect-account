@@ -94,6 +94,11 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     httpStatus: HttpStatus.UNPROCESSABLE_ENTITY,
     message: "Invalid password input",
   },
+  INVALID_USER_PROFILE_PAYLOAD: {
+    code: "invalid_user_profile_payload",
+    httpStatus: HttpStatus.UNPROCESSABLE_ENTITY,
+    message: "Invalid UserProfile payload",
+  },
   CONNECT_UNREACHABLE: {
     code: "connect_unreachable",
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
