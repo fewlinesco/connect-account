@@ -30,7 +30,7 @@ const patchHandler: Handler = async (request, response) => {
   };
 
   return getTracer().span(
-    "/api/profile/user-profile patchHandler",
+    "PATCH /api/profile/user-profile handler",
     async (span) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",

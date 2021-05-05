@@ -18,7 +18,7 @@ const InputDatePicker: React.FC<InputDatePickerProps> = ({
     <Label>
       {label}
       <DatePicker
-        selected={selected ? new Date(selected) : undefined}
+        selected={selected ? new Date(selected) : new Date()}
         onChange={onChange}
         dateFormat={"yyyy-MM-dd"}
       />

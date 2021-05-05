@@ -29,7 +29,7 @@ const handler: Handler = async (request, response) => {
   };
 
   return getTracer().span(
-    "get-user-profile-and-addresses handler",
+    "GET get-user-profile-and-addresses handler",
     async (span) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
@@ -130,7 +130,7 @@ const wrappedHandler = wrapMiddlewares(
     authMiddleware(getTracer()),
   ],
   handler,
-  "/api/profile/get-user-profile-and-addresses",
+  "GET /api/profile/get-user-profile-and-addresses",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
