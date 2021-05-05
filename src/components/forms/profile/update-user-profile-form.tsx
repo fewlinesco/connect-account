@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 import { InputDatePicker } from "../../input/input-date-picker";
 import { InputText } from "../../input/input-text";
 import { Form } from "../form";
-import { HttpVerbs } from "@src/@types/http-verbs";
 import { Profile } from "@src/@types/profile";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
@@ -35,7 +34,7 @@ const UpdateUserProfileForm: React.FC<{ userProfileData?: Profile }> = ({
       <Form
         formID={formID}
         onSubmit={async () => {
-          await fetchJson("/api/profile/user-profile", HttpVerbs.PATCH, {
+          await fetchJson("/api/profile/user-profile", "PATCH", {
             userProfilePayload: userProfile,
           }).then(async (response) => {
             const parsedResponse = await response.json();

@@ -4,7 +4,6 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../buttons/buttons";
-import { HttpVerbs } from "@src/@types/http-verbs";
 import { fetchJson } from "@src/utils/fetch-json";
 
 interface PrimaryConfirmationBoxContentProps {
@@ -30,7 +29,7 @@ const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxContentProps
         type="button"
         variant={ButtonVariant.PRIMARY}
         onClick={async () => {
-          fetchJson("/api/identity/mark-identity-as-primary", HttpVerbs.POST, {
+          fetchJson("/api/identity/mark-identity-as-primary", "POST", {
             identityId: id,
           }).then(() => {
             router && router.push("/account/logins");

@@ -7,7 +7,6 @@ import { v4 as uuidv4 } from "uuid";
 import { InputText } from "../input/input-text";
 import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
-import { HttpVerbs } from "@src/@types/http-verbs";
 import { Box } from "@src/components/box/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
@@ -31,14 +30,10 @@ const ValidateIdentityForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
-          await fetchJson(
-            "/api/auth-connect/verify-validation-code",
-            HttpVerbs.POST,
-            {
-              validationCode,
-              eventId,
-            },
-          ).then(async (response) => {
+          await fetchJson("/api/auth-connect/verify-validation-code", "POST", {
+            validationCode,
+            eventId,
+          }).then(async (response) => {
             if (response.status >= 400) {
               const parsedResponse = await response.json();
 
@@ -96,7 +91,7 @@ const ValidateIdentityForm: React.FC<{
         onClick={async () => {
           await fetchJson(
             "/api/auth-connect/re-send-identity-validation-code",
-            HttpVerbs.POST,
+            "POST",
             { eventId },
           )
             .then(async (response) => await response.json())
