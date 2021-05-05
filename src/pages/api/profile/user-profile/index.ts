@@ -24,10 +24,8 @@ const patchHandler: Handler = async (request, response) => {
   const webErrors = {
     invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
     invalidScopes: ERRORS_DATA.INVALID_SCOPES,
-    profileDataNotFound: ERRORS_DATA.PROFILE_DATA_NOT_FOUND,
+    userProfileNotFound: ERRORS_DATA.USER_PROFILE_NOT_FOUND,
     unreachable: ERRORS_DATA.UNREACHABLE,
-    invalidQueryString: ERRORS_DATA.INVALID_QUERY_STRING,
-    addressNotFound: ERRORS_DATA.ADDRESS_NOT_FOUND,
   };
 
   return getTracer().span(
@@ -62,7 +60,7 @@ const patchHandler: Handler = async (request, response) => {
         .patchProfile(userProfilePayload)
         .catch((error) => {
           span.setDisclosedAttribute(
-            "is Connect.Profile addresses fetched",
+            "is Connect.Profile UserProfile updated",
             false,
           );
 
@@ -72,6 +70,10 @@ const patchHandler: Handler = async (request, response) => {
 
           if (error.response.status === HttpStatus.FORBIDDEN) {
             throw webErrorFactory(webErrors.invalidScopes);
+          }
+
+          if (error.response.status === HttpStatus.NOT_FOUND) {
+            throw webErrorFactory(webErrors.userProfileNotFound);
           }
 
           throw webErrorFactory(webErrors.unreachable);

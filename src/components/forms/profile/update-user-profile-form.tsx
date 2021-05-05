@@ -49,15 +49,9 @@ const UpdateUserProfileForm: React.FC<{ userProfileData?: Profile }> = ({
       <Form
         formID={formID}
         onSubmit={async () => {
-          const body = {
+          await fetchJson("/api/profile/user-profile", HttpVerbs.PATCH, {
             userProfilePayload: userProfile,
-          };
-
-          await fetchJson(
-            "/api/profile/user-profile",
-            HttpVerbs.PATCH,
-            body,
-          ).then(async (response) => {
+          }).then(async (response) => {
             const parsedResponse = await response.json();
 
             if ("updatedUserProfile" in parsedResponse) {
