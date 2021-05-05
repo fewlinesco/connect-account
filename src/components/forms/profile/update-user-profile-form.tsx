@@ -107,6 +107,45 @@ const UpdateUserProfileForm: React.FC<{ userProfileData?: Profile }> = ({
             });
           }}
         />
+        <InputText
+          type="text"
+          name="profile"
+          placeholder="Enter your profile URL"
+          value={userProfile.profile}
+          onChange={(value) => {
+            setUserProfile({
+              ...userProfile,
+              profile: value,
+            });
+          }}
+          label="Profile URL"
+        />
+        <InputText
+          type="text"
+          name="zoneinfo"
+          placeholder="Enter your zone info"
+          value={userProfile.zoneinfo}
+          onChange={(value) => {
+            setUserProfile({
+              ...userProfile,
+              zoneinfo: value,
+            });
+          }}
+          label="Zone info"
+        />
+        <InputText
+          type="text"
+          name="locale"
+          placeholder="Enter your locale"
+          value={userProfile.locale}
+          onChange={(value) => {
+            setUserProfile({
+              ...userProfile,
+              locale: value,
+            });
+          }}
+          label="Locale"
+        />
         <Button type="submit" variant={ButtonVariant.PRIMARY}>
           Update my information
         </Button>
