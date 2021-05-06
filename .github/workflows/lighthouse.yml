@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: fewlines/docker-lighthouse-puppeteer:CU-ht6h0f_94fead3da324
+      image: fewlines/docker-lighthouse-puppeteer:CU-ht6h0f_91faf7611f0e
 
     env:
       GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
