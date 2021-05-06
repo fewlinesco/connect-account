@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: femtopixel/google-lighthouse:v7.3.0
+      image: fewlines/docker-lighthouse-puppeteer:CU-ht6h0f_94fead3da324
 
     env:
       GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
@@ -48,7 +48,7 @@ jobs:
           CONNECT_TEST_ACCOUNT_EMAIL: 'lighthouse_${{ github.event.deployment.sha }}@e2e.test'
           CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
           CONNECT_TEST_ACCOUNT_URL: ${{ github.event.deployment.payload.web_url }}
-        run: e2e/lighthouse-report
+        run: lighthouse-puppeteer bin/e2e/lighthouse-report.js
 
       - name: Remove test user
         if: ${{ always() }}
