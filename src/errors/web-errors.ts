@@ -79,6 +79,11 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     httpStatus: HttpStatus.NOT_FOUND,
     message: "Connect.Profile data not found",
   },
+  USER_PROFILE_NOT_FOUND: {
+    code: "user_profile_not_found",
+    httpStatus: HttpStatus.NOT_FOUND,
+    message: "UserProfile not found",
+  },
   ADDRESS_NOT_FOUND: {
     code: "address_not_found",
     httpStatus: HttpStatus.NOT_FOUND,
@@ -88,6 +93,11 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     code: "invalid_password_input",
     httpStatus: HttpStatus.UNPROCESSABLE_ENTITY,
     message: "Invalid password input",
+  },
+  INVALID_USER_PROFILE_PAYLOAD: {
+    code: "invalid_user_profile_payload",
+    httpStatus: HttpStatus.UNPROCESSABLE_ENTITY,
+    message: "Invalid UserProfile payload",
   },
   CONNECT_UNREACHABLE: {
     code: "connect_unreachable",

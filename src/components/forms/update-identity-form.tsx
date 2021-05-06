@@ -10,7 +10,6 @@ import { StyledPhoneInput } from "../input/styled-phone-input";
 import { WrongInputError } from "../input/wrong-input-error";
 import { SkeletonTextLine } from "../skeletons/skeletons";
 import { Form } from "./form";
-import { HttpVerbs } from "@src/@types/http-verbs";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Box } from "@src/components/box/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
@@ -59,7 +58,7 @@ const UpdateIdentityForm: React.FC<{
 
               await fetchJson(
                 "/api/auth-connect/send-identity-validation-code",
-                HttpVerbs.POST,
+                "POST",
                 body,
               ).then(async (response) => {
                 const parsedResponse = await response.json();

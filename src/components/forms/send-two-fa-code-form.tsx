@@ -7,7 +7,6 @@ import { InputsRadio, Label } from "../input/input-radio-button";
 import { WrongInputError } from "../input/wrong-input-error";
 import { SkeletonTextLine } from "../skeletons/skeletons";
 import { Form } from "./form";
-import { HttpVerbs } from "@src/@types/http-verbs";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { ERRORS_DATA } from "@src/errors/web-errors";
@@ -42,7 +41,7 @@ const SendTwoFACodeForm: React.FC<{
 
         await fetchJson(
           "/api/auth-connect/send-two-fa-validation-code",
-          HttpVerbs.POST,
+          "POST",
           body,
         ).then(async (response) => {
           const parsedResponse = await response.json();

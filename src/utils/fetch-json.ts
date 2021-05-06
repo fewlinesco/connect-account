@@ -1,8 +1,6 @@
-import { HttpVerbs } from "@src/@types/http-verbs";
-
 function fetchJson(
   endpoint: string,
-  method: Exclude<HttpVerbs, HttpVerbs.GET>,
+  method: "POST" | "DELETE" | "PATCH" | "PUT",
   body: Record<string, unknown>,
 ): Promise<Response> {
   return fetch(endpoint, {

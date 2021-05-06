@@ -12,7 +12,7 @@ interface ExtendedLinkProps extends LinkProps {
 const NeutralLink: React.FC<ExtendedLinkProps> = (props) => {
   const { href, as, className, onClick, children } = props;
   const linkRef = React.useRef(null);
-  const { linkProps } = useLink(props, linkRef);
+  const { linkProps } = useLink(props as any, linkRef);
 
   return (
     <Link href={href} as={as} passHref>
