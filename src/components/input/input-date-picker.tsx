@@ -49,7 +49,10 @@ const Label = styled.label`
 
   .react-datepicker {
     font-size: ${({ theme }) => theme.fontSizes.xxs};
-    z-index: 2;
+  }
+
+  .react-datepicker-popper {
+    z-index: 3;
   }
 
   .react-datepicker__day-name,
