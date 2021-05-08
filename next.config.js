@@ -10,8 +10,10 @@ const moduleExports = {
   future: {
     webpack5: true,
   },
-  webpack(config, options) {
-    const { isServer } = options;
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback.fs = false;
+    }
 
     config.module.rules.push({
       test: /\.(png|svg|jpg|gif|eot|ttf|woff|woff2)$/,
@@ -27,12 +29,6 @@ const moduleExports = {
         },
       },
     });
-
-    if (!isServer) {
-      config.node = {
-        fs: "empty",
-      };
-    }
 
     return config;
   },
