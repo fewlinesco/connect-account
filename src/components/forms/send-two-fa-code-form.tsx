@@ -18,10 +18,8 @@ const SendTwoFACodeForm: React.FC<{
   data?: { primaryIdentities: Identity[] };
 }> = ({ isCodeSent, setIsCodeSent, data }) => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
-  const [
-    selectedIdentity,
-    setSelectedIdentity,
-  ] = React.useState<Identity | null>(null);
+  const [selectedIdentity, setSelectedIdentity] =
+    React.useState<Identity | null>(null);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   React.useEffect(() => {

@@ -98,8 +98,7 @@ const radii = ["0.4rem", "0.5rem", "55.5rem", "50%"];
 const shadows = {
   xs: "0 0 0 0.1rem hsla(0, 0%, 0%, 0.05)",
   sm: "0 0.1rem 0.2rem 0 hsla(0, 0%, 0%, 0.05)",
-  base:
-    "0 0.1rem 0.3rem hsla(240, 4%, 26%, 0.15), 0 2rem 3rem hsla(240, 4%, 26%, 0.07)",
+  base: "0 0.1rem 0.3rem hsla(240, 4%, 26%, 0.15), 0 2rem 3rem hsla(240, 4%, 26%, 0.07)",
   left: `0.5rem 0 0.5rem -0.5rem ${colors.blacks[1]}`,
   box: `0 0 1.6rem ${colors.boxShadow}`,
 };

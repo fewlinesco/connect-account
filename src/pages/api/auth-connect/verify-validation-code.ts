@@ -116,13 +116,8 @@ const handler: Handler = async (request, response) => {
     }
     span.setDisclosedAttribute("is temporary Identity expired", false);
 
-    const {
-      value,
-      type,
-      primary,
-      eventIds,
-      identityToUpdateId,
-    } = temporaryIdentity;
+    const { value, type, primary, eventIds, identityToUpdateId } =
+      temporaryIdentity;
 
     if (identityToUpdateId) {
       return await updateIdentityFromUser(

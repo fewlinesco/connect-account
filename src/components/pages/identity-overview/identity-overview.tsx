@@ -19,14 +19,11 @@ import { getIdentityType } from "@src/utils/get-identity-type";
 const IdentityOverview: React.FC<{
   data?: { identity: Identity };
 }> = ({ data }) => {
-  const [confirmationBoxOpen, setConfirmationBoxOpen] = React.useState<boolean>(
-    false,
-  );
+  const [confirmationBoxOpen, setConfirmationBoxOpen] =
+    React.useState<boolean>(false);
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
-  const [
-    confirmationBoxContent,
-    setConfirmationBoxContent,
-  ] = React.useState<JSX.Element>(<React.Fragment />);
+  const [confirmationBoxContent, setConfirmationBoxContent] =
+    React.useState<JSX.Element>(<React.Fragment />);
 
   return (
     <>

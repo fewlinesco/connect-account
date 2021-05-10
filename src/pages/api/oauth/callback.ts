@@ -36,10 +36,7 @@ const handler: Handler = (request, response): Promise<void> => {
   };
 
   return getTracer().span("callback handler", async (span) => {
-    const {
-      access_token,
-      refresh_token,
-    } = await oauth2Client
+    const { access_token, refresh_token } = await oauth2Client
       .getTokensFromAuthorizationCode(`${request.query.code}`)
       .catch((error) => {
         if (error instanceof UnreachableError) {
