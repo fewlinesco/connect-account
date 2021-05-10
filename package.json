@@ -42,7 +42,7 @@
     "@react-aria/link": "3.1.2",
     "@react-aria/ssr": "3.0.2",
     "@react-aria/textfield": "3.3.0",
-    "@sentry/browser": "6.3.5",
+    "@sentry/browser": "6.3.6",
     "@sentry/node": "6.3.5",
     "@types/axios": "0.14.0",
     "apollo-link-context": "1.0.20",
