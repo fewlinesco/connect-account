@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: fewlines/docker-lighthouse-puppeteer:CU-ht6h0f_91faf7611f0e
+      image: fewlines/docker-lighthouse-puppeteer:CU-ht6h0f_35aca8af5105
       env:
-        CHROME_FLAGS: "--no-sandbox"
+        CHROME_FLAGS: "--headless --disable-gpu --no-sandbox --disable-setuid-sandbox"
 
     env:
       GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
@@ -50,8 +50,8 @@ jobs:
           CONNECT_TEST_ACCOUNT_EMAIL: 'lighthouse_${{ github.event.deployment.sha }}@e2e.test'
           CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
           CONNECT_TEST_ACCOUNT_URL: ${{ github.event.deployment.payload.web_url }}
-          CHROME_FLAGS: "--no-sandbox"
-        run: pwd && lighthouse-puppeteer -c "--no-sandbox" /__w/connect-account/connect-account/bin/e2e/lighthouse-report.js
+          CHROME_FLAGS: "--headless --disable-gpu --no-sandbox --disable-setuid-sandbox"
+        run: pwd && lighthouse-puppeteer -c "--headless --disable-gpu --no-sandbox --disable-setuid-sandbox" /__w/connect-account/connect-account/bin/e2e/lighthouse-report.js
 
       - name: Remove test user
         if: ${{ always() }}
