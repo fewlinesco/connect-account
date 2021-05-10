@@ -21,7 +21,6 @@ const InputDatePicker: React.FC<InputDatePickerProps> = ({
         selected={selected ? new Date(selected) : new Date()}
         onChange={onChange}
         dateFormat={"yyyy/MM/dd"}
-        closeOnScroll={true}
         maxDate={new Date()}
         showMonthDropdown
         showYearDropdown
@@ -76,7 +75,7 @@ const Label = styled.label`
 
   .react-datepicker__month-read-view--down-arrow,
   .react-datepicker__year-read-view--down-arrow {
-    top: 0.7rem;
+    top: 0.5rem;
   }
 `;
 
