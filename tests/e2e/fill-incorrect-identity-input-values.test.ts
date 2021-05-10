@@ -77,8 +77,7 @@ describe("Account Web Application add identity", () => {
       done();
     } catch (error) {
       await screenshot({
-        path:
-          "tests/e2e/screenshots/fill-incorrect-add-identity-input-values.test.png",
+        path: "tests/e2e/screenshots/fill-incorrect-add-identity-input-values.test.png",
       });
 
       done(error);
@@ -116,8 +115,7 @@ describe("Account Web Application add identity", () => {
       done();
     } catch (error) {
       await screenshot({
-        path:
-          "tests/e2e/screenshots/fill-incorrect-update-identity-input-values.test.png",
+        path: "tests/e2e/screenshots/fill-incorrect-update-identity-input-values.test.png",
       });
 
       done(error);

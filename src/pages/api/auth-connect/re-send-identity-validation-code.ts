@@ -99,14 +99,8 @@ const handler: Handler = (request, response): Promise<void> => {
       }
       span.setDisclosedAttribute("is temporary Identity found", true);
 
-      const {
-        type,
-        value,
-        expiresAt,
-        primary,
-        eventIds,
-        identityToUpdateId,
-      } = temporaryIdentity;
+      const { type, value, expiresAt, primary, eventIds, identityToUpdateId } =
+        temporaryIdentity;
 
       const identity = {
         type: getIdentityType(type),
