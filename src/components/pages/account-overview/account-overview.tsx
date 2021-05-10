@@ -12,18 +12,15 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 
 const SECTION_LIST_CONTENT = {
   PERSONAL_INFORMATION: {
-    text:
-      "NEED REFINEMENT - Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
+    text: "NEED REFINEMENT - Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
     icon: <ProfileIcon />,
   },
   LOGINS: {
-    text:
-      "Manage your logins options, including emails, phone numbers and social logins",
+    text: "Manage your logins options, including emails, phone numbers and social logins",
     icon: <LoginsIcon />,
   },
   SECURITY: {
-    text:
-      "Set or change your password. You can check your connections history here",
+    text: "Set or change your password. You can check your connections history here",
     icon: <SecurityIcon />,
   },
 };

@@ -12,7 +12,7 @@ const options = configVariables.lightstepAccessToken
   : {
       simpleCollector: {
         serviceName: configVariables.serviceName,
-        url: "http://localhost:55681/v1/traces",
+        url: "http://localhost:29799/v1/traces",
       },
     };
 

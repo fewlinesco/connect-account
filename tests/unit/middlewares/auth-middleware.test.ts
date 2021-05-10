@@ -77,9 +77,7 @@ async function sealJWS(access_token: string, salt?: string): Promise<string> {
   );
 }
 
-function mockedReqAndRes(
-  sealedJWE: string,
-): {
+function mockedReqAndRes(sealedJWE: string): {
   mockedNextApiRequest: NextApiRequest;
   mockedResponse: NextApiResponse;
 } {
@@ -124,9 +122,8 @@ describe("auth-middleware", () => {
 
       const sealedJWS = await sealJWS(access_token);
 
-      const { mockedNextApiRequest, mockedResponse } = mockedReqAndRes(
-        sealedJWS,
-      );
+      const { mockedNextApiRequest, mockedResponse } =
+        mockedReqAndRes(sealedJWS);
 
       mockedNextApiRequest.headers.referer = "referer/url";
 

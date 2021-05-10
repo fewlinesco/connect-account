@@ -23,8 +23,7 @@ describe("ErrorFallback component", () => {
 
     expect(
       screen.getByRole("heading", {
-        name:
-          "Something went wrong. We are working on getting this fixed as soon as we can.",
+        name: "Something went wrong. We are working on getting this fixed as soon as we can.",
       }),
     ).toBeInTheDocument();
   });

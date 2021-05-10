@@ -17,16 +17,12 @@ const SetPasswordForm: React.FC<{
   const [isNotSubmitted, setIsNotSubmitted] = React.useState(true);
 
   const [passwordInput, setPasswordInput] = React.useState("");
-  const [
-    passwordConfirmationInput,
-    setPasswordConfirmationInput,
-  ] = React.useState("");
+  const [passwordConfirmationInput, setPasswordConfirmationInput] =
+    React.useState("");
 
   const [passwordsNotMatching, setPasswordsNotMatching] = React.useState(false);
-  const [
-    passwordRestrictionError,
-    setPasswordRestrictionError,
-  ] = React.useState<Record<string, string> | undefined>();
+  const [passwordRestrictionError, setPasswordRestrictionError] =
+    React.useState<Record<string, string> | undefined>();
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const router = useRouter();
