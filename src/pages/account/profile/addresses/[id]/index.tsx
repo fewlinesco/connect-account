@@ -12,6 +12,8 @@ import styled from "styled-components";
 import useSWR from "swr";
 
 import { Address } from "@src/@types/profile";
+import { ButtonVariant } from "@src/components/buttons/buttons";
+import { FakeButton } from "@src/components/buttons/fake-button";
 import { Container } from "@src/components/containers/container";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { Layout } from "@src/components/page-layout";
@@ -28,6 +30,8 @@ const AddressOverviewPage: React.FC<{ addressId: string }> = ({
     `/api/profile/addresses/${addressId}`,
   );
 
+  console.log(addressId);
+
   if (error) {
     throw error;
   }
@@ -36,8 +40,10 @@ const AddressOverviewPage: React.FC<{ addressId: string }> = ({
     <Layout breadcrumbs={false} title="Personal information">
       <Container>
         <WIP>🏗</WIP>
-        <NeutralLink href={`/account/profile/addresses/${addressId}/update`}>
-          Update this address
+        <NeutralLink href={`/account/profile/addresses/${addressId}/edit`}>
+          <FakeButton variant={ButtonVariant.PRIMARY}>
+            Update this address
+          </FakeButton>
         </NeutralLink>
       </Container>
     </Layout>
@@ -63,7 +69,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       loggingMiddleware(getTracer(), logger),
       authMiddleware(getTracer()),
     ],
-    "account/profile/address/[id]",
+    "account/profile/addresses/[id]",
     () => {
       if (!configVariables.featureFlag) {
         return {

@@ -46,7 +46,7 @@ const getHandler: Handler = async (request, response) => {
         return;
       }
 
-      const addressId = request.query.addressId;
+      const addressId = request.query.id;
 
       if (!addressId || typeof addressId !== "string") {
         throw webErrorFactory(webErrors.invalidQueryString);
@@ -96,6 +96,84 @@ const getHandler: Handler = async (request, response) => {
   );
 };
 
+const patchHandler: Handler = async (request, response) => {
+  const webErrors = {
+    invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
+    invalidScopes: ERRORS_DATA.INVALID_SCOPES,
+    unreachable: ERRORS_DATA.UNREACHABLE,
+    invalidQueryString: ERRORS_DATA.INVALID_QUERY_STRING,
+    addressNotFound: ERRORS_DATA.ADDRESS_NOT_FOUND,
+    invalidUserAddressPayload: ERRORS_DATA.INVALID_USER_ADDRESS_PAYLOAD,
+  };
+
+  return getTracer().span(
+    "/api/profile/addresses/[id] patchHandler",
+    async (span) => {
+      const userCookie = await getServerSideCookies<UserCookie>(request, {
+        cookieName: "user-cookie",
+        isCookieSealed: true,
+        cookieSalt: configVariables.cookieSalt,
+      });
+
+      if (!userCookie) {
+        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+        response.setHeader("location", "/");
+        response.end();
+        return;
+      }
+
+      const addressId = request.query.id;
+
+      if (!addressId || typeof addressId !== "string") {
+        throw webErrorFactory(webErrors.invalidQueryString);
+      }
+
+      const { userAddressPayload } = request.body;
+
+      const profileAccessToken = await getProfileAccessToken(
+        userCookie.access_token,
+      );
+      span.setDisclosedAttribute(
+        "is Connect.Profile access token available",
+        true,
+      );
+
+      const profileClient = initProfileClient(profileAccessToken);
+
+      const { data: updatedAddress } = await profileClient
+        .updateAddress(addressId, userAddressPayload)
+        .catch((error) => {
+          span.setDisclosedAttribute(
+            "is Connect.Profile address updated",
+            false,
+          );
+
+          if (error.response.status === HttpStatus.UNAUTHORIZED) {
+            throw webErrorFactory(webErrors.invalidProfileToken);
+          }
+
+          if (error.response.status === HttpStatus.FORBIDDEN) {
+            throw webErrorFactory(webErrors.invalidScopes);
+          }
+
+          if (error.response.status === HttpStatus.NOT_FOUND) {
+            throw webErrorFactory(webErrors.addressNotFound);
+          }
+
+          if (error.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
+            throw webErrorFactory(webErrors.invalidUserAddressPayload);
+          }
+
+          throw webErrorFactory(webErrors.unreachable);
+        });
+      span.setDisclosedAttribute("is Connect.Profile address updated", true);
+
+      response.statusCode = HttpStatus.OK;
+      response.json({ updatedAddress });
+    },
+  );
+};
+
 const wrappedGetHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
@@ -113,6 +191,24 @@ const wrappedGetHandler = wrapMiddlewares(
   "GET /api/profile/addresses/[id]",
 );
 
+const wrappedPatchHandler = wrapMiddlewares(
+  [
+    tracingMiddleware(getTracer()),
+    rateLimitingMiddleware(getTracer(), logger, {
+      windowMs: 300000,
+      requestsUntilBlock: 200,
+    }),
+    recoveryMiddleware(getTracer()),
+    sentryMiddleware(getTracer()),
+    errorMiddleware(getTracer()),
+    loggingMiddleware(getTracer(), logger),
+    authMiddleware(getTracer()),
+  ],
+  patchHandler,
+  "PATCH /api/profile/addresses/[id]",
+);
+
 export default new Endpoint<NextApiRequest, NextApiResponse>()
   .get(wrappedGetHandler)
+  .patch(wrappedPatchHandler)
   .getHandler();
