@@ -62,24 +62,24 @@ const getHandler: Handler = async (request, response) => {
 
       const profileClient = initProfileClient(profileAccessToken);
 
-      const {
-        data: profileAddresses,
-      } = await profileClient.getAddresses().catch((error) => {
-        span.setDisclosedAttribute(
-          "is Connect.Profile addresses fetched",
-          false,
-        );
+      const { data: profileAddresses } = await profileClient
+        .getAddresses()
+        .catch((error) => {
+          span.setDisclosedAttribute(
+            "is Connect.Profile addresses fetched",
+            false,
+          );
 
-        if (error.response.status === HttpStatus.UNAUTHORIZED) {
-          throw webErrorFactory(webErrors.invalidProfileToken);
-        }
+          if (error.response.status === HttpStatus.UNAUTHORIZED) {
+            throw webErrorFactory(webErrors.invalidProfileToken);
+          }
 
-        if (error.response.status === HttpStatus.FORBIDDEN) {
-          throw webErrorFactory(webErrors.invalidScopes);
-        }
+          if (error.response.status === HttpStatus.FORBIDDEN) {
+            throw webErrorFactory(webErrors.invalidScopes);
+          }
 
-        throw webErrorFactory(webErrors.unreachable);
-      });
+          throw webErrorFactory(webErrors.unreachable);
+        });
       span.setDisclosedAttribute("is Connect.Profile addresses fetched", true);
 
       const address = profileAddresses.find(
