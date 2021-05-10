@@ -20,7 +20,10 @@ const InputDatePicker: React.FC<InputDatePickerProps> = ({
       <DatePicker
         selected={selected ? new Date(selected) : new Date()}
         onChange={onChange}
-        dateFormat={"yyyy-MM-dd"}
+        dateFormat={"yyyy/MM/dd"}
+        maxDate={new Date()}
+        showMonthDropdown
+        showYearDropdown
       />
     </Label>
   );
@@ -49,7 +52,10 @@ const Label = styled.label`
 
   .react-datepicker {
     font-size: ${({ theme }) => theme.fontSizes.xxs};
-    z-index: 2;
+  }
+
+  .react-datepicker-popper {
+    z-index: 3;
   }
 
   .react-datepicker__day-name,
@@ -60,6 +66,16 @@ const Label = styled.label`
 
   .react-datepicker__current-month {
     font-size: ${({ theme }) => theme.fontSizes.xs};
+  }
+
+  .react-datepicker__header__dropdown--scroll {
+    padding-top: 0.5rem;
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+  }
+
+  .react-datepicker__month-read-view--down-arrow,
+  .react-datepicker__year-read-view--down-arrow {
+    top: 0.5rem;
   }
 `;
 

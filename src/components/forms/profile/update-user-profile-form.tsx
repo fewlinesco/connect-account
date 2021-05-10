@@ -19,7 +19,21 @@ const UpdateUserProfileForm: React.FC<{ userProfileData?: Profile }> = ({
 }) => {
   const [formID] = React.useState<string>(uuidv4());
 
-  const [userProfile, setUserProfile] = React.useState<ProfileData>({});
+  const [userProfile, setUserProfile] = React.useState<ProfileData>({
+    name: "",
+    family_name: "",
+    given_name: "",
+    middle_name: "",
+    nickname: "",
+    preferred_username: "",
+    profile: "",
+    picture: "",
+    website: "",
+    gender: "",
+    birthdate: "",
+    zoneinfo: "",
+    locale: "",
+  });
 
   const router = useRouter();
 
@@ -80,9 +94,14 @@ const UpdateUserProfileForm: React.FC<{ userProfileData?: Profile }> = ({
             userProfile.birthdate !== "" ? userProfile.birthdate : undefined
           }
           onChange={(date) => {
-            setUserProfile({
-              ...userProfile,
-              birthdate: date.toLocaleDateString("en-EN"),
+            setUserProfile((prevState) => {
+              return {
+                ...userProfile,
+                birthdate:
+                  date !== null
+                    ? date.toLocaleDateString("en-EN")
+                    : prevState.birthdate,
+              };
             });
           }}
         />
