@@ -1867,17 +1867,17 @@
     node-fetch "2.6.1"
     node-jose "2.0.0"
 
-"@fewlines/connect-management@0.6.4":
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/@fewlines/connect-management/-/connect-management-0.6.4.tgz#af531afdb8bb2df54f681675f4de53d8e5e42c5e"
-  integrity sha512-hzd9Sfn7No3ZeSqh5TMWknxmjINLSNNBJlr5tsg1+Pqpajgkc7Ik3XAiQnQFF1sWsOsaAXSSdm9Vh6prCRhTPw==
+"@fewlines/connect-management@0.6.5":
+  version "0.6.5"
+  resolved "https://registry.yarnpkg.com/@fewlines/connect-management/-/connect-management-0.6.5.tgz#3cdb892d2ac60847d363ca57a1ec8301d9ddbd7f"
+  integrity sha512-mz2+D7h43GU9nb7YymoAt075sIwTuFoSA4M6MhDU9GXeUol+qG8X8OqI41bSV2CxPvaVRsqypwQ1xdBtPhv7Ag==
   dependencies:
     apollo-link "1.2.14"
     apollo-link-context "1.0.20"
     apollo-link-http "1.5.17"
-    cross-fetch "3.0.6"
-    graphql "15.4.0"
-    graphql-tag "2.11.0"
+    cross-fetch "3.1.4"
+    graphql "15.5.0"
+    graphql-tag "2.12.4"
 
 "@fewlines/eslint-config@3.1.2":
   version "3.1.2"
@@ -6192,13 +6192,6 @@ create-require@^1.1.0:
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
 
-cross-fetch@3.0.6:
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.0.6.tgz#3a4040bc8941e653e0e9cf17f29ebcd177d3365c"
-  integrity sha512-KBPUbqgFjzWlVcURG+Svp9TlhA5uliYtiNx/0r8nv0pdypeQCRJ9IaSIc3q/x3q8t3F75cHuwxVql1HFGHCNJQ==
-  dependencies:
-    node-fetch "2.6.1"
-
 cross-fetch@3.1.4, cross-fetch@^3.0.4:
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.4.tgz#9723f3a3a247bf8b89039f3a380a9244e8fa2f39"
@@ -8342,22 +8335,12 @@ graceful-fs@^4.0.0, graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
   integrity sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
 
-graphql-tag@2.11.0:
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.11.0.tgz#1deb53a01c46a7eb401d6cb59dec86fa1cccbffd"
-  integrity sha512-VmsD5pJqWJnQZMUeRwrDhfgoyqcfwEkvtpANqcoUG8/tOLkwNgU9mzub/Mc78OJMhHjx7gfAMTxzdG43VGg3bA==
-
 graphql-tag@2.12.4:
   version "2.12.4"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.12.4.tgz#d34066688a4f09e72d6f4663c74211e9b4b7c4bf"
   integrity sha512-VV1U4O+9x99EkNpNmCUV5RZwq6MnK4+pGbRYWG+lA/m3uo7TSqJF81OkcOP148gFP6fzdl7JWYBrwWVTS9jXww==
   dependencies:
     tslib "^2.1.0"
-
-graphql@15.4.0:
-  version "15.4.0"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.4.0.tgz#e459dea1150da5a106486ba7276518b5295a4347"
-  integrity sha512-EB3zgGchcabbsU9cFe1j+yxdzKQKAbGUWRb13DsrsMN1yyfmmIq+2+L5MqVWcDCE4V89R5AyUOi7sMOGxdsYtA==
 
 graphql@15.5.0:
   version "15.5.0"
