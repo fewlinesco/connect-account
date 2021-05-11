@@ -494,7 +494,7 @@ components:
             $ref: '#/components/schemas/AddressResponse'
           examples:
             superman:
-              $ref: '#/components/examples/supermanAddresses'
+              $ref: '#/components/examples/supermanPrimaryAddress'
 
     # PROFILE
 
