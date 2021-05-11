@@ -140,7 +140,7 @@ const patchHandler: Handler = async (request, response) => {
 
       const profileClient = initProfileClient(profileAccessToken);
 
-      const { data: updatedAddress } = await profileClient
+      const { data: updatedUserAddress } = await profileClient
         .updateAddress(addressId, userAddressPayload)
         .catch((error) => {
           span.setDisclosedAttribute(
@@ -169,7 +169,7 @@ const patchHandler: Handler = async (request, response) => {
       span.setDisclosedAttribute("is Connect.Profile address updated", true);
 
       response.statusCode = HttpStatus.OK;
-      response.json({ updatedAddress });
+      response.json({ updatedUserAddress });
     },
   );
 };
