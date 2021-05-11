@@ -24,7 +24,7 @@ import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { sortIdentities } from "@src/utils/sort-identities";
 
-const handler: Handler = (request, response): Promise<void> => {
+const index: Handler = (request, response): Promise<void> => {
   const webErrors = {
     badRequest: ERRORS_DATA.BAD_REQUEST,
     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
@@ -88,8 +88,8 @@ const wrappedHandler = wrapMiddlewares(
     loggingMiddleware(getTracer(), logger),
     authMiddleware(getTracer()),
   ],
-  handler,
-  "/api/identity/get-sorted-identities",
+  index,
+  "/api/identities",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

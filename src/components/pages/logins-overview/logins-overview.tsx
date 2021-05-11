@@ -37,9 +37,8 @@ const LoginsOverview: React.FC = () => {
   const [hideEmailList, setHideEmailList] = React.useState<boolean>(true);
   const [hidePhoneList, setHidePhoneList] = React.useState<boolean>(true);
 
-  const { data, error } = useSWR<{ sortedIdentities: SortedIdentities }, Error>(
-    "/api/identity/get-sorted-identities",
-  );
+  const { data, error } =
+    useSWR<{ sortedIdentities: SortedIdentities }, Error>("/api/identities");
 
   if (error) {
     throw error;
