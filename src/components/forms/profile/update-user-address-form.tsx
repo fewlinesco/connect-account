@@ -140,11 +140,24 @@ const UpdateUserAddressForm: React.FC<{
           }}
           label="Country *"
         />
+        <InputText
+          type="text"
+          name="kind"
+          placeholder="Enter your address kind"
+          value={updatedAddress.kind}
+          onChange={(value) => {
+            setUpdatedAddress({
+              ...updatedAddress,
+              kind: value,
+            });
+          }}
+          label="Kind"
+        />
         <Button type="submit" variant={ButtonVariant.PRIMARY}>
           Update my address
         </Button>
       </Form>
-      <NeutralLink href="/account/logins">
+      <NeutralLink href={`/account/profile/addresses/${updatedAddress.id}`}>
         <FakeButton variant={ButtonVariant.SECONDARY}>Cancel</FakeButton>
       </NeutralLink>{" "}
     </>

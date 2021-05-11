@@ -58,7 +58,7 @@ describe("EditAddressPage", () => {
     expect(screen.getByRole("link", { name: "Cancel" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Cancel" })).toHaveAttribute(
       "href",
-      "/account/logins",
+      `/account/profile/addresses/${mockAddresses.primaryAddress.id}`,
     );
   });
 });

@@ -31,7 +31,7 @@ const getHandler: Handler = async (request, response) => {
   };
 
   return getTracer().span(
-    "/api/profile/addresses/[id] getHandler",
+    "GET /api/profile/addresses/[id] handler",
     async (span) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
@@ -107,7 +107,7 @@ const patchHandler: Handler = async (request, response) => {
   };
 
   return getTracer().span(
-    "/api/profile/addresses/[id] patchHandler",
+    "PATCH /api/profile/addresses/[id] handler",
     async (span) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
