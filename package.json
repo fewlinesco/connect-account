@@ -30,7 +30,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.14.0",
+    "@aws-sdk/client-dynamodb": "3.15.0",
     "@aws-sdk/util-dynamodb": "3.14.0",
     "@fewlines/connect-client": "0.4.6",
     "@fewlines/connect-management": "0.6.5",
