@@ -46,9 +46,7 @@ const UpdateUserAddressForm: React.FC<{
           await fetchJson(
             `/api/profile/addresses/${updatedAddress.id}`,
             "PATCH",
-            {
-              userAddressPayload: updatedAddress,
-            },
+            updatedAddress,
           ).then(async (response) => {
             const parsedResponse = await response.json();
 

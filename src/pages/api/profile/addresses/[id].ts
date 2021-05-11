@@ -128,7 +128,7 @@ const patchHandler: Handler = async (request, response) => {
         throw webErrorFactory(webErrors.invalidQueryString);
       }
 
-      const { userAddressPayload } = request.body;
+      const userAddressPayload = request.body;
 
       const profileAccessToken = await getProfileAccessToken(
         userCookie.access_token,
