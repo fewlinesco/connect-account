@@ -30,8 +30,6 @@ const AddressOverviewPage: React.FC<{ addressId: string }> = ({
     `/api/profile/addresses/${addressId}`,
   );
 
-  console.log(addressId);
-
   if (error) {
     throw error;
   }
