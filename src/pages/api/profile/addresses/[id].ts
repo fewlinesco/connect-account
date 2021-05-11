@@ -18,7 +18,7 @@ import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import { getProfileAccessToken } from "@src/utils/get-profile-access-token";
+import { getProfileAndAddressAccessTokens } from "@src/utils/get-profile-address-access-token";
 
 const getHandler: Handler = async (request, response) => {
   const webErrors = {
@@ -52,7 +52,7 @@ const getHandler: Handler = async (request, response) => {
         throw webErrorFactory(webErrors.invalidQueryString);
       }
 
-      const profileAccessToken = await getProfileAccessToken(
+      const { addressAccessToken } = await getProfileAndAddressAccessTokens(
         userCookie.access_token,
       );
       span.setDisclosedAttribute(
@@ -60,9 +60,9 @@ const getHandler: Handler = async (request, response) => {
         true,
       );
 
-      const profileClient = initProfileClient(profileAccessToken);
+      const addressClient = initProfileClient(addressAccessToken);
 
-      const { data: profileAddresses } = await profileClient
+      const { data: profileAddresses } = await addressClient
         .getAddresses()
         .catch((error) => {
           span.setDisclosedAttribute(

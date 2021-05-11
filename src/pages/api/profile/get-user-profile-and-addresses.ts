@@ -18,7 +18,7 @@ import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import { getProfileAccessToken } from "@src/utils/get-profile-access-token";
+import { getProfileAndAddressAccessTokens } from "@src/utils/get-profile-address-access-token";
 
 const handler: Handler = async (request, response) => {
   const webErrors = {
@@ -44,9 +44,8 @@ const handler: Handler = async (request, response) => {
         return;
       }
 
-      const profileAccessToken = await getProfileAccessToken(
-        userCookie.access_token,
-      );
+      const { profileAccessToken, addressAccessToken } =
+        await getProfileAndAddressAccessTokens(userCookie.access_token);
 
       span.setDisclosedAttribute(
         "is Connect.Profile access token available",
@@ -54,6 +53,7 @@ const handler: Handler = async (request, response) => {
       );
 
       const profileClient = initProfileClient(profileAccessToken);
+      const addressClient = initProfileClient(addressAccessToken);
 
       const { data: userProfile } = await profileClient
         .getProfile()
@@ -83,7 +83,7 @@ const handler: Handler = async (request, response) => {
         true,
       );
 
-      const { data: userAddresses } = await profileClient
+      const { data: userAddresses } = await addressClient
         .getAddresses()
         .catch((error) => {
           span.setDisclosedAttribute(
