@@ -17,8 +17,8 @@ import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const IdentityOverview: React.FC<{
-  data?: { identity: Identity };
-}> = ({ data }) => {
+  identity?: Identity;
+}> = ({ identity }) => {
   const [confirmationBoxOpen, setConfirmationBoxOpen] =
     React.useState<boolean>(false);
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
@@ -28,19 +28,19 @@ const IdentityOverview: React.FC<{
   return (
     <>
       <Box>
-        {!data ? (
+        {!identity ? (
           <Value>
             <SkeletonTextLine fontSize={1.6} />
           </Value>
         ) : (
           <>
             <Value>
-              <p>{data.identity.value}</p>
+              <p>{identity.value}</p>
             </Value>
-            {data.identity.primary && data.identity.status === "validated" ? (
+            {identity.primary && identity.status === "validated" ? (
               <PrimaryBadge />
             ) : null}
-            {data.identity.status === "validated" ? (
+            {identity.status === "validated" ? (
               <React.Fragment />
             ) : (
               <AwaitingValidationBadge />
@@ -48,30 +48,28 @@ const IdentityOverview: React.FC<{
           </>
         )}
       </Box>
-      {data ? (
+      {identity ? (
         <>
-          {data.identity.status === "unvalidated" && (
-            <NeutralLink
-              href={`/account/logins/${data.identity.type}/validation`}
-            >
+          {identity.status === "unvalidated" && (
+            <NeutralLink href={`/account/logins/${identity.type}/validation`}>
               <FakeButton variant={ButtonVariant.PRIMARY}>
                 Proceed to validation
               </FakeButton>
             </NeutralLink>
           )}
-          {data.identity.status === "validated" && (
+          {identity.status === "validated" && (
             <NeutralLink
-              href={`/account/logins/${data.identity.type}/${data.identity.id}/update`}
+              href={`/account/logins/${identity.type}/${identity.id}/update`}
             >
               <FakeButton variant={ButtonVariant.PRIMARY}>
                 Update this{" "}
-                {getIdentityType(data.identity.type) === IdentityTypes.PHONE
+                {getIdentityType(identity.type) === IdentityTypes.PHONE
                   ? "phone number"
                   : "email address"}
               </FakeButton>
             </NeutralLink>
           )}
-          {!data.identity.primary && data.identity.status === "validated" && (
+          {!identity.primary && identity.status === "validated" && (
             <Button
               type="button"
               variant={ButtonVariant.SECONDARY}
@@ -80,21 +78,21 @@ const IdentityOverview: React.FC<{
                 setConfirmationBoxContent(
                   <PrimaryConfirmationBoxContent
                     setOpen={setConfirmationBoxOpen}
-                    value={data.identity.value}
-                    id={data.identity.id}
+                    value={identity.value}
+                    id={identity.id}
                   />,
                 );
                 setConfirmationBoxOpen(true);
               }}
             >
               Make this{" "}
-              {getIdentityType(data.identity.type) === IdentityTypes.EMAIL
+              {getIdentityType(identity.type) === IdentityTypes.EMAIL
                 ? "email address"
                 : "phone number"}{" "}
               my primary one
             </Button>
           )}
-          {!data.identity.primary && (
+          {!identity.primary && (
             <Button
               type="button"
               variant={ButtonVariant.GHOST}
@@ -103,15 +101,15 @@ const IdentityOverview: React.FC<{
                 setConfirmationBoxContent(
                   <DeleteConfirmationBoxContent
                     setOpen={setConfirmationBoxOpen}
-                    value={data.identity.value}
-                    type={data.identity.type}
+                    value={identity.value}
+                    type={identity.type}
                   />,
                 );
                 setConfirmationBoxOpen(true);
               }}
             >
               Delete this{" "}
-              {getIdentityType(data.identity.type) === IdentityTypes.PHONE
+              {getIdentityType(identity.type) === IdentityTypes.PHONE
                 ? "phone number"
                 : "email address"}
             </Button>

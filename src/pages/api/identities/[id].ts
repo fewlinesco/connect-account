@@ -24,7 +24,7 @@ import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
-const handler: Handler = async (request, response) => {
+const getOne: Handler = async (request, response) => {
   const webErrors = {
     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
     graphqlErrors: ERRORS_DATA.GRAPHQL_ERRORS,
@@ -46,7 +46,7 @@ const handler: Handler = async (request, response) => {
       return;
     }
 
-    const identityId = request.query.identityId;
+    const { id: identityId } = request.query;
 
     if (!identityId || typeof identityId !== "string") {
       throw webErrorFactory(webErrors.invalidQueryString);
@@ -83,11 +83,11 @@ const handler: Handler = async (request, response) => {
 
     span.setDisclosedAttribute("is Identity fetched", true);
     response.statusCode = HttpStatus.OK;
-    response.json({ identity });
+    response.json(identity);
   });
 };
 
-const wrappedHandler = wrapMiddlewares(
+const getOneWrappedHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
     rateLimitingMiddleware(getTracer(), logger, {
@@ -100,10 +100,10 @@ const wrappedHandler = wrapMiddlewares(
     loggingMiddleware(getTracer(), logger),
     authMiddleware(getTracer()),
   ],
-  handler,
-  "/api/identity/get-identity",
+  getOne,
+  "/api/identities/[id]",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .get(wrappedHandler)
+  .get(getOneWrappedHandler)
   .getHandler();

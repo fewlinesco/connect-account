@@ -20,14 +20,15 @@ import { fetchJson } from "@src/utils/fetch-json";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const UpdateIdentityForm: React.FC<{
-  data?: { identity: Identity };
-}> = ({ data }) => {
-  const [identity, setIdentity] = React.useState<InMemoryTemporaryIdentity>({
-    value: "",
-    type: data ? data.identity.type : IdentityTypes.EMAIL,
-    expiresAt: Date.now(),
-    primary: false,
-  });
+  identity?: Identity;
+}> = ({ identity }) => {
+  const [modifiedIdentity, setIdentity] =
+    React.useState<InMemoryTemporaryIdentity>({
+      value: "",
+      type: identity ? identity.type : IdentityTypes.EMAIL,
+      expiresAt: Date.now(),
+      primary: false,
+    });
   const [formID, setFormID] = React.useState<string>(uuidv4());
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
@@ -37,23 +38,23 @@ const UpdateIdentityForm: React.FC<{
     <>
       <Box>
         <Value>
-          {!data ? (
+          {!identity ? (
             <SkeletonTextLine fontSize={1.6} />
           ) : (
-            <p>{data.identity.value}</p>
+            <p>{identity.value}</p>
           )}
         </Value>
       </Box>
       {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
-      {data ? (
+      {identity ? (
         <>
           <Form
             formID={formID}
             onSubmit={async () => {
               const body = {
                 callbackUrl: "/",
-                identityInput: identity,
-                identityToUpdateId: data.identity.id,
+                identityInput: modifiedIdentity,
+                identityToUpdateId: identity.id,
               };
 
               await fetchJson(
@@ -91,24 +92,24 @@ const UpdateIdentityForm: React.FC<{
                 if ("eventId" in parsedResponse) {
                   router &&
                     router.push(
-                      `/account/logins/${data.identity.type}/validation/${parsedResponse.eventId}`,
+                      `/account/logins/${identity.type}/validation/${parsedResponse.eventId}`,
                     );
                 }
               });
             }}
           >
-            {getIdentityType(data.identity.type) === IdentityTypes.EMAIL ? (
+            {getIdentityType(identity.type) === IdentityTypes.EMAIL ? (
               <InputText
                 type="text"
                 name="value"
-                placeholder={`Enter your ${data.identity.type}`}
-                value={identity.value}
+                placeholder={`Enter your ${identity.type}`}
+                value={modifiedIdentity.value}
                 onChange={(value) =>
                   setIdentity({
                     value,
-                    type: data.identity.type,
+                    type: identity.type,
                     expiresAt: Date.now() + 300000,
-                    primary: data.identity.primary,
+                    primary: identity.primary,
                   })
                 }
                 label="New email address *"
@@ -119,21 +120,21 @@ const UpdateIdentityForm: React.FC<{
                 <StyledPhoneInput
                   id="styled-phone-input"
                   placeholder="Enter your phone number"
-                  value={identity.value}
+                  value={modifiedIdentity.value}
                   defaultCountry="FR"
                   onChange={(value) => {
                     setIdentity({
                       value,
-                      type: data.identity.type,
+                      type: identity.type,
                       expiresAt: Date.now() + 300000,
-                      primary: identity.primary,
+                      primary: modifiedIdentity.primary,
                     });
                   }}
                 />
               </>
             )}
             <Button type="submit" variant={ButtonVariant.PRIMARY}>
-              Update {data.identity.type}
+              Update {identity.type}
             </Button>
           </Form>
           <NeutralLink href="/account/logins">

@@ -28,9 +28,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identity: mockIdentities.nonPrimaryEmailIdentity };
-            },
+            fetcher: () => mockIdentities.nonPrimaryEmailIdentity,
           }}
         >
           <IdentityOverviewPage
@@ -52,9 +50,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identity: mockIdentities.nonPrimaryEmailIdentity };
-            },
+            fetcher: () => mockIdentities.nonPrimaryEmailIdentity,
           }}
         >
           <IdentityOverviewPage
@@ -88,9 +84,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identity: mockIdentities.nonPrimaryEmailIdentity };
-            },
+            fetcher: () => mockIdentities.nonPrimaryEmailIdentity,
           }}
         >
           <IdentityOverviewPage
@@ -114,9 +108,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identity: mockIdentities.primaryEmailIdentity };
-            },
+            fetcher: () => mockIdentities.primaryEmailIdentity,
           }}
         >
           <IdentityOverviewPage
@@ -147,9 +139,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identity: mockIdentities.primaryEmailIdentity };
-            },
+            fetcher: () => mockIdentities.primaryEmailIdentity,
           }}
         >
           <IdentityOverviewPage
@@ -171,9 +161,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identity: mockIdentities.unvalidatedEmailIdentity };
-            },
+            fetcher: () => mockIdentities.unvalidatedEmailIdentity,
           }}
         >
           <IdentityOverviewPage
@@ -204,9 +192,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identity: mockIdentities.unvalidatedEmailIdentity };
-            },
+            fetcher: () => mockIdentities.unvalidatedEmailIdentity,
           }}
         >
           <IdentityOverviewPage
@@ -230,9 +216,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identity: mockIdentities.nonPrimaryPhoneIdentity };
-            },
+            fetcher: () => mockIdentities.nonPrimaryPhoneIdentity,
           }}
         >
           <IdentityOverviewPage
@@ -253,9 +237,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identity: mockIdentities.nonPrimaryPhoneIdentity };
-            },
+            fetcher: () => mockIdentities.nonPrimaryPhoneIdentity,
           }}
         >
           <IdentityOverviewPage
@@ -289,9 +271,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identity: mockIdentities.nonPrimaryPhoneIdentity };
-            },
+            fetcher: () => mockIdentities.nonPrimaryPhoneIdentity,
           }}
         >
           <IdentityOverviewPage
@@ -315,9 +295,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identity: mockIdentities.primaryPhoneIdentity };
-            },
+            fetcher: () => mockIdentities.primaryPhoneIdentity,
           }}
         >
           <IdentityOverviewPage
@@ -352,9 +330,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identity: mockIdentities.primaryPhoneIdentity };
-            },
+            fetcher: () => mockIdentities.primaryPhoneIdentity,
           }}
         >
           <IdentityOverviewPage
@@ -374,9 +350,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identity: mockIdentities.unvalidatedPhoneIdentity };
-            },
+            fetcher: () => mockIdentities.unvalidatedPhoneIdentity,
           }}
         >
           <IdentityOverviewPage
@@ -407,9 +381,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identity: mockIdentities.unvalidatedPhoneIdentity };
-            },
+            fetcher: () => mockIdentities.unvalidatedPhoneIdentity,
           }}
         >
           <IdentityOverviewPage
