@@ -40,15 +40,12 @@ const LoginsOverview: React.FC = () => {
 
   const { data: identities, error } =
     useSWR<Identity[], Error>("/api/identities");
-  console.log("👉", identities);
 
   if (error) {
     throw error;
   }
 
   const sortedIdentities = sortIdentities(identities || []);
-
-  console.log(sortedIdentities);
 
   return (
     <>
