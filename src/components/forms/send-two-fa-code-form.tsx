@@ -15,18 +15,18 @@ import { fetchJson } from "@src/utils/fetch-json";
 const SendTwoFACodeForm: React.FC<{
   isCodeSent: boolean;
   setIsCodeSent: React.Dispatch<React.SetStateAction<boolean>>;
-  data?: { primaryIdentities: Identity[] };
-}> = ({ isCodeSent, setIsCodeSent, data }) => {
+  identities?: Identity[];
+}> = ({ isCodeSent, setIsCodeSent, identities }) => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
   const [selectedIdentity, setSelectedIdentity] =
     React.useState<Identity | null>(null);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    if (data) {
-      setSelectedIdentity(data.primaryIdentities[0]);
+    if (identities) {
+      setSelectedIdentity(identities[0]);
     }
-  }, [data]);
+  }, [identities]);
 
   return (
     <ContactChoiceForm
@@ -70,15 +70,13 @@ const SendTwoFACodeForm: React.FC<{
     >
       {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
       <p>Choose a contact means below that we’ll send a validation code to:</p>
-      {data ? (
+      {identities ? (
         <InputsRadio
           groupName="contactChoice"
-          inputsValues={data.primaryIdentities.map(
-            (identity) => identity.value,
-          )}
+          inputsValues={identities.map((identity) => identity.value)}
           selectedInput={selectedIdentity ? selectedIdentity.value : ""}
           onChange={({ target }) => {
-            const newIdentity = data.primaryIdentities.find(
+            const newIdentity = identities.find(
               (identity) => identity.value === target.value,
             );
 

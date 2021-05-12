@@ -2,6 +2,7 @@ import {
   ConnectUnreachableError,
   getIdentities,
   GraphqlErrors,
+  IdentityTypes,
 } from "@fewlines/connect-management";
 import { Endpoint, getServerSideCookies, HttpStatus } from "@fwl/web";
 import {
@@ -49,7 +50,15 @@ const index: Handler = (request, response): Promise<void> => {
       userCookie.sub,
     )
       .then((identities) => {
-        return identities;
+        return request.query.primary && request.query.primary === "true"
+          ? identities.filter((identity) => {
+              return (
+                identity.primary &&
+                (identity.type == IdentityTypes.EMAIL.toLowerCase() ||
+                  identity.type == IdentityTypes.PHONE.toLowerCase())
+              );
+            })
+          : identities;
       })
       .catch((error) => {
         span.setDisclosedAttribute("identities found", false);
