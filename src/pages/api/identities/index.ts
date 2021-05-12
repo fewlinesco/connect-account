@@ -22,7 +22,6 @@ import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import { sortIdentities } from "@src/utils/sort-identities";
 
 const index: Handler = (request, response): Promise<void> => {
   const webErrors = {
@@ -45,12 +44,12 @@ const index: Handler = (request, response): Promise<void> => {
       return;
     }
 
-    const sortedIdentities = await getIdentities(
+    const identities = await getIdentities(
       configVariables.managementCredentials,
       userCookie.sub,
     )
       .then((identities) => {
-        return sortIdentities(identities);
+        return identities;
       })
       .catch((error) => {
         span.setDisclosedAttribute("identities found", false);
@@ -71,7 +70,7 @@ const index: Handler = (request, response): Promise<void> => {
 
     span.setDisclosedAttribute("identities found", true);
     response.statusCode = HttpStatus.OK;
-    response.json({ sortedIdentities });
+    response.json(identities);
   });
 };
 
