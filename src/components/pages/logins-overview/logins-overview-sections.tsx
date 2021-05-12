@@ -21,6 +21,8 @@ const EmailSection: React.FC<{
     (identity) => identity.primary === false,
   );
 
+  console.log("✅", identityList);
+
   return !primaryIdentity ? (
     <NoIdentitiesParagraph>
       {IDENTITIES_SECTION_CONTENT.EMAIL.noIdentityMessage}

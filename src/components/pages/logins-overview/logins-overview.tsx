@@ -48,6 +48,8 @@ const LoginsOverview: React.FC = () => {
 
   const sortedIdentities = sortIdentities(identities || []);
 
+  console.log(sortedIdentities);
+
   return (
     <>
       <Timeline />
