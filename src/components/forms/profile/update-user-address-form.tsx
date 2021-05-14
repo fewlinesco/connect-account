@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -7,26 +8,29 @@ import { Address } from "@src/@types/profile";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { fetchJson } from "@src/utils/fetch-json";
 
 const UpdateUserAddressForm: React.FC<{
   userAddress?: Address;
 }> = ({ userAddress }) => {
-  const [formID, setFormID] = React.useState<string>(uuidv4());
+  const [formID] = React.useState<string>(uuidv4());
 
   const [updatedAddress, setUpdatedAddress] = React.useState<Address>({
     id: "",
     sub: "",
-    street_address: "string",
-    locality: "string",
-    region: "string",
-    postal_code: "string",
-    country: "string",
-    kind: "string",
-    created_at: "string",
-    updated_at: "string",
-    street_address_2: "string",
+    street_address: "",
+    locality: "",
+    region: "",
+    postal_code: "",
+    country: "",
+    kind: "",
+    created_at: "",
+    updated_at: "",
+    street_address_2: "",
     primary: false,
   });
+
+  const router = useRouter();
 
   React.useEffect(() => {
     if (userAddress) {
@@ -39,8 +43,21 @@ const UpdateUserAddressForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
-          setFormID(uuidv4());
-          return;
+          await fetchJson(
+            `/api/profile/addresses/${updatedAddress.id}`,
+            "PATCH",
+            updatedAddress,
+          ).then(async (response) => {
+            const parsedResponse = await response.json();
+
+            if ("updatedUserAddress" in parsedResponse) {
+              router &&
+                router.push(`/account/profile/addresses/${updatedAddress.id}`);
+              return;
+            }
+
+            throw new Error("Something went wrong");
+          });
         }}
       >
         <InputText
@@ -121,11 +138,24 @@ const UpdateUserAddressForm: React.FC<{
           }}
           label="Country *"
         />
+        <InputText
+          type="text"
+          name="kind"
+          placeholder="Enter your address kind"
+          value={updatedAddress.kind}
+          onChange={(value) => {
+            setUpdatedAddress({
+              ...updatedAddress,
+              kind: value,
+            });
+          }}
+          label="Kind"
+        />
         <Button type="submit" variant={ButtonVariant.PRIMARY}>
           Update my address
         </Button>
       </Form>
-      <NeutralLink href="/account/logins">
+      <NeutralLink href={`/account/profile/addresses/${updatedAddress.id}`}>
         <FakeButton variant={ButtonVariant.SECONDARY}>Cancel</FakeButton>
       </NeutralLink>{" "}
     </>
