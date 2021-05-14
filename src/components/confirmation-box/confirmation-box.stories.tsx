@@ -77,6 +77,7 @@ const DangerConfirmationBox = (): JSX.Element => {
                 setOpen={setOpen}
                 value={identity.value}
                 type={identity.type}
+                onPress={() => window.alert("Done")}
               />,
             );
           }}

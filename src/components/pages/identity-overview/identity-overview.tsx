@@ -1,4 +1,5 @@
 import { Identity, IdentityTypes } from "@fewlines/connect-management";
+import router from "next/router";
 import React from "react";
 import styled from "styled-components";
 
@@ -14,6 +15,7 @@ import { DeleteConfirmationBoxContent } from "@src/components/confirmation-box/d
 import { PrimaryConfirmationBoxContent } from "@src/components/confirmation-box/primary-confirmation-box-content";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
+import { fetchJson } from "@src/utils/fetch-json";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const IdentityOverview: React.FC<{
@@ -103,6 +105,21 @@ const IdentityOverview: React.FC<{
                     setOpen={setConfirmationBoxOpen}
                     value={identity.value}
                     type={identity.type}
+                    onPress={() => {
+                      const requestData = {
+                        type: getIdentityType(identity.type),
+                        value: identity.value,
+                        id: identity.id,
+                      };
+
+                      return fetchJson(
+                        `/api/identities/${identity.id}`,
+                        "DELETE",
+                        requestData,
+                      ).then(() => {
+                        router && router.push("/account/logins");
+                      });
+                    }}
                   />,
                 );
                 setConfirmationBoxOpen(true);
