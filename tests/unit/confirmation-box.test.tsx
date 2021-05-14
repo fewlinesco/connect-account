@@ -28,9 +28,7 @@ describe("ConfirmationBox", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => {
-            return { identity: mockIdentities.nonPrimaryEmailIdentity };
-          },
+          fetcher: () => mockIdentities.nonPrimaryEmailIdentity,
         }}
       >
         <IdentityOverviewPage
@@ -60,9 +58,7 @@ describe("ConfirmationBox", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => {
-            return { identity: mockIdentities.nonPrimaryEmailIdentity };
-          },
+          fetcher: () => mockIdentities.nonPrimaryEmailIdentity,
         }}
       >
         <IdentityOverviewPage
@@ -113,9 +109,7 @@ describe("ConfirmationBox", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => {
-            return { identity: mockIdentities.nonPrimaryEmailIdentity };
-          },
+          fetcher: () => mockIdentities.nonPrimaryEmailIdentity,
         }}
       >
         <IdentityOverviewPage

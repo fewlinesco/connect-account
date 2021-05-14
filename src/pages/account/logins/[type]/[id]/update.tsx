@@ -22,16 +22,16 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
   identityId,
 }) => {
-  const { data, error } = useSWR<{ identity: Identity }, Error>(
-    `/api/identity/get-identity?identityId=${identityId}`,
+  const { data: identity, error } = useSWR<Identity, Error>(
+    `/api/identities/${identityId}`,
   );
 
   if (error) {
     throw error;
   }
 
-  const breadcrumbs = data
-    ? data.identity.type.toUpperCase() === IdentityTypes.EMAIL
+  const breadcrumbs = identity
+    ? identity.type.toUpperCase() === IdentityTypes.EMAIL
       ? "Email address | edit"
       : "Phone number | edit"
     : "";
@@ -39,7 +39,7 @@ const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
   return (
     <Layout breadcrumbs={breadcrumbs} title="Logins">
       <Container>
-        <UpdateIdentityForm data={data} />
+        <UpdateIdentityForm identity={identity} />
       </Container>
     </Layout>
   );

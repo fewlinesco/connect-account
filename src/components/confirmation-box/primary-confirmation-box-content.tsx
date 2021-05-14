@@ -1,38 +1,23 @@
-import { Identity } from "@fewlines/connect-management";
-import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../buttons/buttons";
-import { fetchJson } from "@src/utils/fetch-json";
 
 interface PrimaryConfirmationBoxContentProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   value: string;
-  id: Identity["id"];
+  onPress: () => void;
 }
 
 const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxContentProps> =
-  ({ setOpen, value, id }) => {
-    const router = useRouter();
-
+  ({ setOpen, value, onPress }) => {
     return (
       <>
         <PrimaryConfirmationText>
           You are about to set {value} as primary.
         </PrimaryConfirmationText>
 
-        <Button
-          type="button"
-          variant={ButtonVariant.PRIMARY}
-          onClick={async () => {
-            fetchJson("/api/identity/mark-identity-as-primary", "POST", {
-              identityId: id,
-            }).then(() => {
-              router && router.push("/account/logins");
-            });
-          }}
-        >
+        <Button type="button" variant={ButtonVariant.PRIMARY} onClick={onPress}>
           Confirm
         </Button>
 

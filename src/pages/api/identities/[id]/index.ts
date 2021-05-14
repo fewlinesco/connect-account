@@ -1,12 +1,14 @@
 import {
   ConnectUnreachableError,
+  getIdentity,
   GraphqlErrors,
+  IdentityNotFoundError,
   IdentityTypes,
   removeIdentityFromUser,
 } from "@fewlines/connect-management";
 import {
-  Endpoint,
   getServerSideCookies,
+  Endpoint,
   HttpStatus,
   setAlertMessagesCookie,
 } from "@fwl/web";
@@ -17,6 +19,7 @@ import {
   errorMiddleware,
   recoveryMiddleware,
   rateLimitingMiddleware,
+  Middleware,
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -31,7 +34,70 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { generateAlertMessage } from "@src/utils/generate-alert-message";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
-const handler: Handler = (request, response): Promise<void> => {
+const get: Handler = async (request, response) => {
+  const webErrors = {
+    identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
+    graphqlErrors: ERRORS_DATA.GRAPHQL_ERRORS,
+    connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+    invalidQueryString: ERRORS_DATA.INVALID_QUERY_STRING,
+  };
+
+  return getTracer().span("get-identity handler", async (span) => {
+    const userCookie = await getServerSideCookies<UserCookie>(request, {
+      cookieName: "user-cookie",
+      isCookieSealed: true,
+      cookieSalt: configVariables.cookieSalt,
+    });
+
+    if (!userCookie) {
+      response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+      response.setHeader("location", "/");
+      response.end();
+      return;
+    }
+
+    const { id: identityId } = request.query;
+
+    if (!identityId || typeof identityId !== "string") {
+      throw webErrorFactory(webErrors.invalidQueryString);
+    }
+
+    const identity = await getIdentity(configVariables.managementCredentials, {
+      userId: userCookie.sub,
+      identityId,
+    }).catch((error) => {
+      span.setDisclosedAttribute("is Identity fetched", false);
+
+      if (error instanceof IdentityNotFoundError) {
+        throw webErrorFactory({
+          ...webErrors.identityNotFound,
+        });
+      }
+
+      if (error instanceof GraphqlErrors) {
+        throw webErrorFactory({
+          ...webErrors.graphqlErrors,
+          parentError: error,
+        });
+      }
+
+      if (error instanceof ConnectUnreachableError) {
+        throw webErrorFactory({
+          ...webErrors.connectUnreachable,
+          parentError: error,
+        });
+      }
+
+      throw error;
+    });
+
+    span.setDisclosedAttribute("is Identity fetched", true);
+    response.statusCode = HttpStatus.OK;
+    response.json(identity);
+  });
+};
+
+const destroy: Handler = (request, response): Promise<void> => {
   const webErrors = {
     badRequest: ERRORS_DATA.BAD_REQUEST,
     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
@@ -39,9 +105,9 @@ const handler: Handler = (request, response): Promise<void> => {
   };
 
   return getTracer().span("delete-identity handler", async (span) => {
-    const { type, value } = request.body;
+    const { type, value, id } = request.body;
 
-    if (!type || !value) {
+    if (!type || !value || id !== request.query.id) {
       throw webErrorFactory(webErrors.badRequest);
     }
 
@@ -59,12 +125,13 @@ const handler: Handler = (request, response): Promise<void> => {
       response.end();
       return;
     }
-
-    return removeIdentityFromUser(configVariables.managementCredentials, {
+    const data = {
       userId: userCookie.sub,
       identityType: type,
       identityValue: value,
-    })
+    };
+
+    return removeIdentityFromUser(configVariables.managementCredentials, data)
       .then(() => {
         span.setDisclosedAttribute("is Identity removed", true);
 
@@ -102,23 +169,20 @@ const handler: Handler = (request, response): Promise<void> => {
   });
 };
 
-const wrappedHandler = wrapMiddlewares(
-  [
-    tracingMiddleware(getTracer()),
-    rateLimitingMiddleware(getTracer(), logger, {
-      windowMs: 300000,
-      requestsUntilBlock: 200,
-    }),
-    recoveryMiddleware(getTracer()),
-    sentryMiddleware(getTracer()),
-    errorMiddleware(getTracer()),
-    loggingMiddleware(getTracer(), logger),
-    authMiddleware(getTracer()),
-  ],
-  handler,
-  "/api/identity/delete-identity",
-);
+const middlewares: Middleware<NextApiRequest, NextApiResponse>[] = [
+  tracingMiddleware(getTracer()),
+  rateLimitingMiddleware(getTracer(), logger, {
+    windowMs: 300000,
+    requestsUntilBlock: 200,
+  }),
+  recoveryMiddleware(getTracer()),
+  sentryMiddleware(getTracer()),
+  errorMiddleware(getTracer()),
+  loggingMiddleware(getTracer(), logger),
+  authMiddleware(getTracer()),
+];
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .delete(wrappedHandler)
+  .get(wrapMiddlewares(middlewares, get, "/api/identities/[id]"))
+  .delete(wrapMiddlewares(middlewares, destroy, "/api/identities/[id]"))
   .getHandler();
