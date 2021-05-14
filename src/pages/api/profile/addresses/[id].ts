@@ -130,7 +130,7 @@ const patchHandler: Handler = async (request, response) => {
 
       const userAddressPayload = request.body;
 
-      const profileAccessToken = await getProfileAccessToken(
+      const { profileAccessToken } = await getProfileAndAddressAccessTokens(
         userCookie.access_token,
       );
       span.setDisclosedAttribute(
