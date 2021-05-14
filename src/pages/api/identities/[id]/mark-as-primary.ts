@@ -41,11 +41,7 @@ const markAsPrimary: Handler = async (request, response) => {
   };
 
   return getTracer().span("mark-identity-as-primary handler", async (span) => {
-    const { identityId } = request.body;
-
-    if (!identityId) {
-      throw webErrorFactory(webErrors.invalidBody);
-    }
+    const { id: identityId } = request.query as { [key: string]: string };
 
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",

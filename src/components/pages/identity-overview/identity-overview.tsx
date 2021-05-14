@@ -45,9 +45,11 @@ const IdentityOverview: React.FC<{
   };
 
   const markIdentityAsPrimary = (identity: Identity): Promise<void> =>
-    fetchJson(`/api/identities/${identity.id}/mark-as-primary`, "POST", {
-      identityId: identity.id,
-    }).then(() => {
+    fetchJson(
+      `/api/identities/${identity.id}/mark-as-primary`,
+      "POST",
+      {},
+    ).then(() => {
       router && router.push("/account/logins");
     });
 
