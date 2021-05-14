@@ -1,5 +1,5 @@
 import { Identity, IdentityTypes } from "@fewlines/connect-management";
-import router from "next/router";
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
@@ -26,6 +26,30 @@ const IdentityOverview: React.FC<{
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
   const [confirmationBoxContent, setConfirmationBoxContent] =
     React.useState<JSX.Element>(<React.Fragment />);
+  const router = useRouter();
+
+  const deleteIdentity = (identity: Identity): Promise<void> => {
+    const requestData = {
+      type: getIdentityType(identity.type),
+      value: identity.value,
+      id: identity.id,
+    };
+
+    return fetchJson(
+      `/api/identities/${identity.id}`,
+      "DELETE",
+      requestData,
+    ).then(() => {
+      router && router.push("/account/logins");
+    });
+  };
+
+  const markIdentityAsPrimary = (identity: Identity): Promise<void> =>
+    fetchJson(`/api/identities/${identity.id}/mark-as-primary`, "POST", {
+      identityId: identity.id,
+    }).then(() => {
+      router && router.push("/account/logins");
+    });
 
   return (
     <>
@@ -81,7 +105,9 @@ const IdentityOverview: React.FC<{
                   <PrimaryConfirmationBoxContent
                     setOpen={setConfirmationBoxOpen}
                     value={identity.value}
-                    id={identity.id}
+                    onPress={() => {
+                      markIdentityAsPrimary(identity);
+                    }}
                   />,
                 );
                 setConfirmationBoxOpen(true);
@@ -105,21 +131,7 @@ const IdentityOverview: React.FC<{
                     setOpen={setConfirmationBoxOpen}
                     value={identity.value}
                     type={identity.type}
-                    onPress={() => {
-                      const requestData = {
-                        type: getIdentityType(identity.type),
-                        value: identity.value,
-                        id: identity.id,
-                      };
-
-                      return fetchJson(
-                        `/api/identities/${identity.id}`,
-                        "DELETE",
-                        requestData,
-                      ).then(() => {
-                        router && router.push("/account/logins");
-                      });
-                    }}
+                    onPress={() => deleteIdentity(identity)}
                   />,
                 );
                 setConfirmationBoxOpen(true);

@@ -131,8 +131,6 @@ const destroy: Handler = (request, response): Promise<void> => {
       identityValue: value,
     };
 
-    console.log("✅", data);
-
     return removeIdentityFromUser(configVariables.managementCredentials, data)
       .then(() => {
         span.setDisclosedAttribute("is Identity removed", true);
@@ -151,9 +149,6 @@ const destroy: Handler = (request, response): Promise<void> => {
         return;
       })
       .catch((error) => {
-        console.log("❌");
-        console.log(error);
-        console.log("❌");
         span.setDisclosedAttribute("is Identity removed", false);
         if (error instanceof GraphqlErrors) {
           throw webErrorFactory({
