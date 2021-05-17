@@ -108,13 +108,20 @@ const ProfileOverview: React.FC<{
         )}
       </SectionBox>
       {data && data.userAddresses.length > 1 ? (
-        <Flex>
-          <ShowMoreButton
-            hideList={hideAddressList}
-            quantity={data.userAddresses.length - 1}
-            setHideList={setHideAddressList}
-          />
-        </Flex>
+        <>
+          <Flex>
+            <ShowMoreButton
+              hideList={hideAddressList}
+              quantity={data.userAddresses.length - 1}
+              setHideList={setHideAddressList}
+            />
+          </Flex>
+          <NeutralLink href="/account/profile/addresses/new">
+            <FakeButton variant={ButtonVariant.SECONDARY}>
+              + Add new address
+            </FakeButton>
+          </NeutralLink>
+        </>
       ) : null}
     </>
   );
