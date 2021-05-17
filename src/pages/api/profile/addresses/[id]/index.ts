@@ -6,6 +6,7 @@ import {
   errorMiddleware,
   recoveryMiddleware,
   rateLimitingMiddleware,
+  Middleware,
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -174,41 +175,22 @@ const patchHandler: Handler = async (request, response) => {
   );
 };
 
-const wrappedGetHandler = wrapMiddlewares(
-  [
-    tracingMiddleware(getTracer()),
-    rateLimitingMiddleware(getTracer(), logger, {
-      windowMs: 300000,
-      requestsUntilBlock: 200,
-    }),
-    recoveryMiddleware(getTracer()),
-    sentryMiddleware(getTracer()),
-    errorMiddleware(getTracer()),
-    loggingMiddleware(getTracer(), logger),
-    authMiddleware(getTracer()),
-  ],
-  getHandler,
-  "GET /api/profile/addresses/[id]",
-);
-
-const wrappedPatchHandler = wrapMiddlewares(
-  [
-    tracingMiddleware(getTracer()),
-    rateLimitingMiddleware(getTracer(), logger, {
-      windowMs: 300000,
-      requestsUntilBlock: 200,
-    }),
-    recoveryMiddleware(getTracer()),
-    sentryMiddleware(getTracer()),
-    errorMiddleware(getTracer()),
-    loggingMiddleware(getTracer(), logger),
-    authMiddleware(getTracer()),
-  ],
-  patchHandler,
-  "PATCH /api/profile/addresses/[id]",
-);
+const middlewares: Middleware<NextApiRequest, NextApiResponse>[] = [
+  tracingMiddleware(getTracer()),
+  rateLimitingMiddleware(getTracer(), logger, {
+    windowMs: 300000,
+    requestsUntilBlock: 200,
+  }),
+  recoveryMiddleware(getTracer()),
+  sentryMiddleware(getTracer()),
+  errorMiddleware(getTracer()),
+  loggingMiddleware(getTracer(), logger),
+  authMiddleware(getTracer()),
+];
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .get(wrappedGetHandler)
-  .patch(wrappedPatchHandler)
+  .get(wrapMiddlewares(middlewares, getHandler, "/api/profile/addresses/[id]"))
+  .patch(
+    wrapMiddlewares(middlewares, patchHandler, "/api/profile/addresses/[id]"),
+  )
   .getHandler();
