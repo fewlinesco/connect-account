@@ -35,7 +35,10 @@ const addRequestScopeToSentry = (
   Sentry.configureScope((scope) => {
     scope.setTag("url", request.url ? request.url : "");
     scope.setTag("method", request.method ? request.method : "");
-    scope.setTag("trace.id", span.getTraceId());
+    scope.setTag(
+      "trace.id",
+      span.getTraceId() ? span.getTraceId() : "No trace id found",
+    );
 
     if ("query" in request) {
       scope.setContext("query", request.query);
