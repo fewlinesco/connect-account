@@ -33,7 +33,7 @@ const PrimaryConfirmationBox = (): JSX.Element => {
             <PrimaryConfirmationBoxContent
               setOpen={setOpen}
               value={identity.value}
-              id={identity.id}
+              onPress={() => window.alert("DONE")}
             />,
           );
         }}
@@ -77,6 +77,7 @@ const DangerConfirmationBox = (): JSX.Element => {
                 setOpen={setOpen}
                 value={identity.value}
                 type={identity.type}
+                onPress={() => window.alert("Done")}
               />,
             );
           }}

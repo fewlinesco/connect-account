@@ -50,9 +50,7 @@ describe("SudoPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { primaryIdentities };
-            },
+            fetcher: () => primaryIdentities,
           }}
         >
           <SudoPage />
@@ -113,15 +111,13 @@ describe("SudoPage", () => {
 
       const primaryIdentities = [mockIdentities.primaryPhoneIdentity];
 
-      cache.set("/api/identity/get-primary-identities", { primaryIdentities });
+      cache.set("/api/identity?primary=true", primaryIdentities);
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { primaryIdentities };
-            },
+            fetcher: () => primaryIdentities,
           }}
         >
           <SudoPage />

@@ -18,7 +18,7 @@ import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import { getProfileAccessToken } from "@src/utils/get-profile-access-token";
+import { getProfileAndAddressAccessTokens } from "@src/utils/get-profile-and-address-access-tokens";
 
 const patchHandler: Handler = async (request, response) => {
   const webErrors = {
@@ -47,7 +47,7 @@ const patchHandler: Handler = async (request, response) => {
 
       const { userProfilePayload } = request.body;
 
-      const profileAccessToken = await getProfileAccessToken(
+      const { profileAccessToken } = await getProfileAndAddressAccessTokens(
         userCookie.access_token,
       );
       span.setDisclosedAttribute(

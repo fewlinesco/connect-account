@@ -12,8 +12,8 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 const TwoFA: React.FC = () => {
   const [isCodeSent, setIsCodeSent] = React.useState<boolean>(false);
 
-  const { data, error } = useSWR<{ primaryIdentities: Identity[] }, Error>(
-    "/api/identity/get-primary-identities",
+  const { data: primaryIdentities, error } = useSWR<Identity[], Error>(
+    "/api/identities?primary=true",
   );
 
   if (error) {
@@ -30,7 +30,7 @@ const TwoFA: React.FC = () => {
       <SendTwoFACodeForm
         isCodeSent={isCodeSent}
         setIsCodeSent={setIsCodeSent}
-        data={data}
+        identities={primaryIdentities}
       />
       {isCodeSent ? (
         <>

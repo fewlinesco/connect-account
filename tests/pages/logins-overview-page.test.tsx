@@ -1,3 +1,4 @@
+import { Identity } from "@fewlines/connect-management";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import { cache, SWRConfig } from "swr";
@@ -7,6 +8,7 @@ import * as mockIdentities from "../mocks/identities";
 import { SortedIdentities } from "@src/@types/sorted-identities";
 import { IDENTITIES_SECTION_CONTENT } from "@src/components/pages/logins-overview/logins-overview";
 import LoginsOverviewPage from "@src/pages/account/logins";
+import { sortIdentities } from "@src/utils/sort-identities";
 
 jest.mock("@src/configs/db-client", () => {
   return {
@@ -27,22 +29,18 @@ describe("LoginsOverviewPage", () => {
     it("should display primary email identity first and all of them when clicking on the show more button", async () => {
       expect.assertions(7);
 
-      const sortedIdentities: SortedIdentities = {
-        emailIdentities: [
-          mockIdentities.primaryEmailIdentity,
-          mockIdentities.nonPrimaryEmailIdentity,
-        ],
-        phoneIdentities: [],
-        socialIdentities: [],
-      };
+      const identities = [
+        mockIdentities.primaryEmailIdentity,
+        mockIdentities.nonPrimaryEmailIdentity,
+      ];
+
+      const sortedIdentities: SortedIdentities = sortIdentities(identities);
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { sortedIdentities };
-            },
+            fetcher: () => identities,
           }}
         >
           <LoginsOverviewPage />
@@ -107,21 +105,15 @@ describe("LoginsOverviewPage", () => {
     it("should display primary email identity without show more button if provided 1 identity", async () => {
       expect.assertions(4);
 
-      const sortedIdentities: SortedIdentities = {
-        emailIdentities: [mockIdentities.primaryEmailIdentity],
-        phoneIdentities: [],
-        socialIdentities: [],
-      };
+      const identities = [mockIdentities.primaryEmailIdentity];
 
-      cache.set("/api/identity/get-sorted-identities", { sortedIdentities });
+      cache.set("/api/identities", identities);
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { sortedIdentities };
-            },
+            fetcher: () => identities,
           }}
         >
           <LoginsOverviewPage />
@@ -155,13 +147,11 @@ describe("LoginsOverviewPage", () => {
     it("should display default message when no identity is provided", async () => {
       expect.assertions(3);
 
-      const sortedIdentities: SortedIdentities = {
-        emailIdentities: [],
-        phoneIdentities: [],
-        socialIdentities: [],
-      };
+      const identities: Identity[] = [];
 
-      cache.set("/api/identity/get-sorted-identities", { sortedIdentities });
+      const sortedIdentities: SortedIdentities = sortIdentities(identities);
+
+      cache.set("/api/identities", identities);
 
       render(
         <SWRConfig
@@ -194,22 +184,18 @@ describe("LoginsOverviewPage", () => {
     it("should display primary phone identity first and all of them when clicking on the show more button", async () => {
       expect.assertions(7);
 
-      const sortedIdentities: SortedIdentities = {
-        emailIdentities: [],
-        phoneIdentities: [
-          mockIdentities.primaryPhoneIdentity,
-          mockIdentities.nonPrimaryPhoneIdentity,
-        ],
-        socialIdentities: [],
-      };
+      const identities = [
+        mockIdentities.primaryPhoneIdentity,
+        mockIdentities.nonPrimaryPhoneIdentity,
+      ];
+
+      const sortedIdentities = sortIdentities(identities);
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { sortedIdentities };
-            },
+            fetcher: () => identities,
           }}
         >
           <LoginsOverviewPage />
@@ -273,21 +259,15 @@ describe("LoginsOverviewPage", () => {
     it("should display primary phone identity without show more button if provided 1 identity", async () => {
       expect.assertions(4);
 
-      const sortedIdentities: SortedIdentities = {
-        emailIdentities: [],
-        phoneIdentities: [mockIdentities.primaryPhoneIdentity],
-        socialIdentities: [],
-      };
+      const identities = [mockIdentities.primaryPhoneIdentity];
 
-      cache.set("/api/identity/get-sorted-identities", { sortedIdentities });
+      cache.set("/api/identities", identities);
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { sortedIdentities };
-            },
+            fetcher: () => identities,
           }}
         >
           <LoginsOverviewPage />
@@ -320,13 +300,11 @@ describe("LoginsOverviewPage", () => {
     it("should display default message when no identity is provided", async () => {
       expect.assertions(3);
 
-      const sortedIdentities: SortedIdentities = {
-        emailIdentities: [],
-        phoneIdentities: [],
-        socialIdentities: [],
-      };
+      const identities: Identity[] = [];
 
-      cache.set("/api/identity/get-sorted-identities", { sortedIdentities });
+      const sortedIdentities = sortIdentities(identities);
+
+      cache.set("/api/identities", identities);
 
       render(
         <SWRConfig
@@ -359,22 +337,16 @@ describe("LoginsOverviewPage", () => {
     it("should display all social identities provided without the show more button", async () => {
       expect.assertions(3);
 
-      const sortedIdentities: SortedIdentities = {
-        emailIdentities: [],
-        phoneIdentities: [],
-        socialIdentities: [
-          mockIdentities.primarySocialIdentity,
-          mockIdentities.nonPrimarySocialIdentity,
-        ],
-      };
+      const identities = [
+        mockIdentities.primarySocialIdentity,
+        mockIdentities.nonPrimarySocialIdentity,
+      ];
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { sortedIdentities };
-            },
+            fetcher: () => identities,
           }}
         >
           <LoginsOverviewPage />
@@ -397,19 +369,13 @@ describe("LoginsOverviewPage", () => {
     it("should display default message when no identity is provided", async () => {
       expect.assertions(2);
 
-      const sortedIdentities: SortedIdentities = {
-        emailIdentities: [],
-        phoneIdentities: [],
-        socialIdentities: [],
-      };
+      const identities: Identity[] = [];
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { sortedIdentities };
-            },
+            fetcher: () => identities,
           }}
         >
           <LoginsOverviewPage />

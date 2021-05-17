@@ -24,16 +24,16 @@ import { getIdentityType } from "@src/utils/get-identity-type";
 const IdentityOverviewPage: React.FC<{
   identityId: string;
 }> = ({ identityId }) => {
-  const { data, error } = useSWR<{ identity: Identity }, SWRError>(
-    `/api/identity/get-identity?identityId=${identityId}`,
+  const { data: identity, error } = useSWR<Identity, SWRError>(
+    `/api/identities/${identityId}`,
   );
 
   if (error) {
     throw error;
   }
 
-  const breadcrumbs = data
-    ? getIdentityType(data.identity.type) === IdentityTypes.EMAIL
+  const breadcrumbs = identity
+    ? getIdentityType(identity.type) === IdentityTypes.EMAIL
       ? "Email address"
       : "Phone number"
     : "";
@@ -41,7 +41,7 @@ const IdentityOverviewPage: React.FC<{
   return (
     <Layout breadcrumbs={breadcrumbs} title="Logins">
       <Container>
-        <IdentityOverview data={data} />
+        <IdentityOverview identity={identity} />
       </Container>
     </Layout>
   );
