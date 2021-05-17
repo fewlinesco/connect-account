@@ -33,10 +33,10 @@ const addRequestScopeToSentry = (
   );
 
   Sentry.configureScope((scope) => {
-    scope.setTag("url", request.url ? request.url : "");
+    scope.setTag("urls", request.url ? request.url : "");
     scope.setTag("method", request.method ? request.method : "");
     scope.setTag(
-      "trace.id",
+      "trace id",
       span.getTraceId() ? span.getTraceId() : "No trace id found",
     );
 
