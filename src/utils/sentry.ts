@@ -1,4 +1,3 @@
-import { Span } from "@fwl/tracing";
 import * as Sentry from "@sentry/node";
 import { IncomingMessage } from "http";
 import type { NextApiRequest } from "next";
@@ -22,7 +21,6 @@ Sentry.configureScope((scope) => {
 
 const addRequestScopeToSentry = (
   request: NextApiRequest | IncomingMessage,
-  span: Span,
 ): void => {
   const headers = Object.entries(request.headers).reduce(
     (acc, [key, value]) =>
@@ -33,12 +31,12 @@ const addRequestScopeToSentry = (
   );
 
   Sentry.configureScope((scope) => {
-    scope.setTag("urls", request.url ? request.url : "");
+    scope.setTag("url", request.url ? request.url : "");
     scope.setTag("method", request.method ? request.method : "");
-    scope.setTag(
-      "trace id",
-      span.getTraceId() ? span.getTraceId() : "No trace id found",
-    );
+    // scope.setTag(
+    //   "trace id",
+    //   span.getTraceId() ? span.getTraceId() : "No trace id found",
+    // );
 
     if ("query" in request) {
       scope.setContext("query", request.query);
