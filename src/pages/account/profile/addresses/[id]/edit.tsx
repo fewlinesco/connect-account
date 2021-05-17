@@ -11,7 +11,7 @@ import useSWR from "swr";
 
 import { Address } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
-import { UserAddressForm } from "@src/components/forms/profile/update-user-address-form";
+import { UserAddressForm } from "@src/components/forms/profile/user-address-form";
 import { Layout } from "@src/components/page-layout";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
