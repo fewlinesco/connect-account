@@ -131,7 +131,7 @@ const patchHandler: Handler = async (request, response) => {
 
       const userAddressPayload = request.body;
 
-      const { profileAccessToken } = await getProfileAndAddressAccessTokens(
+      const { addressAccessToken } = await getProfileAndAddressAccessTokens(
         userCookie.access_token,
       );
       span.setDisclosedAttribute(
@@ -139,9 +139,9 @@ const patchHandler: Handler = async (request, response) => {
         true,
       );
 
-      const profileClient = initProfileClient(profileAccessToken);
+      const addressClient = initProfileClient(addressAccessToken);
 
-      const { data: updatedUserAddress } = await profileClient
+      const { data: updatedUserAddress } = await addressClient
         .updateAddress(addressId, userAddressPayload)
         .catch((error) => {
           span.setDisclosedAttribute(
