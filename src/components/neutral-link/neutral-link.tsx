@@ -1,9 +1,12 @@
-import { useLink } from "@react-aria/link";
-import Link, { LinkProps } from "next/link";
+import { AriaLinkOptions, useLink } from "@react-aria/link";
+import Link from "next/link";
 import React from "react";
 import style from "styled-components";
+import { UrlObject } from "url";
 
-interface ExtendedLinkProps extends LinkProps {
+interface ExtendedLinkProps extends AriaLinkOptions {
+  href: string | UrlObject;
+  as?: string | UrlObject;
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;

@@ -24,6 +24,8 @@ const InputDatePicker: React.FC<InputDatePickerProps> = ({
         maxDate={new Date()}
         showMonthDropdown
         showYearDropdown
+        yearDropdownItemNumber={120}
+        scrollableYearDropdown
       />
     </Label>
   );
@@ -32,7 +34,6 @@ const InputDatePicker: React.FC<InputDatePickerProps> = ({
 const Label = styled.label`
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
 
   .react-datepicker-wrapper {
     width: 100%;
@@ -44,7 +45,8 @@ const Label = styled.label`
       height: 4rem;
       padding-left: 1.6rem;
       width: 100%;
-      margin: ${({ theme }) => theme.spaces.xxs} 0 0;
+      margin: ${({ theme }) => theme.spaces.xxs} 0
+        ${({ theme }) => theme.spaces.xs};
       z-index: 1;
       position: relative;
     }

@@ -11,7 +11,7 @@ import useSWR from "swr";
 
 import { Address, Profile } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
-import { UpdateUserProfileForm } from "@src/components/forms/profile/update-user-profile-form";
+import { UserProfileForm } from "@src/components/forms/profile/user-profile-form";
 import { Layout } from "@src/components/page-layout";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
@@ -37,7 +37,7 @@ const UpdateUserProfilePage: React.FC = () => {
   return (
     <Layout breadcrumbs={"Profile | edit"} title="Personal information">
       <Container>
-        <UpdateUserProfileForm userProfileData={data && data.userProfile} />
+        <UserProfileForm userProfileData={data && data.userProfile} />
       </Container>
     </Layout>
   );
