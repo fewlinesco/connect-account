@@ -7,9 +7,7 @@ import {
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import React from "react";
-import useSWR from "swr";
 
-import { Address } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
 import { UserAddressForm } from "@src/components/forms/profile/user-address-form";
 import { Layout } from "@src/components/page-layout";
@@ -21,19 +19,11 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 import type { GetServerSideProps } from "next";
 
-const EditAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
-  const { data, error } = useSWR<{ address: Address }, Error>(
-    `/api/profile/addresses/${addressId}`,
-  );
-
-  if (error) {
-    throw error;
-  }
-
+const NewAddressPage: React.FC = () => {
   return (
-    <Layout breadcrumbs={"Address | edit"} title="Personal information">
+    <Layout breadcrumbs="Address | new" title="Personal information">
       <Container>
-        <UserAddressForm userAddress={data ? data.address : undefined} />
+        <UserAddressForm isCreation={true} />
       </Container>
     </Layout>
   );
@@ -54,7 +44,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       loggingMiddleware(getTracer(), logger),
       authMiddleware(getTracer()),
     ],
-    "/account/profile/address/[id]/edit",
+    "account/profile/addresses",
     () => {
       if (!configVariables.featureFlag) {
         return {
@@ -65,20 +55,12 @@ const getServerSideProps: GetServerSideProps = async (context) => {
         };
       }
 
-      if (!context?.params?.id) {
-        return {
-          notFound: true,
-        };
-      }
-
       return {
-        props: {
-          addressId: context.params.id,
-        },
+        props: {},
       };
     },
   );
 };
 
 export { getServerSideProps };
-export default EditAddressPage;
+export default NewAddressPage;
