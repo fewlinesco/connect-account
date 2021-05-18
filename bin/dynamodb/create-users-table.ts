@@ -19,7 +19,7 @@ async function createUsersTable(): Promise<void> {
       new CreateTableCommand(usersTableSchema),
     );
 
-    console.log("Table created:\n", data.TableDescription?.TableName);
+    console.log(`Table created: ${data.TableDescription?.TableName}.`);
   } catch (error) {
     console.log("Error while creating `users` table:\n", error);
   }
