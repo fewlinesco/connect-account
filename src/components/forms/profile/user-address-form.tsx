@@ -57,23 +57,22 @@ const UserAddressForm: React.FC<{
                 throw new Error("Something went wrong");
               },
             );
-          } else {
-            await fetchJson(
-              `/api/profile/addresses/${address.id}`,
-              "PATCH",
-              address,
-            ).then(async (response) => {
-              const parsedResponse = await response.json();
-
-              if ("updatedUserAddress" in parsedResponse) {
-                router &&
-                  router.push(`/account/profile/addresses/${address.id}`);
-                return;
-              }
-
-              throw new Error("Something went wrong");
-            });
           }
+
+          await fetchJson(
+            `/api/profile/addresses/${address.id}`,
+            "PATCH",
+            address,
+          ).then(async (response) => {
+            const parsedResponse = await response.json();
+
+            if ("updatedUserAddress" in parsedResponse) {
+              router && router.push(`/account/profile/addresses/${address.id}`);
+              return;
+            }
+
+            throw new Error("Something went wrong");
+          });
         }}
       >
         <InputText

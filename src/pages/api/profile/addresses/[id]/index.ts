@@ -189,8 +189,14 @@ const middlewares: Middleware<NextApiRequest, NextApiResponse>[] = [
 ];
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .get(wrapMiddlewares(middlewares, getHandler, "/api/profile/addresses/[id]"))
+  .get(
+    wrapMiddlewares(middlewares, getHandler, "GET /api/profile/addresses/[id]"),
+  )
   .patch(
-    wrapMiddlewares(middlewares, patchHandler, "/api/profile/addresses/[id]"),
+    wrapMiddlewares(
+      middlewares,
+      patchHandler,
+      "PATCH /api/profile/addresses/[id]",
+    ),
   )
   .getHandler();
