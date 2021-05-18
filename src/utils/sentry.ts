@@ -9,16 +9,13 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
   Sentry.init({
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
     enabled:
-      process.env.SENTRY_ENVIRONMENT === "development"
+      process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT === "development"
         ? false
         : process.env.NODE_ENV === "production",
-    environment: process.env.SENTRY_ENVIRONMENT || process.env.NODE_ENV,
+    environment:
+      process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT || process.env.NODE_ENV,
   });
 }
-
-Sentry.configureScope((scope) => {
-  scope.setTag("Node environment", process.env.NODE_ENV);
-});
 
 const addRequestScopeToSentry = (
   request: NextApiRequest | IncomingMessage,

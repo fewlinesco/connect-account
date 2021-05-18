@@ -18,6 +18,7 @@ async function sentryReport(
 
     Sentry.withScope((scope) => {
       scope.setTag(request.url || "no URL found", error.name as string);
+      scope.setTag("trace.id", span.getTraceId());
       Sentry.captureException(error);
     });
 
