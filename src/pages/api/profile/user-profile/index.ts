@@ -59,7 +59,6 @@ const patchHandler: Handler = async (request, response) => {
       const profileClient = initProfileClient(profileAccessToken);
 
       const { data: updatedUserProfile } = await profileClient
-
         .patchProfile(userProfilePayload)
         .catch((error) => {
           span.setDisclosedAttribute(

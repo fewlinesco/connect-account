@@ -62,20 +62,20 @@ const UserProfileForm: React.FC<{
 
               throw new Error("Something went wrong");
             });
-          } else {
-            await fetchJson("/api/profile/user-profile", "PATCH", {
-              userProfilePayload: userProfile,
-            }).then(async (response) => {
-              const parsedResponse = await response.json();
-
-              if ("updatedUserProfile" in parsedResponse) {
-                router && router.push("/account/profile");
-                return;
-              }
-
-              throw new Error("Something went wrong");
-            });
           }
+
+          await fetchJson("/api/profile/user-profile", "PATCH", {
+            userProfilePayload: userProfile,
+          }).then(async (response) => {
+            const parsedResponse = await response.json();
+
+            if ("updatedUserProfile" in parsedResponse) {
+              router && router.push("/account/profile");
+              return;
+            }
+
+            throw new Error("Something went wrong");
+          });
         }}
       >
         <InputText
