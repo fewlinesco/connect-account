@@ -6,6 +6,7 @@ import {
   errorMiddleware,
   recoveryMiddleware,
   rateLimitingMiddleware,
+  Middleware,
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -58,6 +59,7 @@ const patchHandler: Handler = async (request, response) => {
       const profileClient = initProfileClient(profileAccessToken);
 
       const { data: updatedUserProfile } = await profileClient
+
         .patchProfile(userProfilePayload)
         .catch((error) => {
           span.setDisclosedAttribute(
@@ -94,23 +96,102 @@ const patchHandler: Handler = async (request, response) => {
   );
 };
 
-const wrappedPatchHandler = wrapMiddlewares(
-  [
-    tracingMiddleware(getTracer()),
-    rateLimitingMiddleware(getTracer(), logger, {
-      windowMs: 300000,
-      requestsUntilBlock: 200,
-    }),
-    recoveryMiddleware(getTracer()),
-    sentryMiddleware(getTracer()),
-    errorMiddleware(getTracer()),
-    loggingMiddleware(getTracer(), logger),
-    authMiddleware(getTracer()),
-  ],
-  patchHandler,
-  "PATCH /api/profile/user-profile",
-);
+const postHandler: Handler = async (request, response) => {
+  const webErrors = {
+    invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
+    invalidScopes: ERRORS_DATA.INVALID_SCOPES,
+    userProfileNotFound: ERRORS_DATA.USER_PROFILE_NOT_FOUND,
+    invalidUserProfilePayload: ERRORS_DATA.INVALID_USER_PROFILE_PAYLOAD,
+    unreachable: ERRORS_DATA.UNREACHABLE,
+  };
+
+  return getTracer().span(
+    "POST /api/profile/user-profile handler",
+    async (span) => {
+      const userCookie = await getServerSideCookies<UserCookie>(request, {
+        cookieName: "user-cookie",
+        isCookieSealed: true,
+        cookieSalt: configVariables.cookieSalt,
+      });
+
+      if (!userCookie) {
+        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+        response.setHeader("location", "/");
+        response.end();
+        return;
+      }
+
+      const { userProfilePayload } = request.body;
+
+      const { profileAccessToken } = await getProfileAndAddressAccessTokens(
+        userCookie.access_token,
+      );
+      span.setDisclosedAttribute(
+        "is Connect.Profile access token available",
+        true,
+      );
+
+      const profileClient = initProfileClient(profileAccessToken);
+
+      const { data: createdUserProfile } = await profileClient
+        .createProfile(userProfilePayload)
+        .catch((error) => {
+          span.setDisclosedAttribute(
+            "is Connect.Profile UserProfile updated",
+            false,
+          );
+
+          if (error.response.status === HttpStatus.UNAUTHORIZED) {
+            throw webErrorFactory(webErrors.invalidProfileToken);
+          }
+
+          if (error.response.status === HttpStatus.FORBIDDEN) {
+            throw webErrorFactory(webErrors.invalidScopes);
+          }
+
+          if (error.response.status === HttpStatus.NOT_FOUND) {
+            throw webErrorFactory(webErrors.userProfileNotFound);
+          }
+
+          if (error.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
+            throw webErrorFactory(webErrors.invalidUserProfilePayload);
+          }
+
+          throw webErrorFactory(webErrors.unreachable);
+        });
+      span.setDisclosedAttribute(
+        "is Connect.Profile UserProfile updated",
+        true,
+      );
+
+      response.statusCode = HttpStatus.OK;
+      response.json({ createdUserProfile });
+    },
+  );
+};
+
+const middlewares: Middleware<NextApiRequest, NextApiResponse>[] = [
+  tracingMiddleware(getTracer()),
+  rateLimitingMiddleware(getTracer(), logger, {
+    windowMs: 300000,
+    requestsUntilBlock: 200,
+  }),
+  recoveryMiddleware(getTracer()),
+  sentryMiddleware(getTracer()),
+  errorMiddleware(getTracer()),
+  loggingMiddleware(getTracer(), logger),
+  authMiddleware(getTracer()),
+];
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .patch(wrappedPatchHandler)
+  .patch(
+    wrapMiddlewares(
+      middlewares,
+      patchHandler,
+      "PATCH /api/profile/user-profile",
+    ),
+  )
+  .post(
+    wrapMiddlewares(middlewares, postHandler, "POST /api/profile/user-profile"),
+  )
   .getHandler();
