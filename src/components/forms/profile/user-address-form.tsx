@@ -10,12 +10,13 @@ import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { fetchJson } from "@src/utils/fetch-json";
 
-const UpdateUserAddressForm: React.FC<{
+const UserAddressForm: React.FC<{
   userAddress?: Address;
-}> = ({ userAddress }) => {
+  isCreation?: boolean;
+}> = ({ userAddress, isCreation }) => {
   const [formID] = React.useState<string>(uuidv4());
 
-  const [updatedAddress, setUpdatedAddress] = React.useState<Address>({
+  const [address, setAddress] = React.useState<Address>({
     id: "",
     sub: "",
     street_address: "",
@@ -34,7 +35,7 @@ const UpdateUserAddressForm: React.FC<{
 
   React.useEffect(() => {
     if (userAddress) {
-      setUpdatedAddress(userAddress);
+      setAddress(userAddress);
     }
   }, [userAddress]);
 
@@ -43,16 +44,30 @@ const UpdateUserAddressForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
+          if (isCreation) {
+            await fetchJson("/api/profile/addresses", "POST", address).then(
+              async (response) => {
+                const parsedResponse = await response.json();
+
+                if ("createdAddress" in parsedResponse) {
+                  router && router.push("/account/profile");
+                  return;
+                }
+
+                throw new Error("Something went wrong");
+              },
+            );
+          }
+
           await fetchJson(
-            `/api/profile/addresses/${updatedAddress.id}`,
+            `/api/profile/addresses/${address.id}`,
             "PATCH",
-            updatedAddress,
+            address,
           ).then(async (response) => {
             const parsedResponse = await response.json();
 
             if ("updatedUserAddress" in parsedResponse) {
-              router &&
-                router.push(`/account/profile/addresses/${updatedAddress.id}`);
+              router && router.push(`/account/profile/addresses/${address.id}`);
               return;
             }
 
@@ -64,10 +79,10 @@ const UpdateUserAddressForm: React.FC<{
           type="text"
           name="street-address"
           placeholder="Enter your street address"
-          value={updatedAddress.street_address}
+          value={address.street_address}
           onChange={(value) => {
-            setUpdatedAddress({
-              ...updatedAddress,
+            setAddress({
+              ...address,
               street_address: value,
             });
           }}
@@ -77,10 +92,10 @@ const UpdateUserAddressForm: React.FC<{
           type="text"
           name="street-address-2"
           placeholder="Enter your complementary street address"
-          value={updatedAddress.street_address_2}
+          value={address.street_address_2}
           onChange={(value) => {
-            setUpdatedAddress({
-              ...updatedAddress,
+            setAddress({
+              ...address,
               street_address_2: value,
             });
           }}
@@ -90,10 +105,10 @@ const UpdateUserAddressForm: React.FC<{
           type="text"
           name="locality"
           placeholder="Enter your locality"
-          value={updatedAddress.locality}
+          value={address.locality}
           onChange={(value) => {
-            setUpdatedAddress({
-              ...updatedAddress,
+            setAddress({
+              ...address,
               locality: value,
             });
           }}
@@ -103,10 +118,10 @@ const UpdateUserAddressForm: React.FC<{
           type="text"
           name="region"
           placeholder="Enter your region"
-          value={updatedAddress.region}
+          value={address.region}
           onChange={(value) => {
-            setUpdatedAddress({
-              ...updatedAddress,
+            setAddress({
+              ...address,
               region: value,
             });
           }}
@@ -116,10 +131,10 @@ const UpdateUserAddressForm: React.FC<{
           type="text"
           name="postal-code"
           placeholder="Enter your postal code"
-          value={updatedAddress.postal_code}
+          value={address.postal_code}
           onChange={(value) => {
-            setUpdatedAddress({
-              ...updatedAddress,
+            setAddress({
+              ...address,
               postal_code: value,
             });
           }}
@@ -129,10 +144,10 @@ const UpdateUserAddressForm: React.FC<{
           type="text"
           name="country"
           placeholder="Enter your country"
-          value={updatedAddress.country}
+          value={address.country}
           onChange={(value) => {
-            setUpdatedAddress({
-              ...updatedAddress,
+            setAddress({
+              ...address,
               country: value,
             });
           }}
@@ -142,24 +157,30 @@ const UpdateUserAddressForm: React.FC<{
           type="text"
           name="kind"
           placeholder="Enter your address kind"
-          value={updatedAddress.kind}
+          value={address.kind}
           onChange={(value) => {
-            setUpdatedAddress({
-              ...updatedAddress,
+            setAddress({
+              ...address,
               kind: value,
             });
           }}
           label="Kind"
         />
         <Button type="submit" variant={ButtonVariant.PRIMARY}>
-          Update my address
+          {isCreation ? "Add address" : "Update my address"}
         </Button>
       </Form>
-      <NeutralLink href={`/account/profile/addresses/${updatedAddress.id}`}>
+      <NeutralLink
+        href={
+          isCreation
+            ? "/account/profile"
+            : `/account/profile/addresses/${address.id}`
+        }
+      >
         <FakeButton variant={ButtonVariant.SECONDARY}>Cancel</FakeButton>
       </NeutralLink>{" "}
     </>
   );
 };
 
-export { UpdateUserAddressForm };
+export { UserAddressForm };
