@@ -1,3 +1,4 @@
+import { HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -6,6 +7,7 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
+import { useRouter } from "next/router";
 import React from "react";
 import useSWR from "swr";
 
@@ -23,6 +25,8 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import type { GetServerSideProps } from "next";
 
 const ProfilePage: React.FC = () => {
+  const router = useRouter();
+
   const { data, error } = useSWR<
     {
       userProfile: Profile;
@@ -32,6 +36,10 @@ const ProfilePage: React.FC = () => {
   >(`/api/profile/get-user-profile-and-addresses`);
 
   if (error) {
+    if (error.statusCode === HttpStatus.NOT_FOUND) {
+      router && router.push("/account/profile/user-profile/new");
+    }
+
     throw error;
   }
 
