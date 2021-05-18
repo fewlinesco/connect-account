@@ -7,7 +7,6 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
-import type { GetServerSideProps } from "next";
 import React from "react";
 import useSWR from "swr";
 
@@ -20,6 +19,8 @@ import { SWRError } from "@src/errors/errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getIdentityType } from "@src/utils/get-identity-type";
+
+import type { GetServerSideProps } from "next";
 
 const IdentityOverviewPage: React.FC<{
   identityId: string;

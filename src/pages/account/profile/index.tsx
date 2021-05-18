@@ -6,7 +6,6 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
-import type { GetServerSideProps } from "next";
 import React from "react";
 import useSWR from "swr";
 
@@ -20,6 +19,8 @@ import getTracer from "@src/configs/tracer";
 import { SWRError } from "@src/errors/errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+
+import type { GetServerSideProps } from "next";
 
 const ProfilePage: React.FC = () => {
   const { data, error } = useSWR<
