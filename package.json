@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "next dev -p $CONNECT_ACCOUNT_PORT",
     "build": "next build",
-    "lint": "eslint \"{src,pages,bin,doc,tests}/**/*.{js,ts,jsx,tsx}\"",
+    "lint": "eslint **/*.json \"{src,pages,bin,doc,tests}/**/*.{js,ts,jsx,tsx}\"",
     "start": "next start -p $PORT",
     "test": "jest --testPathIgnorePatterns=e2e --runInBand",
     "test:e2e": "jest --testPathPattern=e2e --runInBand",
@@ -109,68 +109,22 @@
     "yarn": ">=1.22.4"
   },
   "babel": {
-    "env": {
-      "production": {
-        "presets": [
-          [
-            "next/babel",
-            {
-              "preset-env": {},
-              "transform-runtime": {},
-              "styled-jsx": {},
-              "class-properties": {}
-            }
-          ]
-        ],
-        "plugins": [
-          [
-            "styled-components",
-            {
-              "ssr": true,
-              "displayName": true
-            }
-          ]
-        ]
-      },
-      "development": {
-        "presets": [
-          [
-            "next/babel",
-            {
-              "preset-env": {},
-              "transform-runtime": {},
-              "styled-jsx": {},
-              "class-properties": {}
-            }
-          ]
-        ],
-        "plugins": [
-          [
-            "styled-components",
-            {
-              "ssr": true,
-              "displayName": true
-            }
-          ]
-        ]
-      },
-      "test": {
-        "presets": [
-          "next/babel"
-        ],
-        "plugins": [
-          [
-            "styled-components",
-            {
-              "ssr": true,
-              "displayName": true
-            }
-          ],
-          "@babel/plugin-transform-react-jsx"
-        ]
-      }
-    }
+    "presets": [
+      "next/babel"
+    ],
+    "plugins": [
+      [
+        "styled-components",
+        {
+          "ssr": true,
+          "displayName": true
+        }
+      ]
+    ]
   },
+  "browserslist": [
+    "last 2 versions, > 0.25%, not dead"
+  ],
   "eslintConfig": {
     "extends": [
       "@fewlines/eslint-config/node",
