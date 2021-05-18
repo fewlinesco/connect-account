@@ -2497,7 +2497,7 @@
     "@react-types/shared" "^3.6.0"
     clsx "^1.1.1"
 
-"@react-aria/interactions@^3.2.1", "@react-aria/interactions@^3.4.0":
+"@react-aria/interactions@^3.4.0":
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@react-aria/interactions/-/interactions-3.4.0.tgz#0243947c962811314852399ebc0d9f663eb3b762"
   integrity sha512-BCt0bP+XimcytkAVMQrpRfU/zlOFG1g6i6XmRnatsqq2Xc1ipQHr/MumE2cu8teXJZw2Q3e27VphCDNhCUkpnQ==
@@ -2516,16 +2516,16 @@
     "@react-types/label" "^3.2.1"
     "@react-types/shared" "^3.6.0"
 
-"@react-aria/link@3.1.2":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@react-aria/link/-/link-3.1.2.tgz#0a39e44fb1a7bb30e2ef0c88e0f248462998c87a"
-  integrity sha512-ONAyB+2irMSNnv2qZKw51AwYv1GzFXAn+N4nWxreI+TIzhAA6JBkMYT9I6JFqx51UwvGI+ys0YXAMJVIBeZRvA==
+"@react-aria/link@3.1.3":
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/@react-aria/link/-/link-3.1.3.tgz#3c2b873067298be5567dea1270e3a4ea6e7c7a05"
+  integrity sha512-uFp1lf9fmPbKxA7YgxXE2fTRrG4VvY19pcOUbJab4gikB3NF7LjL24Ogk7xHORatGwXCA4ZwBsKxLd9nimcXPg==
   dependencies:
     "@babel/runtime" "^7.6.2"
-    "@react-aria/interactions" "^3.2.1"
-    "@react-aria/utils" "^3.3.0"
-    "@react-types/link" "^3.1.1"
-    "@react-types/shared" "^3.2.1"
+    "@react-aria/interactions" "^3.4.0"
+    "@react-aria/utils" "^3.8.0"
+    "@react-types/link" "^3.1.2"
+    "@react-types/shared" "^3.6.0"
 
 "@react-aria/ssr@3.0.2", "@react-aria/ssr@^3.0.2":
   version "3.0.2"
@@ -2546,7 +2546,7 @@
     "@react-types/shared" "^3.6.0"
     "@react-types/textfield" "^3.2.2"
 
-"@react-aria/utils@^3.3.0", "@react-aria/utils@^3.8.0":
+"@react-aria/utils@^3.8.0":
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/@react-aria/utils/-/utils-3.8.0.tgz#57bdc7cc967773c7f55b29847b187ec45031a620"
   integrity sha512-VsFSeym4dB+A6t6Kl0MNSI9jYDijoLfy80z06AeGbv01xHGes86z5smvTGt3iW7u1vyYrwf+0h2WiCsF0Lw19g==
@@ -2595,7 +2595,7 @@
   dependencies:
     "@react-types/shared" "^3.4.0"
 
-"@react-types/link@^3.1.1":
+"@react-types/link@^3.1.2":
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@react-types/link/-/link-3.1.2.tgz#81b8e65e791efe604592d969f4b03feac60423dd"
   integrity sha512-4Sa2/7JMLb+nqhZsYIW5iaOIccv+oBHEopeesh67ikO3r3o6XNYR5bdetWj53tN9OBJ3vqGZpRg77ktCI5c1Zw==
