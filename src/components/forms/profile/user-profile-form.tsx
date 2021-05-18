@@ -14,9 +14,10 @@ import { fetchJson } from "@src/utils/fetch-json";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-const UpdateUserProfileForm: React.FC<{ userProfileData?: Profile }> = ({
-  userProfileData,
-}) => {
+const UserProfileForm: React.FC<{
+  userProfileData?: Profile;
+  isCreation?: boolean;
+}> = ({ userProfileData, isCreation }) => {
   const [formID] = React.useState<string>(uuidv4());
 
   const [userProfile, setUserProfile] = React.useState<ProfileData>({
@@ -48,18 +49,33 @@ const UpdateUserProfileForm: React.FC<{ userProfileData?: Profile }> = ({
       <Form
         formID={formID}
         onSubmit={async () => {
-          await fetchJson("/api/profile/user-profile", "PATCH", {
-            userProfilePayload: userProfile,
-          }).then(async (response) => {
-            const parsedResponse = await response.json();
+          if (isCreation) {
+            await fetchJson("/api/profile/user-profile", "POST", {
+              userProfilePayload: userProfile,
+            }).then(async (response) => {
+              const parsedResponse = await response.json();
 
-            if ("updatedUserProfile" in parsedResponse) {
-              router && router.push("/account/profile");
-              return;
-            }
+              if ("createdUserProfile" in parsedResponse) {
+                router && router.push("/account/profile");
+                return;
+              }
 
-            throw new Error("Something went wrong");
-          });
+              throw new Error("Something went wrong");
+            });
+          } else {
+            await fetchJson("/api/profile/user-profile", "PATCH", {
+              userProfilePayload: userProfile,
+            }).then(async (response) => {
+              const parsedResponse = await response.json();
+
+              if ("updatedUserProfile" in parsedResponse) {
+                router && router.push("/account/profile");
+                return;
+              }
+
+              throw new Error("Something went wrong");
+            });
+          }
         }}
       >
         <InputText
@@ -145,14 +161,14 @@ const UpdateUserProfileForm: React.FC<{ userProfileData?: Profile }> = ({
           label="Locale"
         />
         <Button type="submit" variant={ButtonVariant.PRIMARY}>
-          Update my information
+          {isCreation ? "Add my information" : "Update my information"}
         </Button>
       </Form>
-      <NeutralLink href="/account/logins">
+      <NeutralLink href={isCreation ? "/account" : "/account/profile"}>
         <FakeButton variant={ButtonVariant.SECONDARY}>Cancel</FakeButton>
       </NeutralLink>{" "}
     </>
   );
 };
 
-export { UpdateUserProfileForm };
+export { UserProfileForm };
