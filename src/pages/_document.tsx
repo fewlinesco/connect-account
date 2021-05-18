@@ -10,6 +10,8 @@ import type {
 } from "next/dist/next-server/lib/utils";
 
 process.on("unhandledRejection", (error: Error): void => {
+  console.log("FLAG _document");
+
   Sentry.captureException(error);
 });
 

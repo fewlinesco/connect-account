@@ -34,9 +34,13 @@ function sentryMiddleware(
       request: NextApiRequest,
       response: NextApiResponse,
     ): Promise<void> => {
+      console.log("FLAG sentry middleware");
+
       try {
         return await handler(request, response);
       } catch (error) {
+        console.log("error");
+
         await sentryReport(tracer, error, request);
       }
     };

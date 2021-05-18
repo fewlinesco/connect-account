@@ -28,6 +28,8 @@ const CustomErrorComponent = (
     Sentry.captureException(error);
   }
 
+  console.log("FLAG");
+
   return (
     <Layout breadcrumbs={false}>
       <ErrorFallbackComponent statusCode={statusCode} />
@@ -40,10 +42,14 @@ CustomErrorComponent.getInitialProps = async (
 ): Promise<ErrorProps> => {
   const { res, err, asPath } = props;
 
+  console.log("FLAG");
+
   const errorInitialProps: ErrorProps = (await NextError.getInitialProps({
     res,
     err,
   } as NextPageContext)) as ErrorProps;
+
+  console.log("FLAG");
 
   // Workaround for https://github.com/vercel/next.js/issues/8592.
   errorInitialProps.isReadyToRender = true;
@@ -69,9 +75,12 @@ CustomErrorComponent.getInitialProps = async (
   // If this point is reached, getInitialProps was called without any
   // information about what the error might be. This is unexpected and may
   // indicate a bug introduced in Next.js, so record it in Sentry
+
   Sentry.captureException(
     new Error(`_error.js getInitialProps missing data at path: ${asPath}`),
   );
+
+  console.log("FLAG");
 
   return errorInitialProps;
 };

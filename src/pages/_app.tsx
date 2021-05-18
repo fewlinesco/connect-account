@@ -44,7 +44,12 @@ const AccountApp: React.FC = ({ children }) => {
 
                   error.info = await response.json();
                   error.statusCode = response.status;
-                  throw error;
+
+                  if (response.status !== 404) {
+                    throw error;
+                  }
+
+                  return;
                 }
 
                 return response.json();
