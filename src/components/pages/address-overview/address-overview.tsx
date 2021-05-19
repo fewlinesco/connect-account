@@ -24,7 +24,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
             </AddressValue>
             <AddressValue
               isPrimary={address.primary}
-            >{`${address.postal_code}, ${address.region}, ${address.locality}, ${address.country}`}</AddressValue>
+            >{`${address.postal_code}, ${address.locality}, ${address.region}, ${address.country}`}</AddressValue>
             {address.primary ? <PrimaryBadge /> : null}
           </>
         ) : (
@@ -66,6 +66,7 @@ const AddressValue = styled.p<{ isPrimary?: boolean }>`
   text-overflow: ellipsis;
   width: 90%;
   line-height: ${({ theme }) => theme.lineHeights.copy};
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
 
   margin-bottom: ${({ isPrimary, theme }) => isPrimary && theme.spaces.xxs};
 `;

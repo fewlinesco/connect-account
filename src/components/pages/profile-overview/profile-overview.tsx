@@ -172,7 +172,7 @@ const UserAddresses: React.FC<{
           >{`${primaryAddress.street_address}, ${primaryAddress.street_address_2}`}</AddressValue>
           <AddressValue
             isPrimary={primaryAddress.primary}
-          >{`${primaryAddress.postal_code}, ${primaryAddress.region}, ${primaryAddress.locality}, ${primaryAddress.country}`}</AddressValue>
+          >{`${primaryAddress.postal_code}, ${primaryAddress.locality}, ${primaryAddress.region}, ${primaryAddress.country}`}</AddressValue>
         </CategoryContent>
         <RightChevron />
       </BoxedLink>
@@ -207,7 +207,7 @@ const UserAddresses: React.FC<{
                       </AddressValue>
                       <AddressValue
                         isPrimary={primary}
-                      >{`${postal_code}, ${region}, ${locality}, ${country}`}</AddressValue>
+                      >{`${postal_code}, ${locality}, ${region}, ${country}`}</AddressValue>
                     </CategoryContent>
                     <RightChevron />
                   </BoxedLink>
@@ -274,7 +274,8 @@ const AddressValue = styled.p<{ isPrimary: boolean }>`
   width: 90%;
   line-height: ${({ theme }) => theme.lineHeights.copy};
 
-  ${({ isPrimary, theme }) => isPrimary && theme.fontWeights.semibold}
+  font-weight: ${({ isPrimary, theme }) =>
+    isPrimary && theme.fontWeights.semibold};
 `;
 
 export { ProfileOverview };
