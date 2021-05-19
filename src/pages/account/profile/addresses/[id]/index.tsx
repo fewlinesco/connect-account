@@ -10,10 +10,7 @@ import React from "react";
 import useSWR from "swr";
 
 import { Address } from "@src/@types/profile";
-import { ButtonVariant } from "@src/components/buttons/buttons";
-import { FakeButton } from "@src/components/buttons/fake-button";
 import { Container } from "@src/components/containers/container";
-import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { Layout } from "@src/components/page-layout";
 import { AddressOverview } from "@src/components/pages/address-overview/address-overview";
 import { configVariables } from "@src/configs/config-variables";
@@ -39,11 +36,6 @@ const AddressOverviewPage: React.FC<{ addressId: string }> = ({
     <Layout breadcrumbs="Address" title="Personal information">
       <Container>
         <AddressOverview address={address} />
-        <NeutralLink href={`/account/profile/addresses/${addressId}/edit`}>
-          <FakeButton variant={ButtonVariant.PRIMARY}>
-            Update this address
-          </FakeButton>
-        </NeutralLink>
       </Container>
     </Layout>
   );
