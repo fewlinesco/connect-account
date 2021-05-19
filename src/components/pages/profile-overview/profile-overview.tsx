@@ -12,6 +12,7 @@ import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { Separator } from "@src/components/separator/separator";
 import { SectionBox } from "@src/components/shadow-box/section-box";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
+import { capitalizeFirstLetter } from "@src/utils/format";
 
 const ProfileOverview: React.FC<{
   data?: {
@@ -163,7 +164,9 @@ const UserAddresses: React.FC<{
         href={`/account/profile/addresses/${primaryAddress.id}`}
       >
         <CategoryContent>
-          <CategoryName>{primaryAddress.kind}</CategoryName>
+          <CategoryName>
+            {capitalizeFirstLetter(primaryAddress.kind)}
+          </CategoryName>
           <AddressValue
             isPrimary={primaryAddress.primary}
           >{`${primaryAddress.street_address}, ${primaryAddress.street_address_2}`}</AddressValue>
@@ -196,10 +199,12 @@ const UserAddresses: React.FC<{
                     href={`/account/profile/addresses/${id}`}
                   >
                     <CategoryContent>
-                      <CategoryName>{kind}</CategoryName>
-                      <AddressValue
-                        isPrimary={primary}
-                      >{`${street_address}, ${street_address_2}`}</AddressValue>
+                      <CategoryName>{capitalizeFirstLetter(kind)}</CategoryName>
+                      <AddressValue isPrimary={primary}>
+                        {street_address_2
+                          ? `${street_address}, ${street_address_2}`
+                          : street_address}
+                      </AddressValue>
                       <AddressValue
                         isPrimary={primary}
                       >{`${postal_code}, ${region}, ${locality}, ${country}`}</AddressValue>
