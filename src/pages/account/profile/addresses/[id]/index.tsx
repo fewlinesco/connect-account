@@ -27,7 +27,7 @@ import type { GetServerSideProps } from "next";
 const AddressOverviewPage: React.FC<{ addressId: string }> = ({
   addressId,
 }) => {
-  const { error } = useSWR<{ address: Address }, Error>(
+  const { data: address, error } = useSWR<Address, Error>(
     `/api/profile/addresses/${addressId}`,
   );
 
