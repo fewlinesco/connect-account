@@ -87,7 +87,7 @@ const SendTwoFACodeForm: React.FC<{
         />
       ) : (
         <InputRadioWrapper>
-          <SkeletonTextLine fontSize={1.6} />
+          <SkeletonTextLine fontSize={1.6} width={50} />
           <span />
         </InputRadioWrapper>
       )}

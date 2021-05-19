@@ -58,7 +58,7 @@ const IdentityOverview: React.FC<{
       <Box>
         {!identity ? (
           <Value>
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           </Value>
         ) : (
           <>

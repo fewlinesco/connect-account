@@ -42,49 +42,49 @@ const ProfileOverview: React.FC<{
         <Separator />
         <UserInfoSection categoryName="NAME" href="#">
           {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             `${data.userProfile.name} ${data.userProfile.middle_name} ${data.userProfile.family_name}`
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="PREFERRED USERNAME" href="#">
           {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             data.userProfile.preferred_username
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="BIRTH DATE" href="#">
           {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             data.userProfile.birthdate
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="TIME ZONE" href="#">
           {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             data.userProfile.zoneinfo
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="LOCALE" href="#">
           {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             data.userProfile.locale
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="WEBSITE" href="#">
           {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             data.userProfile.website
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="PROFILE" href="#">
           {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             data.userProfile.profile
           )}
@@ -99,7 +99,7 @@ const ProfileOverview: React.FC<{
       <SectionBox>
         {!data ? (
           <BoxedLink disableClick={true} href="#">
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           </BoxedLink>
         ) : (
           <UserAddresses
