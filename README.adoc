@@ -250,7 +250,7 @@ We are using `husky 6.x` to trigger the linting and building of the app before p
 | `NEXT_PUBLIC_SENTRY_DSN`
 | Data Source Name representing the configuration required by the Sentry SDKs.
 
-| `SENTRY_ENVIRONMENT`
+| `NEXT_PUBLIC_SENTRY_ENVIRONMENT`
 | Should be set to `development`. Used to prevent sentry report when working with a built version, locally.
 
 | `CONNECT_TEST_ACCOUNT_EMAIL`
