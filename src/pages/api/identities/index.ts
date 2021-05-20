@@ -19,6 +19,7 @@ import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
+import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
@@ -86,10 +87,7 @@ const index: Handler = (request, response): Promise<void> => {
 const wrappedHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
-    rateLimitingMiddleware(getTracer(), logger, {
-      windowMs: 300000,
-      requestsUntilBlock: 200,
-    }),
+    rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
     recoveryMiddleware(getTracer()),
     sentryMiddleware(getTracer()),
     errorMiddleware(getTracer()),
