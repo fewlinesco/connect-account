@@ -6,7 +6,6 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
-import type { GetServerSideProps } from "next";
 import React from "react";
 import styled from "styled-components";
 import useSWR from "swr";
@@ -23,6 +22,8 @@ import rateLimitinConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+
+import type { GetServerSideProps } from "next";
 
 const AddressOverviewPage: React.FC<{ addressId: string }> = ({
   addressId,
