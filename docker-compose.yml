@@ -2,11 +2,25 @@ version: '2.1'
 
 services:
   dynamodb-local:
-    image: amazon/dynamodb-local:1.13.6
-    container_name: dynamodb-local
+    image: amazon/dynamodb-local:1.16.0
     ports:
       - "29713:8000"
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ."
   
+  create-dynamodb-users-table:
+    image: amazon/aws-cli:2.2.5
+    depends_on:
+      - "dynamodb-local"
+    volumes:
+      - ./.local-dynamodb-credential:/root/.aws/credentials
+    restart: on-failure:10
+    command: >
+      dynamodb create-table
+      --region eu-west-3 --endpoint-url http://dynamodb-local:8000
+      --attribute-definitions '[{ "AttributeName": "sub", "AttributeType": "S" }]' 
+      --table-name users --key-schema '[{ "AttributeName": "sub", "KeyType": "HASH" }]' 
+      --provisioned-throughput '{"ReadCapacityUnits": 10, "WriteCapacityUnits": 10}' 
+
   jaeger:
     image: jaegertracing/all-in-one:1.20.0
     command: ["--log-level=debug"]
