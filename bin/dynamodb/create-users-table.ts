@@ -1,5 +1,4 @@
 import { CreateTableCommand } from "@aws-sdk/client-dynamodb";
-import util from "util";
 
 import { configVariables } from "../../src/configs/config-variables";
 import { dynamoDbClient } from "../../src/configs/db-client";
@@ -20,7 +19,7 @@ async function createUsersTable(): Promise<void> {
       new CreateTableCommand(usersTableSchema),
     );
 
-    console.log(`Table created: ${util.inspect(data.TableDescription)}.`);
+    console.log(`Table created: ${data.TableDescription?.TableName}.`);
   } catch (error) {
     console.log("Error while creating `users` table:\n", error);
   }
