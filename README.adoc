@@ -121,9 +121,6 @@ If you want to interact with the database, you can use the https://docs.aws.amaz
 | `db:create-users-table`
 | Create the `users` table.
 
-| `db:create-users-table`
-| Create the `users` table.
-
 | `db:reset-users-table`
 | Reset the `users` table.
 
