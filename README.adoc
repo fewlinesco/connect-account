@@ -91,7 +91,7 @@ echo "::1 connect-account.local" | sudo tee -a /etc/hosts
 
 [source, shell]
 ----
-hivemind
+hivemind # or overmind s
 
 # In an other terminal tab
 docker-compose up
@@ -108,23 +108,31 @@ yarn build && yarn start [-p 29703]
 
 === Database
 
-To prepare the `users` table you'll need to run:
-[source, shell]
-----
-yarn db:create-users-table
-----
+We made the choice to use https://aws.amazon.com/dynamodb/[DynamoDB].
 
-If you want to reset the `users` table, run:
-[source, shell]
-----
-yarn db:reset-users-table
-----
+The `users` DynamoDB table is created automatically during the docker compose launch.
 
-If you want to delete the `users` table, run:
-[source, shell]
-----
-yarn db:delete-users-table
-----
+If you want to interact with the database, you can use the https://docs.aws.amazon.com/cli/latest/reference/dynamodb/[AWS CLI], of use one of the following npm scripts that use the SDK:
+
+
+|===
+| Name | Description
+
+| `db:create-users-table`
+| Create the `users` table.
+
+| `db:reset-users-table`
+| Reset the `users` table.
+
+| `db:delete-users-table`
+| Delete the `users` table.
+
+| `db:put-user`
+| Put a user entry in the `users` table.
+
+| `db:get-user-from-sub sub`
+| Get the user entry the `users` table using its `sub`.
+|===
 
 === Testing
 
@@ -180,6 +188,9 @@ We are using `husky 6.x` to trigger the linting and building of the app before p
 
 |===
 | Name | Description
+
+| `NEXT_PUBLIC_FEATURE_FLAG`
+| Should be set to `false`. Used to access in development features.
 
 | `CONNECT_ACCOUNT_PORT`
 | Local port used to run the application.
@@ -256,8 +267,11 @@ We are using `husky 6.x` to trigger the linting and building of the app before p
 | `CONNECT_TEST_ACCOUNT_EMAIL`
 | Email of the Connect account that will be used for e2e tests.
 
-| `CONNECT_TEST_ACCOUNT_PASSWORD=`
+| `CONNECT_TEST_ACCOUNT_PASSWORD`
 | Password of the Connect account that will be used for e2e tests.
+
+| `PROFILE_MOCK_SERVER_URL`
+| URL of Connect.Profile mock server.
 |===
 
 
