@@ -1,3 +1,2 @@
 proxy: nginx -p ./ -c nginx.conf
 connect-account: source .env_vars && NODE_TLS_REJECT_UNAUTHORIZED=0 yarn dev
-create-dynamodb-users-table: ./bin/check-if-stack-is-up.sh && yarn db:create-users-table
