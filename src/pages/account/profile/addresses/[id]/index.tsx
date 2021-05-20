@@ -7,15 +7,12 @@ import {
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import React from "react";
-import styled from "styled-components";
 import useSWR from "swr";
 
 import { Address } from "@src/@types/profile";
-import { ButtonVariant } from "@src/components/buttons/buttons";
-import { FakeButton } from "@src/components/buttons/fake-button";
 import { Container } from "@src/components/containers/container";
-import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { Layout } from "@src/components/page-layout";
+import { AddressOverview } from "@src/components/pages/address-overview/address-overview";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
@@ -27,7 +24,7 @@ import type { GetServerSideProps } from "next";
 const AddressOverviewPage: React.FC<{ addressId: string }> = ({
   addressId,
 }) => {
-  const { error } = useSWR<{ address: Address }, Error>(
+  const { data: address, error } = useSWR<Address, Error>(
     `/api/profile/addresses/${addressId}`,
   );
 
@@ -36,22 +33,13 @@ const AddressOverviewPage: React.FC<{ addressId: string }> = ({
   }
 
   return (
-    <Layout breadcrumbs={false} title="Personal information">
+    <Layout breadcrumbs="Address" title="Personal information">
       <Container>
-        <WIP>🏗</WIP>
-        <NeutralLink href={`/account/profile/addresses/${addressId}/edit`}>
-          <FakeButton variant={ButtonVariant.PRIMARY}>
-            Update this address
-          </FakeButton>
-        </NeutralLink>
+        <AddressOverview address={address} />
       </Container>
     </Layout>
   );
 };
-
-const WIP = styled.div`
-  font-size: 20rem;
-`;
 
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
