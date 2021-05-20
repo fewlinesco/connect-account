@@ -38,7 +38,12 @@
       "quantity": 1
     }
   },
-  "addons": [],
+  "addons": [
+    {
+      "plan": "memcachedcloud:30",
+      "as": "MEMCACHED_CLIENT"
+    }
+  ],
   "buildpacks": [
     {
       "url": "heroku/nodejs"

@@ -26,6 +26,14 @@ services:
     ports:
       - "29799:55681"
 
+  memcached:
+    image: bitnami/memcached:1.6.9
+    environment:
+      MEMCACHED_USERNAME: "memcached"
+      MEMCACHED_PASSWORD: "memcached"
+    ports:
+      - "29794:11211"
+
   profile_mock_server:
     image: stoplight/prism:4
     command: -p 29712 mock --host 0.0.0.0 "/etc/connect-profile-openapi.yml"

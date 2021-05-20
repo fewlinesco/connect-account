@@ -7,6 +7,7 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
+import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React from "react";
 import useSWR from "swr";
@@ -17,12 +18,11 @@ import { Layout } from "@src/components/page-layout";
 import { ProfileOverview } from "@src/components/pages/profile-overview/profile-overview";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
+import rateLimitinConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { SWRError } from "@src/errors/errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-
-import type { GetServerSideProps } from "next";
 
 const ProfilePage: React.FC = () => {
   const router = useRouter();
@@ -60,10 +60,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     context,
     [
       tracingMiddleware(getTracer()),
-      rateLimitingMiddleware(getTracer(), logger, {
-        windowMs: 300000,
-        requestsUntilBlock: 200,
-      }),
+      rateLimitingMiddleware(getTracer(), logger, rateLimitinConfig),
       recoveryMiddleware(getTracer()),
       sentryMiddleware(getTracer()),
       errorMiddleware(getTracer()),

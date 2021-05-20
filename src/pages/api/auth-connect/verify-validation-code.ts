@@ -29,6 +29,7 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
+import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { NoDBUserFoundError } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
@@ -282,10 +283,7 @@ const handler: Handler = async (request, response) => {
 const wrappedHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
-    rateLimitingMiddleware(getTracer(), logger, {
-      windowMs: 300000,
-      requestsUntilBlock: 200,
-    }),
+    rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
     recoveryMiddleware(getTracer()),
     sentryMiddleware(getTracer()),
     errorMiddleware(getTracer()),

@@ -6,6 +6,7 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
+import type { GetServerSideProps } from "next";
 import React from "react";
 import useSWR from "swr";
 
@@ -13,12 +14,11 @@ import { Container } from "@src/components/containers/container";
 import { SetPasswordForm } from "@src/components/forms/set-password-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
+import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { verifySudoModeMiddleware } from "@src/middlewares/verify-sudo-mode-middleware";
-
-import type { GetServerSideProps } from "next";
 
 const SecurityUpdatePage: React.FC = () => {
   const { data: passwordSetData, error: passwordSetError } = useSWR<
@@ -62,10 +62,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     context,
     [
       tracingMiddleware(getTracer()),
-      rateLimitingMiddleware(getTracer(), logger, {
-        windowMs: 300000,
-        requestsUntilBlock: 200,
-      }),
+      rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
       recoveryMiddleware(getTracer()),
       sentryMiddleware(getTracer()),
       errorMiddleware(getTracer()),

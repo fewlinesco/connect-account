@@ -14,6 +14,7 @@ import { Container } from "@src/components/containers/container";
 import { AddIdentityForm } from "@src/components/forms/add-identity-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
+import rateLimitinConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
@@ -41,10 +42,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     context,
     [
       tracingMiddleware(getTracer()),
-      rateLimitingMiddleware(getTracer(), logger, {
-        windowMs: 300000,
-        requestsUntilBlock: 200,
-      }),
+      rateLimitingMiddleware(getTracer(), logger, rateLimitinConfig),
       recoveryMiddleware(getTracer()),
       sentryMiddleware(getTracer()),
       errorMiddleware(getTracer()),
