@@ -15,7 +15,7 @@ const UpdateEmailForm = (): JSX.Element => {
 
   return (
     <StoriesContainer>
-      <UpdateIdentityForm data={{ identity: emailIdentity }} />
+      <UpdateIdentityForm identity={emailIdentity} />
     </StoriesContainer>
   );
 };
@@ -31,7 +31,7 @@ const UpdatePhoneForm = (): JSX.Element => {
 
   return (
     <StoriesContainer>
-      <UpdateIdentityForm data={{ identity: phoneIdentity }} />
+      <UpdateIdentityForm identity={phoneIdentity} />
     </StoriesContainer>
   );
 };

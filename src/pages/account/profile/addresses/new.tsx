@@ -1,4 +1,3 @@
-import { HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -7,49 +6,24 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
-import { useRouter } from "next/router";
 import React from "react";
-import useSWR from "swr";
 
-import { Address, Profile } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
+import { UserAddressForm } from "@src/components/forms/profile/user-address-form";
 import { Layout } from "@src/components/page-layout";
-import { ProfileOverview } from "@src/components/pages/profile-overview/profile-overview";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
-import { SWRError } from "@src/errors/errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 import type { GetServerSideProps } from "next";
 
-const ProfilePage: React.FC = () => {
-  const router = useRouter();
-
-  const { data, error } = useSWR<
-    {
-      userProfile: Profile;
-      userAddresses: Address[];
-    },
-    SWRError
-  >(`/api/profile/get-user-profile-and-addresses`);
-
-  if (error) {
-    if (error.statusCode === HttpStatus.NOT_FOUND) {
-      router && router.push("/account/profile/user-profile/new");
-    }
-
-    throw error;
-  }
-
+const NewAddressPage: React.FC = () => {
   return (
-    <Layout
-      breadcrumbs="Basic information about you"
-      title="Personal information"
-    >
+    <Layout breadcrumbs="Address | new" title="Personal information">
       <Container>
-        <ProfileOverview data={data} />
+        <UserAddressForm isCreation={true} />
       </Container>
     </Layout>
   );
@@ -70,7 +44,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       loggingMiddleware(getTracer(), logger),
       authMiddleware(getTracer()),
     ],
-    "/account/profile",
+    "account/profile/addresses",
     () => {
       if (!configVariables.featureFlag) {
         return {
@@ -81,10 +55,12 @@ const getServerSideProps: GetServerSideProps = async (context) => {
         };
       }
 
-      return { props: {} };
+      return {
+        props: {},
+      };
     },
   );
 };
 
 export { getServerSideProps };
-export default ProfilePage;
+export default NewAddressPage;

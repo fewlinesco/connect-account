@@ -22,7 +22,7 @@ const Security: React.FC = () => {
       <SectionBox>
         <SecurityLink href={!data ? "#" : "/account/security/update"}>
           {!data ? (
-            <SkeletonTextLine fontSize={1.4} />
+            <SkeletonTextLine fontSize={1.4} width={50} />
           ) : (
             <p>{data.isPasswordSet ? "Update" : "Set"} your password</p>
           )}

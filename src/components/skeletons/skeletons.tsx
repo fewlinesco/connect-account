@@ -19,10 +19,13 @@ const SkeletonAnimation = styled.div`
   }
 `;
 
-const SkeletonTextLine = styled(SkeletonAnimation)<{ fontSize: number }>`
+const SkeletonTextLine = styled(SkeletonAnimation)<{
+  fontSize: number;
+  width: number;
+}>`
   position: relative;
   height: ${({ fontSize }) => `${fontSize}rem`};
-  width: 50%;
+  width: ${({ width }) => `${width}%`};
   background-color: ${({ theme }) => theme.colors.box};
   border-radius: ${({ theme }) => theme.radii[0]};
   overflow: hidden;

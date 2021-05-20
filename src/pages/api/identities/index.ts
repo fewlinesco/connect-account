@@ -1,10 +1,10 @@
 import {
   ConnectUnreachableError,
-  getIdentity,
+  getIdentities,
   GraphqlErrors,
-  IdentityNotFoundError,
+  IdentityTypes,
 } from "@fewlines/connect-management";
-import { getServerSideCookies, Endpoint, HttpStatus } from "@fwl/web";
+import { Endpoint, getServerSideCookies, HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -24,15 +24,14 @@ import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
-const handler: Handler = async (request, response) => {
+const index: Handler = (request, response): Promise<void> => {
   const webErrors = {
+    badRequest: ERRORS_DATA.BAD_REQUEST,
     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
-    graphqlErrors: ERRORS_DATA.GRAPHQL_ERRORS,
     connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
-    invalidQueryString: ERRORS_DATA.INVALID_QUERY_STRING,
   };
 
-  return getTracer().span("get-identity handler", async (span) => {
+  return getTracer().span("get-sorted-identities handler", async (span) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
@@ -46,44 +45,41 @@ const handler: Handler = async (request, response) => {
       return;
     }
 
-    const identityId = request.query.identityId;
+    const identities = await getIdentities(
+      configVariables.managementCredentials,
+      userCookie.sub,
+    )
+      .then((identities) => {
+        return request.query.primary && request.query.primary === "true"
+          ? identities.filter((identity) => {
+              return (
+                identity.primary &&
+                (identity.type == IdentityTypes.EMAIL.toLowerCase() ||
+                  identity.type == IdentityTypes.PHONE.toLowerCase())
+              );
+            })
+          : identities;
+      })
+      .catch((error) => {
+        span.setDisclosedAttribute("identities found", false);
+        if (error instanceof GraphqlErrors) {
+          throw webErrorFactory({
+            ...webErrors.identityNotFound,
+            parentError: error,
+          });
+        }
+        if (error instanceof ConnectUnreachableError) {
+          throw webErrorFactory({
+            ...webErrors.connectUnreachable,
+            parentError: error,
+          });
+        }
+        throw error;
+      });
 
-    if (!identityId || typeof identityId !== "string") {
-      throw webErrorFactory(webErrors.invalidQueryString);
-    }
-
-    const identity = await getIdentity(configVariables.managementCredentials, {
-      userId: userCookie.sub,
-      identityId,
-    }).catch((error) => {
-      span.setDisclosedAttribute("is Identity fetched", false);
-
-      if (error instanceof IdentityNotFoundError) {
-        throw webErrorFactory({
-          ...webErrors.identityNotFound,
-        });
-      }
-
-      if (error instanceof GraphqlErrors) {
-        throw webErrorFactory({
-          ...webErrors.graphqlErrors,
-          parentError: error,
-        });
-      }
-
-      if (error instanceof ConnectUnreachableError) {
-        throw webErrorFactory({
-          ...webErrors.connectUnreachable,
-          parentError: error,
-        });
-      }
-
-      throw error;
-    });
-
-    span.setDisclosedAttribute("is Identity fetched", true);
+    span.setDisclosedAttribute("identities found", true);
     response.statusCode = HttpStatus.OK;
-    response.json({ identity });
+    response.json(identities);
   });
 };
 
@@ -100,8 +96,8 @@ const wrappedHandler = wrapMiddlewares(
     loggingMiddleware(getTracer(), logger),
     authMiddleware(getTracer()),
   ],
-  handler,
-  "/api/identity/get-identity",
+  index,
+  "/api/identities",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

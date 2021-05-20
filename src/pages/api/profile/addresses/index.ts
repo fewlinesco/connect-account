@@ -18,20 +18,19 @@ import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
-import { getProfileAccessToken } from "@src/utils/get-profile-access-token";
+import { getProfileAndAddressAccessTokens } from "@src/utils/get-profile-and-address-access-tokens";
 
-const getHandler: Handler = async (request, response) => {
+const postHandler: Handler = async (request, response) => {
   const webErrors = {
     invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
     invalidScopes: ERRORS_DATA.INVALID_SCOPES,
-    profileDataNotFound: ERRORS_DATA.PROFILE_DATA_NOT_FOUND,
+    userProfileNotFound: ERRORS_DATA.USER_PROFILE_NOT_FOUND,
+    invalidUserProfilePayload: ERRORS_DATA.INVALID_USER_PROFILE_PAYLOAD,
     unreachable: ERRORS_DATA.UNREACHABLE,
-    invalidQueryString: ERRORS_DATA.INVALID_QUERY_STRING,
-    addressNotFound: ERRORS_DATA.ADDRESS_NOT_FOUND,
   };
 
   return getTracer().span(
-    "/api/profile/addresses/[id] getHandler",
+    "POST /api/profile/addresses handler",
     async (span) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
@@ -46,13 +45,9 @@ const getHandler: Handler = async (request, response) => {
         return;
       }
 
-      const addressId = request.query.addressId;
+      const userAddressPayload = request.body;
 
-      if (!addressId || typeof addressId !== "string") {
-        throw webErrorFactory(webErrors.invalidQueryString);
-      }
-
-      const profileAccessToken = await getProfileAccessToken(
+      const { addressAccessToken } = await getProfileAndAddressAccessTokens(
         userCookie.access_token,
       );
       span.setDisclosedAttribute(
@@ -60,13 +55,13 @@ const getHandler: Handler = async (request, response) => {
         true,
       );
 
-      const profileClient = initProfileClient(profileAccessToken);
+      const addressClient = initProfileClient(addressAccessToken);
 
-      const { data: profileAddresses } = await profileClient
-        .getAddresses()
+      const { data: createdAddress } = await addressClient
+        .createAddress(userAddressPayload)
         .catch((error) => {
           span.setDisclosedAttribute(
-            "is Connect.Profile addresses fetched",
+            "is Connect.Profile new address created",
             false,
           );
 
@@ -78,25 +73,24 @@ const getHandler: Handler = async (request, response) => {
             throw webErrorFactory(webErrors.invalidScopes);
           }
 
+          if (error.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
+            throw webErrorFactory(webErrors.invalidUserProfilePayload);
+          }
+
           throw webErrorFactory(webErrors.unreachable);
         });
-      span.setDisclosedAttribute("is Connect.Profile addresses fetched", true);
-
-      const address = profileAddresses.find(
-        (address) => address.id === addressId,
+      span.setDisclosedAttribute(
+        "is Connect.Profile new address created",
+        true,
       );
 
-      if (!address) {
-        throw webErrorFactory(webErrors.addressNotFound);
-      }
-
       response.statusCode = HttpStatus.OK;
-      response.json({ address });
+      response.json({ createdAddress });
     },
   );
 };
 
-const wrappedGetHandler = wrapMiddlewares(
+const wrappedPatchHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
     rateLimitingMiddleware(getTracer(), logger, {
@@ -109,10 +103,10 @@ const wrappedGetHandler = wrapMiddlewares(
     loggingMiddleware(getTracer(), logger),
     authMiddleware(getTracer()),
   ],
-  getHandler,
-  "GET /api/profile/addresses/[id]",
+  postHandler,
+  "POST /api/profile/addresses",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .get(wrappedGetHandler)
+  .post(wrappedPatchHandler)
   .getHandler();

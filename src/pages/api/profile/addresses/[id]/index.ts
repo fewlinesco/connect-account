@@ -21,17 +21,18 @@ import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getProfileAndAddressAccessTokens } from "@src/utils/get-profile-and-address-access-tokens";
 
-const patchHandler: Handler = async (request, response) => {
+const getHandler: Handler = async (request, response) => {
   const webErrors = {
     invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
     invalidScopes: ERRORS_DATA.INVALID_SCOPES,
-    userProfileNotFound: ERRORS_DATA.USER_PROFILE_NOT_FOUND,
-    invalidUserProfilePayload: ERRORS_DATA.INVALID_USER_PROFILE_PAYLOAD,
+    profileDataNotFound: ERRORS_DATA.PROFILE_DATA_NOT_FOUND,
     unreachable: ERRORS_DATA.UNREACHABLE,
+    invalidQueryString: ERRORS_DATA.INVALID_QUERY_STRING,
+    addressNotFound: ERRORS_DATA.ADDRESS_NOT_FOUND,
   };
 
   return getTracer().span(
-    "PATCH /api/profile/user-profile handler",
+    "GET /api/profile/addresses/[id] handler",
     async (span) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
@@ -46,9 +47,13 @@ const patchHandler: Handler = async (request, response) => {
         return;
       }
 
-      const { userProfilePayload } = request.body;
+      const addressId = request.query.id;
 
-      const { profileAccessToken } = await getProfileAndAddressAccessTokens(
+      if (!addressId || typeof addressId !== "string") {
+        throw webErrorFactory(webErrors.invalidQueryString);
+      }
+
+      const { addressAccessToken } = await getProfileAndAddressAccessTokens(
         userCookie.access_token,
       );
       span.setDisclosedAttribute(
@@ -56,13 +61,13 @@ const patchHandler: Handler = async (request, response) => {
         true,
       );
 
-      const profileClient = initProfileClient(profileAccessToken);
+      const addressClient = initProfileClient(addressAccessToken);
 
-      const { data: updatedUserProfile } = await profileClient
-        .patchProfile(userProfilePayload)
+      const { data: profileAddresses } = await addressClient
+        .getAddresses()
         .catch((error) => {
           span.setDisclosedAttribute(
-            "is Connect.Profile UserProfile updated",
+            "is Connect.Profile addresses fetched",
             false,
           );
 
@@ -74,38 +79,36 @@ const patchHandler: Handler = async (request, response) => {
             throw webErrorFactory(webErrors.invalidScopes);
           }
 
-          if (error.response.status === HttpStatus.NOT_FOUND) {
-            throw webErrorFactory(webErrors.userProfileNotFound);
-          }
-
-          if (error.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
-            throw webErrorFactory(webErrors.invalidUserProfilePayload);
-          }
-
           throw webErrorFactory(webErrors.unreachable);
         });
-      span.setDisclosedAttribute(
-        "is Connect.Profile UserProfile updated",
-        true,
+      span.setDisclosedAttribute("is Connect.Profile addresses fetched", true);
+
+      const address = profileAddresses.find(
+        (address) => address.id === addressId,
       );
 
+      if (!address) {
+        throw webErrorFactory(webErrors.addressNotFound);
+      }
+
       response.statusCode = HttpStatus.OK;
-      response.json({ updatedUserProfile });
+      response.json(address);
     },
   );
 };
 
-const postHandler: Handler = async (request, response) => {
+const patchHandler: Handler = async (request, response) => {
   const webErrors = {
     invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
     invalidScopes: ERRORS_DATA.INVALID_SCOPES,
-    userProfileNotFound: ERRORS_DATA.USER_PROFILE_NOT_FOUND,
-    invalidUserProfilePayload: ERRORS_DATA.INVALID_USER_PROFILE_PAYLOAD,
     unreachable: ERRORS_DATA.UNREACHABLE,
+    invalidQueryString: ERRORS_DATA.INVALID_QUERY_STRING,
+    addressNotFound: ERRORS_DATA.ADDRESS_NOT_FOUND,
+    invalidUserAddressPayload: ERRORS_DATA.INVALID_USER_ADDRESS_PAYLOAD,
   };
 
   return getTracer().span(
-    "POST /api/profile/user-profile handler",
+    "PATCH /api/profile/addresses/[id] handler",
     async (span) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
@@ -120,9 +123,15 @@ const postHandler: Handler = async (request, response) => {
         return;
       }
 
-      const { userProfilePayload } = request.body;
+      const addressId = request.query.id;
 
-      const { profileAccessToken } = await getProfileAndAddressAccessTokens(
+      if (!addressId || typeof addressId !== "string") {
+        throw webErrorFactory(webErrors.invalidQueryString);
+      }
+
+      const userAddressPayload = request.body;
+
+      const { addressAccessToken } = await getProfileAndAddressAccessTokens(
         userCookie.access_token,
       );
       span.setDisclosedAttribute(
@@ -130,13 +139,13 @@ const postHandler: Handler = async (request, response) => {
         true,
       );
 
-      const profileClient = initProfileClient(profileAccessToken);
+      const addressClient = initProfileClient(addressAccessToken);
 
-      const { data: createdUserProfile } = await profileClient
-        .createProfile(userProfilePayload)
+      const { data: updatedUserAddress } = await addressClient
+        .updateAddress(addressId, userAddressPayload)
         .catch((error) => {
           span.setDisclosedAttribute(
-            "is Connect.Profile UserProfile updated",
+            "is Connect.Profile address updated",
             false,
           );
 
@@ -149,22 +158,19 @@ const postHandler: Handler = async (request, response) => {
           }
 
           if (error.response.status === HttpStatus.NOT_FOUND) {
-            throw webErrorFactory(webErrors.userProfileNotFound);
+            throw webErrorFactory(webErrors.addressNotFound);
           }
 
           if (error.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
-            throw webErrorFactory(webErrors.invalidUserProfilePayload);
+            throw webErrorFactory(webErrors.invalidUserAddressPayload);
           }
 
           throw webErrorFactory(webErrors.unreachable);
         });
-      span.setDisclosedAttribute(
-        "is Connect.Profile UserProfile updated",
-        true,
-      );
+      span.setDisclosedAttribute("is Connect.Profile address updated", true);
 
       response.statusCode = HttpStatus.OK;
-      response.json({ createdUserProfile });
+      response.json({ updatedUserAddress });
     },
   );
 };
@@ -183,14 +189,14 @@ const middlewares: Middleware<NextApiRequest, NextApiResponse>[] = [
 ];
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
+  .get(
+    wrapMiddlewares(middlewares, getHandler, "GET /api/profile/addresses/[id]"),
+  )
   .patch(
     wrapMiddlewares(
       middlewares,
       patchHandler,
-      "PATCH /api/profile/user-profile",
+      "PATCH /api/profile/addresses/[id]",
     ),
-  )
-  .post(
-    wrapMiddlewares(middlewares, postHandler, "POST /api/profile/user-profile"),
   )
   .getHandler();

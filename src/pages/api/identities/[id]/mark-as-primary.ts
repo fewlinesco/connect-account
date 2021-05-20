@@ -32,7 +32,7 @@ import { generateAlertMessage } from "@src/utils/generate-alert-message";
 import { getIdentityType } from "@src/utils/get-identity-type";
 import { isMarkingIdentityAsPrimaryAuthorized } from "@src/utils/is-marking-identity-as-primary-authorized";
 
-const handler: Handler = async (request, response) => {
+const markAsPrimary: Handler = async (request, response) => {
   const webErrors = {
     badRequest: ERRORS_DATA.BAD_REQUEST,
     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
@@ -41,11 +41,7 @@ const handler: Handler = async (request, response) => {
   };
 
   return getTracer().span("mark-identity-as-primary handler", async (span) => {
-    const { identityId } = request.body;
-
-    if (!identityId) {
-      throw webErrorFactory(webErrors.invalidBody);
-    }
+    const { id: identityId } = request.query as { [key: string]: string };
 
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
@@ -102,7 +98,7 @@ const handler: Handler = async (request, response) => {
         const alertMessage =
           getIdentityType(identity.type) === IdentityTypes.EMAIL
             ? `${identity.value} is now your primary email`
-            : `${identity.value} is now your phone number`;
+            : `${identity.value} is now your primary phone number`;
 
         setAlertMessagesCookie(response, [generateAlertMessage(alertMessage)]);
 
@@ -133,7 +129,7 @@ const handler: Handler = async (request, response) => {
   });
 };
 
-const wrappedHandler = wrapMiddlewares(
+const markAsPrimaryWrappedHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
     rateLimitingMiddleware(getTracer(), logger, {
@@ -146,10 +142,10 @@ const wrappedHandler = wrapMiddlewares(
     loggingMiddleware(getTracer(), logger),
     authMiddleware(getTracer()),
   ],
-  handler,
-  "/api/identity/mark-identity-as-primary",
+  markAsPrimary,
+  "/api/identities/[id]/mark-as-primary",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .post(wrappedHandler)
+  .post(markAsPrimaryWrappedHandler)
   .getHandler();

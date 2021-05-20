@@ -1,10 +1,11 @@
 import * as Sentry from "@sentry/node";
-import type { NextPageContext } from "next";
 import NextError, { ErrorProps as NextErrorProps } from "next/error";
 import React from "react";
 
 import { ErrorFallbackComponent } from "@src/components/error-fallback-component/error-fallback-component";
 import { Layout } from "@src/components/page-layout";
+
+import type { NextPageContext } from "next";
 
 type CustomErrorComponentProps = {
   error: Error;

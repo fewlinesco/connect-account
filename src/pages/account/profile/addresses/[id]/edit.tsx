@@ -6,13 +6,12 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
-import type { GetServerSideProps } from "next";
 import React from "react";
 import useSWR from "swr";
 
 import { Address } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
-import { UpdateUserAddressForm } from "@src/components/forms/profile/update-user-address-form";
+import { UserAddressForm } from "@src/components/forms/profile/user-address-form";
 import { Layout } from "@src/components/page-layout";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
@@ -20,8 +19,10 @@ import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
+import type { GetServerSideProps } from "next";
+
 const EditAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
-  const { data, error } = useSWR<{ address: Address }, Error>(
+  const { data: address, error } = useSWR<Address, Error>(
     `/api/profile/addresses/${addressId}`,
   );
 
@@ -32,7 +33,7 @@ const EditAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
   return (
     <Layout breadcrumbs={"Address | edit"} title="Personal information">
       <Container>
-        <UpdateUserAddressForm userAddress={data ? data.address : undefined} />
+        <UserAddressForm userAddress={address ? address : undefined} />
       </Container>
     </Layout>
   );

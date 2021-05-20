@@ -99,6 +99,11 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     httpStatus: HttpStatus.UNPROCESSABLE_ENTITY,
     message: "Invalid UserProfile payload",
   },
+  INVALID_USER_ADDRESS_PAYLOAD: {
+    code: "invalid_user_address_payload",
+    httpStatus: HttpStatus.UNPROCESSABLE_ENTITY,
+    message: "Invalid UserAddress payload",
+  },
   CONNECT_UNREACHABLE: {
     code: "connect_unreachable",
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,

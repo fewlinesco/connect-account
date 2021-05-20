@@ -6,7 +6,6 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
-import type { GetServerSideProps } from "next";
 import React from "react";
 import useSWR from "swr";
 
@@ -18,6 +17,8 @@ import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { verifySudoModeMiddleware } from "@src/middlewares/verify-sudo-mode-middleware";
+
+import type { GetServerSideProps } from "next";
 
 const SecurityUpdatePage: React.FC = () => {
   const { data: passwordSetData, error: passwordSetError } = useSWR<

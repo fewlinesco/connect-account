@@ -4,7 +4,7 @@ info:
   contact:
     email: info@fewlines.co
   description: 'The application stores user profile information, it is meant to be compliant with OpenID Connect specification'
-  version: 0.2.0
+  version: 0.2.4
   title: Connect Profile
 
 tags:
@@ -12,7 +12,7 @@ tags:
     description: An API for user OpenID Connect profile storage
 
 servers:
-  - url: 'http://localhost:4008'
+  - url: 'http://localhost:21001'
 
 paths:
   /users/me/addresses:
@@ -81,6 +81,90 @@ paths:
           $ref: '#/components/responses/MissingScope'
         '404':
           $ref: '#/components/responses/AddressNotFound'
+
+  /users/me/addresses/{id}:
+      get:
+        tags:
+          - Connect Profile
+        description: Retrieve a user's address based on address ID
+        operationId: getAddress
+        security:
+          - bearer: []
+        parameters:
+          - name: id
+            in: path
+            description: the Address ID identifier of the requested Address
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            $ref: '#/components/responses/GetAddressSuccess'
+          '401':
+            $ref: '#/components/responses/EndUserUnauthorized'
+          '403':
+            $ref: '#/components/responses/MissingScope'
+          '404':
+            $ref: '#/components/responses/AddressNotFound'
+      
+      patch:
+        tags:
+          - Connect Profile
+        description: Update a user's address based on the provided address ID
+        operationId: updateAddress
+        security:
+          - bearer: []
+        parameters:
+          - name: id
+            in: path
+            description: the Address ID identifier of the requested Address
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressData'
+              examples:
+                superman:
+                  $ref: '#/components/examples/supermanAddressPayload'
+        responses:
+          '200':
+            $ref: '#/components/responses/PatchAddressSuccess'
+          '401':
+            $ref: '#/components/responses/EndUserUnauthorized'
+          '403':
+            $ref: '#/components/responses/MissingScope'
+          '404':
+            $ref: '#/components/responses/AddressNotFound'
+          '422':
+            $ref: '#/components/responses/UnprocessableEntity'
+
+      delete:
+        tags:
+          - Connect Profile
+        description: Delete a user's address based on address ID
+        operationId: deleteAddress
+        security:
+          - bearer: []
+        parameters:
+          - name: id
+            in: path
+            description: the Address ID identifier of the requested Address
+            required: true
+            schema:
+              type: string
+        responses:
+          '204':
+            description: The resource was deleted successfully.
+          '401':
+            $ref: '#/components/responses/EndUserUnauthorized'
+          '403':
+            $ref: '#/components/responses/MissingScope'
+          '404':
+            $ref: '#/components/responses/AddressNotFound'
 
   /users/me/profile:
     get:
@@ -372,6 +456,16 @@ components:
             'Superman addresses':
               $ref: '#/components/examples/supermanAddresses'
 
+    GetAddressSuccess:
+      description: Successful Get Address Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AddressResponse'
+          examples:
+            'Superman addresses':
+              $ref: '#/components/examples/supermanPrimaryAddress'
+
     CreateAddressSuccess:
       description: A successful User Address creation response
       content:
@@ -390,6 +484,16 @@ components:
             $ref: '#/components/schemas/AddressResponse'
           examples:
             "Superman's primary address":
+              $ref: '#/components/examples/supermanPrimaryAddress'
+    
+    PatchAddressSuccess:
+      description: Successful Patch User's Address Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AddressResponse'
+          examples:
+            superman:
               $ref: '#/components/examples/supermanPrimaryAddress'
 
     # PROFILE

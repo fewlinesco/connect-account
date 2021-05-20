@@ -12,6 +12,7 @@ import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { Separator } from "@src/components/separator/separator";
 import { SectionBox } from "@src/components/shadow-box/section-box";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
+import { capitalizeFirstLetter } from "@src/utils/format";
 
 const ProfileOverview: React.FC<{
   data?: {
@@ -41,49 +42,49 @@ const ProfileOverview: React.FC<{
         <Separator />
         <UserInfoSection categoryName="NAME" href="#">
           {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             `${data.userProfile.name} ${data.userProfile.middle_name} ${data.userProfile.family_name}`
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="PREFERRED USERNAME" href="#">
           {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             data.userProfile.preferred_username
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="BIRTH DATE" href="#">
           {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             data.userProfile.birthdate
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="TIME ZONE" href="#">
           {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             data.userProfile.zoneinfo
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="LOCALE" href="#">
           {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             data.userProfile.locale
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="WEBSITE" href="#">
           {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             data.userProfile.website
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="PROFILE" href="#">
           {!data ? (
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             data.userProfile.profile
           )}
@@ -98,7 +99,7 @@ const ProfileOverview: React.FC<{
       <SectionBox>
         {!data ? (
           <BoxedLink disableClick={true} href="#">
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           </BoxedLink>
         ) : (
           <UserAddresses
@@ -108,13 +109,20 @@ const ProfileOverview: React.FC<{
         )}
       </SectionBox>
       {data && data.userAddresses.length > 1 ? (
-        <Flex>
-          <ShowMoreButton
-            hideList={hideAddressList}
-            quantity={data.userAddresses.length - 1}
-            setHideList={setHideAddressList}
-          />
-        </Flex>
+        <>
+          <Flex>
+            <ShowMoreButton
+              hideList={hideAddressList}
+              quantity={data.userAddresses.length - 1}
+              setHideList={setHideAddressList}
+            />
+          </Flex>
+          <NeutralLink href="/account/profile/addresses/new">
+            <FakeButton variant={ButtonVariant.SECONDARY}>
+              + Add new address
+            </FakeButton>
+          </NeutralLink>
+        </>
       ) : null}
     </>
   );
@@ -156,13 +164,15 @@ const UserAddresses: React.FC<{
         href={`/account/profile/addresses/${primaryAddress.id}`}
       >
         <CategoryContent>
-          <CategoryName>{primaryAddress.kind}</CategoryName>
+          <CategoryName>
+            {capitalizeFirstLetter(primaryAddress.kind)}
+          </CategoryName>
           <AddressValue
             isPrimary={primaryAddress.primary}
           >{`${primaryAddress.street_address}, ${primaryAddress.street_address_2}`}</AddressValue>
           <AddressValue
             isPrimary={primaryAddress.primary}
-          >{`${primaryAddress.postal_code}, ${primaryAddress.region}, ${primaryAddress.locality}, ${primaryAddress.country}`}</AddressValue>
+          >{`${primaryAddress.postal_code}, ${primaryAddress.locality}, ${primaryAddress.region}, ${primaryAddress.country}`}</AddressValue>
         </CategoryContent>
         <RightChevron />
       </BoxedLink>
@@ -189,13 +199,15 @@ const UserAddresses: React.FC<{
                     href={`/account/profile/addresses/${id}`}
                   >
                     <CategoryContent>
-                      <CategoryName>{kind}</CategoryName>
+                      <CategoryName>{capitalizeFirstLetter(kind)}</CategoryName>
+                      <AddressValue isPrimary={primary}>
+                        {street_address_2
+                          ? `${street_address}, ${street_address_2}`
+                          : street_address}
+                      </AddressValue>
                       <AddressValue
                         isPrimary={primary}
-                      >{`${street_address}, ${street_address_2}`}</AddressValue>
-                      <AddressValue
-                        isPrimary={primary}
-                      >{`${postal_code}, ${region}, ${locality}, ${country}`}</AddressValue>
+                      >{`${postal_code}, ${locality}, ${region}, ${country}`}</AddressValue>
                     </CategoryContent>
                     <RightChevron />
                   </BoxedLink>
@@ -262,7 +274,8 @@ const AddressValue = styled.p<{ isPrimary: boolean }>`
   width: 90%;
   line-height: ${({ theme }) => theme.lineHeights.copy};
 
-  ${({ isPrimary, theme }) => isPrimary && theme.fontWeights.semibold}
+  font-weight: ${({ isPrimary, theme }) =>
+    isPrimary && theme.fontWeights.semibold};
 `;
 
 export { ProfileOverview };

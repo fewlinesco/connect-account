@@ -6,19 +6,20 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
-import type { GetServerSideProps } from "next";
 import React from "react";
 import useSWR from "swr";
 
 import { Address, Profile } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
-import { UpdateUserProfileForm } from "@src/components/forms/profile/update-user-profile-form";
+import { UserProfileForm } from "@src/components/forms/profile/user-profile-form";
 import { Layout } from "@src/components/page-layout";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+
+import type { GetServerSideProps } from "next";
 
 const UpdateUserProfilePage: React.FC = () => {
   const { data, error } = useSWR<
@@ -36,7 +37,7 @@ const UpdateUserProfilePage: React.FC = () => {
   return (
     <Layout breadcrumbs={"Profile | edit"} title="Personal information">
       <Container>
-        <UpdateUserProfileForm userProfileData={data && data.userProfile} />
+        <UserProfileForm userProfileData={data && data.userProfile} />
       </Container>
     </Layout>
   );

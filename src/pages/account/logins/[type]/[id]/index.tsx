@@ -7,7 +7,6 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
-import type { GetServerSideProps } from "next";
 import React from "react";
 import useSWR from "swr";
 
@@ -21,19 +20,21 @@ import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
+import type { GetServerSideProps } from "next";
+
 const IdentityOverviewPage: React.FC<{
   identityId: string;
 }> = ({ identityId }) => {
-  const { data, error } = useSWR<{ identity: Identity }, SWRError>(
-    `/api/identity/get-identity?identityId=${identityId}`,
+  const { data: identity, error } = useSWR<Identity, SWRError>(
+    `/api/identities/${identityId}`,
   );
 
   if (error) {
     throw error;
   }
 
-  const breadcrumbs = data
-    ? getIdentityType(data.identity.type) === IdentityTypes.EMAIL
+  const breadcrumbs = identity
+    ? getIdentityType(identity.type) === IdentityTypes.EMAIL
       ? "Email address"
       : "Phone number"
     : "";
@@ -41,7 +42,7 @@ const IdentityOverviewPage: React.FC<{
   return (
     <Layout breadcrumbs={breadcrumbs} title="Logins">
       <Container>
-        <IdentityOverview data={data} />
+        <IdentityOverview identity={identity} />
       </Container>
     </Layout>
   );

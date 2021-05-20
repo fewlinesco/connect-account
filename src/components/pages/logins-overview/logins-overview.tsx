@@ -1,3 +1,4 @@
+import { Identity } from "@fewlines/connect-management";
 import React from "react";
 import styled from "styled-components";
 import useSWR from "swr";
@@ -12,9 +13,9 @@ import {
   PhoneSection,
   SocialSection,
 } from "./logins-overview-sections";
-import { SortedIdentities } from "@src/@types/sorted-identities";
 import { BoxedLink } from "@src/components/boxed-link/boxed-link";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
+import { sortIdentities } from "@src/utils/sort-identities";
 
 const IDENTITIES_SECTION_CONTENT = {
   EMAIL: {
@@ -37,35 +38,36 @@ const LoginsOverview: React.FC = () => {
   const [hideEmailList, setHideEmailList] = React.useState<boolean>(true);
   const [hidePhoneList, setHidePhoneList] = React.useState<boolean>(true);
 
-  const { data, error } = useSWR<{ sortedIdentities: SortedIdentities }, Error>(
-    "/api/identity/get-sorted-identities",
-  );
+  const { data: identities, error } =
+    useSWR<Identity[], Error>("/api/identities");
 
   if (error) {
     throw error;
   }
+
+  const sortedIdentities = sortIdentities(identities || []);
 
   return (
     <>
       <Timeline />
       <h2>{IDENTITIES_SECTION_CONTENT.EMAIL.title}</h2>
       <SectionBox>
-        {!data ? (
+        {!identities ? (
           <BoxedLink disableClick={true} href="#">
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           </BoxedLink>
         ) : (
           <EmailSection
-            identityList={data.sortedIdentities.emailIdentities}
+            identityList={sortedIdentities.emailIdentities}
             hideEmailList={hideEmailList}
           />
         )}
       </SectionBox>
-      {data && data.sortedIdentities.emailIdentities.length > 1 ? (
+      {identities && sortedIdentities.emailIdentities.length > 1 ? (
         <Flex>
           <ShowMoreButton
             hideList={hideEmailList}
-            quantity={data.sortedIdentities.emailIdentities.length - 1}
+            quantity={sortedIdentities.emailIdentities.length - 1}
             setHideList={setHideEmailList}
           />
         </Flex>
@@ -78,22 +80,22 @@ const LoginsOverview: React.FC = () => {
       <Timeline />
       <h2>{IDENTITIES_SECTION_CONTENT.PHONE.title}</h2>
       <SectionBox>
-        {!data ? (
+        {!identities ? (
           <BoxedLink disableClick={true} href="#">
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           </BoxedLink>
         ) : (
           <PhoneSection
-            identityList={data.sortedIdentities.phoneIdentities}
+            identityList={sortedIdentities.phoneIdentities}
             hideEmailList={hidePhoneList}
           />
         )}
       </SectionBox>
-      {data && data.sortedIdentities.phoneIdentities.length > 1 ? (
+      {identities && sortedIdentities.phoneIdentities.length > 1 ? (
         <Flex>
           <ShowMoreButton
             hideList={hidePhoneList}
-            quantity={data.sortedIdentities.phoneIdentities.length - 1}
+            quantity={sortedIdentities.phoneIdentities.length - 1}
             setHideList={setHidePhoneList}
           />
         </Flex>
@@ -106,14 +108,12 @@ const LoginsOverview: React.FC = () => {
       <TimelineEnd />
       <h2>{IDENTITIES_SECTION_CONTENT.SOCIAL.title}</h2>
       <SectionBox>
-        {!data ? (
+        {!identities ? (
           <BoxedLink disableClick={true} href="#">
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           </BoxedLink>
         ) : (
-          <SocialSection
-            identityList={data.sortedIdentities.socialIdentities}
-          />
+          <SocialSection identityList={sortedIdentities.socialIdentities} />
         )}
       </SectionBox>
     </>
