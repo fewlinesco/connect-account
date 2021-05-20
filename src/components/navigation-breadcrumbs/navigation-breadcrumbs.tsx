@@ -8,7 +8,7 @@ const NavigationBreadcrumbs: React.FC<{
   if (breadcrumbs === "") {
     return (
       <h3>
-        <SkeletonTextLine fontSize={1.4} />
+        <SkeletonTextLine fontSize={1.4} width={40} />
       </h3>
     );
   }

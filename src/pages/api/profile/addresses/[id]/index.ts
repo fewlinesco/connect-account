@@ -92,7 +92,7 @@ const getHandler: Handler = async (request, response) => {
       }
 
       response.statusCode = HttpStatus.OK;
-      response.json({ address });
+      response.json(address);
     },
   );
 };

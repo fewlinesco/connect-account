@@ -39,7 +39,7 @@ const UpdateIdentityForm: React.FC<{
       <Box>
         <Value>
           {!identity ? (
-            <SkeletonTextLine fontSize={1.6} />
+            <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             <p>{identity.value}</p>
           )}

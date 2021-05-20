@@ -23,7 +23,7 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import type { GetServerSideProps } from "next";
 
 const EditAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
-  const { data, error } = useSWR<{ address: Address }, Error>(
+  const { data: address, error } = useSWR<Address, Error>(
     `/api/profile/addresses/${addressId}`,
   );
 
@@ -34,7 +34,7 @@ const EditAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
   return (
     <Layout breadcrumbs={"Address | edit"} title="Personal information">
       <Container>
-        <UserAddressForm userAddress={data ? data.address : undefined} />
+        <UserAddressForm userAddress={address ? address : undefined} />
       </Container>
     </Layout>
   );

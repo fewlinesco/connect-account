@@ -2,7 +2,7 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import { SWRConfig } from "swr";
 
-import { render, screen } from "../config/testing-library-config";
+import { render, screen, waitFor } from "../config/testing-library-config";
 import * as mockAddresses from "../mocks/addresses";
 import EditAddressPage from "@src/pages/account/profile/addresses/[id]/edit";
 
@@ -55,10 +55,17 @@ describe("EditAddressPage", () => {
       screen.getByRole("button", { name: "Update my address" }),
     ).toHaveAttribute("type", "submit");
 
-    expect(screen.getByRole("link", { name: "Cancel" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Cancel" })).toHaveAttribute(
-      "href",
-      `/account/profile/addresses/${mockAddresses.primaryAddress.id}`,
-    );
+    expect(
+      await screen.findByRole("link", { name: "Cancel" }),
+    ).toBeInTheDocument();
+
+    waitFor(async () => {
+      expect(
+        await screen.findByRole("link", { name: "Cancel" }),
+      ).toHaveAttribute(
+        "href",
+        `/account/profile/addresses/${mockAddresses.primaryAddress.id}`,
+      );
+    });
   });
 });
