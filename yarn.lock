@@ -1881,10 +1881,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fewlines/connect-client@0.4.6":
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/@fewlines/connect-client/-/connect-client-0.4.6.tgz#6cdb42f882afb31a7599db09b85a2a704d4bc5cb"
-  integrity sha512-KaPMPGr4yoexNk4mgg+KWzxKDmytNNs7YJljtXj3xJx3uCLPch/qKWlyfB23Pq4JZ9F1QvLY8vIBUWWZoxQ31A==
+"@fewlines/connect-client@0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@fewlines/connect-client/-/connect-client-0.5.0.tgz#7397dfeb0c8b812cde4a5e1413a9b34cbe72f044"
+  integrity sha512-VhU4kBRmfntYjnpi8OKZvPim4p3mQBET2uF0AA2r1AX4L/YcCtg2wwxHiy39oPeCtDVp6Rp0E1/5G442k4uCYg==
   dependencies:
     jsonwebtoken "8.5.1"
     node-fetch "2.6.1"
