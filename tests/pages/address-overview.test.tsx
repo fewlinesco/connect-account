@@ -61,7 +61,7 @@ describe("AddressOverviewPage", () => {
   });
 
   it("should display the update button", async () => {
-    expect.assertions(2);
+    expect.assertions(1);
 
     render(
       <SWRConfig
@@ -74,11 +74,6 @@ describe("AddressOverviewPage", () => {
       </SWRConfig>,
     );
 
-    expect(
-      await screen.findByRole("link", {
-        name: /Update this address/i,
-      }),
-    ).toBeInTheDocument();
     expect(
       await screen.findByRole("link", {
         name: /Update this address/i,
