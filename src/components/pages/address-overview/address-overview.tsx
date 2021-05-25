@@ -4,8 +4,12 @@ import styled from "styled-components";
 import { Address } from "@src/@types/profile";
 import { PrimaryBadge } from "@src/components/badges/badges";
 import { Box } from "@src/components/box/box";
-import { ButtonVariant } from "@src/components/buttons/buttons";
+import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
+import {
+  ConfirmationBox,
+  useConfirmationBox,
+} from "@src/components/confirmation-box/confirmation-box";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 import {
@@ -15,6 +19,13 @@ import {
 } from "@src/utils/format";
 
 const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
+  const {
+    confirmationBoxOpen,
+    preventAnimation,
+    setConfirmationBoxOpen,
+    setPreventAnimation,
+  } = useConfirmationBox();
+
   return (
     <>
       <Box>
@@ -41,6 +52,46 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
           Update this address
         </FakeButton>
       </NeutralLink>
+      <Button
+        type="button"
+        variant={ButtonVariant.SECONDARY}
+        onClick={() => {
+          setPreventAnimation(false);
+          setConfirmationBoxOpen(true);
+        }}
+      >
+        Use this address as my main address
+      </Button>
+
+      <ConfirmationBox
+        open={confirmationBoxOpen}
+        setOpen={setConfirmationBoxOpen}
+        preventAnimation={preventAnimation}
+      >
+        <>
+          <p>You are about to set this address as main.</p>
+
+          <Button
+            type="button"
+            variant={ButtonVariant.PRIMARY}
+            onClick={() => {
+              alert("DONE");
+            }}
+          >
+            Confirm
+          </Button>
+
+          <Button
+            type="button"
+            variant={ButtonVariant.SECONDARY}
+            onClick={() => {
+              setConfirmationBoxOpen(false);
+            }}
+          >
+            Cancel
+          </Button>
+        </>
+      </ConfirmationBox>
     </>
   );
 };

@@ -12,6 +12,24 @@ interface ConfirmationBoxProps {
   children: JSX.Element;
 }
 
+const useConfirmationBox = (): {
+  confirmationBoxOpen: boolean;
+  preventAnimation: boolean;
+  setConfirmationBoxOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setPreventAnimation: React.Dispatch<React.SetStateAction<boolean>>;
+} => {
+  const [confirmationBoxOpen, setConfirmationBoxOpen] =
+    React.useState<boolean>(false);
+  const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
+
+  return {
+    confirmationBoxOpen,
+    preventAnimation,
+    setConfirmationBoxOpen,
+    setPreventAnimation,
+  };
+};
+
 const ConfirmationBox: React.FC<ConfirmationBoxProps> = ({
   open,
   setOpen,
@@ -62,6 +80,13 @@ const Box = styled.div<Pick<ConfirmationBoxProps, "open" | "preventAnimation">>`
     border-radius: 0;
   }
 
+  p {
+    margin: 0 0 ${({ theme }) => theme.spaces.xs};
+    line-height: ${({ theme }) => theme.lineHeights.copy};
+    text-align: center;
+    word-break: break-word;
+  }
+
   .cross {
     position: absolute;
     top: ${({ theme }) => theme.spaces.xs};
@@ -79,4 +104,4 @@ const Box = styled.div<Pick<ConfirmationBoxProps, "open" | "preventAnimation">>`
   ${({ open }) => !open && `visibility: hidden;`};
 `;
 
-export { ConfirmationBox };
+export { ConfirmationBox, useConfirmationBox };
