@@ -12,7 +12,11 @@ import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { Separator } from "@src/components/separator/separator";
 import { SectionBox } from "@src/components/shadow-box/section-box";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
-import { capitalizeFirstLetter } from "@src/utils/format";
+import {
+  capitalizeFirstLetter,
+  formatOtherAddressFieldsToDisplay,
+  formatStreetAddressToDisplay,
+} from "@src/utils/format";
 
 const ProfileOverview: React.FC<{
   data?: {
@@ -109,20 +113,20 @@ const ProfileOverview: React.FC<{
         )}
       </SectionBox>
       {data && data.userAddresses.length > 1 ? (
-        <>
-          <Flex>
-            <ShowMoreButton
-              hideList={hideAddressList}
-              quantity={data.userAddresses.length - 1}
-              setHideList={setHideAddressList}
-            />
-          </Flex>
-          <NeutralLink href="/account/profile/addresses/new">
-            <FakeButton variant={ButtonVariant.SECONDARY}>
-              + Add new address
-            </FakeButton>
-          </NeutralLink>
-        </>
+        <Flex>
+          <ShowMoreButton
+            hideList={hideAddressList}
+            quantity={data.userAddresses.length - 1}
+            setHideList={setHideAddressList}
+          />
+        </Flex>
+      ) : null}
+      {data ? (
+        <NeutralLink href="/account/profile/addresses/new">
+          <FakeButton variant={ButtonVariant.SECONDARY}>
+            + Add new address
+          </FakeButton>
+        </NeutralLink>
       ) : null}
     </>
   );
@@ -167,54 +171,41 @@ const UserAddresses: React.FC<{
           <CategoryName>
             {capitalizeFirstLetter(primaryAddress.kind)}
           </CategoryName>
-          <AddressValue
-            isPrimary={primaryAddress.primary}
-          >{`${primaryAddress.street_address}, ${primaryAddress.street_address_2}`}</AddressValue>
-          <AddressValue
-            isPrimary={primaryAddress.primary}
-          >{`${primaryAddress.postal_code}, ${primaryAddress.locality}, ${primaryAddress.region}, ${primaryAddress.country}`}</AddressValue>
+          <AddressValue isPrimary={primaryAddress.primary}>
+            {formatStreetAddressToDisplay(primaryAddress)}
+          </AddressValue>
+          <AddressValue isPrimary={primaryAddress.primary}>
+            {formatOtherAddressFieldsToDisplay(primaryAddress)}
+          </AddressValue>
         </CategoryContent>
         <RightChevron />
       </BoxedLink>
       {!hideAddressList && addressList.length > 0 ? (
         <>
-          {secondaryAddresses.map(
-            ({
-              id,
-              sub,
-              street_address,
-              street_address_2,
-              locality,
-              region,
-              postal_code,
-              country,
-              kind,
-              primary,
-            }) => {
-              return (
-                <React.Fragment key={id + sub}>
-                  <Separator />
-                  <BoxedLink
-                    disableClick={false}
-                    href={`/account/profile/addresses/${id}`}
-                  >
-                    <CategoryContent>
-                      <CategoryName>{capitalizeFirstLetter(kind)}</CategoryName>
-                      <AddressValue isPrimary={primary}>
-                        {street_address_2
-                          ? `${street_address}, ${street_address_2}`
-                          : street_address}
-                      </AddressValue>
-                      <AddressValue
-                        isPrimary={primary}
-                      >{`${postal_code}, ${locality}, ${region}, ${country}`}</AddressValue>
-                    </CategoryContent>
-                    <RightChevron />
-                  </BoxedLink>
-                </React.Fragment>
-              );
-            },
-          )}
+          {secondaryAddresses.map((address) => {
+            return (
+              <React.Fragment key={address.id + address.sub}>
+                <Separator />
+                <BoxedLink
+                  disableClick={false}
+                  href={`/account/profile/addresses/${address.id}`}
+                >
+                  <CategoryContent>
+                    <CategoryName>
+                      {capitalizeFirstLetter(address.kind)}
+                    </CategoryName>
+                    <AddressValue isPrimary={address.primary}>
+                      {formatStreetAddressToDisplay(address)}
+                    </AddressValue>
+                    <AddressValue isPrimary={address.primary}>
+                      {formatOtherAddressFieldsToDisplay(address)}
+                    </AddressValue>
+                  </CategoryContent>
+                  <RightChevron />
+                </BoxedLink>
+              </React.Fragment>
+            );
+          })}
         </>
       ) : null}
     </>

@@ -110,13 +110,19 @@ const UserProfileForm: React.FC<{
             userProfile.birthdate !== "" ? userProfile.birthdate : undefined
           }
           onChange={(date) => {
+            if (date !== null) {
+              const fullISODate = date.toISOString();
+              const formattedISODate = fullISODate.slice(
+                0,
+                fullISODate.indexOf("T"),
+              );
+              setUserProfile({ ...userProfile, birthdate: formattedISODate });
+            }
+
             setUserProfile((prevState) => {
               return {
                 ...userProfile,
-                birthdate:
-                  date !== null
-                    ? date.toLocaleDateString("en-EN")
-                    : prevState.birthdate,
+                birthdate: prevState.birthdate,
               };
             });
           }}
