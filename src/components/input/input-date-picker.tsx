@@ -20,7 +20,7 @@ const InputDatePicker: React.FC<InputDatePickerProps> = ({
       <DatePicker
         selected={selected ? new Date(selected) : new Date()}
         onChange={onChange}
-        dateFormat={"yyyy/MM/dd"}
+        dateFormat={"yyyy-MM-dd"}
         maxDate={new Date()}
         showMonthDropdown
         showYearDropdown
