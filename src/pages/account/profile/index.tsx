@@ -40,8 +40,6 @@ const ProfilePage: React.FC = () => {
     if (error.statusCode === HttpStatus.NOT_FOUND) {
       router && router.push("/account/profile/user-profile/new");
     }
-
-    throw error;
   }
 
   return (
