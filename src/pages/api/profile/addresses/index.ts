@@ -26,7 +26,7 @@ const postHandler: Handler = async (request, response) => {
     invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
     invalidScopes: ERRORS_DATA.INVALID_SCOPES,
     userProfileNotFound: ERRORS_DATA.USER_PROFILE_NOT_FOUND,
-    invalidUserProfilePayload: ERRORS_DATA.INVALID_USER_PROFILE_PAYLOAD,
+    invalidUserAddressPayload: ERRORS_DATA.INVALID_USER_ADDRESS_PAYLOAD,
     unreachable: ERRORS_DATA.UNREACHABLE,
   };
 
@@ -75,7 +75,7 @@ const postHandler: Handler = async (request, response) => {
           }
 
           if (error.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
-            throw webErrorFactory(webErrors.invalidUserProfilePayload);
+            throw webErrorFactory(webErrors.invalidUserAddressPayload);
           }
 
           throw webErrorFactory(webErrors.unreachable);
@@ -91,7 +91,7 @@ const postHandler: Handler = async (request, response) => {
   );
 };
 
-const wrappedPatchHandler = wrapMiddlewares(
+const wrappedPostHandler = wrapMiddlewares(
   [
     tracingMiddleware(getTracer()),
     rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
@@ -106,5 +106,5 @@ const wrappedPatchHandler = wrapMiddlewares(
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .post(wrappedPatchHandler)
+  .post(wrappedPostHandler)
   .getHandler();

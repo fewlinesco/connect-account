@@ -1,4 +1,7 @@
-import { CreateTableCommand } from "@aws-sdk/client-dynamodb";
+import {
+  CreateTableCommand,
+  ListTablesCommand,
+} from "@aws-sdk/client-dynamodb";
 
 import { configVariables } from "../../src/configs/config-variables";
 import { dynamoDbClient } from "../../src/configs/db-client";
@@ -15,6 +18,14 @@ const usersTableSchema = {
 
 async function createUsersTable(): Promise<void> {
   try {
+    const listTable = await dynamoDbClient.send(new ListTablesCommand({}));
+
+    if (listTable.TableNames?.includes(usersTableSchema.TableName)) {
+      return console.log(
+        `Table '${usersTableSchema.TableName}' already created.`,
+      );
+    }
+
     const data = await dynamoDbClient.send(
       new CreateTableCommand(usersTableSchema),
     );

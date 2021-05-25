@@ -44,25 +44,37 @@ const UserAddressForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
+          const addressPayload = {
+            street_address: address.street_address,
+            locality: address.locality,
+            region: address.region,
+            postal_code: address.postal_code,
+            country: address.country,
+            kind: address.kind,
+            street_address_2: address.street_address_2,
+          };
+
           if (isCreation) {
-            await fetchJson("/api/profile/addresses", "POST", address).then(
-              async (response) => {
-                const parsedResponse = await response.json();
+            await fetchJson(
+              "/api/profile/addresses",
+              "POST",
+              addressPayload,
+            ).then(async (response) => {
+              const parsedResponse = await response.json();
 
-                if ("createdAddress" in parsedResponse) {
-                  router && router.push("/account/profile");
-                  return;
-                }
+              if ("createdAddress" in parsedResponse) {
+                router && router.push("/account/profile");
+                return;
+              }
 
-                throw new Error("Something went wrong");
-              },
-            );
+              throw new Error("Something went wrong");
+            });
           }
 
           await fetchJson(
             `/api/profile/addresses/${address.id}`,
             "PATCH",
-            address,
+            addressPayload,
           ).then(async (response) => {
             const parsedResponse = await response.json();
 

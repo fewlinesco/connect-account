@@ -13,7 +13,7 @@ services:
       - "dynamodb-local"
     volumes:
       - ./.local-dynamodb-credential:/root/.aws/credentials
-    restart: on-failure:10
+    restart: on-failure:5
     command: >
       dynamodb create-table
       --region eu-west-3 --endpoint-url http://dynamodb-local:8000
