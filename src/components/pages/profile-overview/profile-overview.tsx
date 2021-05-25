@@ -19,11 +19,9 @@ import {
 } from "@src/utils/format";
 
 const ProfileOverview: React.FC<{
-  data?: {
-    userProfile: Profile;
-    userAddresses: Address[];
-  };
-}> = ({ data }) => {
+  userProfile?: Profile;
+  userAddresses?: Address[];
+}> = ({ userProfile, userAddresses }) => {
   const [hideAddressList, setHideAddressList] = React.useState<boolean>(true);
 
   return (
@@ -32,12 +30,12 @@ const ProfileOverview: React.FC<{
       <SectionBox>
         <BoxedLink disableClick={false} href="#">
           <Flex>
-            {!data ? (
+            {!userProfile ? (
               <DefaultProfilePictureIconWrapper>
                 <DefaultProfilePictureIcon />
               </DefaultProfilePictureIconWrapper>
             ) : (
-              <UserPicture src={data.userProfile.picture} alt="user" />
+              <UserPicture src={userProfile.picture} alt="user" />
             )}
             <PictureCategoryName>PROFILE PICTURE</PictureCategoryName>
           </Flex>
@@ -45,52 +43,52 @@ const ProfileOverview: React.FC<{
         </BoxedLink>
         <Separator />
         <UserInfoSection categoryName="NAME" href="#">
-          {!data ? (
+          {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
-            `${data.userProfile.name} ${data.userProfile.middle_name} ${data.userProfile.family_name}`
+            `${userProfile.name} ${userProfile.middle_name} ${userProfile.family_name}`
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="PREFERRED USERNAME" href="#">
-          {!data ? (
+          {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
-            data.userProfile.preferred_username
+            userProfile.preferred_username
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="BIRTH DATE" href="#">
-          {!data ? (
+          {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
-            data.userProfile.birthdate
+            userProfile.birthdate
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="TIME ZONE" href="#">
-          {!data ? (
+          {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
-            data.userProfile.zoneinfo
+            userProfile.zoneinfo
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="LOCALE" href="#">
-          {!data ? (
+          {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
-            data.userProfile.locale
+            userProfile.locale
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="WEBSITE" href="#">
-          {!data ? (
+          {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
-            data.userProfile.website
+            userProfile.website
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="PROFILE" href="#">
-          {!data ? (
+          {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
-            data.userProfile.profile
+            userProfile.profile
           )}
         </UserInfoSection>
       </SectionBox>
@@ -101,27 +99,27 @@ const ProfileOverview: React.FC<{
       </NeutralLink>
       <h2>Addresses</h2>
       <SectionBox>
-        {!data ? (
+        {!userAddresses ? (
           <BoxedLink disableClick={true} href="#">
             <SkeletonTextLine fontSize={1.6} width={50} />
           </BoxedLink>
         ) : (
           <UserAddresses
             hideAddressList={hideAddressList}
-            addressList={data.userAddresses}
+            addressList={userAddresses}
           />
         )}
       </SectionBox>
-      {data && data.userAddresses.length > 1 ? (
+      {userAddresses && userAddresses.length > 1 ? (
         <Flex>
           <ShowMoreButton
             hideList={hideAddressList}
-            quantity={data.userAddresses.length - 1}
+            quantity={userAddresses.length - 1}
             setHideList={setHideAddressList}
           />
         </Flex>
       ) : null}
-      {data ? (
+      {userAddresses ? (
         <NeutralLink href="/account/profile/addresses/new">
           <FakeButton variant={ButtonVariant.SECONDARY}>
             + Add new address

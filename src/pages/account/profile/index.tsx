@@ -7,7 +7,6 @@ import {
   rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
-import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React from "react";
 import useSWR from "swr";
@@ -24,21 +23,29 @@ import { SWRError } from "@src/errors/errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
+import type { GetServerSideProps } from "next";
+
 const ProfilePage: React.FC = () => {
   const router = useRouter();
 
-  const { data, error } = useSWR<
-    {
-      userProfile: Profile;
-      userAddresses: Address[];
-    },
+  const { data: userProfile, error: userProfileError } = useSWR<
+    Profile,
     SWRError
-  >(`/api/profile/get-user-profile-and-addresses`);
+  >(`/api/profile/user-profile`);
 
-  if (error) {
-    if (error.statusCode === HttpStatus.NOT_FOUND) {
+  if (userProfileError) {
+    if (userProfileError.statusCode === HttpStatus.NOT_FOUND) {
       router && router.push("/account/profile/user-profile/new");
     }
+  }
+
+  const { data: userAddress, error: userAddressError } = useSWR<
+    Address[],
+    SWRError
+  >(`/api/profile/addresses`);
+
+  if (userAddressError) {
+    throw userAddressError;
   }
 
   return (
@@ -47,7 +54,10 @@ const ProfilePage: React.FC = () => {
       title="Personal information"
     >
       <Container>
-        <ProfileOverview data={data} />
+        <ProfileOverview
+          userProfile={userProfile}
+          userAddresses={userAddress}
+        />
       </Container>
     </Layout>
   );
