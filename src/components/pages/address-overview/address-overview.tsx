@@ -8,7 +8,11 @@ import { ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
-import { capitalizeFirstLetter } from "@src/utils/format";
+import {
+  capitalizeFirstLetter,
+  formatOtherAddressFieldsToDisplay,
+  formatStreetAddressToDisplay,
+} from "@src/utils/format";
 
 const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
   return (
@@ -17,14 +21,10 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
         {address ? (
           <>
             <CategoryName>{capitalizeFirstLetter(address.kind)}</CategoryName>
-            <AddressValue>
-              {address.street_address_2
-                ? `${address.street_address}, ${address.street_address_2}`
-                : address.street_address}
+            <AddressValue>{formatStreetAddressToDisplay(address)}</AddressValue>
+            <AddressValue isPrimary={address.primary}>
+              {formatOtherAddressFieldsToDisplay(address)}
             </AddressValue>
-            <AddressValue
-              isPrimary={address.primary}
-            >{`${address.postal_code}, ${address.locality}, ${address.region}, ${address.country}`}</AddressValue>
             {address.primary ? <PrimaryBadge /> : null}
           </>
         ) : (

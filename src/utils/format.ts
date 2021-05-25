@@ -1,3 +1,5 @@
+import { Address } from "@src/@types/profile";
+
 function capitalizeFirstLetter(word: string): string {
   const normalizedWord = word.toLocaleLowerCase();
   return normalizedWord.charAt(0).toLocaleUpperCase() + normalizedWord.slice(1);
@@ -28,4 +30,37 @@ function formatSpecialSocialIdentities(
   throw new Error("Wrong social identity");
 }
 
-export { capitalizeFirstLetter, formatSpecialSocialIdentities };
+function formatStreetAddressToDisplay(address: Address): string {
+  return address.street_address_2
+    ? `${address.street_address}, ${address.street_address_2}`
+    : address.street_address;
+}
+
+function formatOtherAddressFieldsToDisplay(address: Address): string {
+  const otherFields = [];
+
+  if (address.postal_code) {
+    otherFields.push(address.postal_code);
+  }
+
+  if (address.locality) {
+    otherFields.push(address.locality);
+  }
+
+  if (address.region) {
+    otherFields.push(address.region);
+  }
+
+  if (address.country) {
+    otherFields.push(address.country);
+  }
+
+  return otherFields.join(", ");
+}
+
+export {
+  capitalizeFirstLetter,
+  formatSpecialSocialIdentities,
+  formatStreetAddressToDisplay,
+  formatOtherAddressFieldsToDisplay,
+};
