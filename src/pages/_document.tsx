@@ -1,13 +1,12 @@
 import * as Sentry from "@sentry/node";
-import Document, { Html, Main, Head, NextScript } from "next/document";
-import React from "react";
-import { ServerStyleSheet } from "styled-components";
-
 import type { AppProps } from "next/app";
 import type {
   AppType,
   DocumentInitialProps,
 } from "next/dist/next-server/lib/utils";
+import Document, { Html, Main, Head, NextScript } from "next/document";
+import React from "react";
+import { ServerStyleSheet } from "styled-components";
 
 process.on("unhandledRejection", (error: Error): void => {
   Sentry.captureException(error);
