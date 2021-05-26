@@ -236,7 +236,7 @@ const deleteHandler: Handler = async (request, response) => {
 
       span.setDisclosedAttribute("is Connect.Profile address deleted", true);
 
-      response.statusCode = HttpStatus.ACCEPTED;
+      response.statusCode = HttpStatus.NO_CONTENT;
       response.end();
     },
   );
