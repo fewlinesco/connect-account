@@ -175,6 +175,74 @@ const patchHandler: Handler = async (request, response) => {
   );
 };
 
+const deleteHandler: Handler = async (request, response) => {
+  const webErrors = {
+    invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
+    invalidScopes: ERRORS_DATA.INVALID_SCOPES,
+    profileDataNotFound: ERRORS_DATA.PROFILE_DATA_NOT_FOUND,
+    unreachable: ERRORS_DATA.UNREACHABLE,
+    invalidQueryString: ERRORS_DATA.INVALID_QUERY_STRING,
+    addressNotFound: ERRORS_DATA.ADDRESS_NOT_FOUND,
+  };
+
+  return getTracer().span(
+    "DELETE /api/profile/addresses/[id] handler",
+    async (span) => {
+      const userCookie = await getServerSideCookies<UserCookie>(request, {
+        cookieName: "user-cookie",
+        isCookieSealed: true,
+        cookieSalt: configVariables.cookieSalt,
+      });
+
+      if (!userCookie) {
+        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+        response.setHeader("location", "/");
+        response.end();
+        return;
+      }
+
+      const addressId = request.query.id;
+
+      if (!addressId || typeof addressId !== "string") {
+        throw webErrorFactory(webErrors.invalidQueryString);
+      }
+
+      const { addressAccessToken } = await getProfileAndAddressAccessTokens(
+        userCookie.access_token,
+      );
+      span.setDisclosedAttribute(
+        "is Connect.Profile access token available",
+        true,
+      );
+
+      const addressClient = initProfileClient(addressAccessToken);
+
+      await addressClient.deleteAddress(addressId).catch((error) => {
+        span.setDisclosedAttribute("is Connect.Profile address deleted", false);
+
+        if (error.response.status === HttpStatus.UNAUTHORIZED) {
+          throw webErrorFactory(webErrors.invalidProfileToken);
+        }
+
+        if (error.response.status === HttpStatus.FORBIDDEN) {
+          throw webErrorFactory(webErrors.invalidScopes);
+        }
+
+        if (error.response.status === HttpStatus.NOT_FOUND) {
+          throw webErrorFactory(webErrors.addressNotFound);
+        }
+
+        throw webErrorFactory(webErrors.unreachable);
+      });
+
+      span.setDisclosedAttribute("is Connect.Profile address deleted", true);
+
+      response.statusCode = HttpStatus.ACCEPTED;
+      response.end();
+    },
+  );
+};
+
 const middlewares: Middleware<NextApiRequest, NextApiResponse>[] = [
   tracingMiddleware(getTracer()),
   rateLimitingMiddleware(getTracer(), logger, {
@@ -197,6 +265,13 @@ export default new Endpoint<NextApiRequest, NextApiResponse>()
       middlewares,
       patchHandler,
       "PATCH /api/profile/addresses/[id]",
+    ),
+  )
+  .delete(
+    wrapMiddlewares(
+      middlewares,
+      deleteHandler,
+      "DELETE /api/profile/addresses/[id]",
     ),
   )
   .getHandler();
