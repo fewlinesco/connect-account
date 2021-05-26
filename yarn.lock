@@ -1914,6 +1914,13 @@
   dependencies:
     logfmt "1.3.2"
 
+"@fwl/logging@0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@fwl/logging/-/logging-0.1.2.tgz#dc462f4e98c3db5dcd767ebafb06824fde1694ce"
+  integrity sha512-RUq7aKMuPDD9HlIhyoNfD2W361B7xxFJf7Uo4txVufqeZjy6GdP93FHxwX+gB7InreZr8QKFmAwoA8ZWu8zdyA==
+  dependencies:
+    logfmt "1.3.2"
+
 "@fwl/tracing@0.9.0":
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/@fwl/tracing/-/tracing-0.9.0.tgz#e8e5c0b77f0728680d7de0fa79db70805a42a9ca"
