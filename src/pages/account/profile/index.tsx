@@ -34,17 +34,17 @@ const ProfilePage: React.FC = () => {
 
   if (userProfileError) {
     if (userProfileError.statusCode === HttpStatus.NOT_FOUND) {
-      router && router.push("/account/profile/user-profile/new");
+      router && router.replace("/account/profile/user-profile/new");
     }
   }
 
-  const { data: userAddress, error: userAddressError } = useSWR<
+  const { data: userAddresses, error: userAddressesError } = useSWR<
     Address[],
     SWRError
   >(`/api/profile/addresses`);
 
-  if (userAddressError) {
-    throw userAddressError;
+  if (userAddressesError) {
+    throw userAddressesError;
   }
 
   return (
@@ -55,7 +55,7 @@ const ProfilePage: React.FC = () => {
       <Container>
         <ProfileOverview
           userProfile={userProfile}
-          userAddresses={userAddress}
+          userAddresses={userAddresses}
         />
       </Container>
     </Layout>
