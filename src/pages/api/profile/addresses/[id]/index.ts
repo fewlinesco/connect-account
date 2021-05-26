@@ -25,7 +25,6 @@ const getHandler: Handler = async (request, response) => {
   const webErrors = {
     invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
     invalidScopes: ERRORS_DATA.INVALID_SCOPES,
-    profileDataNotFound: ERRORS_DATA.PROFILE_DATA_NOT_FOUND,
     unreachable: ERRORS_DATA.UNREACHABLE,
     invalidQueryString: ERRORS_DATA.INVALID_QUERY_STRING,
     addressNotFound: ERRORS_DATA.ADDRESS_NOT_FOUND,
@@ -179,7 +178,6 @@ const deleteHandler: Handler = async (request, response) => {
   const webErrors = {
     invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
     invalidScopes: ERRORS_DATA.INVALID_SCOPES,
-    profileDataNotFound: ERRORS_DATA.PROFILE_DATA_NOT_FOUND,
     unreachable: ERRORS_DATA.UNREACHABLE,
     invalidQueryString: ERRORS_DATA.INVALID_QUERY_STRING,
     addressNotFound: ERRORS_DATA.ADDRESS_NOT_FOUND,
