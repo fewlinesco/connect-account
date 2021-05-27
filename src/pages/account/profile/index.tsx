@@ -27,18 +27,24 @@ import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 const ProfilePage: React.FC = () => {
   const router = useRouter();
 
-  const { data, error } = useSWR<
-    {
-      userProfile: Profile;
-      userAddresses: Address[];
-    },
+  const { data: userProfile, error: userProfileError } = useSWR<
+    Profile,
     SWRError
-  >(`/api/profile/get-user-profile-and-addresses`);
+  >(`/api/profile/user-profile`);
 
-  if (error) {
-    if (error.statusCode === HttpStatus.NOT_FOUND) {
-      router && router.push("/account/profile/user-profile/new");
+  if (userProfileError) {
+    if (userProfileError.statusCode === HttpStatus.NOT_FOUND) {
+      router && router.replace("/account/profile/user-profile/new");
     }
+  }
+
+  const { data: userAddresses, error: userAddressesError } = useSWR<
+    Address[],
+    SWRError
+  >(`/api/profile/addresses`);
+
+  if (userAddressesError) {
+    throw userAddressesError;
   }
 
   return (
@@ -47,7 +53,10 @@ const ProfilePage: React.FC = () => {
       title="Personal information"
     >
       <Container>
-        <ProfileOverview data={data} />
+        <ProfileOverview
+          userProfile={userProfile}
+          userAddresses={userAddresses}
+        />
       </Container>
     </Layout>
   );
