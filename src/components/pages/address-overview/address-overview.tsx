@@ -78,7 +78,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                 });
             }}
           >
-            Delete this address
+            Delete
           </Button>
 
           <Button

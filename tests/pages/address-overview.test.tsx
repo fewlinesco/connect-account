@@ -121,4 +121,25 @@ describe("AddressOverviewPage", () => {
       expect(screen.queryByText("Primary")).not.toBeInTheDocument();
     });
   });
+
+  it("should display the delete button", async () => {
+    expect.assertions(1);
+
+    render(
+      <SWRConfig
+        value={{
+          dedupingInterval: 0,
+          fetcher: () => mockAddresses.primaryAddress,
+        }}
+      >
+        <AddressOverviewPage addressId={mockAddresses.primaryAddress.id} />
+      </SWRConfig>,
+    );
+
+    expect(
+      await screen.findByRole("button", {
+        name: /Delete this address/i,
+      }),
+    ).toBeInTheDocument();
+  });
 });
