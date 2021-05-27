@@ -10,7 +10,7 @@ import type { GetServerSideProps } from "next";
 import React from "react";
 import useSWR from "swr";
 
-import { Address, Profile } from "@src/@types/profile";
+import { Profile } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
 import { UserProfileForm } from "@src/components/forms/profile/user-profile-form";
 import { Layout } from "@src/components/page-layout";
@@ -18,26 +18,24 @@ import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import rateLimitinConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
+import { SWRError } from "@src/errors/errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const UpdateUserProfilePage: React.FC = () => {
-  const { data, error } = useSWR<
-    {
-      userProfile: Profile;
-      userAddresses: Address[];
-    },
-    Error
-  >("/api/profile/get-user-profile-and-addresses");
+  const { data: userProfile, error: userProfileError } = useSWR<
+    Profile,
+    SWRError
+  >(`/api/profile/user-profile`);
 
-  if (error) {
-    throw error;
+  if (userProfileError) {
+    throw userProfileError;
   }
 
   return (
     <Layout breadcrumbs={"Profile | edit"} title="Personal information">
       <Container>
-        <UserProfileForm userProfileData={data && data.userProfile} />
+        <UserProfileForm userProfileData={userProfile} />
       </Container>
     </Layout>
   );

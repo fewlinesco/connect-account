@@ -6,6 +6,7 @@ import {
   errorMiddleware,
   recoveryMiddleware,
   rateLimitingMiddleware,
+  Middleware,
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -21,16 +22,18 @@ import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getProfileAndAddressAccessTokens } from "@src/utils/get-profile-and-address-access-tokens";
 
-const handler: Handler = async (request, response) => {
+const markAsPrimaryHandler: Handler = async (request, response) => {
   const webErrors = {
     invalidProfileToken: ERRORS_DATA.INVALID_PROFILE_TOKEN,
     invalidScopes: ERRORS_DATA.INVALID_SCOPES,
-    profileDataNotFound: ERRORS_DATA.PROFILE_DATA_NOT_FOUND,
     unreachable: ERRORS_DATA.UNREACHABLE,
+    invalidQueryString: ERRORS_DATA.INVALID_QUERY_STRING,
+    addressNotFound: ERRORS_DATA.ADDRESS_NOT_FOUND,
+    invalidUserAddressPayload: ERRORS_DATA.INVALID_USER_ADDRESS_PAYLOAD,
   };
 
   return getTracer().span(
-    "GET get-user-profile-and-addresses handler",
+    "POST /api/profile/addresses/[id]/mark-as-primary handler",
     async (span) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
@@ -45,22 +48,27 @@ const handler: Handler = async (request, response) => {
         return;
       }
 
-      const { profileAccessToken, addressAccessToken } =
-        await getProfileAndAddressAccessTokens(userCookie.access_token);
+      const addressId = request.query.id;
 
+      if (!addressId || typeof addressId !== "string") {
+        throw webErrorFactory(webErrors.invalidQueryString);
+      }
+
+      const { addressAccessToken } = await getProfileAndAddressAccessTokens(
+        userCookie.access_token,
+      );
       span.setDisclosedAttribute(
         "is Connect.Profile access token available",
         true,
       );
 
-      const profileClient = initProfileClient(profileAccessToken);
       const addressClient = initProfileClient(addressAccessToken);
 
-      const { data: userProfile } = await profileClient
-        .getProfile()
+      const { data: address } = await addressClient
+        .markUserAddressAsPrimary(addressId)
         .catch((error) => {
           span.setDisclosedAttribute(
-            "is Connect.Profile UserProfile fetched",
+            "is Connect.Profile address marked as primary",
             false,
           );
 
@@ -73,64 +81,38 @@ const handler: Handler = async (request, response) => {
           }
 
           if (error.response.status === HttpStatus.NOT_FOUND) {
-            throw webErrorFactory(webErrors.profileDataNotFound);
+            throw webErrorFactory(webErrors.addressNotFound);
           }
 
           throw webErrorFactory(webErrors.unreachable);
         });
-
       span.setDisclosedAttribute(
-        "is Connect.Profile UserProfile fetched",
+        "is Connect.Profile address marked as primary",
         true,
       );
 
-      const { data: userAddresses } = await addressClient
-        .getAddresses()
-        .catch((error) => {
-          span.setDisclosedAttribute(
-            "is Connect.Profile UserAddresses fetched",
-            false,
-          );
-
-          if (error.response.status === HttpStatus.UNAUTHORIZED) {
-            throw webErrorFactory(webErrors.invalidProfileToken);
-          }
-
-          if (error.response.status === HttpStatus.FORBIDDEN) {
-            throw webErrorFactory(webErrors.invalidScopes);
-          }
-
-          throw webErrorFactory(webErrors.unreachable);
-        });
-
-      span.setDisclosedAttribute(
-        "is Connect.Profile UserAddresses fetched",
-        true,
-      );
-
-      response.statusCode = HttpStatus.OK;
-      response.json({
-        userProfile,
-        userAddresses,
-      });
+      response.statusCode = HttpStatus.CREATED;
+      response.json(address);
     },
   );
 };
 
-const wrappedHandler = wrapMiddlewares(
-  [
-    tracingMiddleware(getTracer()),
-    rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
-    recoveryMiddleware(getTracer()),
-    sentryMiddleware(getTracer()),
-    errorMiddleware(getTracer()),
-    loggingMiddleware(getTracer(), logger),
-    authMiddleware(getTracer()),
-  ],
-  handler,
-  "GET /api/profile/get-user-profile-and-addresses",
-);
+const middlewares: Middleware<NextApiRequest, NextApiResponse>[] = [
+  tracingMiddleware(getTracer()),
+  rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
+  recoveryMiddleware(getTracer()),
+  sentryMiddleware(getTracer()),
+  errorMiddleware(getTracer()),
+  loggingMiddleware(getTracer(), logger),
+  authMiddleware(getTracer()),
+];
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .get(wrappedHandler)
+  .post(
+    wrapMiddlewares(
+      middlewares,
+      markAsPrimaryHandler,
+      "POST /api/profile/addresses/[id]/mark-as-primary",
+    ),
+  )
   .getHandler();

@@ -1,13 +1,16 @@
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
 import { Address } from "@src/@types/profile";
 import { PrimaryBadge } from "@src/components/badges/badges";
 import { Box } from "@src/components/box/box";
-import { ButtonVariant } from "@src/components/buttons/buttons";
+import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
+import { ConfirmationBox } from "@src/components/confirmation-box/confirmation-box";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
+import { fetchJson } from "@src/utils/fetch-json";
 import {
   capitalizeFirstLetter,
   formatOtherAddressFieldsToDisplay,
@@ -15,6 +18,11 @@ import {
 } from "@src/utils/format";
 
 const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
+  const router = useRouter();
+  const [confirmationBoxOpen, setConfirmationBoxOpen] =
+    React.useState<boolean>(false);
+  const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
+
   return (
     <>
       <Box>
@@ -41,6 +49,58 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
           Update this address
         </FakeButton>
       </NeutralLink>
+      {address && address.primary ? null : (
+        <>
+          <Button
+            type="button"
+            variant={ButtonVariant.SECONDARY}
+            onClick={() => {
+              setPreventAnimation(false);
+              setConfirmationBoxOpen(true);
+            }}
+          >
+            Use this address as my main address
+          </Button>
+
+          <ConfirmationBox
+            open={confirmationBoxOpen}
+            setOpen={setConfirmationBoxOpen}
+            preventAnimation={preventAnimation}
+          >
+            <>
+              <p>You are about to set this address as main.</p>
+
+              <Button
+                type="button"
+                variant={ButtonVariant.PRIMARY}
+                onClick={() => {
+                  fetchJson(
+                    `/api/profile/addresses/${address?.id}/mark-as-primary`,
+                    "POST",
+                    {},
+                  )
+                    .then(() => router && router.push("/account/profile"))
+                    .catch((error) => {
+                      throw error;
+                    });
+                }}
+              >
+                Confirm
+              </Button>
+
+              <Button
+                type="button"
+                variant={ButtonVariant.SECONDARY}
+                onClick={() => {
+                  setConfirmationBoxOpen(false);
+                }}
+              >
+                Cancel
+              </Button>
+            </>
+          </ConfirmationBox>
+        </>
+      )}
     </>
   );
 };

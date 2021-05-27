@@ -61,7 +61,7 @@ describe("AddressOverviewPage", () => {
   });
 
   it("should display the update button", async () => {
-    expect.assertions(2);
+    expect.assertions(1);
 
     render(
       <SWRConfig
@@ -79,9 +79,46 @@ describe("AddressOverviewPage", () => {
         name: /Update this address/i,
       }),
     ).toBeInTheDocument();
+  });
+
+  it("should not display the 'mark as primary' button when the address is primary", async () => {
+    expect.assertions(1);
+
+    render(
+      <SWRConfig
+        value={{
+          dedupingInterval: 0,
+          fetcher: () => mockAddresses.primaryAddress,
+        }}
+      >
+        <AddressOverviewPage addressId={mockAddresses.primaryAddress.id} />
+      </SWRConfig>,
+    );
+
     expect(
-      await screen.findByRole("link", {
-        name: /Update this address/i,
+      await screen.findByRole("button", {
+        name: /Use this address as my main address/i,
+      }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("should display the 'mark as primary' button when the address is not primary", async () => {
+    expect.assertions(1);
+
+    render(
+      <SWRConfig
+        value={{
+          dedupingInterval: 0,
+          fetcher: () => mockAddresses.nonPrimaryAddress,
+        }}
+      >
+        <AddressOverviewPage addressId={mockAddresses.nonPrimaryAddress.id} />
+      </SWRConfig>,
+    );
+
+    expect(
+      await screen.findByRole("button", {
+        name: /Use this address as my main address/i,
       }),
     ).toBeInTheDocument();
   });
