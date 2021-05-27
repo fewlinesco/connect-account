@@ -43,6 +43,8 @@ function sentryMiddleware(
       try {
         return await handler(request, response);
       } catch (error) {
+        console.log("😱", error);
+        console.log("😱😱", error.statusCode);
         await sentryReport(tracer, error, request);
       }
     };
