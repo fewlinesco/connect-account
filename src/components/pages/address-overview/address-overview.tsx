@@ -101,6 +101,50 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
           </ConfirmationBox>
         </>
       )}
+      <Button
+        type="button"
+        variant={ButtonVariant.GHOST}
+        onClick={() => {
+          setPreventAnimation(false);
+          setConfirmationBoxOpen(true);
+        }}
+      >
+        Delete this address
+      </Button>
+
+      <ConfirmationBox
+        open={confirmationBoxOpen}
+        setOpen={setConfirmationBoxOpen}
+        preventAnimation={preventAnimation}
+      >
+        <>
+          <p>You are about to delete this address.</p>
+
+          <Button
+            type="button"
+            variant={ButtonVariant.PRIMARY}
+            onClick={() => {
+              fetchJson(`/api/profile/addresses/${address?.id}`, "DELETE", {})
+                .then(() => router && router.push("/account/profile"))
+                .catch((error) => {
+                  throw error;
+                });
+            }}
+          >
+            Delete
+          </Button>
+
+          <Button
+            type="button"
+            variant={ButtonVariant.SECONDARY}
+            onClick={() => {
+              setConfirmationBoxOpen(false);
+            }}
+          >
+            Keep address
+          </Button>
+        </>
+      </ConfirmationBox>
     </>
   );
 };
