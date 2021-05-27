@@ -30,6 +30,7 @@ const IdentityOverviewPage: React.FC<{
   );
 
   if (error) {
+    console.log("😱", error);
     throw error;
   }
 
