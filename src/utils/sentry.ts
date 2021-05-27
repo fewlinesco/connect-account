@@ -16,6 +16,10 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
   });
 }
 
+Sentry.configureScope((scope) => {
+  scope.setTag("Node environment", process.env.NODE_ENV);
+});
+
 const addRequestScopeToSentry = (
   request: NextApiRequest | IncomingMessage,
 ): void => {
