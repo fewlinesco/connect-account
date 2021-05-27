@@ -193,6 +193,7 @@
   },
   "jest": {
     "preset": "ts-jest",
+    "testEnvironment": "jsdom",
     "moduleFileExtensions": [
       "js",
       "ts",

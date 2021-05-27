@@ -98,7 +98,7 @@ const UserAddressForm: React.FC<{
               street_address: value,
             });
           }}
-          label="Street address *"
+          label="Street address"
         />
         <InputText
           type="text"
@@ -137,7 +137,7 @@ const UserAddressForm: React.FC<{
               region: value,
             });
           }}
-          label="Region *"
+          label="Region"
         />
         <InputText
           type="text"
