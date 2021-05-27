@@ -11,7 +11,7 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { Container } from "@src/components/containers/container";
-import { AddIdentityForm } from "@src/components/forms/add-identity-form";
+import { AddIdentityForm } from "@src/components/forms/identities/add-identity-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
 import rateLimitinConfig from "@src/configs/rate-limiting-config";

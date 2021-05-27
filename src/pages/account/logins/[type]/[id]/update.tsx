@@ -12,7 +12,7 @@ import React from "react";
 import useSWR from "swr";
 
 import { Container } from "@src/components/containers/container";
-import { UpdateIdentityForm } from "@src/components/forms/update-identity-form";
+import { UpdateIdentityForm } from "@src/components/forms/identities/update-identity-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
 import rateLimitinConfig from "@src/configs/rate-limiting-config";
