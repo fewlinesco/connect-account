@@ -46,21 +46,21 @@
     "@aws-sdk/types" "3.15.0"
     tslib "^2.0.0"
 
-"@aws-sdk/client-dynamodb@3.16.0":
-  version "3.16.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/client-dynamodb/-/client-dynamodb-3.16.0.tgz#9496829860479525049e41d864c5bbd7a9b4f016"
-  integrity sha512-Bein7GNweDb8LaNxOsnMnTXoZvArx0A5f7kTs0AezqqrQPdlfvlLFyskZwHKlX0aEpKhVw2MqT81YvW9k5cxrw==
+"@aws-sdk/client-dynamodb@3.17.0":
+  version "3.17.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-dynamodb/-/client-dynamodb-3.17.0.tgz#e37bfddd8c5fa216d48d4f4e694db4824b7307ec"
+  integrity sha512-BTfP42sU5BhN5zuN4gfCkYbY2CktyH4vNJcc1oAXyZLJoWo7+BiT+s2Bs/Rwoq/ZAKR7yp/I2n+b2LgDVp/E+g==
   dependencies:
     "@aws-crypto/sha256-browser" "^1.0.0"
     "@aws-crypto/sha256-js" "^1.0.0"
-    "@aws-sdk/client-sts" "3.16.0"
+    "@aws-sdk/client-sts" "3.17.0"
     "@aws-sdk/config-resolver" "3.16.0"
-    "@aws-sdk/credential-provider-node" "3.16.0"
+    "@aws-sdk/credential-provider-node" "3.17.0"
     "@aws-sdk/fetch-http-handler" "3.15.0"
     "@aws-sdk/hash-node" "3.15.0"
     "@aws-sdk/invalid-dependency" "3.15.0"
     "@aws-sdk/middleware-content-length" "3.15.0"
-    "@aws-sdk/middleware-endpoint-discovery" "3.16.0"
+    "@aws-sdk/middleware-endpoint-discovery" "3.17.0"
     "@aws-sdk/middleware-host-header" "3.16.0"
     "@aws-sdk/middleware-logger" "3.15.0"
     "@aws-sdk/middleware-retry" "3.16.0"
@@ -86,10 +86,10 @@
     tslib "^2.0.0"
     uuid "^8.3.2"
 
-"@aws-sdk/client-sso@3.16.0":
-  version "3.16.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/client-sso/-/client-sso-3.16.0.tgz#49b46bca40bbe0173421e35f4a4b5bc4a0784582"
-  integrity sha512-SOFnYTSuDJRoINekcZyhW4ocQBLt+XDXLXsZ/zAMRuRkzS4EpaRfklNM6hAfxFd3bIO3Lamo1CyVqJuc97H5bg==
+"@aws-sdk/client-sso@3.17.0":
+  version "3.17.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-sso/-/client-sso-3.17.0.tgz#be922a33ca8be155d69c67584449c864de34bd4b"
+  integrity sha512-STlRDK6ZpJKh9sXIm6FO/JXm5K3IFoZfICCHaZHxPdf9CsuvemZQzV6Tf+OlO6yk6VG+mw22hnRIf0RyuRr7KA==
   dependencies:
     "@aws-crypto/sha256-browser" "^1.0.0"
     "@aws-crypto/sha256-js" "^1.0.0"
@@ -120,15 +120,15 @@
     "@aws-sdk/util-utf8-node" "3.13.1"
     tslib "^2.0.0"
 
-"@aws-sdk/client-sts@3.16.0":
-  version "3.16.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/client-sts/-/client-sts-3.16.0.tgz#bc3998292dbc870dbf5c3764491666c91d73b851"
-  integrity sha512-FWQ3OjoUNuSTqL+MzmJLNGncfJyWYM1RjBgWoWkjVSNC58GibAItnkPOAH5SDqcAya1jeY4RrlfMQ+V8VbWWJQ==
+"@aws-sdk/client-sts@3.17.0":
+  version "3.17.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-sts/-/client-sts-3.17.0.tgz#ee87a39638713a07dd291274cb6bfeae04b300e3"
+  integrity sha512-y1NEm+xEIr7ieDWusU/w27IuHE7jDDolQwSxYv48A1GBEzYUBoVqhP6XpiA0r0sBYkMMk+rwCHyCRWtaa7o6ow==
   dependencies:
     "@aws-crypto/sha256-browser" "^1.0.0"
     "@aws-crypto/sha256-js" "^1.0.0"
     "@aws-sdk/config-resolver" "3.16.0"
-    "@aws-sdk/credential-provider-node" "3.16.0"
+    "@aws-sdk/credential-provider-node" "3.17.0"
     "@aws-sdk/fetch-http-handler" "3.15.0"
     "@aws-sdk/hash-node" "3.15.0"
     "@aws-sdk/invalid-dependency" "3.15.0"
@@ -199,16 +199,16 @@
     "@aws-sdk/types" "3.15.0"
     tslib "^2.0.0"
 
-"@aws-sdk/credential-provider-node@3.16.0":
-  version "3.16.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/credential-provider-node/-/credential-provider-node-3.16.0.tgz#cfdd48009c053efae05400219848ae84fff03608"
-  integrity sha512-L6MWHra9MybNHY0kxrjhWRuM0Jf/w9zCS/aPUmSptyfHERz1pAulxWiGvc7sA5fQ/RsMjZ7YVy6J+a7UFXVr+Q==
+"@aws-sdk/credential-provider-node@3.17.0":
+  version "3.17.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/credential-provider-node/-/credential-provider-node-3.17.0.tgz#96e1b953ec6f4658e4e88bed2cdd6bbf05c5884c"
+  integrity sha512-N8emwOfDvLbhhHC0vwbg0Cxk+s7Nac9jLYVklcoKsDMDqpiGgZ1ktkYkM2Asd+nTNJR+SbEKx0K/zvaDxKKnew==
   dependencies:
     "@aws-sdk/credential-provider-env" "3.15.0"
     "@aws-sdk/credential-provider-imds" "3.15.0"
     "@aws-sdk/credential-provider-ini" "3.15.0"
     "@aws-sdk/credential-provider-process" "3.15.0"
-    "@aws-sdk/credential-provider-sso" "3.16.0"
+    "@aws-sdk/credential-provider-sso" "3.17.0"
     "@aws-sdk/credential-provider-web-identity" "3.15.0"
     "@aws-sdk/property-provider" "3.15.0"
     "@aws-sdk/shared-ini-file-loader" "3.13.1"
@@ -226,12 +226,12 @@
     "@aws-sdk/types" "3.15.0"
     tslib "^2.0.0"
 
-"@aws-sdk/credential-provider-sso@3.16.0":
-  version "3.16.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/credential-provider-sso/-/credential-provider-sso-3.16.0.tgz#225e1695f6f2a39244b544d920d1218bbf3ac6eb"
-  integrity sha512-jR9UzIZDZQpBpG+lyvbE9bHJ8SeFW1sb5R+nfYv4kSXMDcjoOANmc2NY755dEN+LoOVBTjHhQcF1mjW7bRpTrg==
+"@aws-sdk/credential-provider-sso@3.17.0":
+  version "3.17.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/credential-provider-sso/-/credential-provider-sso-3.17.0.tgz#7ce4839bd04e17187eb316b6009967fe76bc0d66"
+  integrity sha512-lv9dbsgFfQeSYUMfX+4Ew2cNSAGJ1L2qgTZEK8o541RN852Y2BlQcW17nvG3rvR5UQxpsNfT2KoivFuS9fOoKA==
   dependencies:
-    "@aws-sdk/client-sso" "3.16.0"
+    "@aws-sdk/client-sso" "3.17.0"
     "@aws-sdk/credential-provider-ini" "3.15.0"
     "@aws-sdk/property-provider" "3.15.0"
     "@aws-sdk/shared-ini-file-loader" "3.13.1"
@@ -247,10 +247,10 @@
     "@aws-sdk/types" "3.15.0"
     tslib "^2.0.0"
 
-"@aws-sdk/endpoint-cache@3.16.0":
-  version "3.16.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/endpoint-cache/-/endpoint-cache-3.16.0.tgz#88b510e218b004563c3c6d416910d5c44553a3b0"
-  integrity sha512-XFjVOBSNSN6eZmtD71KIv3UzbIxK+l3bYYCJACVr5e1C1N4OJN/VPGuivxLO+Rw+DlCU4MmzWM5dQOLlEolpJQ==
+"@aws-sdk/endpoint-cache@3.17.0":
+  version "3.17.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/endpoint-cache/-/endpoint-cache-3.17.0.tgz#1fd4ef79468ce9bea0c528e4db8864746032893d"
+  integrity sha512-I2tzgMPPjRRG3qPMx676s2Oav/WXuWaLN9Yyyo4yq+w9JBGbf+TI4ZUzSVJyZmfYGrYXxRo6eFb8zaKz6CiecQ==
   dependencies:
     mnemonist "0.38.3"
     tslib "^2.0.0"
@@ -299,13 +299,13 @@
     "@aws-sdk/types" "3.15.0"
     tslib "^2.0.0"
 
-"@aws-sdk/middleware-endpoint-discovery@3.16.0":
-  version "3.16.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/middleware-endpoint-discovery/-/middleware-endpoint-discovery-3.16.0.tgz#d8af50464f253b1d1e45ba0e1040a4186d938961"
-  integrity sha512-xa8jHOinMFrCpDsAxT8tLLMQkoaTV5NXjXR4CiqDyrYvdqxJsdodomZJXbSREkFyN8ALnvrDnahrcjAphyRoIg==
+"@aws-sdk/middleware-endpoint-discovery@3.17.0":
+  version "3.17.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/middleware-endpoint-discovery/-/middleware-endpoint-discovery-3.17.0.tgz#9d63a96ba612059805c14df87d102f681a2dbff7"
+  integrity sha512-bi0VF8LLvO8SQbeAnyasw/EK/6iLHas0bD6e1I4wNXNpvFLFLItyH9+XuXWUDO2BCugzyHAzvOMiuu4nCQ8qCQ==
   dependencies:
     "@aws-sdk/config-resolver" "3.16.0"
-    "@aws-sdk/endpoint-cache" "3.16.0"
+    "@aws-sdk/endpoint-cache" "3.17.0"
     "@aws-sdk/protocol-http" "3.15.0"
     "@aws-sdk/types" "3.15.0"
     tslib "^2.0.0"
@@ -1914,6 +1914,13 @@
   dependencies:
     logfmt "1.3.2"
 
+"@fwl/logging@0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@fwl/logging/-/logging-0.1.2.tgz#dc462f4e98c3db5dcd767ebafb06824fde1694ce"
+  integrity sha512-RUq7aKMuPDD9HlIhyoNfD2W361B7xxFJf7Uo4txVufqeZjy6GdP93FHxwX+gB7InreZr8QKFmAwoA8ZWu8zdyA==
+  dependencies:
+    logfmt "1.3.2"
+
 "@fwl/tracing@0.9.0":
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/@fwl/tracing/-/tracing-0.9.0.tgz#e8e5c0b77f0728680d7de0fa79db70805a42a9ca"
@@ -2178,6 +2185,27 @@
     source-map "^0.6.1"
     write-file-atomic "^3.0.0"
 
+"@jest/transform@^27.0.1":
+  version "27.0.1"
+  resolved "https://registry.yarnpkg.com/@jest/transform/-/transform-27.0.1.tgz#a9ece291f82273d5e58132550996c16edd5a902a"
+  integrity sha512-LC95VpT6wMnQ96dRJDlUiAnW/90zyh4+jS30szI/5AsfS0qwSlr/O4TPcGoD2WVaVMfo6KvR+brvOtGyMHaNhA==
+  dependencies:
+    "@babel/core" "^7.1.0"
+    "@jest/types" "^27.0.1"
+    babel-plugin-istanbul "^6.0.0"
+    chalk "^4.0.0"
+    convert-source-map "^1.4.0"
+    fast-json-stable-stringify "^2.0.0"
+    graceful-fs "^4.2.4"
+    jest-haste-map "^27.0.1"
+    jest-regex-util "^27.0.1"
+    jest-util "^27.0.1"
+    micromatch "^4.0.4"
+    pirates "^4.0.1"
+    slash "^3.0.0"
+    source-map "^0.6.1"
+    write-file-atomic "^3.0.0"
+
 "@jest/types@^26.6.2":
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/@jest/types/-/types-26.6.2.tgz#bef5a532030e1d88a2f5a6d933f84e97226ed48e"
@@ -2187,6 +2215,17 @@
     "@types/istanbul-reports" "^3.0.0"
     "@types/node" "*"
     "@types/yargs" "^15.0.0"
+    chalk "^4.0.0"
+
+"@jest/types@^27.0.1":
+  version "27.0.1"
+  resolved "https://registry.yarnpkg.com/@jest/types/-/types-27.0.1.tgz#631738c942e70045ebbf42a3f9b433036d3845e4"
+  integrity sha512-8A25RRV4twZutsx2D+7WphnDsp7If9Yu6ko0Gxwrwv8BiWESFzka34+Aa2kC8w9xewt7SDuCUSZ6IiAFVj3PRg==
+  dependencies:
+    "@types/istanbul-lib-coverage" "^2.0.0"
+    "@types/istanbul-reports" "^3.0.0"
+    "@types/node" "*"
+    "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
 "@mdx-js/loader@^1.6.22":
@@ -3464,7 +3503,7 @@
   dependencies:
     axios "*"
 
-"@types/babel__core@^7.0.0", "@types/babel__core@^7.1.7":
+"@types/babel__core@^7.0.0", "@types/babel__core@^7.1.14", "@types/babel__core@^7.1.7":
   version "7.1.14"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.14.tgz#faaeefc4185ec71c389f4501ee5ec84b170cc402"
   integrity sha512-zGZJzzBUVDo/eV6KgbE0f0ZI7dInEYvo12Rb70uNQDshC3SkRMb67ja0GgRHZgAX3Za6rhaWlvbDO8rrGyAb1g==
@@ -3761,10 +3800,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@17.0.6":
-  version "17.0.6"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.6.tgz#0ec564566302c562bf497d73219797a5e0297013"
-  integrity sha512-u/TtPoF/hrvb63LdukET6ncaplYsvCvmkceasx8oG84/ZCsoLxz9Z/raPBP4lTAiWW1Jb889Y9svHmv8R26dWw==
+"@types/react@*", "@types/react@17.0.8":
+  version "17.0.8"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.8.tgz#fe76e3ba0fbb5602704110fd1e3035cf394778e3"
+  integrity sha512-3sx4c0PbXujrYAKwXxNONXUtRp9C+hE2di0IuxFyf5BELD+B+AXL8G7QrmSKhVwKZDbv0igiAjQAMhXj8Yg3aw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -3865,6 +3904,13 @@
   version "15.0.13"
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-15.0.13.tgz#34f7fec8b389d7f3c1fd08026a5763e072d3c6dc"
   integrity sha512-kQ5JNTrbDv3Rp5X2n/iUu37IJBDU2gsZ5R/g1/KHOOEc5IKfUFjXT6DENPGduh08I/pamwtEq4oul7gUqKTQDQ==
+  dependencies:
+    "@types/yargs-parser" "*"
+
+"@types/yargs@^16.0.0":
+  version "16.0.3"
+  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-16.0.3.tgz#4b6d35bb8e680510a7dc2308518a80ee1ef27e01"
+  integrity sha512-YlFfTGS+zqCgXuXNV26rOIeETOkXnGQXP/pjjL9P0gO/EP9jTmc7pUBhx+jVEIxpq41RX33GQ7N3DzOSfZoglQ==
   dependencies:
     "@types/yargs-parser" "*"
 
@@ -4711,7 +4757,21 @@ axios@*, axios@0.21.1:
   dependencies:
     follow-redirects "^1.10.0"
 
-babel-jest@26.6.3, babel-jest@^26.6.3:
+babel-jest@27.0.1:
+  version "27.0.1"
+  resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-27.0.1.tgz#9f1c4571ac17a39e599d1325dcaf53a274261df4"
+  integrity sha512-aWFD7OGQjk3Y8MdZKf1XePlQvHnjMVJQjIq9WKrlAjz9by703kJ45Jxhp26JwnovoW71YYz5etuqRl8wMcIv0w==
+  dependencies:
+    "@jest/transform" "^27.0.1"
+    "@jest/types" "^27.0.1"
+    "@types/babel__core" "^7.1.14"
+    babel-plugin-istanbul "^6.0.0"
+    babel-preset-jest "^27.0.1"
+    chalk "^4.0.0"
+    graceful-fs "^4.2.4"
+    slash "^3.0.0"
+
+babel-jest@^26.6.3:
   version "26.6.3"
   resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-26.6.3.tgz#d87d25cb0037577a0c89f82e5755c5d293c01056"
   integrity sha512-pl4Q+GAVOHwvjrck6jKjvmGhnO3jHX/xuB9d27f+EJZ/6k+6nMuPjorrYp7s++bKKdANwzElBWnLWaObvTnaZA==
@@ -4793,6 +4853,16 @@ babel-plugin-jest-hoist@^26.6.2:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-26.6.2.tgz#8185bd030348d254c6d7dd974355e6a28b21e62d"
   integrity sha512-PO9t0697lNTmcEHH69mdtYiOIkkOlj9fySqfO3K1eCcdISevLAE0xY59VLLUj0SoiPiTX/JU2CYFpILydUa5Lw==
+  dependencies:
+    "@babel/template" "^7.3.3"
+    "@babel/types" "^7.3.3"
+    "@types/babel__core" "^7.0.0"
+    "@types/babel__traverse" "^7.0.6"
+
+babel-plugin-jest-hoist@^27.0.1:
+  version "27.0.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-27.0.1.tgz#a6d10e484c93abff0f4e95f437dad26e5736ea11"
+  integrity sha512-sqBF0owAcCDBVEDtxqfYr2F36eSHdx7lAVGyYuOBRnKdD6gzcy0I0XrAYCZgOA3CRrLhmR+Uae9nogPzmAtOfQ==
   dependencies:
     "@babel/template" "^7.3.3"
     "@babel/types" "^7.3.3"
@@ -4902,6 +4972,14 @@ babel-preset-jest@^26.6.2:
   integrity sha512-YvdtlVm9t3k777c5NPQIv6cxFFFapys25HiUmuSgHwIZhfifweR5c5Sf5nwE3MAbfu327CYSvps8Yx6ANLyleQ==
   dependencies:
     babel-plugin-jest-hoist "^26.6.2"
+    babel-preset-current-node-syntax "^1.0.0"
+
+babel-preset-jest@^27.0.1:
+  version "27.0.1"
+  resolved "https://registry.yarnpkg.com/babel-preset-jest/-/babel-preset-jest-27.0.1.tgz#7a50c75d16647c23a2cf5158d5bb9eb206b10e20"
+  integrity sha512-nIBIqCEpuiyhvjQs2mVNwTxQQa2xk70p9Dd/0obQGBf8FBzbnI8QhQKzLsWMN2i6q+5B0OcWDtrboBX5gmOLyA==
+  dependencies:
+    babel-plugin-jest-hoist "^27.0.1"
     babel-preset-current-node-syntax "^1.0.0"
 
 babelify@^10.0.0:
@@ -5576,6 +5654,11 @@ ci-info@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
   integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
+
+ci-info@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.1.1.tgz#9a32fcefdf7bcdb6f0a7e1c0f8098ec57897b80a"
+  integrity sha512-kdRWLBIJwdsYJWYJFtAFFYxybguqeF91qpZaggjG5Nf8QKdizFG2hjqvaTXbxFIcYbSaD74KpAXv6BSm17DHEQ==
 
 cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
   version "1.0.4"
@@ -8007,7 +8090,7 @@ fsevents@^1.2.7:
     bindings "^1.5.0"
     nan "^2.12.1"
 
-fsevents@^2.1.2, fsevents@~2.3.1:
+fsevents@^2.1.2, fsevents@^2.3.2, fsevents@~2.3.1:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
   integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
@@ -9101,6 +9184,13 @@ is-ci@^2.0.0:
   dependencies:
     ci-info "^2.0.0"
 
+is-ci@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/is-ci/-/is-ci-3.0.0.tgz#c7e7be3c9d8eef7d0fa144390bd1e4b88dc4c994"
+  integrity sha512-kDXyttuLeslKAHYL/K28F2YkM3x5jvFPEw3yXbRptXydjD9rpLEz+C5K5iutY9ZiUu6AP41JdvRQwF4Iqs4ZCQ==
+  dependencies:
+    ci-info "^3.1.1"
+
 is-core-module@^2.2.0, is-core-module@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.4.0.tgz#8e9fc8e15027b011418026e98f0e6f4d86305cc1"
@@ -9700,6 +9790,26 @@ jest-haste-map@^26.6.2:
   optionalDependencies:
     fsevents "^2.1.2"
 
+jest-haste-map@^27.0.1:
+  version "27.0.1"
+  resolved "https://registry.yarnpkg.com/jest-haste-map/-/jest-haste-map-27.0.1.tgz#653c4ba59309a86499ad7bf663176e7f97478191"
+  integrity sha512-ioCuobr4z90H1Pz8+apz2vfz63387apzAoawm/9IIOndarDfRkjLURdLOe//AI5jUQmjVRg+WiL92339kqlCmA==
+  dependencies:
+    "@jest/types" "^27.0.1"
+    "@types/graceful-fs" "^4.1.2"
+    "@types/node" "*"
+    anymatch "^3.0.3"
+    fb-watchman "^2.0.0"
+    graceful-fs "^4.2.4"
+    jest-regex-util "^27.0.1"
+    jest-serializer "^27.0.1"
+    jest-util "^27.0.1"
+    jest-worker "^27.0.1"
+    micromatch "^4.0.4"
+    walker "^1.0.7"
+  optionalDependencies:
+    fsevents "^2.3.2"
+
 jest-jasmine2@^26.6.3:
   version "26.6.3"
   resolved "https://registry.yarnpkg.com/jest-jasmine2/-/jest-jasmine2-26.6.3.tgz#adc3cf915deacb5212c93b9f3547cd12958f2edd"
@@ -9774,6 +9884,11 @@ jest-regex-util@^26.0.0:
   version "26.0.0"
   resolved "https://registry.yarnpkg.com/jest-regex-util/-/jest-regex-util-26.0.0.tgz#d25e7184b36e39fd466c3bc41be0971e821fee28"
   integrity sha512-Gv3ZIs/nA48/Zvjrl34bf+oD76JHiGDUxNOVgUjh3j890sblXryjY4rss71fPtD/njchl6PSE2hIhvyWa1eT0A==
+
+jest-regex-util@^27.0.1:
+  version "27.0.1"
+  resolved "https://registry.yarnpkg.com/jest-regex-util/-/jest-regex-util-27.0.1.tgz#69d4b1bf5b690faa3490113c47486ed85dd45b68"
+  integrity sha512-6nY6QVcpTgEKQy1L41P4pr3aOddneK17kn3HJw6SdwGiKfgCGTvH02hVXL0GU8GEKtPH83eD2DIDgxHXOxVohQ==
 
 jest-resolve-dependencies@^26.6.3:
   version "26.6.3"
@@ -9865,6 +9980,14 @@ jest-serializer@^26.6.2:
     "@types/node" "*"
     graceful-fs "^4.2.4"
 
+jest-serializer@^27.0.1:
+  version "27.0.1"
+  resolved "https://registry.yarnpkg.com/jest-serializer/-/jest-serializer-27.0.1.tgz#2464d04dcc33fb71dc80b7c82e3c5e8a08cb1020"
+  integrity sha512-svy//5IH6bfQvAbkAEg1s7xhhgHTtXu0li0I2fdKHDsLP2P2MOiscPQIENQep8oU2g2B3jqLyxKKzotZOz4CwQ==
+  dependencies:
+    "@types/node" "*"
+    graceful-fs "^4.2.4"
+
 jest-snapshot@^26.6.2:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/jest-snapshot/-/jest-snapshot-26.6.2.tgz#f3b0af1acb223316850bd14e1beea9837fb39c84"
@@ -9905,6 +10028,18 @@ jest-util@^26.1.0, jest-util@^26.6.2:
     graceful-fs "^4.2.4"
     is-ci "^2.0.0"
     micromatch "^4.0.2"
+
+jest-util@^27.0.1:
+  version "27.0.1"
+  resolved "https://registry.yarnpkg.com/jest-util/-/jest-util-27.0.1.tgz#324ed9879d129c1e64f9169a739d6d50d7928769"
+  integrity sha512-lEw3waSmEOO4ZkwkUlFSvg4es1+8+LIkSGxp/kF60K0+vMR3Dv3O2HMZhcln9NHqSQzpVbsDT6OeMzUPW7DfRg==
+  dependencies:
+    "@jest/types" "^27.0.1"
+    "@types/node" "*"
+    chalk "^4.0.0"
+    graceful-fs "^4.2.4"
+    is-ci "^3.0.0"
+    picomatch "^2.2.3"
 
 jest-validate@^26.6.2:
   version "26.6.2"
@@ -9948,6 +10083,15 @@ jest-worker@^26.2.1, jest-worker@^26.6.2:
     "@types/node" "*"
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
+
+jest-worker@^27.0.1:
+  version "27.0.1"
+  resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-27.0.1.tgz#b255fcbb40fb467295010c628474b1185cab4f9e"
+  integrity sha512-NhHqClI3owOjmS8dBhQMKHZ2rrT0sBTpqGitp9nMX5AAjVXd+15o4v96uBEMhoywaLKN+5opcKBlXwAoADZolA==
+  dependencies:
+    "@types/node" "*"
+    merge-stream "^2.0.0"
+    supports-color "^8.0.0"
 
 jest@26.6.3:
   version "26.6.3"
@@ -10939,7 +11083,7 @@ micromatch@^3.1.10, micromatch@^3.1.4, micromatch@^3.1.5:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-micromatch@^4.0.2:
+micromatch@^4.0.2, micromatch@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.4.tgz#896d519dfe9db25fce94ceb7a500919bf881ebf9"
   integrity sha512-pRmzw/XUcwXGpD9aI9q/0XOwLNygjETJ8y0ao0wdqprrzDa4YnxLcz7fQRZr8voh8V10kGhABbNcHVk5wHgWwg==

@@ -73,6 +73,10 @@ const TextBox = styled.div`
   line-height: ${({ theme }) => theme.lineHeights.title};
 
   @media ${deviceBreakpoints.m} {
+    max-width: 50%;
+  }
+
+  @media ${deviceBreakpoints.s} {
     max-width: 60%;
   }
 `;
