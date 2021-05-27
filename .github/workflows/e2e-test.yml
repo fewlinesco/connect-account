@@ -15,49 +15,49 @@ jobs:
       GITHUB_CONTEXT_EVENT: ${{ toJson(github.event) }}
 
     steps:
-      # - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.3.4
 
-      # - name: Get yarn cache directory path
-      #   id: yarn-cache-dir-path
-      #   run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      # - uses: actions/cache@v2.1.5
-      #   id: yarn-cache
-      #   with:
-      #     path: |
-      #       ${{ steps.yarn-cache-dir-path.outputs.dir }}
-      #       **/node_modules
-      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-yarn-
+      - uses: actions/cache@v2.1.5
+        id: yarn-cache
+        with:
+          path: |
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+            **/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
-      # - name: dependencies
-      #   if: steps.yarn-cache.outputs.cache-hit != 'true'
-      #   run: yarn install
+      - name: dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn install
 
-      # - name: taiko
-      #   if: steps.yarn-cache.outputs.cache-hit != 'true'
-      #   run: yarn add -D taiko
+      - name: taiko
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn add -D taiko
 
-      # - name: creating test user
-      #   env:
-      #     CONNECT_TEST_ACCOUNT_EMAIL: "taiko@e2e.test"
-      #     CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
-      #     CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
-      #     CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
-      #   run: yarn e2e:create-test-user
+      - name: creating test user
+        env:
+          CONNECT_TEST_ACCOUNT_EMAIL: "taiko@e2e.test"
+          CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
+          CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
+          CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
+        run: yarn e2e:create-test-user
 
-      # - name: e2e
-      #   run: yarn test:e2e
-      #   env:
-      #     CONNECT_TEST_ACCOUNT_EMAIL: 'taiko_${{ github.event.deployment.sha }}@e2e.test'
-      #     CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
-      #     CONNECT_TEST_ACCOUNT_URL: ${{ github.event.deployment.payload.web_url }}
+      - name: e2e
+        run: yarn test:e2e
+        env:
+          CONNECT_TEST_ACCOUNT_EMAIL: 'taiko_${{ github.event.deployment.sha }}@e2e.test'
+          CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
+          CONNECT_TEST_ACCOUNT_URL: ${{ github.event.deployment.payload.web_url }}
 
-      # - name: removing test user
-      #   if: ${{ always() }}
-      #   env:
-      #     CONNECT_TEST_ACCOUNT_EMAIL: "taiko@e2e.test"
-      #     CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
-      #     CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
-      #   run: yarn e2e:remove-test-user
+      - name: removing test user
+        if: ${{ always() }}
+        env:
+          CONNECT_TEST_ACCOUNT_EMAIL: "taiko@e2e.test"
+          CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
+          CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
+        run: yarn e2e:remove-test-user
