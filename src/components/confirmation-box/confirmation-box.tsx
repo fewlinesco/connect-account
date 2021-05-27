@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { ClickAwayListener } from "../click-away-listener";
@@ -18,6 +18,16 @@ const ConfirmationBox: React.FC<ConfirmationBoxProps> = ({
   preventAnimation,
   children,
 }) => {
+  useEffect(() => {
+    const echapPressed = (event: KeyboardEvent): void => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+    window.addEventListener("keyup", echapPressed);
+    return () => window.removeEventListener("keyup", echapPressed);
+  });
+
   return (
     <>
       {open && (
@@ -60,6 +70,13 @@ const Box = styled.div<Pick<ConfirmationBoxProps, "open" | "preventAnimation">>`
     transform: none;
     padding: 4rem 4rem 2rem;
     border-radius: 0;
+  }
+
+  p {
+    margin: 0 0 ${({ theme }) => theme.spaces.xs};
+    line-height: ${({ theme }) => theme.lineHeights.copy};
+    text-align: center;
+    word-break: break-word;
   }
 
   .cross {
