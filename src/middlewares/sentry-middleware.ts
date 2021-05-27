@@ -41,6 +41,7 @@ function sentryMiddleware(
       response: NextApiResponse,
     ): Promise<void> => {
       try {
+        console.log("😘😘😘", request);
         return await handler(request, response);
       } catch (error) {
         console.log("😱", error);
