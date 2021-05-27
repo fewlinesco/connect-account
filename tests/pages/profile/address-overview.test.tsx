@@ -1,8 +1,8 @@
 import React from "react";
 import { cache, SWRConfig } from "swr";
 
-import { render, screen, waitFor } from "../config/testing-library-config";
-import * as mockAddresses from "../mocks/addresses";
+import { render, screen, waitFor } from "../../config/testing-library-config";
+import * as mockAddresses from "../../mocks/addresses";
 import AddressOverviewPage from "@src/pages/account/profile/addresses/[id]";
 
 jest.mock("@src/configs/db-client", () => {

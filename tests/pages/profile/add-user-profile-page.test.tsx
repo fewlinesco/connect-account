@@ -1,8 +1,8 @@
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
-import { render, screen } from "../config/testing-library-config";
-import NewAddressPage from "@src/pages/account/profile/addresses/new";
+import { render, screen } from "../../config/testing-library-config";
+import NewUserProfilePage from "@src/pages/account/profile/user-profile/new";
 
 jest.mock("@src/configs/db-client", () => {
   return {
@@ -14,19 +14,19 @@ jest.mock("@src/configs/db-client", () => {
   };
 });
 
-describe("NewAddressPage", () => {
-  it("should render proper user address form elements", async () => {
-    expect.assertions(20);
+describe("NewUserProfilePage", () => {
+  it("should render proper user profile form elements", async () => {
+    expect.assertions(18);
 
-    render(<NewAddressPage />);
+    render(<NewUserProfilePage />);
 
     expect(
-      screen.getByRole("heading", { name: /address \| new/i }),
+      screen.getByRole("heading", { name: /profile \| new/i }),
     ).toBeInTheDocument();
 
     const textInputs = await screen.findAllByRole("textbox");
 
-    expect(textInputs).toHaveLength(7);
+    expect(textInputs).toHaveLength(6);
 
     textInputs.forEach((input) => {
       userEvent.clear(input);
@@ -36,17 +36,16 @@ describe("NewAddressPage", () => {
     });
 
     expect(
-      screen.getByRole("button", { name: "Add address" }),
+      screen.getByRole("button", { name: "Add my information" }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Add address" })).toHaveAttribute(
-      "type",
-      "submit",
-    );
+    expect(
+      screen.getByRole("button", { name: "Add my information" }),
+    ).toHaveAttribute("type", "submit");
 
     expect(screen.getByRole("link", { name: "Cancel" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Cancel" })).toHaveAttribute(
       "href",
-      "/account/profile",
+      "/account",
     );
   });
 });

@@ -22,7 +22,7 @@ jest.mock("@fewlines/connect-management", () => {
 });
 
 describe("isMarkingIdentityAsPrimaryAuthorized", () => {
-  test("should return true if `identityId` is part of user identities", async (done) => {
+  test("should return true if `identityId` is part of user identities", async () => {
     expect.assertions(1);
 
     const identityId = "be90006d-b0d8-44bd-80a9-084048ee1cb8";
@@ -32,11 +32,9 @@ describe("isMarkingIdentityAsPrimaryAuthorized", () => {
     );
 
     expect(isAuthorized).toBe(true);
-
-    done();
   });
 
-  test("should return false if `identityId` is not part of user identities", async (done) => {
+  test("should return false if `identityId` is not part of user identities", async () => {
     expect.assertions(1);
 
     const identityId = "228ad77d-8bfd-4a46-ab36-8c03b783ee77";
@@ -46,7 +44,5 @@ describe("isMarkingIdentityAsPrimaryAuthorized", () => {
     );
 
     expect(isAuthorized).toBe(false);
-
-    done();
   });
 });
