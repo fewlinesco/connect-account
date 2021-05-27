@@ -73,8 +73,6 @@ describe("Account Web Application add identity", () => {
       expect(
         await text("Invalid phone number format input.").exists(),
       ).toBeTruthy();
-
-      done();
     } catch (error) {
       await screenshot({
         path: "tests/e2e/screenshots/fill-incorrect-add-identity-input-values.test.png",
@@ -111,8 +109,6 @@ describe("Account Web Application add identity", () => {
       await click("Update email");
 
       expect(await text("Something went wrong").exists()).toBeTruthy();
-
-      done();
     } catch (error) {
       await screenshot({
         path: "tests/e2e/screenshots/fill-incorrect-update-identity-input-values.test.png",

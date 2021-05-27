@@ -69,8 +69,6 @@ describe("Delete Identity", () => {
       expect(await text("Hide").exists()).toBeTruthy();
 
       expect(!(await link("_delete_").exists())).toBeTruthy();
-
-      done();
     } catch (error) {
       await screenshot({
         path: "tests/e2e/screenshots/delete-identity.png",
