@@ -9,7 +9,6 @@ async function sentryReport(
   error: Record<string, unknown>,
   request: NextApiRequest,
 ): Promise<void> {
-  console.log("??");
   return tracer.span("sentry-middleware", async (span) => {
     addRequestScopeToSentry(request);
 
@@ -18,7 +17,6 @@ async function sentryReport(
     span.setDisclosedAttribute("error.message", error.message);
 
     if ("statusCode" in error && error.statusCode === 404) {
-      console.log("❌", error.statusCode);
       throw error;
     }
 
@@ -41,11 +39,8 @@ function sentryMiddleware(
       response: NextApiResponse,
     ): Promise<void> => {
       try {
-        console.log("😘😘😘", request);
         return await handler(request, response);
       } catch (error) {
-        console.log("😱", error);
-        console.log("😱😱", error.statusCode);
         await sentryReport(tracer, error, request);
       }
     };

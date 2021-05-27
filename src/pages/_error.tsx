@@ -37,29 +37,30 @@ const CustomErrorComponent = (
 CustomErrorComponent.getInitialProps = async (
   props: NextPageContext,
 ): Promise<ErrorProps> => {
-  const { res, err, asPath } = props;
+  const { res: response, err: error, asPath } = props;
 
   const errorInitialProps: ErrorProps = (await NextError.getInitialProps({
-    res,
-    err,
+    res: response,
+    err: error,
   } as NextPageContext)) as ErrorProps;
-  console.log("FUCK YEAH");
   // Workaround for https://github.com/vercel/next.js/issues/8592.
   errorInitialProps.isReadyToRender = true;
 
-  if (res) {
-    if (res.statusCode === 404) {
+  if (response) {
+    if (response.statusCode === 404) {
       return { statusCode: 404, isReadyToRender: true };
     }
 
-    if (err) {
-      Sentry.captureException(err);
+    if (error) {
+      Sentry.captureException(error);
 
       return errorInitialProps;
     }
   } else {
-    if (err) {
-      Sentry.captureException(err);
+    if (error) {
+      if (!("statusCode" in error && error.statusCode === 404)) {
+        Sentry.captureException(error);
+      }
 
       return errorInitialProps;
     }

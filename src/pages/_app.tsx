@@ -37,7 +37,6 @@ const AccountApp: React.FC = ({ children }) => {
           value={{
             fetcher: async (url) =>
               fetch(url).then(async (response) => {
-                console.log("fetcher's response", response);
                 if (!response.ok) {
                   const error = new SWRError(
                     "An error occurred while fetching the data.",
