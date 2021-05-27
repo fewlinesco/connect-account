@@ -18,6 +18,7 @@ async function sentryReport(
     span.setDisclosedAttribute("error.message", error.message);
 
     if ("statusCode" in error && error.statusCode === 404) {
+      console.log("❌", error.statusCode);
       throw error;
     }
 
