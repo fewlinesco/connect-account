@@ -112,7 +112,7 @@ describe("AddressOverviewPage", () => {
           fetcher: () => mockAddresses.nonPrimaryAddress,
         }}
       >
-        <AddressOverviewPage addressId={mockAddresses.primaryAddress.id} />
+        <AddressOverviewPage addressId={mockAddresses.nonPrimaryAddress.id} />
       </SWRConfig>,
     );
 

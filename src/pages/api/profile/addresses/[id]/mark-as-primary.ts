@@ -84,10 +84,6 @@ const markAsPrimaryHandler: Handler = async (request, response) => {
             throw webErrorFactory(webErrors.addressNotFound);
           }
 
-          if (error.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
-            throw webErrorFactory(webErrors.invalidUserAddressPayload);
-          }
-
           throw webErrorFactory(webErrors.unreachable);
         });
       span.setDisclosedAttribute(
