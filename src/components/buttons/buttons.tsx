@@ -25,7 +25,7 @@ const Button: React.FC<ButtonProps> = (props) => {
   const { buttonProps } = useButton(props, buttonRef);
 
   return (
-    <StyledButton {...buttonProps} variant={variant}>
+    <StyledButton {...buttonProps} variant={variant} ref={buttonRef}>
       {children}
     </StyledButton>
   );
@@ -98,10 +98,20 @@ const ShowMoreButton: React.FC<{
     showMoreButtonRef,
   );
 
+  function toggleOnEnterOrSpacePress(
+    event: React.KeyboardEvent<HTMLDivElement>,
+  ): void {
+    if (event.code === "Enter" || event.code === "Space") {
+      setHideList(!hideList);
+    }
+  }
+
   return (
     <ShowMoreButtonStyle
       {...buttonProps}
+      ref={showMoreButtonRef}
       onClick={() => setHideList(!hideList)}
+      onKeyUp={(event) => toggleOnEnterOrSpacePress(event)}
     >
       {hideList ? (
         <div>
