@@ -36,7 +36,7 @@ describe("Account Web Application add identity", () => {
   });
 
   test("It should show error messages if Identity inputs are filled incorrectly in add identity", async (done) => {
-    expect.assertions(10);
+    expect.assertions(11);
 
     try {
       await authenticateToConnect();
