@@ -1,4 +1,5 @@
 import { useButton } from "@react-aria/button";
+import { AriaButtonProps } from "@react-types/button";
 import React from "react";
 import styled from "styled-components";
 
@@ -13,11 +14,11 @@ enum ButtonVariant {
   GHOST = "GHOST",
 }
 
-type ButtonProps = {
+interface ButtonProps extends AriaButtonProps {
   type: "button" | "submit" | "reset";
-  onClick?: (event?: React.MouseEvent<HTMLElement>) => void;
+  onPress?: () => void;
   variant?: ButtonVariant;
-};
+}
 
 const Button: React.FC<ButtonProps> = (props) => {
   const { variant, children } = props;

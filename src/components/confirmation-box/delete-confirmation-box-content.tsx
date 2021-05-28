@@ -22,7 +22,7 @@ const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
     <DeleteConfirmationText>
       You are about to delete {value}
     </DeleteConfirmationText>
-    <Button type="button" variant={ButtonVariant.DANGER} onClick={onPress}>
+    <Button type="button" variant={ButtonVariant.DANGER} onPress={onPress}>
       Delete this{" "}
       {getIdentityType(type) === IdentityTypes.PHONE
         ? "phone number"
@@ -31,7 +31,7 @@ const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
     <Button
       type="button"
       variant={ButtonVariant.SECONDARY}
-      onClick={() => setOpen(false)}
+      onPress={() => setOpen(false)}
     >
       Keep{" "}
       {getIdentityType(type) === IdentityTypes.PHONE

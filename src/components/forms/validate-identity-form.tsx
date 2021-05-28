@@ -88,7 +88,7 @@ const ValidateIdentityForm: React.FC<{
       <Button
         type="button"
         variant={ButtonVariant.SECONDARY}
-        onClick={async () => {
+        onPress={async () => {
           await fetchJson(
             "/api/auth-connect/re-send-identity-validation-code",
             "POST",
