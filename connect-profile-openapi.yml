@@ -584,7 +584,7 @@ components:
         nickname: Superman
         preferred_username: Clark
         profile: 'https://www.dccomics.com/characters/superman'
-        picture: 'https://www.dccomics.com/sites/default/files/styles/character_thumb_160x160/public/Char_Profile_Superman_20190116_5c3fc2758f6a12.2513240.jpg'
+        picture: 'https://source.unsplash.com/random'
         website: 'https://superman.com'
         gender: male
         birthdate: '1938-04-01'
@@ -600,7 +600,7 @@ components:
         nickname: Superman
         preferred_username: Clark
         profile: 'https://www.dccomics.com/characters/superman'
-        picture: 'https://www.dccomics.com/sites/default/files/styles/character_thumb_160x160/public/Char_Profile_Superman_20190116_5c3fc2758f6a12.2513240.jpg'
+        picture: 'https://source.unsplash.com/random'
         website: 'https://superman.com'
         gender: male
         birthdate: '1938-04-01'
