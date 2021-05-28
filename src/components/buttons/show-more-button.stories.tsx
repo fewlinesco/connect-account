@@ -9,7 +9,7 @@ const StandardShowMoreButton = (): JSX.Element => {
     <ShowMoreButton
       hideList={hideList}
       quantity={4}
-      setHideList={setHideList}
+      onPress={() => setHideList(!hideList)}
     />
   );
 };
