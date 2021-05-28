@@ -25,7 +25,7 @@ describe("Account Web Application add identity", () => {
         "--start-maximized",
         "--disable-dev-shm",
       ],
-      headless: false,
+      headless: true,
       observe: false,
       observeTime: 2000,
     });
@@ -75,6 +75,8 @@ describe("Account Web Application add identity", () => {
       expect(
         await text("Invalid phone number format input.").exists(),
       ).toBeTruthy();
+
+      done();
     } catch (error) {
       await screenshot({
         path: "tests/e2e/screenshots/fill-incorrect-add-identity-input-values.test.png",

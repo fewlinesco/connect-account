@@ -61,7 +61,10 @@ describe("Mark Identity as primary", () => {
       click(link(".test", below("Email addresses")), {
         waitForEvents: ["loadEventFired"],
       });
+
       expect(text(nonPrimaryYet)).toBeTruthy();
+
+      done();
     } catch (error) {
       await screenshot({
         path: "tests/e2e/screenshots/mark-identity-as-primary.test.png",
