@@ -16,6 +16,10 @@ async function sentryReport(
     span.setDisclosedAttribute("error.name", error.name);
     span.setDisclosedAttribute("error.message", error.message);
 
+    if ("statusCode" in error && error.statusCode === 404) {
+      throw error;
+    }
+
     Sentry.withScope((scope) => {
       scope.setTag(request.url || "no URL found", error.name as string);
       scope.setTag("trace.id", span.getTraceId());

@@ -38,6 +38,7 @@ const Wrapper = styled.div<{ statusCode: number }>`
   background-color: ${({ theme }) => theme.colors.background};
   box-shadow: ${({ theme }) => theme.shadows.base};
   padding: ${({ theme }) => theme.spaces.xs};
+  text-align: center;
   margin-top: ${({ statusCode, theme }) =>
     statusCode !== 404 ? theme.spaces.s : ""};
 `;

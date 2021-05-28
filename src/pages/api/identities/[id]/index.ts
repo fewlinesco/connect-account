@@ -68,8 +68,10 @@ const get: Handler = async (request, response) => {
       identityId,
     }).catch((error) => {
       span.setDisclosedAttribute("is Identity fetched", false);
-
-      if (error instanceof IdentityNotFoundError) {
+      if (
+        error instanceof IdentityNotFoundError ||
+        error.message === "Invalid UUID format"
+      ) {
         throw webErrorFactory({
           ...webErrors.identityNotFound,
         });
@@ -151,6 +153,7 @@ const destroy: Handler = (request, response): Promise<void> => {
       })
       .catch((error) => {
         span.setDisclosedAttribute("is Identity removed", false);
+
         if (error instanceof GraphqlErrors) {
           throw webErrorFactory({
             ...webErrors.identityNotFound,
