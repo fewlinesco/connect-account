@@ -1,8 +1,8 @@
 import React from "react";
 import { cache, SWRConfig } from "swr";
 
-import { render, screen, waitFor } from "../config/testing-library-config";
-import * as mockIdentities from "../mocks/identities";
+import { render, screen, waitFor } from "../../config/testing-library-config";
+import * as mockIdentities from "../../mocks/identities";
 import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
 
 jest.mock("@src/configs/db-client", () => {

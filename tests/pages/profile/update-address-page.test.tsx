@@ -2,8 +2,8 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import { SWRConfig } from "swr";
 
-import { render, screen, waitFor } from "../config/testing-library-config";
-import * as mockAddresses from "../mocks/addresses";
+import { render, screen, waitFor } from "../../config/testing-library-config";
+import * as mockAddresses from "../../mocks/addresses";
 import EditAddressPage from "@src/pages/account/profile/addresses/[id]/edit";
 
 jest.mock("@src/configs/db-client", () => {

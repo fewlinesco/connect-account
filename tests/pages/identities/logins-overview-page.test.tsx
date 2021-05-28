@@ -3,8 +3,8 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import { cache, SWRConfig } from "swr";
 
-import { render, screen } from "../config/testing-library-config";
-import * as mockIdentities from "../mocks/identities";
+import { render, screen } from "../../config/testing-library-config";
+import * as mockIdentities from "../../mocks/identities";
 import { SortedIdentities } from "@src/@types/sorted-identities";
 import { IDENTITIES_SECTION_CONTENT } from "@src/components/pages/logins-overview/logins-overview";
 import LoginsOverviewPage from "@src/pages/account/logins";

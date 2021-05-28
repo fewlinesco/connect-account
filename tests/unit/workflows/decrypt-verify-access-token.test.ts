@@ -32,7 +32,7 @@ describe("decryptVerifyAccessToken", () => {
     jest.clearAllMocks();
   });
 
-  test("should return a verified access token if provided a JWS", async (done) => {
+  test("should return a verified access token if provided a JWS", async () => {
     expect.assertions(3);
 
     mockConfigGetter.mockReturnValue({
@@ -68,11 +68,9 @@ describe("decryptVerifyAccessToken", () => {
     expect(oauth2Client.verifyJWT).toHaveBeenCalled();
     expect(oauth2Client.decryptJWE).not.toHaveBeenCalled();
     expect(verifiedToken).toMatchObject(expectedAccessToken);
-
-    done();
   });
 
-  test("should return a decoded access token if provided a non-signed JWE", async (done) => {
+  test("should return a decoded access token if provided a non-signed JWE", async () => {
     expect.assertions(3);
 
     mockConfigGetter.mockReturnValue({
@@ -108,11 +106,9 @@ describe("decryptVerifyAccessToken", () => {
     expect(oauth2Client.verifyJWT).not.toHaveBeenCalled();
     expect(oauth2Client.decryptJWE).toHaveBeenCalled();
     expect(decodedToken).toMatchObject(expectedAccessToken);
-
-    done();
   });
 
-  test("should return a decoded access token if provided a signed JWE", async (done) => {
+  test("should return a decoded access token if provided a signed JWE", async () => {
     expect.assertions(3);
 
     mockConfigGetter.mockReturnValue({
@@ -154,11 +150,9 @@ describe("decryptVerifyAccessToken", () => {
     expect(oauth2Client.verifyJWT).toHaveBeenCalled();
     expect(oauth2Client.decryptJWE).toHaveBeenCalled();
     expect(decodedToken).toMatchObject(expectedAccessToken);
-
-    done();
   });
 
-  test("should throw instance of UnhandledTokenType error if access token isn't neither JWS nor JWE", async (done) => {
+  test("should throw instance of UnhandledTokenType error if access token isn't neither JWS nor JWE", async () => {
     expect.assertions(2);
 
     const wrongFormedToken =
@@ -168,11 +162,9 @@ describe("decryptVerifyAccessToken", () => {
       expect(error).toBeInstanceOf(UnhandledTokenType);
       expect(error.message).toEqual("UnhandledTokenType");
     });
-
-    done();
   });
 
-  test("should throw instance of EnvVar_IsJweSigned_MustBeABoolean error if isJweSigned env var isn't a boolean", async (done) => {
+  test("should throw instance of EnvVar_IsJweSigned_MustBeABoolean error if isJweSigned env var isn't a boolean", async () => {
     expect.assertions(2);
 
     mockConfigGetter.mockReturnValue({
@@ -189,7 +181,5 @@ describe("decryptVerifyAccessToken", () => {
       expect(error).toBeInstanceOf(EnvVar_IsJweSigned_MustBeABoolean);
       expect(error.message).toEqual("EnvVar_IsJweSigned_MustBeABoolean");
     });
-
-    done();
   });
 });

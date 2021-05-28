@@ -2,7 +2,7 @@ import { IdentityTypes } from "@fewlines/connect-management";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
-import { render, screen } from "../config/testing-library-config";
+import { render, screen } from "../../config/testing-library-config";
 import AddIdentityPage from "@src/pages/account/logins/[type]/new";
 
 jest.mock("@src/configs/db-client", () => {

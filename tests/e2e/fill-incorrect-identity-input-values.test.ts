@@ -36,13 +36,15 @@ describe("Account Web Application add identity", () => {
   });
 
   test("It should show error messages if Identity inputs are filled incorrectly in add identity", async (done) => {
-    expect.assertions(10);
+    expect.assertions(11);
 
     try {
       await authenticateToConnect();
 
       expect(await text("LOGINS").exists()).toBeTruthy();
       await click("LOGINS");
+
+      expect(await text("taiko").exists()).toBeTruthy();
 
       await click("Add new email address");
       expect(await text("Email address *").exists()).toBeTruthy();
