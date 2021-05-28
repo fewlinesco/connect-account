@@ -25,7 +25,7 @@ describe("Account Web Application add identity", () => {
         "--start-maximized",
         "--disable-dev-shm",
       ],
-      headless: true,
+      headless: false,
       observe: false,
       observeTime: 2000,
     });
@@ -43,6 +43,8 @@ describe("Account Web Application add identity", () => {
 
       expect(await text("LOGINS").exists()).toBeTruthy();
       await click("LOGINS");
+
+      expect(await text("taiko").exists()).toBeTruthy();
 
       await click("Add new email address");
       expect(await text("Email address *").exists()).toBeTruthy();
