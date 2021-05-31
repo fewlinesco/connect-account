@@ -39,6 +39,7 @@ const UserAddressForm: React.FC<{
     }
   }, [userAddress]);
 
+  console.log(isCreation);
   return (
     <>
       <Form
@@ -55,7 +56,7 @@ const UserAddressForm: React.FC<{
           };
 
           if (isCreation) {
-            await fetchJson(
+            return fetchJson(
               "/api/profile/addresses",
               "POST",
               addressPayload,
@@ -125,6 +126,7 @@ const UserAddressForm: React.FC<{
             });
           }}
           label="Locality *"
+          required
         />
         <InputText
           type="text"
@@ -151,6 +153,7 @@ const UserAddressForm: React.FC<{
             });
           }}
           label="Postal code *"
+          required
         />
         <InputText
           type="text"
@@ -164,6 +167,7 @@ const UserAddressForm: React.FC<{
             });
           }}
           label="Country *"
+          required
         />
         <InputText
           type="text"
