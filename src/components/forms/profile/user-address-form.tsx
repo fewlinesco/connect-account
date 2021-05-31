@@ -39,7 +39,6 @@ const UserAddressForm: React.FC<{
     }
   }, [userAddress]);
 
-  console.log(isCreation);
   return (
     <>
       <Form
