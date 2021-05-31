@@ -1,4 +1,9 @@
-import { getServerSideCookies, Endpoint, HttpStatus } from "@fwl/web";
+import {
+  getServerSideCookies,
+  Endpoint,
+  HttpStatus,
+  setAlertMessagesCookie,
+} from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -20,6 +25,7 @@ import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { generateAlertMessage } from "@src/utils/generate-alert-message";
 import { getProfileAndAddressAccessTokens } from "@src/utils/get-profile-and-address-access-tokens";
 
 const getHandler: Handler = async (request, response) => {
@@ -144,6 +150,13 @@ const patchHandler: Handler = async (request, response) => {
 
       const { data: updatedUserAddress } = await addressClient
         .updateAddress(addressId, userAddressPayload)
+        .then((addressData) => {
+          setAlertMessagesCookie(response, [
+            generateAlertMessage("Your address has been updated"),
+          ]);
+
+          return addressData;
+        })
         .catch((error) => {
           span.setDisclosedAttribute(
             "is Connect.Profile address updated",
@@ -217,23 +230,35 @@ const deleteHandler: Handler = async (request, response) => {
 
       const addressClient = initProfileClient(addressAccessToken);
 
-      await addressClient.deleteAddress(addressId).catch((error) => {
-        span.setDisclosedAttribute("is Connect.Profile address deleted", false);
+      await addressClient
+        .deleteAddress(addressId)
+        .then((addressData) => {
+          setAlertMessagesCookie(response, [
+            generateAlertMessage("Your address has been deleted"),
+          ]);
 
-        if (error.response.status === HttpStatus.UNAUTHORIZED) {
-          throw webErrorFactory(webErrors.invalidProfileToken);
-        }
+          return addressData;
+        })
+        .catch((error) => {
+          span.setDisclosedAttribute(
+            "is Connect.Profile address deleted",
+            false,
+          );
 
-        if (error.response.status === HttpStatus.FORBIDDEN) {
-          throw webErrorFactory(webErrors.invalidScopes);
-        }
+          if (error.response.status === HttpStatus.UNAUTHORIZED) {
+            throw webErrorFactory(webErrors.invalidProfileToken);
+          }
 
-        if (error.response.status === HttpStatus.NOT_FOUND) {
-          throw webErrorFactory(webErrors.addressNotFound);
-        }
+          if (error.response.status === HttpStatus.FORBIDDEN) {
+            throw webErrorFactory(webErrors.invalidScopes);
+          }
 
-        throw webErrorFactory(webErrors.unreachable);
-      });
+          if (error.response.status === HttpStatus.NOT_FOUND) {
+            throw webErrorFactory(webErrors.addressNotFound);
+          }
+
+          throw webErrorFactory(webErrors.unreachable);
+        });
 
       span.setDisclosedAttribute("is Connect.Profile address deleted", true);
 
