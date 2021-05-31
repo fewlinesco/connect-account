@@ -1,7 +1,7 @@
 import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 
-import { StoriesContainer } from "../containers/stories-container";
+import { StoriesContainer } from "../../containers/stories-container";
 import { UpdateIdentityForm } from "./update-identity-form";
 
 const UpdateEmailForm = (): JSX.Element => {

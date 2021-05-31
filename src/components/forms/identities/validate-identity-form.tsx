@@ -4,9 +4,9 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
-import { InputText } from "../input/input-text";
-import { WrongInputError } from "../input/wrong-input-error";
-import { Form } from "./form";
+import { InputText } from "../../input/input-text";
+import { WrongInputError } from "../../input/wrong-input-error";
+import { Form } from "../form";
 import { Box } from "@src/components/box/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";

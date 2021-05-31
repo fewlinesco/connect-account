@@ -13,10 +13,11 @@ type InputTextProps = {
   className?: string;
   maxLength?: number;
   children?: React.ReactNode;
+  required?: boolean;
 };
 
 const InputText: React.FC<InputTextProps> = (props) => {
-  const { label, className, children } = props;
+  const { label, className, children, required } = props;
 
   const inputRef = React.useRef(null);
   const { labelProps, inputProps } = useTextField(props, inputRef);
@@ -27,10 +28,20 @@ const InputText: React.FC<InputTextProps> = (props) => {
       {children ? (
         <ChildrenWrapper>
           {children}
-          <InputElement {...inputProps} ref={inputRef} className={className} />
+          <InputElement
+            {...inputProps}
+            ref={inputRef}
+            className={className}
+            required={required}
+          />
         </ChildrenWrapper>
       ) : (
-        <InputElement {...inputProps} ref={inputRef} className={className} />
+        <InputElement
+          {...inputProps}
+          ref={inputRef}
+          className={className}
+          required={required}
+        />
       )}
     </Label>
   );

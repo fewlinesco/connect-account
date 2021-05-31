@@ -90,6 +90,7 @@ const UserProfileForm: React.FC<{
             });
           }}
           label="Name *"
+          required
         />
         <InputText
           type="text"
