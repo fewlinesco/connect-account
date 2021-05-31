@@ -115,7 +115,7 @@ const ProfileOverview: React.FC<{
           <ShowMoreButton
             hideList={hideAddressList}
             quantity={userAddresses.length - 1}
-            setHideList={setHideAddressList}
+            onPress={() => setHideAddressList(!hideAddressList)}
           />
         </Flex>
       ) : null}

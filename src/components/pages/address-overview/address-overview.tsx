@@ -54,7 +54,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
           <Button
             type="button"
             variant={ButtonVariant.SECONDARY}
-            onClick={() => {
+            onPress={() => {
               setPreventAnimation(false);
               setConfirmationBoxOpen(true);
             }}
@@ -73,7 +73,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
               <Button
                 type="button"
                 variant={ButtonVariant.PRIMARY}
-                onClick={() => {
+                onPress={() => {
                   fetchJson(
                     `/api/profile/addresses/${address?.id}/mark-as-primary`,
                     "POST",
@@ -91,7 +91,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
               <Button
                 type="button"
                 variant={ButtonVariant.SECONDARY}
-                onClick={() => {
+                onPress={() => {
                   setConfirmationBoxOpen(false);
                 }}
               >
@@ -104,7 +104,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
       <Button
         type="button"
         variant={ButtonVariant.GHOST}
-        onClick={() => {
+        onPress={() => {
           setPreventAnimation(false);
           setConfirmationBoxOpen(true);
         }}
@@ -123,7 +123,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
           <Button
             type="button"
             variant={ButtonVariant.PRIMARY}
-            onClick={() => {
+            onPress={() => {
               fetchJson(`/api/profile/addresses/${address?.id}`, "DELETE", {})
                 .then(() => router && router.push("/account/profile"))
                 .catch((error) => {
@@ -137,7 +137,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
           <Button
             type="button"
             variant={ButtonVariant.SECONDARY}
-            onClick={() => {
+            onPress={() => {
               setConfirmationBoxOpen(false);
             }}
           >

@@ -1,4 +1,5 @@
 import { useButton } from "@react-aria/button";
+import { AriaButtonProps } from "@react-types/button";
 import React from "react";
 import styled from "styled-components";
 
@@ -13,11 +14,11 @@ enum ButtonVariant {
   GHOST = "GHOST",
 }
 
-type ButtonProps = {
+interface ButtonProps extends AriaButtonProps {
   type: "button" | "submit" | "reset";
-  onClick?: (event?: React.MouseEvent<HTMLElement>) => void;
+  onPress?: () => void;
   variant?: ButtonVariant;
-};
+}
 
 const Button: React.FC<ButtonProps> = (props) => {
   const { variant, children } = props;
@@ -86,33 +87,22 @@ const StyledButton = styled.button<Record<string, unknown>>`
   `};
 `;
 
-const ShowMoreButton: React.FC<{
+interface ShowMoreButtonProps extends AriaButtonProps {
   hideList: boolean;
   quantity: number;
-  setHideList: React.Dispatch<React.SetStateAction<boolean>>;
-}> = (props) => {
-  const { hideList, quantity, setHideList } = props;
+  onPress: () => void;
+}
+
+const ShowMoreButton: React.FC<ShowMoreButtonProps> = (props) => {
+  const { hideList, quantity } = props;
   const showMoreButtonRef = React.useRef(null);
   const { buttonProps } = useButton(
     { ...props, elementType: "div" },
     showMoreButtonRef,
   );
 
-  function toggleOnEnterOrSpacePress(
-    event: React.KeyboardEvent<HTMLDivElement>,
-  ): void {
-    if (event.code === "Enter" || event.code === "Space") {
-      setHideList(!hideList);
-    }
-  }
-
   return (
-    <ShowMoreButtonStyle
-      {...buttonProps}
-      ref={showMoreButtonRef}
-      onClick={() => setHideList(!hideList)}
-      onKeyUp={(event) => toggleOnEnterOrSpacePress(event)}
-    >
+    <ShowMoreButtonStyle {...buttonProps} ref={showMoreButtonRef}>
       {hideList ? (
         <div>
           Show {quantity} more <Triangle rotate={hideList} />
@@ -126,7 +116,7 @@ const ShowMoreButton: React.FC<{
   );
 };
 
-const ShowMoreButtonStyle = styled.div`
+const ShowMoreButtonStyle = styled.div<Record<string, unknown>>`
   display: flex;
   justify-content: center;
   align-items: center;

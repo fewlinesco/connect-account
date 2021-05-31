@@ -68,7 +68,7 @@ const LoginsOverview: React.FC = () => {
           <ShowMoreButton
             hideList={hideEmailList}
             quantity={sortedIdentities.emailIdentities.length - 1}
-            setHideList={setHideEmailList}
+            onPress={() => setHideEmailList(!hideEmailList)}
           />
         </Flex>
       ) : null}
@@ -96,7 +96,7 @@ const LoginsOverview: React.FC = () => {
           <ShowMoreButton
             hideList={hidePhoneList}
             quantity={sortedIdentities.phoneIdentities.length - 1}
-            setHideList={setHidePhoneList}
+            onPress={() => setHidePhoneList(!hidePhoneList)}
           />
         </Flex>
       ) : null}
