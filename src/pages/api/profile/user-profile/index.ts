@@ -138,7 +138,7 @@ const patchHandler: Handler = async (request, response) => {
         .patchProfile(userProfilePayload)
         .then((profileData) => {
           setAlertMessagesCookie(response, [
-            generateAlertMessage("Your profile has been update"),
+            generateAlertMessage("Your profile has been updated"),
           ]);
 
           return profileData;

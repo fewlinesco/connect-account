@@ -1,4 +1,9 @@
-import { getServerSideCookies, Endpoint, HttpStatus } from "@fwl/web";
+import {
+  getServerSideCookies,
+  Endpoint,
+  HttpStatus,
+  setAlertMessagesCookie,
+} from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -20,6 +25,7 @@ import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { generateAlertMessage } from "@src/utils/generate-alert-message";
 import { getProfileAndAddressAccessTokens } from "@src/utils/get-profile-and-address-access-tokens";
 
 const getHandler: Handler = async (request, response) => {
@@ -126,6 +132,13 @@ const postHandler: Handler = async (request, response) => {
 
       const { data: createdAddress } = await addressClient
         .createAddress(userAddressPayload)
+        .then((addressData) => {
+          setAlertMessagesCookie(response, [
+            generateAlertMessage("Your address has been added"),
+          ]);
+
+          return addressData;
+        })
         .catch((error) => {
           span.setDisclosedAttribute(
             "is Connect.Profile new address created",

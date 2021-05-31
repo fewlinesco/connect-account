@@ -1,4 +1,9 @@
-import { getServerSideCookies, Endpoint, HttpStatus } from "@fwl/web";
+import {
+  getServerSideCookies,
+  Endpoint,
+  HttpStatus,
+  setAlertMessagesCookie,
+} from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -20,6 +25,7 @@ import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { generateAlertMessage } from "@src/utils/generate-alert-message";
 import { getProfileAndAddressAccessTokens } from "@src/utils/get-profile-and-address-access-tokens";
 
 const markAsPrimaryHandler: Handler = async (request, response) => {
@@ -66,6 +72,13 @@ const markAsPrimaryHandler: Handler = async (request, response) => {
 
       const { data: address } = await addressClient
         .markUserAddressAsPrimary(addressId)
+        .then((addressData) => {
+          setAlertMessagesCookie(response, [
+            generateAlertMessage("Your address has been marked as primary"),
+          ]);
+
+          return addressData;
+        })
         .catch((error) => {
           span.setDisclosedAttribute(
             "is Connect.Profile address marked as primary",
