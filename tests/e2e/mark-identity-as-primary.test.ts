@@ -61,6 +61,7 @@ describe("Mark Identity as primary", () => {
       click(link(".test", below("Email addresses")), {
         waitForEvents: ["loadEventFired"],
       });
+
       expect(text(nonPrimaryYet)).toBeTruthy();
 
       done();

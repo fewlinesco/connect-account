@@ -2,8 +2,8 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import { SWRConfig } from "swr";
 
-import { render, screen } from "../config/testing-library-config";
-import * as mockUserProfile from "../mocks/user-profile";
+import { render, screen } from "../../config/testing-library-config";
+import * as mockUserProfile from "../../mocks/user-profile";
 import UpdateUserProfilePage from "@src/pages/account/profile/user-profile/edit";
 
 jest.mock("@src/configs/db-client", () => {

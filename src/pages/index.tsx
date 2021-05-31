@@ -23,7 +23,7 @@ import { Home } from "@src/components/pages/home/home";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import { oauth2Client } from "@src/configs/oauth2-client";
-import rateLimitinConfig from "@src/configs/rate-limiting-config";
+import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
@@ -46,7 +46,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     context,
     [
       tracingMiddleware(getTracer()),
-      rateLimitingMiddleware(getTracer(), logger, rateLimitinConfig),
+      rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
       recoveryMiddleware(getTracer()),
       sentryMiddleware(getTracer()),
       errorMiddleware(getTracer()),

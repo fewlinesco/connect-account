@@ -112,7 +112,7 @@ describe("auth-middleware", () => {
   });
 
   describe("Refresh tokens", () => {
-    test("should refresh the user tokens if a `TokenExpiredError` exception is thrown and a user is provided, and should not redirect", async (done) => {
+    test("should refresh the user tokens if a `TokenExpiredError` exception is thrown and a user is provided, and should not redirect", async () => {
       expect.assertions(5);
 
       const access_token = generateHS256JWS({
@@ -146,8 +146,6 @@ describe("auth-middleware", () => {
       expect(spiedOnRefreshTokensFlow).toHaveBeenCalled();
       expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();
       expect(spiedOnGetAndPutUser).toHaveBeenCalled();
-
-      done();
     });
   });
 });
