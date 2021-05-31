@@ -1,7 +1,7 @@
 import { IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 
-import { StoriesContainer } from "../containers/stories-container";
+import { StoriesContainer } from "../../containers/stories-container";
 import { ValidateIdentityForm } from "./validate-identity-form";
 
 const ValidateEmailForm = (): JSX.Element => {

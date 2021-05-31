@@ -5,11 +5,11 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
-import { InputText } from "../input/input-text";
-import { StyledPhoneInput } from "../input/styled-phone-input";
-import { WrongInputError } from "../input/wrong-input-error";
-import { SkeletonTextLine } from "../skeletons/skeletons";
-import { Form } from "./form";
+import { InputText } from "../../input/input-text";
+import { StyledPhoneInput } from "../../input/styled-phone-input";
+import { WrongInputError } from "../../input/wrong-input-error";
+import { SkeletonTextLine } from "../../skeletons/skeletons";
+import { Form } from "../form";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Box } from "@src/components/box/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
