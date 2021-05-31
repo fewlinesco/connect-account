@@ -13,10 +13,11 @@ type InputTextProps = {
   className?: string;
   maxLength?: number;
   children?: React.ReactNode;
+  errorMessage?: string;
 };
 
 const InputText: React.FC<InputTextProps> = (props) => {
-  const { label, className, children } = props;
+  const { label, className, children, errorMessage } = props;
 
   const inputRef = React.useRef(null);
   const { labelProps, inputProps } = useTextField(props, inputRef);
@@ -27,11 +28,22 @@ const InputText: React.FC<InputTextProps> = (props) => {
       {children ? (
         <ChildrenWrapper>
           {children}
-          <InputElement {...inputProps} ref={inputRef} className={className} />
+          <InputElement
+            {...inputProps}
+            ref={inputRef}
+            className={className}
+            errorMessage={errorMessage}
+          />
         </ChildrenWrapper>
       ) : (
-        <InputElement {...inputProps} ref={inputRef} className={className} />
+        <InputElement
+          {...inputProps}
+          ref={inputRef}
+          className={className}
+          errorMessage={errorMessage}
+        />
       )}
+      {errorMessage ? <ErrorMessage>error</ErrorMessage> : null}
     </Label>
   );
 };
@@ -40,6 +52,8 @@ const InputElement = styled.input<Record<string, unknown>>`
   background: ${({ theme }) => theme.colors.background};
   border: 0.1rem solid ${({ theme }) => theme.colors.blacks[2]};
   border-radius: ${({ theme }) => theme.radii[0]};
+  border-color: ${({ errorMessage, theme }) =>
+    errorMessage ? theme.colors.red : "black"};
   height: 4rem;
   padding-left: 1.6rem;
   width: 100%;
@@ -72,6 +86,11 @@ const ChildrenWrapper = styled.div`
     outline: Highlight auto 0.1rem;
     outline: -webkit-focus-ring-color auto 0.1rem;
   }
+`;
+
+const ErrorMessage = styled.p`
+  color: ${({ theme }) => theme.colors.red};
+  margin-bottom: 2rem;
 `;
 
 export { InputText };

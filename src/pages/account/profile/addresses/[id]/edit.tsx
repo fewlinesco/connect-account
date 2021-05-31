@@ -33,7 +33,10 @@ const EditAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
   return (
     <Layout breadcrumbs={"Address | edit"} title="Personal information">
       <Container>
-        <UserAddressForm userAddress={address ? address : undefined} />
+        <UserAddressForm
+          userAddress={address ? address : undefined}
+          isCreation={false}
+        />
       </Container>
     </Layout>
   );
