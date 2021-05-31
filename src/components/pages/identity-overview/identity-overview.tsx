@@ -101,7 +101,7 @@ const IdentityOverview: React.FC<{
             <Button
               type="button"
               variant={ButtonVariant.SECONDARY}
-              onClick={() => {
+              onPress={() => {
                 setPreventAnimation(false);
                 setConfirmationBoxContent(
                   <PrimaryConfirmationBoxContent
@@ -126,7 +126,7 @@ const IdentityOverview: React.FC<{
             <Button
               type="button"
               variant={ButtonVariant.GHOST}
-              onClick={() => {
+              onPress={() => {
                 setPreventAnimation(false);
                 setConfirmationBoxContent(
                   <DeleteConfirmationBoxContent

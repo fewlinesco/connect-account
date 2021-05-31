@@ -26,7 +26,7 @@ const PrimaryConfirmationBox = (): JSX.Element => {
       <Button
         type="button"
         variant={ButtonVariant.PRIMARY}
-        onClick={() => {
+        onPress={() => {
           setPreventAnimation(false);
           setOpen(!open);
           setConfirmationBoxContent(
@@ -69,7 +69,7 @@ const DangerConfirmationBox = (): JSX.Element => {
         <Button
           type="button"
           variant={ButtonVariant.PRIMARY}
-          onClick={() => {
+          onPress={() => {
             setPreventAnimation(false);
             setOpen(!open);
             setConfirmationBoxContent(

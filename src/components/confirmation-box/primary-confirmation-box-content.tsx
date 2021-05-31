@@ -17,14 +17,14 @@ const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxContentProps
           You are about to set {value} as primary.
         </PrimaryConfirmationText>
 
-        <Button type="button" variant={ButtonVariant.PRIMARY} onClick={onPress}>
+        <Button type="button" variant={ButtonVariant.PRIMARY} onPress={onPress}>
           Confirm
         </Button>
 
         <Button
           type="button"
           variant={ButtonVariant.SECONDARY}
-          onClick={() => {
+          onPress={() => {
             setOpen(false);
           }}
         >
