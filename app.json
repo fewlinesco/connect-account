@@ -23,7 +23,7 @@
     "NEXT_TELEMETRY_DISABLED": "true",
     "NEXT_PUBLIC_SENTRY_ENVIRONMENT": "preview",
     "NEXT_PUBLIC_FEATURE_FLAG": "false",
-    "PROFILE_MOCK_SERVER_URL": "https://stoplight.io/mocks/fewlines/profile-test/68676/"
+    "PROFILE_MOCK_SERVER_URL": "https://fewlines-pro-cu-kn4jnf--ughcnx.herokuapp.com"
   },
   "environments": {
     "review": {
