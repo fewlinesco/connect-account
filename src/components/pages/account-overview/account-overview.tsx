@@ -12,7 +12,7 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 
 const SECTION_LIST_CONTENT = {
   PERSONAL_INFORMATION: {
-    text: "NEED REFINEMENT - Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
+    text: "Basic information about you, like your name, or addresses.",
     icon: <ProfileIcon />,
   },
   LOGINS: {
