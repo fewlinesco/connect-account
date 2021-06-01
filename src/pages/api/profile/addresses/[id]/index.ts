@@ -1,9 +1,4 @@
-import {
-  getServerSideCookies,
-  Endpoint,
-  HttpStatus,
-  setAlertMessagesCookie,
-} from "@fwl/web";
+import { Endpoint, HttpStatus, setAlertMessagesCookie } from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -16,8 +11,6 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
-import { UserCookie } from "@src/@types/user-cookie";
-import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import { initProfileClient } from "@src/configs/profile-client";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
@@ -26,7 +19,6 @@ import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { generateAlertMessage } from "@src/utils/generate-alert-message";
-import { getProfileAndAddressAccessTokens } from "@src/utils/get-profile-and-address-access-tokens";
 
 const getHandler: Handler = async (request, response) => {
   const webErrors = {
@@ -41,36 +33,15 @@ const getHandler: Handler = async (request, response) => {
   return getTracer().span(
     "GET /api/profile/addresses/[id] handler",
     async (span) => {
-      const userCookie = await getServerSideCookies<UserCookie>(request, {
-        cookieName: "user-cookie",
-        isCookieSealed: true,
-        cookieSalt: configVariables.cookieSalt,
-      });
-
-      if (!userCookie) {
-        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-        response.setHeader("location", "/");
-        response.end();
-        return;
-      }
-
       const addressId = request.query.id;
 
       if (!addressId || typeof addressId !== "string") {
         throw webErrorFactory(webErrors.invalidQueryString);
       }
 
-      const { addressAccessToken } = await getProfileAndAddressAccessTokens(
-        userCookie.access_token,
-      );
-      span.setDisclosedAttribute(
-        "is Connect.Profile access token available",
-        true,
-      );
+      const { userAddressClient } = await initProfileClient(request, span);
 
-      const addressClient = initProfileClient(addressAccessToken);
-
-      const { data: profileAddresses } = await addressClient
+      const { data: profileAddresses } = await userAddressClient
         .getAddresses()
         .catch((error) => {
           span.setDisclosedAttribute(
@@ -117,39 +88,16 @@ const patchHandler: Handler = async (request, response) => {
   return getTracer().span(
     "PATCH /api/profile/addresses/[id] handler",
     async (span) => {
-      const userCookie = await getServerSideCookies<UserCookie>(request, {
-        cookieName: "user-cookie",
-        isCookieSealed: true,
-        cookieSalt: configVariables.cookieSalt,
-      });
-
-      if (!userCookie) {
-        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-        response.setHeader("location", "/");
-        response.end();
-        return;
-      }
-
       const addressId = request.query.id;
 
       if (!addressId || typeof addressId !== "string") {
         throw webErrorFactory(webErrors.invalidQueryString);
       }
 
-      const userAddressPayload = request.body;
+      const { userAddressClient } = await initProfileClient(request, span);
 
-      const { addressAccessToken } = await getProfileAndAddressAccessTokens(
-        userCookie.access_token,
-      );
-      span.setDisclosedAttribute(
-        "is Connect.Profile access token available",
-        true,
-      );
-
-      const addressClient = initProfileClient(addressAccessToken);
-
-      const { data: updatedUserAddress } = await addressClient
-        .updateAddress(addressId, userAddressPayload)
+      const { data: updatedUserAddress } = await userAddressClient
+        .updateAddress(addressId, request.body)
         .then((addressData) => {
           setAlertMessagesCookie(response, [
             generateAlertMessage("Your address has been updated"),
@@ -201,36 +149,15 @@ const deleteHandler: Handler = async (request, response) => {
   return getTracer().span(
     "DELETE /api/profile/addresses/[id] handler",
     async (span) => {
-      const userCookie = await getServerSideCookies<UserCookie>(request, {
-        cookieName: "user-cookie",
-        isCookieSealed: true,
-        cookieSalt: configVariables.cookieSalt,
-      });
-
-      if (!userCookie) {
-        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-        response.setHeader("location", "/");
-        response.end();
-        return;
-      }
-
       const addressId = request.query.id;
 
       if (!addressId || typeof addressId !== "string") {
         throw webErrorFactory(webErrors.invalidQueryString);
       }
 
-      const { addressAccessToken } = await getProfileAndAddressAccessTokens(
-        userCookie.access_token,
-      );
-      span.setDisclosedAttribute(
-        "is Connect.Profile access token available",
-        true,
-      );
+      const { userAddressClient } = await initProfileClient(request, span);
 
-      const addressClient = initProfileClient(addressAccessToken);
-
-      await addressClient
+      await userAddressClient
         .deleteAddress(addressId)
         .then((addressData) => {
           setAlertMessagesCookie(response, [
