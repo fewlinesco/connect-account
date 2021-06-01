@@ -141,7 +141,6 @@ const UserInfoSection: React.FC<{
           <CategoryName>{categoryName}</CategoryName>
           {children}
         </CategoryContent>
-        <RightChevron />
       </BoxedLink>
       <Separator />
     </>
