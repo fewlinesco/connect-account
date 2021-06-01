@@ -12,7 +12,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import { logger } from "@src/configs/logger";
-import { initProfileClient } from "@src/configs/profile-client";
+import { wrappedProfileClient } from "@src/configs/profile-client";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
@@ -31,7 +31,7 @@ const getHandler: Handler = async (request, response) => {
   return getTracer().span(
     "GET /api/profile/addresses handler",
     async (span) => {
-      const { userAddressClient } = await initProfileClient(request, span);
+      const { userAddressClient } = await wrappedProfileClient(request, span);
 
       const { data: userAddresses } = await userAddressClient
         .getAddresses()
@@ -75,7 +75,7 @@ const postHandler: Handler = async (request, response) => {
   return getTracer().span(
     "POST /api/profile/addresses handler",
     async (span) => {
-      const { userAddressClient } = await initProfileClient(request, span);
+      const { userAddressClient } = await wrappedProfileClient(request, span);
 
       const { data: createdAddress } = await userAddressClient
         .createAddress(request.body)

@@ -12,7 +12,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import { logger } from "@src/configs/logger";
-import { initProfileClient } from "@src/configs/profile-client";
+import { wrappedProfileClient } from "@src/configs/profile-client";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
@@ -31,7 +31,7 @@ const getHandler: Handler = async (request, response) => {
   return getTracer().span(
     "GET /api/profile/user-profile handler",
     async (span) => {
-      const { userProfileClient } = await initProfileClient(request, span);
+      const { userProfileClient } = await wrappedProfileClient(request, span);
 
       const { data: userProfile } = await userProfileClient
         .getProfile()
@@ -79,7 +79,7 @@ const patchHandler: Handler = async (request, response) => {
   return getTracer().span(
     "PATCH /api/profile/user-profile handler",
     async (span) => {
-      const { userProfileClient } = await initProfileClient(request, span);
+      const { userProfileClient } = await wrappedProfileClient(request, span);
 
       const { data: updatedUserProfile } = await userProfileClient
         .patchProfile(request.body)
@@ -137,7 +137,7 @@ const postHandler: Handler = async (request, response) => {
   return getTracer().span(
     "POST /api/profile/user-profile handler",
     async (span) => {
-      const { userProfileClient } = await initProfileClient(request, span);
+      const { userProfileClient } = await wrappedProfileClient(request, span);
 
       const { data: createdUserProfile } = await userProfileClient
         .createProfile(request.body)

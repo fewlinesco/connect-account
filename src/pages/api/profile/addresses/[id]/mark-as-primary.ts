@@ -12,7 +12,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import { logger } from "@src/configs/logger";
-import { initProfileClient } from "@src/configs/profile-client";
+import { wrappedProfileClient } from "@src/configs/profile-client";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
@@ -39,7 +39,7 @@ const markAsPrimaryHandler: Handler = async (request, response) => {
         throw webErrorFactory(webErrors.invalidQueryString);
       }
 
-      const { userAddressClient } = await initProfileClient(request, span);
+      const { userAddressClient } = await wrappedProfileClient(request, span);
 
       const { data: address } = await userAddressClient
         .markUserAddressAsPrimary(addressId)

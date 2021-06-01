@@ -8,7 +8,16 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { NoUserCookieFoundError } from "@src/errors/errors";
 import { getProfileAndAddressAccessTokens } from "@src/utils/get-profile-and-address-access-tokens";
 
-async function initProfileClient(
+function initProfileClient(accessToken: string): ConnectProfileApi {
+  return new ConnectProfileApi(
+    new Configuration({
+      accessToken,
+      basePath: configVariables.connectProfileUrl,
+    }),
+  );
+}
+
+async function wrappedProfileClient(
   request: NextApiRequest,
   span: Span,
 ): Promise<{
@@ -30,21 +39,10 @@ async function initProfileClient(
 
   span.setDisclosedAttribute("is Connect.Profile access token available", true);
 
-  const userProfileClient = new ConnectProfileApi(
-    new Configuration({
-      accessToken: profileAccessToken,
-      basePath: configVariables.connectProfileUrl,
-    }),
-  );
-
-  const userAddressClient = new ConnectProfileApi(
-    new Configuration({
-      accessToken: addressAccessToken,
-      basePath: configVariables.connectProfileUrl,
-    }),
-  );
-
-  return { userProfileClient, userAddressClient };
+  return {
+    userProfileClient: initProfileClient(profileAccessToken),
+    userAddressClient: initProfileClient(addressAccessToken),
+  };
 }
 
-export { initProfileClient };
+export { initProfileClient, wrappedProfileClient };
