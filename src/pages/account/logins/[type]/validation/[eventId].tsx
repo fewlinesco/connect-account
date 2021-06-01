@@ -12,7 +12,7 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { Container } from "@src/components/containers/container";
-import { ValidateIdentityForm } from "@src/components/forms/validate-identity-form";
+import { ValidateIdentityForm } from "@src/components/forms/identities/validate-identity-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
