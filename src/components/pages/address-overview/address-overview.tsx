@@ -19,7 +19,9 @@ import {
 
 const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
   const router = useRouter();
-  const [confirmationBoxOpen, setConfirmationBoxOpen] =
+  const [primaryConfirmationBoxOpen, setPrimaryConfirmationBoxOpen] =
+    React.useState<boolean>(false);
+  const [deleteConfirmationBoxOpen, setDeleteConfirmationBoxOpen] =
     React.useState<boolean>(false);
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
 
@@ -56,15 +58,15 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
             variant={ButtonVariant.SECONDARY}
             onPress={() => {
               setPreventAnimation(false);
-              setConfirmationBoxOpen(true);
+              setPrimaryConfirmationBoxOpen(true);
             }}
           >
             Use this address as my main address
           </Button>
 
           <ConfirmationBox
-            open={confirmationBoxOpen}
-            setOpen={setConfirmationBoxOpen}
+            open={primaryConfirmationBoxOpen}
+            setOpen={setPrimaryConfirmationBoxOpen}
             preventAnimation={preventAnimation}
           >
             <>
@@ -92,7 +94,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                 type="button"
                 variant={ButtonVariant.SECONDARY}
                 onPress={() => {
-                  setConfirmationBoxOpen(false);
+                  setPrimaryConfirmationBoxOpen(false);
                 }}
               >
                 Cancel
@@ -106,15 +108,15 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
         variant={ButtonVariant.GHOST}
         onPress={() => {
           setPreventAnimation(false);
-          setConfirmationBoxOpen(true);
+          setDeleteConfirmationBoxOpen(true);
         }}
       >
         Delete this address
       </Button>
 
       <ConfirmationBox
-        open={confirmationBoxOpen}
-        setOpen={setConfirmationBoxOpen}
+        open={deleteConfirmationBoxOpen}
+        setOpen={setDeleteConfirmationBoxOpen}
         preventAnimation={preventAnimation}
       >
         <>
@@ -138,7 +140,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
             type="button"
             variant={ButtonVariant.SECONDARY}
             onPress={() => {
-              setConfirmationBoxOpen(false);
+              setDeleteConfirmationBoxOpen(false);
             }}
           >
             Keep address
