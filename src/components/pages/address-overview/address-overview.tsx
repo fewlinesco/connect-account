@@ -51,58 +51,60 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
           Update this address
         </FakeButton>
       </NeutralLink>
-      {address && address.primary ? null : (
-        <>
-          <Button
-            type="button"
-            variant={ButtonVariant.SECONDARY}
-            onPress={() => {
-              setPreventAnimation(false);
-              setPrimaryConfirmationBoxOpen(true);
-            }}
-          >
-            Use this address as my main address
-          </Button>
+      {address ? (
+        address.primary ? null : (
+          <>
+            <Button
+              type="button"
+              variant={ButtonVariant.SECONDARY}
+              onPress={() => {
+                setPreventAnimation(false);
+                setPrimaryConfirmationBoxOpen(true);
+              }}
+            >
+              Use this address as my main address
+            </Button>
 
-          <ConfirmationBox
-            open={primaryConfirmationBoxOpen}
-            setOpen={setPrimaryConfirmationBoxOpen}
-            preventAnimation={preventAnimation}
-          >
-            <>
-              <p>You are about to set this address as main.</p>
+            <ConfirmationBox
+              open={primaryConfirmationBoxOpen}
+              setOpen={setPrimaryConfirmationBoxOpen}
+              preventAnimation={preventAnimation}
+            >
+              <>
+                <p>You are about to set this address as main.</p>
 
-              <Button
-                type="button"
-                variant={ButtonVariant.PRIMARY}
-                onPress={() => {
-                  fetchJson(
-                    `/api/profile/addresses/${address?.id}/mark-as-primary`,
-                    "POST",
-                    {},
-                  )
-                    .then(() => router && router.push("/account/profile"))
-                    .catch((error) => {
-                      throw error;
-                    });
-                }}
-              >
-                Confirm
-              </Button>
+                <Button
+                  type="button"
+                  variant={ButtonVariant.PRIMARY}
+                  onPress={() => {
+                    fetchJson(
+                      `/api/profile/addresses/${address?.id}/mark-as-primary`,
+                      "POST",
+                      {},
+                    )
+                      .then(() => router && router.push("/account/profile"))
+                      .catch((error) => {
+                        throw error;
+                      });
+                  }}
+                >
+                  Confirm
+                </Button>
 
-              <Button
-                type="button"
-                variant={ButtonVariant.SECONDARY}
-                onPress={() => {
-                  setPrimaryConfirmationBoxOpen(false);
-                }}
-              >
-                Cancel
-              </Button>
-            </>
-          </ConfirmationBox>
-        </>
-      )}
+                <Button
+                  type="button"
+                  variant={ButtonVariant.SECONDARY}
+                  onPress={() => {
+                    setPrimaryConfirmationBoxOpen(false);
+                  }}
+                >
+                  Cancel
+                </Button>
+              </>
+            </ConfirmationBox>
+          </>
+        )
+      ) : null}
       <Button
         type="button"
         variant={ButtonVariant.GHOST}
