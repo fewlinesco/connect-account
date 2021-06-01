@@ -1,9 +1,4 @@
-import {
-  getServerSideCookies,
-  Endpoint,
-  HttpStatus,
-  setAlertMessagesCookie,
-} from "@fwl/web";
+import { Endpoint, HttpStatus, setAlertMessagesCookie } from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -16,17 +11,14 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
-import { UserCookie } from "@src/@types/user-cookie";
-import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
-import { initProfileClient } from "@src/configs/profile-client";
+import { wrappedProfileClient } from "@src/configs/profile-client";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { generateAlertMessage } from "@src/utils/generate-alert-message";
-import { getProfileAndAddressAccessTokens } from "@src/utils/get-profile-and-address-access-tokens";
 
 const getHandler: Handler = async (request, response) => {
   const webErrors = {
@@ -39,31 +31,9 @@ const getHandler: Handler = async (request, response) => {
   return getTracer().span(
     "GET /api/profile/user-profile handler",
     async (span) => {
-      const userCookie = await getServerSideCookies<UserCookie>(request, {
-        cookieName: "user-cookie",
-        isCookieSealed: true,
-        cookieSalt: configVariables.cookieSalt,
-      });
+      const { userProfileClient } = await wrappedProfileClient(request, span);
 
-      if (!userCookie) {
-        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-        response.setHeader("location", "/");
-        response.end();
-        return;
-      }
-
-      const { profileAccessToken } = await getProfileAndAddressAccessTokens(
-        userCookie.access_token,
-      );
-
-      span.setDisclosedAttribute(
-        "is Connect.Profile access token available",
-        true,
-      );
-
-      const profileClient = initProfileClient(profileAccessToken);
-
-      const { data: userProfile } = await profileClient
+      const { data: userProfile } = await userProfileClient
         .getProfile()
         .catch((error) => {
           span.setDisclosedAttribute(
@@ -109,33 +79,10 @@ const patchHandler: Handler = async (request, response) => {
   return getTracer().span(
     "PATCH /api/profile/user-profile handler",
     async (span) => {
-      const userCookie = await getServerSideCookies<UserCookie>(request, {
-        cookieName: "user-cookie",
-        isCookieSealed: true,
-        cookieSalt: configVariables.cookieSalt,
-      });
+      const { userProfileClient } = await wrappedProfileClient(request, span);
 
-      if (!userCookie) {
-        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-        response.setHeader("location", "/");
-        response.end();
-        return;
-      }
-
-      const { userProfilePayload } = request.body;
-
-      const { profileAccessToken } = await getProfileAndAddressAccessTokens(
-        userCookie.access_token,
-      );
-      span.setDisclosedAttribute(
-        "is Connect.Profile access token available",
-        true,
-      );
-
-      const profileClient = initProfileClient(profileAccessToken);
-
-      const { data: updatedUserProfile } = await profileClient
-        .patchProfile(userProfilePayload)
+      const { data: updatedUserProfile } = await userProfileClient
+        .patchProfile(request.body)
         .then((profileData) => {
           setAlertMessagesCookie(response, [
             generateAlertMessage("Your profile has been updated"),
@@ -190,33 +137,10 @@ const postHandler: Handler = async (request, response) => {
   return getTracer().span(
     "POST /api/profile/user-profile handler",
     async (span) => {
-      const userCookie = await getServerSideCookies<UserCookie>(request, {
-        cookieName: "user-cookie",
-        isCookieSealed: true,
-        cookieSalt: configVariables.cookieSalt,
-      });
+      const { userProfileClient } = await wrappedProfileClient(request, span);
 
-      if (!userCookie) {
-        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-        response.setHeader("location", "/");
-        response.end();
-        return;
-      }
-
-      const { userProfilePayload } = request.body;
-
-      const { profileAccessToken } = await getProfileAndAddressAccessTokens(
-        userCookie.access_token,
-      );
-      span.setDisclosedAttribute(
-        "is Connect.Profile access token available",
-        true,
-      );
-
-      const profileClient = initProfileClient(profileAccessToken);
-
-      const { data: createdUserProfile } = await profileClient
-        .createProfile(userProfilePayload)
+      const { data: createdUserProfile } = await userProfileClient
+        .createProfile(request.body)
         .then((profileData) => {
           setAlertMessagesCookie(response, [
             generateAlertMessage("Your profile has been created"),
@@ -226,7 +150,7 @@ const postHandler: Handler = async (request, response) => {
         })
         .catch((error) => {
           span.setDisclosedAttribute(
-            "is Connect.Profile UserProfile updated",
+            "is Connect.Profile UserProfile created",
             false,
           );
 
@@ -238,10 +162,6 @@ const postHandler: Handler = async (request, response) => {
             throw webErrorFactory(webErrors.invalidScopes);
           }
 
-          if (error.response.status === HttpStatus.NOT_FOUND) {
-            throw webErrorFactory(webErrors.userProfileNotFound);
-          }
-
           if (error.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
             throw webErrorFactory(webErrors.invalidUserProfilePayload);
           }
@@ -249,7 +169,7 @@ const postHandler: Handler = async (request, response) => {
           throw webErrorFactory(webErrors.unreachable);
         });
       span.setDisclosedAttribute(
-        "is Connect.Profile UserProfile updated",
+        "is Connect.Profile UserProfile created",
         true,
       );
 
