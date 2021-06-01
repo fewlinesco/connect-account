@@ -1,9 +1,4 @@
-import {
-  getServerSideCookies,
-  Endpoint,
-  HttpStatus,
-  setAlertMessagesCookie,
-} from "@fwl/web";
+import { Endpoint, HttpStatus, setAlertMessagesCookie } from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -16,17 +11,14 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
-import { UserCookie } from "@src/@types/user-cookie";
-import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
-import { initProfileClient } from "@src/configs/profile-client";
+import { wrappedProfileClient } from "@src/configs/profile-client";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { generateAlertMessage } from "@src/utils/generate-alert-message";
-import { getProfileAndAddressAccessTokens } from "@src/utils/get-profile-and-address-access-tokens";
 
 const markAsPrimaryHandler: Handler = async (request, response) => {
   const webErrors = {
@@ -41,36 +33,15 @@ const markAsPrimaryHandler: Handler = async (request, response) => {
   return getTracer().span(
     "POST /api/profile/addresses/[id]/mark-as-primary handler",
     async (span) => {
-      const userCookie = await getServerSideCookies<UserCookie>(request, {
-        cookieName: "user-cookie",
-        isCookieSealed: true,
-        cookieSalt: configVariables.cookieSalt,
-      });
-
-      if (!userCookie) {
-        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-        response.setHeader("location", "/");
-        response.end();
-        return;
-      }
-
       const addressId = request.query.id;
 
       if (!addressId || typeof addressId !== "string") {
         throw webErrorFactory(webErrors.invalidQueryString);
       }
 
-      const { addressAccessToken } = await getProfileAndAddressAccessTokens(
-        userCookie.access_token,
-      );
-      span.setDisclosedAttribute(
-        "is Connect.Profile access token available",
-        true,
-      );
+      const { userAddressClient } = await wrappedProfileClient(request, span);
 
-      const addressClient = initProfileClient(addressAccessToken);
-
-      const { data: address } = await addressClient
+      const { data: address } = await userAddressClient
         .markUserAddressAsPrimary(addressId)
         .then((addressData) => {
           setAlertMessagesCookie(response, [
