@@ -81,7 +81,7 @@ describe("AddressOverviewPage", () => {
     ).toBeInTheDocument();
   });
 
-  it("should not display the 'mark as primary' button when the address is primary", async () => {
+  it("should not display the 'mark as primary' button when the address is primary", () => {
     expect.assertions(1);
 
     render(
@@ -96,7 +96,7 @@ describe("AddressOverviewPage", () => {
     );
 
     expect(
-      await screen.findByRole("button", {
+      screen.queryByRole("button", {
         name: /Use this address as my main address/i,
       }),
     ).not.toBeInTheDocument();

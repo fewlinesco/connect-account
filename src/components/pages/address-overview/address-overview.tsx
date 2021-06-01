@@ -19,7 +19,9 @@ import {
 
 const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
   const router = useRouter();
-  const [confirmationBoxOpen, setConfirmationBoxOpen] =
+  const [primaryConfirmationBoxOpen, setPrimaryConfirmationBoxOpen] =
+    React.useState<boolean>(false);
+  const [deleteConfirmationBoxOpen, setDeleteConfirmationBoxOpen] =
     React.useState<boolean>(false);
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
 
@@ -49,72 +51,74 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
           Update this address
         </FakeButton>
       </NeutralLink>
-      {address && address.primary ? null : (
-        <>
-          <Button
-            type="button"
-            variant={ButtonVariant.SECONDARY}
-            onPress={() => {
-              setPreventAnimation(false);
-              setConfirmationBoxOpen(true);
-            }}
-          >
-            Use this address as my main address
-          </Button>
+      {address ? (
+        address.primary ? null : (
+          <>
+            <Button
+              type="button"
+              variant={ButtonVariant.SECONDARY}
+              onPress={() => {
+                setPreventAnimation(false);
+                setPrimaryConfirmationBoxOpen(true);
+              }}
+            >
+              Use this address as my main address
+            </Button>
 
-          <ConfirmationBox
-            open={confirmationBoxOpen}
-            setOpen={setConfirmationBoxOpen}
-            preventAnimation={preventAnimation}
-          >
-            <>
-              <p>You are about to set this address as main.</p>
+            <ConfirmationBox
+              open={primaryConfirmationBoxOpen}
+              setOpen={setPrimaryConfirmationBoxOpen}
+              preventAnimation={preventAnimation}
+            >
+              <>
+                <p>You are about to set this address as main.</p>
 
-              <Button
-                type="button"
-                variant={ButtonVariant.PRIMARY}
-                onPress={() => {
-                  fetchJson(
-                    `/api/profile/addresses/${address?.id}/mark-as-primary`,
-                    "POST",
-                    {},
-                  )
-                    .then(() => router && router.push("/account/profile"))
-                    .catch((error) => {
-                      throw error;
-                    });
-                }}
-              >
-                Confirm
-              </Button>
+                <Button
+                  type="button"
+                  variant={ButtonVariant.PRIMARY}
+                  onPress={() => {
+                    fetchJson(
+                      `/api/profile/addresses/${address?.id}/mark-as-primary`,
+                      "POST",
+                      {},
+                    )
+                      .then(() => router && router.push("/account/profile"))
+                      .catch((error) => {
+                        throw error;
+                      });
+                  }}
+                >
+                  Confirm
+                </Button>
 
-              <Button
-                type="button"
-                variant={ButtonVariant.SECONDARY}
-                onPress={() => {
-                  setConfirmationBoxOpen(false);
-                }}
-              >
-                Cancel
-              </Button>
-            </>
-          </ConfirmationBox>
-        </>
-      )}
+                <Button
+                  type="button"
+                  variant={ButtonVariant.SECONDARY}
+                  onPress={() => {
+                    setPrimaryConfirmationBoxOpen(false);
+                  }}
+                >
+                  Cancel
+                </Button>
+              </>
+            </ConfirmationBox>
+          </>
+        )
+      ) : null}
       <Button
         type="button"
         variant={ButtonVariant.GHOST}
         onPress={() => {
           setPreventAnimation(false);
-          setConfirmationBoxOpen(true);
+          setDeleteConfirmationBoxOpen(true);
         }}
       >
         Delete this address
       </Button>
 
       <ConfirmationBox
-        open={confirmationBoxOpen}
-        setOpen={setConfirmationBoxOpen}
+        open={deleteConfirmationBoxOpen}
+        setOpen={setDeleteConfirmationBoxOpen}
         preventAnimation={preventAnimation}
       >
         <>
@@ -138,7 +142,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
             type="button"
             variant={ButtonVariant.SECONDARY}
             onPress={() => {
-              setConfirmationBoxOpen(false);
+              setDeleteConfirmationBoxOpen(false);
             }}
           >
             Keep address

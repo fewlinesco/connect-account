@@ -226,7 +226,7 @@ const postHandler: Handler = async (request, response) => {
         })
         .catch((error) => {
           span.setDisclosedAttribute(
-            "is Connect.Profile UserProfile updated",
+            "is Connect.Profile UserProfile created",
             false,
           );
 
@@ -238,10 +238,6 @@ const postHandler: Handler = async (request, response) => {
             throw webErrorFactory(webErrors.invalidScopes);
           }
 
-          if (error.response.status === HttpStatus.NOT_FOUND) {
-            throw webErrorFactory(webErrors.userProfileNotFound);
-          }
-
           if (error.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
             throw webErrorFactory(webErrors.invalidUserProfilePayload);
           }
@@ -249,7 +245,7 @@ const postHandler: Handler = async (request, response) => {
           throw webErrorFactory(webErrors.unreachable);
         });
       span.setDisclosedAttribute(
-        "is Connect.Profile UserProfile updated",
+        "is Connect.Profile UserProfile created",
         true,
       );
 

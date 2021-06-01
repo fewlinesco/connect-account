@@ -46,7 +46,7 @@ const ProfileOverview: React.FC<{
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
-            `${userProfile.name} ${userProfile.middle_name} ${userProfile.family_name}`
+            userProfile.name
           )}
         </UserInfoSection>
         <UserInfoSection categoryName="PREFERRED USERNAME" href="#">
@@ -141,7 +141,6 @@ const UserInfoSection: React.FC<{
           <CategoryName>{categoryName}</CategoryName>
           {children}
         </CategoryContent>
-        <RightChevron />
       </BoxedLink>
       <Separator />
     </>
