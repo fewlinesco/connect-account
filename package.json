@@ -14,6 +14,7 @@
     "start": "next start -p $PORT",
     "test": "jest --testPathIgnorePatterns=e2e --runInBand",
     "test:e2e": "jest --testPathPattern=e2e --runInBand",
+    "test:e2e:local": "ts-node bin/e2e/prepare-e2e-tests.ts && jest --testPathPattern=e2e --runInBand",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "db:put-user": "ts-node bin/dynamodb/put-user.ts",
@@ -26,8 +27,7 @@
     "e2e:create-test-user": "ts-node bin/e2e/create-test-user.ts",
     "e2e:remove-test-user": "ts-node bin/e2e/remove-test-user.ts",
     "generate-connect-profile-client": "docker run --rm -v ${PWD}/:/local openapitools/openapi-generator-cli generate --input-spec /local/connect-profile-openapi.yml --generator-name typescript-axios --additional-properties supportsES6=true --output /local/connect-profile-client",
-    "prepare": "husky install", 
-    "test:e2e:local": "ts-node bin/e2e/prepare-e2e-tests.ts"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.17.0",

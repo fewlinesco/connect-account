@@ -45,7 +45,6 @@ const ADD_IDENTITY_TO_USER = gql`
 `;
 
 async function prepareE2ETests(): Promise<void> {
-  console.log("node env: ", process.env.NODE_ENV);
   const operation = {
     query: ADD_IDENTITY_TO_USER,
     variables: {
@@ -55,9 +54,7 @@ async function prepareE2ETests(): Promise<void> {
     },
   };
 
-  const { data, errors } = await fetchManagement(operation);
-  console.log(data);
-  console.log(errors);
+  await fetchManagement(operation);
 }
 
 prepareE2ETests();
