@@ -66,14 +66,14 @@ function getSectionListContent(
 
   const profileSection = isNewProfile
     ? {
-        PERSONAL_INFORMATION: {
-          text: "Update basic information about you, like your name, or addresses.",
+        CREATE_YOUR_PROFILE: {
+          text: "Add basic information about you, like your name, or addresses.",
           icon: <ProfileIcon />,
         },
       }
     : {
-        CREATE_YOUR_PROFILE: {
-          text: "Add basic information about you, like your name, or addresses.",
+        PERSONAL_INFORMATION: {
+          text: "Update basic information about you, like your name, or addresses.",
           icon: <ProfileIcon />,
         },
       };
