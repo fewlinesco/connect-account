@@ -29,8 +29,10 @@ const AccountOverview: React.FC = () => {
             : `/account/${sectionName.toLocaleLowerCase()}`;
 
         if (
-          !configVariables.featureFlag &&
-          sectionHref === "/account/profile"
+          (!configVariables.featureFlag &&
+            sectionHref === "/account/profile") ||
+          (!configVariables.featureFlag &&
+            sectionHref === "/account/profile/user-profile/new")
         ) {
           return <React.Fragment key={sectionName} />;
         }

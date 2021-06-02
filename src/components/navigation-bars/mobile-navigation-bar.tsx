@@ -35,7 +35,11 @@ const MobileNavigationBar: React.FC = () => {
             {getNavigationSections(
               userProfileFetchedResponse.error ? true : false,
             ).map(([title, { href, icon }]) => {
-              if (!configVariables.featureFlag && href === "/account/profile") {
+              if (
+                (!configVariables.featureFlag && href === "/account/profile") ||
+                (!configVariables.featureFlag &&
+                  href === "/account/profile/user-profile/new")
+              ) {
                 return <React.Fragment key={title + href} />;
               }
 
