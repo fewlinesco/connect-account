@@ -1,38 +1,30 @@
 import React from "react";
 import styled from "styled-components";
+import useSWR from "swr";
 
-import { LoginsIcon } from "@src/components/icons/logins-icon/logins-icon";
-import { ProfileIcon } from "@src/components/icons/profile-icon/profile-icon";
+import { Profile } from "@src/@types/profile";
 import { RightChevron } from "@src/components/icons/right-chevron/right-chevron";
-import { SecurityIcon } from "@src/components/icons/security-icon/security-icon";
+import { getSectionListContent } from "@src/components/navigation-bars/navigation-sections";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SectionBox } from "@src/components/shadow-box/section-box";
 import { configVariables } from "@src/configs/config-variables";
 import { deviceBreakpoints } from "@src/design-system/theme";
-
-const SECTION_LIST_CONTENT = {
-  PERSONAL_INFORMATION: {
-    text: "NEED REFINEMENT - Lorem, ipsum dolor sit amet consectetur adipisicing elit.",
-    icon: <ProfileIcon />,
-  },
-  LOGINS: {
-    text: "Manage your logins options, including emails, phone numbers and social logins",
-    icon: <LoginsIcon />,
-  },
-  SECURITY: {
-    text: "Set or change your password. You can check your connections history here",
-    icon: <SecurityIcon />,
-  },
-};
+import { SWRError } from "@src/errors/errors";
 
 const AccountOverview: React.FC = () => {
+  const { error: userProfileError } = useSWR<Profile, SWRError>(
+    `/api/profile/user-profile`,
+  );
+
   return (
     <>
-      {Object.entries(SECTION_LIST_CONTENT).map(
+      {getSectionListContent(userProfileError ? true : false).map(
         ([sectionName, { text, icon }]) => {
           const sectionHref =
             sectionName.toLocaleLowerCase() === "personal_information"
               ? "/account/profile"
+              : sectionName.toLocaleLowerCase() === "create_your_profile"
+              ? "/account/profile/user-profile/new"
               : `/account/${sectionName.toLocaleLowerCase()}`;
 
           if (
@@ -47,7 +39,7 @@ const AccountOverview: React.FC = () => {
               <SectionLink href={sectionHref}>
                 {icon}
                 <TextBox>
-                  <SectionName>{sectionName.replace("_", " ")}</SectionName>
+                  <SectionName>{sectionName.replace(/_/g, " ")}</SectionName>
                   {text}
                 </TextBox>
                 <RightChevron />
@@ -87,4 +79,4 @@ const SectionName = styled.p`
   letter-spacing: ${({ theme }) => theme.letterSpacing.tracked};
 `;
 
-export { SECTION_LIST_CONTENT, AccountOverview };
+export { AccountOverview };
