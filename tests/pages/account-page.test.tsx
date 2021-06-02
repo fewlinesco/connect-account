@@ -1,4 +1,5 @@
 import React from "react";
+import { SWRConfig } from "swr";
 
 import { render, screen } from "../config/testing-library-config";
 import { getSectionListContent } from "@src/components/navigation-bars/navigation-sections";
@@ -18,9 +19,20 @@ describe("AccountPage", () => {
   it("should display each account section", async () => {
     expect.assertions(6);
 
-    render(<AccountPage />);
+    render(
+      <SWRConfig
+        value={{
+          dedupingInterval: 0,
+          fetcher: () => {
+            return { error: undefined };
+          },
+        }}
+      >
+        <AccountPage />
+      </SWRConfig>,
+    );
 
-    for await (const [sectionName, { text }] of getSectionListContent(true)) {
+    for await (const [sectionName, { text }] of getSectionListContent(false)) {
       expect(
         await screen.findByText(sectionName.replace(/_/g, " ")),
       ).toBeInTheDocument();
