@@ -1,53 +1,53 @@
 import React from "react";
 import styled from "styled-components";
-import useSWR from "swr";
 
-import { Profile } from "@src/@types/profile";
 import { RightChevron } from "@src/components/icons/right-chevron/right-chevron";
 import { getSectionListContent } from "@src/components/navigation-bars/navigation-sections";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SectionBox } from "@src/components/shadow-box/section-box";
 import { configVariables } from "@src/configs/config-variables";
+import { useUserProfile } from "@src/contexts/user-profile-context";
 import { deviceBreakpoints } from "@src/design-system/theme";
-import { SWRError } from "@src/errors/errors";
 
 const AccountOverview: React.FC = () => {
-  const { error: userProfileError } = useSWR<Profile, SWRError>(
-    `/api/profile/user-profile`,
-  );
+  const { userProfileFetchedResponse } = useUserProfile();
+
+  if (!userProfileFetchedResponse) {
+    return <React.Fragment />;
+  }
 
   return (
     <>
-      {getSectionListContent(userProfileError ? true : false).map(
-        ([sectionName, { text, icon }]) => {
-          const sectionHref =
-            sectionName.toLocaleLowerCase() === "personal_information"
-              ? "/account/profile"
-              : sectionName.toLocaleLowerCase() === "create_your_profile"
-              ? "/account/profile/user-profile/new"
-              : `/account/${sectionName.toLocaleLowerCase()}`;
+      {getSectionListContent(
+        userProfileFetchedResponse.error ? true : false,
+      ).map(([sectionName, { text, icon }]) => {
+        const sectionHref =
+          sectionName.toLocaleLowerCase() === "personal_information"
+            ? "/account/profile"
+            : sectionName.toLocaleLowerCase() === "create_your_profile"
+            ? "/account/profile/user-profile/new"
+            : `/account/${sectionName.toLocaleLowerCase()}`;
 
-          if (
-            !configVariables.featureFlag &&
-            sectionHref === "/account/profile"
-          ) {
-            return <React.Fragment key={sectionName} />;
-          }
+        if (
+          !configVariables.featureFlag &&
+          sectionHref === "/account/profile"
+        ) {
+          return <React.Fragment key={sectionName} />;
+        }
 
-          return (
-            <SectionBox key={sectionName}>
-              <SectionLink href={sectionHref}>
-                {icon}
-                <TextBox>
-                  <SectionName>{sectionName.replace(/_/g, " ")}</SectionName>
-                  {text}
-                </TextBox>
-                <RightChevron />
-              </SectionLink>
-            </SectionBox>
-          );
-        },
-      )}
+        return (
+          <SectionBox key={sectionName}>
+            <SectionLink href={sectionHref}>
+              {icon}
+              <TextBox>
+                <SectionName>{sectionName.replace(/_/g, " ")}</SectionName>
+                {text}
+              </TextBox>
+              <RightChevron />
+            </SectionLink>
+          </SectionBox>
+        );
+      })}
     </>
   );
 };
