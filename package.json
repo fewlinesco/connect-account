@@ -26,7 +26,8 @@
     "e2e:create-test-user": "ts-node bin/e2e/create-test-user.ts",
     "e2e:remove-test-user": "ts-node bin/e2e/remove-test-user.ts",
     "generate-connect-profile-client": "docker run --rm -v ${PWD}/:/local openapitools/openapi-generator-cli generate --input-spec /local/connect-profile-openapi.yml --generator-name typescript-axios --additional-properties supportsES6=true --output /local/connect-profile-client",
-    "prepare": "husky install"
+    "prepare": "husky install", 
+    "test:e2e:local": "ts-node bin/e2e/prepare-e2e-tests.ts"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.17.0",
