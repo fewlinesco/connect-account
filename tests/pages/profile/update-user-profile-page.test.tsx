@@ -18,7 +18,7 @@ jest.mock("@src/configs/db-client", () => {
 
 describe("UpdateUserProfilePage", () => {
   it("should render proper user profile form elements", async () => {
-    expect.assertions(18);
+    expect.assertions(22);
 
     render(
       <SWRConfig
@@ -39,7 +39,7 @@ describe("UpdateUserProfilePage", () => {
 
     const textInputs = await screen.findAllByRole("textbox");
 
-    expect(textInputs).toHaveLength(6);
+    expect(textInputs).toHaveLength(8);
 
     textInputs.forEach((input) => {
       userEvent.clear(input);
