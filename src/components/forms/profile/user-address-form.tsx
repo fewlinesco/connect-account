@@ -71,7 +71,7 @@ const UserAddressForm: React.FC<{
             });
           }
 
-          await fetchJson(
+          return fetchJson(
             `/api/profile/addresses/${address.id}`,
             "PATCH",
             addressPayload,
