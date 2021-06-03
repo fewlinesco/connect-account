@@ -40,7 +40,6 @@ const getHandler: Handler = async (request, response) => {
             "is Connect.Profile UserProfile fetched",
             false,
           );
-          console.log("FLAG", error);
 
           if (error.response.status === HttpStatus.UNAUTHORIZED) {
             throw webErrorFactory(webErrors.invalidProfileToken);
