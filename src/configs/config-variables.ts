@@ -73,7 +73,10 @@ function getConnectAccountURL(): string {
 function handleEnvVars(): void {
   const connectAccountURL = getConnectAccountURL();
 
-  configVariables.featureFlag = process.env.NEXT_PUBLIC_FEATURE_FLAG || "";
+  configVariables.featureFlag =
+    process.env.NEXT_PUBLIC_FEATURE_FLAG || process.env.NODE_ENV === "test"
+      ? "false"
+      : "";
   configVariables.connectAccountURL = connectAccountURL;
   configVariables.dynamoRegion = process.env.DYNAMODB_REGION || "";
   configVariables.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";

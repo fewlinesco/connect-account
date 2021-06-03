@@ -1,7 +1,8 @@
 import React from "react";
+import { SWRConfig } from "swr";
 
 import { render, screen } from "../config/testing-library-config";
-import { SECTION_LIST_CONTENT } from "@src/components/pages/account-overview/account-overview";
+import { getSectionListContent } from "@src/components/navigation-bars/navigation-sections";
 import AccountPage from "@src/pages/account/index";
 
 jest.mock("@src/configs/db-client", () => {
@@ -15,31 +16,27 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("AccountPage", () => {
-  it("should display each account section", () => {
-    render(<AccountPage />);
+  it("should display each account section", async () => {
+    expect.assertions(6);
 
-    expect(
-      screen.getByRole("link", {
-        name: "LOGINS " + SECTION_LIST_CONTENT["LOGINS"].text,
-      }),
-    ).toBeInTheDocument();
+    render(
+      <SWRConfig
+        value={{
+          dedupingInterval: 0,
+          fetcher: () => {
+            return { error: undefined };
+          },
+        }}
+      >
+        <AccountPage />
+      </SWRConfig>,
+    );
 
-    expect(
-      screen.getByRole("link", {
-        name: "LOGINS " + SECTION_LIST_CONTENT["LOGINS"].text,
-      }),
-    ).toHaveAttribute("href", "/account/logins");
-
-    expect(
-      screen.getByRole("link", {
-        name: "SECURITY " + SECTION_LIST_CONTENT["SECURITY"].text,
-      }),
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByRole("link", {
-        name: "SECURITY " + SECTION_LIST_CONTENT["SECURITY"].text,
-      }),
-    ).toHaveAttribute("href", "/account/security");
+    for await (const [sectionName, { text }] of getSectionListContent(false)) {
+      expect(
+        await screen.findByText(sectionName.replace(/_/g, " ")),
+      ).toBeInTheDocument();
+      expect(await screen.findByText(text)).toBeInTheDocument();
+    }
   });
 });
