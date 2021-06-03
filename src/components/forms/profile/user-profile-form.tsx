@@ -50,7 +50,7 @@ const UserProfileForm: React.FC<{
         formID={formID}
         onSubmit={async () => {
           if (isCreation) {
-            return await fetchJson("/api/profile/user-profile", "POST", {
+            await fetchJson("/api/profile/user-profile", "POST", {
               userProfilePayload: userProfile,
             }).then(async (response) => {
               const parsedResponse = await response.json();
@@ -64,7 +64,7 @@ const UserProfileForm: React.FC<{
             });
           }
 
-          return await fetchJson("/api/profile/user-profile", "PATCH", {
+          await fetchJson("/api/profile/user-profile", "PATCH", {
             userProfilePayload: userProfile,
           }).then(async (response) => {
             const parsedResponse = await response.json();
