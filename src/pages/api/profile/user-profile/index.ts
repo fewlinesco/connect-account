@@ -82,7 +82,7 @@ const patchHandler: Handler = async (request, response) => {
       const { userProfileClient } = await wrappedProfileClient(request, span);
 
       const { data: updatedUserProfile } = await userProfileClient
-        .patchProfile(request.body)
+        .patchProfile(request.body.userProfilePayload)
         .then((profileData) => {
           setAlertMessagesCookie(response, [
             generateAlertMessage("Your profile has been updated"),
@@ -140,7 +140,7 @@ const postHandler: Handler = async (request, response) => {
       const { userProfileClient } = await wrappedProfileClient(request, span);
 
       const { data: createdUserProfile } = await userProfileClient
-        .createProfile(request.body)
+        .createProfile(request.body.userProfilePayload)
         .then((profileData) => {
           setAlertMessagesCookie(response, [
             generateAlertMessage("Your profile has been created"),

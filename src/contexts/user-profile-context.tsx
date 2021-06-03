@@ -46,14 +46,14 @@ const UserProfileProvider: React.FC<{
           throw error;
         }
 
-        return response.json().then((body) => setUserProfile(body));
+        return response.json();
       });
     },
   );
 
   React.useEffect(() => {
     setUserProfile(fetchedUserProfile.data);
-  }, []);
+  }, [fetchedUserProfile]);
 
   return (
     <UserProfileContext.Provider value={{ userProfile }}>
