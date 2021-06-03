@@ -27,18 +27,18 @@ const UserProfileProvider: React.FC<{
       return await fetch(url).then(async (response) => {
         if (!response.ok) {
           const error = new SWRError(
-            "An error occurred while fetching the data.",
+            "An error occurred while fetching the data. FLAG",
           );
 
           if (response.status === HttpStatus.NOT_FOUND) {
             if (router.pathname === "/account/profile") {
               router && router.replace("/account/profile/user-profile/new");
-              return response.json();
+              return;
             }
 
             error.info = await response.json();
             error.statusCode = response.status;
-            return error;
+            throw error;
           }
 
           error.info = await response.json();

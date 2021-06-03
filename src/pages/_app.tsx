@@ -34,26 +34,28 @@ const AccountApp: React.FC = ({ children }) => {
         </Head>
         <GlobalStyle />
         <AlertMessages />
-        <SWRConfig
-          value={{
-            fetcher: async (url) =>
-              fetch(url).then(async (response) => {
-                if (!response.ok) {
-                  const error = new SWRError(
-                    "An error occurred while fetching the data.",
-                  );
+        <UserProfileProvider>
+          <SWRConfig
+            value={{
+              fetcher: async (url) =>
+                fetch(url).then(async (response) => {
+                  if (!response.ok) {
+                    const error = new SWRError(
+                      "An error occurred while fetching the data.",
+                    );
 
-                  error.info = await response.json();
-                  error.statusCode = response.status;
-                  throw error;
-                }
+                    error.info = await response.json();
+                    error.statusCode = response.status;
+                    throw error;
+                  }
 
-                return response.json();
-              }),
-          }}
-        >
-          <UserProfileProvider>{children}</UserProfileProvider>
-        </SWRConfig>
+                  return response.json();
+                }),
+            }}
+          >
+            {children}
+          </SWRConfig>
+        </UserProfileProvider>
       </ThemeProvider>
     </SSRProvider>
   );
