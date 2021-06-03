@@ -1,10 +1,15 @@
+import { HttpStatus } from "@fwl/web";
 import userEvent from "@testing-library/user-event";
+import * as fetch from "cross-fetch";
+import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 import { SWRConfig } from "swr";
 
 import { render, screen } from "../../config/testing-library-config";
 import * as mockUserProfile from "../../mocks/user-profile";
 import UpdateUserProfilePage from "@src/pages/account/profile/user-profile/edit";
+
+enableFetchMocks();
 
 jest.mock("@src/configs/db-client", () => {
   return {
@@ -14,6 +19,17 @@ jest.mock("@src/configs/db-client", () => {
       },
     },
   };
+});
+
+const mockedFetchJSONResponse = new Response(
+  JSON.stringify({ address: mockUserProfile.userProfile }),
+  {
+    status: HttpStatus.OK,
+  },
+);
+
+jest.spyOn(fetch, "fetch").mockImplementation(async () => {
+  return Promise.resolve(mockedFetchJSONResponse);
 });
 
 describe("UpdateUserProfilePage", () => {
