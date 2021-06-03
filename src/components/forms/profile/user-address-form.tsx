@@ -129,19 +129,6 @@ const UserAddressForm: React.FC<{
         />
         <InputText
           type="text"
-          name="region"
-          placeholder="Enter your region"
-          value={address.region}
-          onChange={(value) => {
-            setAddress({
-              ...address,
-              region: value,
-            });
-          }}
-          label="Region"
-        />
-        <InputText
-          type="text"
           name="postal-code"
           placeholder="Enter your postal code"
           value={address.postal_code}
@@ -153,6 +140,19 @@ const UserAddressForm: React.FC<{
           }}
           label="Postal code *"
           required
+        />
+        <InputText
+          type="text"
+          name="region"
+          placeholder="Enter your region"
+          value={address.region}
+          onChange={(value) => {
+            setAddress({
+              ...address,
+              region: value,
+            });
+          }}
+          label="Region"
         />
         <InputText
           type="text"
