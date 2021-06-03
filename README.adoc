@@ -136,9 +136,18 @@ If you want to interact with the database, you can use the https://docs.aws.amaz
 
 === Testing
 
+To run integration and unit tests :
+
 [source, shell]
 ----
 yarn test
+----
+
+To run the e2e tests suite on local environment :
+
+[source, shell]
+----
+yarn test:e2e:local
 ----
 
 === Storybook
@@ -628,12 +637,10 @@ To automate our test processes, we use https://docs.github.com/en/actions[Github
 Regarding our main flow for end to end tests (i.e `e2e-test.yml`), here is the gist of it. 
 Since we had to trigger different flows based on a third party event (i.e. `review app deployment`), we couldn't leverage Github checks management automation on PR.
 Once we receive the status of the deployment from our third party actor, we run our end to end test suite (`e2e-tests` job inside `e2e-test.yml`) if the review app deployment is a success, or we skip it in the case of a failure during the process.
-In the last job (`create-e2e-status-check` inside `e2e-test.yml`), we create manually a https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-status-checks[status check].
-If the deployment failed, we set its status to failure too. When the end to end test suite can be runned, we wait for it to complete before setting the custom `status check` state according to the tests results. 
 
 All of these cases are handled at job-level, mostly thanks to https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#job-status-check-functions[job status check functions], which permit to control more precisely jobs execution via conditional statements. 
 
-Inside most of our jobs, we used TypeScript written scripts to perform our actions (i.e. _fetching Github API to handle check-run creation and update_).
+Inside most of our jobs, we used TypeScript written scripts to perform our actions.
 
 == Monitoring
 
