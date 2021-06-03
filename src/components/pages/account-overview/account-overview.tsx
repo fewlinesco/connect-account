@@ -10,46 +10,42 @@ import { useUserProfile } from "@src/contexts/user-profile-context";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const AccountOverview: React.FC = () => {
-  const { userProfileFetchedResponse } = useUserProfile();
-
-  if (!userProfileFetchedResponse) {
-    return <React.Fragment />;
-  }
+  const { userProfile } = useUserProfile();
 
   return (
     <>
-      {getSectionListContent(
-        userProfileFetchedResponse.error ? true : false,
-      ).map(([sectionName, { text, icon }]) => {
-        const sectionHref =
-          sectionName.toLocaleLowerCase() === "personal_information"
-            ? "/account/profile"
-            : sectionName.toLocaleLowerCase() === "create_your_profile"
-            ? "/account/profile/user-profile/new"
-            : `/account/${sectionName.toLocaleLowerCase()}`;
+      {getSectionListContent(userProfile ? false : true).map(
+        ([sectionName, { text, icon }]) => {
+          const sectionHref =
+            sectionName.toLocaleLowerCase() === "personal_information"
+              ? "/account/profile"
+              : sectionName.toLocaleLowerCase() === "create_your_profile"
+              ? "/account/profile/user-profile/new"
+              : `/account/${sectionName.toLocaleLowerCase()}`;
 
-        if (
-          (!configVariables.featureFlag &&
-            sectionHref === "/account/profile") ||
-          (!configVariables.featureFlag &&
-            sectionHref === "/account/profile/user-profile/new")
-        ) {
-          return <React.Fragment key={sectionName} />;
-        }
+          if (
+            (!configVariables.featureFlag &&
+              sectionHref === "/account/profile") ||
+            (!configVariables.featureFlag &&
+              sectionHref === "/account/profile/user-profile/new")
+          ) {
+            return <React.Fragment key={sectionName} />;
+          }
 
-        return (
-          <SectionBox key={sectionName}>
-            <SectionLink href={sectionHref}>
-              {icon}
-              <TextBox>
-                <SectionName>{sectionName.replace(/_/g, " ")}</SectionName>
-                {text}
-              </TextBox>
-              <RightChevron />
-            </SectionLink>
-          </SectionBox>
-        );
-      })}
+          return (
+            <SectionBox key={sectionName}>
+              <SectionLink href={sectionHref}>
+                {icon}
+                <TextBox>
+                  <SectionName>{sectionName.replace(/_/g, " ")}</SectionName>
+                  {text}
+                </TextBox>
+                <RightChevron />
+              </SectionLink>
+            </SectionBox>
+          );
+        },
+      )}
     </>
   );
 };

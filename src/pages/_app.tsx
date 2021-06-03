@@ -6,6 +6,7 @@ import { ThemeProvider } from "styled-components";
 import { SWRConfig } from "swr";
 
 import { AlertMessages } from "@src/components/alert-message/alert-messages";
+import { UserProfileProvider } from "@src/contexts/user-profile-context";
 import { GlobalStyle } from "@src/design-system/globals/global-style";
 import { theme } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
@@ -51,7 +52,7 @@ const AccountApp: React.FC = ({ children }) => {
               }),
           }}
         >
-          {children}
+          <UserProfileProvider>{children}</UserProfileProvider>
         </SWRConfig>
       </ThemeProvider>
     </SSRProvider>

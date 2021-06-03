@@ -12,33 +12,29 @@ import { configVariables } from "@src/configs/config-variables";
 import { useUserProfile } from "@src/contexts/user-profile-context";
 
 const DesktopNavigationBar: React.FC = () => {
-  const { userProfileFetchedResponse } = useUserProfile();
-
-  if (!userProfileFetchedResponse) {
-    return <React.Fragment />;
-  }
+  const { userProfile } = useUserProfile();
 
   return (
     <>
       <Header />
-      {getNavigationSections(
-        userProfileFetchedResponse.error ? true : false,
-      ).map(([title, { href, icon }]) => {
-        if (
-          (!configVariables.featureFlag && href === "/account/profile") ||
-          (!configVariables.featureFlag &&
-            href === "/account/profile/user-profile/new")
-        ) {
-          return <React.Fragment key={title + href} />;
-        }
+      {getNavigationSections(userProfile ? false : true).map(
+        ([title, { href, icon }]) => {
+          if (
+            (!configVariables.featureFlag && href === "/account/profile") ||
+            (!configVariables.featureFlag &&
+              href === "/account/profile/user-profile/new")
+          ) {
+            return <React.Fragment key={title + href} />;
+          }
 
-        return (
-          <ListItem href={href} key={title + href}>
-            {icon}
-            <p>{title.replace(/_/g, " ")}</p>
-          </ListItem>
-        );
-      })}
+          return (
+            <ListItem href={href} key={title + href}>
+              {icon}
+              <p>{title.replace(/_/g, " ")}</p>
+            </ListItem>
+          );
+        },
+      )}
       <Separator />
       <SwitchLanguageItem href="/account/locale">
         <SwitchLanguageLabel>

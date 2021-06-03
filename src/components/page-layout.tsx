@@ -5,7 +5,6 @@ import { Header } from "./header/header";
 import { DesktopNavigationBar } from "./navigation-bars/desktop-navigation-bar";
 import { MobileNavigationBar } from "./navigation-bars/mobile-navigation-bar";
 import { NavigationBreadcrumbs } from "./navigation-breadcrumbs/navigation-breadcrumbs";
-import { UserProfileProvider } from "@src/contexts/user-profile-context";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Layout: React.FC<{
@@ -14,28 +13,26 @@ const Layout: React.FC<{
 }> = ({ children, title, breadcrumbs }) => {
   return (
     <Main>
-      <UserProfileProvider>
-        <MobileDisplayOnly>
-          <Header />
-          <MobileNavigationBar />
-        </MobileDisplayOnly>
-        <Flex>
-          <DesktopNavigationBarWrapper>
-            <DesktopNavigationBar />
-          </DesktopNavigationBarWrapper>
-          <ChildrenContainer titleText={title} breadcrumbs={breadcrumbs}>
-            {title ? (
-              <MainTitle
-                needSpacing={breadcrumbs || breadcrumbs === "" ? false : true}
-              >
-                {title}
-              </MainTitle>
-            ) : null}
-            <NavigationBreadcrumbs breadcrumbs={breadcrumbs} />
-            {children}
-          </ChildrenContainer>
-        </Flex>
-      </UserProfileProvider>
+      <MobileDisplayOnly>
+        <Header />
+        <MobileNavigationBar />
+      </MobileDisplayOnly>
+      <Flex>
+        <DesktopNavigationBarWrapper>
+          <DesktopNavigationBar />
+        </DesktopNavigationBarWrapper>
+        <ChildrenContainer titleText={title} breadcrumbs={breadcrumbs}>
+          {title ? (
+            <MainTitle
+              needSpacing={breadcrumbs || breadcrumbs === "" ? false : true}
+            >
+              {title}
+            </MainTitle>
+          ) : null}
+          <NavigationBreadcrumbs breadcrumbs={breadcrumbs} />
+          {children}
+        </ChildrenContainer>
+      </Flex>
     </Main>
   );
 };

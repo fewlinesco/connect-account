@@ -1,4 +1,3 @@
-import { HttpStatus } from "@fwl/web";
 import {
   loggingMiddleware,
   tracingMiddleware,
@@ -8,11 +7,10 @@ import {
 } from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
-import { useRouter } from "next/router";
 import React from "react";
 import useSWR from "swr";
 
-import { Address, Profile } from "@src/@types/profile";
+import { Address } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { ProfileOverview } from "@src/components/pages/profile-overview/profile-overview";
@@ -20,41 +18,13 @@ import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
+import { useUserProfile } from "@src/contexts/user-profile-context";
 import { SWRError } from "@src/errors/errors";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const ProfilePage: React.FC = () => {
-  const router = useRouter();
-
-  const { data: userProfile, error: userProfileError } = useSWR<
-    Profile,
-    SWRError
-  >(
-    `/api/profile/user-profile`,
-    async (url) =>
-      await fetch(url).then(async (response) => {
-        if (!response.ok) {
-          if (response.status === HttpStatus.NOT_FOUND) {
-            router && router.replace("/account/profile/user-profile/new");
-            return;
-          }
-
-          const error = new SWRError(
-            "An error occurred while fetching the data.",
-          );
-          error.info = await response.json();
-          error.statusCode = response.status;
-          throw error;
-        }
-
-        return response.json();
-      }),
-  );
-
-  if (userProfileError) {
-    throw userProfileError;
-  }
+  const { userProfile } = useUserProfile();
 
   const { data: userAddresses, error: userAddressesError } = useSWR<
     Address[],

@@ -20,11 +20,7 @@ const MobileNavigationBar: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const router = useRouter();
 
-  const { userProfileFetchedResponse } = useUserProfile();
-
-  if (!userProfileFetchedResponse) {
-    return <React.Fragment />;
-  }
+  const { userProfile } = useUserProfile();
 
   return (
     <>
@@ -32,31 +28,32 @@ const MobileNavigationBar: React.FC = () => {
       <Container>
         {isOpen ? (
           <MenuList>
-            {getNavigationSections(
-              userProfileFetchedResponse.error ? true : false,
-            ).map(([title, { href, icon }]) => {
-              if (
-                (!configVariables.featureFlag && href === "/account/profile") ||
-                (!configVariables.featureFlag &&
-                  href === "/account/profile/user-profile/new")
-              ) {
-                return <React.Fragment key={title + href} />;
-              }
+            {getNavigationSections(userProfile ? false : true).map(
+              ([title, { href, icon }]) => {
+                if (
+                  (!configVariables.featureFlag &&
+                    href === "/account/profile") ||
+                  (!configVariables.featureFlag &&
+                    href === "/account/profile/user-profile/new")
+                ) {
+                  return <React.Fragment key={title + href} />;
+                }
 
-              return (
-                <ListItem
-                  href={href}
-                  onClick={() => setIsOpen(false)}
-                  key={title + href}
-                >
-                  <ListItemLabel>
-                    {icon}
-                    <p>{title.replace(/_/g, " ")}</p>
-                  </ListItemLabel>
-                  <RightChevron />
-                </ListItem>
-              );
-            })}
+                return (
+                  <ListItem
+                    href={href}
+                    onClick={() => setIsOpen(false)}
+                    key={title + href}
+                  >
+                    <ListItemLabel>
+                      {icon}
+                      <p>{title.replace(/_/g, " ")}</p>
+                    </ListItemLabel>
+                    <RightChevron />
+                  </ListItem>
+                );
+              },
+            )}
             <LogoutAnchor />
           </MenuList>
         ) : null}

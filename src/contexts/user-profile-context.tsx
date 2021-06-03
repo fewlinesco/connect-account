@@ -1,15 +1,13 @@
 import { HttpStatus } from "@fwl/web";
+import { useRouter } from "next/router";
 import React from "react";
-import useSWR, { SWRResponse } from "swr";
+import useSWR from "swr";
 
 import { Profile } from "@src/@types/profile";
 import { SWRError } from "@src/errors/errors";
 
 type UserProfileContextDataStructure = {
-  userProfileFetchedResponse?: SWRResponse<Profile, SWRError>;
-  setUserProfileFetchedResponse: React.Dispatch<
-    React.SetStateAction<SWRResponse<Profile, SWRError> | undefined>
-  >;
+  userProfile?: Profile;
 };
 
 const UserProfileContext =
@@ -18,23 +16,29 @@ const UserProfileContext =
 const UserProfileProvider: React.FC<{
   children: React.ReactNode | undefined;
 }> = ({ children }) => {
-  const [userProfileFetchedResponse, setUserProfileFetchedResponse] =
-    React.useState<SWRResponse<Profile, SWRError> | undefined>(undefined);
+  const [userProfile, setUserProfile] =
+    React.useState<Profile | undefined>(undefined);
+
+  const router = useRouter();
 
   const fetchedUserProfile = useSWR<Profile, SWRError>(
     `/api/profile/user-profile`,
     async (url) => {
       return await fetch(url).then(async (response) => {
-        console.log({ response });
         if (!response.ok) {
           const error = new SWRError(
             "An error occurred while fetching the data.",
           );
 
           if (response.status === HttpStatus.NOT_FOUND) {
-            error.statusCode = response.status;
+            if (router.pathname === "/account/profile") {
+              router && router.replace("/account/profile/user-profile/new");
+              return response.json();
+            }
+
             error.info = await response.json();
-            return;
+            error.statusCode = response.status;
+            return error;
           }
 
           error.info = await response.json();
@@ -42,20 +46,17 @@ const UserProfileProvider: React.FC<{
           throw error;
         }
 
-        return response.json();
+        return response.json().then((body) => setUserProfile(body));
       });
     },
-    { shouldRetryOnError: false },
   );
 
   React.useEffect(() => {
-    setUserProfileFetchedResponse(fetchedUserProfile);
-  }, [fetchedUserProfile]);
+    setUserProfile(fetchedUserProfile.data);
+  }, []);
 
   return (
-    <UserProfileContext.Provider
-      value={{ userProfileFetchedResponse, setUserProfileFetchedResponse }}
-    >
+    <UserProfileContext.Provider value={{ userProfile }}>
       {children}
     </UserProfileContext.Provider>
   );
@@ -65,9 +66,7 @@ function useUserProfile(): UserProfileContextDataStructure {
   const context = React.useContext(UserProfileContext);
 
   if (context === undefined) {
-    throw new Error(
-      "useAlertMessages must be used within a AlertMessageProvider",
-    );
+    throw new Error("useUserProfile must be used within a UserProfileProvider");
   }
 
   return context;
