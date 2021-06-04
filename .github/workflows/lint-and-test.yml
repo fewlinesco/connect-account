@@ -58,4 +58,4 @@ jobs:
     - name: test
       run: docker-compose up -d profile_mock_server && yarn test
       env:
-        PROFILE_MOCK_SERVER_URL: "http://localhost:29712"
+        CONNECT_PROFILE_URL: "http://localhost:29712"

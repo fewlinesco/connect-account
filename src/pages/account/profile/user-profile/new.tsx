@@ -13,7 +13,6 @@ import styled from "styled-components";
 import { Container } from "@src/components/containers/container";
 import { UserProfileForm } from "@src/components/forms/profile/user-profile-form";
 import { Layout } from "@src/components/page-layout";
-import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
@@ -53,15 +52,6 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     ],
     "/profile/user-profile/new",
     () => {
-      if (!configVariables.featureFlag) {
-        return {
-          redirect: {
-            destination: "/",
-            permanent: false,
-          },
-        };
-      }
-
       return { props: {} };
     },
   );

@@ -15,7 +15,6 @@ import { LogoutAnchor } from "../logout-anchor/logout-anchor";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { getNavigationSections } from "./navigation-sections";
 import { Profile } from "@src/@types/profile";
-import { configVariables } from "@src/configs/config-variables";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
 
@@ -55,15 +54,6 @@ const MobileNavigationBar: React.FC = () => {
           <MenuList>
             {getNavigationSections(userProfile ? false : true).map(
               ([title, { href, icon }]) => {
-                if (
-                  (!configVariables.featureFlag &&
-                    href === "/account/profile") ||
-                  (!configVariables.featureFlag &&
-                    href === "/account/profile/user-profile/new")
-                ) {
-                  return <React.Fragment key={title + href} />;
-                }
-
                 return (
                   <ListItem
                     href={href}

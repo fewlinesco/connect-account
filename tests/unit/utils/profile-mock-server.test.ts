@@ -98,7 +98,7 @@ describe("Mock Server", () => {
 
       const noAuthToken = new ConnectProfileApi(
         new Configuration({
-          basePath: process.env.PROFILE_MOCK_SERVER_URL,
+          basePath: process.env.CONNECT_PROFILE_URL,
         }),
       );
 

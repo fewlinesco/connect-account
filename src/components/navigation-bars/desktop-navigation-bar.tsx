@@ -11,7 +11,6 @@ import { NeutralLink } from "../neutral-link/neutral-link";
 import { Separator } from "../separator/separator";
 import { getNavigationSections } from "./navigation-sections";
 import { Profile } from "@src/@types/profile";
-import { configVariables } from "@src/configs/config-variables";
 import { SWRError } from "@src/errors/errors";
 
 const DesktopNavigationBar: React.FC = () => {
@@ -45,14 +44,6 @@ const DesktopNavigationBar: React.FC = () => {
       <Header />
       {getNavigationSections(userProfile ? false : true).map(
         ([title, { href, icon }]) => {
-          if (
-            (!configVariables.featureFlag && href === "/account/profile") ||
-            (!configVariables.featureFlag &&
-              href === "/account/profile/user-profile/new")
-          ) {
-            return <React.Fragment key={title + href} />;
-          }
-
           return (
             <ListItem href={href} key={title + href}>
               {icon}
