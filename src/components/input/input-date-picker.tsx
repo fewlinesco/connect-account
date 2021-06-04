@@ -34,6 +34,7 @@ const InputDatePicker: React.FC<InputDatePickerProps> = ({
 const Label = styled.label`
   display: flex;
   flex-direction: column;
+  margin: 0 0 ${({ theme }) => theme.spaces.xs};
 
   .react-datepicker-wrapper {
     width: 100%;
@@ -45,8 +46,7 @@ const Label = styled.label`
       height: 4rem;
       padding-left: 1.6rem;
       width: 100%;
-      margin: ${({ theme }) => theme.spaces.xxs} 0
-        ${({ theme }) => theme.spaces.xs};
+      margin-top: ${({ theme }) => theme.spaces.xxs};
       z-index: 1;
       position: relative;
     }
@@ -71,13 +71,10 @@ const Label = styled.label`
   }
 
   .react-datepicker__header__dropdown--scroll {
-    padding-top: 0.5rem;
+    padding-top: 0.8rem;
     font-size: ${({ theme }) => theme.fontSizes.xs};
-  }
-
-  .react-datepicker__month-read-view--down-arrow,
-  .react-datepicker__year-read-view--down-arrow {
-    top: 0.5rem;
+    display: flex;
+    justify-content: space-evenly;
   }
 `;
 
