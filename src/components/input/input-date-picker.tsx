@@ -76,6 +76,10 @@ const Label = styled.label`
     display: flex;
     justify-content: space-evenly;
   }
+
+  .react-datepicker__triangle {
+    left: -12px !important;
+  }
 `;
 
 export { InputDatePicker };
