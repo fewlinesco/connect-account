@@ -14,7 +14,6 @@ import { Address } from "@src/@types/profile";
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { AddressOverview } from "@src/components/pages/address-overview/address-overview";
-import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
@@ -55,15 +54,6 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     ],
     "account/profile/addresses/[id]",
     () => {
-      if (!configVariables.featureFlag) {
-        return {
-          redirect: {
-            destination: "/",
-            permanent: false,
-          },
-        };
-      }
-
       if (!context?.params?.id) {
         return {
           notFound: true,

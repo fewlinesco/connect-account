@@ -8,7 +8,6 @@ import { RightChevron } from "@src/components/icons/right-chevron/right-chevron"
 import { getSectionListContent } from "@src/components/navigation-bars/navigation-sections";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SectionBox } from "@src/components/shadow-box/section-box";
-import { configVariables } from "@src/configs/config-variables";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
 
@@ -48,15 +47,6 @@ const AccountOverview: React.FC = () => {
               : sectionName.toLocaleLowerCase() === "create_your_profile"
               ? "/account/profile/user-profile/new"
               : `/account/${sectionName.toLocaleLowerCase()}`;
-
-          if (
-            (!configVariables.featureFlag &&
-              sectionHref === "/account/profile") ||
-            (!configVariables.featureFlag &&
-              sectionHref === "/account/profile/user-profile/new")
-          ) {
-            return <React.Fragment key={sectionName} />;
-          }
 
           return (
             <SectionBox key={sectionName}>
