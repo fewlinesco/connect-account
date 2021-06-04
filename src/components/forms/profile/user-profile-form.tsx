@@ -143,6 +143,32 @@ const UserProfileForm: React.FC<{
         />
         <InputText
           type="text"
+          name="website"
+          placeholder="Enter your website URL"
+          value={userProfile.website}
+          onChange={(value) => {
+            setUserProfile({
+              ...userProfile,
+              website: value,
+            });
+          }}
+          label="Website URL"
+        />
+        <InputText
+          type="text"
+          name="picture"
+          placeholder="Enter your picture URL"
+          value={userProfile.picture}
+          onChange={(value) => {
+            setUserProfile({
+              ...userProfile,
+              picture: value,
+            });
+          }}
+          label="Picture URL"
+        />
+        <InputText
+          type="text"
           name="zoneinfo"
           placeholder="Enter your zone info"
           value={userProfile.zoneinfo}
