@@ -1,3 +1,4 @@
+import { HttpStatus } from "@fwl/web";
 import React from "react";
 import styled from "styled-components";
 import useSWR from "swr";
@@ -12,13 +13,34 @@ import { deviceBreakpoints } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
 
 const AccountOverview: React.FC = () => {
-  const { error: userProfileError } = useSWR<Profile, SWRError>(
+  const { data: userProfile } = useSWR<Profile, SWRError>(
     `/api/profile/user-profile`,
+    async (url) => {
+      return await fetch(url).then(async (response) => {
+        if (!response.ok) {
+          const error = new SWRError(
+            "An error occurred while fetching the data. FLAG",
+          );
+
+          if (response.status === HttpStatus.NOT_FOUND) {
+            error.info = await response.json();
+            error.statusCode = response.status;
+            return;
+          }
+
+          error.info = await response.json();
+          error.statusCode = response.status;
+          throw error;
+        }
+
+        return response.json();
+      });
+    },
   );
 
   return (
     <>
-      {getSectionListContent(userProfileError ? true : false).map(
+      {getSectionListContent(userProfile ? false : true).map(
         ([sectionName, { text, icon }]) => {
           const sectionHref =
             sectionName.toLocaleLowerCase() === "personal_information"
