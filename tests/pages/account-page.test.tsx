@@ -32,7 +32,7 @@ describe("AccountPage", () => {
       </SWRConfig>,
     );
 
-    for await (const [sectionName, { text }] of getSectionListContent(false)) {
+    for await (const [sectionName, { text }] of getSectionListContent(true)) {
       expect(
         await screen.findByText(sectionName.replace(/_/g, " ")),
       ).toBeInTheDocument();
