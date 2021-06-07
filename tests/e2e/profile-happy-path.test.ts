@@ -15,7 +15,7 @@ import {
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
 describe("Profile Happy path", () => {
-  jest.setTimeout(80000);
+  jest.setTimeout(70000);
 
   beforeAll(async () => {
     await openBrowser({
@@ -25,7 +25,7 @@ describe("Profile Happy path", () => {
         "--start-maximized",
         "--disable-dev-shm",
       ],
-      headless: false,
+      headless: true,
       observe: false,
       observeTime: 2000,
     });
