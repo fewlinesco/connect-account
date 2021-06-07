@@ -44,6 +44,11 @@ describe("Profile Happy path", () => {
     try {
       await authenticateToConnect();
 
+      const baseURL = (
+        process.env.CONNECT_TEST_ACCOUNT_URL ||
+        configVariables.connectAccountURL
+      ).replace(/\/?$/, "");
+
       expect(await text("Personal Information").exists()).toBeTruthy();
       await click("Personal Information");
 
@@ -82,13 +87,8 @@ describe("Profile Happy path", () => {
       );
 
       await click("Add address");
-      await waitFor(200);
-      expect(await currentURL()).toEqual(
-        `${
-          process.env.CONNECT_TEST_ACCOUNT_URL ||
-          configVariables.connectAccountURL
-        }/account/profile`,
-      );
+      await waitFor(250);
+      expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       // Update address flow
       await click(link("Delivery", below("Addresses")));
@@ -112,13 +112,8 @@ describe("Profile Happy path", () => {
         await text("You are about to delete this address.").exists(),
       ).toBeTruthy();
       await click("Delete");
-      await waitFor(200);
-      expect(await currentURL()).toEqual(
-        `${
-          process.env.CONNECT_TEST_ACCOUNT_URL ||
-          configVariables.connectAccountURL
-        }/account/profile`,
-      );
+      await waitFor(250);
+      expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       // Mark address as primary flow
       expect(await text("Show 1 more").exists()).toBeTruthy();
