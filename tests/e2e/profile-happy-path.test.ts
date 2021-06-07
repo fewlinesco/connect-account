@@ -8,6 +8,7 @@ import {
   write,
   clear,
   link,
+  below,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
@@ -34,7 +35,7 @@ describe("Profile Happy path", () => {
   });
 
   test("it should redirect", async (done) => {
-    expect.assertions(10);
+    expect.assertions(13);
 
     try {
       await authenticateToConnect();
@@ -43,13 +44,12 @@ describe("Profile Happy path", () => {
       await click("Personal Information");
 
       expect(
-        await text("Update your personal information").exists(),
+        await link("Update your personal information").exists(),
       ).toBeTruthy();
       await click("Update your personal information");
+      expect(await text("Profile | edit").exists()).toBeTruthy();
 
-      expect(await text("Username").exists()).toBeTruthy();
-
-      await clear(textBox({ value: "Clark" }));
+      await clear(textBox("Username"));
       await write(
         "Superman",
         into(textBox({ placeholder: "Enter your username" })),
@@ -60,19 +60,16 @@ describe("Profile Happy path", () => {
 
       expect(await link("Add new address").exists()).toBeTruthy();
       await click(link("Add new address"));
-
       expect(await text("Address | new").exists()).toBeTruthy();
 
       await write(
         "Metropolis",
         into(textBox({ placeholder: "Enter your locality" })),
       );
-
       await write(
         "59000",
         into(textBox({ placeholder: "Enter your postal code" })),
       );
-
       await write(
         "United States of America",
         into(textBox({ placeholder: "Enter your country" })),
@@ -80,6 +77,21 @@ describe("Profile Happy path", () => {
 
       await click("Add address");
       expect(await text("Your address has been added").exists()).toBeTruthy();
+
+      await click(link("Delivery", below("Addresses")));
+
+      expect(await text("Primary").exists()).toBeTruthy();
+      await click("Update this address");
+      expect(await text("Address | edit").exists()).toBeTruthy();
+
+      await clear(textBox("Street address"));
+      await write(
+        "21b Baker Street",
+        into(textBox({ placeholder: "Enter your street address" })),
+      );
+
+      await click("Update my address");
+      expect(await text("Your address has been updated").exists()).toBeTruthy();
 
       done();
     } catch (error) {
