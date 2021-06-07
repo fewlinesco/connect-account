@@ -27,7 +27,10 @@
     "e2e:create-test-user": "ts-node bin/e2e/create-test-user.ts",
     "e2e:remove-test-user": "ts-node bin/e2e/remove-test-user.ts",
     "generate-connect-profile-client": "docker run --rm -v ${PWD}/:/local openapitools/openapi-generator-cli generate --input-spec /local/connect-profile-openapi.yml --generator-name typescript-axios --additional-properties supportsES6=true --output /local/connect-profile-client",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "extract:i18n": "formatjs extract '{pages,components,sections}/**/*.{js,ts,tsx}' --format simple --id-interpolation-pattern '[sha512:contenthash:base64:6]' --out-file content/locales/en.json",
+    "compile:i18n": "formatjs compile-folder --ast --format simple content/locales content/compiled-locales",
+    "i18n": "npm run extract:i18n && npm run compile:i18n"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.18.0",
@@ -185,6 +188,10 @@
           "pathGroups": [
             {
               "pattern": "@src/**",
+              "group": "internal"
+            },
+            {
+              "pattern": "@content/**",
               "group": "internal"
             }
           ],

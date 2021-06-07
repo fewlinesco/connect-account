@@ -24,8 +24,8 @@ module.exports = {
     return config;
   },
   i18n: {
-    locales: ["en-US", "fr-FR"],
-    defaultLocale: "en-US",
+    locales: ["en", "fr"],
+    defaultLocale: "en",
   },
   future: {
     webpack5: true,
