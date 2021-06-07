@@ -9,12 +9,13 @@ import {
   clear,
   link,
   below,
+  waitFor,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 
 describe("Profile Happy path", () => {
-  jest.setTimeout(60000);
+  jest.setTimeout(80000);
 
   beforeAll(async () => {
     await openBrowser({
@@ -34,8 +35,8 @@ describe("Profile Happy path", () => {
     await closeBrowser();
   });
 
-  test("it should redirect", async (done) => {
-    expect.assertions(13);
+  test("it should do Profile and Addresses flows happy path", async (done) => {
+    expect.assertions(15);
 
     try {
       await authenticateToConnect();
@@ -92,6 +93,15 @@ describe("Profile Happy path", () => {
 
       await click("Update my address");
       expect(await text("Your address has been updated").exists()).toBeTruthy();
+
+      await waitFor(500);
+
+      await click("Delete this address");
+      expect(
+        await text("You are about to delete this address.").exists(),
+      ).toBeTruthy();
+      await click("Delete");
+      expect(await text("Your address has been deleted").exists()).toBeTruthy();
 
       done();
     } catch (error) {
