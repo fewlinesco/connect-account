@@ -54,7 +54,6 @@ describe("Profile Happy path", () => {
         "Superman",
         into(textBox({ placeholder: "Enter your username" })),
       );
-      expect(await textBox({ value: "Superman" }).exists()).toBeTruthy();
 
       await click("Update my information");
       expect(await text("Your profile has been updated").exists()).toBeTruthy();
@@ -78,6 +77,9 @@ describe("Profile Happy path", () => {
         "United States of America",
         into(textBox({ placeholder: "Enter your country" })),
       );
+
+      await click("Add address");
+      expect(await text("Your address has been added").exists()).toBeTruthy();
 
       done();
     } catch (error) {
