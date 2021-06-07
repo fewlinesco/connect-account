@@ -36,7 +36,7 @@ describe("Profile Happy path", () => {
   });
 
   test("it should do Profile and Addresses flows happy path", async (done) => {
-    expect.assertions(15);
+    expect.assertions(19);
 
     try {
       await authenticateToConnect();
@@ -44,6 +44,7 @@ describe("Profile Happy path", () => {
       expect(await text("Personal Information").exists()).toBeTruthy();
       await click("Personal Information");
 
+      // Update user profile flow
       expect(
         await link("Update your personal information").exists(),
       ).toBeTruthy();
@@ -59,6 +60,7 @@ describe("Profile Happy path", () => {
       await click("Update my information");
       expect(await text("Your profile has been updated").exists()).toBeTruthy();
 
+      // Add address flow
       expect(await link("Add new address").exists()).toBeTruthy();
       await click(link("Add new address"));
       expect(await text("Address | new").exists()).toBeTruthy();
@@ -79,6 +81,7 @@ describe("Profile Happy path", () => {
       await click("Add address");
       expect(await text("Your address has been added").exists()).toBeTruthy();
 
+      // Update address flow
       await click(link("Delivery", below("Addresses")));
 
       expect(await text("Primary").exists()).toBeTruthy();
@@ -94,6 +97,7 @@ describe("Profile Happy path", () => {
       await click("Update my address");
       expect(await text("Your address has been updated").exists()).toBeTruthy();
 
+      // Delete address flow
       await waitFor(500);
 
       await click("Delete this address");
@@ -102,6 +106,23 @@ describe("Profile Happy path", () => {
       ).toBeTruthy();
       await click("Delete");
       expect(await text("Your address has been deleted").exists()).toBeTruthy();
+
+      // Mark address as primary flow
+      expect(await text("Show 1 more").exists()).toBeTruthy();
+      await click("Show 1 more");
+      await click(link("Work"));
+
+      expect(
+        await text("Use this address as my main address").exists(),
+      ).toBeTruthy();
+      await click("Use this address as my main address");
+      expect(
+        await text("You are about to set this address as main.").exists(),
+      ).toBeTruthy();
+      await click("Confirm");
+      expect(
+        await text("Your address has been marked as primary").exists(),
+      ).toBeTruthy();
 
       done();
     } catch (error) {
