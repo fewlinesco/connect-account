@@ -24,7 +24,7 @@ describe("Profile Happy path", () => {
         "--start-maximized",
         "--disable-dev-shm",
       ],
-      headless: true,
+      headless: false,
       observe: false,
       observeTime: 2000,
     });
@@ -34,14 +34,35 @@ describe("Profile Happy path", () => {
     await closeBrowser();
   });
 
+  const isStagingEnv = (process.env.CONNECT_PROFILE_URL || "").includes(
+    "staging",
+  );
+
   test("it should do Profile flows happy path", async (done) => {
-    expect.assertions(7);
+    expect.assertions(isStagingEnv ? 10 : 7);
 
     try {
       await authenticateToConnect();
 
-      expect(await text("Personal Information").exists()).toBeTruthy();
-      await click("Personal Information");
+      if (isStagingEnv) {
+        expect(await text("Create your profile").exists()).toBeTruthy();
+        await click("Create your profile");
+
+        expect(await text("Profile | new").exists()).toBeTruthy();
+
+        await write(
+          "Superman",
+          into(textBox({ placeholder: "Enter your name" })),
+        );
+
+        await click("Add my information");
+        expect(
+          await text("Your profile has been created").exists(),
+        ).toBeTruthy();
+      } else {
+        expect(await text("Personal Information").exists()).toBeTruthy();
+        await click("Personal Information");
+      }
 
       // Update user profile flow
       expect(
