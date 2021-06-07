@@ -10,9 +10,12 @@ import {
   link,
   below,
   waitFor,
+  currentURL,
+  screenshot,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
+import { configVariables } from "@src/configs/config-variables";
 
 describe("Profile Happy path", () => {
   jest.setTimeout(70000);
@@ -79,7 +82,13 @@ describe("Profile Happy path", () => {
       );
 
       await click("Add address");
-      expect(await text("Your address has been added").exists()).toBeTruthy();
+      await waitFor(200);
+      expect(await currentURL()).toEqual(
+        `${
+          process.env.CONNECT_TEST_ACCOUNT_URL ||
+          configVariables.connectAccountURL
+        }/account/profile`,
+      );
 
       // Update address flow
       await click(link("Delivery", below("Addresses")));
@@ -98,14 +107,18 @@ describe("Profile Happy path", () => {
       expect(await text("Your address has been updated").exists()).toBeTruthy();
 
       // Delete address flow
-      await waitFor(500);
-
       await click("Delete this address");
       expect(
         await text("You are about to delete this address.").exists(),
       ).toBeTruthy();
       await click("Delete");
-      expect(await text("Your address has been deleted").exists()).toBeTruthy();
+      await waitFor(200);
+      expect(await currentURL()).toEqual(
+        `${
+          process.env.CONNECT_TEST_ACCOUNT_URL ||
+          configVariables.connectAccountURL
+        }/account/profile`,
+      );
 
       // Mark address as primary flow
       expect(await text("Show 1 more").exists()).toBeTruthy();
@@ -126,6 +139,9 @@ describe("Profile Happy path", () => {
 
       done();
     } catch (error) {
+      await screenshot({
+        path: "tests/e2e/screenshots/profile-happy-path.png",
+      });
       done(error);
     }
   });
