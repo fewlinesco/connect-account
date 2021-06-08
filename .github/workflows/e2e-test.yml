@@ -35,10 +35,6 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install
 
-      - name: taiko
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn add -D taiko
-
       - name: creating test user
         env:
           CONNECT_TEST_ACCOUNT_EMAIL: "taiko@e2e.test"
@@ -61,3 +57,11 @@ jobs:
           CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
           CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
         run: yarn e2e:remove-test-user
+      
+      # - name: cleaning profile staging
+      #   if: ${{ github.event.deployment.environment == 'fewlines-account-staging' && github.event.deployment_status.state == 'success' && success()  }}
+      #   env:
+      #     CONNECT_TEST_ACCOUNT_EMAIL: "taiko@e2e.test"
+      #     CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
+      #     CONNECT_PROFILE_API_KEY: ${{ secrets.CONNECT_PROFILE_API_KEY }}
+      #   run: 
