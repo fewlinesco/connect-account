@@ -35,7 +35,7 @@ describe("Account Web Application re-send Identity validation code", () => {
     await closeBrowser();
   });
 
-  test("It should re-send an Identity validation code", async (done) => {
+  test("It should re-send an Identity validation code", async () => {
     expect.assertions(9);
 
     try {
@@ -67,14 +67,12 @@ describe("Account Web Application re-send Identity validation code", () => {
 
       const secondURL = await currentURL();
       expect(firstURL).not.toMatch(secondURL);
-
-      done();
     } catch (error) {
       await screenshot({
         path: "tests/e2e/screenshots/re-send-identity-validation-code.png",
       });
 
-      done(error);
+      throw error;
     }
   });
 });

@@ -33,7 +33,7 @@ describe("Account Web Application update password", () => {
     await closeBrowser();
   });
 
-  test("It should show error messages if password inputs are filled incorrectly", async (done) => {
+  test("It should show error messages if password inputs are filled incorrectly", async () => {
     expect.assertions(12);
 
     try {
@@ -86,14 +86,12 @@ describe("Account Web Application update password", () => {
       await write("");
       await click("Update password");
       expect(await text("Password can't be blank.").exists()).toBeTruthy();
-
-      done();
     } catch (error) {
       await screenshot({
         path: "tests/e2e/screenshots/fill-incorrect-new-password.test.png",
       });
 
-      done(error);
+      throw error;
     }
   });
 });
