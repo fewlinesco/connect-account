@@ -23,20 +23,16 @@ async function getAndPutUser(
     return putUser({
       sub,
       refresh_token,
+      locale: "en",
     });
   }
 
-  let user: OAuth2UserInfo = {
+  return putUser({
     ...inDBUser,
     sub,
     refresh_token,
-  };
-
-  if (locale) {
-    user = { ...user, locale };
-  }
-
-  return putUser(user);
+    locale,
+  });
 }
 
 export { getAndPutUser };

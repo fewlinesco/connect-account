@@ -1,18 +1,32 @@
 import React from "react";
 import styled from "styled-components";
+import useSWR from "swr";
 import { v4 as uuidv4 } from "uuid";
 
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { Form } from "@src/components/forms/form";
 import { InputsRadio } from "@src/components/input/input-radio-button";
 import { WrongInputError } from "@src/components/input/wrong-input-error";
+import { SWRError } from "@src/errors/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 
 const Locale: React.FC = () => {
   const availableLanguage = ["English", "Français"];
   const [formID, setFormID] = React.useState<string>(uuidv4());
-  const [locale, setLocale] = React.useState<string>(availableLanguage[0]);
+  const [locale, setLocale] = React.useState<string>("en");
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+
+  const { data } = useSWR<{ locale: string }, SWRError>(
+    `/api/locale/get-locale`,
+  );
+
+  if (!data) {
+    return <React.Fragment />;
+  }
+
+  React.useEffect(() => {
+    setLocale(data.locale);
+  });
 
   return (
     <>
