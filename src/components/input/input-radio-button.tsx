@@ -11,7 +11,7 @@ const InputsRadio: React.FC<{
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }> = ({ groupName, inputsValues, selectedInput, onChange }) => {
   return (
-    <div role="radiogroup" aria-label={groupName}>
+    <RadioGroup role="radiogroup" aria-label={groupName}>
       {inputsValues.map((inputValue) => {
         return (
           <React.Fragment key={groupName + inputValue}>
@@ -31,9 +31,13 @@ const InputsRadio: React.FC<{
           </React.Fragment>
         );
       })}
-    </div>
+    </RadioGroup>
   );
 };
+
+const RadioGroup = styled.div`
+  margin-bottom: 1.5rem;
+`;
 
 const Label = styled.label`
   position: relative;
@@ -41,8 +45,8 @@ const Label = styled.label`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 6.8rem;
-  padding: 0 ${({ theme }) => theme.spaces.xs};
+  line-height: ${({ theme }) => theme.lineHeights.copy};
+  padding: 2.5rem ${({ theme }) => theme.spaces.xs};
   background-color: ${({ theme }) => theme.colors.background};
   box-shadow: ${({ theme }) => theme.shadows.box};
   cursor: pointer;
@@ -55,7 +59,7 @@ const Label = styled.label`
   }
 
   @media ${deviceBreakpoints.m} {
-    padding: 0 1.5rem;
+    padding: 2.5rem 1.5rem;
   }
 
   span {

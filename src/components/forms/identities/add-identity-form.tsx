@@ -124,13 +124,11 @@ const AddIdentityForm: React.FC<{
           }}
           label="Mark this identity as my primary one"
         />
-
         <Button
           variant={ButtonVariant.PRIMARY}
           type="submit"
         >{`Add ${type.toLowerCase()}`}</Button>
       </Form>
-
       <NeutralLink href="/account/logins">
         <FakeButton variant={ButtonVariant.SECONDARY}>Cancel</FakeButton>
       </NeutralLink>
