@@ -18,7 +18,7 @@ import { authenticateToConnect } from "./utils/authenticate-to-connect";
 import { configVariables } from "@src/configs/config-variables";
 
 describe("Profile Happy path", () => {
-  jest.setTimeout(90000);
+  jest.setTimeout(120000);
 
   beforeAll(async () => {
     await openBrowser({
@@ -28,7 +28,7 @@ describe("Profile Happy path", () => {
         "--start-maximized",
         "--disable-dev-shm",
       ],
-      headless: false,
+      headless: true,
       observe: false,
       observeTime: 2000,
     });
@@ -43,7 +43,7 @@ describe("Profile Happy path", () => {
   ).includes("staging");
 
   test("it should do Profile and Addresses flows' happy path", async (done) => {
-    expect.assertions(isStagingEnv ? 10 : 20);
+    expect.assertions(isStagingEnv ? 25 : 20);
 
     try {
       await authenticateToConnect();
@@ -52,10 +52,6 @@ describe("Profile Happy path", () => {
         process.env.CONNECT_TEST_ACCOUNT_URL ||
         configVariables.connectAccountURL
       ).replace(/\/?$/, "");
-
-      console.log(isStagingEnv);
-      console.log(process.env.CONNECT_PROFILE_URL);
-      console.log(configVariables.connectProfileUrl);
 
       if (isStagingEnv) {
         expect(await text("Create your profile").exists()).toBeTruthy();
@@ -93,19 +89,15 @@ describe("Profile Happy path", () => {
       await click("Update my information");
       expect(await text("Your profile has been updated").exists()).toBeTruthy();
 
-      // expect(await text("Personal Information").exists()).toBeTruthy();
-      // await click("Personal Information");
-
       // Add address flow
-      expect(await link("Add new address").exists()).toBeTruthy();
-      await click(link("Add new address"));
+      expect(await text("Add new address").exists()).toBeTruthy();
+      await click(text("Add new address"));
       expect(await text("Address | new").exists()).toBeTruthy();
 
       await write(
         "42 Test Road",
         into(textBox({ placeholder: "Enter your street address" })),
       );
-
       await write(
         "Test City",
         into(textBox({ placeholder: "Enter your locality" })),
@@ -128,8 +120,8 @@ describe("Profile Happy path", () => {
       expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       if (isStagingEnv) {
-        expect(await link("Add new address").exists()).toBeTruthy();
-        await click(link("Add new address"));
+        expect(await text("Add new address").exists()).toBeTruthy();
+        await click(text("Add new address"));
         expect(await text("Address | new").exists()).toBeTruthy();
 
         await write(
