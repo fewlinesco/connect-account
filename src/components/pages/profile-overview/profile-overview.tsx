@@ -29,7 +29,7 @@ const ProfileOverview: React.FC<{
       <SectionBox>
         <BoxedLink disableClick={false} href="#">
           <Flex>
-            {!userProfile ? (
+            {!userProfile || !userProfile.picture ? (
               <DefaultProfilePictureIconWrapper>
                 <DefaultProfilePictureIcon />
               </DefaultProfilePictureIconWrapper>
