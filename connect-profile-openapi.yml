@@ -4,12 +4,14 @@ info:
   contact:
     email: info@fewlines.co
   description: 'The application stores user profile information, it is meant to be compliant with OpenID Connect specification'
-  version: 0.2.4
+  version: 0.2.8
   title: Connect Profile
 
 tags:
   - name: Connect Profile
     description: An API for user OpenID Connect profile storage
+  - name: Connect Profile Admin
+    description: An admin API for user OpenID Connect profile storage
 
 servers:
   - url: 'http://localhost:21001'
@@ -238,12 +240,68 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 
+  /users/profiles/{sub}:
+    delete:
+      tags: 
+        - Connect Profile Admin
+      description: Delete a user profile based on the provided sub
+      operationId: deleteProfile
+      security: 
+        - api_key: []
+      parameters:
+        - name: sub
+          in: path
+          description: the sub identifier of the requested User to delete
+          required: true
+          schema:
+            type: string
+      responses: 
+        '204':
+          description: The resource was deleted successfully.
+        '401':
+          $ref: '#/components/responses/AdminUnauthorized'
+        '404':
+          $ref: '#/components/responses/UserNotFound'
+
+  /users/{sub}/addresses/{id}:
+    delete:
+      tags:
+        - Connect Profile Admin
+      description: Delete a user's address based on the provided sub and address id
+      operationId: deleteOneUserAddress
+      security:
+        - api_key: []
+      parameters:
+        - name: sub
+          in: path
+          description: the sub identifier of the requested User
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: the address unique identifier of the address to delete
+          required: true
+          schema:
+            type: string
+      responses: 
+        '204':
+          description: The resource was deleted successfully.
+        '401':
+          $ref: '#/components/responses/AdminUnauthorized'
+        '404':
+          $ref: '#/components/responses/AddressNotFound'
+
 components:
   securitySchemes:
     bearer:
       type: http
       bearerFormat: JWT
       scheme: bearer
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header
 
   schemas:
 
@@ -360,6 +418,17 @@ components:
 
     # ERRORS
 
+    AdminUnauthorized:
+      description: Unauthorized request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                default: Without a valid API key you are not allowed to access this endpoint
+
     EndUserUnauthorized:
       description: Unauthorized request
       content:
@@ -388,9 +457,6 @@ components:
                 description: an object representing invalid scopes
                 properties:
                   address:
-                    type: string
-                    default: Must be present
-                  openid:
                     type: string
                     default: Must be present
                   profile:
@@ -584,7 +650,7 @@ components:
         nickname: Superman
         preferred_username: Clark
         profile: 'https://www.dccomics.com/characters/superman'
-        picture: 'https://www.dccomics.com/sites/default/files/styles/character_thumb_160x160/public/Char_Profile_Superman_20190116_5c3fc2758f6a12.2513240.jpg'
+        picture: 'https://source.unsplash.com/random'
         website: 'https://superman.com'
         gender: male
         birthdate: '1938-04-01'
@@ -600,7 +666,7 @@ components:
         nickname: Superman
         preferred_username: Clark
         profile: 'https://www.dccomics.com/characters/superman'
-        picture: 'https://www.dccomics.com/sites/default/files/styles/character_thumb_160x160/public/Char_Profile_Superman_20190116_5c3fc2758f6a12.2513240.jpg'
+        picture: 'https://source.unsplash.com/random'
         website: 'https://superman.com'
         gender: male
         birthdate: '1938-04-01'

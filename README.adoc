@@ -279,8 +279,8 @@ We are using `husky 6.x` to trigger the linting and building of the app before p
 | `CONNECT_TEST_ACCOUNT_PASSWORD`
 | Password of the Connect account that will be used for e2e tests.
 
-| `PROFILE_MOCK_SERVER_URL`
-| URL of Connect.Profile mock server.
+| `CONNECT_PROFILE_URL`
+| URL of Connect.Profile server.
 |===
 
 

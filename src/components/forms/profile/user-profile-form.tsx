@@ -50,7 +50,7 @@ const UserProfileForm: React.FC<{
         formID={formID}
         onSubmit={async () => {
           if (isCreation) {
-            await fetchJson("/api/profile/user-profile", "POST", {
+            return fetchJson("/api/profile/user-profile", "POST", {
               userProfilePayload: userProfile,
             }).then(async (response) => {
               const parsedResponse = await response.json();
@@ -64,7 +64,7 @@ const UserProfileForm: React.FC<{
             });
           }
 
-          await fetchJson("/api/profile/user-profile", "PATCH", {
+          return fetchJson("/api/profile/user-profile", "PATCH", {
             userProfilePayload: userProfile,
           }).then(async (response) => {
             const parsedResponse = await response.json();
@@ -140,6 +140,32 @@ const UserProfileForm: React.FC<{
             });
           }}
           label="Profile URL"
+        />
+        <InputText
+          type="text"
+          name="website"
+          placeholder="Enter your website URL"
+          value={userProfile.website}
+          onChange={(value) => {
+            setUserProfile({
+              ...userProfile,
+              website: value,
+            });
+          }}
+          label="Website URL"
+        />
+        <InputText
+          type="text"
+          name="picture"
+          placeholder="Enter your picture URL"
+          value={userProfile.picture}
+          onChange={(value) => {
+            setUserProfile({
+              ...userProfile,
+              picture: value,
+            });
+          }}
+          label="Picture URL"
         />
         <InputText
           type="text"

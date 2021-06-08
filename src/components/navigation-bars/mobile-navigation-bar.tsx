@@ -1,3 +1,4 @@
+import { HttpStatus } from "@fwl/web";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
@@ -14,7 +15,6 @@ import { LogoutAnchor } from "../logout-anchor/logout-anchor";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { getNavigationSections } from "./navigation-sections";
 import { Profile } from "@src/@types/profile";
-import { configVariables } from "@src/configs/config-variables";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
 
@@ -22,8 +22,29 @@ const MobileNavigationBar: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const router = useRouter();
 
-  const { error: userProfileError } = useSWR<Profile, SWRError>(
+  const { data: userProfile } = useSWR<Profile, SWRError>(
     `/api/profile/user-profile`,
+    async (url) => {
+      return await fetch(url).then(async (response) => {
+        if (!response.ok) {
+          const error = new SWRError(
+            "An error occurred while fetching the data. FLAG",
+          );
+
+          if (response.status === HttpStatus.NOT_FOUND) {
+            error.info = await response.json();
+            error.statusCode = response.status;
+            return;
+          }
+
+          error.info = await response.json();
+          error.statusCode = response.status;
+          throw error;
+        }
+
+        return response.json();
+      });
+    },
   );
   return (
     <>
@@ -31,17 +52,8 @@ const MobileNavigationBar: React.FC = () => {
       <Container>
         {isOpen ? (
           <MenuList>
-            {getNavigationSections(userProfileError ? true : false).map(
+            {getNavigationSections(userProfile ? false : true).map(
               ([title, { href, icon }]) => {
-                if (
-                  (!configVariables.featureFlag &&
-                    href === "/account/profile") ||
-                  (!configVariables.featureFlag &&
-                    href === "/account/profile/user-profile/new")
-                ) {
-                  return <React.Fragment key={title + href} />;
-                }
-
                 return (
                   <ListItem
                     href={href}

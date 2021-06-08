@@ -6,7 +6,6 @@ import { BoxedLink } from "@src/components/boxed-link/boxed-link";
 import { ButtonVariant, ShowMoreButton } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { DefaultProfilePictureIcon } from "@src/components/icons/default-profile-picture/default-profile-picture";
-import { PlusIcon } from "@src/components/icons/plus-icon/plus-icon";
 import { RightChevron } from "@src/components/icons/right-chevron/right-chevron";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { Separator } from "@src/components/separator/separator";
@@ -39,7 +38,6 @@ const ProfileOverview: React.FC<{
             )}
             <PictureCategoryName>PROFILE PICTURE</PictureCategoryName>
           </Flex>
-          <PlusIcon />
         </BoxedLink>
         <Separator />
         <UserInfoSection categoryName="NAME" href="#">
