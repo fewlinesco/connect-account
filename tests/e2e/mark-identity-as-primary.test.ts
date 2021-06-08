@@ -32,7 +32,7 @@ describe("Mark Identity as primary", () => {
     await closeBrowser();
   });
 
-  test("It should correctly mark another identity to primary status and going back to logins overview page", async (done) => {
+  test("It should correctly mark another identity to primary status and going back to logins overview page", async () => {
     expect.assertions(10);
 
     try {
@@ -63,14 +63,12 @@ describe("Mark Identity as primary", () => {
       });
 
       expect(text(nonPrimaryYet)).toBeTruthy();
-
-      done();
     } catch (error) {
       await screenshot({
         path: "tests/e2e/screenshots/mark-identity-as-primary.test.png",
       });
 
-      done(error);
+      throw error;
     }
   });
 });

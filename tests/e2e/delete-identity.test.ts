@@ -31,7 +31,7 @@ describe("Delete Identity", () => {
     await closeBrowser();
   });
 
-  test("It should navigate to the show of the Identity, and delete it", async (done) => {
+  test("It should navigate to the show of the Identity, and delete it", async () => {
     expect.assertions(13);
 
     try {
@@ -69,14 +69,12 @@ describe("Delete Identity", () => {
       expect(await text("Hide").exists()).toBeTruthy();
 
       expect(!(await link("_delete_").exists())).toBeTruthy();
-
-      done();
     } catch (error) {
       await screenshot({
         path: "tests/e2e/screenshots/delete-identity.png",
       });
 
-      done(error);
+      throw error;
     }
   });
 });
