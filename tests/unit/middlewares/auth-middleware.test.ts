@@ -63,7 +63,7 @@ const spiedOnRefreshTokensFlow = jest
 const spiedOnGetAndPutUser = jest
   .spyOn(getAndPutUser, "getAndPutUser")
   .mockImplementation(async () => {
-    return;
+    return { $metadata: {} };
   });
 
 async function sealJWS(access_token: string, salt?: string): Promise<string> {
