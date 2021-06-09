@@ -48,7 +48,7 @@ const handler: Handler = (request, response): Promise<void> => {
       throw webErrorFactory(webErrors.badRequest);
     }
 
-    await getAndPutUser({
+    const updatedUser = await getAndPutUser({
       ...(currentDBUser as DynamoUser),
       locale: locale as string,
     }).catch((error) => {
@@ -60,9 +60,9 @@ const handler: Handler = (request, response): Promise<void> => {
     });
 
     span.setDisclosedAttribute("user locale set", true);
-    response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-    response.setHeader("location", "/account");
-    response.end();
+    response.statusCode = HttpStatus.OK;
+    response.setHeader("Content-Type", "application/json");
+    response.json({ updatedUser });
     return;
   });
 };
@@ -81,5 +81,5 @@ const wrappedHandler = wrapMiddlewares(
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .get(wrappedHandler)
+  .post(wrappedHandler)
   .getHandler();

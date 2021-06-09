@@ -56,10 +56,10 @@ const handler: Handler = (request, response): Promise<void> => {
       return;
     }
 
-    span.setDisclosedAttribute("user locale retrieved", true);
+    // const locale = currentDBUser.locale;
+    span.setDisclosedAttribute("user locale retrieved", currentDBUser.locale);
     response.statusCode = HttpStatus.OK;
     response.json({ locale: currentDBUser.locale });
-
     return;
   });
 };
