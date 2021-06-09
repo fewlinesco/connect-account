@@ -36,12 +36,13 @@ jobs:
         run: yarn install
 
       - name: creating test user
+        id: test-user-creation
         env:
           CONNECT_TEST_ACCOUNT_EMAIL: "taiko@e2e.test"
           CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
           CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
           CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
-        run: yarn e2e:create-test-user
+        run: echo "::set-output name=test-user-sub::$(yarn e2e:create-test-user | xargs | cut -d' ' -f7 | cut -c-36)"
 
       - name: e2e
         run: yarn test:e2e
@@ -49,6 +50,11 @@ jobs:
           CONNECT_TEST_ACCOUNT_EMAIL: 'taiko_${{ github.event.deployment.sha }}@e2e.test'
           CONNECT_TEST_ACCOUNT_PASSWORD: ${{ secrets.CONNECT_TEST_ACCOUNT_PASSWORD }}
           CONNECT_TEST_ACCOUNT_URL: ${{ github.event.deployment.payload.web_url }}
+
+      - name: cleaning profile staging
+        run: yarn e2e:cleaning-profile-staging
+        env:
+          CONNECT_TEST_USER_SUB: ${{ steps.test-user-creation.outputs.test-user-sub }}
 
       - name: removing test user
         if: ${{ always() }}
@@ -58,10 +64,3 @@ jobs:
           CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
         run: yarn e2e:remove-test-user
       
-      # - name: cleaning profile staging
-      #   if: ${{ github.event.deployment.environment == 'fewlines-account-staging' && github.event.deployment_status.state == 'success' && success()  }}
-      #   env:
-      #     CONNECT_TEST_ACCOUNT_EMAIL: "taiko@e2e.test"
-      #     CONNECT_MANAGEMENT_URL: ${{ secrets.CONNECT_MANAGEMENT_URL }}
-      #     CONNECT_PROFILE_API_KEY: ${{ secrets.CONNECT_PROFILE_API_KEY }}
-      #   run: 
