@@ -53,6 +53,10 @@ describe("Profile Happy path", () => {
         configVariables.connectAccountURL
       ).replace(/\/?$/, "");
 
+      console.log(isStagingEnv);
+      console.log("PROFILE URL: ", process.env.CONNECT_PROFILE_URL);
+      console.log("USERSUB: ", process.env.CONNECT_TEST_USER_SUB);
+
       if (isStagingEnv) {
         expect(await text("Create your profile").exists()).toBeTruthy();
         await click("Create your profile");
@@ -68,6 +72,7 @@ describe("Profile Happy path", () => {
         expect(
           await text("Your profile has been created").exists(),
         ).toBeTruthy();
+        console.log("PROFILE CREATION DONE");
       } else {
         expect(await text("Personal Information").exists()).toBeTruthy();
         await click("Personal Information");
@@ -86,8 +91,16 @@ describe("Profile Happy path", () => {
         into(textBox({ placeholder: "Enter your username" })),
       );
 
+      expect(textBox({ value: "Supertest" }).exists()).toBeTruthy();
+      expect(textBox({ value: "Taiko Test" }).exists()).toBeTruthy();
+
       await click("Update my information");
-      expect(await text("Your profile has been updated").exists()).toBeTruthy();
+      await waitFor(5000);
+
+      console.log("CURRENT URL: ", await currentURL());
+
+      expect(text("Basic information").exists()).toBeTruthy();
+      expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       // Add address flow
       expect(await text("Add new address").exists()).toBeTruthy();

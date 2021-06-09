@@ -6,9 +6,9 @@ async function cleaningProfileStaging(): Promise<void> {
     throw new Error("CONNECT_TEST_USER_SUB environment variable is undefined");
   }
 
-  if (process.env.CONNECT_PROFILE_API_KEY === undefined) {
+  if (process.env.CONNECT_PROFILE_STAGING_API_KEY === undefined) {
     throw new Error(
-      "CONNECT_PROFILE_API_KEY environment variable is undefined",
+      "CONNECT_PROFILE_STAGING_API_KEY environment variable is undefined",
     );
   }
 
@@ -19,7 +19,7 @@ async function cleaningProfileStaging(): Promise<void> {
   console.log(process.env.CONNECT_TEST_USER_SUB);
 
   const basePath = process.env.CONNECT_PROFILE_URL.replace(/\/?$/, "");
-  const apiKey = `API_KEY ${process.env.CONNECT_PROFILE_API_KEY}`;
+  const apiKey = `API_KEY ${process.env.CONNECT_PROFILE_STAGING_API_KEY}`;
 
   const profileAdminClient = new ConnectProfileAdminApi(
     new Configuration({
