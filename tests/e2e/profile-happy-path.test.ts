@@ -42,8 +42,8 @@ describe("Profile Happy path", () => {
     process.env.CONNECT_PROFILE_URL || configVariables.connectProfileUrl
   ).includes("staging");
 
-  test("it should do Profile and Addresses flows' happy path", async (done) => {
-    expect.assertions(isStagingEnv ? 25 : 20);
+  test("it should do Profile and Addresses flows' happy path", async () => {
+    expect.assertions(isStagingEnv ? 28 : 20);
 
     try {
       await authenticateToConnect();
@@ -75,7 +75,7 @@ describe("Profile Happy path", () => {
 
       // Update user profile flow
       expect(
-        await link("Update your personal information").exists(),
+        await text("Update your personal information").exists(),
       ).toBeTruthy();
       await click("Update your personal information");
       expect(await text("Profile | edit").exists()).toBeTruthy();
@@ -196,12 +196,23 @@ describe("Profile Happy path", () => {
       await waitFor(250);
       expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
-      done();
+      if (isStagingEnv) {
+        await click(link("", below("Addresses")));
+        expect(await text("Primary").exists()).toBeTruthy();
+
+        await click("Delete this address");
+        expect(
+          await text("You are about to delete this address.").exists(),
+        ).toBeTruthy();
+        await click("Delete");
+        await waitFor(250);
+        expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+      }
     } catch (error) {
       await screenshot({
         path: "tests/e2e/screenshots/profile-happy-path.png",
       });
-      done(error);
+      throw error;
     }
   });
 });
