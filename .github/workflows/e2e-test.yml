@@ -52,9 +52,12 @@ jobs:
           CONNECT_TEST_ACCOUNT_URL: ${{ github.event.deployment.payload.web_url }}
 
       - name: cleaning profile staging
+        if: ${{ github.event.deployment.environment == 'fewlines-account-staging' && github.event.deployment_status.state == 'success' && success()  }}
         run: yarn e2e:cleaning-profile-staging
         env:
           CONNECT_TEST_USER_SUB: ${{ steps.test-user-creation.outputs.test-user-sub }}
+          CONNECT_PROFILE_API_KEY: ${{ secrets.CONNECT_PROFILE_API_KEY }}
+          CONNECT_PROFILE_URL: ${{ secrets.CONNECT_PROFILE_URL }}
 
       - name: removing test user
         if: ${{ always() }}
