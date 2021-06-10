@@ -16,6 +16,7 @@ const InputsRadioButtons = (): JSX.Element => {
         onChange={({ target }) => {
           setOptionValue(target.value);
         }}
+        isReady={true}
       />
     </StoriesContainer>
   );

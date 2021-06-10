@@ -9,7 +9,7 @@ const InputsRadio: React.FC<{
   inputsValues: string[];
   selectedInput: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  isReady?: boolean;
+  isReady: boolean;
 }> = ({ groupName, inputsValues, selectedInput, onChange, isReady }) => {
   return (
     <RadioGroup role="radiogroup" aria-label={groupName}>

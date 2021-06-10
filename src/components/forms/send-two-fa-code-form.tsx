@@ -86,6 +86,7 @@ const SendTwoFACodeForm: React.FC<{
               setSelectedIdentity(newIdentity);
             }
           }}
+          isReady={true}
         />
       ) : (
         <InputRadioWrapper>
