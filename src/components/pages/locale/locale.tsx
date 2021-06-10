@@ -18,9 +18,7 @@ const Locale: React.FC = () => {
   const [locale, setLocale] = React.useState<string>("en");
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
-  const { data } = useSWR<{ locale: string }, SWRError>(
-    `/api/locale/get-locale`,
-  );
+  const { data } = useSWR<{ locale: string }, SWRError>(`/api/locale`);
 
   React.useEffect(() => {
     data && setLocale(data.locale);
@@ -38,7 +36,7 @@ const Locale: React.FC = () => {
       <Form
         formID={formID}
         onSubmit={async () => {
-          await fetchJson("/api/locale/set-locale", "POST", { locale }).then(
+          await fetchJson("/api/locale", "POST", { locale }).then(
             async (response) => {
               const parsedResponse = await response.json();
 
