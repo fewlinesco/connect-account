@@ -24,10 +24,6 @@ const Locale: React.FC = () => {
     data && setLocale(data.locale);
   }, [data]);
 
-  if (!data) {
-    return <React.Fragment />;
-  }
-
   return (
     <>
       {errorMessage ? (
@@ -36,6 +32,10 @@ const Locale: React.FC = () => {
       <Form
         formID={formID}
         onSubmit={async () => {
+          if (!data) {
+            return;
+          }
+
           await fetchJson("/api/locale", "POST", { locale }).then(
             async (response) => {
               if (response.status >= 400) {
@@ -57,10 +57,13 @@ const Locale: React.FC = () => {
           onChange={({ target }) => {
             setLocale(getLocaleKey(target.value));
           }}
+          isReady={data ? true : false}
         />
-        <Button variant={ButtonVariant.PRIMARY} type="submit">
-          Set your preferred locale
-        </Button>
+        {data ? (
+          <Button variant={ButtonVariant.PRIMARY} type="submit">
+            Set your preferred locale
+          </Button>
+        ) : null}
       </Form>
     </>
   );

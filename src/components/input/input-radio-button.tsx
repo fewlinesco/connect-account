@@ -9,7 +9,8 @@ const InputsRadio: React.FC<{
   inputsValues: string[];
   selectedInput: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}> = ({ groupName, inputsValues, selectedInput, onChange }) => {
+  isReady?: boolean;
+}> = ({ groupName, inputsValues, selectedInput, onChange, isReady }) => {
   return (
     <RadioGroup role="radiogroup" aria-label={groupName}>
       {inputsValues.map((inputValue) => {
@@ -25,7 +26,7 @@ const InputsRadio: React.FC<{
                 value={inputValue}
                 checked={selectedInput === inputValue ? true : false}
               />
-              <span />
+              {isReady ? <span /> : null}
             </Label>
             <Separator />
           </React.Fragment>
