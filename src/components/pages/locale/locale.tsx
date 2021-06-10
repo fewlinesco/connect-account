@@ -10,6 +10,7 @@ import { InputsRadio } from "@src/components/input/input-radio-button";
 import { WrongInputError } from "@src/components/input/wrong-input-error";
 import { SWRError } from "@src/errors/errors";
 import { fetchJson } from "@src/utils/fetch-json";
+import { AVAILABLE_LANGUAGE, getLocaleKey } from "@src/utils/get-locale";
 
 const Locale: React.FC = () => {
   const router = useRouter();
@@ -28,11 +29,6 @@ const Locale: React.FC = () => {
   if (!data) {
     return <React.Fragment />;
   }
-
-  const availableLanguage: { [key: string]: string; en: string; fr: string } = {
-    en: "English",
-    fr: "Français",
-  };
 
   return (
     <>
@@ -60,14 +56,10 @@ const Locale: React.FC = () => {
       >
         <InputsRadio
           groupName="language"
-          inputsValues={Object.values(availableLanguage)}
-          selectedInput={availableLanguage[locale]}
+          inputsValues={Object.values(AVAILABLE_LANGUAGE)}
+          selectedInput={AVAILABLE_LANGUAGE[locale]}
           onChange={({ target }) => {
-            const targetedLocale = Object.keys(availableLanguage).find(
-              (key) => availableLanguage[key] === target.value,
-            );
-
-            setLocale(targetedLocale ? targetedLocale : "en");
+            setLocale(getLocaleKey(target.value));
           }}
         />
         <Button variant={ButtonVariant.PRIMARY} type="submit">
