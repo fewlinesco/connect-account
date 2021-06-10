@@ -80,7 +80,7 @@
     "@types/react": "17.0.11",
     "@types/react-datepicker": "3.1.8",
     "@types/react-dom": "17.0.7",
-    "@types/react-phone-number-input": "3.0.6",
+    "@types/react-phone-number-input": "3.0.7",
     "@types/styled-components": "5.1.10",
     "@types/uuid": "8.3.0",
     "@typescript-eslint/eslint-plugin": "4.26.1",

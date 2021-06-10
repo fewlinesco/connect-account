@@ -3806,10 +3806,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-phone-number-input@3.0.6":
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/@types/react-phone-number-input/-/react-phone-number-input-3.0.6.tgz#fa38246931ddb79629d2ac90565a97edd184f1bc"
-  integrity sha512-72+yblLIzquMluZEipZxHzFMcnLZmeW3/1dkAG/iK63wQLwyMRIYk+5U+AvRahAzLs4YBfZqlhyiwOa3qCGikg==
+"@types/react-phone-number-input@3.0.7":
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@types/react-phone-number-input/-/react-phone-number-input-3.0.7.tgz#11eb743af21dd9e5ad248e3d73be020a4d386586"
+  integrity sha512-CM7atL6w89Q8WNSC3Gbjvi/28v1DSJaYF8Ig2jPLtuKfelyoeW58dTNv5/6XP3dhB6DTpXM7QxI69gYS9GzgtA==
   dependencies:
     "@types/react" "*"
 
