@@ -1,4 +1,9 @@
-import { Endpoint, getServerSideCookies, HttpStatus } from "@fwl/web";
+import {
+  Endpoint,
+  getServerSideCookies,
+  HttpStatus,
+  setAlertMessagesCookie,
+} from "@fwl/web";
 import {
   loggingMiddleware,
   wrapMiddlewares,
@@ -22,6 +27,8 @@ import { NoUserCookieFoundError } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
+import { generateAlertMessage } from "@src/utils/generate-alert-message";
+import { AVAILABLE_LANGUAGE } from "@src/utils/get-locale";
 
 const getHandler: Handler = (request, response): Promise<void> => {
   const webErrors = {
@@ -92,21 +99,29 @@ const postHandler: Handler = (request, response): Promise<void> => {
       throw webErrorFactory(webErrors.badRequest);
     }
 
-    const updatedUser = await getAndPutUser({
+    await getAndPutUser({
       ...(currentDBUser as DynamoUser),
       locale: locale as string,
-    }).catch((error) => {
-      span.setDisclosedAttribute("user locale set", false);
-      throw webErrorFactory({
-        ...webErrors.databaseUnreachable,
-        parentError: error,
+    })
+      .then(() =>
+        setAlertMessagesCookie(response, [
+          generateAlertMessage(
+            `Your language has been set to ${AVAILABLE_LANGUAGE[locale]}`,
+          ),
+        ]),
+      )
+      .catch((error) => {
+        span.setDisclosedAttribute("user locale set", false);
+        throw webErrorFactory({
+          ...webErrors.databaseUnreachable,
+          parentError: error,
+        });
       });
-    });
 
     span.setDisclosedAttribute("user locale set", true);
     response.statusCode = HttpStatus.OK;
     response.setHeader("Content-Type", "application/json");
-    response.json({ updatedUser });
+    response.end();
     return;
   });
 };

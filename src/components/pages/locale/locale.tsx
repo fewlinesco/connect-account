@@ -38,17 +38,13 @@ const Locale: React.FC = () => {
         onSubmit={async () => {
           await fetchJson("/api/locale", "POST", { locale }).then(
             async (response) => {
-              const parsedResponse = await response.json();
-
-              if ("message" in parsedResponse) {
+              if (response.status >= 400) {
                 setErrorMessage("Something went wrong. Please try again later");
                 setFormID(uuidv4());
+                return;
               }
 
-              if ("updatedUser" in parsedResponse) {
-                router && router.push("/account");
-              }
-
+              router && router.push("/account");
               return;
             },
           );
