@@ -6,8 +6,8 @@ import { v4 as uuidv4 } from "uuid";
 
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { Form } from "@src/components/forms/form";
+import { FormErrorMessage } from "@src/components/input/form-error-message";
 import { InputsRadio } from "@src/components/input/input-radio-button";
-import { WrongInputError } from "@src/components/input/wrong-input-error";
 import { SWRError } from "@src/errors/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 import { AVAILABLE_LANGUAGE, getLocaleKey } from "@src/utils/get-locale";
@@ -32,7 +32,9 @@ const Locale: React.FC = () => {
 
   return (
     <>
-      {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
+      {errorMessage ? (
+        <FormErrorMessage>{errorMessage}.</FormErrorMessage>
+      ) : null}
       <Form
         formID={formID}
         onSubmit={async () => {

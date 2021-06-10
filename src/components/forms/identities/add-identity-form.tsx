@@ -4,10 +4,10 @@ import { useRouter } from "next/router";
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import { FormErrorMessage } from "../../input/form-error-message";
 import { InputCheckbox } from "../../input/input-checkbox";
 import { InputText } from "../../input/input-text";
 import { StyledPhoneInput } from "../../input/styled-phone-input";
-import { WrongInputError } from "../../input/wrong-input-error";
 import { Form } from "../form";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
@@ -33,7 +33,9 @@ const AddIdentityForm: React.FC<{
 
   return (
     <>
-      {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
+      {errorMessage ? (
+        <FormErrorMessage>{errorMessage}.</FormErrorMessage>
+      ) : null}
       <Form
         formID={formID}
         onSubmit={async () => {

@@ -5,9 +5,9 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
+import { FormErrorMessage } from "../../input/form-error-message";
 import { InputText } from "../../input/input-text";
 import { StyledPhoneInput } from "../../input/styled-phone-input";
-import { WrongInputError } from "../../input/wrong-input-error";
 import { SkeletonTextLine } from "../../skeletons/skeletons";
 import { Form } from "../form";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
@@ -45,7 +45,9 @@ const UpdateIdentityForm: React.FC<{
           )}
         </Value>
       </Box>
-      {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
+      {errorMessage ? (
+        <FormErrorMessage>{errorMessage}.</FormErrorMessage>
+      ) : null}
       {identity ? (
         <>
           <Form
