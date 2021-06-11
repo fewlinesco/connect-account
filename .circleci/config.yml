@@ -5,7 +5,7 @@ jobs:
       - image: cimg/node:14.17.0
     steps:
       - checkout
-     - restore_cache:
+      - restore_cache:
           name: Restore Yarn Package Cache
           key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
