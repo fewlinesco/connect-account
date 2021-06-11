@@ -1,7 +1,7 @@
 import React from "react";
 import { SWRConfig } from "swr";
 
-import { render, screen } from "../config/testing-library-config";
+import { render, screen, waitFor } from "../config/testing-library-config";
 import LocalePage from "@src/pages/account/locale";
 import { AVAILABLE_LANGUAGE } from "@src/utils/get-locale";
 
@@ -56,7 +56,7 @@ describe("LocalePage", () => {
         value={{
           dedupingInterval: 0,
           fetcher: () => {
-            return { locale: "fr" };
+            return "fr";
           },
         }}
       >
@@ -67,7 +67,9 @@ describe("LocalePage", () => {
     const languageRadioInputs = await screen.findAllByRole("radio");
     expect(languageRadioInputs).toHaveLength(2);
 
-    expect(languageRadioInputs[0]).not.toBeChecked();
-    expect(languageRadioInputs[1]).toBeChecked();
+    await waitFor(() => {
+      expect(languageRadioInputs[0]).not.toBeChecked();
+      expect(languageRadioInputs[1]).toBeChecked();
+    });
   });
 });
