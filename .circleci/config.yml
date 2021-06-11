@@ -16,6 +16,7 @@ jobs:
     docker:
       - image: cimg/node:14.17.0
     steps:
+      - setup_remote_docker
       - checkout
       - docker/install-docker-compose
       - restore_cache:
@@ -27,6 +28,8 @@ jobs:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
+      - run:
+          command: which docker-compose
       - run:
           name: docker-compose-up
           command: docker-compose up -d profile_mock_server
