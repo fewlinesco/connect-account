@@ -29,8 +29,6 @@ jobs:
           paths:
             - ./node_modules
       - run:
-          command: which docker-compose
-      - run:
           name: docker-compose-up
           command: docker-compose up -d profile_mock_server
       - run:
