@@ -5,11 +5,20 @@ jobs:
       - image: cimg/node:14.17.0
     steps:
       - checkout
+     - restore_cache:
+          name: Restore Yarn Package Cache
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
       - run:
           name: lint
-          command: | 
-            yarn install
-            yarn lint
+          command: yarn lint
   integration-tests:
     machine:
       image: ubuntu-2004:202101-01
