@@ -18,11 +18,11 @@ const Locale: React.FC = () => {
   const [locale, setLocale] = React.useState<string>("en");
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
-  const { data } = useSWR<{ locale: string }, SWRError>(`/api/locale`);
+  const { data: fetchedLocale } = useSWR<string, SWRError>(`/api/locale`);
 
   React.useEffect(() => {
-    data && setLocale(data.locale);
-  }, [data]);
+    fetchedLocale && setLocale(fetchedLocale);
+  }, [fetchedLocale]);
 
   return (
     <>
@@ -32,7 +32,7 @@ const Locale: React.FC = () => {
       <Form
         formID={formID}
         onSubmit={async () => {
-          if (!data) {
+          if (!fetchedLocale) {
             return;
           }
 
@@ -57,9 +57,9 @@ const Locale: React.FC = () => {
           onChange={({ target }) => {
             setLocale(getLocaleKey(target.value));
           }}
-          isReady={data ? true : false}
+          isReady={fetchedLocale ? true : false}
         />
-        {data ? (
+        {fetchedLocale ? (
           <Button variant={ButtonVariant.PRIMARY} type="submit">
             Set your preferred locale
           </Button>
