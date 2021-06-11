@@ -1,6 +1,4 @@
 version: 2.1
-orbs:
-  docker: circleci/docker@1.6.0
 jobs:
   linter:
     docker:
@@ -13,12 +11,11 @@ jobs:
             yarn install
             yarn lint
   integration-tests:
-    docker:
-      - image: cimg/node:14.17.0
+    machine:
+      image: ubuntu-2004:202101-01
+      docker_layer_caching: true
     steps:
-      - setup_remote_docker
       - checkout
-      - docker/install-docker-compose
       - restore_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
