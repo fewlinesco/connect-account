@@ -17,19 +17,21 @@ jobs:
     steps:
       - checkout
       - restore_cache:
+          name: Restore Yarn Package Cache
           key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
-          name: yarn-install
+          name: Install dependencies
           command: yarn install
       - save_cache:
+          name: Save Yarn Package Cache
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
       - run:
-          name: docker-compose-up
+          name: "Lauching Profile mock server"
           command: docker-compose up -d profile_mock_server
       - run:
-          name: run-test
+          name: Run tests
           command: yarn test
           environment:
             CONNECT_PROFILE_URL: "http://localhost:29712"
