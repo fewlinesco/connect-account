@@ -4,8 +4,8 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
+import { FormErrorMessage } from "../../input/form-error-message";
 import { InputText } from "../../input/input-text";
-import { WrongInputError } from "../../input/wrong-input-error";
 import { Form } from "../form";
 import { Box } from "@src/components/box/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
@@ -26,7 +26,9 @@ const ValidateIdentityForm: React.FC<{
 
   return (
     <>
-      {flashMessage ? <WrongInputError>{flashMessage}.</WrongInputError> : null}
+      {flashMessage ? (
+        <FormErrorMessage>{flashMessage}.</FormErrorMessage>
+      ) : null}
       <Form
         formID={formID}
         onSubmit={async () => {

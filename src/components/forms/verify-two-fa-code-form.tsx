@@ -3,8 +3,8 @@ import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
+import { FormErrorMessage } from "../input/form-error-message";
 import { InputText } from "../input/input-text";
-import { WrongInputError } from "../input/wrong-input-error";
 import { Form } from "./form";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { deviceBreakpoints } from "@src/design-system/theme";
@@ -65,7 +65,9 @@ const VerifyTwoFACodeForm: React.FC<{
         });
       }}
     >
-      {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
+      {errorMessage ? (
+        <FormErrorMessage>{errorMessage}.</FormErrorMessage>
+      ) : null}
       <MultipleInputsMasked
         type="text"
         name="verificationCode"

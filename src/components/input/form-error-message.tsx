@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-const WrongInputError = styled.p`
+const FormErrorMessage = styled.p`
   color: ${({ theme }) => theme.colors.red};
   margin-bottom: 3rem;
 `;
 
-export { WrongInputError };
+export { FormErrorMessage };
