@@ -51,7 +51,6 @@ const handler: Handler = (request, response): Promise<void> => {
 
         throw error;
       });
-
     span.setAttribute("authorization_code", request.query.code);
     span.setDisclosedAttribute("query.error", request.query.error);
 
@@ -79,12 +78,12 @@ const handler: Handler = (request, response): Promise<void> => {
 
       throw error;
     });
-
     span.setDisclosedAttribute("is access_token valid", true);
 
     const oAuth2UserInfo = {
       sub: decodedAccessToken.sub,
       refresh_token,
+      locale: "en",
     };
 
     await getAndPutUser(oAuth2UserInfo).catch((error) => {
@@ -94,7 +93,6 @@ const handler: Handler = (request, response): Promise<void> => {
         parentError: error,
       });
     });
-
     span.setDisclosedAttribute("user updated on DB", true);
 
     await setServerSideCookies(
@@ -113,13 +111,11 @@ const handler: Handler = (request, response): Promise<void> => {
         secure: true,
       },
     );
-
     span.setDisclosedAttribute("is cookie set", true);
 
     response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
       Location: "/account",
     });
-
     response.end();
     return;
   });
