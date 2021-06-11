@@ -16,7 +16,6 @@ jobs:
     docker:
       - image: cimg/node:14.17.0
     steps:
-      - setup_remote_docker
       - checkout
       - docker/install-docker-compose
       - run:
@@ -24,7 +23,7 @@ jobs:
           command: yarn install
       - run:
           name: docker-compose-up
-          command: sudo docker-compose up -d profile_mock_server
+          command: docker-compose up -d profile_mock_server
       - run:
           name: run-test
           command: yarn test
