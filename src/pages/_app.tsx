@@ -9,12 +9,12 @@ import { SWRConfig } from "swr";
 
 import * as locales from "@content/locales";
 import { AlertMessages } from "@src/components/alert-message/alert-messages";
+import { UserLocaleProvider } from "@src/context/locale-context";
 import { GlobalStyle } from "@src/design-system/globals/global-style";
 import { theme } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
 
 import "@src/utils/sentry";
-import { UserLocaleProvider } from "@src/context/locale-context";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (

@@ -44,7 +44,7 @@ const Locale: React.FC = () => {
                 return;
               }
 
-              router && router.push("/account");
+              router && router.push(`/account`);
               return;
             },
           );
