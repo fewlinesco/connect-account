@@ -18,9 +18,15 @@ jobs:
     steps:
       - checkout
       - docker/install-docker-compose
+      - restore_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
           name: yarn-install
           command: yarn install
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
       - run:
           name: docker-compose-up
           command: docker-compose up -d profile_mock_server
