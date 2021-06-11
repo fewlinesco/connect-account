@@ -74,7 +74,7 @@ const getHandler: Handler = (request, response): Promise<void> => {
   });
 };
 
-const postHandler: Handler = (request, response): Promise<void> => {
+const patchHandler: Handler = (request, response): Promise<void> => {
   const webErrors = {
     badRequest: ERRORS_DATA.BAD_REQUEST,
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
@@ -138,5 +138,5 @@ const middlewares: Middleware<NextApiRequest, NextApiResponse>[] = [
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
   .get(wrapMiddlewares(middlewares, getHandler, "GET /api/locale"))
-  .post(wrapMiddlewares(middlewares, postHandler, "POST /api/locale"))
+  .patch(wrapMiddlewares(middlewares, patchHandler, "POST /api/locale"))
   .getHandler();

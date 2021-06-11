@@ -36,7 +36,7 @@ const Locale: React.FC = () => {
             return;
           }
 
-          await fetchJson("/api/locale", "POST", { locale }).then(
+          await fetchJson("/api/locale", "PATCH", { locale }).then(
             async (response) => {
               if (response.status >= 400) {
                 setErrorMessage("Something went wrong. Please try again later");
