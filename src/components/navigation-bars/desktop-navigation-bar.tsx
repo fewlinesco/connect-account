@@ -56,7 +56,7 @@ const DesktopNavigationBar: React.FC = () => {
       <SwitchLanguageItem href="/account/locale">
         <SwitchLanguageLabel>
           <BlackWorldIcon />
-          <p>English</p>
+          <p>Language</p>
         </SwitchLanguageLabel>
         <BlackSwitchIcon />
       </SwitchLanguageItem>

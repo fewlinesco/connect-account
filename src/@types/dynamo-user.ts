@@ -13,6 +13,7 @@ type DynamoUser = {
     sudo_mode_ttl: number;
     sudo_event_ids: SudoEventId[];
   };
+  locale: string;
 };
 
 export type { DynamoUser, SudoEventId };
