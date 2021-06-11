@@ -1,9 +1,38 @@
 version: 2.1
+orbs:
+  docker: circleci/docker@1.6.0
 jobs:
-  build:
+  linter:
     docker:
       - image: cimg/node:14.17.0
-
     steps:
       - checkout
-      - run: echo "Hello World"
+      - run:
+          name: lint
+          command: | 
+            yarn install
+            yarn lint
+  integration-tests:
+    docker:
+      - image: cimg/node:14.17.0
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/install-docker-compose
+      - run:
+          name: yarn-install
+          command: yarn install
+      - run:
+          name: docker-compose-up
+          command: sudo docker-compose up -d profile_mock_server
+      - run:
+          name: run-test
+          command: yarn test
+          environment:
+            CONNECT_PROFILE_URL: "http://localhost:29712"
+
+workflows:
+  lint-and-test:
+    jobs:
+      - linter
+      - integration-tests
