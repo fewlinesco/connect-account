@@ -2004,17 +2004,10 @@
     "@opentelemetry/plugin-https" "0.18.2"
     "@opentelemetry/tracing" "0.19.0"
 
-<<<<<<< HEAD
 "@fwl/web@0.12.0":
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/@fwl/web/-/web-0.12.0.tgz#da08734d65b56f31ee9b8beb7fe9c3bc6667ed8d"
   integrity sha512-MNqifzGDRs650nd/cbEG9OCP41uzBrNoXY4sCskk108BHIYgoWpKim6CQAoA0jnTY+nS+DhT2Na0dslZsO9ahQ==
-=======
-"@fwl/web@0.0.0-experimental-27fb19b":
-  version "0.0.0-experimental-27fb19b"
-  resolved "https://registry.yarnpkg.com/@fwl/web/-/web-0.0.0-experimental-27fb19b.tgz#17580c2d7287e9a3c6df2210a4446c5968a338e1"
-  integrity sha512-bakl1EHBmxoswAxlzSIHJsiwZ+zEsVytEfdgKysifAESGw/uffpGY69jMG3QBknMyHv7FVnCC1sXKCsWzHWnuA==
->>>>>>> try with experimental version
   dependencies:
     "@fwl/logging" "0.1.2"
     "@fwl/tracing" "0.10.0"
