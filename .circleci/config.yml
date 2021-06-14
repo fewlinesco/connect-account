@@ -50,7 +50,7 @@ jobs:
           # command: pwd && lighthouse-puppeteer -c "--headless --disable-gpu --no-sandbox --disable-setuid-sandbox" /__w/connect-account/connect-account/bin/e2e/lighthouse-report.js
           command: |
             wget https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/docker/seccomp/chrome.json -O ~/chrome.json
-            docker run --rm --name perf -v $(pwd)/lighthouse-reports:/home/chrome/reports -v $(pwd)/bin:/home/chrome/testcases --security-opt seccomp=$HOME/chrome.json femtopixel/google-lighthouse-puppeteer e2e/lighthouse-report
+            docker run --rm --name perf  -e CONNECT_TEST_ACCOUNT_EMAIL=$CONNECT_TEST_ACCOUNT_EMAIL -e CONNECT_TEST_ACCOUNT_PASSWORD=$CONNECT_TEST_ACCOUNT_PASSWORD -e CONNECT_TEST_ACCOUNT_URL=$CONNECT_TEST_ACCOUNT_URL  -v $(pwd)/lighthouse-reports:/home/chrome/reports -v $(pwd)/bin:/home/chrome/testcases --security-opt seccomp=$HOME/chrome.json femtopixel/google-lighthouse-puppeteer e2e/lighthouse-report
 
 workflows:
   CI:
