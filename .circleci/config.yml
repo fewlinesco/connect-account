@@ -18,7 +18,7 @@ jobs:
           paths:
             - ./node_modules
       - run:
-          name: "Lauching Profile mock server"
+          name: Launching Profile mock server
           command: docker-compose up -d profile_mock_server
       - run:
           name: Run lint
@@ -29,6 +29,9 @@ jobs:
           environment:
             CONNECT_PROFILE_URL: "http://localhost:29712"
   lighthouse:
+    machine:
+      image: ubuntu-2004:202101-01
+      docker_layer_caching: true
     steps:
       - checkout
       - restore_cache:
@@ -42,12 +45,13 @@ jobs:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
-      -run:
-        name: lighthouse reports
-        # command: pwd && lighthouse-puppeteer -c "--headless --disable-gpu --no-sandbox --disable-setuid-sandbox" /__w/connect-account/connect-account/bin/e2e/lighthouse-report.js
-        command: docker run --rm --name perf -v $(pwd)/lighthouse-reports:/home/chrome/reports -v $(pwd)/bin:/home/chrome/testcases --security-opt seccomp=$HOME/chrome.json femtopixel/google-lighthouse-puppeteer e2e/lighthouse-report
+      - run:
+          name: lighthouse reports
+          # command: pwd && lighthouse-puppeteer -c "--headless --disable-gpu --no-sandbox --disable-setuid-sandbox" /__w/connect-account/connect-account/bin/e2e/lighthouse-report.js
+          command: docker run --rm --name perf -v $(pwd)/lighthouse-reports:/home/chrome/reports -v $(pwd)/bin:/home/chrome/testcases --security-opt seccomp=$HOME/chrome.json femtopixel/google-lighthouse-puppeteer e2e/lighthouse-report
 
 workflows:
   CI:
     jobs:
       - lint-and-tests
+      - lighthouse
