@@ -1,25 +1,6 @@
 version: 2.1
 jobs:
-  linter:
-    docker:
-      - image: cimg/node:14.17.0
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          key: dependency-cache-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install dependencies
-          command: yarn install
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: dependency-cache-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: lint
-          command: yarn lint
-  integration-tests:
+  lint-and-tests:
     machine:
       image: ubuntu-2004:202101-01
       docker_layer_caching: true
@@ -40,13 +21,15 @@ jobs:
           name: "Lauching Profile mock server"
           command: docker-compose up -d profile_mock_server
       - run:
+          name: Run lint
+          command: yarn lint
+      - run:
           name: Run tests
           command: yarn test
           environment:
             CONNECT_PROFILE_URL: "http://localhost:29712"
 
 workflows:
-  lint-and-test:
+  CI:
     jobs:
-      - linter
-      - integration-tests
+      - lint-and-tests
