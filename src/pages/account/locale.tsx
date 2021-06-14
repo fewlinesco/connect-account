@@ -34,15 +34,7 @@ const LocalePage: React.FC = () => {
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
     context,
-    [
-      tracingMiddleware(getTracer()),
-      rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
-      recoveryMiddleware(getTracer()),
-      sentryMiddleware(getTracer()),
-      errorMiddleware(getTracer()),
-      loggingMiddleware(getTracer(), logger),
-      authMiddleware(getTracer()),
-    ],
+    basicMiddlewares(getTracer(), logger),
     "/account/locale",
   );
 };
