@@ -225,7 +225,8 @@
     "moduleNameMapper": {
       "\\.(png|svg|jpg|gif|eot|ttf|woff|woff2)$": "<rootDir>/tests/config/import-asset-fix.ts",
       "\\.(css|less)$": "<rootDir>/tests/config/import-asset-fix.ts",
-      "@src/(.*)": "<rootDir>/src/$1"
+      "@src/(.*)": "<rootDir>/src/$1",
+      "@content/(.*)": "<rootDir>/content/$1"
     },
     "setupFilesAfterEnv": [
       "@testing-library/jest-dom/extend-expect"
