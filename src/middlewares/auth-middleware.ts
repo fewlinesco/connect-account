@@ -131,6 +131,10 @@ async function authentication(
         );
 
         span.setDisclosedAttribute("is cookie set", true);
+        console.log(
+          "Set-cookie header inside refresh: ",
+          response.getHeader("set-cookie"),
+        );
 
         await getAndPutUser(
           { sub, refresh_token: refreshedTokens.refresh_token },
@@ -171,6 +175,11 @@ async function authentication(
 
       throw error;
     });
+
+    console.log(
+      "Set-cookie header outside refresh: ",
+      response.getHeader("set-cookie"),
+    );
 
     span.setDisclosedAttribute("is access_token valid", true);
   });
