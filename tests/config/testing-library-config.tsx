@@ -54,6 +54,7 @@ const mockedNextRouter: NextRouter = {
   isReady: false,
   isLocaleDomain: false,
   isPreview: false,
+  locale: "en",
 };
 
 const AllTheProviders: React.ComponentType = ({ children }) => {
