@@ -54,9 +54,8 @@ jobs:
             -e CONNECT_TEST_ACCOUNT_EMAIL=$CONNECT_TEST_ACCOUNT_EMAIL \
             -e CONNECT_TEST_ACCOUNT_PASSWORD=$CONNECT_TEST_ACCOUNT_PASSWORD \
             -e CONNECT_TEST_ACCOUNT_URL=$CONNECT_TEST_ACCOUNT_URL \
-            -v $(pwd)/lighthouse-reports:/home/chrome/reports -v $(pwd)/bin:/home/chrome/testcases \
+            -v $(pwd)/lighthouse-reports:/tmp/chrome/reports -v $(pwd)/bin:/home/chrome/testcases \
             --security-opt seccomp=$HOME/chrome.json \
-            --entrypoint "mkdir -p /home/chrome/reports && ./entrypoint e2e-lighthouse-report" \
             femtopixel/google-lighthouse-puppeteer e2e/lighthouse-report
 
 workflows:
