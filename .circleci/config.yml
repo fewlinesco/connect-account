@@ -54,13 +54,10 @@ jobs:
             -e CONNECT_TEST_ACCOUNT_EMAIL=$CONNECT_TEST_ACCOUNT_EMAIL \
             -e CONNECT_TEST_ACCOUNT_PASSWORD=$CONNECT_TEST_ACCOUNT_PASSWORD \
             -e CONNECT_TEST_ACCOUNT_URL=$CONNECT_TEST_ACCOUNT_URL \
-            -v $(pwd)/lighthouse-reports:/tmp/chrome/reports -v $(pwd)/bin:/home/chrome/testcases \
+            -v $(pwd)/bin:/home/chrome/testcases \
             --security-opt seccomp=$HOME/chrome.json \
-            femtopixel/google-lighthouse-puppeteer e2e/lighthouse-report \
-            -d /tmp/chrome/reports
+            femtopixel/google-lighthouse-puppeteer e2e/lighthouse-report
             cat /home/chrome/reports/summary.json
-      - store_artifacts:
-          path: /tmp/chrome/reports/summary.json
 
 workflows:
   CI:
