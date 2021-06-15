@@ -20,8 +20,8 @@ module.exports = {
         throttlingMethod: "devtools",
       },
       url: [
-        "https://account-staging.fewlines.tech/",
-        "https://account-staging.fewlines.tech/account",
+        process.env.CONNECT_TEST_ACCOUNT_URL,
+        `${process.env.CONNECT_TEST_ACCOUNT_UR}/account`,
       ],
     },
     upload: {

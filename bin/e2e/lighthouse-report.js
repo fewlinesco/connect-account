@@ -1,8 +1,25 @@
 let counter = 1;
 
 async function login(page) {
-  // const reviewAppURL = process.env.CONNECT_TEST_ACCOUNT_URL;
-  const reviewAppURL = "https://account-staging.fewlines.tech/";
+  if (process.env.CONNECT_TEST_ACCOUNT_URL === undefined) {
+    throw new Error(
+      "CONNECT_TEST_ACCOUNT_URL environment variable is undefined",
+    );
+  }
+
+  if (process.env.CONNECT_TEST_ACCOUNT_EMAIL === undefined) {
+    throw new Error(
+      "CONNECT_TEST_ACCOUNT_EMAIL environment variable is undefined",
+    );
+  }
+
+  if (process.env.CONNECT_TEST_ACCOUNT_PASSWORD === undefined) {
+    throw new Error(
+      "CONNECT_TEST_ACCOUNT_PASSWORD environment variable is undefined",
+    );
+  }
+
+  const reviewAppURL = process.env.CONNECT_TEST_ACCOUNT_URL;
 
   console.log("Page open");
   await page.goto(reviewAppURL);
@@ -46,7 +63,7 @@ async function setup(browser, context) {
   } else {
     await page.goto(context.url);
   }
-  // close session for next run
+
   await page.close();
   counter++;
 }
