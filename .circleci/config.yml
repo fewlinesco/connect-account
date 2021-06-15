@@ -57,6 +57,9 @@ jobs:
             -v $(pwd)/lighthouse-reports:/tmp/chrome/reports -v $(pwd)/bin:/home/chrome/testcases \
             --security-opt seccomp=$HOME/chrome.json \
             femtopixel/google-lighthouse-puppeteer e2e/lighthouse-report
+      - run:
+          name: cat ls report
+          command: cat /tmp/chrome/reports/summary.json
 
 workflows:
   CI:
