@@ -28,6 +28,7 @@ jobs:
           command: yarn test
           environment:
             CONNECT_PROFILE_URL: "http://localhost:29712"
+
   lighthouse:
     machine:
       image: ubuntu-2004:202101-01
@@ -47,7 +48,6 @@ jobs:
             - ./node_modules
       - run:
           name: lighthouse reports
-          # command: pwd && lighthouse-puppeteer -c "--headless --disable-gpu --no-sandbox --disable-setuid-sandbox" /__w/connect-account/connect-account/bin/e2e/lighthouse-report.js
           command: |
             wget https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/docker/seccomp/chrome.json -O ~/chrome.json
             docker run --rm --name perf \
@@ -56,10 +56,11 @@ jobs:
             -e CONNECT_TEST_ACCOUNT_URL=$CONNECT_TEST_ACCOUNT_URL \
             -v $(pwd)/lighthouse-reports:/tmp/chrome/reports -v $(pwd)/bin:/home/chrome/testcases \
             --security-opt seccomp=$HOME/chrome.json \
-            femtopixel/google-lighthouse-puppeteer e2e/lighthouse-report
-      - run:
-          name: cat ls report
-          command: cat /tmp/chrome/reports/summary.json
+            femtopixel/google-lighthouse-puppeteer e2e/lighthouse-report \
+            -d /tmp/chrome/reports
+            cat /home/chrome/reports/summary.json
+      - store_artifacts:
+          path: /tmp/chrome/reports/summary.json
 
 workflows:
   CI:
