@@ -28,8 +28,35 @@ jobs:
           command: yarn test
           environment:
             CONNECT_PROFILE_URL: "http://localhost:29712"
+  
+  lighthouse:
+    docker:
+      - image: cimg/node:14.17.0-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Install puppeteer with chronium
+          command: yarn add -D puppeteer
+      - run:
+          name: Run Lighthouse audit
+          command: npx lhci autorun
+      - run:
+          name: ls lh report
+          command: ls ./lhci_reports
 
 workflows:
   CI:
     jobs:
       - lint-and-tests
+      - lighthouse
