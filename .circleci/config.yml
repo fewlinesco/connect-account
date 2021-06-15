@@ -50,10 +50,7 @@ jobs:
           command: yarn add -D puppeteer
       - run:
           name: Run Lighthouse audit
-          command: npx lhci autorun
-      - run:
-          name: ls lh report
-          command: ls ./lhci_reports
+          command: npx @lhci/cli autorun
       - store_artifacts:
           path: ./lhci_reports
 

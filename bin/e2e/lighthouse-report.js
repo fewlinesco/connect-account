@@ -31,7 +31,7 @@ async function login(page) {
     process.env.CONNECT_TEST_ACCOUNT_PASSWORD,
     {
       delay: 50,
-    }
+    },
   );
   await page.click("[type=submit]");
   await page.waitForTimeout(10000);
