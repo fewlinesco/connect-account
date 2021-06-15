@@ -46,7 +46,7 @@ jobs:
           paths:
             - ./node_modules
       - run:
-          name: Install puppeteer with chronium
+          name: Install Puppeteer
           command: yarn add -D puppeteer
       - run:
           name: Run Lighthouse audit

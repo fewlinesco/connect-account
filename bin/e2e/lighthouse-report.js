@@ -2,7 +2,7 @@ let counter = 1;
 
 async function login(page) {
   // const reviewAppURL = process.env.CONNECT_TEST_ACCOUNT_URL;
-  const reviewAppURL = "https://fewlines-account-staging.herokuapp.com/";
+  const reviewAppURL = "https://account-staging.fewlines.tech/";
 
   console.log("Page open");
   await page.goto(reviewAppURL);
