@@ -30,9 +30,10 @@ jobs:
             CONNECT_PROFILE_URL: "http://localhost:29712"
 
   lighthouse:
-    machine:
-      image: ubuntu-2004:202101-01
-      docker_layer_caching: true
+    docker:
+      - image: fewlines/docker-lighthouse-puppeteer:CU-ht6h0f_35aca8af5105
+        environment:
+          CHROME_FLAGS: "--headless --disable-gpu --no-sandbox --disable-setuid-sandbox"
     steps:
       - checkout
       - restore_cache:
@@ -49,15 +50,7 @@ jobs:
       - run:
           name: lighthouse reports
           command: |
-            wget https://raw.githubusercontent.com/jfrazelle/dotfiles/master/etc/docker/seccomp/chrome.json -O ~/chrome.json
-            docker run --rm --name perf \
-            -e CONNECT_TEST_ACCOUNT_EMAIL=$CONNECT_TEST_ACCOUNT_EMAIL \
-            -e CONNECT_TEST_ACCOUNT_PASSWORD=$CONNECT_TEST_ACCOUNT_PASSWORD \
-            -e CONNECT_TEST_ACCOUNT_URL=$CONNECT_TEST_ACCOUNT_URL \
-            -v $(pwd)/bin:/home/chrome/testcases \
-            --security-opt seccomp=$HOME/chrome.json \
-            femtopixel/google-lighthouse-puppeteer e2e/lighthouse-report
-            cat /home/chrome/reports/summary.json
+            pwd && lighthouse-puppeteer -c "--headless --disable-gpu --no-sandbox --disable-setuid-sandbox" /root/project/bin/e2e/lighthouse-report.js
 
 workflows:
   CI:
