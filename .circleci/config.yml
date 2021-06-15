@@ -18,7 +18,7 @@ jobs:
           paths:
             - ./node_modules
       - run:
-          name: "Lauching Profile mock server"
+          name: Launching Profile mock server
           command: docker-compose up -d profile_mock_server
       - run:
           name: Run lint
@@ -54,6 +54,8 @@ jobs:
       - run:
           name: ls lh report
           command: ls ./lhci_reports
+      - store_artifacts:
+          path: ./lhci_reports
 
 workflows:
   CI:
