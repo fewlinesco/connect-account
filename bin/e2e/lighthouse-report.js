@@ -19,7 +19,7 @@ async function login(page) {
     );
   }
 
-  const reviewAppURL = "https://account-staging.fewlines.tech/";
+  const reviewAppURL = "https://fewlines-account-staging.herokuapp.com/";
 
   console.log("Page open");
   await page.goto(reviewAppURL);
