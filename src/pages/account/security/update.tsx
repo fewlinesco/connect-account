@@ -8,6 +8,7 @@ import {
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
+import { useIntl } from "react-intl";
 import useSWR from "swr";
 
 import { Container } from "@src/components/containers/container";
@@ -30,14 +31,15 @@ const SecurityUpdatePage: React.FC = () => {
     throw passwordSetError;
   }
 
+  const { formatMessage } = useIntl();
   let conditionalBreadcrumb;
 
   if (!passwordSetData) {
     conditionalBreadcrumb = "";
   } else {
-    conditionalBreadcrumb = `Password | ${
-      passwordSetData.isPasswordSet ? "update" : "set"
-    }`;
+    conditionalBreadcrumb = passwordSetData.isPasswordSet
+      ? formatMessage({ id: "updateBreadcrumb" })
+      : formatMessage({ id: "setBreadcrumb" });
   }
 
   return (
@@ -48,8 +50,8 @@ const SecurityUpdatePage: React.FC = () => {
             !passwordSetData
               ? ""
               : passwordSetData.isPasswordSet
-              ? "update"
-              : "set"
+              ? formatMessage({ id: "update" })
+              : formatMessage({ id: "set" })
           }
         />
       </Container>

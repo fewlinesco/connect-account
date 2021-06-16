@@ -26,4 +26,17 @@ export const fr = {
     socialTitle: "Comptes sociaux",
     socialNoIdentityMessage: "Aucun compte sociale n’a encore été ajoutée",
   },
+  "/account/security": {
+    title: "Mot de passe",
+    breadcrumb: "Mot de passe, historique de connexion et plus",
+    setPassword: "Créer votre mot de passe",
+    updatePassword: "Mettre à jour votre mot de passe",
+  },
+  "/account/update": {
+    title: "Mot de passe",
+    setBreadcrumb: "Mot de passe | créer",
+    updateBreadcrumb: "Mot de passe | mettre à jour",
+    set: "créer",
+    update: "mettre à jour",
+  },
 };

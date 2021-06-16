@@ -26,4 +26,17 @@ export const en = {
     socialTitle: "Social logins",
     socialNoIdentityMessage: "No social logins added yet.",
   },
+  "/account/security": {
+    title: "Password",
+    breadcrumb: "Password, login history and more",
+    setPassword: "Set your password",
+    updatePassword: "Update your password",
+  },
+  "/account/update": {
+    title: "Password",
+    setBreadcrumb: "Password | set",
+    updateBreadcrumb: "Password | update",
+    set: "set",
+    update: "update",
+  },
 };
