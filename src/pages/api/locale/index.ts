@@ -3,6 +3,7 @@ import {
   getServerSideCookies,
   HttpStatus,
   setAlertMessagesCookie,
+  setServerSideCookies,
 } from "@fwl/web";
 import {
   loggingMiddleware,
@@ -102,13 +103,17 @@ const patchHandler: Handler = (request, response): Promise<void> => {
     }
 
     await getAndPutUser(currentDBUser as DynamoUser)
-      .then(() =>
+      .then(() => {
         setAlertMessagesCookie(response, [
           generateAlertMessage(
             `Your language has been set to ${AVAILABLE_LANGUAGE[locale]}`,
           ),
-        ]),
-      )
+        ]);
+
+        return setServerSideCookies(response, "NEXT_LOCALE", locale, {
+          shouldCookieBeSealed: false,
+        });
+      })
       .catch((error) => {
         span.setDisclosedAttribute("user locale set", false);
         throw webErrorFactory({

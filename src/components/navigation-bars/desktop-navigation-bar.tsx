@@ -20,7 +20,7 @@ const DesktopNavigationBar: React.FC = () => {
       return await fetch(url).then(async (response) => {
         if (!response.ok) {
           const error = new SWRError(
-            "An error occurred while fetching the data. FLAG",
+            "An error occurred while fetching the data.",
           );
 
           if (response.status === HttpStatus.NOT_FOUND) {
