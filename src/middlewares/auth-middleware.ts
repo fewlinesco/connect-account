@@ -67,8 +67,7 @@ async function authentication(
 
         console.log("nextURL: ", nextURL);
 
-        const redirectURL =
-          !nextURL || nextURL.pathname === "/" ? "/account" : nextURL.pathname;
+        const redirectURL = !nextURL ? "/account" : nextURL.pathname;
 
         response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
         response.setHeader(
