@@ -1,3 +1,4 @@
+import { HttpStatus } from "@fwl/web";
 import { SSRProvider } from "@react-aria/ssr";
 import { AppProps } from "next/app";
 import Head from "next/head";
@@ -9,6 +10,7 @@ import { AlertMessages } from "@src/components/alert-message/alert-messages";
 import { GlobalStyle } from "@src/design-system/globals/global-style";
 import { theme } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
+import { ERRORS_DATA } from "@src/errors/web-errors";
 
 import "@src/utils/sentry";
 
@@ -41,6 +43,18 @@ const AccountApp: React.FC = ({ children }) => {
                   const error = new SWRError(
                     "An error occurred while fetching the data.",
                   );
+
+                  console.log("response:", response);
+
+                  if (
+                    response.status === HttpStatus.UNAUTHORIZED &&
+                    response.statusText === ERRORS_DATA.UNAUTHORIZED.message
+                  ) {
+                    // error.info = await response.json();
+                    // error.statusCode = response.status;
+                    // return;
+                    window.location.reload();
+                  }
 
                   error.info = await response.json();
                   error.statusCode = response.status;
