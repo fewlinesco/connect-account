@@ -20,8 +20,6 @@ async function login(page) {
   }
 
   const reviewAppURL = "https://account-staging.fewlines.tech";
-  const x = process.env.CONNECT_TEST_ACCOUNT_URL.split();
-  console.log("FLAG", x);
 
   console.log("Page open");
   await page.goto(reviewAppURL);
