@@ -42,6 +42,7 @@ describe("decryptVerifyAccessToken", () => {
       isJweSigned: "true",
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (oauth2Client.verifyJWT as any).mockImplementation(() => {
       return Promise.resolve({
         aud: ["connect-account"],
@@ -80,6 +81,7 @@ describe("decryptVerifyAccessToken", () => {
       isJweSigned: "false",
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (oauth2Client.decryptJWE as any).mockImplementation(() => {
       return Promise.resolve({
         aud: ["connect-account"],
@@ -118,6 +120,7 @@ describe("decryptVerifyAccessToken", () => {
       isJweSigned: "true",
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (oauth2Client.verifyJWT as any).mockImplementation(() => {
       return Promise.resolve({
         aud: ["connect-account"],
@@ -128,6 +131,7 @@ describe("decryptVerifyAccessToken", () => {
       });
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (oauth2Client.decryptJWE as any).mockImplementation(() => {
       return Promise.resolve(
         "eyJhbGciOiJSUzI1NiIsImtpZCI6ImQ2NTEyZjUzLTk3NzQtNGE1OC04MzBjLTk4MTg4NmM4YmI0MyIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiY29ubmVjdC1hY2NvdW50Il0sImV4cCI6MjUyNDY1MTIwMCwiaXNzIjoiaHR0cHM6Ly9icy1wcm92aWRlci5wcm9kLmNvbm5lY3QuY29ubmVjdC5hd3MuZXUtd2VzdC0yLms4cy5mZXdsaW5lcy5uZXQiLCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzdWIiOiJjNGIxY2I1OS0xYzUwLTQ5NGEtODdlNS0zMmE1ZmU2ZTdjYWEifQ.dRw3QknDU9KOQR44tKLYkkasQvUenN3dbBai2f7omSpf1NCYSorisVpKUhS6luyhtZhL5H8q8oY95WlfU7XEdMk4iW9-VGlrWCVhD-NDdFC2nc_drz9aJm_tZDY-NL5l63PJuRchFmPuKEoehAQ6ZJfK63o_0VsutCQAOpqSocI",

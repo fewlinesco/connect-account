@@ -18,6 +18,8 @@ const options = configVariables.lightstepAccessToken
 
 startTracer(options);
 
-export default function (): Tracer {
+function tracer(): Tracer {
   return getTracer();
 }
+
+export default tracer;
