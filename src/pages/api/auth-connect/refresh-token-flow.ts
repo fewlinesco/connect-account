@@ -38,7 +38,6 @@ import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-t
 
 const handler: Handler = (request, response): Promise<void> => {
   const webErrors = {
-    connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
     unreachable: ERRORS_DATA.UNREACHABLE,
     badRequest: ERRORS_DATA.BAD_REQUEST,
@@ -160,8 +159,6 @@ const handler: Handler = (request, response): Promise<void> => {
     });
 
     span.setDisclosedAttribute("user updated on DB", true);
-
-    console.log("NEXT: ", request.query.next);
 
     response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
     response.setHeader("location", `${request.query.next}`);
