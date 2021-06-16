@@ -20,7 +20,7 @@ module.exports = {
         throttlingMethod: "devtools",
       },
       url: [
-        "https://account-staging.fewlines.tech",
+        "https://account-staging.fewlines.tech/",
         "https://account-staging.fewlines.tech/account",
       ],
     },
