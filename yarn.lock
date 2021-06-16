@@ -1967,10 +1967,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fewlines/connect-client@0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@fewlines/connect-client/-/connect-client-0.5.0.tgz#7397dfeb0c8b812cde4a5e1413a9b34cbe72f044"
-  integrity sha512-VhU4kBRmfntYjnpi8OKZvPim4p3mQBET2uF0AA2r1AX4L/YcCtg2wwxHiy39oPeCtDVp6Rp0E1/5G442k4uCYg==
+"@fewlines/connect-client@0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@fewlines/connect-client/-/connect-client-0.5.1.tgz#6e23cb0a2d0412c8e8d59c15de712a324f4a2acd"
+  integrity sha512-1hQhv3vpUuAZq3AEaBSLI7mMNzqc5n4CiGKU5BuKJPwfNlwLNOq2/sIJ14nGVLn214kz6pMegd7yVw1Q8quN5w==
   dependencies:
     jsonwebtoken "8.5.1"
     node-fetch "2.6.1"
