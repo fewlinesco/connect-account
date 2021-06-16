@@ -24,7 +24,7 @@ const AlertMessages: React.FC = () => {
     }, 500);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [alertMessages]);
 
   if (alertMessages.length === 0) {
     return null;
@@ -77,7 +77,7 @@ const AlertMessage: React.FC<
 
       clearTimeout(timeoutId);
     };
-  }, []);
+  }, [alertMessages, id, setAlertMessages]);
 
   if (!showAlertMessage) {
     return null;
