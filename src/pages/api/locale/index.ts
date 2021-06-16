@@ -101,10 +101,7 @@ const patchHandler: Handler = (request, response): Promise<void> => {
       throw webErrorFactory(webErrors.badRequest);
     }
 
-    await getAndPutUser({
-      ...(currentDBUser as DynamoUser),
-      locale: locale as string,
-    })
+    await getAndPutUser(currentDBUser as DynamoUser)
       .then(() =>
         setAlertMessagesCookie(response, [
           generateAlertMessage(

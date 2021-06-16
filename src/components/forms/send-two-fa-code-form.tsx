@@ -1,5 +1,6 @@
 import { Identity } from "@fewlines/connect-management";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
@@ -27,6 +28,8 @@ const SendTwoFACodeForm: React.FC<{
       setSelectedIdentity(identities[0]);
     }
   }, [identities]);
+
+  const { formatMessage } = useIntl();
 
   return (
     <ContactChoiceForm
@@ -71,7 +74,7 @@ const SendTwoFACodeForm: React.FC<{
       {errorMessage ? (
         <FormErrorMessage>{errorMessage}.</FormErrorMessage>
       ) : null}
-      <p>Choose a contact means below that we’ll send a validation code to:</p>
+      <p>{formatMessage({ id: "info" })}</p>
       {identities ? (
         <InputsRadio
           groupName="contactChoice"
@@ -99,7 +102,9 @@ const SendTwoFACodeForm: React.FC<{
         variant={isCodeSent ? ButtonVariant.SECONDARY : ButtonVariant.PRIMARY}
         type="submit"
       >
-        {isCodeSent ? "Resend validation code" : "Send validation code"}
+        {isCodeSent
+          ? formatMessage({ id: "resend" })
+          : formatMessage({ id: "send" })}
       </Button>
     </ContactChoiceForm>
   );

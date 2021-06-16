@@ -44,7 +44,7 @@ const Locale: React.FC = () => {
                 return;
               }
 
-              router && router.push(`/${locale}/account`);
+              router && router.push(`/account`, undefined, { locale });
               return;
             },
           );

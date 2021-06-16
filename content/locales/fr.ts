@@ -32,11 +32,22 @@ export const fr = {
     setPassword: "Créer votre mot de passe",
     updatePassword: "Mettre à jour votre mot de passe",
   },
-  "/account/update": {
+  "/account/security/update": {
     title: "Mot de passe",
     setBreadcrumb: "Mot de passe | créer",
     updateBreadcrumb: "Mot de passe | mettre à jour",
     set: "créer",
     update: "mettre à jour",
+  },
+  "/account/security/sudo": {
+    title: "Sécurité",
+    warning:
+      "Vous avez besoin d’une authentification à double facteur pour accéder à cette page",
+    info: "Choisissez un moyen de contact ci-dessous que nous enverrons un code de validation à:",
+    send: "Envoi du code de validation",
+    resend: "Renvoyer le code de validation",
+  },
+  "/account/locale": {
+    title: "Changer de langue",
   },
 };

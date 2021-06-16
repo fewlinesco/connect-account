@@ -32,11 +32,21 @@ export const en = {
     setPassword: "Set your password",
     updatePassword: "Update your password",
   },
-  "/account/update": {
+  "/account/security/update": {
     title: "Password",
     setBreadcrumb: "Password | set",
     updateBreadcrumb: "Password | update",
     set: "set",
     update: "update",
+  },
+  "/account/security/sudo": {
+    title: "Security",
+    warning: "You need double factor authentication to access this page",
+    info: "Choose a contact means below that we’ll send a validation code to:",
+    send: "Send validation code",
+    resend: "Resend validation code",
+  },
+  "/account/locale": {
+    title: "Switch Language",
   },
 };

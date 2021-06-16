@@ -4,8 +4,6 @@ import React from "react";
 import style from "styled-components";
 import { UrlObject } from "url";
 
-import { useUserLocale } from "@src/context/locale-context";
-
 interface ExtendedLinkProps extends AriaLinkOptions {
   href: string | UrlObject;
   as?: string | UrlObject;
@@ -15,13 +13,12 @@ interface ExtendedLinkProps extends AriaLinkOptions {
 }
 
 const NeutralLink: React.FC<ExtendedLinkProps> = (props) => {
-  const { locale } = useUserLocale();
   const { href, as, className, onClick, children } = props;
   const linkRef = React.useRef(null);
   const { linkProps } = useLink(props, linkRef);
 
   return (
-    <Link href={href} as={as} passHref locale={locale}>
+    <Link href={href} as={as} passHref>
       <NeutralAnchor
         {...linkProps}
         className={className}
