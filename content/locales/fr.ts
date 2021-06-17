@@ -6,25 +6,26 @@ export const fr = {
   "/account": {
     breadcrumb: "Bienvenue sur votre compte",
     createProfile:
-      "Ajoutez des informations de base sur vous, comme votre nom ou vos adresses.",
-    updatedProfile:
-      "Mettez à jour les informations de base vous concernant, comme votre nom ou vos adresses.",
+      "Ajoutez vos informations personnelles, comme votre nom ou vos adresses.",
+    updateProfile:
+      "Mettez à jour vos informations personnelles, comme votre nom ou vos adresses.",
     logins:
-      "Gérez vos options de connexion, y compris les courriels, les numéros de téléphone et les comptes sociales",
+      "Gérez vos options de connexion, y compris les courriels, les numéros de téléphone et les réseaux sociaux",
     security:
       "Définissez ou modifiez votre mot de passe. Vous pouvez consulter l’historique de vos connexions ici.",
   },
   "/account/logins": {
     title: "Identifiants",
-    breadcrumb: "Vos e-mails, téléphones et identifiants sociaux",
+    breadcrumb: "Vos e-mails, téléphones et identifiants de réseaux sociaux",
     emailTitle: "Adresses e-mail",
     emailNoIdentityMessage: "Aucun e-mail n’a encore été ajouté.",
     emailAddNewIdentityMessage: "Ajouter une nouvelle adresse e-mail",
     phoneTitle: "Numéros de téléphone",
     phoneNoIdentityMessage: "Aucun numéro de téléphone ajouté.",
     phoneAddNewIdentityMessage: "Ajouter un nouveau numéro de téléphone",
-    socialTitle: "Comptes sociaux",
-    socialNoIdentityMessage: "Aucun compte sociale n’a encore été ajoutée",
+    socialTitle: "Comptes de réseaux sociaux",
+    socialNoIdentityMessage:
+      "Aucun compte de réseau social n’a encore été ajouté",
   },
   "/account/security": {
     title: "Mot de passe",
@@ -43,7 +44,7 @@ export const fr = {
     title: "Sécurité",
     warning:
       "Vous avez besoin d’une authentification à double facteur pour accéder à cette page",
-    info: "Choisissez un moyen de contact ci-dessous que nous enverrons un code de validation à:",
+    info: "Choisissez un moyen de contact sur lequel nous enverrons un code de validation:",
     send: "Envoi du code de validation",
     resend: "Renvoyer le code de validation",
   },

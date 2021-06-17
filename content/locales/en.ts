@@ -6,9 +6,9 @@ export const en = {
   "/account": {
     breadcrumb: "Welcome to your account",
     createProfile:
-      "Add basic information about you, like your name, or addresses.",
-    updatedProfile:
-      "Update basic information about you, like your name, or addresses.",
+      "Add personal information about you, like your name, or addresses.",
+    updateProfile:
+      "Update personal information about you, like your name, or addresses.",
     logins:
       "Manage your logins options, including emails, phone numbers and social logins.",
     security:
