@@ -49,6 +49,7 @@ const AccountApp: React.FC = ({ children }) => {
                     response.status === HttpStatus.UNAUTHORIZED &&
                     response.statusText === "Unauthorized"
                   ) {
+                    console.log("FLAG IS PASSING BY");
                     document.location.reload();
                     return;
                   }
