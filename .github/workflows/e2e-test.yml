@@ -62,35 +62,35 @@ jobs:
           CONNECT_MANAGEMENT_API_KEY: ${{ secrets.CONNECT_MANAGEMENT_API_KEY }}
         run: yarn e2e:remove-test-user
 
-  # trigger-circle-ci-e2e-tests:
-  #   if: ${{ contains(github.event.deployment_status.target_url, 'heroku') && github.event.deployment_status.state == 'success'}}
-  #   runs-on: ubuntu-latest
+  trigger-circle-ci-e2e-tests:
+    if: ${{ contains(github.event.deployment_status.target_url, 'heroku') && github.event.deployment_status.state == 'success'}}
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #       with:
-  #         fetch-depth: 0
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       
-  #     - name: Set branch name
-  #       id: set-branch-name
-  #       run: |
-  #         if [[ "${{github.event.deployment.environment}}" == "fewlines-account-staging" ]]; then
-  #           echo "::set-output name=branch_name::main"
-  #         fi
-  #         if [[ !("${{github.event.deployment.environment}}" == "fewlines-account-production") && !("${{github.event.deployment.environment}}" == "fewlines-account-staging") ]]; then
-  #           git branch -a --contains ${{github.sha}} | awk 'NR==2' | sed 's/remotes\/origin\/\([CU-].*\).*/\1/' | xargs -I '{}' echo "::set-output name=branch_name::{}"
-  #         fi
+      - name: Set branch name
+        id: set-branch-name
+        run: |
+          if [[ "${{github.event.deployment.environment}}" == "fewlines-account-staging" ]]; then
+            echo "::set-output name=branch_name::main"
+          fi
+          if [[ !("${{github.event.deployment.environment}}" == "fewlines-account-production") && !("${{github.event.deployment.environment}}" == "fewlines-account-staging") ]]; then
+            git describe --all ${{ github.sha }} | cut -d/ -f3- | xargs -I '{}' echo "::set-output name=branch_name::{}"
+          fi
 
-  #     - name: Trigger Circle Ci pipeline
-  #       run: |
-  #         curl -f --request POST \
-  #           --url https://circleci.com/api/v2/project/github/fewlinesco/connect-account/pipeline \
-  #           --header 'Circle-Token: ${{ secrets.CIRCLE_CI_TOKEN }}' \
-  #           --header 'content-type: application/json' \
-  #           --data '{
-  #           "branch": "${{ steps.set-branch-name.outputs.branch_name }}",
-  #           "parameters": {
-  #             "deployed_on_heroku": true,
-  #             "target_url": "${{ github.event.deployment.payload.web_url }}"
-  #           }
-  #         }'
+      - name: Trigger Circle Ci pipeline
+        run: |
+          curl -f --request POST \
+            --url https://circleci.com/api/v2/project/github/fewlinesco/connect-account/pipeline \
+            --header 'Circle-Token: ${{ secrets.CIRCLE_CI_TOKEN }}' \
+            --header 'content-type: application/json' \
+            --data '{
+            "branch": "${{ steps.set-branch-name.outputs.branch_name }}",
+            "parameters": {
+              "deployed_on_heroku": true,
+              "target_url": "${{ github.event.deployment.payload.web_url }}"
+            }
+          }'
