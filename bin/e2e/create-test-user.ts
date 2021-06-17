@@ -44,6 +44,8 @@ async function createTestUser(): Promise<void> {
     );
   }
 
+  console.log(process.env.CONNECT_MANAGEMENT_URL);
+
   const userIdentitiesInput = [
     {
       status: IdentityStatus.VALIDATED,
