@@ -1,4 +1,16 @@
 version: 2.1
+commands: 
+  install-dependencies:
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: yarn install
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
 jobs:
   lint-and-tests:
     machine:
@@ -6,17 +18,7 @@ jobs:
       docker_layer_caching: true
     steps:
       - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          key: dependency-cache-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install dependencies
-          command: yarn install
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: dependency-cache-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
+      - install-dependencies
       - run:
           name: "Lauching Profile mock server"
           command: docker-compose up -d profile_mock_server
@@ -30,6 +32,6 @@ jobs:
             CONNECT_PROFILE_URL: "http://localhost:29712"
 
 workflows:
-  CI:
+  tests-on-push:
     jobs:
       - lint-and-tests
