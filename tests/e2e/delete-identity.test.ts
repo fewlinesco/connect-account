@@ -6,6 +6,7 @@ import {
   screenshot,
   link,
   waitFor,
+  currentURL,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
@@ -38,6 +39,8 @@ describe("Delete Identity", () => {
       await authenticateToConnect();
 
       await waitFor(2000);
+
+      console.log(await currentURL());
 
       expect(await text("LOGINS").exists()).toBeTruthy();
       await click("LOGINS");
