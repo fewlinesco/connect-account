@@ -25,11 +25,11 @@ const Home: React.FC<{ authorizeURL: string; providerName: string }> = ({
           <SectionBox>
             <Flex>
               <DescriptionText>
-                {formatMessage({ id: "p" })} {providerName}
+                {formatMessage({ id: "info" })} {providerName}
               </DescriptionText>
               <NeutralLink href={authorizeURL}>
                 <FakeButton variant={ButtonVariant.PRIMARY}>
-                  {formatMessage({ id: "buttonLabel" })}
+                  {formatMessage({ id: "callToAction" })}
                 </FakeButton>
               </NeutralLink>
             </Flex>

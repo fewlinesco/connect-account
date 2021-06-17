@@ -1,7 +1,7 @@
 export const en = {
   "/": {
-    p: "You are about to access your account from",
-    buttonLabel: "Access my account",
+    info: "You are about to access your account from",
+    callToAction: "Access my account",
   },
   "/account": {
     breadcrumb: "Welcome to your account",
