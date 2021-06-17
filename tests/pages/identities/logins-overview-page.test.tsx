@@ -3,7 +3,11 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import { cache, SWRConfig } from "swr";
 
-import { render, screen } from "../../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+} from "../../config/testing-library-config";
 import * as mockIdentities from "../../mocks/identities";
 import * as locales from "@content/locales";
 import { SortedIdentities } from "@src/@types/sorted-identities";
@@ -21,12 +25,16 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("LoginsOverviewPage", () => {
+  beforeAll(() => {
+    setRouterPathname("/account/logins");
+  });
+
   afterEach(() => {
     cache.clear();
   });
 
   describe("Identity type: EMAIL", () => {
-    it.only("should display primary email identity first and all of them when clicking on the show more button", async () => {
+    it("should display primary email identity first and all of them when clicking on the show more button", async () => {
       expect.assertions(7);
 
       const identities = [

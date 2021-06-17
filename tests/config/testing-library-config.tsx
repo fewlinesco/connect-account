@@ -39,23 +39,29 @@ const mockedNextRouter: NextRouter = {
   route: "/",
   asPath: "/",
   query: {},
-  push: jest.fn(),
-  replace: jest.fn(),
-  reload: jest.fn(),
-  back: jest.fn(),
+  push: jest.fn(() => Promise.resolve(true)),
+  replace: jest.fn(() => Promise.resolve(true)),
+  reload: jest.fn(() => Promise.resolve(true)),
+  back: jest.fn(() => Promise.resolve(true)),
   prefetch: jest.fn().mockResolvedValue(null),
-  beforePopState: jest.fn(),
+  beforePopState: jest.fn(() => Promise.resolve(true)),
   events: {
-    on: jest.fn(),
-    off: jest.fn(),
-    emit: jest.fn(),
+    on: jest.fn(() => Promise.resolve(true)),
+    off: jest.fn(() => Promise.resolve(true)),
+    emit: jest.fn(() => Promise.resolve(true)),
   },
   isFallback: false,
   isReady: false,
   isLocaleDomain: false,
   isPreview: false,
   locale: "en",
+  defaultLocale: "en",
 };
+
+function setRouterPathname(pathname: string): NextRouter {
+  mockedNextRouter.pathname = pathname;
+  return mockedNextRouter;
+}
 
 const AllTheProviders: React.ComponentType = ({ children }) => {
   return (
@@ -72,4 +78,4 @@ const customRender = (
 
 export * from "@testing-library/react";
 
-export { customRender as render };
+export { customRender as render, setRouterPathname };
