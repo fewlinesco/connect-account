@@ -10,6 +10,8 @@ async function authenticateToConnect(): Promise<void> {
       process.env.CONNECT_TEST_ACCOUNT_URL || configVariables.connectAccountURL,
     );
 
+    console.log(configVariables.connectTestAccountEmail);
+
     expect(await text("Access my account").exists()).toBeTruthy();
     await click("Access my account");
 
