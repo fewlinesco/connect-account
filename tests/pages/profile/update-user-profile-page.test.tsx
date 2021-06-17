@@ -2,7 +2,11 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import { SWRConfig } from "swr";
 
-import { render, screen } from "../../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+} from "../../config/testing-library-config";
 import * as mockUserProfile from "../../mocks/user-profile";
 import { userProfile } from "../../mocks/user-profile";
 import { UserProfileForm } from "@src/components/forms/profile/user-profile-form";
@@ -18,6 +22,10 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("UpdateUserProfilePage", () => {
+  beforeAll(() => {
+    setRouterPathname("/account/profile/user-profile/update");
+  });
+
   it("should render proper user profile form elements", async () => {
     expect.assertions(21);
 
