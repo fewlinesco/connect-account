@@ -49,7 +49,7 @@ const AccountApp: React.FC = ({ children }) => {
                     response.status === HttpStatus.UNAUTHORIZED &&
                     response.statusText === "Unauthorized"
                   ) {
-                    window.location.reload();
+                    document.location.reload();
                     return;
                   }
 
