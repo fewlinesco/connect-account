@@ -1,10 +1,10 @@
 import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 
 import { RightChevron } from "../../icons/right-chevron/right-chevron";
 import { Separator } from "../../separator/separator";
-import { IDENTITIES_SECTION_CONTENT } from "./logins-overview";
 import { BoxedLink } from "@src/components/boxed-link/boxed-link";
 import {
   capitalizeFirstLetter,
@@ -16,6 +16,8 @@ const EmailSection: React.FC<{
   identityList: Identity[];
   hideEmailList: boolean;
 }> = ({ identityList, hideEmailList }) => {
+  const { formatMessage } = useIntl();
+
   const primaryIdentity = identityList.find((identity) => identity.primary);
   const secondaryIdentities = identityList.filter(
     (identity) => identity.primary === false,
@@ -23,7 +25,7 @@ const EmailSection: React.FC<{
 
   return !primaryIdentity ? (
     <NoIdentitiesParagraph>
-      {IDENTITIES_SECTION_CONTENT.EMAIL.noIdentityMessage}
+      {formatMessage({ id: "emailNoIdentityMessage" })}
     </NoIdentitiesParagraph>
   ) : (
     <>
@@ -69,6 +71,8 @@ const PhoneSection: React.FC<{
   identityList: Identity[];
   hideEmailList: boolean;
 }> = ({ identityList, hideEmailList }) => {
+  const { formatMessage } = useIntl();
+
   const primaryIdentity = identityList.find((identity) => identity.primary);
   const secondaryIdentities = identityList.filter(
     (identity) => identity.primary === false,
@@ -76,7 +80,7 @@ const PhoneSection: React.FC<{
 
   return !primaryIdentity ? (
     <NoIdentitiesParagraph>
-      {IDENTITIES_SECTION_CONTENT.PHONE.noIdentityMessage}
+      {formatMessage({ id: "phoneNoIdentityMessage" })}
     </NoIdentitiesParagraph>
   ) : (
     <>
@@ -121,11 +125,13 @@ const PhoneSection: React.FC<{
 const SocialSection: React.FC<{
   identityList: Identity[];
 }> = ({ identityList }) => {
+  const { formatMessage } = useIntl();
+
   return (
     <>
       {identityList.length === 0 ? (
         <NoIdentitiesParagraph>
-          {IDENTITIES_SECTION_CONTENT.SOCIAL.noIdentityMessage}
+          {formatMessage({ id: "socialNoIdentityMessage" })}
         </NoIdentitiesParagraph>
       ) : (
         identityList.map(({ type }, index) => (

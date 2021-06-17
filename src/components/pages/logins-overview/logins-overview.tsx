@@ -18,23 +18,6 @@ import { BoxedLink } from "@src/components/boxed-link/boxed-link";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 import { sortIdentities } from "@src/utils/sort-identities";
 
-const IDENTITIES_SECTION_CONTENT = {
-  EMAIL: {
-    title: "Email addresses",
-    noIdentityMessage: "No email added yet.",
-    addNewIdentityMessage: "Add new email address",
-  },
-  PHONE: {
-    title: "Phone numbers",
-    noIdentityMessage: "No phone number added yet.",
-    addNewIdentityMessage: "Add new phone number",
-  },
-  SOCIAL: {
-    title: "Social logins",
-    noIdentityMessage: "No social logins added yet.",
-  },
-};
-
 const LoginsOverview: React.FC = () => {
   const [hideEmailList, setHideEmailList] = React.useState<boolean>(true);
   const [hidePhoneList, setHidePhoneList] = React.useState<boolean>(true);
@@ -128,4 +111,4 @@ const Flex = styled.div`
   justify-content: center;
 `;
 
-export { LoginsOverview, IDENTITIES_SECTION_CONTENT };
+export { LoginsOverview };
