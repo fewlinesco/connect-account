@@ -42,7 +42,7 @@ jobs:
 
   e2e-tests:
     docker: 
-      image: buildkite/puppeteer:8.0.0
+      - image: buildkite/puppeteer:8.0.0
     steps: 
       - checkout
       - install-dependencies
