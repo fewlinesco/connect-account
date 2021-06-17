@@ -54,6 +54,7 @@ jobs:
             CONNECT_TEST_ACCOUNT_PASSWORD: $CONNECT_TEST_ACCOUNT_PASSWORD
             CONNECT_MANAGEMENT_URL: https://management.connect.review.fewlines.tech/graphql
             CONNECT_MANAGEMENT_API_KEY: $CONNECT_MANAGEMENT_API_KEY
+            CURRENT_COMMIT_SHA: $CIRCLE_SHA1
       - run:
           name: Run e2e tests
           command: yarn test:e2e 
@@ -69,6 +70,7 @@ jobs:
             CONNECT_TEST_ACCOUNT_EMAIL: "taiko@e2e.test"
             CONNECT_MANAGEMENT_URL: https://management.connect.review.fewlines.tech/graphql
             CONNECT_MANAGEMENT_API_KEY: $CONNECT_MANAGEMENT_API_KEY
+            CURRENT_COMMIT_SHA: $CIRCLE_SHA1
 
 workflows:
   tests-on-push:

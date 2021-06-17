@@ -4,14 +4,18 @@ import {
 } from "@fewlines/connect-management";
 
 async function removeTestUser(): Promise<void> {
-  if (process.env.GITHUB_CONTEXT_EVENT === undefined) {
-    throw new Error("GITHUB_CONTEXT_EVENT environment variable is undefined");
-  }
+  // if (process.env.GITHUB_CONTEXT_EVENT === undefined) {
+  //   throw new Error("GITHUB_CONTEXT_EVENT environment variable is undefined");
+  // }
 
-  const githubActionsContext = JSON.parse(process.env.GITHUB_CONTEXT_EVENT);
+  // const githubActionsContext = JSON.parse(process.env.GITHUB_CONTEXT_EVENT);
 
-  if (githubActionsContext.deployment === undefined) {
-    throw new Error("deployment is undefined");
+  // if (githubActionsContext.deployment === undefined) {
+  //   throw new Error("deployment is undefined");
+  // }
+
+  if (process.env.CURRENT_COMMIT_SHA === undefined) {
+    throw new Error("CURRENT_COMMIT_SHA environment variable is undefined");
   }
 
   if (process.env.CONNECT_TEST_ACCOUNT_EMAIL === undefined) {
@@ -31,7 +35,7 @@ async function removeTestUser(): Promise<void> {
   }
 
   const testUserEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL.split("@").join(
-    "_" + githubActionsContext.deployment.sha + "@",
+    "_" + process.env.CURRENT_COMMIT_SHA + "@",
   );
 
   const testUserId = await getUserIdFromIdentityValue(
