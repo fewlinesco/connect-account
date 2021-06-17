@@ -26,7 +26,6 @@ jobs:
       image: ubuntu-2004:202101-01
       docker_layer_caching: true
     steps:
-      - checkout
       - install-dependencies
       - run:
           name: "Lauching Profile mock server"
@@ -44,7 +43,6 @@ jobs:
     docker: 
       - image: buildkite/puppeteer:8.0.0
     steps: 
-      - checkout
       - install-dependencies
       - run:
           name: Creating test user
