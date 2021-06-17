@@ -44,11 +44,7 @@ jobs:
       - image: buildkite/puppeteer:8.0.0
     environment:
       CONNECT_TEST_ACCOUNT_EMAIL: "taiko@e2e.test"
-      CONNECT_TEST_ACCOUNT_PASSWORD: $CONNECT_TEST_ACCOUNT_PASSWORD
-      CONNECT_MANAGEMENT_URL: $CONNECT_MANAGEMENT_URL
-      CONNECT_MANAGEMENT_API_KEY: $CONNECT_MANAGEMENT_API_KEY
       CONNECT_TEST_ACCOUNT_URL: << pipeline.parameters.target_url >>
-      CURRENT_COMMIT_SHA: $CIRCLE_SHA1
     steps: 
       - install-dependencies
       - run:

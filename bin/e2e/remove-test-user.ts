@@ -14,8 +14,8 @@ async function removeTestUser(): Promise<void> {
   //   throw new Error("deployment is undefined");
   // }
 
-  if (process.env.CURRENT_COMMIT_SHA === undefined) {
-    throw new Error("CURRENT_COMMIT_SHA environment variable is undefined");
+  if (process.env.CIRCLE_SHA1 === undefined) {
+    throw new Error("CIRCLE_SHA1 environment variable is undefined");
   }
 
   if (process.env.CONNECT_TEST_ACCOUNT_EMAIL === undefined) {
@@ -35,7 +35,7 @@ async function removeTestUser(): Promise<void> {
   }
 
   const testUserEmail = process.env.CONNECT_TEST_ACCOUNT_EMAIL.split("@").join(
-    "_" + process.env.CURRENT_COMMIT_SHA + "@",
+    "_" + process.env.CIRCLE_SHA1 + "@",
   );
 
   const testUserId = await getUserIdFromIdentityValue(

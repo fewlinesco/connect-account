@@ -18,8 +18,8 @@ async function createTestUser(): Promise<void> {
   //   throw new Error("deployment is undefined");
   // }
 
-  if (process.env.CURRENT_COMMIT_SHA === undefined) {
-    throw new Error("CURRENT_COMMIT_SHA environment variable is undefined");
+  if (process.env.CIRCLE_SHA1 === undefined) {
+    throw new Error("CIRCLE_SHA1 environment variable is undefined");
   }
 
   if (process.env.CONNECT_TEST_ACCOUNT_EMAIL === undefined) {
@@ -44,28 +44,30 @@ async function createTestUser(): Promise<void> {
     );
   }
 
-  console.log(process.env.CONNECT_MANAGEMENT_URL);
+  // console.log(process.env.CONNECT_MANAGEMENT_URL);
+
+  console.log("flag: ", process.env.CIRCLE_PULL_REQUEST);
 
   const userIdentitiesInput = [
     {
       status: IdentityStatus.VALIDATED,
       type: IdentityTypes.EMAIL,
       value: process.env.CONNECT_TEST_ACCOUNT_EMAIL.split("@").join(
-        "_" + process.env.CURRENT_COMMIT_SHA + "@",
+        "_" + process.env.CIRCLE_SHA1 + "@",
       ),
     },
     {
       status: IdentityStatus.VALIDATED,
       type: IdentityTypes.EMAIL,
       value: process.env.CONNECT_TEST_ACCOUNT_EMAIL.split("@").join(
-        "_delete_" + process.env.CURRENT_COMMIT_SHA + "@",
+        "_delete_" + process.env.CIRCLE_SHA1 + "@",
       ),
     },
     {
       status: IdentityStatus.VALIDATED,
       type: IdentityTypes.EMAIL,
       value: process.env.CONNECT_TEST_ACCOUNT_EMAIL.split("@").join(
-        "2_" + process.env.CURRENT_COMMIT_SHA + "@",
+        "2_" + process.env.CIRCLE_SHA1 + "@",
       ),
     },
   ];
