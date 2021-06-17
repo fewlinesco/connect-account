@@ -29,9 +29,9 @@ describe("DesktopNavigationBar", () => {
     try {
       await authenticateToConnect();
 
-      expect(await text("Logins").exists()).toBeTruthy();
+      expect(await text("LOGINS").exists()).toBeTruthy();
 
-      await click("Logins");
+      await click("LOGINS");
       expect(await text("Email addresses").exists()).toBeTruthy();
 
       await click("Home");
