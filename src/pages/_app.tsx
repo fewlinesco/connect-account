@@ -50,10 +50,8 @@ const AccountApp: React.FC = ({ children }) => {
                     response.status === HttpStatus.UNAUTHORIZED &&
                     response.statusText === ERRORS_DATA.UNAUTHORIZED.message
                   ) {
-                    // error.info = await response.json();
-                    // error.statusCode = response.status;
-                    // return;
                     window.location.reload();
+                    return;
                   }
 
                   error.info = await response.json();
