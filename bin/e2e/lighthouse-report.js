@@ -19,7 +19,7 @@ async function login(page) {
     );
   }
 
-  const reviewAppURL = process.env.CONNECT_TEST_ACCOUNT_URL;
+  const reviewAppURL = "https://fewlines-account-staging.herokuapp.com/";
 
   console.log("Page open");
   await page.goto(reviewAppURL);
@@ -57,6 +57,8 @@ async function login(page) {
 async function setup(browser, context) {
   const page = await browser.newPage();
   await page.setCacheEnabled(true);
+
+  console.log("URL", context.url);
 
   if (counter === 1) {
     await login(page);
