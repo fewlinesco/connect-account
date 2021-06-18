@@ -38,16 +38,16 @@ jobs:
           name: Restore Yarn Package Cache
           key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
-          name: Install dependencies
+          name: Install Connect.Account dependencies
           command: yarn install
+      - run:
+          name: Install Puppeteer
+          command: yarn add -D puppeteer
       - save_cache:
           name: Save Yarn Package Cache
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
-      - run:
-          name: Install Puppeteer
-          command: yarn add -D puppeteer
       - run:
           name: Run Lighthouse audit
           command: npx @lhci/cli autorun

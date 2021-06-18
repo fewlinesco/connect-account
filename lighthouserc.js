@@ -21,7 +21,8 @@ module.exports = {
       },
       url: [
         process.env.CONNECT_TEST_ACCOUNT_URL,
-        `${process.env.CONNECT_TEST_ACCOUNT_URL}/account`,
+        `${process.env.CONNECT_TEST_ACCOUNT_URL}/account/logins`,
+        `${process.env.CONNECT_TEST_ACCOUNT_URL}/account/profile`,
       ],
     },
     upload: {

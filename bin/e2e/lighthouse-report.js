@@ -1,6 +1,6 @@
-let counter = 1;
+let counter = 0;
 
-async function login(page) {
+async function login(page, context) {
   if (process.env.CONNECT_TEST_ACCOUNT_URL === undefined) {
     throw new Error(
       "CONNECT_TEST_ACCOUNT_URL environment variable is undefined",
@@ -19,10 +19,8 @@ async function login(page) {
     );
   }
 
-  const reviewAppURL = "https://fewlines-account-staging.herokuapp.com/";
-
   console.log("Page open");
-  await page.goto(reviewAppURL);
+  await page.goto(process.env.CONNECT_TEST_ACCOUNT_URL);
   console.log("App loaded");
 
   await page.click("a");
@@ -33,12 +31,14 @@ async function login(page) {
     visible: true,
     timeout: 0,
   });
+  console.log("Connect URL", await page.url());
   await page.type("input[type=email]", process.env.CONNECT_TEST_ACCOUNT_EMAIL, {
     delay: 50,
   });
   await page.click("[type=submit]");
   await page.waitForTimeout(5000);
-
+  console.log("Email submitted");
+  console.log("Connect URL", await page.url());
   await page.waitForSelector("input[type=password]", {
     visible: true,
     timeout: 0,
@@ -51,19 +51,22 @@ async function login(page) {
     },
   );
   await page.click("[type=submit]");
-  await page.waitForTimeout(10000);
+  console.log("Password submitted");
+
+  await page.waitForNavigation();
+
+  await page.goto(context.url);
+  console.log("FLAG", await page.url());
 }
 
 async function setup(browser, context) {
   const page = await browser.newPage();
   await page.setCacheEnabled(true);
 
-  console.log("URL", context.url);
-
-  if (counter === 1) {
-    await login(page);
-  } else {
+  if (counter === 0) {
     await page.goto(context.url);
+  } else {
+    await login(page, context);
   }
 
   await page.close();
