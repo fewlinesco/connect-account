@@ -44,11 +44,9 @@ const getHandler: Handler = (request, response): Promise<void> => {
 
     const locale = request.cookies["NEXT_LOCALE"] || "en";
 
-    span.setDisclosedAttribute("user locale retrieved", true);
     span.setDisclosedAttribute("user locale value", locale);
     response.statusCode = HttpStatus.OK;
     response.json(locale);
-
     return;
   });
 };
@@ -56,7 +54,6 @@ const getHandler: Handler = (request, response): Promise<void> => {
 const patchHandler: Handler = (request, response): Promise<void> => {
   const webErrors = {
     badRequest: ERRORS_DATA.BAD_REQUEST,
-    databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
   };
 
   return getTracer().span("set-locale handler", async (span) => {
