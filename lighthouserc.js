@@ -19,7 +19,10 @@ module.exports = {
         maxWaitForLoad: 60000,
         throttlingMethod: "devtools",
       },
-      url: ["https://fewlines-account-staging.herokuapp.com/"],
+      url: [
+        process.env.CONNECT_TEST_ACCOUNT_URL,
+        `${process.env.CONNECT_TEST_ACCOUNT_UR}/account`,
+      ],
     },
     upload: {
       target: "filesystem",
