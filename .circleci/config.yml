@@ -1,24 +1,34 @@
 version: 2.1
+
+parameters:
+  deployed_on_heroku:
+    type: boolean
+    default: false
+  target_url:
+    type: string
+    default: ""
+
+commands: 
+  install-dependencies:
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: yarn install
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
 jobs:
   lint-and-tests:
     machine:
       image: ubuntu-2004:202101-01
       docker_layer_caching: true
     steps:
-      - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - install-dependencies
       - run:
-          name: Install dependencies
-          command: yarn install
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: dependency-cache-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: "Lauching Profile mock server"
+          name: "Launching Profile mock server"
           command: docker-compose up -d profile_mock_server
       - run:
           name: Run lint
@@ -29,7 +39,31 @@ jobs:
           environment:
             CONNECT_PROFILE_URL: "http://localhost:29712"
 
+  e2e-tests:
+    docker: 
+      - image: buildkite/puppeteer:8.0.0
+    environment:
+      CONNECT_TEST_ACCOUNT_URL: << pipeline.parameters.target_url >>
+    steps: 
+      - install-dependencies
+      - run:
+          name: Creating test user
+          command: yarn e2e:create-test-user
+      - run:
+          name: Run e2e tests
+          command: CONNECT_TEST_ACCOUNT_EMAIL="taiko_${CIRCLE_SHA1}@fewlines.test" yarn test:e2e 
+      - run: 
+          name: Removing test user
+          command: yarn e2e:remove-test-user
+          when: always
+
 workflows:
-  CI:
+  tests-on-push:
+    when:
+      not: << pipeline.parameters.deployed_on_heroku >>
     jobs:
       - lint-and-tests
+  e2e-tests-after-heroku-deploy:
+    when: << pipeline.parameters.deployed_on_heroku >>
+    jobs: 
+      - e2e-tests

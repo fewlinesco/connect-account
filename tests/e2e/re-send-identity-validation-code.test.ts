@@ -36,7 +36,7 @@ describe("Account Web Application re-send Identity validation code", () => {
   });
 
   test("It should re-send an Identity validation code", async () => {
-    expect.assertions(9);
+    expect.assertions(8);
 
     try {
       await authenticateToConnect();
@@ -60,10 +60,6 @@ describe("Account Web Application re-send Identity validation code", () => {
 
       expect(await text("Resend validation code").exists()).toBeTruthy();
       await click("Resend validation code");
-
-      expect(
-        await text("A new confirmation email has been sent").exists(),
-      ).toBeTruthy();
 
       const secondURL = await currentURL();
       expect(firstURL).not.toMatch(secondURL);
