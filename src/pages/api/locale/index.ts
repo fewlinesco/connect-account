@@ -46,7 +46,7 @@ const getHandler: Handler = (request, response): Promise<void> => {
 
     span.setDisclosedAttribute("user locale value", locale);
     response.statusCode = HttpStatus.OK;
-    response.json(locale);
+    response.json(JSON.parse(JSON.stringify(locale)));
     return;
   });
 };
