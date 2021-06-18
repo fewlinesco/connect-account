@@ -58,6 +58,8 @@ async function setup(browser, context) {
   const page = await browser.newPage();
   await page.setCacheEnabled(true);
 
+  console.log("URL", context.url);
+
   if (counter === 1) {
     await login(page);
   } else {
