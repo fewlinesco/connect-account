@@ -1,4 +1,13 @@
-import { text, click, screenshot, write, press, goto, setConfig } from "taiko";
+import {
+  text,
+  click,
+  screenshot,
+  write,
+  press,
+  goto,
+  setConfig,
+  waitFor,
+} from "taiko";
 
 import { configVariables } from "@src/configs/config-variables";
 
@@ -10,14 +19,14 @@ async function authenticateToConnect(): Promise<void> {
       process.env.CONNECT_TEST_ACCOUNT_URL || configVariables.connectAccountURL,
     );
 
-    console.log(configVariables.connectTestAccountEmail);
-
     expect(await text("Access my account").exists()).toBeTruthy();
     await click("Access my account");
 
     expect(await text("Email").exists()).toBeTruthy();
     await write(configVariables.connectTestAccountEmail);
     await press("Enter");
+
+    await waitFor(3000);
 
     expect(await text("Password").exists()).toBeTruthy();
     await write(configVariables.connectTestAccountPassword);

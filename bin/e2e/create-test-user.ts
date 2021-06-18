@@ -44,9 +44,8 @@ async function createTestUser(): Promise<void> {
     );
   }
 
-  // console.log(process.env.CONNECT_MANAGEMENT_URL);
-
-  console.log("flag: ", process.env.CIRCLE_PULL_REQUEST);
+  console.log("sha: ", process.env.CIRCLE_SHA1);
+  console.log("mail:", process.env.CONNECT_TEST_ACCOUNT_EMAIL.split("@"));
 
   const userIdentitiesInput = [
     {
@@ -82,6 +81,8 @@ async function createTestUser(): Promise<void> {
       localeCode: "en-US",
     },
   );
+
+  console.log("userId: ", userId);
 
   await createOrUpdatePassword(
     {
