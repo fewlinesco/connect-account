@@ -18,6 +18,8 @@ async function getAndPutUser(
     ? currentUserData
     : await getDBUserFromSub(sub);
 
+  console.log({ inDBUser });
+
   if (!inDBUser) {
     return putUser({
       sub,
