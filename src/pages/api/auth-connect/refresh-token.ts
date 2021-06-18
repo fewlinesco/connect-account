@@ -43,7 +43,7 @@ const handler: Handler = (request, response): Promise<void> => {
     badRequest: ERRORS_DATA.BAD_REQUEST,
   };
 
-  return getTracer().span("refresh-token-flow handler", async (span) => {
+  return getTracer().span("refresh-token handler", async (span) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
@@ -177,7 +177,7 @@ const wrappedHandler = wrapMiddlewares(
     loggingMiddleware(getTracer(), logger),
   ],
   handler,
-  "/api/auth-connect/refresh-token-flow",
+  "/api/auth-connect/refresh-token",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

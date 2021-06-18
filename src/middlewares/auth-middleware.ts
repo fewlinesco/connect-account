@@ -62,7 +62,7 @@ async function authentication(
         response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
         response.setHeader(
           "location",
-          `/api/auth-connect/refresh-token-flow?next=${redirectURL}`,
+          `/api/auth-connect/refresh-token?next=${redirectURL}`,
         );
         throw webErrorFactory(webErrors.temporaryRedirection);
       }

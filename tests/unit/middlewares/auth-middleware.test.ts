@@ -13,7 +13,7 @@ import * as getAndPutUser from "@src/commands/get-and-put-user";
 import { configVariables } from "@src/configs/config-variables";
 import { oauth2Client } from "@src/configs/oauth2-client";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
-import refreshTokenHandler from "@src/pages/api/auth-connect/refresh-token-flow";
+import refreshTokenHandler from "@src/pages/api/auth-connect/refresh-token";
 import * as getDBUserFromSub from "@src/queries/get-db-user-from-sub";
 import * as decryptVerifyAccessToken from "@src/workflows/decrypt-verify-access-token";
 
