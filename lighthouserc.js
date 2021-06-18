@@ -19,10 +19,7 @@ module.exports = {
         maxWaitForLoad: 60000,
         throttlingMethod: "devtools",
       },
-      url: [
-        process.env.CONNECT_TEST_ACCOUNT_URL,
-        `${process.env.CONNECT_TEST_ACCOUNT_URL}/account`,
-      ],
+      url: [`${process.env.CONNECT_TEST_ACCOUNT_URL}/account`],
     },
     upload: {
       target: "filesystem",
