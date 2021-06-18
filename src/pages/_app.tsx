@@ -2,6 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import { SSRProvider } from "@react-aria/ssr";
 import { AppProps } from "next/app";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 import { SWRConfig } from "swr";
@@ -22,6 +23,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
 };
 
 const AccountApp: React.FC = ({ children }) => {
+  const router = useRouter();
   return (
     <SSRProvider>
       <ThemeProvider theme={theme}>
@@ -50,7 +52,9 @@ const AccountApp: React.FC = ({ children }) => {
                     response.statusText === "Unauthorized"
                   ) {
                     console.log("FLAG IS PASSING BY");
-                    document.location.reload();
+                    console.log("router.pathname: ", router.pathname);
+                    router && router.replace(router.pathname);
+                    // document.location.reload();
                     return;
                   }
 
