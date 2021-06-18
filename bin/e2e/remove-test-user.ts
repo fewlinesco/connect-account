@@ -4,16 +4,6 @@ import {
 } from "@fewlines/connect-management";
 
 async function removeTestUser(): Promise<void> {
-  // if (process.env.GITHUB_CONTEXT_EVENT === undefined) {
-  //   throw new Error("GITHUB_CONTEXT_EVENT environment variable is undefined");
-  // }
-
-  // const githubActionsContext = JSON.parse(process.env.GITHUB_CONTEXT_EVENT);
-
-  // if (githubActionsContext.deployment === undefined) {
-  //   throw new Error("deployment is undefined");
-  // }
-
   if (process.env.CIRCLE_SHA1 === undefined) {
     throw new Error("CIRCLE_SHA1 environment variable is undefined");
   }
