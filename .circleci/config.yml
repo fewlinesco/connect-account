@@ -28,7 +28,7 @@ jobs:
     steps:
       - install-dependencies
       - run:
-          name: "Lauching Profile mock server"
+          name: "Launching Profile mock server"
           command: docker-compose up -d profile_mock_server
       - run:
           name: Run lint
@@ -40,6 +40,10 @@ jobs:
             CONNECT_PROFILE_URL: "http://localhost:29712"
 
   e2e-tests:
+    parameters: 
+      commit-sha:
+        type: string
+        default: "" 
     docker: 
       - image: buildkite/puppeteer:8.0.0
     environment:
@@ -54,7 +58,7 @@ jobs:
           name: Run e2e tests
           command: yarn test:e2e 
           environment:
-            CONNECT_TEST_ACCOUNT_EMAIL: 'taiko_${CIRCLE_SHA1}@e2e.test'
+            CONNECT_TEST_ACCOUNT_EMAIL: "taiko_<< parameters.commit-sha >>@e2e.test"
       - run: 
           name: Removing test user
           command: yarn e2e:remove-test-user
@@ -69,4 +73,5 @@ workflows:
   e2e-tests-after-heroku-deploy:
     when: << pipeline.parameters.deployed_on_heroku >>
     jobs: 
-      - e2e-tests
+      - e2e-tests: 
+          commit-sha: ${CIRCLE_SHA1}
