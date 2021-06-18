@@ -53,8 +53,6 @@ async function authentication(
       if (error.name === "TokenExpiredError") {
         span.setDisclosedAttribute("is access_token expired", true);
 
-        console.log("request.url: ", request.url);
-
         if (request.url && request.url.includes("/api/")) {
           throw webErrorFactory(webErrors.unauthorized);
         }

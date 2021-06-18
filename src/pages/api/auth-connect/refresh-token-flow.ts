@@ -97,7 +97,7 @@ const handler: Handler = (request, response): Promise<void> => {
 
     await decryptVerifyAccessToken(refreshedTokens.access_token).catch(
       (error) => {
-        span.setDisclosedAttribute("is access_token valid", false);
+        span.setDisclosedAttribute("is refresh access_token valid", false);
         if (
           error instanceof MissingJWKSURIError ||
           error instanceof InvalidAudienceError ||

@@ -45,16 +45,11 @@ const AccountApp: React.FC = ({ children }) => {
                     "An error occurred while fetching the data.",
                   );
 
-                  console.log("response:", response);
-
                   if (
                     response.status === HttpStatus.UNAUTHORIZED &&
                     response.statusText === "Unauthorized"
                   ) {
-                    console.log("FLAG IS PASSING BY");
-                    console.log("router.pathname: ", router.pathname);
                     router && router.replace(router.pathname);
-                    // document.location.reload();
                     return;
                   }
 
