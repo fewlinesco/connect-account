@@ -40,14 +40,9 @@ jobs:
             CONNECT_PROFILE_URL: "http://localhost:29712"
 
   e2e-tests:
-    parameters: 
-      commit-sha:
-        type: string
-        default: "" 
     docker: 
       - image: buildkite/puppeteer:8.0.0
     environment:
-      CONNECT_TEST_ACCOUNT_EMAIL: "taiko@e2e.test"
       CONNECT_TEST_ACCOUNT_URL: << pipeline.parameters.target_url >>
     steps: 
       - install-dependencies
@@ -56,9 +51,7 @@ jobs:
           command: yarn e2e:create-test-user
       - run:
           name: Run e2e tests
-          command: yarn test:e2e 
-          environment:
-            CONNECT_TEST_ACCOUNT_EMAIL: "taiko_<< parameters.commit-sha >>@e2e.test"
+          command: CONNECT_TEST_ACCOUNT_EMAIL="taiko_${CIRCLE_SHA1}@test.co" yarn test:e2e 
       - run: 
           name: Removing test user
           command: yarn e2e:remove-test-user
@@ -73,5 +66,4 @@ workflows:
   e2e-tests-after-heroku-deploy:
     when: << pipeline.parameters.deployed_on_heroku >>
     jobs: 
-      - e2e-tests: 
-          commit-sha: ${CIRCLE_SHA1}
+      - e2e-tests
