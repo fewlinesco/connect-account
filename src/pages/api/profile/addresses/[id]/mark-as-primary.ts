@@ -11,6 +11,7 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
+import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import { wrappedProfileClient } from "@src/configs/profile-client";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
@@ -44,8 +45,12 @@ const markAsPrimaryHandler: Handler = async (request, response) => {
       const { data: address } = await userAddressClient
         .markUserAddressAsPrimary(addressId)
         .then((addressData) => {
+          const locale = getLocaleFromRequest(request, span);
+
           setAlertMessagesCookie(response, [
-            generateAlertMessage("Your address has been marked as primary"),
+            generateAlertMessage(
+              formatAlertMessage(locale, "addressMarkedAsPrimary"),
+            ),
           ]);
 
           return addressData;

@@ -69,5 +69,6 @@ export const fr = {
     addressAdded: "Votre adresse a été ajoutée",
     addressUpdated: "Votre adresse a été mise à jour",
     addressDeleted: "Votre adresse a été supprimée",
+    addressMarkedAsPrimary: "Votre adresse a été marquée comme principale",
   },
 };
