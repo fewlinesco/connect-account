@@ -34,6 +34,7 @@
     "@aws-sdk/util-dynamodb": "3.18.0",
     "@fewlines/connect-client": "0.5.1",
     "@fewlines/connect-management": "0.6.5",
+    "@formatjs/intl": "1.13.1",
     "@fwl/logging": "0.1.2",
     "@fwl/tracing": "0.10.1",
     "@fwl/web": "0.11.4",
