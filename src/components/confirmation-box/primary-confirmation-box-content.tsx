@@ -16,11 +16,9 @@ const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxContentProps
         <PrimaryConfirmationText>
           You are about to set {value} as primary.
         </PrimaryConfirmationText>
-
         <Button type="button" variant={ButtonVariant.PRIMARY} onPress={onPress}>
           Confirm
         </Button>
-
         <Button
           type="button"
           variant={ButtonVariant.SECONDARY}

@@ -147,7 +147,6 @@ const IdentityOverview: React.FC<{
           )}
         </>
       ) : null}
-
       <ConfirmationBox
         open={confirmationBoxOpen}
         setOpen={setConfirmationBoxOpen}
