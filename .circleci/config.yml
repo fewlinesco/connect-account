@@ -20,6 +20,7 @@ commands:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
+
 jobs:
   lint-and-tests:
     machine:
@@ -58,16 +59,17 @@ jobs:
       - run:
           name: Run e2e tests
           command: CONNECT_TEST_ACCOUNT_EMAIL="taiko_${CIRCLE_SHA1}@fewlines.test" yarn test:e2e 
-      # - when:
-      #     condition:
-      #       matches: { pattern: "staging", value: << pipeline.parameters.target_url >> }
-      #     steps:
-      #       name: Cleaning Profile Staging
-      #       command: yarn e2e:cleaning-profile-staging
-      - run: 
-          name: Cleaning Profile Staging
-          command: yarn e2e:cleaning-profile-staging
-          when: always
+      - when:
+          condition:
+            matches: { pattern: "^herokuapp$", value: << pipeline.parameters.target_url >> }
+          steps:
+            - run: 
+                name: Cleaning Profile staging
+                command: yarn e2e:cleaning-profile-staging
+      # - run: 
+      #     name: Cleaning Profile Staging
+      #     command: yarn e2e:cleaning-profile-staging
+      #     when: always
       - run: 
           name: Removing Connect test user
           command: yarn e2e:remove-test-user
