@@ -2004,10 +2004,10 @@
     "@opentelemetry/plugin-https" "0.18.2"
     "@opentelemetry/tracing" "0.19.0"
 
-"@fwl/web@0.11.4":
-  version "0.11.4"
-  resolved "https://registry.yarnpkg.com/@fwl/web/-/web-0.11.4.tgz#bb605a729e3f310cbcac8ad1258643e275b2c754"
-  integrity sha512-Cj6CKDcgE9ao0VtT6U7SpvC9ac9fcok2cHy8073IB4EPab0aORkckSZuSAWqJmPBlSRjTaElurWt5v3UR2p53A==
+"@fwl/web@0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@fwl/web/-/web-0.12.0.tgz#da08734d65b56f31ee9b8beb7fe9c3bc6667ed8d"
+  integrity sha512-MNqifzGDRs650nd/cbEG9OCP41uzBrNoXY4sCskk108BHIYgoWpKim6CQAoA0jnTY+nS+DhT2Na0dslZsO9ahQ==
   dependencies:
     "@fwl/logging" "0.1.2"
     "@fwl/tracing" "0.10.0"
@@ -2017,6 +2017,7 @@
     parseurl "1.3.3"
     qs "6.10.1"
     send "0.17.1"
+    tls "^0.0.1"
 
 "@hapi/accept@5.0.2":
   version "5.0.2"
@@ -14813,6 +14814,11 @@ tiny-lr@^1.1.0:
     livereload-js "^2.3.0"
     object-assign "^4.1.0"
     qs "^6.4.0"
+
+tls@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/tls/-/tls-0.0.1.tgz#0ab2bf5968d71df2f8c0e1515d24a2240b98aac8"
+  integrity sha1-CrK/WWjXHfL4wOFRXSSiJAuYqsg=
 
 tmpl@1.0.x:
   version "1.0.4"

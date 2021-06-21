@@ -36,7 +36,7 @@
     "@fewlines/connect-management": "0.6.5",
     "@fwl/logging": "0.1.2",
     "@fwl/tracing": "0.10.1",
-    "@fwl/web": "0.11.4",
+    "@fwl/web": "0.12.0",
     "@hapi/iron": "6.0.0",
     "@react-aria/button": "3.3.2",
     "@react-aria/link": "3.1.3",
