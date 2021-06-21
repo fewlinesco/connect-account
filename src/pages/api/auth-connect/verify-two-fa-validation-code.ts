@@ -25,6 +25,7 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { insertSudoModeTTL } from "@src/commands/insert-sudo-mode-ttl";
 import { removeExpiredSudoEventIds } from "@src/commands/remove-expired-sudo-event-ids";
 import { configVariables } from "@src/configs/config-variables";
+import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
@@ -121,8 +122,11 @@ const handler: Handler = async (request, response) => {
 
       if (!validEventIds.length) {
         span.setDisclosedAttribute("are valid sudo event ids found", false);
+        const locale = getLocaleFromRequest(request, span);
         setAlertMessagesCookie(response, [
-          generateAlertMessage("Validation code has expired"),
+          generateAlertMessage(
+            formatAlertMessage(locale, "validationCodeExpired"),
+          ),
         ]);
         throw webErrorFactory(webErrors.sudoEventIdsNotFound);
       }

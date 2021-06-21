@@ -57,5 +57,6 @@ export const fr = {
     confirmationCodePhone: "Un SMS de confirmation a été envoyé",
     newConfirmationCodeEmail: "Un nouvel email de confirmation a été envoyé",
     newConfirmationCodePhone: "Un nouveau SMS de confirmation a été envoyé",
+    validationCodeExpired: "Le code de validation a expiré",
   },
 };
