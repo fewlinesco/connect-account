@@ -70,7 +70,7 @@ export const fr = {
     addressUpdated: "Votre adresse a été mise à jour",
     addressDeleted: "Votre adresse a été supprimée",
     addressMarkedAsPrimary: "Votre adresse a été marquée comme principale",
-    profileCreated: "Your profile has been created",
-    profileUpdated: "Your profile has been updated",
+    profileCreated: "Votre profil à été créé",
+    profileUpdated: "Votre profil a été mis à jour",
   },
 };

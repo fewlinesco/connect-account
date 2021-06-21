@@ -68,5 +68,7 @@ export const en = {
     addressUpdated: "Your address has been updated",
     addressDeleted: "Your address has been deleted",
     addressMarkedAsPrimary: "Your address has been marked as primary",
+    profileCreated: "Your profile has been created",
+    profileUpdated: "Your profile has been updated",
   },
 };
