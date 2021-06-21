@@ -53,5 +53,7 @@ export const fr = {
   },
   alertMessages: {
     localeChanged: "Votre langue a été réglée sur",
+    newConfirmationCodeEmail: "Un nouvel email de confirmation a été envoyé",
+    newConfirmationCodePhone: "Un nouveau SMS de confirmation a été envoyé",
   },
 };

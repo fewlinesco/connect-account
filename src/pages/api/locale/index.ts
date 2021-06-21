@@ -19,7 +19,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { configVariables } from "@src/configs/config-variables";
-import { formatAlertMessage } from "@src/configs/intl";
+import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
@@ -43,11 +43,9 @@ const getHandler: Handler = (request, response): Promise<void> => {
     }
     span.setDisclosedAttribute("user cookie found", true);
 
-    const locale = request.cookies["NEXT_LOCALE"] || "en";
-
-    span.setDisclosedAttribute("user locale value", locale);
+    const locale = getLocaleFromRequest(request, span);
     response.statusCode = HttpStatus.OK;
-    response.json(locale);
+    response.json(JSON.stringify(locale));
     return;
   });
 };
