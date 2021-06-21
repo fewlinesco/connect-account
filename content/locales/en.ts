@@ -60,5 +60,7 @@ export const en = {
     phoneUpdated: "Your phone number has been updated",
     emailAdded: "Your email address has been added",
     phoneAdded: "Your phone number has been added",
+    emailDeleted: "Your email address has been deleted",
+    phoneDeleted: "Your phone number has been deleted",
   },
 };

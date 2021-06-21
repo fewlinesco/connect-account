@@ -26,6 +26,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { configVariables } from "@src/configs/config-variables";
+import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
@@ -138,13 +139,15 @@ const destroy: Handler = (request, response): Promise<void> => {
       .then(() => {
         span.setDisclosedAttribute("is Identity removed", true);
 
-        const deleteMessage = `${
+        const locale = getLocaleFromRequest(request, span);
+        const localizedAlertMessageString =
           getIdentityType(type) === IdentityTypes.EMAIL
-            ? "Email address"
-            : "Phone number"
-        } has been deleted`;
+            ? formatAlertMessage(locale, "emailDeleted")
+            : formatAlertMessage(locale, "phoneDeleted");
 
-        setAlertMessagesCookie(response, [generateAlertMessage(deleteMessage)]);
+        setAlertMessagesCookie(response, [
+          generateAlertMessage(localizedAlertMessageString),
+        ]);
 
         response.statusCode = HttpStatus.ACCEPTED;
         response.setHeader("Content-Type", "application/json");
