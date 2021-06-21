@@ -122,12 +122,14 @@ const handler: Handler = async (request, response) => {
 
       if (!validEventIds.length) {
         span.setDisclosedAttribute("are valid sudo event ids found", false);
+
         const locale = getLocaleFromRequest(request, span);
         setAlertMessagesCookie(response, [
           generateAlertMessage(
             formatAlertMessage(locale, "validationCodeExpired"),
           ),
         ]);
+
         throw webErrorFactory(webErrors.sudoEventIdsNotFound);
       }
       span.setDisclosedAttribute("are valid sudo event ids found", true);

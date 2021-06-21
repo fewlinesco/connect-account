@@ -55,6 +55,10 @@ export const en = {
     confirmationCodePhone: "A confirmation SMS has been sent",
     newConfirmationCodeEmail: "A new confirmation email has been sent",
     newConfirmationCodePhone: "A new confirmation SMS has been sent",
-    validationCodeExpired: "Validation code has expired",
+    validationCodeExpired: "The validation code has expired",
+    emailUpdated: "Your email address has been updated",
+    phoneUpdated: "Your phone number has been updated",
+    emailAdded: "Your email address has been added",
+    phoneAdded: "Your phone number has been added",
   },
 };

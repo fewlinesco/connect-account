@@ -155,13 +155,13 @@ const handler: Handler = (request, response): Promise<void> => {
           });
 
           const locale = getLocaleFromRequest(request, span);
-          const localizedVerificationCodeMessage =
+          const localizedAlertMessageString =
             getIdentityType(type) === IdentityTypes.EMAIL
               ? formatAlertMessage(locale, "newConfirmationCodeEmail")
               : formatAlertMessage(locale, "newConfirmationCodePhone");
 
           setAlertMessagesCookie(response, [
-            generateAlertMessage(localizedVerificationCodeMessage),
+            generateAlertMessage(localizedAlertMessageString),
           ]);
 
           response.statusCode = HttpStatus.OK;
