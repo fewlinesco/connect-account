@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
+import { FormErrorMessage } from "../input/form-error-message";
 import { InputText } from "../input/input-text";
-import { WrongInputError } from "../input/wrong-input-error";
 import { StyledForm } from "./form";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { PasswordRulesErrorList } from "@src/components/password-rules-error-list/password-rules-error-list";
@@ -87,7 +87,9 @@ const SetPasswordForm: React.FC<{
           Your password confirmation do not match your new password.
         </MismatchedPassword>
       ) : null}
-      {errorMessage ? <WrongInputError>{errorMessage}.</WrongInputError> : null}
+      {errorMessage ? (
+        <FormErrorMessage>{errorMessage}.</FormErrorMessage>
+      ) : null}
       <ExtendedInputStyle
         type="password"
         name="password-input"

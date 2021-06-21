@@ -35,7 +35,7 @@ describe("Account Web Application add identity", () => {
     await closeBrowser();
   });
 
-  test("It should show error messages if Identity inputs are filled incorrectly in add identity", async (done) => {
+  test("It should show error messages if Identity inputs are filled incorrectly in add identity", async () => {
     expect.assertions(11);
 
     try {
@@ -75,18 +75,16 @@ describe("Account Web Application add identity", () => {
       expect(
         await text("Invalid phone number format input.").exists(),
       ).toBeTruthy();
-
-      done();
     } catch (error) {
       await screenshot({
         path: "tests/e2e/screenshots/fill-incorrect-add-identity-input-values.test.png",
       });
 
-      done(error);
+      throw error;
     }
   });
 
-  test("It should show error messages if Identity inputs are filled incorrectly in update identity", async (done) => {
+  test("It should show error messages if Identity inputs are filled incorrectly in update identity", async () => {
     expect.assertions(6);
 
     try {
@@ -113,14 +111,12 @@ describe("Account Web Application add identity", () => {
       await click("Update email");
 
       expect(await text("Something went wrong").exists()).toBeTruthy();
-
-      done();
     } catch (error) {
       await screenshot({
         path: "tests/e2e/screenshots/fill-incorrect-update-identity-input-values.test.png",
       });
 
-      done(error);
+      throw error;
     }
   });
 });

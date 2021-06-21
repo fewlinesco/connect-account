@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { ClickAwayListener } from "../click-away-listener";
@@ -9,7 +9,6 @@ interface ConfirmationBoxProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   preventAnimation: boolean;
-  children: JSX.Element;
 }
 
 const ConfirmationBox: React.FC<ConfirmationBoxProps> = ({
@@ -18,14 +17,14 @@ const ConfirmationBox: React.FC<ConfirmationBoxProps> = ({
   preventAnimation,
   children,
 }) => {
-  useEffect(() => {
-    const echapPressed = (event: KeyboardEvent): void => {
+  React.useEffect(() => {
+    const escapePressed = (event: KeyboardEvent): void => {
       if (event.key === "Escape") {
         setOpen(false);
       }
     };
-    window.addEventListener("keyup", echapPressed);
-    return () => window.removeEventListener("keyup", echapPressed);
+    window.addEventListener("keyup", escapePressed);
+    return () => window.removeEventListener("keyup", escapePressed);
   });
 
   return (

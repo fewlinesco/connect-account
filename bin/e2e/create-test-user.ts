@@ -8,14 +8,8 @@ import {
 } from "@fewlines/connect-management/dist/src/types";
 
 async function createTestUser(): Promise<void> {
-  if (process.env.GITHUB_CONTEXT_EVENT === undefined) {
-    throw new Error("GITHUB_CONTEXT_EVENT environment variable is undefined");
-  }
-
-  const githubActionsContext = JSON.parse(process.env.GITHUB_CONTEXT_EVENT);
-
-  if (githubActionsContext.deployment === undefined) {
-    throw new Error("deployment is undefined");
+  if (process.env.CIRCLE_SHA1 === undefined) {
+    throw new Error("CIRCLE_SHA1 environment variable is undefined");
   }
 
   if (process.env.CONNECT_TEST_ACCOUNT_EMAIL === undefined) {
@@ -45,21 +39,21 @@ async function createTestUser(): Promise<void> {
       status: IdentityStatus.VALIDATED,
       type: IdentityTypes.EMAIL,
       value: process.env.CONNECT_TEST_ACCOUNT_EMAIL.split("@").join(
-        "_" + githubActionsContext.deployment.sha + "@",
+        "_" + process.env.CIRCLE_SHA1 + "@",
       ),
     },
     {
       status: IdentityStatus.VALIDATED,
       type: IdentityTypes.EMAIL,
       value: process.env.CONNECT_TEST_ACCOUNT_EMAIL.split("@").join(
-        "_delete_" + githubActionsContext.deployment.sha + "@",
+        "_delete_" + process.env.CIRCLE_SHA1 + "@",
       ),
     },
     {
       status: IdentityStatus.VALIDATED,
       type: IdentityTypes.EMAIL,
       value: process.env.CONNECT_TEST_ACCOUNT_EMAIL.split("@").join(
-        "2_" + githubActionsContext.deployment.sha + "@",
+        "2_" + process.env.CIRCLE_SHA1 + "@",
       ),
     },
   ];

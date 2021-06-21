@@ -55,7 +55,7 @@ describe("Profile Happy path", () => {
 
       console.log(isStagingEnv);
       console.log("PROFILE URL: ", process.env.CONNECT_PROFILE_URL);
-      console.log("USERSUB: ", process.env.CONNECT_TEST_USER_SUB);
+      console.log("USERSUB: ", process.env.CONNECT_TEST_ACCOUNT_SUB);
 
       if (isStagingEnv) {
         expect(await text("Create your profile").exists()).toBeTruthy();

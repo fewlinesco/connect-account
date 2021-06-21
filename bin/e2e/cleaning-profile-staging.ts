@@ -2,8 +2,10 @@ import { HttpStatus } from "@fwl/web";
 import { Configuration, ConnectProfileAdminApi } from "connect-profile-client";
 
 async function cleaningProfileStaging(): Promise<void> {
-  if (process.env.CONNECT_TEST_USER_SUB === undefined) {
-    throw new Error("CONNECT_TEST_USER_SUB environment variable is undefined");
+  if (process.env.CONNECT_TEST_ACCOUNT_SUB === undefined) {
+    throw new Error(
+      "CONNECT_TEST_ACCOUNT_SUB environment variable is undefined",
+    );
   }
 
   if (process.env.CONNECT_PROFILE_STAGING_API_KEY === undefined) {
@@ -16,7 +18,7 @@ async function cleaningProfileStaging(): Promise<void> {
     throw new Error("CONNECT_PROFILE_URL environment variable is undefined");
   }
 
-  console.log(process.env.CONNECT_TEST_USER_SUB);
+  console.log(process.env.CONNECT_TEST_ACCOUNT_SUB);
 
   const basePath = process.env.CONNECT_PROFILE_URL.replace(/\/?$/, "");
   const apiKey = `API_KEY ${process.env.CONNECT_PROFILE_STAGING_API_KEY}`;
@@ -29,7 +31,9 @@ async function cleaningProfileStaging(): Promise<void> {
   );
 
   try {
-    await profileAdminClient.deleteProfile(process.env.CONNECT_TEST_USER_SUB);
+    await profileAdminClient.deleteProfile(
+      process.env.CONNECT_TEST_ACCOUNT_SUB,
+    );
     console.log("✅ Test user profile deleted");
   } catch (error) {
     if (error.response.status === HttpStatus.UNAUTHORIZED) {

@@ -35,8 +35,8 @@ describe("Account Web Application re-send Identity validation code", () => {
     await closeBrowser();
   });
 
-  test("It should re-send an Identity validation code", async (done) => {
-    expect.assertions(9);
+  test("It should re-send an Identity validation code", async () => {
+    expect.assertions(8);
 
     try {
       await authenticateToConnect();
@@ -61,20 +61,14 @@ describe("Account Web Application re-send Identity validation code", () => {
       expect(await text("Resend validation code").exists()).toBeTruthy();
       await click("Resend validation code");
 
-      expect(
-        await text("A new confirmation email has been sent").exists(),
-      ).toBeTruthy();
-
       const secondURL = await currentURL();
       expect(firstURL).not.toMatch(secondURL);
-
-      done();
     } catch (error) {
       await screenshot({
         path: "tests/e2e/screenshots/re-send-identity-validation-code.png",
       });
 
-      done(error);
+      throw error;
     }
   });
 });

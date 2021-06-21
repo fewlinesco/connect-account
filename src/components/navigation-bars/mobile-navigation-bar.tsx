@@ -79,7 +79,7 @@ const MobileNavigationBar: React.FC = () => {
                 <Content>
                   <LanguagesOptions>
                     <WhiteWorldIcon />
-                    <div>English</div>
+                    <div>Language</div>
                   </LanguagesOptions>
                   <WhiteSwitchIcon />
                 </Content>
