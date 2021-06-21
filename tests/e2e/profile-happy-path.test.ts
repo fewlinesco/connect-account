@@ -43,7 +43,7 @@ describe.only("Profile Happy path", () => {
   ).includes("staging");
 
   test("it should do Profile and Addresses flows' happy path", async () => {
-    expect.assertions(isStagingEnv ? 28 : 20);
+    expect.assertions(isStagingEnv ? 32 : 20);
 
     try {
       await authenticateToConnect();
@@ -53,7 +53,7 @@ describe.only("Profile Happy path", () => {
         configVariables.connectAccountURL
       ).replace(/\/?$/, "");
 
-      console.log(isStagingEnv);
+      console.log("isStagingEnv: ", isStagingEnv);
       console.log("PROFILE URL: ", process.env.CONNECT_PROFILE_URL);
       console.log("USERSUB: ", process.env.CONNECT_TEST_ACCOUNT_SUB);
       console.log("targetUrl:", process.env.CONNECT_TEST_ACCOUNT_URL);
@@ -61,23 +61,23 @@ describe.only("Profile Happy path", () => {
       if (isStagingEnv) {
         expect(await text("Create your profile").exists()).toBeTruthy();
         await click("Create your profile");
-
         expect(await text("Profile | new").exists()).toBeTruthy();
-
         await write(
           "Taiko Test",
           into(textBox({ placeholder: "Enter your full name" })),
         );
-
         await click("Add my information");
+        await waitFor(1000);
         expect(
           await text("Your profile has been created").exists(),
         ).toBeTruthy();
+        expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
         console.log("PROFILE CREATION DONE");
       } else {
         expect(await text("Personal Information").exists()).toBeTruthy();
         await click("Personal Information");
       }
+      await waitFor(1000);
 
       // Update user profile flow
       expect(
@@ -91,16 +91,14 @@ describe.only("Profile Happy path", () => {
         "Supertest",
         into(textBox({ placeholder: "Enter your username" })),
       );
-
-      expect(textBox({ value: "Supertest" }).exists()).toBeTruthy();
-      expect(textBox({ value: "Taiko Test" }).exists()).toBeTruthy();
-
+      expect(await textBox({ value: "Supertest" }).exists()).toBeTruthy();
       await click("Update my information");
-      await waitFor(5000);
 
-      console.log("CURRENT URL: ", await currentURL());
-
-      expect(text("Basic information").exists()).toBeTruthy();
+      await waitFor(2000);
+      expect(await text("Basic information").exists()).toBeTruthy();
+      expect(
+        await text("Supertest", below("PREFERRED USERNAME")).exists(),
+      ).toBeTruthy();
       expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       // Add address flow
@@ -130,12 +128,13 @@ describe.only("Profile Happy path", () => {
       );
 
       await click("Add address");
-      await waitFor(350);
+      await waitFor(1000);
       expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       if (isStagingEnv) {
         expect(await text("Add new address").exists()).toBeTruthy();
         await click(text("Add new address"));
+        await waitFor(1000);
         expect(await text("Address | new").exists()).toBeTruthy();
 
         await write(
@@ -160,7 +159,7 @@ describe.only("Profile Happy path", () => {
         );
 
         await click("Add address");
-        await waitFor(350);
+        await waitFor(1000);
         expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
       }
 
@@ -182,6 +181,7 @@ describe.only("Profile Happy path", () => {
 
       // Mark address as primary flow
       await click("Personal Information");
+      await waitFor(1000);
       expect(await text("Show 1 more").exists()).toBeTruthy();
       await click("Show 1 more");
       await click(link("Work"));
@@ -207,7 +207,7 @@ describe.only("Profile Happy path", () => {
         await text("You are about to delete this address.").exists(),
       ).toBeTruthy();
       await click("Delete");
-      await waitFor(250);
+      await waitFor(1000);
       expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       if (isStagingEnv) {
@@ -219,7 +219,7 @@ describe.only("Profile Happy path", () => {
           await text("You are about to delete this address.").exists(),
         ).toBeTruthy();
         await click("Delete");
-        await waitFor(250);
+        await waitFor(1000);
         expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
       }
     } catch (error) {
