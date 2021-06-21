@@ -7,6 +7,9 @@ parameters:
   target_url:
     type: string
     default: ""
+  is_staging_env:
+    type: boolean
+    default: true
 
 commands: 
   install-dependencies:
@@ -52,24 +55,15 @@ jobs:
           command: echo "export CONNECT_TEST_ACCOUNT_SUB=$(yarn e2e:create-test-user | xargs | cut -d' ' -f7 | cut -c-36)" >> $BASH_ENV
       - run: 
           name: Setting Profile staging URL env var
-          command: |
-            if [[ << pipeline.parameters.target_url >> == *"herokuapp"* ]]; then
-              echo "export CONNECT_PROFILE_URL=https://fewlines-profile-staging.herokuapp.com/" >> $BASH_ENV
-            fi
+          command: echo "export CONNECT_PROFILE_URL=https://fewlines-profile-staging.herokuapp.com/" >> $BASH_ENV
+          when: << pipeline.parameters.is_staging_env >>
       - run:
           name: Run e2e tests
           command: CONNECT_TEST_ACCOUNT_EMAIL="taiko_${CIRCLE_SHA1}@fewlines.test" yarn test:e2e 
-      - when:
-          condition:
-            matches: { pattern: "^herokuapp$", value: << pipeline.parameters.target_url >> }
-          steps:
-            - run: 
-                name: Cleaning Profile staging
-                command: yarn e2e:cleaning-profile-staging
-      # - run: 
-      #     name: Cleaning Profile Staging
-      #     command: yarn e2e:cleaning-profile-staging
-      #     when: always
+      - run: 
+          name: Cleaning Profile Staging
+          command: yarn e2e:cleaning-profile-staging
+          when: << pipeline.parameters.is_staging_env >> 
       - run: 
           name: Removing Connect test user
           command: yarn e2e:remove-test-user
