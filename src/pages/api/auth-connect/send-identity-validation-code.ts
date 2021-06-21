@@ -129,7 +129,6 @@ const handler: Handler = (request, response): Promise<void> => {
           });
 
           const locale = getLocaleFromRequest(request, span);
-
           const verificationCodeMessage =
             getIdentityType(identityInput.type) === IdentityTypes.EMAIL
               ? formatAlertMessage(locale, "confirmationCodeEmail")
