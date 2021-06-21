@@ -49,4 +49,9 @@ export const en = {
   "/account/locale": {
     title: "Switch Language",
   },
+  alertMessages: {
+    localeChanged: "Your language has been set to",
+    newConfirmationCodeEmail: "A new confirmation email has been sent",
+    newConfirmationCodePhone: "A new confirmation SMS has been sent",
+  },
 };

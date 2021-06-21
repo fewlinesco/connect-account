@@ -19,6 +19,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { configVariables } from "@src/configs/config-variables";
+import { formatAlertMessage } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
@@ -77,7 +78,9 @@ const patchHandler: Handler = (request, response): Promise<void> => {
 
     setAlertMessagesCookie(response, [
       generateAlertMessage(
-        `Your language has been set to ${AVAILABLE_LANGUAGE[locale]}`,
+        `${formatAlertMessage(locale, "localeChanged")} ${
+          AVAILABLE_LANGUAGE[locale]
+        }`,
       ),
     ]);
 

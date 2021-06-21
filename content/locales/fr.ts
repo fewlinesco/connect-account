@@ -51,4 +51,7 @@ export const fr = {
   "/account/locale": {
     title: "Changer de langue",
   },
+  alertMessages: {
+    localeChanged: "Votre langue a été réglée sur",
+  },
 };
