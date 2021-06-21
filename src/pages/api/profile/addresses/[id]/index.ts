@@ -11,6 +11,7 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
+import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import { wrappedProfileClient } from "@src/configs/profile-client";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
@@ -99,8 +100,10 @@ const patchHandler: Handler = async (request, response) => {
       const { data: updatedUserAddress } = await userAddressClient
         .updateAddress(addressId, request.body)
         .then((addressData) => {
+          const locale = getLocaleFromRequest(request, span);
+
           setAlertMessagesCookie(response, [
-            generateAlertMessage("Your address has been updated"),
+            generateAlertMessage(formatAlertMessage(locale, "addressUpdated")),
           ]);
 
           return addressData;
@@ -160,8 +163,10 @@ const deleteHandler: Handler = async (request, response) => {
       await userAddressClient
         .deleteAddress(addressId)
         .then((addressData) => {
+          const locale = getLocaleFromRequest(request, span);
+
           setAlertMessagesCookie(response, [
-            generateAlertMessage("Your address has been deleted"),
+            generateAlertMessage(formatAlertMessage(locale, "addressDeleted")),
           ]);
 
           return addressData;

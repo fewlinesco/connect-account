@@ -69,7 +69,6 @@ const patchHandler: Handler = (request, response): Promise<void> => {
     span.setDisclosedAttribute("user cookie found", true);
 
     const { locale } = request.body;
-
     if (!locale) {
       throw webErrorFactory(webErrors.badRequest);
     }

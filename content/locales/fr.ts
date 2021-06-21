@@ -66,5 +66,8 @@ export const fr = {
     phoneDeleted: "Votre numéro de téléphone a été supprimé",
     emailMarkedAsPrimary: "est maintenant votre e-mail principal",
     phoneMarkedAsPrimary: "est maintenant votre numéro de téléphone principal",
+    addressAdded: "Votre adresse a été ajoutée",
+    addressUpdated: "Votre adresse a été mise à jour",
+    addressDeleted: "Votre adresse a été supprimée",
   },
 };
