@@ -2,7 +2,11 @@ import { IdentityTypes } from "@fewlines/connect-management/dist/src/types";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
-import { render, screen } from "../../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+} from "../../config/testing-library-config";
 import ValidateIdentityPage from "@src/pages/account/logins/[type]/validation/[eventId]";
 
 jest.mock("@src/configs/db-client", () => {
@@ -19,6 +23,10 @@ const eventId = "foo";
 
 describe("ValidateIdentityPage", () => {
   describe("Identity type : EMAIL", () => {
+    beforeAll(() => {
+      setRouterPathname("/account/logins/email/validation/[eventId]");
+    });
+
     it("should render proper email form elements ", () => {
       render(
         <ValidateIdentityPage type={IdentityTypes.EMAIL} eventId={eventId} />,
@@ -58,6 +66,10 @@ describe("ValidateIdentityPage", () => {
   });
 
   describe("Identity type : PHONE", () => {
+    beforeAll(() => {
+      setRouterPathname("/account/logins/phone/validation/[eventId]");
+    });
+
     it("should render proper phone form elements ", () => {
       render(
         <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />,

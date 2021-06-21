@@ -37,8 +37,8 @@ describe("Delete Identity", () => {
     try {
       await authenticateToConnect();
 
-      expect(await text("Logins").exists()).toBeTruthy();
-      await click("Logins");
+      expect(await text("LOGINS").exists()).toBeTruthy();
+      await click("LOGINS");
 
       expect(await text("Show").exists()).toBeTruthy();
       await click("Show");

@@ -1,7 +1,12 @@
 import React from "react";
 import { cache, SWRConfig } from "swr";
 
-import { render, screen, waitFor } from "../../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+  waitFor,
+} from "../../config/testing-library-config";
 import * as mockIdentities from "../../mocks/identities";
 import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
 
@@ -16,6 +21,12 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("IdentityOverviewPage", () => {
+  beforeAll(() => {
+    setRouterPathname(
+      `/account/logins/${mockIdentities.nonPrimaryEmailIdentity.id}`,
+    );
+  });
+
   afterEach(() => {
     cache.clear();
   });

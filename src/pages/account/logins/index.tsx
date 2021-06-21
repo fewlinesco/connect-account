@@ -8,6 +8,7 @@ import {
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { GetServerSideProps } from "next";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
@@ -19,8 +20,13 @@ import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const LoginsOverviewPage: React.FC = () => {
+  const { formatMessage } = useIntl();
+
   return (
-    <Layout breadcrumbs="Your emails, phones and social logins" title="Logins">
+    <Layout
+      breadcrumbs={formatMessage({ id: "breadcrumb" })}
+      title={formatMessage({ id: "title" })}
+    >
       <Container>
         <LoginsOverview />
       </Container>

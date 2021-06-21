@@ -57,6 +57,7 @@
     "react": "17.0.2",
     "react-datepicker": "4.1.1",
     "react-dom": "17.0.2",
+    "react-intl": "5.20.1",
     "react-phone-number-input": "3.1.23",
     "styled-components": "5.3.0",
     "swr": "0.5.6",
@@ -187,6 +188,10 @@
             {
               "pattern": "@src/**",
               "group": "internal"
+            },
+            {
+              "pattern": "@content/**",
+              "group": "internal"
             }
           ],
           "pathGroupsExcludedImportTypes": [
@@ -219,7 +224,8 @@
     "moduleNameMapper": {
       "\\.(png|svg|jpg|gif|eot|ttf|woff|woff2)$": "<rootDir>/tests/config/import-asset-fix.ts",
       "\\.(css|less)$": "<rootDir>/tests/config/import-asset-fix.ts",
-      "@src/(.*)": "<rootDir>/src/$1"
+      "@src/(.*)": "<rootDir>/src/$1",
+      "@content/(.*)": "<rootDir>/content/$1"
     },
     "setupFilesAfterEnv": [
       "@testing-library/jest-dom/extend-expect"
