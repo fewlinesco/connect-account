@@ -1,5 +1,9 @@
 import { HttpStatus } from "@fwl/web";
-import { Configuration, ConnectProfileAdminApi } from "connect-profile-client";
+
+import {
+  Configuration,
+  ConnectProfileAdminApi,
+} from "../../connect-profile-client";
 
 async function cleaningProfileStaging(): Promise<void> {
   if (process.env.CONNECT_TEST_ACCOUNT_SUB === undefined) {

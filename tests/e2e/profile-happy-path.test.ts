@@ -17,7 +17,7 @@ import {
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 import { configVariables } from "@src/configs/config-variables";
 
-describe("Profile Happy path", () => {
+describe.only("Profile Happy path", () => {
   jest.setTimeout(120000);
 
   beforeAll(async () => {
@@ -56,6 +56,7 @@ describe("Profile Happy path", () => {
       console.log(isStagingEnv);
       console.log("PROFILE URL: ", process.env.CONNECT_PROFILE_URL);
       console.log("USERSUB: ", process.env.CONNECT_TEST_ACCOUNT_SUB);
+      console.log("targetUrl:", process.env.CONNECT_TEST_ACCOUNT_URL);
 
       if (isStagingEnv) {
         expect(await text("Create your profile").exists()).toBeTruthy();
