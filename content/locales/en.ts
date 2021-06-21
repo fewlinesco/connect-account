@@ -62,5 +62,7 @@ export const en = {
     phoneAdded: "Your phone number has been added",
     emailDeleted: "Your email address has been deleted",
     phoneDeleted: "Your phone number has been deleted",
+    emailMarkedAsPrimary: "is now your primary email",
+    phoneMarkedAsPrimary: "is now your primary phone number",
   },
 };
