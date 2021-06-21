@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 
 import { ButtonVariant } from "@src/components/buttons/buttons";
@@ -13,6 +14,8 @@ const Home: React.FC<{ authorizeURL: string; providerName: string }> = ({
   authorizeURL,
   providerName,
 }) => {
+  const { formatMessage } = useIntl();
+
   return (
     <>
       <HomeDesktopBackground />
@@ -22,11 +25,11 @@ const Home: React.FC<{ authorizeURL: string; providerName: string }> = ({
           <SectionBox>
             <Flex>
               <DescriptionText>
-                You are about to access your account from {providerName}
+                {formatMessage({ id: "info" })} {providerName}
               </DescriptionText>
               <NeutralLink href={authorizeURL}>
                 <FakeButton variant={ButtonVariant.PRIMARY}>
-                  Access my account
+                  {formatMessage({ id: "callToAction" })}
                 </FakeButton>
               </NeutralLink>
             </Flex>

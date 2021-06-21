@@ -1,7 +1,11 @@
 import React from "react";
 import { SWRConfig } from "swr";
 
-import { render, screen } from "../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+} from "../config/testing-library-config";
 import { getSectionListContent } from "@src/components/navigation-bars/navigation-sections";
 import AccountPage from "@src/pages/account/index";
 
@@ -16,6 +20,10 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("AccountPage", () => {
+  beforeAll(() => {
+    setRouterPathname("/account");
+  });
+
   it("should display each account section", async () => {
     expect.assertions(6);
 

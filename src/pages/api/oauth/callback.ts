@@ -83,7 +83,6 @@ const handler: Handler = (request, response): Promise<void> => {
     const oAuth2UserInfo = {
       sub: decodedAccessToken.sub,
       refresh_token,
-      locale: "en",
     };
 
     await getAndPutUser(oAuth2UserInfo).catch((error) => {

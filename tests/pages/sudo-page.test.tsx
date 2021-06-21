@@ -4,7 +4,11 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
 import { cache, SWRConfig } from "swr";
 
-import { render, screen } from "../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+} from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
 import SudoPage from "@src/pages/account/security/sudo";
 import * as fetchJson from "@src/utils/fetch-json";
@@ -26,6 +30,10 @@ const mockedFetchJson = jest.spyOn(fetchJson, "fetchJson");
 const eventId = "5aebc079-c754-4324-93bb-af20d7015fbe";
 
 describe("SudoPage", () => {
+  beforeAll(() => {
+    setRouterPathname("/account/security/sudo");
+  });
+
   describe("Contact identity choice form", () => {
     it("should render proper form elements and submit button text should update after first submit", async () => {
       expect.assertions(11);

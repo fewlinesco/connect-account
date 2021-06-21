@@ -1,7 +1,11 @@
 import React from "react";
 import { cache, SWRConfig } from "swr";
 
-import { render, screen } from "../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+} from "../config/testing-library-config";
 import SecurityPage from "@src/pages/account/security";
 
 jest.mock("@src/configs/db-client", () => {
@@ -15,6 +19,10 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("SecurityPage", () => {
+  beforeAll(() => {
+    setRouterPathname("/account/security");
+  });
+
   afterEach(() => {
     cache.clear();
   });
