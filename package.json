@@ -13,7 +13,7 @@
     "lint": "eslint \"{src,pages,bin,doc,tests}/**/*.{js,ts,jsx,tsx}\"",
     "start": "next start -p $PORT",
     "test": "jest --testPathIgnorePatterns=e2e --runInBand",
-    "test:e2e": "jest --testPathPattern=e2e --runInBand -t 'Delete Identity'",
+    "test:e2e": "jest --testPathPattern=e2e --runInBand",
     "test:e2e:local": "ts-node bin/e2e/prepare-e2e-tests.ts && jest --testPathPattern=e2e --runInBand",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
