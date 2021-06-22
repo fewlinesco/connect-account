@@ -23,7 +23,7 @@
     "NEXT_TELEMETRY_DISABLED": "true",
     "NEXT_PUBLIC_SENTRY_ENVIRONMENT": "preview",
     "NEXT_PUBLIC_FEATURE_FLAG": "false",
-    "CONNECT_PROFILE_URL": "https://fewlines-profile-staging.herokuapp.com"
+    "CONNECT_PROFILE_URL": "https://stoplight.io/mocks/fewlines/connect-profile:main/68676/"
   },
   "environments": {
     "review": {

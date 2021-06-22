@@ -52,7 +52,7 @@ jobs:
           command: echo "export CONNECT_TEST_ACCOUNT_SUB=$(yarn e2e:create-test-user | xargs | cut -d' ' -f7 | cut -c-36)" >> $BASH_ENV
       - when: 
           condition: 
-            matches: { pattern: ".*?\\bherokuapp\\b.*?", value: << pipeline.parameters.target_url >> }
+            matches: { pattern: ".*?\\bstaging\\b.*?", value: << pipeline.parameters.target_url >> }
           steps:
             - run: 
                 name: Setting Profile staging URL env var
@@ -62,7 +62,7 @@ jobs:
           command: CONNECT_TEST_ACCOUNT_EMAIL="taiko_${CIRCLE_SHA1}@fewlines.test" yarn test:e2e 
       - when: 
           condition: 
-            matches: { pattern: ".*?\\bherokuapp\\b.*?", value: << pipeline.parameters.target_url >> }
+            matches: { pattern: ".*?\\bstaging\\b.*?", value: << pipeline.parameters.target_url >> }
           steps:
             - run: 
                 name: Cleaning Profile Staging
