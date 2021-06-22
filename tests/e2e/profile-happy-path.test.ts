@@ -9,7 +9,6 @@ import {
   clear,
   link,
   screenshot,
-  currentURL,
   below,
 } from "taiko";
 
@@ -42,20 +41,21 @@ describe.only("Profile Happy path", () => {
   ).includes("staging");
 
   test("it should do Profile and Addresses flows' happy path", async () => {
-    expect.assertions(isStagingEnv ? 32 : 20);
+    expect.assertions(isStagingEnv ? 29 : 20);
 
     try {
       await authenticateToConnect();
 
-      const baseURL = (
-        process.env.CONNECT_TEST_ACCOUNT_URL ||
-        configVariables.connectAccountURL
-      ).replace(/\/?$/, "");
+      // const baseURL = (
+      //   process.env.CONNECT_TEST_ACCOUNT_URL ||
+      //   configVariables.connectAccountURL
+      // ).replace(/\/?$/, "");
 
       console.log("isStagingEnv: ", isStagingEnv);
       console.log("PROFILE URL: ", process.env.CONNECT_PROFILE_URL);
       console.log("USERSUB: ", process.env.CONNECT_TEST_ACCOUNT_SUB);
 
+      // Profile creation
       if (isStagingEnv) {
         expect(await text("Create your profile").exists()).toBeTruthy();
         await click("Create your profile");
@@ -69,7 +69,8 @@ describe.only("Profile Happy path", () => {
         expect(
           await text("Your profile has been created").exists(),
         ).toBeTruthy();
-        expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+
+        // expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
       } else {
         expect(await text("Personal Information").exists()).toBeTruthy();
         await click("Personal Information");
@@ -90,11 +91,13 @@ describe.only("Profile Happy path", () => {
       expect(await textBox({ value: "Supertest" }).exists()).toBeTruthy();
       await click("Update my information");
 
-      expect(await text("Basic information").exists()).toBeTruthy();
-      expect(
-        await text("Supertest", below("PREFERRED USERNAME")).exists(),
-      ).toBeTruthy();
-      expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+      // expect(await text("Basic information").exists()).toBeTruthy();
+      // expect(
+      //   await text("Supertest", below("PREFERRED USERNAME")).exists(),
+      // ).toBeTruthy();
+      // expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+
+      expect(await text("Your profile has been updated").exists()).toBeTruthy();
 
       // Add address flow
       expect(await text("Add new address").exists()).toBeTruthy();
@@ -124,7 +127,9 @@ describe.only("Profile Happy path", () => {
 
       await click("Add address");
 
-      expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+      expect(await text("Your address has been added").exists()).toBeTruthy();
+
+      // expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       if (isStagingEnv) {
         expect(await text("Add new address").exists()).toBeTruthy();
@@ -155,7 +160,8 @@ describe.only("Profile Happy path", () => {
 
         await click("Add address");
 
-        expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+        expect(await text("Your address has been added").exists()).toBeTruthy();
+        // expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
       }
 
       // Update address flow
@@ -203,7 +209,9 @@ describe.only("Profile Happy path", () => {
       ).toBeTruthy();
       await click("Delete");
 
-      expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+      expect(await text("Your address has been deleted").exists()).toBeTruthy();
+
+      // expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       if (isStagingEnv) {
         await click(link("", below("Addresses")));
@@ -215,7 +223,11 @@ describe.only("Profile Happy path", () => {
         ).toBeTruthy();
         await click("Delete");
 
-        expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+        expect(
+          await text("Your address has been deleted").exists(),
+        ).toBeTruthy();
+
+        // expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
       }
     } catch (error) {
       await screenshot({
