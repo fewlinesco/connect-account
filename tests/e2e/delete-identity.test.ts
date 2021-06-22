@@ -31,28 +31,23 @@ describe("Delete Identity", () => {
   });
 
   test("It should navigate to the show of the Identity, and delete it", async () => {
-    expect.assertions(13);
+    expect.assertions(7);
 
     try {
       await authenticateToConnect();
 
-      expect(await text("LOGINS").exists()).toBeTruthy();
       await click("LOGINS");
 
-      expect(await text("Show").exists()).toBeTruthy();
       await click("Show");
 
-      expect(await link("_delete_").exists()).toBeTruthy();
       await click(link("_delete_"));
 
-      expect(await text("Delete this email address").exists()).toBeTruthy();
       await click(text("Delete this email address"));
 
       // Waiting to remove SWR cache.
       // await waitFor(2000);
 
       expect(await text("You are about to delete").exists()).toBeTruthy();
-      expect(await text("Delete this email address").exists()).toBeTruthy();
       await click("Delete this email address");
 
       expect(
@@ -62,11 +57,10 @@ describe("Delete Identity", () => {
       // Waiting to remove SWR cache.
       // await waitFor(2000);
 
-      expect(await text("Show").exists()).toBeTruthy();
       await click("Show");
 
       expect(await text("Hide").exists()).toBeTruthy();
-      expect(!(await link("_delete_").exists())).toBeTruthy();
+      expect(await link("_delete_").exists()).toBeFalsy();
     } catch (error) {
       await screenshot({
         path: "./tests/e2e/screenshots/delete-identity.png",
