@@ -77,4 +77,12 @@ export const fr = {
     profileCreated: "Votre profil à été créé",
     profileUpdated: "Votre profil a été mis à jour",
   },
+  navigation: {
+    home: "Accueil",
+    logins: "Identifiants",
+    security: "Sécurité",
+    createYourProfile: "Créer votre profil",
+    personalInformation: "Informations personelles",
+    language: "Langue",
+  },
 };

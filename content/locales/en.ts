@@ -75,4 +75,12 @@ export const en = {
     profileCreated: "Your profile has been created",
     profileUpdated: "Your profile has been updated",
   },
+  navigation: {
+    home: "Home",
+    logins: "Logins",
+    security: "Security",
+    createYourProfile: "Create Your Profile",
+    personalInformation: "Personal Information",
+    language: "Language",
+  },
 };

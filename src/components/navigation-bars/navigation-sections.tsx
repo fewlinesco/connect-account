@@ -12,15 +12,15 @@ function getNavigationSections(
   isNewProfile: boolean,
 ): [string, { href: string; icon: Element }][] {
   const navigationSections = {
-    Home: {
+    home: {
       href: "/account",
       icon: <HomeIcon />,
     },
-    Logins: {
+    logins: {
       href: "/account/logins",
       icon: <KeyIcon />,
     },
-    Security: {
+    security: {
       href: "/account/security",
       icon: <LockIcon />,
     },
@@ -28,25 +28,25 @@ function getNavigationSections(
 
   const profileSection = isNewProfile
     ? {
-        Create_Your_Profile: {
+        createYourProfile: {
           href: "/account/profile/user-profile/new",
           icon: <UserIcon />,
         },
       }
     : {
-        Personal_Information: {
+        personalInformation: {
           href: "/account/profile",
           icon: <UserIcon />,
         },
       };
 
-  const { Home, Logins, Security } = navigationSections;
+  const { home, logins, security } = navigationSections;
 
   return Object.entries({
-    Home,
+    home,
     ...profileSection,
-    Logins,
-    Security,
+    logins,
+    security,
   }) as unknown as [string, { href: string; icon: Element }][];
 }
 

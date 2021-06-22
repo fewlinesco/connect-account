@@ -1,4 +1,5 @@
 import { HttpStatus } from "@fwl/web";
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import useSWR from "swr";
@@ -11,6 +12,7 @@ import { NeutralLink } from "../neutral-link/neutral-link";
 import { Separator } from "../separator/separator";
 import { getNavigationSections } from "./navigation-sections";
 import { Profile } from "@src/@types/profile";
+import { formatNavigation } from "@src/configs/intl";
 import { SWRError } from "@src/errors/errors";
 
 const DesktopNavigationBar: React.FC = () => {
@@ -39,6 +41,8 @@ const DesktopNavigationBar: React.FC = () => {
     },
   );
 
+  const { locale } = useRouter();
+
   return (
     <>
       <Header />
@@ -47,7 +51,8 @@ const DesktopNavigationBar: React.FC = () => {
           return (
             <ListItem href={href} key={title + href}>
               {icon}
-              <p>{title.replace(/_/g, " ")}</p>
+
+              <p>{formatNavigation(locale || "en", title)}</p>
             </ListItem>
           );
         },
@@ -56,7 +61,7 @@ const DesktopNavigationBar: React.FC = () => {
       <SwitchLanguageItem href="/account/locale">
         <SwitchLanguageLabel>
           <BlackWorldIcon />
-          <p>Language</p>
+          <p>{formatNavigation(locale || "en", "language")}</p>
         </SwitchLanguageLabel>
         <BlackSwitchIcon />
       </SwitchLanguageItem>
