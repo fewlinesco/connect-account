@@ -49,10 +49,6 @@ describe("Mark Identity as primary", () => {
       const nonPrimaryYet = await link(".test", above("Hide")).text();
       await click(nonPrimaryYet);
 
-      await screenshot({
-        path: "./tests/e2e/screenshots/mark-identity-as-primary-not-failed.test.png",
-      });
-
       expect(await text("Make").exists()).toBeTruthy();
       await click("Make");
 
@@ -61,8 +57,6 @@ describe("Mark Identity as primary", () => {
       expect(
         await text(`${nonPrimaryYet} is now your primary email`).exists(),
       ).toBeTruthy();
-
-      console.log(nonPrimaryYet);
 
       click(link(".test", below("Email addresses")), {
         waitForEvents: ["loadEventFired"],
