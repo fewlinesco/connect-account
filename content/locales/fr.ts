@@ -87,5 +87,6 @@ export const fr = {
     menu: "Menu",
     back: "Retour",
     close: "Fermer",
+    logout: "Vous déconnecter",
   },
 };

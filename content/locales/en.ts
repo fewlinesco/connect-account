@@ -85,5 +85,6 @@ export const en = {
     menu: "Menu",
     back: "Back",
     close: "Close",
+    logout: "Logout",
   },
 };
