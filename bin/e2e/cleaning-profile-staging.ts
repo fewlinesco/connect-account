@@ -22,8 +22,6 @@ async function cleaningProfileStaging(): Promise<void> {
     throw new Error("CONNECT_PROFILE_URL environment variable is undefined");
   }
 
-  console.log(process.env.CONNECT_TEST_ACCOUNT_SUB);
-
   const basePath = process.env.CONNECT_PROFILE_URL.replace(/\/?$/, "");
   const apiKey = `API_KEY ${process.env.CONNECT_PROFILE_STAGING_API_KEY}`;
 

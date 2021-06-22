@@ -52,10 +52,6 @@ describe.only("Profile Happy path", () => {
         configVariables.connectAccountURL
       ).replace(/\/?$/, "");
 
-      console.log("isStagingEnv: ", isStagingEnv);
-      console.log("PROFILE URL: ", process.env.CONNECT_PROFILE_URL);
-      console.log("USERSUB: ", process.env.CONNECT_TEST_ACCOUNT_SUB);
-
       // Profile creation
       if (isStagingEnv) {
         expect(await text("Create your profile").exists()).toBeTruthy();
@@ -155,7 +151,6 @@ describe.only("Profile Happy path", () => {
 
       expect(await text("Primary").exists()).toBeTruthy();
       const addressURL = await currentURL();
-      console.log("addressURL: ", addressURL);
       await click("Update this address");
       expect(await text("Address | edit").exists()).toBeTruthy();
 
