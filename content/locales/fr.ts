@@ -84,5 +84,8 @@ export const fr = {
     createYourProfile: "Créer votre profil",
     personalInformation: "Informations personelles",
     language: "Langue",
+    menu: "Menu",
+    back: "Retour",
+    close: "Fermer",
   },
 };

@@ -93,19 +93,19 @@ const MobileNavigationBar: React.FC = () => {
             <MenuItem onClick={() => router.back()}>
               <Content>
                 <Arrow />
-                <div>Back</div>
+                <div>{formatNavigation(router.locale || "en", "back")}</div>
               </Content>
             </MenuItem>
           )}
           <MenuItem borderLeft={true} onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? (
               <Content>
-                <div>Close</div>
+                <div>{formatNavigation(router.locale || "en", "close")}</div>
                 <NavBarCrossIcon />
               </Content>
             ) : (
               <Content>
-                <div>Menu</div>
+                <div>{formatNavigation(router.locale || "en", "menu")}</div>
                 <BurgerIcon />
               </Content>
             )}
