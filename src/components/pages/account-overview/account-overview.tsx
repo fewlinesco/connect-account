@@ -11,6 +11,7 @@ import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SectionBox } from "@src/components/shadow-box/section-box";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
+import { getNavSectionHref } from "@src/utils/getNavSectionHref";
 
 const AccountOverview: React.FC = () => {
   const { data: userProfile } = useSWR<Profile, SWRError>(
@@ -44,16 +45,9 @@ const AccountOverview: React.FC = () => {
     <>
       {getSectionListContent(userProfile ? false : true).map(
         ([sectionName, { textID, icon }]) => {
-          const sectionHref =
-            sectionName.toLocaleLowerCase() === "personal_information"
-              ? "/account/profile"
-              : sectionName.toLocaleLowerCase() === "create_your_profile"
-              ? "/account/profile/user-profile/new"
-              : `/account/${sectionName.toLocaleLowerCase()}`;
-
           return (
             <SectionBox key={sectionName}>
-              <SectionLink href={sectionHref}>
+              <SectionLink href={getNavSectionHref(sectionName)}>
                 {icon}
                 <TextBox>
                   <SectionName>

@@ -16,7 +16,7 @@ import {
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 import { configVariables } from "@src/configs/config-variables";
 
-describe.only("Profile Happy path", () => {
+describe.only("Profile happy path", () => {
   jest.setTimeout(120000);
 
   beforeAll(async () => {
