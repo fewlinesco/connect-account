@@ -46,6 +46,7 @@ describe("Delete Identity", () => {
       await click(text("Delete this email address"));
 
       expect(await text("You are about to delete").exists()).toBeTruthy();
+
       await click("Delete this email address");
 
       expect(
