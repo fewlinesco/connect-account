@@ -3,6 +3,7 @@ import { AriaButtonProps } from "@react-types/button";
 import React from "react";
 import styled from "styled-components";
 
+import { CrossIcon } from "../icons/cross-icon/cross-icon";
 import { Triangle } from "../icons/triangle/triangle";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
@@ -126,4 +127,26 @@ const ShowMoreButtonStyle = styled.div<Record<string, unknown>>`
   cursor: pointer;
 `;
 
-export { Button, StyledButton, ButtonVariant, ShowMoreButton };
+const CloseConfirmationBoxButton: React.FC<{ onPress: () => void }> = (
+  props,
+) => {
+  const closeConfirmationBoxButtonRef = React.useRef(null);
+  const { buttonProps } = useButton(
+    { ...props, elementType: "div" },
+    closeConfirmationBoxButtonRef,
+  );
+
+  return (
+    <div {...buttonProps} className="cross" ref={closeConfirmationBoxButtonRef}>
+      <CrossIcon />
+    </div>
+  );
+};
+
+export {
+  Button,
+  StyledButton,
+  ButtonVariant,
+  ShowMoreButton,
+  CloseConfirmationBoxButton,
+};
