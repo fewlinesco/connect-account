@@ -16,6 +16,8 @@ import { formatNavigation } from "@src/configs/intl";
 import { SWRError } from "@src/errors/errors";
 
 const DesktopNavigationBar: React.FC = () => {
+  const { locale } = useRouter();
+
   const { data: userProfile } = useSWR<Profile, SWRError>(
     `/api/profile/user-profile`,
     async (url) => {
@@ -41,8 +43,6 @@ const DesktopNavigationBar: React.FC = () => {
     },
   );
 
-  const { locale } = useRouter();
-
   return (
     <>
       <Header />
@@ -51,7 +51,6 @@ const DesktopNavigationBar: React.FC = () => {
           return (
             <ListItem href={href} key={title + href}>
               {icon}
-
               <p>{formatNavigation(locale || "en", title)}</p>
             </ListItem>
           );
