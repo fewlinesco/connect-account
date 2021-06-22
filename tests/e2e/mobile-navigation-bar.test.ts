@@ -39,7 +39,7 @@ describe("Log in with a smart phone, open and close the navigation bar", () => {
       expect(await text("Menu").exists()).toBeTruthy();
     } catch (error) {
       await screenshot({
-        path: "tests/e2e/screenshots/mobile_navigation_bar.png",
+        path: "./tests/e2e/screenshots/mobile_navigation_bar.png",
       });
 
       throw error;

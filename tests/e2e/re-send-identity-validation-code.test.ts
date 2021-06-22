@@ -65,7 +65,7 @@ describe("Account Web Application re-send Identity validation code", () => {
       expect(firstURL).not.toMatch(secondURL);
     } catch (error) {
       await screenshot({
-        path: "tests/e2e/screenshots/re-send-identity-validation-code.png",
+        path: "./tests/e2e/screenshots/re-send-identity-validation-code.png",
       });
 
       throw error;

@@ -52,8 +52,6 @@ describe.only("Profile Happy path", () => {
         configVariables.connectAccountURL
       ).replace(/\/?$/, "");
 
-      expect(await text("Flag").exists()).toBeTruthy();
-
       // Profile creation
       if (isStagingEnv) {
         expect(await text("Create your profile").exists()).toBeTruthy();
