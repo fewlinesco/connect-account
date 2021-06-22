@@ -5,6 +5,10 @@ export const fr = {
   },
   "/account": {
     breadcrumb: "Bienvenue sur votre compte",
+    createProfileTitle: "CRÉER VOTRE PROFIL",
+    updateProfileTitle: "INFORMATIONS PERSONNELLES",
+    loginsTitle: "IDENTIFIANTS",
+    securityTitle: "SÉCURITÉ",
     createProfile:
       "Ajoutez vos informations personnelles, comme votre nom ou vos adresses.",
     updateProfile:

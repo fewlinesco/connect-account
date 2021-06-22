@@ -1,3 +1,4 @@
+import { MessageDescriptor } from "@formatjs/intl";
 import React from "react";
 
 import { HomeIcon } from "../icons/home-icon/home-icon";
@@ -49,31 +50,47 @@ function getNavigationSections(
     Security,
   }) as unknown as [string, { href: string; icon: Element }][];
 }
-
+type FormatXMLElementFn<T, R = string | T | Array<string | T>> = (
+  parts: Array<string | T>,
+) => R;
 function getSectionListContent(
   isNewProfile: boolean,
+  formatMessage: (
+    descriptor: MessageDescriptor,
+    values?: Record<
+      string,
+      | string
+      | number
+      | boolean
+      | null
+      | undefined
+      | Date
+      | FormatXMLElementFn<string, string>
+    >,
+    opts?: Record<string, unknown>,
+  ) => string,
 ): [string, { text: string; icon: Element }][] {
   const partialListContent = {
-    LOGINS: {
-      text: "Manage your logins options, including emails, phone numbers and social logins",
+    loginsTitle: {
+      text: formatMessage({ id: "logins" }),
       icon: <LoginsIcon />,
     },
-    SECURITY: {
-      text: "Set or change your password. You can check your connections history here",
+    securityTitle: {
+      text: formatMessage({ id: "security" }),
       icon: <SecurityIcon />,
     },
   };
 
   const profileSection = isNewProfile
     ? {
-        CREATE_YOUR_PROFILE: {
-          text: "Add basic information about you, like your name, or addresses.",
+        createProfileTitle: {
+          text: formatMessage({ id: "createProfile" }),
           icon: <ProfileIcon />,
         },
       }
     : {
-        PERSONAL_INFORMATION: {
-          text: "Update basic information about you, like your name, or addresses.",
+        updateProfileTitle: {
+          text: formatMessage({ id: "updateProfile" }),
           icon: <ProfileIcon />,
         },
       };

@@ -1,5 +1,6 @@
 import { HttpStatus } from "@fwl/web";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 import useSWR from "swr";
 
@@ -37,9 +38,11 @@ const AccountOverview: React.FC = () => {
     },
   );
 
+  const { formatMessage } = useIntl();
+
   return (
     <>
-      {getSectionListContent(userProfile ? false : true).map(
+      {getSectionListContent(userProfile ? false : true, formatMessage).map(
         ([sectionName, { text, icon }]) => {
           const sectionHref =
             sectionName.toLocaleLowerCase() === "personal_information"
@@ -53,7 +56,9 @@ const AccountOverview: React.FC = () => {
               <SectionLink href={sectionHref}>
                 {icon}
                 <TextBox>
-                  <SectionName>{sectionName.replace(/_/g, " ")}</SectionName>
+                  <SectionName>
+                    {formatMessage({ id: sectionName })}
+                  </SectionName>
                   {text}
                 </TextBox>
                 <RightChevron />
