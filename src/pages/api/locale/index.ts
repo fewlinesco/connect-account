@@ -19,6 +19,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { configVariables } from "@src/configs/config-variables";
+import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
@@ -42,11 +43,9 @@ const getHandler: Handler = (request, response): Promise<void> => {
     }
     span.setDisclosedAttribute("user cookie found", true);
 
-    const locale = request.cookies["NEXT_LOCALE"] || "en";
-
-    span.setDisclosedAttribute("user locale value", locale);
+    const locale = getLocaleFromRequest(request, span);
     response.statusCode = HttpStatus.OK;
-    response.json(JSON.parse(JSON.stringify(locale)));
+    response.json(JSON.stringify(locale));
     return;
   });
 };
@@ -70,14 +69,15 @@ const patchHandler: Handler = (request, response): Promise<void> => {
     span.setDisclosedAttribute("user cookie found", true);
 
     const { locale } = request.body;
-
     if (!locale) {
       throw webErrorFactory(webErrors.badRequest);
     }
 
     setAlertMessagesCookie(response, [
       generateAlertMessage(
-        `Your language has been set to ${AVAILABLE_LANGUAGE[locale]}`,
+        `${formatAlertMessage(locale, "localeChanged")} ${
+          AVAILABLE_LANGUAGE[locale]
+        }`,
       ),
     ]);
 

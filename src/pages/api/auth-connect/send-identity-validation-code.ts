@@ -28,6 +28,7 @@ import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
 import { configVariables } from "@src/configs/config-variables";
+import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import { NoDBUserFoundError } from "@src/errors/errors";
@@ -127,13 +128,14 @@ const handler: Handler = (request, response): Promise<void> => {
             });
           });
 
-          const verificationCodeMessage =
+          const locale = getLocaleFromRequest(request, span);
+          const localizedAlertMessageString =
             getIdentityType(identityInput.type) === IdentityTypes.EMAIL
-              ? "A confirmation email has been sent"
-              : "A confirmation SMS has been sent";
+              ? formatAlertMessage(locale, "confirmationCodeEmail")
+              : formatAlertMessage(locale, "confirmationCodePhone");
 
           setAlertMessagesCookie(response, [
-            generateAlertMessage(verificationCodeMessage),
+            generateAlertMessage(localizedAlertMessageString),
           ]);
 
           response.statusCode = HttpStatus.OK;
