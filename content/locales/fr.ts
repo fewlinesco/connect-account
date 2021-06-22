@@ -82,7 +82,7 @@ export const fr = {
     logins: "Identifiants",
     security: "Sécurité",
     createYourProfile: "Créer votre profil",
-    personalInformation: "Informations personelles",
+    personalInformation: "Informations personnelles",
     language: "Langue",
     menu: "Menu",
     back: "Retour",
