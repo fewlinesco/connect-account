@@ -79,6 +79,8 @@ async function createTestUser(): Promise<void> {
       userId,
     },
   );
+
+  process.stdout.write(userId);
 }
 
 createTestUser();
