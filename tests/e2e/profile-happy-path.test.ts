@@ -18,7 +18,7 @@ import { authenticateToConnect } from "./utils/authenticate-to-connect";
 import { configVariables } from "@src/configs/config-variables";
 
 describe.only("Profile Happy path", () => {
-  jest.setTimeout(120000);
+  jest.setTimeout(240000);
 
   beforeAll(async () => {
     await openBrowser({
@@ -29,7 +29,7 @@ describe.only("Profile Happy path", () => {
         "--disable-dev-shm",
       ],
       headless: true,
-      observe: false,
+      observe: true,
       observeTime: 2000,
     });
   });
