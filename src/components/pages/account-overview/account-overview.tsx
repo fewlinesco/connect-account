@@ -42,8 +42,8 @@ const AccountOverview: React.FC = () => {
 
   return (
     <>
-      {getSectionListContent(userProfile ? false : true, formatMessage).map(
-        ([sectionName, { text, icon }]) => {
+      {getSectionListContent(userProfile ? false : true).map(
+        ([sectionName, { textID, icon }]) => {
           const sectionHref =
             sectionName.toLocaleLowerCase() === "personal_information"
               ? "/account/profile"
@@ -59,7 +59,7 @@ const AccountOverview: React.FC = () => {
                   <SectionName>
                     {formatMessage({ id: sectionName })}
                   </SectionName>
-                  {text}
+                  {formatMessage({ id: textID })}
                 </TextBox>
                 <RightChevron />
               </SectionLink>
