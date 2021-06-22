@@ -11,6 +11,7 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
+import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import { wrappedProfileClient } from "@src/configs/profile-client";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
@@ -84,8 +85,10 @@ const patchHandler: Handler = async (request, response) => {
       const { data: updatedUserProfile } = await userProfileClient
         .patchProfile(request.body.userProfilePayload)
         .then((profileData) => {
+          const locale = getLocaleFromRequest(request, span);
+
           setAlertMessagesCookie(response, [
-            generateAlertMessage("Your profile has been updated"),
+            generateAlertMessage(formatAlertMessage(locale, "profileUpdated")),
           ]);
 
           return profileData;
@@ -142,8 +145,10 @@ const postHandler: Handler = async (request, response) => {
       const { data: createdUserProfile } = await userProfileClient
         .createProfile(request.body.userProfilePayload)
         .then((profileData) => {
+          const locale = getLocaleFromRequest(request, span);
+
           setAlertMessagesCookie(response, [
-            generateAlertMessage("Your profile has been created"),
+            generateAlertMessage(formatAlertMessage(locale, "profileCreated")),
           ]);
 
           return profileData;

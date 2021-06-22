@@ -28,6 +28,7 @@ import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { removeTemporaryIdentity } from "@src/commands/remove-temporary-identity";
 import { configVariables } from "@src/configs/config-variables";
+import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
@@ -110,9 +111,14 @@ const handler: Handler = async (request, response) => {
 
     if (temporaryIdentity.expiresAt < Date.now()) {
       span.setDisclosedAttribute("is temporary Identity expired", true);
+
+      const locale = getLocaleFromRequest(request, span);
       setAlertMessagesCookie(response, [
-        generateAlertMessage("Validation code has expired"),
+        generateAlertMessage(
+          formatAlertMessage(locale, "validationCodeExpired"),
+        ),
       ]);
+
       throw webErrorFactory(webErrors.temporaryIdentityExpired);
     }
     span.setDisclosedAttribute("is temporary Identity expired", false);
@@ -151,14 +157,14 @@ const handler: Handler = async (request, response) => {
             });
           });
 
-          const updateMessage = `${
+          const locale = getLocaleFromRequest(request, span);
+          const localizedAlertMessageString =
             getIdentityType(type) === IdentityTypes.EMAIL
-              ? "Email address"
-              : "Phone number"
-          } has been updated`;
+              ? formatAlertMessage(locale, "emailUpdated")
+              : formatAlertMessage(locale, "phoneUpdated");
 
           setAlertMessagesCookie(response, [
-            generateAlertMessage(updateMessage),
+            generateAlertMessage(localizedAlertMessageString),
           ]);
 
           response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
@@ -263,13 +269,15 @@ const handler: Handler = async (request, response) => {
       },
     );
 
-    const addMessage = `${
+    const locale = getLocaleFromRequest(request, span);
+    const localizedAlertMessageString =
       getIdentityType(type) === IdentityTypes.EMAIL
-        ? "New email address"
-        : "New phone number"
-    } has been added`;
+        ? formatAlertMessage(locale, "emailAdded")
+        : formatAlertMessage(locale, "phoneAdded");
 
-    setAlertMessagesCookie(response, [generateAlertMessage(addMessage)]);
+    setAlertMessagesCookie(response, [
+      generateAlertMessage(localizedAlertMessageString),
+    ]);
 
     response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
       Location: "/account/logins",

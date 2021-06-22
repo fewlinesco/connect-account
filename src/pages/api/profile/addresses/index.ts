@@ -11,6 +11,7 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
+import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import { wrappedProfileClient } from "@src/configs/profile-client";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
@@ -80,8 +81,10 @@ const postHandler: Handler = async (request, response) => {
       const { data: createdAddress } = await userAddressClient
         .createAddress(request.body)
         .then((addressData) => {
+          const locale = getLocaleFromRequest(request, span);
+
           setAlertMessagesCookie(response, [
-            generateAlertMessage("Your address has been added"),
+            generateAlertMessage(formatAlertMessage(locale, "addressAdded")),
           ]);
 
           return addressData;

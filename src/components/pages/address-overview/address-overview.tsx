@@ -64,7 +64,6 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
             >
               Use this address as my main address
             </Button>
-
             <ConfirmationBox
               open={primaryConfirmationBoxOpen}
               setOpen={setPrimaryConfirmationBoxOpen}
@@ -72,7 +71,6 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
             >
               <>
                 <p>You are about to set this address as main.</p>
-
                 <Button
                   type="button"
                   variant={ButtonVariant.PRIMARY}
@@ -90,7 +88,6 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                 >
                   Confirm
                 </Button>
-
                 <Button
                   type="button"
                   variant={ButtonVariant.SECONDARY}
@@ -115,7 +112,6 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
       >
         Delete this address
       </Button>
-
       <ConfirmationBox
         open={deleteConfirmationBoxOpen}
         setOpen={setDeleteConfirmationBoxOpen}
@@ -123,7 +119,6 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
       >
         <>
           <p>You are about to delete this address.</p>
-
           <Button
             type="button"
             variant={ButtonVariant.PRIMARY}
@@ -137,7 +132,6 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
           >
             Delete
           </Button>
-
           <Button
             type="button"
             variant={ButtonVariant.SECONDARY}

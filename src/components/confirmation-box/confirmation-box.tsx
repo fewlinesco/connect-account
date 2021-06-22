@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import { CloseConfirmationBoxButton } from "../buttons/buttons";
 import { ClickAwayListener } from "../click-away-listener";
-import { CrossIcon } from "../icons/cross-icon/cross-icon";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 interface ConfirmationBoxProps {
@@ -38,9 +38,7 @@ const ConfirmationBox: React.FC<ConfirmationBoxProps> = ({
         />
       )}
       <Box open={open} preventAnimation={preventAnimation}>
-        <div className="cross" onClick={() => setOpen(false)}>
-          <CrossIcon />
-        </div>
+        <CloseConfirmationBoxButton onPress={() => setOpen(false)} />
         {children}
       </Box>
     </>

@@ -54,7 +54,14 @@ async function prepareE2ETests(): Promise<void> {
     },
   };
 
-  await fetchManagement(operation);
+  await fetchManagement(operation).then((response) => {
+    if ("errors" in response) {
+      console.warn(
+        "The test suit will most likely fail because of the following error(s):",
+      );
+      console.warn(response.errors);
+    }
+  });
 }
 
 prepareE2ETests();

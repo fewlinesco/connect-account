@@ -23,6 +23,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { configVariables } from "@src/configs/config-variables";
+import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
@@ -96,12 +97,17 @@ const markAsPrimary: Handler = async (request, response) => {
       .then((identity) => {
         span.setDisclosedAttribute("is Identity marked as primary", true);
 
-        const alertMessage =
+        const locale = getLocaleFromRequest(request, span);
+        const localizedAlertMessageString =
           getIdentityType(identity.type) === IdentityTypes.EMAIL
-            ? `${identity.value} is now your primary email`
-            : `${identity.value} is now your primary phone number`;
+            ? formatAlertMessage(locale, "emailMarkedAsPrimary")
+            : formatAlertMessage(locale, "phoneMarkedAsPrimary");
 
-        setAlertMessagesCookie(response, [generateAlertMessage(alertMessage)]);
+        setAlertMessagesCookie(response, [
+          generateAlertMessage(
+            `${identity.value} ${localizedAlertMessageString}`,
+          ),
+        ]);
 
         response.statusCode = HttpStatus.OK;
         response.setHeader("Content-type", "application/json");

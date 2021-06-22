@@ -8,11 +8,10 @@ type OAuth2UserInfo = {
   sub: string;
   refresh_token: string;
   id_token?: string;
-  locale?: string;
 };
 
 async function getAndPutUser(
-  { sub, refresh_token, locale }: OAuth2UserInfo,
+  { sub, refresh_token }: OAuth2UserInfo,
   currentUserData?: DynamoUser,
 ): Promise<PutItemCommandOutput> {
   const inDBUser = currentUserData
@@ -23,7 +22,6 @@ async function getAndPutUser(
     return putUser({
       sub,
       refresh_token,
-      locale: "en",
     });
   }
 
@@ -31,7 +29,6 @@ async function getAndPutUser(
     ...inDBUser,
     sub,
     refresh_token,
-    locale,
   });
 }
 

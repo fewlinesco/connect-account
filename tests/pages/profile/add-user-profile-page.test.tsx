@@ -1,7 +1,11 @@
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
-import { render, screen } from "../../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+} from "../../config/testing-library-config";
 import NewUserProfilePage from "@src/pages/account/profile/user-profile/new";
 
 jest.mock("@src/configs/db-client", () => {
@@ -15,6 +19,10 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("NewUserProfilePage", () => {
+  beforeAll(() => {
+    setRouterPathname("/account/profile/user-profile/new");
+  });
+
   it("should render proper user profile form elements", async () => {
     expect.assertions(22);
 

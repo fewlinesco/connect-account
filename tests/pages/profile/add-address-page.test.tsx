@@ -1,7 +1,11 @@
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
-import { render, screen } from "../../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+} from "../../config/testing-library-config";
 import NewAddressPage from "@src/pages/account/profile/addresses/new";
 
 jest.mock("@src/configs/db-client", () => {
@@ -15,6 +19,10 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("NewAddressPage", () => {
+  beforeAll(() => {
+    setRouterPathname("/account/profile/addresses/new");
+  });
+
   it("should render proper user address form elements", async () => {
     expect.assertions(20);
 

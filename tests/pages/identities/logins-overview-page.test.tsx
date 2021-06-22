@@ -3,10 +3,14 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import { cache, SWRConfig } from "swr";
 
-import { render, screen } from "../../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+} from "../../config/testing-library-config";
 import * as mockIdentities from "../../mocks/identities";
+import * as locales from "@content/locales";
 import { SortedIdentities } from "@src/@types/sorted-identities";
-import { IDENTITIES_SECTION_CONTENT } from "@src/components/pages/logins-overview/logins-overview";
 import LoginsOverviewPage from "@src/pages/account/logins";
 import { sortIdentities } from "@src/utils/sort-identities";
 
@@ -21,6 +25,10 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("LoginsOverviewPage", () => {
+  beforeAll(() => {
+    setRouterPathname("/account/logins");
+  });
+
   afterEach(() => {
     cache.clear();
   });
@@ -97,7 +105,7 @@ describe("LoginsOverviewPage", () => {
 
       expect(
         screen.getByRole("link", {
-          name: `+ ${IDENTITIES_SECTION_CONTENT.EMAIL.addNewIdentityMessage}`,
+          name: `+ ${locales.en["/account/logins"].emailAddNewIdentityMessage}`,
         }),
       ).toBeInTheDocument();
     });
@@ -139,7 +147,7 @@ describe("LoginsOverviewPage", () => {
 
       expect(
         screen.getByRole("link", {
-          name: `+ ${IDENTITIES_SECTION_CONTENT.EMAIL.addNewIdentityMessage}`,
+          name: `+ ${locales.en["/account/logins"].emailAddNewIdentityMessage}`,
         }),
       ).toBeInTheDocument();
     });
@@ -168,13 +176,13 @@ describe("LoginsOverviewPage", () => {
 
       expect(
         await screen.findByText(
-          new RegExp(IDENTITIES_SECTION_CONTENT.EMAIL.noIdentityMessage, "i"),
+          new RegExp(locales.en["/account/logins"].emailNoIdentityMessage, "i"),
         ),
       ).toBeInTheDocument();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
       expect(
         screen.getByRole("link", {
-          name: `+ ${IDENTITIES_SECTION_CONTENT.EMAIL.addNewIdentityMessage}`,
+          name: `+ ${locales.en["/account/logins"].emailAddNewIdentityMessage}`,
         }),
       ).toBeInTheDocument();
     });
@@ -251,7 +259,7 @@ describe("LoginsOverviewPage", () => {
       );
       expect(
         screen.getByRole("link", {
-          name: `+ ${IDENTITIES_SECTION_CONTENT.PHONE.addNewIdentityMessage}`,
+          name: `+ ${locales.en["/account/logins"].phoneAddNewIdentityMessage}`,
         }),
       ).toBeInTheDocument();
     });
@@ -292,7 +300,7 @@ describe("LoginsOverviewPage", () => {
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
       expect(
         screen.getByRole("link", {
-          name: `+ ${IDENTITIES_SECTION_CONTENT.PHONE.addNewIdentityMessage}`,
+          name: `+ ${locales.en["/account/logins"].phoneAddNewIdentityMessage}`,
         }),
       ).toBeInTheDocument();
     });
@@ -321,13 +329,13 @@ describe("LoginsOverviewPage", () => {
 
       expect(
         await screen.findByText(
-          new RegExp(IDENTITIES_SECTION_CONTENT.PHONE.noIdentityMessage, "i"),
+          new RegExp(locales.en["/account/logins"].phoneNoIdentityMessage, "i"),
         ),
       ).toBeInTheDocument();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
       expect(
         screen.getByRole("link", {
-          name: `+ ${IDENTITIES_SECTION_CONTENT.PHONE.addNewIdentityMessage}`,
+          name: `+ ${locales.en["/account/logins"].phoneAddNewIdentityMessage}`,
         }),
       ).toBeInTheDocument();
     });
@@ -384,7 +392,10 @@ describe("LoginsOverviewPage", () => {
 
       expect(
         await screen.findByText(
-          new RegExp(IDENTITIES_SECTION_CONTENT.SOCIAL.noIdentityMessage, "i"),
+          new RegExp(
+            locales.en["/account/logins"].socialNoIdentityMessage,
+            "i",
+          ),
         ),
       ).toBeInTheDocument();
       expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
