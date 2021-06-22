@@ -11,6 +11,7 @@ import {
   screenshot,
   below,
   currentURL,
+  waitFor,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
@@ -63,6 +64,7 @@ describe.only("Profile happy path", () => {
         );
 
         await click("Add my information");
+        waitFor(2000);
         expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
       } else {
         expect(await text("Personal Information").exists()).toBeTruthy();
