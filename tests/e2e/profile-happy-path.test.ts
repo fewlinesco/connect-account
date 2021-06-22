@@ -52,7 +52,7 @@ describe.only("Profile Happy path", () => {
         configVariables.connectAccountURL
       ).replace(/\/?$/, "");
 
-      expect(text("Flag").exists()).toBeTruthy();
+      expect(await text("Flag").exists()).toBeTruthy();
 
       // Profile creation
       if (isStagingEnv) {
@@ -209,7 +209,7 @@ describe.only("Profile Happy path", () => {
       }
     } catch (error) {
       await screenshot({
-        path: "tests/e2e/screenshots/profile-happy-path.png",
+        path: "./tests/e2e/screenshots/profile-happy-path.png",
       });
       throw error;
     }
