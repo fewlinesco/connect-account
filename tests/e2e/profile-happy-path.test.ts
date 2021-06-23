@@ -43,7 +43,7 @@ describe.only("Profile happy path", () => {
   ).includes("staging");
 
   test("it should do Profile and Addresses flows' happy path", async () => {
-    expect.assertions(isStagingEnv ? 29 : 19);
+    expect.assertions(isStagingEnv ? 28 : 19);
 
     try {
       await authenticateToConnect();
