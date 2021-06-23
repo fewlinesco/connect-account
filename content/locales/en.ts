@@ -5,6 +5,10 @@ export const en = {
   },
   "/account": {
     breadcrumb: "Welcome to your account",
+    createProfileTitle: "CREATE YOUR PROFILE",
+    updateProfileTitle: "PERSONAL INFORMATION",
+    loginsTitle: "LOGINS",
+    securityTitle: "SECURITY",
     createProfile:
       "Add personal information about you, like your name, or addresses.",
     updateProfile:
@@ -70,5 +74,17 @@ export const en = {
     addressMarkedAsPrimary: "Your address has been marked as primary",
     profileCreated: "Your profile has been created",
     profileUpdated: "Your profile has been updated",
+  },
+  navigation: {
+    home: "Home",
+    logins: "Logins",
+    security: "Security",
+    createYourProfile: "Create Your Profile",
+    personalInformation: "Personal Information",
+    language: "Language",
+    menu: "Menu",
+    back: "Back",
+    close: "Close",
+    logout: "Logout",
   },
 };

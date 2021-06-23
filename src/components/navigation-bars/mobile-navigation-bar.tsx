@@ -15,6 +15,7 @@ import { LogoutAnchor } from "../logout-anchor/logout-anchor";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { getNavigationSections } from "./navigation-sections";
 import { Profile } from "@src/@types/profile";
+import { formatNavigation } from "@src/configs/intl";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
 
@@ -46,6 +47,7 @@ const MobileNavigationBar: React.FC = () => {
       });
     },
   );
+
   return (
     <>
       {isOpen ? <ClickAwayListener onClick={() => setIsOpen(false)} /> : null}
@@ -62,7 +64,7 @@ const MobileNavigationBar: React.FC = () => {
                   >
                     <ListItemLabel>
                       {icon}
-                      <p>{title.replace(/_/g, " ")}</p>
+                      <p>{formatNavigation(router.locale || "en", title)}</p>
                     </ListItemLabel>
                     <RightChevron />
                   </ListItem>
@@ -79,7 +81,9 @@ const MobileNavigationBar: React.FC = () => {
                 <Content>
                   <LanguagesOptions>
                     <WhiteWorldIcon />
-                    <div>Language</div>
+                    <div>
+                      {formatNavigation(router.locale || "en", "language")}
+                    </div>
                   </LanguagesOptions>
                   <WhiteSwitchIcon />
                 </Content>
@@ -89,19 +93,19 @@ const MobileNavigationBar: React.FC = () => {
             <MenuItem onClick={() => router.back()}>
               <Content>
                 <Arrow />
-                <div>Back</div>
+                <div>{formatNavigation(router.locale || "en", "back")}</div>
               </Content>
             </MenuItem>
           )}
           <MenuItem borderLeft={true} onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? (
               <Content>
-                <div>Close</div>
+                <div>{formatNavigation(router.locale || "en", "close")}</div>
                 <NavBarCrossIcon />
               </Content>
             ) : (
               <Content>
-                <div>Menu</div>
+                <div>{formatNavigation(router.locale || "en", "menu")}</div>
                 <BurgerIcon />
               </Content>
             )}
