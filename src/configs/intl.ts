@@ -61,11 +61,27 @@ function formatNavigation(locale: string, id: string): string {
 }
 
 function getLocaleFromRequest(request: NextApiRequest, span: Span): string {
-  const acceptLanguage = request.headers["accept-language"]
-    ?.split(",")[0]
-    .split("-")[0];
+  if (!request.headers["accept-language"]) {
+    let locale = request.cookies["NEXT_LOCALE"] || "en";
 
-  let locale = request.cookies["NEXT_LOCALE"] || acceptLanguage || "en";
+    if (locale[0] === '"') {
+      locale = locale.slice(1, -1);
+    }
+
+    span.setDisclosedAttribute("locale", locale);
+    return locale;
+  }
+
+  const acceptLanguage = request.headers["accept-language"]
+    .split(",")
+    .map((locale) => locale.split("-")[0])
+    .map((locale) => locale.split(";")[0]);
+
+  const filteredAcceptLanguage = acceptLanguage.find(
+    (locale) => locale === "en" || locale === "fr",
+  );
+
+  let locale = request.cookies["NEXT_LOCALE"] || filteredAcceptLanguage || "en";
 
   if (locale[0] === '"') {
     locale = locale.slice(1, -1);
