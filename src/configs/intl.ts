@@ -61,7 +61,11 @@ function formatNavigation(locale: string, id: string): string {
 }
 
 function getLocaleFromRequest(request: NextApiRequest, span: Span): string {
-  let locale = request.cookies["NEXT_LOCALE"] || "en";
+  const acceptLanguage = request.headers["accept-language"]
+    ?.split(",")[0]
+    .split("-")[0];
+
+  let locale = request.cookies["NEXT_LOCALE"] || acceptLanguage || "en";
 
   if (locale[0] === '"') {
     locale = locale.slice(1, -1);

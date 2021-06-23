@@ -20,6 +20,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Handler } from "@src/@types/handler";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { configVariables } from "@src/configs/config-variables";
+import { getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import { oauth2Client } from "@src/configs/oauth2-client";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
@@ -28,7 +29,6 @@ import { UnhandledTokenType } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
-import { getLocaleFromRequest } from "@src/configs/intl";
 
 const handler: Handler = (request, response): Promise<void> => {
   const webErrors = {
@@ -112,7 +112,7 @@ const handler: Handler = (request, response): Promise<void> => {
       },
     );
     span.setDisclosedAttribute("is cookie set", true);
-    
+
     const locale = getLocaleFromRequest(request, span);
     span.setDisclosedAttribute("locale", locale);
 
