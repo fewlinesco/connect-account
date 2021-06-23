@@ -207,7 +207,7 @@ describe.only("Profile Happy path", () => {
       }
     } catch (error) {
       await screenshot({
-        path: "tests/e2e/screenshots/profile-happy-path.png",
+        path: "./tests/e2e/screenshots/profile-happy-path.png",
       });
       throw error;
     }

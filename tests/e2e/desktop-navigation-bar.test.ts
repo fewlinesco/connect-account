@@ -38,7 +38,7 @@ describe("DesktopNavigationBar", () => {
       expect(await text("LOGINS").exists()).toBeTruthy();
     } catch (error) {
       await screenshot({
-        path: "tests/e2e/screenshots/desktop_navigation_bar.png",
+        path: "./tests/e2e/screenshots/desktop_navigation_bar.png",
       });
 
       throw error;

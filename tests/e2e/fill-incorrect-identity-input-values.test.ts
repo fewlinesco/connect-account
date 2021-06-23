@@ -77,7 +77,7 @@ describe("Account Web Application add identity", () => {
       ).toBeTruthy();
     } catch (error) {
       await screenshot({
-        path: "tests/e2e/screenshots/fill-incorrect-add-identity-input-values.test.png",
+        path: "./tests/e2e/screenshots/fill-incorrect-add-identity-input-values.test.png",
       });
 
       throw error;
@@ -113,7 +113,7 @@ describe("Account Web Application add identity", () => {
       expect(await text("Something went wrong").exists()).toBeTruthy();
     } catch (error) {
       await screenshot({
-        path: "tests/e2e/screenshots/fill-incorrect-update-identity-input-values.test.png",
+        path: "./tests/e2e/screenshots/fill-incorrect-update-identity-input-values.test.png",
       });
 
       throw error;

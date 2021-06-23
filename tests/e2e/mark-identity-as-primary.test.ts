@@ -65,7 +65,7 @@ describe("Mark Identity as primary", () => {
       expect(text(nonPrimaryYet)).toBeTruthy();
     } catch (error) {
       await screenshot({
-        path: "tests/e2e/screenshots/mark-identity-as-primary.test.png",
+        path: "./tests/e2e/screenshots/mark-identity-as-primary.test.png",
       });
 
       throw error;
