@@ -5,6 +5,7 @@ import {
   click,
   screenshot,
   link,
+  below,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
@@ -21,8 +22,8 @@ describe("Delete Identity", () => {
         "--disable-dev-shm",
       ],
       headless: true,
-      observe: false,
-      observeTime: 2000,
+      observe: true,
+      observeTime: 500,
     });
   });
 
@@ -31,7 +32,7 @@ describe("Delete Identity", () => {
   });
 
   test("It should navigate to the show of the Identity, and delete it", async () => {
-    expect.assertions(7);
+    expect.assertions(9);
 
     try {
       await authenticateToConnect();
@@ -55,7 +56,15 @@ describe("Delete Identity", () => {
 
       expect(await text("Hide").exists()).toBeTruthy();
 
-      expect(!(await link("_delete_").exists())).toBeTruthy();
+      const primaryIdentity = await link("", below("Email addresses")).text();
+
+      const secondIdentity = await link("", below(primaryIdentity)).text();
+
+      const thirdLink = await link("", below(secondIdentity)).text();
+
+      expect(secondIdentity.includes("_delete_")).toBeFalsy();
+      expect(primaryIdentity.includes("_delete_")).toBeFalsy();
+      expect(thirdLink.includes("_delete_")).toBeFalsy();
     } catch (error) {
       await screenshot({
         path: "./tests/e2e/screenshots/delete-identity.png",
