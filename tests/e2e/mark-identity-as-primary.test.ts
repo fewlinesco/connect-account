@@ -44,6 +44,10 @@ describe("Mark Identity as primary", () => {
       expect(await text("Show").exists()).toBeTruthy();
       await click("Show");
 
+      await screenshot({
+        path: "./tests/e2e/screenshots/mark-identity-as-primary-show-identities.test.png",
+      });
+
       expect(await text("Hide").exists()).toBeTruthy();
 
       const nonPrimaryYet = await link(".test", above("Hide")).text();
