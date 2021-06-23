@@ -30,7 +30,7 @@ describe.only("Profile happy path", () => {
       ],
       headless: true,
       observe: true,
-      observeTime: 500,
+      observeTime: 1000,
     });
   });
 
@@ -43,7 +43,7 @@ describe.only("Profile happy path", () => {
   ).includes("staging");
 
   test("it should do Profile and Addresses flows' happy path", async () => {
-    expect.assertions(isStagingEnv ? 29 : 21);
+    expect.assertions(isStagingEnv ? 29 : 19);
 
     try {
       await authenticateToConnect();
@@ -64,17 +64,17 @@ describe.only("Profile happy path", () => {
         );
 
         await click("Add my information");
-        waitFor(2000);
         expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
       } else {
-        expect(await text("Personal Information").exists()).toBeTruthy();
+        await waitFor(2000);
+        waitFor(async () => await text("Personal Information").exists());
         await click("Personal Information");
       }
 
       // Update user profile flow
-      expect(
-        await text("Update your personal information").exists(),
-      ).toBeTruthy();
+      waitFor(
+        async () => await text("Update your personal information").exists(),
+      );
       await click("Update your personal information");
       expect(await text("Profile | edit").exists()).toBeTruthy();
 
