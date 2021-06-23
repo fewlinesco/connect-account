@@ -28,6 +28,7 @@ import { UnhandledTokenType } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
+import { getLocaleFromRequest } from "@src/configs/intl";
 
 const handler: Handler = (request, response): Promise<void> => {
   const webErrors = {
@@ -111,9 +112,12 @@ const handler: Handler = (request, response): Promise<void> => {
       },
     );
     span.setDisclosedAttribute("is cookie set", true);
+    
+    const locale = getLocaleFromRequest(request, span);
+    span.setDisclosedAttribute("locale", locale);
 
     response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
-      Location: "/account",
+      Location: locale === "en" ? "/account" : `/${locale}/account`,
     });
     response.end();
     return;
