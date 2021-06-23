@@ -1,9 +1,5 @@
-import {
-  DynamoDBClient,
-  GetItemCommand,
-  PutItemCommand,
-} from "@aws-sdk/client-dynamodb";
-import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
+import { marshall } from "@aws-sdk/util-dynamodb";
 
 async function settingSudoTTL(): Promise<void> {
   if (process.env.CONNECT_TEST_ACCOUNT_SUB === undefined) {
@@ -54,20 +50,6 @@ async function settingSudoTTL(): Promise<void> {
   });
   await dynamoDbClient.send(itemCommand);
 
-  const { Item } = await dynamoDbClient.send(
-    new GetItemCommand({
-      TableName: process.env.DYNAMODB_TABLE_NAME,
-      Key: {
-        sub: { S: process.env.CONNECT_TEST_ACCOUNT_SUB },
-      },
-    }),
-  );
-
-  if (Item) {
-    const user = unmarshall(Item);
-
-    console.log(user);
-  }
   return;
 }
 
