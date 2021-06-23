@@ -50,12 +50,15 @@ jobs:
       - run:
           name: Creating Connect test user
           command: echo "export CONNECT_TEST_ACCOUNT_SUB=$(yarn e2e:create-test-user | xargs | cut -d' ' -f7 | cut -c-36)" >> $BASH_ENV
+      - run: 
+          name: Prepare test user
+          command: yarn e2e:setting-sudo-ttl
       - when: 
           condition: 
             matches: { pattern: ".*?\\bstaging\\b.*?", value: << pipeline.parameters.target_url >> }
           steps:
             - run: 
-                name: Setting Profile staging URL env var
+                name: Setting Profile and Account staging URL env var
                 command: |
                   echo "export CONNECT_PROFILE_URL=https://fewlines-profile-staging.herokuapp.com/" >> $BASH_ENV
                   echo "export CONNECT_TEST_ACCOUNT_URL=https://account-staging.fewlines.tech/" >> $BASH_ENV

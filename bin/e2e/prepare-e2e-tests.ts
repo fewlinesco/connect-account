@@ -48,7 +48,7 @@ async function prepareE2ETests(): Promise<void> {
   const operation = {
     query: ADD_IDENTITY_TO_USER,
     variables: {
-      userId: process.env.CONNECT_TEST_ACCOUNT_USER_ID,
+      userId: process.env.CONNECT_TEST_ACCOUNT_SUB,
       type: "EMAIL",
       value: "test_delete_this@taiko.test",
     },
