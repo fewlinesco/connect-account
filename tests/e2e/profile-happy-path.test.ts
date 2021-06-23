@@ -11,12 +11,13 @@ import {
   screenshot,
   below,
   currentURL,
+  waitFor,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 import { configVariables } from "@src/configs/config-variables";
 
-describe.only("Profile Happy path", () => {
+describe.only("Profile happy path", () => {
   jest.setTimeout(120000);
 
   beforeAll(async () => {
@@ -29,7 +30,7 @@ describe.only("Profile Happy path", () => {
       ],
       headless: true,
       observe: true,
-      observeTime: 500,
+      observeTime: 1000,
     });
   });
 
@@ -42,7 +43,7 @@ describe.only("Profile Happy path", () => {
   ).includes("staging");
 
   test("it should do Profile and Addresses flows' happy path", async () => {
-    expect.assertions(isStagingEnv ? 29 : 21);
+    expect.assertions(isStagingEnv ? 28 : 19);
 
     try {
       await authenticateToConnect();
@@ -65,14 +66,15 @@ describe.only("Profile Happy path", () => {
         await click("Add my information");
         expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
       } else {
-        expect(await text("Personal Information").exists()).toBeTruthy();
+        await waitFor(2000);
+        waitFor(async () => await text("Personal Information").exists());
         await click("Personal Information");
       }
 
       // Update user profile flow
-      expect(
-        await text("Update your personal information").exists(),
-      ).toBeTruthy();
+      waitFor(
+        async () => await text("Update your personal information").exists(),
+      );
       await click("Update your personal information");
       expect(await text("Profile | edit").exists()).toBeTruthy();
 

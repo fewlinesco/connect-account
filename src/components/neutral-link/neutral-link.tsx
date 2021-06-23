@@ -1,5 +1,6 @@
 import { AriaLinkOptions, useLink } from "@react-aria/link";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import style from "styled-components";
 import { UrlObject } from "url";
@@ -16,9 +17,10 @@ const NeutralLink: React.FC<ExtendedLinkProps> = (props) => {
   const { href, as, className, onClick, children } = props;
   const linkRef = React.useRef(null);
   const { linkProps } = useLink(props, linkRef);
+  const { locale } = useRouter();
 
   return (
-    <Link href={href} as={as} passHref>
+    <Link href={href} as={as} locale={locale} passHref>
       <NeutralAnchor
         {...linkProps}
         className={className}

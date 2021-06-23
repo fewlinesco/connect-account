@@ -12,15 +12,15 @@ function getNavigationSections(
   isNewProfile: boolean,
 ): [string, { href: string; icon: Element }][] {
   const navigationSections = {
-    Home: {
+    home: {
       href: "/account",
       icon: <HomeIcon />,
     },
-    Logins: {
+    logins: {
       href: "/account/logins",
       icon: <KeyIcon />,
     },
-    Security: {
+    security: {
       href: "/account/security",
       icon: <LockIcon />,
     },
@@ -28,52 +28,52 @@ function getNavigationSections(
 
   const profileSection = isNewProfile
     ? {
-        Create_Your_Profile: {
+        createYourProfile: {
           href: "/account/profile/user-profile/new",
           icon: <UserIcon />,
         },
       }
     : {
-        Personal_Information: {
+        personalInformation: {
           href: "/account/profile",
           icon: <UserIcon />,
         },
       };
 
-  const { Home, Logins, Security } = navigationSections;
+  const { home, logins, security } = navigationSections;
 
   return Object.entries({
-    Home,
+    home,
     ...profileSection,
-    Logins,
-    Security,
+    logins,
+    security,
   }) as unknown as [string, { href: string; icon: Element }][];
 }
 
 function getSectionListContent(
   isNewProfile: boolean,
-): [string, { text: string; icon: Element }][] {
+): [string, { textID: string; icon: Element }][] {
   const partialListContent = {
-    LOGINS: {
-      text: "Manage your logins options, including emails, phone numbers and social logins",
+    loginsTitle: {
+      textID: "logins",
       icon: <LoginsIcon />,
     },
-    SECURITY: {
-      text: "Set or change your password. You can check your connections history here",
+    securityTitle: {
+      textID: "security",
       icon: <SecurityIcon />,
     },
   };
 
   const profileSection = isNewProfile
     ? {
-        CREATE_YOUR_PROFILE: {
-          text: "Add basic information about you, like your name, or addresses.",
+        createProfileTitle: {
+          textID: "createProfile",
           icon: <ProfileIcon />,
         },
       }
     : {
-        PERSONAL_INFORMATION: {
-          text: "Update basic information about you, like your name, or addresses.",
+        updateProfileTitle: {
+          textID: "updateProfile",
           icon: <ProfileIcon />,
         },
       };
@@ -81,7 +81,7 @@ function getSectionListContent(
   return Object.entries({
     ...profileSection,
     ...partialListContent,
-  }) as unknown as [string, { text: string; icon: Element }][];
+  }) as unknown as [string, { textID: string; icon: Element }][];
 }
 
 export { getNavigationSections, getSectionListContent };
