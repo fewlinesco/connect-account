@@ -70,17 +70,17 @@ export const fr = {
     hide: "Cacher",
   },
   "/account/logins/[type]/new": {
-    title: "Logins",
+    title: "Identifiants",
     emailBreadcrumb: "Adresses e-mail",
     phoneBreadcrumb: "Numéro de téléphone",
   },
   "/account/logins/[type]/[id]": {
-    title: "Logins",
+    title: "Identifiants",
     emailBreadcrumb: "Adresses e-mail",
     phoneBreadcrumb: "Numéro de téléphone",
   },
   "/account/logins/[type]/[id]/update": {
-    title: "Logins",
+    title: "Identifiants",
     emailBreadcrumb: "Adresses e-mail | modification",
     phoneBreadcrumb: "Numéro de téléphone | modification",
   },
