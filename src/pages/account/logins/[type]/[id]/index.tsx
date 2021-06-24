@@ -2,6 +2,7 @@ import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
+import { useIntl } from "react-intl";
 import useSWR from "swr";
 
 import { Container } from "@src/components/containers/container";
@@ -16,6 +17,8 @@ import { getIdentityType } from "@src/utils/get-identity-type";
 const IdentityOverviewPage: React.FC<{
   identityId: string;
 }> = ({ identityId }) => {
+  const { formatMessage } = useIntl();
+
   const { data: identity, error } = useSWR<Identity, SWRError>(
     `/api/identities/${identityId}`,
   );
@@ -26,12 +29,12 @@ const IdentityOverviewPage: React.FC<{
 
   const breadcrumbs = identity
     ? getIdentityType(identity.type) === IdentityTypes.EMAIL
-      ? "Email address"
-      : "Phone number"
+      ? formatMessage({ id: "emailBreadcrumb" })
+      : formatMessage({ id: "phoneBreadcrumb" })
     : "";
 
   return (
-    <Layout breadcrumbs={breadcrumbs} title="Logins">
+    <Layout breadcrumbs={breadcrumbs} title={formatMessage({ id: "title" })}>
       <Container>
         <IdentityOverview identity={identity} />
       </Container>

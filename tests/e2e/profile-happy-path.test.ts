@@ -168,8 +168,8 @@ describe.only("Profile happy path", () => {
       // Mark address as primary flow
       await click("Personal Information");
 
-      expect(await text("Show 1 more").exists()).toBeTruthy();
-      await click("Show 1 more");
+      expect(await text("Show more (1)").exists()).toBeTruthy();
+      await click("Show more (1)");
       await click(link("Work"));
 
       expect(

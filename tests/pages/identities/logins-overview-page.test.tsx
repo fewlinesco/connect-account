@@ -25,8 +25,11 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("LoginsOverviewPage", () => {
+  const path = "/account/logins";
+  const localizedStrings = locales.en[path];
+
   beforeAll(() => {
-    setRouterPathname("/account/logins");
+    setRouterPathname(path);
   });
 
   afterEach(() => {
@@ -41,7 +44,6 @@ describe("LoginsOverviewPage", () => {
         mockIdentities.primaryEmailIdentity,
         mockIdentities.nonPrimaryEmailIdentity,
       ];
-
       const sortedIdentities: SortedIdentities = sortIdentities(identities);
 
       render(
@@ -57,7 +59,7 @@ describe("LoginsOverviewPage", () => {
 
       expect(
         await screen.findByRole("link", {
-          name: new RegExp(`${mockIdentities.primaryEmailIdentity.value}`, "i"),
+          name: new RegExp(`${mockIdentities.primaryEmailIdentity.value}`),
         }),
       ).toBeInTheDocument();
       expect(
@@ -78,7 +80,7 @@ describe("LoginsOverviewPage", () => {
 
       userEvent.click(
         screen.getByText(
-          `Show ${sortedIdentities.emailIdentities.length - 1} more`,
+          `Show more (${sortedIdentities.emailIdentities.length - 1})`,
         ),
       );
 
@@ -105,7 +107,7 @@ describe("LoginsOverviewPage", () => {
 
       expect(
         screen.getByRole("link", {
-          name: `+ ${locales.en["/account/logins"].emailAddNewIdentityMessage}`,
+          name: `+ ${localizedStrings.emailAddNewIdentityMessage}`,
         }),
       ).toBeInTheDocument();
     });
@@ -143,11 +145,13 @@ describe("LoginsOverviewPage", () => {
           mockIdentities.primaryEmailIdentity.id
         }`,
       );
-      expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+      expect(
+        screen.queryByText(/Show more \([0-9]+\)/),
+      ).not.toBeInTheDocument();
 
       expect(
         screen.getByRole("link", {
-          name: `+ ${locales.en["/account/logins"].emailAddNewIdentityMessage}`,
+          name: `+ ${localizedStrings.emailAddNewIdentityMessage}`,
         }),
       ).toBeInTheDocument();
     });
@@ -157,8 +161,6 @@ describe("LoginsOverviewPage", () => {
 
       const identities: Identity[] = [];
 
-      const sortedIdentities: SortedIdentities = sortIdentities(identities);
-
       cache.set("/api/identities", identities);
 
       render(
@@ -166,7 +168,7 @@ describe("LoginsOverviewPage", () => {
           value={{
             dedupingInterval: 0,
             fetcher: () => {
-              return { sortedIdentities };
+              return { identities };
             },
           }}
         >
@@ -176,13 +178,15 @@ describe("LoginsOverviewPage", () => {
 
       expect(
         await screen.findByText(
-          new RegExp(locales.en["/account/logins"].emailNoIdentityMessage, "i"),
+          new RegExp(localizedStrings.emailNoIdentityMessage),
         ),
       ).toBeInTheDocument();
-      expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+      expect(
+        screen.queryByText(/Show more \([0-9]+\)/),
+      ).not.toBeInTheDocument();
       expect(
         screen.getByRole("link", {
-          name: `+ ${locales.en["/account/logins"].emailAddNewIdentityMessage}`,
+          name: `+ ${localizedStrings.emailAddNewIdentityMessage}`,
         }),
       ).toBeInTheDocument();
     });
@@ -196,7 +200,6 @@ describe("LoginsOverviewPage", () => {
         mockIdentities.primaryPhoneIdentity,
         mockIdentities.nonPrimaryPhoneIdentity,
       ];
-
       const sortedIdentities = sortIdentities(identities);
 
       render(
@@ -212,7 +215,7 @@ describe("LoginsOverviewPage", () => {
 
       expect(
         await screen.findByRole("link", {
-          name: new RegExp(`${mockIdentities.primaryPhoneIdentity.value}`, "i"),
+          name: new RegExp(`${mockIdentities.primaryPhoneIdentity.value}`),
         }),
       ).toBeInTheDocument();
       expect(
@@ -233,7 +236,7 @@ describe("LoginsOverviewPage", () => {
 
       userEvent.click(
         screen.getByText(
-          `Show ${sortedIdentities.phoneIdentities.length - 1} more`,
+          `Show more (${sortedIdentities.phoneIdentities.length - 1})`,
         ),
       );
 
@@ -259,7 +262,7 @@ describe("LoginsOverviewPage", () => {
       );
       expect(
         screen.getByRole("link", {
-          name: `+ ${locales.en["/account/logins"].phoneAddNewIdentityMessage}`,
+          name: `+ ${localizedStrings.phoneAddNewIdentityMessage}`,
         }),
       ).toBeInTheDocument();
     });
@@ -297,10 +300,12 @@ describe("LoginsOverviewPage", () => {
           mockIdentities.primaryPhoneIdentity.id
         }`,
       );
-      expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+      expect(
+        screen.queryByText(/Show more \([0-9]+\)/),
+      ).not.toBeInTheDocument();
       expect(
         screen.getByRole("link", {
-          name: `+ ${locales.en["/account/logins"].phoneAddNewIdentityMessage}`,
+          name: `+ ${localizedStrings.phoneAddNewIdentityMessage}`,
         }),
       ).toBeInTheDocument();
     });
@@ -310,8 +315,6 @@ describe("LoginsOverviewPage", () => {
 
       const identities: Identity[] = [];
 
-      const sortedIdentities = sortIdentities(identities);
-
       cache.set("/api/identities", identities);
 
       render(
@@ -319,7 +322,7 @@ describe("LoginsOverviewPage", () => {
           value={{
             dedupingInterval: 0,
             fetcher: () => {
-              return { sortedIdentities };
+              return { identities };
             },
           }}
         >
@@ -329,13 +332,15 @@ describe("LoginsOverviewPage", () => {
 
       expect(
         await screen.findByText(
-          new RegExp(locales.en["/account/logins"].phoneNoIdentityMessage, "i"),
+          new RegExp(localizedStrings.phoneNoIdentityMessage),
         ),
       ).toBeInTheDocument();
-      expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+      expect(
+        screen.queryByText(/Show more \([0-9]+\)/),
+      ).not.toBeInTheDocument();
       expect(
         screen.getByRole("link", {
-          name: `+ ${locales.en["/account/logins"].phoneAddNewIdentityMessage}`,
+          name: `+ ${localizedStrings.phoneAddNewIdentityMessage}`,
         }),
       ).toBeInTheDocument();
     });
@@ -361,17 +366,15 @@ describe("LoginsOverviewPage", () => {
         </SWRConfig>,
       );
 
-      await screen
-        .findAllByText(new RegExp("Github", "i"))
-        .then((elementList) => {
-          expect(elementList[1].innerHTML).toBe("Github");
-        });
-      await screen
-        .findAllByText(new RegExp("Facebook", "i"))
-        .then((elementList) => {
-          expect(elementList[1].innerHTML).toBe("Facebook");
-        });
-      expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+      await screen.findAllByText(new RegExp("Github")).then((elementList) => {
+        expect(elementList[1].innerHTML).toBe("Github");
+      });
+      await screen.findAllByText(new RegExp("Facebook")).then((elementList) => {
+        expect(elementList[1].innerHTML).toBe("Facebook");
+      });
+      expect(
+        screen.queryByText(/Show more \([0-9]+\)/),
+      ).not.toBeInTheDocument();
     });
 
     it("should display default message when no identity is provided", async () => {
@@ -392,13 +395,12 @@ describe("LoginsOverviewPage", () => {
 
       expect(
         await screen.findByText(
-          new RegExp(
-            locales.en["/account/logins"].socialNoIdentityMessage,
-            "i",
-          ),
+          new RegExp(localizedStrings.socialNoIdentityMessage),
         ),
       ).toBeInTheDocument();
-      expect(screen.queryByText(/Show [0-9]+ more/i)).not.toBeInTheDocument();
+      expect(
+        screen.queryByText(/Show more \([0-9]+\)/),
+      ).not.toBeInTheDocument();
     });
   });
 });

@@ -61,12 +61,23 @@ function formatNavigation(locale: string, id: string): string {
 }
 
 function getLocaleFromRequest(request: NextApiRequest, span: Span): string {
-  let locale = request.cookies["NEXT_LOCALE"] || "en";
-
-  if (locale[0] === '"') {
-    locale = locale.slice(1, -1);
+  if (!request.headers["accept-language"]) {
+    const locale = request.cookies["NEXT_LOCALE"] || "en";
+    span.setDisclosedAttribute("locale", locale);
+    return locale;
   }
 
+  const acceptLanguage = request.headers["accept-language"]
+    .split(",")
+    .map((locale) => locale.split("-")[0])
+    .map((locale) => locale.split(";")[0]);
+
+  const filteredAcceptLanguage = acceptLanguage.find(
+    (locale) => locale === "en" || locale === "fr",
+  );
+
+  const locale =
+    request.cookies["NEXT_LOCALE"] || filteredAcceptLanguage || "en";
   span.setDisclosedAttribute("locale", locale);
   return locale;
 }

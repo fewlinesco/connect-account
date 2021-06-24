@@ -20,6 +20,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Handler } from "@src/@types/handler";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { configVariables } from "@src/configs/config-variables";
+import { getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import { oauth2Client } from "@src/configs/oauth2-client";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
@@ -112,8 +113,11 @@ const handler: Handler = (request, response): Promise<void> => {
     );
     span.setDisclosedAttribute("is cookie set", true);
 
+    const locale = getLocaleFromRequest(request, span);
+    span.setDisclosedAttribute("locale", locale);
+
     response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
-      Location: "/account",
+      Location: locale === "en" ? "/account" : `/${locale}/account`,
     });
     response.end();
     return;

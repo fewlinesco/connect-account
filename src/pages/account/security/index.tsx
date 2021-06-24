@@ -1,6 +1,7 @@
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
@@ -10,8 +11,13 @@ import getTracer from "@src/configs/tracer";
 import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 
 const SecurityPage: React.FC = () => {
+  const { formatMessage } = useIntl();
+
   return (
-    <Layout breadcrumbs="Password, login history and more" title="Security">
+    <Layout
+      breadcrumbs={formatMessage({ id: "breadcrumb" })}
+      title={formatMessage({ id: "title" })}
+    >
       <Container>
         <Security />
       </Container>
