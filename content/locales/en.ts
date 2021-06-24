@@ -18,6 +18,23 @@ export const en = {
     security:
       "Set or change your password. You can check your connections history here.",
   },
+  "/account/profile": {
+    basicInfo: "Basic information",
+    profilePicture: "PROFILE PICTURE",
+    name: "NAME",
+    preferredName: "PREFERRED USERNAME",
+    birthDate: "BIRTH DATE",
+    timeZone: "TIME ZONE",
+    locale: "LOCALE",
+    website: "WEBSITE",
+    profile: "PROFILE",
+    updateInfo: "Update your personal information",
+    addresses: "Addresses",
+    addAddress: "Add new address",
+    noAddresses: "No addresses added yet",
+    showMore: "Show More",
+    hide: "Hide",
+  },
   "/account/logins": {
     title: "Logins",
     breadcrumb: "Your emails, phones and social logins",
@@ -29,6 +46,8 @@ export const en = {
     phoneAddNewIdentityMessage: "Add new phone number",
     socialTitle: "Social logins",
     socialNoIdentityMessage: "No social logins added yet.",
+    showMore: "Show More",
+    hide: "Hide",
   },
   "/account/security": {
     title: "Password",

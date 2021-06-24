@@ -18,6 +18,23 @@ export const fr = {
     security:
       "Définissez ou modifiez votre mot de passe. Vous pouvez consulter l’historique de vos connexions ici.",
   },
+  "/account/profile": {
+    basicInfo: "Informations personnelles",
+    profilePicture: "PHOTO DE PROFIL",
+    name: "NOM",
+    preferredName: "NOM D’UTILISATEUR PRÉFÉRÉ",
+    birthDate: "DATE DE NAISSANCE",
+    timeZone: "FUSEAU HORAIRE",
+    locale: "LANGUE",
+    website: "SITE WEB",
+    profile: "PROFIL",
+    updateInfo: "Mettre à jour vos informations personnelles",
+    addresses: "Adresses",
+    addAddress: "Ajouter une nouvelle adresse",
+    noAddresses: "Aucune adresse n’a encore été ajoutée",
+    showMore: "Afficher plus",
+    hide: "Cacher",
+  },
   "/account/logins": {
     title: "Identifiants",
     breadcrumb: "Vos e-mails, téléphones et identifiants de réseaux sociaux",
@@ -30,6 +47,8 @@ export const fr = {
     socialTitle: "Comptes de réseaux sociaux",
     socialNoIdentityMessage:
       "Aucun compte de réseau social n’a encore été ajouté",
+    showMore: "Afficher plus",
+    hide: "Cacher",
   },
   "/account/security": {
     title: "Mot de passe",

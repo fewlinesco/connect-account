@@ -1,4 +1,6 @@
+import { formatMessage } from "@formatjs/intl";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 
 import { Address, Profile } from "@src/@types/profile";
@@ -22,10 +24,11 @@ const ProfileOverview: React.FC<{
   userAddresses?: Address[];
 }> = ({ userProfile, userAddresses }) => {
   const [hideAddressList, setHideAddressList] = React.useState<boolean>(true);
+  const { formatMessage } = useIntl();
 
   return (
     <>
-      <h2>Basic information</h2>
+      <h2>{formatMessage({ id: "basicInfo" })}</h2>
       <SectionBox>
         <BoxedLink disableClick={false} href="#">
           <Flex>
@@ -36,53 +39,73 @@ const ProfileOverview: React.FC<{
             ) : (
               <UserPicture src={userProfile.picture} alt="user" />
             )}
-            <PictureCategoryName>PROFILE PICTURE</PictureCategoryName>
+            <PictureCategoryName>
+              {formatMessage({ id: "profilePicture" })}
+            </PictureCategoryName>
           </Flex>
         </BoxedLink>
         <Separator />
-        <UserInfoSection categoryName="NAME" href="#">
+        <UserInfoSection categoryName={formatMessage({ id: "name" })} href="#">
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             userProfile.name
           )}
         </UserInfoSection>
-        <UserInfoSection categoryName="PREFERRED USERNAME" href="#">
+        <UserInfoSection
+          categoryName={formatMessage({ id: "preferredName" })}
+          href="#"
+        >
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             userProfile.preferred_username
           )}
         </UserInfoSection>
-        <UserInfoSection categoryName="BIRTH DATE" href="#">
+        <UserInfoSection
+          categoryName={formatMessage({ id: "birthDate" })}
+          href="#"
+        >
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             userProfile.birthdate
           )}
         </UserInfoSection>
-        <UserInfoSection categoryName="TIME ZONE" href="#">
+        <UserInfoSection
+          categoryName={formatMessage({ id: "timeZone" })}
+          href="#"
+        >
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             userProfile.zoneinfo
           )}
         </UserInfoSection>
-        <UserInfoSection categoryName="LOCALE" href="#">
+        <UserInfoSection
+          categoryName={formatMessage({ id: "locale" })}
+          href="#"
+        >
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             userProfile.locale
           )}
         </UserInfoSection>
-        <UserInfoSection categoryName="WEBSITE" href="#">
+        <UserInfoSection
+          categoryName={formatMessage({ id: "website" })}
+          href="#"
+        >
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             userProfile.website
           )}
         </UserInfoSection>
-        <UserInfoSection categoryName="PROFILE" href="#">
+        <UserInfoSection
+          categoryName={formatMessage({ id: "profile" })}
+          href="#"
+        >
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
@@ -92,10 +115,10 @@ const ProfileOverview: React.FC<{
       </SectionBox>
       <NeutralLink href={"/account/profile/user-profile/edit"}>
         <FakeButton variant={ButtonVariant.PRIMARY}>
-          Update your personal information
+          {formatMessage({ id: "updateInfo" })}
         </FakeButton>
       </NeutralLink>
-      <h2>Addresses</h2>
+      <h2>{formatMessage({ id: "addresses" })}</h2>
       <SectionBox>
         {!userAddresses ? (
           <BoxedLink disableClick={true} href="#">
@@ -120,7 +143,7 @@ const ProfileOverview: React.FC<{
       {userAddresses ? (
         <NeutralLink href="/account/profile/addresses/new">
           <FakeButton variant={ButtonVariant.SECONDARY}>
-            + Add new address
+            + {formatMessage({ id: "addAddress" })}
           </FakeButton>
         </NeutralLink>
       ) : null}
@@ -149,13 +172,16 @@ const UserAddresses: React.FC<{
   hideAddressList: boolean;
   addressList: Address[];
 }> = ({ hideAddressList, addressList }) => {
+  const { formatMessage } = useIntl();
   const primaryAddress = addressList.find((address) => address.primary);
   const secondaryAddresses = addressList.filter(
     (address) => address.primary === false,
   );
 
   return !primaryAddress ? (
-    <NoAddressesParagraph>No addresses added yet</NoAddressesParagraph>
+    <NoAddressesParagraph>
+      {formatMessage({ id: "noAddresses" })}
+    </NoAddressesParagraph>
   ) : (
     <>
       <BoxedLink
