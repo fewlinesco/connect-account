@@ -84,7 +84,7 @@ const patchHandler: Handler = (request, response): Promise<void> => {
 
     setServerSideCookies(response, "NEXT_LOCALE", locale, {
       shouldCookieBeSealed: false,
-      maxAge: Number.MAX_SAFE_INTEGER,
+      maxAge: 2147483647,
       path: "/",
     });
 
