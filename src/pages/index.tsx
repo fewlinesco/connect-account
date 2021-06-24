@@ -7,13 +7,6 @@ import {
   getProviderName,
   GraphqlErrors,
 } from "@fewlines/connect-management";
-import {
-  loggingMiddleware,
-  tracingMiddleware,
-  errorMiddleware,
-  recoveryMiddleware,
-  rateLimitingMiddleware,
-} from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { GetServerSideProps } from "next";
 import React from "react";
@@ -23,10 +16,9 @@ import { Home } from "@src/components/pages/home/home";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import { oauth2Client } from "@src/configs/oauth2-client";
-import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { noAuthBasicMiddlewares } from "@src/middlewares/basic-middlewares";
 
 type HomePageProps = { authorizeURL: string; providerName: string };
 
@@ -42,55 +34,24 @@ const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{
     authorizeURL: string;
     providerName: string;
-  }>(
-    context,
-    [
-      tracingMiddleware(getTracer()),
-      rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
-      recoveryMiddleware(getTracer()),
-      sentryMiddleware(getTracer()),
-      errorMiddleware(getTracer()),
-      loggingMiddleware(getTracer(), logger),
-    ],
-    "/",
-    async () => {
-      const webErrors = {
-        identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
-        connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
-        unreachable: ERRORS_DATA.UNREACHABLE,
-        badRequest: ERRORS_DATA.BAD_REQUEST,
-      };
+  }>(context, noAuthBasicMiddlewares(getTracer(), logger), "/", async () => {
+    const webErrors = {
+      identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
+      connectUnreachable: ERRORS_DATA.CONNECT_UNREACHABLE,
+      unreachable: ERRORS_DATA.UNREACHABLE,
+      badRequest: ERRORS_DATA.BAD_REQUEST,
+    };
 
-      const authorizeURL = await oauth2Client
-        .getAuthorizationURL()
-        .catch((error) => {
-          if (error instanceof ScopesNotSupportedError) {
-            throw webErrorFactory(webErrors.badRequest);
-          }
-
-          if (error instanceof UnreachableError) {
-            throw webErrorFactory({
-              ...webErrors.unreachable,
-              parentError: error,
-            });
-          }
-
-          throw error;
-        });
-
-      const providerName = await getProviderName(
-        configVariables.managementCredentials,
-      ).catch((error) => {
-        if (error instanceof GraphqlErrors) {
-          throw webErrorFactory({
-            ...webErrors.identityNotFound,
-            parentError: error,
-          });
+    const authorizeURL = await oauth2Client
+      .getAuthorizationURL()
+      .catch((error) => {
+        if (error instanceof ScopesNotSupportedError) {
+          throw webErrorFactory(webErrors.badRequest);
         }
 
-        if (error instanceof ConnectUnreachableError) {
+        if (error instanceof UnreachableError) {
           throw webErrorFactory({
-            ...webErrors.connectUnreachable,
+            ...webErrors.unreachable,
             parentError: error,
           });
         }
@@ -98,14 +59,33 @@ const getServerSideProps: GetServerSideProps = async (context) => {
         throw error;
       });
 
-      return {
-        props: {
-          authorizeURL: authorizeURL.toString(),
-          providerName,
-        },
-      };
-    },
-  );
+    const providerName = await getProviderName(
+      configVariables.managementCredentials,
+    ).catch((error) => {
+      if (error instanceof GraphqlErrors) {
+        throw webErrorFactory({
+          ...webErrors.identityNotFound,
+          parentError: error,
+        });
+      }
+
+      if (error instanceof ConnectUnreachableError) {
+        throw webErrorFactory({
+          ...webErrors.connectUnreachable,
+          parentError: error,
+        });
+      }
+
+      throw error;
+    });
+
+    return {
+      props: {
+        authorizeURL: authorizeURL.toString(),
+        providerName,
+      },
+    };
+  });
 };
 
 export { getServerSideProps };

@@ -5,15 +5,7 @@ import {
   setAlertMessagesCookie,
   setServerSideCookies,
 } from "@fwl/web";
-import {
-  loggingMiddleware,
-  wrapMiddlewares,
-  tracingMiddleware,
-  errorMiddleware,
-  recoveryMiddleware,
-  rateLimitingMiddleware,
-  Middleware,
-} from "@fwl/web/dist/middlewares";
+import { wrapMiddlewares, Middleware } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
@@ -21,11 +13,10 @@ import { UserCookie } from "@src/@types/user-cookie";
 import { configVariables } from "@src/configs/config-variables";
 import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
-import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { NoUserCookieFoundError } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 import { generateAlertMessage } from "@src/utils/generate-alert-message";
 import { AVAILABLE_LANGUAGE } from "@src/utils/get-locale";
 
@@ -93,14 +84,8 @@ const patchHandler: Handler = (request, response): Promise<void> => {
   });
 };
 
-const middlewares: Middleware<NextApiRequest, NextApiResponse>[] = [
-  tracingMiddleware(getTracer()),
-  rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
-  recoveryMiddleware(getTracer()),
-  sentryMiddleware(getTracer()),
-  errorMiddleware(getTracer()),
-  loggingMiddleware(getTracer(), logger),
-];
+const middlewares: Middleware<NextApiRequest, NextApiResponse>[] =
+  basicMiddlewares(getTracer(), logger);
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
   .get(wrapMiddlewares(middlewares, getHandler, "GET /api/locale"))
