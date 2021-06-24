@@ -100,15 +100,5 @@ describe("ValidateIdentityPage", () => {
         screen.getByRole("button", { name: "Resend validation code" }),
       ).toBeInTheDocument();
     });
-
-    it("should render proper phone breadcrumbs", () => {
-      render(
-        <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />,
-      );
-
-      expect(
-        screen.getByRole("heading", { name: localizedStrings.phoneBreadcrumb }),
-      ).toBeInTheDocument();
-    });
   });
 });

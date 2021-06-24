@@ -22,17 +22,7 @@ jest.mock("@src/configs/db-client", () => {
 describe("AddIdentityPage", () => {
   describe("Identity type : EMAIL", () => {
     beforeAll(() => {
-      setRouterPathname("/account/logins/email/new");
-    });
-
-    it("should render proper email breadcrumbs", async () => {
-      expect.assertions(1);
-
-      render(<AddIdentityPage type={IdentityTypes.EMAIL} />);
-
-      expect(
-        await screen.findByRole("heading", { name: /email address \| new/i }),
-      ).toBeInTheDocument();
+      setRouterPathname("/account/logins/[type]/new");
     });
 
     it("should render proper email form elements ", () => {
@@ -71,16 +61,6 @@ describe("AddIdentityPage", () => {
   describe("Identity type : PHONE", () => {
     beforeAll(() => {
       setRouterPathname("/account/logins/phone/new");
-    });
-
-    it("should render proper email breadcrumbs", () => {
-      expect.assertions(1);
-
-      render(<AddIdentityPage type={IdentityTypes.PHONE} />);
-
-      expect(
-        screen.getByRole("heading", { name: /phone number \| new/i }),
-      ).toBeInTheDocument();
     });
 
     it("should render proper phone form elements ", () => {
