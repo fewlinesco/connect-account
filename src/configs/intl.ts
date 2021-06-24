@@ -62,12 +62,7 @@ function formatNavigation(locale: string, id: string): string {
 
 function getLocaleFromRequest(request: NextApiRequest, span: Span): string {
   if (!request.headers["accept-language"]) {
-    let locale = request.cookies["NEXT_LOCALE"] || "en";
-
-    if (locale[0] === '"') {
-      locale = locale.slice(1, -1);
-    }
-
+    const locale = request.cookies["NEXT_LOCALE"] || "en";
     span.setDisclosedAttribute("locale", locale);
     return locale;
   }
@@ -81,12 +76,8 @@ function getLocaleFromRequest(request: NextApiRequest, span: Span): string {
     (locale) => locale === "en" || locale === "fr",
   );
 
-  let locale = request.cookies["NEXT_LOCALE"] || filteredAcceptLanguage || "en";
-
-  if (locale[0] === '"') {
-    locale = locale.slice(1, -1);
-  }
-
+  const locale =
+    request.cookies["NEXT_LOCALE"] || filteredAcceptLanguage || "en";
   span.setDisclosedAttribute("locale", locale);
   return locale;
 }
