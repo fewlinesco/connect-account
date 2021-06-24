@@ -27,7 +27,11 @@ const Security: React.FC = () => {
           {!data ? (
             <SkeletonTextLine fontSize={1.4} width={50} />
           ) : (
-            <p>{data.isPasswordSet ? "Update" : "Set"} your password</p>
+            <p>
+              {data.isPasswordSet
+                ? formatMessage({ id: "updatePassword" })
+                : formatMessage({ id: "setPassword" })}
+            </p>
           )}
           <RightChevron />
         </SecurityLink>
