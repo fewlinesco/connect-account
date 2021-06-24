@@ -24,12 +24,10 @@ describe("DesktopNavigationBar", () => {
   });
 
   test("Log in with a desktop computer, use the navbar to go to the logins page and go back to home page", async () => {
-    expect.assertions(6);
+    expect.assertions(5);
 
     try {
       await authenticateToConnect();
-
-      expect(await text("LOGINS").exists()).toBeTruthy();
 
       await click("LOGINS");
       expect(await text("Email addresses").exists()).toBeTruthy();

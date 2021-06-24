@@ -33,34 +33,35 @@ describe("Mark Identity as primary", () => {
   });
 
   test("It should correctly mark another identity to primary status and going back to logins overview page", async () => {
-    expect.assertions(10);
+    expect.assertions(6);
 
     try {
       await authenticateToConnect();
 
-      expect(await text("LOGINS").exists()).toBeTruthy();
       await click("LOGINS");
 
-      expect(await text("Show").exists()).toBeTruthy();
       await click("Show");
 
       expect(await text("Hide").exists()).toBeTruthy();
 
-      const nonPrimaryYet = await link(".test", above("Hide")).text();
+      const primaryIdentity = await link("", below("Email addresses")).text();
+
+      const nonPrimaryYet = (
+        await link("", below(primaryIdentity)).text()
+      ).includes("_delete_")
+        ? await link("", above("Hide")).text()
+        : await link("", below(primaryIdentity)).text();
+
       await click(nonPrimaryYet);
 
-      expect(await text("Make").exists()).toBeTruthy();
       await click("Make");
 
-      expect(await text("Confirm").exists()).toBeTruthy();
       await click("Confirm");
       expect(
         await text(`${nonPrimaryYet} is now your primary email`).exists(),
       ).toBeTruthy();
 
-      click(link(".test", below("Email addresses")), {
-        waitForEvents: ["loadEventFired"],
-      });
+      await click(link("", below("Email addresses")));
 
       expect(text(nonPrimaryYet)).toBeTruthy();
     } catch (error) {
