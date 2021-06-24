@@ -80,6 +80,17 @@ jobs:
           command: yarn e2e:remove-test-user
           when: always
 
+  promote-to-production:
+    docker:
+      - image: cimg/node:14.17.0
+
+    steps:
+      - install-dependencies
+
+      - run:
+          name: Promote Heroku staging app to production
+          command: yarn heroku:promote-staging-to-prod
+
 workflows:
   tests-on-push:
     when:
@@ -90,3 +101,6 @@ workflows:
     when: << pipeline.parameters.deployed_on_heroku >>
     jobs: 
       - e2e-tests
+      - promote-to-production:
+          requires:
+            - e2e-tests
