@@ -21,7 +21,7 @@ const Security: React.FC = () => {
 
   return (
     <>
-      <h2>{formatMessage({ id: "titleSection" })}</h2>
+      <h2>{formatMessage({ id: "sectionTitle" })}</h2>
       <SectionBox>
         <SecurityLink href={!data ? "#" : "/account/security/update"}>
           {!data ? (
