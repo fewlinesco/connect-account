@@ -88,7 +88,7 @@ describe("Account Web Application update password", () => {
       expect(await text("Password can't be blank.").exists()).toBeTruthy();
     } catch (error) {
       await screenshot({
-        path: "./tests/e2e/screenshots/fill-incorrect-new-password.test.png",
+        path: "./tests/e2e/screenshots/password-flow.test.png",
       });
 
       throw error;

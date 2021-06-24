@@ -1,11 +1,4 @@
 import { Identity, IdentityTypes } from "@fewlines/connect-management";
-import {
-  loggingMiddleware,
-  tracingMiddleware,
-  errorMiddleware,
-  recoveryMiddleware,
-  rateLimitingMiddleware,
-} from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { GetServerSideProps } from "next";
 import React from "react";
@@ -16,10 +9,8 @@ import { Container } from "@src/components/containers/container";
 import { UpdateIdentityForm } from "@src/components/forms/identities/update-identity-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
-import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
-import { authMiddleware } from "@src/middlewares/auth-middleware";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
@@ -52,15 +43,7 @@ const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ identityId: string }>(
     context,
-    [
-      tracingMiddleware(getTracer()),
-      rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
-      recoveryMiddleware(getTracer()),
-      sentryMiddleware(getTracer()),
-      errorMiddleware(getTracer()),
-      loggingMiddleware(getTracer(), logger),
-      authMiddleware(getTracer()),
-    ],
+    basicMiddlewares(getTracer(), logger),
     "/account/logins/[type]/[id]/update",
     () => {
       if (!context?.params?.id) {
