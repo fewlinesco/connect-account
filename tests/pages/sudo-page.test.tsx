@@ -25,11 +25,10 @@ jest.mock("@src/configs/db-client", () => {
   };
 });
 
-const mockedFetchJson = jest.spyOn(fetchJson, "fetchJson");
-
-const eventId = "5aebc079-c754-4324-93bb-af20d7015fbe";
-
 describe("SudoPage", () => {
+  const mockedFetchJson = jest.spyOn(fetchJson, "fetchJson");
+  const eventId = "5aebc079-c754-4324-93bb-af20d7015fbe";
+
   beforeAll(() => {
     setRouterPathname("/account/security/sudo");
   });

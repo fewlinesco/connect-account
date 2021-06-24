@@ -93,7 +93,8 @@ export const en = {
     phoneBreadcrumb: "Phone number | validation",
   },
   "/account/security": {
-    title: "Password",
+    title: "Security",
+    sectionTitle: "Password",
     breadcrumb: "Password, login history and more",
     setPassword: "Set your password",
     updatePassword: "Update your password",

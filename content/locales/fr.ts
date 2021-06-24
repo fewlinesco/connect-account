@@ -90,7 +90,8 @@ export const fr = {
     phoneBreadcrumb: "Numéro de téléphone | validation",
   },
   "/account/security": {
-    title: "Mot de passe",
+    title: "Sécurité",
+    sectionTitle: "Mot de passe",
     breadcrumb: "Mot de passe, historique de connexion et plus",
     setPassword: "Créer votre mot de passe",
     updatePassword: "Mettre à jour votre mot de passe",

@@ -25,15 +25,16 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("LoginsOverviewPage", () => {
+  const path = "/account/logins";
+  const localizedStrings = locales.en[path];
+
   beforeAll(() => {
-    setRouterPathname("/account/logins");
+    setRouterPathname(path);
   });
 
   afterEach(() => {
     cache.clear();
   });
-
-  const localizedStrings = locales.en["/account/logins"];
 
   describe("Identity type: EMAIL", () => {
     it("should display primary email identity first and all of them when clicking on the show more button", async () => {
