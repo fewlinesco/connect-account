@@ -23,7 +23,7 @@ jest.mock("@src/configs/db-client", () => {
 
 describe("EditAddressPage", () => {
   beforeAll(() => {
-    setRouterPathname("/account/profile/addresses/foo/edit");
+    setRouterPathname("/account/profile/addresses/[id]/edit");
   });
 
   it("should render proper user address form elements", async () => {

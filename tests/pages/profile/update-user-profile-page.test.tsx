@@ -23,7 +23,7 @@ jest.mock("@src/configs/db-client", () => {
 
 describe("UpdateUserProfilePage", () => {
   beforeAll(() => {
-    setRouterPathname("/account/profile/user-profile/update");
+    setRouterPathname("/account/profile/user-profile/edit");
   });
 
   it("should render proper user profile form elements", async () => {

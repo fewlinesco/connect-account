@@ -22,7 +22,7 @@ jest.mock("@src/configs/db-client", () => {
 
 describe("AddressOverviewPage", () => {
   beforeAll(() => {
-    setRouterPathname("/account/profile/addresses/foo");
+    setRouterPathname("/account/profile/addresses/[id]");
   });
 
   afterEach(() => {
