@@ -2,6 +2,7 @@ import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { GetServerSideProps } from "next";
 import React from "react";
+import { useIntl } from "react-intl";
 import useSWR from "swr";
 
 import { Container } from "@src/components/containers/container";
@@ -10,10 +11,12 @@ import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
+import { getIdentityType } from "@src/utils/get-identity-type";
 
 const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
   identityId,
 }) => {
+  const { formatMessage } = useIntl();
   const { data: identity, error } = useSWR<Identity, Error>(
     `/api/identities/${identityId}`,
   );
@@ -23,13 +26,13 @@ const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
   }
 
   const breadcrumbs = identity
-    ? identity.type.toUpperCase() === IdentityTypes.EMAIL
-      ? "Email address | edit"
-      : "Phone number | edit"
+    ? getIdentityType(identity.type) === IdentityTypes.EMAIL
+      ? formatMessage({ id: "emailBreadcrumb" })
+      : formatMessage({ id: "phoneBreadcrumb" })
     : "";
 
   return (
-    <Layout breadcrumbs={breadcrumbs} title="Logins">
+    <Layout breadcrumbs={breadcrumbs} title={formatMessage({ id: "title" })}>
       <Container>
         <UpdateIdentityForm identity={identity} />
       </Container>

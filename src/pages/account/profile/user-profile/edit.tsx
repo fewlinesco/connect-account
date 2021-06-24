@@ -1,6 +1,7 @@
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
+import { useIntl } from "react-intl";
 import useSWR from "swr";
 
 import { Profile } from "@src/@types/profile";
@@ -13,6 +14,7 @@ import { SWRError } from "@src/errors/errors";
 import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 
 const UpdateUserProfilePage: React.FC = () => {
+  const { formatMessage } = useIntl();
   const { data: userProfile, error: userProfileError } = useSWR<
     Profile,
     SWRError
@@ -23,7 +25,10 @@ const UpdateUserProfilePage: React.FC = () => {
   }
 
   return (
-    <Layout breadcrumbs={"Profile | edit"} title="Personal information">
+    <Layout
+      breadcrumbs={formatMessage({ id: "breadcrumb" })}
+      title={formatMessage({ id: "title" })}
+    >
       <Container>
         <UserProfileForm userProfileData={userProfile} />
       </Container>

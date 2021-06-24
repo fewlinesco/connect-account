@@ -1,6 +1,7 @@
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 
 import { Container } from "@src/components/containers/container";
@@ -11,12 +12,15 @@ import getTracer from "@src/configs/tracer";
 import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 
 const NewUserProfilePage: React.FC = () => {
+  const { formatMessage } = useIntl();
+
   return (
-    <Layout breadcrumbs={"Profile | new"} title="Personal information">
+    <Layout
+      breadcrumbs={formatMessage({ id: "breadcrumb" })}
+      title={formatMessage({ id: "title" })}
+    >
       <Container>
-        <InformativeMessage>
-          Please fill in these information to create your profile.
-        </InformativeMessage>
+        <InformativeMessage>{formatMessage({ id: "info" })}</InformativeMessage>
         <UserProfileForm isCreation={true} />
       </Container>
     </Layout>

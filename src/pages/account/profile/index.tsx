@@ -3,6 +3,7 @@ import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React from "react";
+import { useIntl } from "react-intl";
 import useSWR from "swr";
 
 import { Address, Profile } from "@src/@types/profile";
@@ -16,7 +17,7 @@ import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 
 const ProfilePage: React.FC = () => {
   const router = useRouter();
-
+  const { formatMessage } = useIntl();
   const { data: userProfile, error: userProfileError } = useSWR<
     Profile,
     SWRError
@@ -57,8 +58,8 @@ const ProfilePage: React.FC = () => {
 
   return (
     <Layout
-      breadcrumbs="Basic information about you"
-      title="Personal information"
+      breadcrumbs={formatMessage({ id: "breadcrumb" })}
+      title={formatMessage({ id: "title" })}
     >
       <Container>
         <ProfileOverview

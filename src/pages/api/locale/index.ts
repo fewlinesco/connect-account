@@ -60,6 +60,7 @@ const patchHandler: Handler = (request, response): Promise<void> => {
     span.setDisclosedAttribute("user cookie found", true);
 
     const { locale } = request.body;
+
     if (!locale) {
       throw webErrorFactory(webErrors.badRequest);
     }
@@ -74,6 +75,8 @@ const patchHandler: Handler = (request, response): Promise<void> => {
 
     setServerSideCookies(response, "NEXT_LOCALE", locale, {
       shouldCookieBeSealed: false,
+      maxAge: 2147483647,
+      path: "/",
     });
 
     span.setDisclosedAttribute("user locale set", true);

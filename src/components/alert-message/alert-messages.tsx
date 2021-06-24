@@ -111,7 +111,7 @@ const Wrapper = styled.div`
   align-items: flex-end;
   justify-content: center;
   z-index: 1;
-  width: 88rem;
+  width: 102.4rem;
 
   @media ${deviceBreakpoints.m} {
     width: 100%;

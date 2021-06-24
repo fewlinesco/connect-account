@@ -2,6 +2,7 @@ import { IdentityTypes } from "@fewlines/connect-management";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { GetServerSideProps } from "next";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { Container } from "@src/components/containers/container";
 import { AddIdentityForm } from "@src/components/forms/identities/add-identity-form";
@@ -12,14 +13,16 @@ import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
+  const { formatMessage } = useIntl();
+
   return (
     <Layout
-      breadcrumbs={`${
+      breadcrumbs={
         getIdentityType(type) === IdentityTypes.EMAIL
-          ? "Email address"
-          : "Phone number"
-      } | new`}
-      title="Logins"
+          ? formatMessage({ id: "emailBreadcrumb" })
+          : formatMessage({ id: "phoneBreadcrumb" })
+      }
+      title={formatMessage({ id: "title" })}
     >
       <Container>
         <AddIdentityForm type={type} />

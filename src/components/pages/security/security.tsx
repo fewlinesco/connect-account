@@ -21,13 +21,17 @@ const Security: React.FC = () => {
 
   return (
     <>
-      <h2>{formatMessage({ id: "title" })}</h2>
+      <h2>{formatMessage({ id: "sectionTitle" })}</h2>
       <SectionBox>
         <SecurityLink href={!data ? "#" : "/account/security/update"}>
           {!data ? (
             <SkeletonTextLine fontSize={1.4} width={50} />
           ) : (
-            <p>{data.isPasswordSet ? "Update" : "Set"} your password</p>
+            <p>
+              {data.isPasswordSet
+                ? formatMessage({ id: "updatePassword" })
+                : formatMessage({ id: "setPassword" })}
+            </p>
           )}
           <RightChevron />
         </SecurityLink>

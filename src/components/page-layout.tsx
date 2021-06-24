@@ -40,7 +40,7 @@ const Layout: React.FC<{
 const Main = styled.main`
   width: 100%;
   height: 100vh;
-  max-width: 88rem;
+  max-width: 102.4rem;
   margin: 0 auto;
 
   @media ${deviceBreakpoints.m} {
