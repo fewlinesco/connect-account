@@ -8,6 +8,7 @@ import {
   waitFor,
 } from "../../config/testing-library-config";
 import * as mockIdentities from "../../mocks/identities";
+import * as locales from "@content/locales";
 import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
 
 jest.mock("@src/configs/db-client", () => {
@@ -21,17 +22,19 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("IdentityOverviewPage", () => {
-  beforeAll(() => {
-    setRouterPathname(
-      `/account/logins/${mockIdentities.nonPrimaryEmailIdentity.id}`,
-    );
-  });
-
   afterEach(() => {
     cache.clear();
   });
 
+  const localizedStrings = locales.en["/account/logins/[type]/new"];
+
   describe("Identity type: EMAIL", () => {
+    beforeAll(() => {
+      setRouterPathname(
+        `/account/logins/email/${mockIdentities.nonPrimaryEmailIdentity.id}`,
+      );
+    });
+
     it("should render proper email breadcrumbs", async () => {
       expect.assertions(1);
 
@@ -50,7 +53,9 @@ describe("IdentityOverviewPage", () => {
       );
 
       expect(
-        await screen.findByRole("heading", { name: /email address/i }),
+        await screen.findByRole("heading", {
+          name: localizedStrings.emailBreadcrumb,
+        }),
       ).toBeInTheDocument();
     });
 
@@ -220,6 +225,12 @@ describe("IdentityOverviewPage", () => {
   });
 
   describe("Identity type: PHONE", () => {
+    beforeAll(() => {
+      setRouterPathname(
+        `/account/logins/phone/${mockIdentities.nonPrimaryPhoneIdentity.id}`,
+      );
+    });
+
     it("should render proper phone identity breadcrumbs", async () => {
       expect.assertions(1);
 
@@ -237,7 +248,9 @@ describe("IdentityOverviewPage", () => {
       );
 
       expect(
-        await screen.findByRole("heading", { name: /phone number/i }),
+        await screen.findByRole("heading", {
+          name: localizedStrings.phoneBreadcrumb,
+        }),
       ).toBeInTheDocument();
     });
 

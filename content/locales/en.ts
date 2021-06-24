@@ -34,7 +34,7 @@ export const en = {
     addressesSection: "Addresses",
     addAddress: "Add new address",
     noAddresses: "No addresses added yet",
-    showMore: "Show More",
+    showMore: "Show more",
     hide: "Hide",
   },
   "/account/profile/user-profile/new": {
@@ -69,7 +69,7 @@ export const en = {
     phoneAddNewIdentityMessage: "Add new phone number",
     socialTitle: "Social logins",
     socialNoIdentityMessage: "No social logins added yet.",
-    showMore: "Show More",
+    showMore: "Show more",
     hide: "Hide",
   },
   "/account/logins/[type]/new": {

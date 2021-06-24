@@ -34,7 +34,7 @@ const IdentityOverviewPage: React.FC<{
     : "";
 
   return (
-    <Layout breadcrumbs={breadcrumbs} title="Logins">
+    <Layout breadcrumbs={breadcrumbs} title={formatMessage({ id: "title" })}>
       <Container>
         <IdentityOverview identity={identity} />
       </Container>

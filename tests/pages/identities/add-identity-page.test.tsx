@@ -25,13 +25,13 @@ describe("AddIdentityPage", () => {
       setRouterPathname("/account/logins/email/new");
     });
 
-    it("should render proper email breadcrumbs", () => {
+    it("should render proper email breadcrumbs", async () => {
       expect.assertions(1);
 
       render(<AddIdentityPage type={IdentityTypes.EMAIL} />);
 
       expect(
-        screen.getByRole("heading", { name: /email address \| new/i }),
+        await screen.findByRole("heading", { name: /email address \| new/i }),
       ).toBeInTheDocument();
     });
 
