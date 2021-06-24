@@ -24,12 +24,10 @@ describe("Log in with a smart phone, open and close the navigation bar", () => {
   });
 
   test("Launch the browser with a smartphone, open and close the navigation bar", async () => {
-    expect.assertions(7);
+    expect.assertions(6);
 
     try {
       await authenticateToConnect();
-
-      expect(await text("Menu").exists()).toBeTruthy();
 
       await click("Menu");
       expect(await text("Close").exists()).toBeTruthy();

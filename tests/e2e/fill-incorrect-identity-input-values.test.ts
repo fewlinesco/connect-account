@@ -14,7 +14,7 @@ import {
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 import { configVariables } from "@src/configs/config-variables";
 
-describe("Account Web Application add identity", () => {
+describe("Fill incorrect identity input values", () => {
   jest.setTimeout(60000);
 
   beforeAll(async () => {
@@ -36,15 +36,12 @@ describe("Account Web Application add identity", () => {
   });
 
   test("It should show error messages if Identity inputs are filled incorrectly in add identity", async () => {
-    expect.assertions(11);
+    expect.assertions(9);
 
     try {
       await authenticateToConnect();
 
-      expect(await text("LOGINS").exists()).toBeTruthy();
       await click("LOGINS");
-
-      expect(await text("taiko").exists()).toBeTruthy();
 
       await click("Add new email address");
       expect(await text("Email address *").exists()).toBeTruthy();
@@ -85,31 +82,25 @@ describe("Account Web Application add identity", () => {
   });
 
   test("It should show error messages if Identity inputs are filled incorrectly in update identity", async () => {
-    expect.assertions(6);
+    expect.assertions(3);
 
     try {
-      expect(await text("LOGINS").exists()).toBeTruthy();
       await click("LOGINS");
-
       await click("Show");
       expect(await text("Hide").exists()).toBeTruthy();
-      const nonPrimaryYet = await link(".test", above("Hide")).text();
-      await click(nonPrimaryYet);
 
-      expect(await text("Update this email address").exists()).toBeTruthy();
+      const identityToUpdate = await link(".test", above("Hide")).text();
+      await click(identityToUpdate);
+
       await click("Update this email address");
-
       await click("Update email");
       expect(await text("Identity input can't be blank").exists()).toBeTruthy();
 
       await write(
-        nonPrimaryYet,
+        identityToUpdate,
         into(textBox({ placeholder: "Enter your email" })),
       );
-
-      expect(await text("Update email").exists()).toBeTruthy();
       await click("Update email");
-
       expect(await text("Something went wrong").exists()).toBeTruthy();
     } catch (error) {
       await screenshot({
