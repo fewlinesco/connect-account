@@ -10,6 +10,7 @@ import {
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { GetServerSideProps } from "next";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { Container } from "@src/components/containers/container";
 import { ValidateIdentityForm } from "@src/components/forms/identities/validate-identity-form";
@@ -26,14 +27,16 @@ const ValidateIdentityPage: React.FC<{
   eventId: string;
   alertMessages?: AlertMessage[];
 }> = ({ type, eventId }) => {
+  const { formatMessage } = useIntl();
+
   return (
     <Layout
-      breadcrumbs={`${
+      breadcrumbs={
         getIdentityType(type) === IdentityTypes.EMAIL
-          ? "Email address"
-          : "Phone number"
-      } | validation`}
-      title="Logins"
+          ? formatMessage({ id: "emailBreadcrumb" })
+          : formatMessage({ id: "phoneBreadcrumb" })
+      }
+      title={formatMessage({ id: "title" })}
     >
       <Container>
         <ValidateIdentityForm type={type} eventId={eventId} />

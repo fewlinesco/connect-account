@@ -8,6 +8,7 @@ import {
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
+import { useIntl } from "react-intl";
 import useSWR from "swr";
 
 import { Address } from "@src/@types/profile";
@@ -21,6 +22,7 @@ import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 
 const EditAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
+  const { formatMessage } = useIntl();
   const { data: address, error } = useSWR<Address, Error>(
     `/api/profile/addresses/${addressId}`,
   );
@@ -30,7 +32,10 @@ const EditAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
   }
 
   return (
-    <Layout breadcrumbs={"Address | edit"} title="Personal information">
+    <Layout
+      breadcrumbs={formatMessage({ id: "breadcrumb" })}
+      title={formatMessage({ id: "title" })}
+    >
       <Container>
         <UserAddressForm
           userAddress={address ? address : undefined}

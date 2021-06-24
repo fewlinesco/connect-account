@@ -19,7 +19,9 @@ export const en = {
       "Set or change your password. You can check your connections history here.",
   },
   "/account/profile": {
-    basicInfo: "Basic information",
+    title: "Personal information",
+    breadcrumb: "Basic information about you",
+    profileSection: "Profile",
     profilePicture: "PROFILE PICTURE",
     name: "NAME",
     preferredName: "PREFERRED USERNAME",
@@ -29,11 +31,32 @@ export const en = {
     website: "WEBSITE",
     profile: "PROFILE",
     updateInfo: "Update your personal information",
-    addresses: "Addresses",
+    addressesSection: "Addresses",
     addAddress: "Add new address",
     noAddresses: "No addresses added yet",
     showMore: "Show More",
     hide: "Hide",
+  },
+  "/account/profile/user-profile/new": {
+    title: "Personal information",
+    breadcrumb: "Profile | new",
+    info: "Please fill in these information to create your profile.",
+  },
+  "/account/profile/user-profile/edit": {
+    title: "Personal information",
+    breadcrumb: "Profile | edit",
+  },
+  "/account/profile/addresses/[id]": {
+    title: "Personal information",
+    breadcrumb: "Address",
+  },
+  "/account/profile/addresses/[id]/edit": {
+    title: "Personal information",
+    breadcrumb: "Address | edit",
+  },
+  "/account/profile/addresses/new": {
+    title: "Personal information",
+    breadcrumb: "Address | new",
   },
   "/account/logins": {
     title: "Logins",
@@ -48,6 +71,26 @@ export const en = {
     socialNoIdentityMessage: "No social logins added yet.",
     showMore: "Show More",
     hide: "Hide",
+  },
+  "/account/logins/[type]/new": {
+    title: "Logins",
+    emailBreadcrumb: "Email address",
+    phoneBreadcrumb: "Phone number",
+  },
+  "/account/logins/[type]/[id]": {
+    title: "Logins",
+    emailBreadcrumb: "Email address",
+    phoneBreadcrumb: "Phone number",
+  },
+  "/account/logins/[type]/[id]/update": {
+    title: "Logins",
+    emailBreadcrumb: "Email address | edit",
+    phoneBreadcrumb: "Phone number | edit",
+  },
+  "/account/logins/[type]/validation/[eventId]": {
+    title: "Logins",
+    emailBreadcrumb: "Email address | validation",
+    phoneBreadcrumb: "Phone number | validation",
   },
   "/account/security": {
     title: "Password",

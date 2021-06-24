@@ -27,7 +27,7 @@ const ProfileOverview: React.FC<{
 
   return (
     <>
-      <h2>{formatMessage({ id: "basicInfo" })}</h2>
+      <h2>{formatMessage({ id: "profileSection" })}</h2>
       <SectionBox>
         <BoxedLink disableClick={false} href="#">
           <Flex>
@@ -117,7 +117,7 @@ const ProfileOverview: React.FC<{
           {formatMessage({ id: "updateInfo" })}
         </FakeButton>
       </NeutralLink>
-      <h2>{formatMessage({ id: "addresses" })}</h2>
+      <h2>{formatMessage({ id: "addressesSection" })}</h2>
       <SectionBox>
         {!userAddresses ? (
           <BoxedLink disableClick={true} href="#">

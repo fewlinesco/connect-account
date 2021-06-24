@@ -9,6 +9,7 @@ import {
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import { GetServerSideProps } from "next";
 import React from "react";
+import { useIntl } from "react-intl";
 import useSWR from "swr";
 
 import { Container } from "@src/components/containers/container";
@@ -19,10 +20,12 @@ import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { getIdentityType } from "@src/utils/get-identity-type";
 
 const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
   identityId,
 }) => {
+  const { formatMessage } = useIntl();
   const { data: identity, error } = useSWR<Identity, Error>(
     `/api/identities/${identityId}`,
   );
@@ -32,13 +35,13 @@ const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
   }
 
   const breadcrumbs = identity
-    ? identity.type.toUpperCase() === IdentityTypes.EMAIL
-      ? "Email address | edit"
-      : "Phone number | edit"
+    ? getIdentityType(identity.type) === IdentityTypes.EMAIL
+      ? formatMessage({ id: "emailBreadcrumb" })
+      : formatMessage({ id: "phoneBreadcrumb" })
     : "";
 
   return (
-    <Layout breadcrumbs={breadcrumbs} title="Logins">
+    <Layout breadcrumbs={breadcrumbs} title={formatMessage({ id: "title" })}>
       <Container>
         <UpdateIdentityForm identity={identity} />
       </Container>
