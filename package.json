@@ -229,7 +229,6 @@
       "@src/(.*)": "<rootDir>/src/$1",
       "@content/(.*)": "<rootDir>/content/$1"
     },
-    
     "setupFilesAfterEnv": [
       "@testing-library/jest-dom/extend-expect"
     ]
