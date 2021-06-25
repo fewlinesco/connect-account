@@ -522,10 +522,10 @@
     "@aws-sdk/is-array-buffer" "3.18.0"
     tslib "^2.0.0"
 
-"@aws-sdk/util-dynamodb@3.18.0":
-  version "3.18.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/util-dynamodb/-/util-dynamodb-3.18.0.tgz#634c68e57c57de02de22f089b77932dc8dc6929f"
-  integrity sha512-UoBImpz/3q/wUG/8IF9BGOHgCAhq1RpfXz7sYFXGHRTJy6UdOMBJyE4odey7kmoqxLHC+pRE712tE6s9z1EHgg==
+"@aws-sdk/util-dynamodb@3.19.0":
+  version "3.19.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/util-dynamodb/-/util-dynamodb-3.19.0.tgz#3f08d4e4cef02402e7bf88fd765976511429db36"
+  integrity sha512-ROM57j0a6odsUEabstiSIDJHkYyiRvZihLXnjyD8XH+j7F0oPxHsFWJROvGL8Oqm/x0rADyFyEL+nQOyDZkDCQ==
   dependencies:
     tslib "^2.0.0"
 
