@@ -16,20 +16,7 @@ const UserAddressForm: React.FC<{
 }> = ({ userAddress, isCreation }) => {
   const [formID] = React.useState<string>(uuidv4());
 
-  const [address, setAddress] = React.useState<Address>({
-    id: "",
-    sub: "",
-    street_address: "",
-    locality: "",
-    region: "",
-    postal_code: "",
-    country: "",
-    kind: "",
-    created_at: "",
-    updated_at: "",
-    street_address_2: "",
-    primary: false,
-  });
+  const [address, setAddress] = React.useState<Address>({} as Address);
 
   const router = useRouter();
 
@@ -125,7 +112,6 @@ const UserAddressForm: React.FC<{
             });
           }}
           label="Locality *"
-          required
         />
         <InputText
           type="text"
@@ -139,7 +125,6 @@ const UserAddressForm: React.FC<{
             });
           }}
           label="Postal code *"
-          required
         />
         <InputText
           type="text"
@@ -166,7 +151,6 @@ const UserAddressForm: React.FC<{
             });
           }}
           label="Country *"
-          required
         />
         <InputText
           type="text"

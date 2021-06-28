@@ -80,6 +80,7 @@ const postHandler: Handler = async (request, response) => {
           return addressData;
         })
         .catch((error) => {
+          console.log("❌", error.response.data);
           span.setDisclosedAttribute(
             "is Connect.Profile new address created",
             false,
