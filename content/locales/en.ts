@@ -157,7 +157,7 @@ export const en = {
     "404Content":
       "It may have expired, or there could be a typo. Maybe you can find what you need on our",
     homepage: "homepage",
-    "505Content":
+    "500Content":
       "Something went wrong. We are working on getting this fixed as soon as we can.",
     blankPassword: "Password can't be blank.",
     passwordMatch:
