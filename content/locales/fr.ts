@@ -160,6 +160,15 @@ export const fr = {
     blankPassword: "Le mot de passe ne peut pas être vide.",
     passwordMatch:
       "Votre confirmation de mot de passe ne correspond pas à votre nouveau mot de passe.",
+    passwordCriteria:
+      "Le mot de passe que vous entrez ne répond pas aux critères.",
+    passwordInfo: "Assurez-vous que votre mot de passe contient au moins :",
+    passwordRuleDigit:
+      "{digitCount, plural, one {1 chiffre} other {{digitCount} chiffres}}",
+    passwordRuleNonDigit:
+      "{nonDigitCount, plural, one {1 non-chiffre} other {{nonDigitCount} non-chiffres}}",
+    passwordRuleCharacter:
+      "{characterCount, plural, one {1 caractère} other {{characterCount} caractères}}",
     somethingWrong:
       "Quelque chose s’est mal passé. Veuillez réessayer plus tard.",
     invalidValidationCode: "Code de validation invalide.",

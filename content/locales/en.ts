@@ -162,6 +162,14 @@ export const en = {
     blankPassword: "Password can't be blank.",
     passwordMatch:
       "Your password confirmation does not match your new password.",
+    passwordCriteria: "The password you enter does not meet the criteria.",
+    passwordInfo: "Ensure that your password contains at least:",
+    passwordRuleDigit:
+      "{digitCount, plural, one {1 digit} other {{digitCount} digits}}",
+    passwordRuleNonDigit:
+      "{nonDigitCount, plural, one {1 non-digit} other {{nonDigitCount} non-digits}}",
+    passwordRuleCharacter:
+      "{characterCount, plural, one {1 character} other {{characterCount} characters}}",
     somethingWrong: "Something went wrong. Please try again later.",
     invalidValidationCode: "Invalid validation code.",
   },

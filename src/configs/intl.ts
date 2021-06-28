@@ -74,12 +74,16 @@ function formatNavigation(locale: string, id: string): string {
   }
 }
 
-function formatErrorMessage(locale: string, id: string): string {
+function formatErrorMessage(
+  locale: string,
+  id: string,
+  variables?: Record<string, unknown>,
+): string {
   switch (locale) {
     case "fr":
-      return frErrorIntl.formatMessage({ id });
+      return frErrorIntl.formatMessage({ id }, variables);
     case "en":
-      return enErrorIntl.formatMessage({ id });
+      return enErrorIntl.formatMessage({ id }, variables);
     default:
       throw new Error(
         `${locale} locale not allowed. Please choose one of the following:\n- en\n- fr`,
