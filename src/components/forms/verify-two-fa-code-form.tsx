@@ -116,19 +116,19 @@ const ExtendedStyledForm = styled(Form)`
 const MultipleInputsMasked = styled(InputText)`
   border: 0;
   background: none;
-  letter-spacing: 4.35rem;
-  width: 85%;
+  letter-spacing: 4.65rem;
+  width: 75%;
   font-size: ${({ theme }) => theme.fontSizes.paragraph};
   font-family: monospace, monospace;
   caret-color: transparent;
   position: relative;
-  left: 1.95rem;
+  left: 2.4rem;
   margin: ${({ theme }) => theme.spaces.xs} 0;
 
   @media ${deviceBreakpoints.m} {
     letter-spacing: 3.3rem;
     width: 27rem;
-    left: 1rem;
+    left: 0.9rem;
     padding-left: 1.5rem;
   }
 `;
@@ -136,7 +136,7 @@ const MultipleInputsMasked = styled(InputText)`
 const InputMask = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 75%;
+  width: 65%;
   position: absolute;
   top: 0;
   margin: ${({ theme }) => theme.spaces.xs} 0;
