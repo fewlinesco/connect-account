@@ -53,16 +53,16 @@ async function authentication(
       if (error.name === "TokenExpiredError") {
         span.setDisclosedAttribute("is access_token expired", true);
 
-        if (request.url && request.url.includes("/api/")) {
+        if (request.url && request.url.startsWith("/api/")) {
           throw webErrorFactory(webErrors.unauthorized);
         }
 
-        const redirectURL = !request.url ? "/account" : request.url;
+        const redirectURL = request.url ? request.url : "/account";
 
         response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
         response.setHeader(
           "location",
-          `/api/auth-connect/refresh-token?next=${redirectURL}`,
+          `/api/auth-connect/refresh-token?next=${encodeURIComponent(redirectURL)}`,
         );
         throw webErrorFactory(webErrors.temporaryRedirection);
       }
