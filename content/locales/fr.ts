@@ -148,4 +148,12 @@ export const fr = {
     close: "Fermer",
     logout: "Vous déconnecter",
   },
+  errors: {
+    "404Title": "Nous ne trouvons pas la page que vous cherchez.",
+    "404Content":
+      "Elle peut être expirée, ou il pourrait y avoir une coquille. Peut-être que vous pouvez trouver ce dont vous avez besoin sur notre",
+    homepage: "page d'acceuil",
+    "505Content":
+      "Something went wrong. We are working on getting this fixed as soon as we can.",
+  },
 };

@@ -33,6 +33,20 @@ const frNavIntl = createIntl(
   },
   cache,
 );
+const enErrorIntl = createIntl(
+  {
+    locale: "en",
+    messages: { ...locales["en"].errors },
+  },
+  cache,
+);
+const frErrorIntl = createIntl(
+  {
+    locale: "fr",
+    messages: { ...locales["fr"].errors },
+  },
+  cache,
+);
 
 function formatAlertMessage(locale: string, id: string): string {
   switch (locale) {
@@ -53,6 +67,19 @@ function formatNavigation(locale: string, id: string): string {
       return frNavIntl.formatMessage({ id });
     case "en":
       return enNavIntl.formatMessage({ id });
+    default:
+      throw new Error(
+        `${locale} locale not allowed. Please choose one of the following:\n- en\n- fr`,
+      );
+  }
+}
+
+function formatErrorMessage(locale: string, id: string): string {
+  switch (locale) {
+    case "fr":
+      return frErrorIntl.formatMessage({ id });
+    case "en":
+      return enErrorIntl.formatMessage({ id });
     default:
       throw new Error(
         `${locale} locale not allowed. Please choose one of the following:\n- en\n- fr`,
@@ -82,4 +109,9 @@ function getLocaleFromRequest(request: NextApiRequest, span: Span): string {
   return locale;
 }
 
-export { formatAlertMessage, getLocaleFromRequest, formatNavigation };
+export {
+  formatAlertMessage,
+  getLocaleFromRequest,
+  formatNavigation,
+  formatErrorMessage,
+};

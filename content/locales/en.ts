@@ -150,4 +150,12 @@ export const en = {
     close: "Close",
     logout: "Logout",
   },
+  errors: {
+    "404Title": "We can't find the page you are looking for.",
+    "404Content":
+      "It may have expired, or there could be a typo. Maybe you can find what you need on our",
+    homepage: "homepage",
+    "505Content":
+      "Something went wrong. We are working on getting this fixed as soon as we can.",
+  },
 };
