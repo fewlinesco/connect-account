@@ -58,7 +58,6 @@ const spiedOnGetDBUserFromSub = jest
         sudo_mode_ttl: 42,
         sudo_event_ids: [],
       },
-      locale: "en",
     };
   });
 
@@ -104,8 +103,14 @@ function mockedReqAndRes(sealedJWE: string): {
 
   mockedNextApiRequest.headers = {
     cookie: `user-cookie=${sealedJWE}`,
+    host: "http://localhost:4242/",
   };
-  mockedNextApiRequest.rawHeaders = ["Cookie", `user-cookie=${sealedJWE}`];
+  mockedNextApiRequest.rawHeaders = [
+    "Cookie",
+    `user-cookie=${sealedJWE}`,
+    "host",
+    "http://localhost:4242/",
+  ];
 
   return { mockedNextApiRequest, mockedResponse };
 }
@@ -175,7 +180,7 @@ describe("Authentication flow", () => {
       const { mockedNextApiRequest, mockedResponse } =
         mockedReqAndRes(sealedJWS);
 
-      mockedNextApiRequest.headers.referer = "http://referer.test/url";
+      mockedNextApiRequest.url = "https://referer.test/url";
       mockedNextApiRequest.method = "GET";
 
       await refreshTokenHandler(mockedNextApiRequest, mockedResponse);
