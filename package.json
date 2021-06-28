@@ -104,7 +104,7 @@
     "jest": "27.0.5",
     "jest-fetch-mock": "3.0.3",
     "jest-styled-components": "7.0.4",
-    "prettier": "2.3.1",
+    "prettier": "2.3.2",
     "taiko": "1.2.5",
     "ts-jest": "27.0.3",
     "ts-node": "10.0.0",
