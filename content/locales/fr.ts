@@ -166,7 +166,7 @@ export const fr = {
     passwordRuleDigit:
       "{digitCount, plural, one {1 chiffre} other {{digitCount} chiffres}}",
     passwordRuleNonDigit:
-      "{nonDigitCount, plural, one {1 non-chiffre} other {{nonDigitCount} non-chiffres}}",
+      "{nonDigitCount, plural, one {1 lettre} other {{nonDigitCount} lettres}}",
     passwordRuleCharacter:
       "{characterCount, plural, one {1 caractère} other {{characterCount} caractères}}",
     somethingWrong:

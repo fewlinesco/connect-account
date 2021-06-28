@@ -12,6 +12,7 @@ import {
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
+import * as locales from "@content/locales";
 import { configVariables } from "@src/configs/config-variables";
 
 describe("Fill incorrect identity input values", () => {
@@ -34,6 +35,8 @@ describe("Fill incorrect identity input values", () => {
   afterAll(async () => {
     await closeBrowser();
   });
+
+  const localizedErrorStrings = locales.en.errors;
 
   test("It should show error messages if Identity inputs are filled incorrectly in add identity", async () => {
     expect.assertions(9);

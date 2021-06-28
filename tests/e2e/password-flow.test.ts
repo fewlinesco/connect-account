@@ -11,6 +11,7 @@ import {
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
+import * as locales from "@content/locales";
 
 describe("Account Web Application update password", () => {
   jest.setTimeout(60000);
@@ -32,6 +33,8 @@ describe("Account Web Application update password", () => {
   afterAll(async () => {
     await closeBrowser();
   });
+
+  const localizedErrorStrings = locales.en.errors;
 
   test("It should show error messages if password inputs are filled incorrectly", async () => {
     expect.assertions(12);
@@ -55,9 +58,7 @@ describe("Account Web Application update password", () => {
 
       await click("Update password");
       expect(
-        await text(
-          "Your password confirmation do not match your new password.",
-        ).exists(),
+        await text(localizedErrorStrings.passwordMatch).exists(),
       ).toBeTruthy();
 
       await focus(textBox({ placeholder: "New password" }));
@@ -70,9 +71,7 @@ describe("Account Web Application update password", () => {
 
       await click("Update password");
       expect(
-        await text(
-          "The password you enter does not meet the criteria.",
-        ).exists(),
+        await text(localizedErrorStrings.passwordCriteria).exists(),
       ).toBeTruthy();
       expect(await text("1 digit").exists()).toBeTruthy();
       expect(await text("1 non-digit").exists()).toBeTruthy();
@@ -85,7 +84,9 @@ describe("Account Web Application update password", () => {
       await clear(textBox({ placeholder: "Confirm new password" }));
       await write("");
       await click("Update password");
-      expect(await text("Password can't be blank.").exists()).toBeTruthy();
+      expect(
+        await text(localizedErrorStrings.blankPassword).exists(),
+      ).toBeTruthy();
     } catch (error) {
       await screenshot({
         path: "./tests/e2e/screenshots/password-flow.test.png",
