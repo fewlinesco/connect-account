@@ -13,12 +13,7 @@ import {
   HttpStatus,
 } from "@fwl/web";
 import {
-  loggingMiddleware,
   wrapMiddlewares,
-  tracingMiddleware,
-  errorMiddleware,
-  recoveryMiddleware,
-  rateLimitingMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -28,13 +23,13 @@ import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { configVariables } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import { oauth2Client } from "@src/configs/oauth2-client";
-import rateLimitingConfig from "@src/configs/rate-limiting-config";
+
 import getTracer from "@src/configs/tracer";
 import { NoDBUserFoundError, UnhandledTokenType } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
+import { noAuthBasicMiddlewares } from "@src/middlewares/basic-middlewares";
 
 const handler: Handler = (request, response): Promise<void> => {
   const webErrors = {
@@ -167,14 +162,7 @@ const handler: Handler = (request, response): Promise<void> => {
 };
 
 const wrappedHandler = wrapMiddlewares(
-  [
-    tracingMiddleware(getTracer()),
-    rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
-    recoveryMiddleware(getTracer()),
-    sentryMiddleware(getTracer()),
-    errorMiddleware(getTracer()),
-    loggingMiddleware(getTracer(), logger),
-  ],
+  noAuthBasicMiddlewares(getTracer(), logger),
   handler,
   "/api/auth-connect/refresh-token",
 );
