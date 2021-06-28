@@ -112,6 +112,8 @@ export const en = {
     info: "Choose a contact means below that we’ll send a validation code to:",
     send: "Send validation code",
     resend: "Resend validation code",
+    twoFALabel: "Enter received code here:",
+    confirm: "Confirm",
   },
   "/account/locale": {
     title: "Switch Language",
@@ -161,5 +163,6 @@ export const en = {
     passwordMatch:
       "Your password confirmation does not match your new password.",
     somethingWrong: "Something went wrong. Please try again later.",
+    invalidValidationCode: "Invalid validation code.",
   },
 };

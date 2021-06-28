@@ -110,6 +110,8 @@ export const fr = {
     info: "Choisissez un moyen de contact sur lequel nous enverrons un code de validation:",
     send: "Envoi du code de validation",
     resend: "Renvoyer le code de validation",
+    twoFALabel: "Entrez le code reçu ici :",
+    confirm: "Confirmer",
   },
   "/account/locale": {
     title: "Changer de langue",
@@ -160,5 +162,6 @@ export const fr = {
       "Votre confirmation de mot de passe ne correspond pas à votre nouveau mot de passe.",
     somethingWrong:
       "Quelque chose s’est mal passé. Veuillez réessayer plus tard.",
+    invalidValidationCode: "Code de validation invalide.",
   },
 };

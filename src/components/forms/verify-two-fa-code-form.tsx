@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
@@ -7,6 +8,7 @@ import { FormErrorMessage } from "../input/form-error-message";
 import { InputText } from "../input/input-text";
 import { Form } from "./form";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { formatErrorMessage } from "@src/configs/intl";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
@@ -19,6 +21,7 @@ const VerifyTwoFACodeForm: React.FC<{
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const router = useRouter();
+  const { formatMessage } = useIntl();
 
   return (
     <ExtendedStyledForm
@@ -40,7 +43,12 @@ const VerifyTwoFACodeForm: React.FC<{
                   ERRORS_DATA.INVALID_VALIDATION_CODE.message
               ) {
                 setFormID(uuidv4());
-                setErrorMessage("Invalid validation code");
+                setErrorMessage(
+                  formatErrorMessage(
+                    router.locale || "en",
+                    "invalidValidationCode",
+                  ),
+                );
                 return;
               }
 
@@ -66,14 +74,14 @@ const VerifyTwoFACodeForm: React.FC<{
       }}
     >
       {errorMessage ? (
-        <FormErrorMessage>{errorMessage}.</FormErrorMessage>
+        <FormErrorMessage>{errorMessage}</FormErrorMessage>
       ) : null}
       <MultipleInputsMasked
         type="text"
         name="verificationCode"
         onChange={(value) => setVerificationCode(value)}
         value={verificationCode}
-        label="Enter received code here:"
+        label={formatMessage({ id: "twoFALabel" })}
         maxLength={6}
         autoFocus={true}
       >
@@ -87,7 +95,7 @@ const VerifyTwoFACodeForm: React.FC<{
         </InputMask>
       </MultipleInputsMasked>
       <Button variant={ButtonVariant.PRIMARY} type="submit">
-        Confirm
+        {formatMessage({ id: "confirm" })}
       </Button>
     </ExtendedStyledForm>
   );
