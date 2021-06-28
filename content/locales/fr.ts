@@ -152,8 +152,13 @@ export const fr = {
     "404Title": "Nous ne trouvons pas la page que vous cherchez.",
     "404Content":
       "Elle peut être expirée, ou il pourrait y avoir une coquille. Peut-être que vous pouvez trouver ce dont vous avez besoin sur notre",
-    homepage: "page d'acceuil",
+    homepage: "page d'acceuil.",
     "505Content":
       "Something went wrong. We are working on getting this fixed as soon as we can.",
+    blankPassword: "Le mot de passe ne peut pas être vide.",
+    passwordMatch:
+      "Votre confirmation de mot de passe ne correspond pas à votre nouveau mot de passe.",
+    somethingWrong:
+      "Quelque chose s’est mal passé. Veuillez réessayer plus tard.",
   },
 };

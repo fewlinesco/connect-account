@@ -157,5 +157,9 @@ export const en = {
     homepage: "homepage",
     "505Content":
       "Something went wrong. We are working on getting this fixed as soon as we can.",
+    blankPassword: "Password can't be blank.",
+    passwordMatch:
+      "Your password confirmation does not match your new password.",
+    somethingWrong: "Something went wrong. Please try again later.",
   },
 };

@@ -7,6 +7,7 @@ import { InputText } from "../input/input-text";
 import { StyledForm } from "./form";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { PasswordRulesErrorList } from "@src/components/password-rules-error-list/password-rules-error-list";
+import { formatErrorMessage } from "@src/configs/intl";
 import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
 import { capitalizeFirstLetter } from "@src/utils/format";
@@ -55,13 +56,18 @@ const SetPasswordForm: React.FC<{
                   if (
                     parsedResponse.message === ERRORS_DATA.INVALID_BODY.message
                   ) {
-                    setErrorMessage("Password can't be blank");
+                    setErrorMessage(
+                      formatErrorMessage(
+                        router.locale || "en",
+                        "passwordMatch",
+                      ),
+                    );
                     setIsNotSubmitted(true);
                     return;
                   }
 
                   setErrorMessage(
-                    "Something went wrong. Please try again later",
+                    formatErrorMessage(router.locale || "en", "somethingWrong"),
                   );
                 }
 
@@ -84,11 +90,11 @@ const SetPasswordForm: React.FC<{
       ) : null}
       {passwordsNotMatching ? (
         <MismatchedPassword>
-          Your password confirmation do not match your new password.
+          {formatErrorMessage(router.locale || "en", "passwordMatch")}
         </MismatchedPassword>
       ) : null}
       {errorMessage ? (
-        <FormErrorMessage>{errorMessage}.</FormErrorMessage>
+        <FormErrorMessage>{errorMessage}</FormErrorMessage>
       ) : null}
       <ExtendedInputStyle
         type="password"
