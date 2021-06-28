@@ -20,6 +20,7 @@ commands:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
+
 jobs:
   lint-and-tests:
     machine:
@@ -47,15 +48,48 @@ jobs:
     steps: 
       - install-dependencies
       - run:
-          name: Creating test user
-          command: yarn e2e:create-test-user
-      - run:
-          name: Run e2e tests
-          command: CONNECT_TEST_ACCOUNT_EMAIL="taiko_${CIRCLE_SHA1}@fewlines.test" yarn test:e2e 
+          name: Creating Connect test user
+          command: echo "export CONNECT_TEST_ACCOUNT_SUB=$(yarn e2e:create-test-user | xargs | cut -d' ' -f7 | cut -c-36)" >> $BASH_ENV
       - run: 
-          name: Removing test user
+          name: Preparing test user
+          command: yarn e2e:setting-sudo-ttl
+      - when: 
+          condition: 
+            matches: { pattern: ".*?\\bstaging\\b.*?", value: << pipeline.parameters.target_url >> }
+          steps:
+            - run: 
+                name: Setting Profile and Account staging URL env var
+                command: |
+                  echo "export CONNECT_PROFILE_URL=https://fewlines-profile-staging.herokuapp.com/" >> $BASH_ENV
+                  echo "export CONNECT_TEST_ACCOUNT_URL=https://account-staging.fewlines.tech/" >> $BASH_ENV
+      - run:
+          name: Running e2e tests
+          command: CONNECT_TEST_ACCOUNT_EMAIL="taiko_${CIRCLE_SHA1}@fewlines.test" yarn test:e2e 
+      - store_artifacts:
+          path: ./tests/e2e/screenshots
+      - when: 
+          condition: 
+            matches: { pattern: ".*?\\bstaging\\b.*?", value: << pipeline.parameters.target_url >> }
+          steps:
+            - run: 
+                name: Cleaning Profile Staging
+                command: yarn e2e:cleaning-profile-staging
+                when: always
+      - run: 
+          name: Removing Connect test user
           command: yarn e2e:remove-test-user
           when: always
+
+  promote-to-production:
+    docker:
+      - image: cimg/node:14.17.0
+
+    steps:
+      - install-dependencies
+
+      - run:
+          name: Promote Heroku staging app to production
+          command: yarn heroku:promote-staging-to-prod
 
 workflows:
   tests-on-push:
@@ -67,3 +101,10 @@ workflows:
     when: << pipeline.parameters.deployed_on_heroku >>
     jobs: 
       - e2e-tests
+      - promote-to-production:
+          requires:
+            - e2e-tests
+          filters:
+            branches:
+              only:
+                - main

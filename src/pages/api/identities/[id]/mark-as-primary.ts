@@ -10,25 +10,17 @@ import {
   HttpStatus,
   setAlertMessagesCookie,
 } from "@fwl/web";
-import {
-  loggingMiddleware,
-  wrapMiddlewares,
-  tracingMiddleware,
-  errorMiddleware,
-  recoveryMiddleware,
-  rateLimitingMiddleware,
-} from "@fwl/web/dist/middlewares";
+import { wrapMiddlewares } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { configVariables } from "@src/configs/config-variables";
+import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
-import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
-import { authMiddleware } from "@src/middlewares/auth-middleware";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 import { generateAlertMessage } from "@src/utils/generate-alert-message";
 import { getIdentityType } from "@src/utils/get-identity-type";
 import { isMarkingIdentityAsPrimaryAuthorized } from "@src/utils/is-marking-identity-as-primary-authorized";
@@ -96,12 +88,17 @@ const markAsPrimary: Handler = async (request, response) => {
       .then((identity) => {
         span.setDisclosedAttribute("is Identity marked as primary", true);
 
-        const alertMessage =
+        const locale = getLocaleFromRequest(request, span);
+        const localizedAlertMessageString =
           getIdentityType(identity.type) === IdentityTypes.EMAIL
-            ? `${identity.value} is now your primary email`
-            : `${identity.value} is now your primary phone number`;
+            ? formatAlertMessage(locale, "emailMarkedAsPrimary")
+            : formatAlertMessage(locale, "phoneMarkedAsPrimary");
 
-        setAlertMessagesCookie(response, [generateAlertMessage(alertMessage)]);
+        setAlertMessagesCookie(response, [
+          generateAlertMessage(
+            `${identity.value} ${localizedAlertMessageString}`,
+          ),
+        ]);
 
         response.statusCode = HttpStatus.OK;
         response.setHeader("Content-type", "application/json");
@@ -131,15 +128,7 @@ const markAsPrimary: Handler = async (request, response) => {
 };
 
 const markAsPrimaryWrappedHandler = wrapMiddlewares(
-  [
-    tracingMiddleware(getTracer()),
-    rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
-    recoveryMiddleware(getTracer()),
-    sentryMiddleware(getTracer()),
-    errorMiddleware(getTracer()),
-    loggingMiddleware(getTracer(), logger),
-    authMiddleware(getTracer()),
-  ],
+  basicMiddlewares(getTracer(), logger),
   markAsPrimary,
   "/api/identities/[id]/mark-as-primary",
 );

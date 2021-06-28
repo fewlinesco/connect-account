@@ -2,7 +2,12 @@ import { IdentityTypes } from "@fewlines/connect-management/dist/src/types";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
-import { render, screen } from "../../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+} from "../../config/testing-library-config";
+import * as locales from "@content/locales";
 import ValidateIdentityPage from "@src/pages/account/logins/[type]/validation/[eventId]";
 
 jest.mock("@src/configs/db-client", () => {
@@ -18,7 +23,14 @@ jest.mock("@src/configs/db-client", () => {
 const eventId = "foo";
 
 describe("ValidateIdentityPage", () => {
+  const path = "/account/logins/[type]/validation/[eventId]";
+  const localizedStrings = locales.en[path];
+
   describe("Identity type : EMAIL", () => {
+    beforeAll(() => {
+      setRouterPathname(path);
+    });
+
     it("should render proper email form elements ", () => {
       render(
         <ValidateIdentityPage type={IdentityTypes.EMAIL} eventId={eventId} />,
@@ -52,12 +64,16 @@ describe("ValidateIdentityPage", () => {
       );
 
       expect(
-        screen.getByRole("heading", { name: /email address \| validation/i }),
+        screen.getByRole("heading", { name: localizedStrings.emailBreadcrumb }),
       ).toBeInTheDocument();
     });
   });
 
   describe("Identity type : PHONE", () => {
+    beforeAll(() => {
+      setRouterPathname("/account/logins/phone/validation/[eventId]");
+    });
+
     it("should render proper phone form elements ", () => {
       render(
         <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />,
@@ -82,16 +98,6 @@ describe("ValidateIdentityPage", () => {
 
       expect(
         screen.getByRole("button", { name: "Resend validation code" }),
-      ).toBeInTheDocument();
-    });
-
-    it("should render proper phone breadcrumbs", () => {
-      render(
-        <ValidateIdentityPage type={IdentityTypes.PHONE} eventId={eventId} />,
-      );
-
-      expect(
-        screen.getByRole("heading", { name: /phone number \| validation/i }),
       ).toBeInTheDocument();
     });
   });

@@ -147,7 +147,6 @@ const handler: Handler = (request, response): Promise<void> => {
       {
         sub,
         refresh_token: refreshedTokens.refresh_token,
-        locale: user.locale,
       },
       user,
     ).catch((error) => {

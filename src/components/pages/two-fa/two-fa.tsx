@@ -1,5 +1,6 @@
 import { Identity } from "@fewlines/connect-management";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 import useSWR from "swr";
 
@@ -20,11 +21,13 @@ const TwoFA: React.FC = () => {
     throw error;
   }
 
+  const { formatMessage } = useIntl();
+
   return (
     <Wrapper>
       <SecurityMessage>
         <LockIcon />
-        <p>You need double factor authentication to access this page</p>
+        <p>{formatMessage({ id: "warning" })}</p>
       </SecurityMessage>
       <Separator />
       <SendTwoFACodeForm

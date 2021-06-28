@@ -24,12 +24,10 @@ describe("Log in with a smart phone, open and close the navigation bar", () => {
   });
 
   test("Launch the browser with a smartphone, open and close the navigation bar", async () => {
-    expect.assertions(7);
+    expect.assertions(6);
 
     try {
       await authenticateToConnect();
-
-      expect(await text("Menu").exists()).toBeTruthy();
 
       await click("Menu");
       expect(await text("Close").exists()).toBeTruthy();
@@ -39,7 +37,7 @@ describe("Log in with a smart phone, open and close the navigation bar", () => {
       expect(await text("Menu").exists()).toBeTruthy();
     } catch (error) {
       await screenshot({
-        path: "tests/e2e/screenshots/mobile_navigation_bar.png",
+        path: "./tests/e2e/screenshots/mobile_navigation_bar.png",
       });
 
       throw error;

@@ -12,14 +12,7 @@ import {
   getServerSideCookies,
   setAlertMessagesCookie,
 } from "@fwl/web";
-import {
-  loggingMiddleware,
-  wrapMiddlewares,
-  tracingMiddleware,
-  errorMiddleware,
-  recoveryMiddleware,
-  rateLimitingMiddleware,
-} from "@fwl/web/dist/middlewares";
+import { wrapMiddlewares } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 import { isValidPhoneNumber } from "react-phone-number-input";
 
@@ -28,12 +21,11 @@ import { TemporaryIdentity } from "@src/@types/temporary-identity";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertTemporaryIdentity } from "@src/commands/insert-temporary-identity";
 import { configVariables } from "@src/configs/config-variables";
+import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
-import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import { NoDBUserFoundError } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
-import { authMiddleware } from "@src/middlewares/auth-middleware";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 import { generateAlertMessage } from "@src/utils/generate-alert-message";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
@@ -127,13 +119,14 @@ const handler: Handler = (request, response): Promise<void> => {
             });
           });
 
-          const verificationCodeMessage =
+          const locale = getLocaleFromRequest(request, span);
+          const localizedAlertMessageString =
             getIdentityType(identityInput.type) === IdentityTypes.EMAIL
-              ? "A confirmation email has been sent"
-              : "A confirmation SMS has been sent";
+              ? formatAlertMessage(locale, "confirmationCodeEmail")
+              : formatAlertMessage(locale, "confirmationCodePhone");
 
           setAlertMessagesCookie(response, [
-            generateAlertMessage(verificationCodeMessage),
+            generateAlertMessage(localizedAlertMessageString),
           ]);
 
           response.statusCode = HttpStatus.OK;
@@ -166,15 +159,7 @@ const handler: Handler = (request, response): Promise<void> => {
 };
 
 const wrappedHandler = wrapMiddlewares(
-  [
-    tracingMiddleware(getTracer()),
-    rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
-    recoveryMiddleware(getTracer()),
-    sentryMiddleware(getTracer()),
-    errorMiddleware(getTracer()),
-    loggingMiddleware(getTracer(), logger),
-    authMiddleware(getTracer()),
-  ],
+  basicMiddlewares(getTracer(), logger),
   handler,
   "/api/auth-connect/send-identity-validation-code",
 );

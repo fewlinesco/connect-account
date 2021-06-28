@@ -2,7 +2,11 @@ import { IdentityTypes } from "@fewlines/connect-management";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
-import { render, screen } from "../../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+} from "../../config/testing-library-config";
 import AddIdentityPage from "@src/pages/account/logins/[type]/new";
 
 jest.mock("@src/configs/db-client", () => {
@@ -17,14 +21,8 @@ jest.mock("@src/configs/db-client", () => {
 
 describe("AddIdentityPage", () => {
   describe("Identity type : EMAIL", () => {
-    it("should render proper email breadcrumbs", () => {
-      expect.assertions(1);
-
-      render(<AddIdentityPage type={IdentityTypes.EMAIL} />);
-
-      expect(
-        screen.getByRole("heading", { name: /email address \| new/i }),
-      ).toBeInTheDocument();
+    beforeAll(() => {
+      setRouterPathname("/account/logins/[type]/new");
     });
 
     it("should render proper email form elements ", () => {
@@ -61,14 +59,8 @@ describe("AddIdentityPage", () => {
   });
 
   describe("Identity type : PHONE", () => {
-    it("should render proper email breadcrumbs", () => {
-      expect.assertions(1);
-
-      render(<AddIdentityPage type={IdentityTypes.PHONE} />);
-
-      expect(
-        screen.getByRole("heading", { name: /phone number \| new/i }),
-      ).toBeInTheDocument();
+    beforeAll(() => {
+      setRouterPathname("/account/logins/phone/new");
     });
 
     it("should render proper phone form elements ", () => {

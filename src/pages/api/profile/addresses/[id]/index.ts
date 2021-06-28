@@ -1,23 +1,14 @@
 import { Endpoint, HttpStatus, setAlertMessagesCookie } from "@fwl/web";
-import {
-  loggingMiddleware,
-  wrapMiddlewares,
-  tracingMiddleware,
-  errorMiddleware,
-  recoveryMiddleware,
-  rateLimitingMiddleware,
-  Middleware,
-} from "@fwl/web/dist/middlewares";
+import { wrapMiddlewares } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
+import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import { wrappedProfileClient } from "@src/configs/profile-client";
-import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
-import { authMiddleware } from "@src/middlewares/auth-middleware";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 import { generateAlertMessage } from "@src/utils/generate-alert-message";
 
 const getHandler: Handler = async (request, response) => {
@@ -99,8 +90,10 @@ const patchHandler: Handler = async (request, response) => {
       const { data: updatedUserAddress } = await userAddressClient
         .updateAddress(addressId, request.body)
         .then((addressData) => {
+          const locale = getLocaleFromRequest(request, span);
+
           setAlertMessagesCookie(response, [
-            generateAlertMessage("Your address has been updated"),
+            generateAlertMessage(formatAlertMessage(locale, "addressUpdated")),
           ]);
 
           return addressData;
@@ -160,8 +153,10 @@ const deleteHandler: Handler = async (request, response) => {
       await userAddressClient
         .deleteAddress(addressId)
         .then((addressData) => {
+          const locale = getLocaleFromRequest(request, span);
+
           setAlertMessagesCookie(response, [
-            generateAlertMessage("Your address has been deleted"),
+            generateAlertMessage(formatAlertMessage(locale, "addressDeleted")),
           ]);
 
           return addressData;
@@ -195,15 +190,7 @@ const deleteHandler: Handler = async (request, response) => {
   );
 };
 
-const middlewares: Middleware<NextApiRequest, NextApiResponse>[] = [
-  tracingMiddleware(getTracer()),
-  rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
-  recoveryMiddleware(getTracer()),
-  sentryMiddleware(getTracer()),
-  errorMiddleware(getTracer()),
-  loggingMiddleware(getTracer(), logger),
-  authMiddleware(getTracer()),
-];
+const middlewares = basicMiddlewares(getTracer(), logger);
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
   .get(

@@ -6,6 +6,7 @@ import {
   errorMiddleware,
   recoveryMiddleware,
   rateLimitingMiddleware,
+  httpsRedirectMiddleware,
 } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -45,6 +46,7 @@ const wrappedHandler = wrapMiddlewares(
     sentryMiddleware(getTracer()),
     errorMiddleware(getTracer()),
     loggingMiddleware(getTracer(), logger),
+    httpsRedirectMiddleware(getTracer()),
   ],
   handler,
   "/api/logout",

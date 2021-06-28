@@ -1,5 +1,6 @@
 import { HttpStatus } from "@fwl/web";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 import useSWR from "swr";
 
@@ -10,6 +11,7 @@ import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SectionBox } from "@src/components/shadow-box/section-box";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
+import { getNavSectionHref } from "@src/utils/getNavSectionHref";
 
 const AccountOverview: React.FC = () => {
   const { data: userProfile } = useSWR<Profile, SWRError>(
@@ -18,7 +20,7 @@ const AccountOverview: React.FC = () => {
       return await fetch(url).then(async (response) => {
         if (!response.ok) {
           const error = new SWRError(
-            "An error occurred while fetching the data. FLAG",
+            "An error occurred while fetching the data.",
           );
 
           if (response.status === HttpStatus.NOT_FOUND) {
@@ -37,24 +39,21 @@ const AccountOverview: React.FC = () => {
     },
   );
 
+  const { formatMessage } = useIntl();
+
   return (
     <>
       {getSectionListContent(userProfile ? false : true).map(
-        ([sectionName, { text, icon }]) => {
-          const sectionHref =
-            sectionName.toLocaleLowerCase() === "personal_information"
-              ? "/account/profile"
-              : sectionName.toLocaleLowerCase() === "create_your_profile"
-              ? "/account/profile/user-profile/new"
-              : `/account/${sectionName.toLocaleLowerCase()}`;
-
+        ([sectionName, { textID, icon }]) => {
           return (
             <SectionBox key={sectionName}>
-              <SectionLink href={sectionHref}>
+              <SectionLink href={getNavSectionHref(sectionName)}>
                 {icon}
                 <TextBox>
-                  <SectionName>{sectionName.replace(/_/g, " ")}</SectionName>
-                  {text}
+                  <SectionName>
+                    {formatMessage({ id: sectionName })}
+                  </SectionName>
+                  {formatMessage({ id: textID })}
                 </TextBox>
                 <RightChevron />
               </SectionLink>

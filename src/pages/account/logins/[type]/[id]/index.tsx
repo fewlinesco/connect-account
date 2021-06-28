@@ -1,30 +1,24 @@
 import { Identity, IdentityTypes } from "@fewlines/connect-management";
-import {
-  loggingMiddleware,
-  tracingMiddleware,
-  errorMiddleware,
-  recoveryMiddleware,
-  rateLimitingMiddleware,
-} from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
+import { useIntl } from "react-intl";
 import useSWR from "swr";
 
 import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { IdentityOverview } from "@src/components/pages/identity-overview/identity-overview";
 import { logger } from "@src/configs/logger";
-import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { SWRError } from "@src/errors/errors";
-import { authMiddleware } from "@src/middlewares/auth-middleware";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const IdentityOverviewPage: React.FC<{
   identityId: string;
 }> = ({ identityId }) => {
+  const { formatMessage } = useIntl();
+
   const { data: identity, error } = useSWR<Identity, SWRError>(
     `/api/identities/${identityId}`,
   );
@@ -35,12 +29,12 @@ const IdentityOverviewPage: React.FC<{
 
   const breadcrumbs = identity
     ? getIdentityType(identity.type) === IdentityTypes.EMAIL
-      ? "Email address"
-      : "Phone number"
+      ? formatMessage({ id: "emailBreadcrumb" })
+      : formatMessage({ id: "phoneBreadcrumb" })
     : "";
 
   return (
-    <Layout breadcrumbs={breadcrumbs} title="Logins">
+    <Layout breadcrumbs={breadcrumbs} title={formatMessage({ id: "title" })}>
       <Container>
         <IdentityOverview identity={identity} />
       </Container>
@@ -51,15 +45,7 @@ const IdentityOverviewPage: React.FC<{
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ identityId: string }>(
     context,
-    [
-      tracingMiddleware(getTracer()),
-      rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
-      recoveryMiddleware(getTracer()),
-      sentryMiddleware(getTracer()),
-      errorMiddleware(getTracer()),
-      loggingMiddleware(getTracer(), logger),
-      authMiddleware(getTracer()),
-    ],
+    basicMiddlewares(getTracer(), logger),
     "/account/logins/[type]/[id]",
     () => {
       if (!context?.params?.id) {

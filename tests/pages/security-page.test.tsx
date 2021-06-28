@@ -1,7 +1,12 @@
 import React from "react";
 import { cache, SWRConfig } from "swr";
 
-import { render, screen } from "../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+} from "../config/testing-library-config";
+import * as locales from "@content/locales";
 import SecurityPage from "@src/pages/account/security";
 
 jest.mock("@src/configs/db-client", () => {
@@ -15,6 +20,13 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("SecurityPage", () => {
+  const path = "/account/security";
+  const localizedStrings = locales.en[path];
+
+  beforeAll(() => {
+    setRouterPathname(path);
+  });
+
   afterEach(() => {
     cache.clear();
   });
@@ -42,14 +54,14 @@ describe("SecurityPage", () => {
       );
     expect(
       await screen.findByRole("heading", {
-        name: /password, login history and more/i,
+        name: localizedStrings.breadcrumb,
       }),
     ).toBeInTheDocument();
 
     await screen
-      .findAllByRole("heading", { name: /password/i })
+      .findAllByRole("heading", { name: localizedStrings.title })
       .then((elementList) => {
-        expect(elementList[1].innerHTML).toBe("Password");
+        expect(elementList[0].innerHTML).toBe("Security");
       });
   });
 
@@ -69,7 +81,7 @@ describe("SecurityPage", () => {
       </SWRConfig>,
     );
 
-    expect(await screen.findByText(/Set your password/i)).toBeTruthy();
+    expect(await screen.findByText(localizedStrings.setPassword)).toBeTruthy();
   });
 
   test("The anchor should render 'Update your password' if isPasswordSet is true", async () => {
@@ -88,6 +100,8 @@ describe("SecurityPage", () => {
       </SWRConfig>,
     );
 
-    expect(await screen.findByText(/Update your password/i)).toBeTruthy();
+    expect(
+      await screen.findByText(localizedStrings.updatePassword),
+    ).toBeTruthy();
   });
 });

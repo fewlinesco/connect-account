@@ -1,7 +1,12 @@
 import React from "react";
 import { cache, SWRConfig } from "swr";
 
-import { render, screen, waitFor } from "../../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+  waitFor,
+} from "../../config/testing-library-config";
 import * as mockIdentities from "../../mocks/identities";
 import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
 
@@ -21,26 +26,10 @@ describe("IdentityOverviewPage", () => {
   });
 
   describe("Identity type: EMAIL", () => {
-    it("should render proper email breadcrumbs", async () => {
-      expect.assertions(1);
-
-      render(
-        <SWRConfig
-          value={{
-            dedupingInterval: 0,
-            fetcher: () => mockIdentities.nonPrimaryEmailIdentity,
-          }}
-        >
-          <IdentityOverviewPage
-            identityId={mockIdentities.nonPrimaryEmailIdentity.id}
-          />
-          ,
-        </SWRConfig>,
+    beforeAll(() => {
+      setRouterPathname(
+        `/account/logins/email/${mockIdentities.nonPrimaryEmailIdentity.id}`,
       );
-
-      expect(
-        await screen.findByRole("heading", { name: /email address/i }),
-      ).toBeInTheDocument();
     });
 
     it("should display the relevant delete & mark as primary buttons but not validate identity one for a non primary validated email address", async () => {
@@ -209,25 +198,10 @@ describe("IdentityOverviewPage", () => {
   });
 
   describe("Identity type: PHONE", () => {
-    it("should render proper phone identity breadcrumbs", async () => {
-      expect.assertions(1);
-
-      render(
-        <SWRConfig
-          value={{
-            dedupingInterval: 0,
-            fetcher: () => mockIdentities.nonPrimaryPhoneIdentity,
-          }}
-        >
-          <IdentityOverviewPage
-            identityId={mockIdentities.nonPrimaryPhoneIdentity.id}
-          />
-        </SWRConfig>,
+    beforeAll(() => {
+      setRouterPathname(
+        `/account/logins/phone/${mockIdentities.nonPrimaryPhoneIdentity.id}`,
       );
-
-      expect(
-        await screen.findByRole("heading", { name: /phone number/i }),
-      ).toBeInTheDocument();
     });
 
     it("should display the relevant delete & mark as primary buttons but not validate identity one for a non primary validated phone number", async () => {

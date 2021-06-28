@@ -17,8 +17,7 @@ async function getDBUserFromSub(sub: string): Promise<DynamoUser | null> {
   const { Item } = await dynamoDbClient.send(new GetItemCommand(getItem));
 
   if (Item) {
-    const { sub, refresh_token, temporary_identities, sudo, locale } =
-      unmarshall(Item);
+    const { sub, refresh_token, temporary_identities, sudo } = unmarshall(Item);
 
     let currentSudo;
 
@@ -40,7 +39,6 @@ async function getDBUserFromSub(sub: string): Promise<DynamoUser | null> {
         ? (temporary_identities as TemporaryIdentity[])
         : [],
       sudo: currentSudo,
-      locale,
     };
   }
 

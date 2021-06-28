@@ -1,5 +1,6 @@
 import { Identity } from "@fewlines/connect-management";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 import useSWR from "swr";
 
@@ -17,23 +18,6 @@ import { BoxedLink } from "@src/components/boxed-link/boxed-link";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 import { sortIdentities } from "@src/utils/sort-identities";
 
-const IDENTITIES_SECTION_CONTENT = {
-  EMAIL: {
-    title: "Email addresses",
-    noIdentityMessage: "No email added yet.",
-    addNewIdentityMessage: "Add new email address",
-  },
-  PHONE: {
-    title: "Phone numbers",
-    noIdentityMessage: "No phone number added yet.",
-    addNewIdentityMessage: "Add new phone number",
-  },
-  SOCIAL: {
-    title: "Social logins",
-    noIdentityMessage: "No social logins added yet.",
-  },
-};
-
 const LoginsOverview: React.FC = () => {
   const [hideEmailList, setHideEmailList] = React.useState<boolean>(true);
   const [hidePhoneList, setHidePhoneList] = React.useState<boolean>(true);
@@ -47,11 +31,12 @@ const LoginsOverview: React.FC = () => {
   }
 
   const sortedIdentities = sortIdentities(identities || []);
+  const { formatMessage } = useIntl();
 
   return (
     <>
       <Timeline />
-      <h2>{IDENTITIES_SECTION_CONTENT.EMAIL.title}</h2>
+      <h2>{formatMessage({ id: "emailTitle" })}</h2>
       <SectionBox>
         {!identities ? (
           <BoxedLink disableClick={true} href="#">
@@ -75,11 +60,11 @@ const LoginsOverview: React.FC = () => {
       ) : null}
       <NeutralLink href={`/account/logins/email/new`}>
         <FakeButton variant={ButtonVariant.SECONDARY}>
-          {`+ ${IDENTITIES_SECTION_CONTENT.EMAIL.addNewIdentityMessage}`}
+          {`+ ${formatMessage({ id: "emailAddNewIdentityMessage" })}`}
         </FakeButton>
       </NeutralLink>
       <Timeline />
-      <h2>{IDENTITIES_SECTION_CONTENT.PHONE.title}</h2>
+      <h2>{formatMessage({ id: "phoneTitle" })}</h2>
       <SectionBox>
         {!identities ? (
           <BoxedLink disableClick={true} href="#">
@@ -103,11 +88,11 @@ const LoginsOverview: React.FC = () => {
       ) : null}
       <NeutralLink href={`/account/logins/phone/new`}>
         <FakeButton variant={ButtonVariant.SECONDARY}>
-          {`+ ${IDENTITIES_SECTION_CONTENT.PHONE.addNewIdentityMessage}`}
+          {`+ ${formatMessage({ id: "phoneAddNewIdentityMessage" })}`}
         </FakeButton>
       </NeutralLink>
       <TimelineEnd />
-      <h2>{IDENTITIES_SECTION_CONTENT.SOCIAL.title}</h2>
+      <h2>{formatMessage({ id: "socialTitle" })}</h2>
       <SectionBox>
         {!identities ? (
           <BoxedLink disableClick={true} href="#">
@@ -126,4 +111,4 @@ const Flex = styled.div`
   justify-content: center;
 `;
 
-export { LoginsOverview, IDENTITIES_SECTION_CONTENT };
+export { LoginsOverview };

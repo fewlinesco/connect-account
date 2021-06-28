@@ -1,8 +1,10 @@
 import { useButton } from "@react-aria/button";
 import { AriaButtonProps } from "@react-types/button";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 
+import { CrossIcon } from "../icons/cross-icon/cross-icon";
 import { Triangle } from "../icons/triangle/triangle";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
@@ -100,16 +102,19 @@ const ShowMoreButton: React.FC<ShowMoreButtonProps> = (props) => {
     { ...props, elementType: "div" },
     showMoreButtonRef,
   );
+  const { formatMessage } = useIntl();
 
   return (
     <ShowMoreButtonStyle {...buttonProps} ref={showMoreButtonRef}>
       {hideList ? (
         <div>
-          Show {quantity} more <Triangle rotate={hideList} />
+          {`${formatMessage({ id: "showMore" })} (${quantity}) `}
+          <Triangle rotate={hideList} />
         </div>
       ) : (
         <div>
-          Hide {quantity} <Triangle rotate={hideList} />
+          {`${formatMessage({ id: "hide" })} (${quantity}) `}
+          <Triangle rotate={hideList} />
         </div>
       )}
     </ShowMoreButtonStyle>
@@ -126,4 +131,26 @@ const ShowMoreButtonStyle = styled.div<Record<string, unknown>>`
   cursor: pointer;
 `;
 
-export { Button, StyledButton, ButtonVariant, ShowMoreButton };
+const CloseConfirmationBoxButton: React.FC<{ onPress: () => void }> = (
+  props,
+) => {
+  const closeConfirmationBoxButtonRef = React.useRef(null);
+  const { buttonProps } = useButton(
+    { ...props, elementType: "div" },
+    closeConfirmationBoxButtonRef,
+  );
+
+  return (
+    <div {...buttonProps} className="cross" ref={closeConfirmationBoxButtonRef}>
+      <CrossIcon />
+    </div>
+  );
+};
+
+export {
+  Button,
+  StyledButton,
+  ButtonVariant,
+  ShowMoreButton,
+  CloseConfirmationBoxButton,
+};

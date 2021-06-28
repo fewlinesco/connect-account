@@ -24,21 +24,19 @@ describe("DesktopNavigationBar", () => {
   });
 
   test("Log in with a desktop computer, use the navbar to go to the logins page and go back to home page", async () => {
-    expect.assertions(6);
+    expect.assertions(5);
 
     try {
       await authenticateToConnect();
 
-      expect(await text("Logins").exists()).toBeTruthy();
-
-      await click("Logins");
+      await click("LOGINS");
       expect(await text("Email addresses").exists()).toBeTruthy();
 
       await click("Home");
       expect(await text("LOGINS").exists()).toBeTruthy();
     } catch (error) {
       await screenshot({
-        path: "tests/e2e/screenshots/desktop_navigation_bar.png",
+        path: "./tests/e2e/screenshots/desktop_navigation_bar.png",
       });
 
       throw error;

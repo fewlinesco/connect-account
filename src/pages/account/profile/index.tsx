@@ -1,15 +1,9 @@
 import { HttpStatus } from "@fwl/web";
-import {
-  loggingMiddleware,
-  tracingMiddleware,
-  errorMiddleware,
-  recoveryMiddleware,
-  rateLimitingMiddleware,
-} from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React from "react";
+import { useIntl } from "react-intl";
 import useSWR from "swr";
 
 import { Address, Profile } from "@src/@types/profile";
@@ -17,15 +11,13 @@ import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { ProfileOverview } from "@src/components/pages/profile-overview/profile-overview";
 import { logger } from "@src/configs/logger";
-import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
 import { SWRError } from "@src/errors/errors";
-import { authMiddleware } from "@src/middlewares/auth-middleware";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 
 const ProfilePage: React.FC = () => {
   const router = useRouter();
-
+  const { formatMessage } = useIntl();
   const { data: userProfile, error: userProfileError } = useSWR<
     Profile,
     SWRError
@@ -66,8 +58,8 @@ const ProfilePage: React.FC = () => {
 
   return (
     <Layout
-      breadcrumbs="Basic information about you"
-      title="Personal information"
+      breadcrumbs={formatMessage({ id: "breadcrumb" })}
+      title={formatMessage({ id: "title" })}
     >
       <Container>
         <ProfileOverview
@@ -82,15 +74,7 @@ const ProfilePage: React.FC = () => {
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
     context,
-    [
-      tracingMiddleware(getTracer()),
-      rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
-      recoveryMiddleware(getTracer()),
-      sentryMiddleware(getTracer()),
-      errorMiddleware(getTracer()),
-      loggingMiddleware(getTracer(), logger),
-      authMiddleware(getTracer()),
-    ],
+    basicMiddlewares(getTracer(), logger),
     "/account/profile",
     () => {
       return { props: {} };

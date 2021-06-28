@@ -1,7 +1,12 @@
 import React from "react";
 import { SWRConfig } from "swr";
 
-import { render, screen } from "../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+} from "../config/testing-library-config";
+import * as locales from "@content/locales";
 import { getSectionListContent } from "@src/components/navigation-bars/navigation-sections";
 import AccountPage from "@src/pages/account/index";
 
@@ -16,8 +21,13 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("AccountPage", () => {
+  beforeAll(() => {
+    setRouterPathname("/account");
+  });
+
   it("should display each account section", async () => {
-    expect.assertions(6);
+    const sectionContent = getSectionListContent(true);
+    expect.assertions(sectionContent.length * 2);
 
     render(
       <SWRConfig
@@ -32,11 +42,17 @@ describe("AccountPage", () => {
       </SWRConfig>,
     );
 
-    for await (const [sectionName, { text }] of getSectionListContent(true)) {
+    for await (const [sectionName, { textID }] of sectionContent) {
       expect(
-        await screen.findByText(sectionName.replace(/_/g, " ")),
+        await screen.findByText(
+          (locales.en["/account"] as Record<string, string>)[sectionName],
+        ),
       ).toBeInTheDocument();
-      expect(await screen.findByText(text)).toBeInTheDocument();
+      expect(
+        await screen.findByText(
+          (locales.en["/account"] as Record<string, string>)[textID],
+        ),
+      ).toBeInTheDocument();
     }
   });
 });

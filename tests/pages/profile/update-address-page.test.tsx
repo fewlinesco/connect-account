@@ -2,7 +2,12 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import { SWRConfig } from "swr";
 
-import { render, screen, waitFor } from "../../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+  waitFor,
+} from "../../config/testing-library-config";
 import * as mockAddresses from "../../mocks/addresses";
 import EditAddressPage from "@src/pages/account/profile/addresses/[id]/edit";
 
@@ -17,6 +22,10 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("EditAddressPage", () => {
+  beforeAll(() => {
+    setRouterPathname("/account/profile/addresses/[id]/edit");
+  });
+
   it("should render proper user address form elements", async () => {
     expect.assertions(20);
 

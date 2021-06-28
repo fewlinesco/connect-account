@@ -48,13 +48,20 @@ async function prepareE2ETests(): Promise<void> {
   const operation = {
     query: ADD_IDENTITY_TO_USER,
     variables: {
-      userId: process.env.CONNECT_TEST_ACCOUNT_USER_ID,
+      userId: process.env.CONNECT_TEST_ACCOUNT_SUB,
       type: "EMAIL",
       value: "test_delete_this@taiko.test",
     },
   };
 
-  await fetchManagement(operation);
+  await fetchManagement(operation).then((response) => {
+    if ("errors" in response) {
+      console.warn(
+        "The test suit will most likely fail because of the following error(s):",
+      );
+      console.warn(response.errors);
+    }
+  });
 }
 
 prepareE2ETests();

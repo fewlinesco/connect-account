@@ -1,23 +1,15 @@
-import {
-  loggingMiddleware,
-  tracingMiddleware,
-  errorMiddleware,
-  recoveryMiddleware,
-  rateLimitingMiddleware,
-} from "@fwl/web/dist/middlewares";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import React from "react";
+import { useIntl } from "react-intl";
 import useSWR from "swr";
 
 import { Container } from "@src/components/containers/container";
 import { SetPasswordForm } from "@src/components/forms/set-password-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
-import rateLimitingConfig from "@src/configs/rate-limiting-config";
 import getTracer from "@src/configs/tracer";
-import { authMiddleware } from "@src/middlewares/auth-middleware";
-import { sentryMiddleware } from "@src/middlewares/sentry-middleware";
+import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 import { verifySudoModeMiddleware } from "@src/middlewares/verify-sudo-mode-middleware";
 
 const SecurityUpdatePage: React.FC = () => {
@@ -30,14 +22,15 @@ const SecurityUpdatePage: React.FC = () => {
     throw passwordSetError;
   }
 
+  const { formatMessage } = useIntl();
   let conditionalBreadcrumb;
 
   if (!passwordSetData) {
     conditionalBreadcrumb = "";
   } else {
-    conditionalBreadcrumb = `Password | ${
-      passwordSetData.isPasswordSet ? "update" : "set"
-    }`;
+    conditionalBreadcrumb = passwordSetData.isPasswordSet
+      ? formatMessage({ id: "updateBreadcrumb" })
+      : formatMessage({ id: "setBreadcrumb" });
   }
 
   return (
@@ -48,8 +41,8 @@ const SecurityUpdatePage: React.FC = () => {
             !passwordSetData
               ? ""
               : passwordSetData.isPasswordSet
-              ? "update"
-              : "set"
+              ? formatMessage({ id: "update" })
+              : formatMessage({ id: "set" })
           }
         />
       </Container>
@@ -61,13 +54,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
     context,
     [
-      tracingMiddleware(getTracer()),
-      rateLimitingMiddleware(getTracer(), logger, rateLimitingConfig),
-      recoveryMiddleware(getTracer()),
-      sentryMiddleware(getTracer()),
-      errorMiddleware(getTracer()),
-      loggingMiddleware(getTracer(), logger),
-      authMiddleware(getTracer()),
+      ...basicMiddlewares(getTracer(), logger),
       verifySudoModeMiddleware(getTracer(), context.resolvedUrl),
     ],
     "/account/security/update",
