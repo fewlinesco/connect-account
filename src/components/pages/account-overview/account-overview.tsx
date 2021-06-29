@@ -74,6 +74,7 @@ const SectionLink = styled(NeutralLink)`
 
 const TextBox = styled.div`
   max-width: 70%;
+  flex-grow: 2;
   font-size: ${({ theme }) => theme.fontSizes.xs};
   line-height: ${({ theme }) => theme.lineHeights.title};
 
