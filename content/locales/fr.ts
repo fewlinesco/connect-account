@@ -160,8 +160,7 @@ export const fr = {
     blankPassword: "Le mot de passe ne peut pas être vide.",
     passwordMatch:
       "Votre confirmation de mot de passe ne correspond pas à votre nouveau mot de passe.",
-    passwordCriteria:
-      "Le mot de passe que vous entrez ne répond pas aux critères.",
+    passwordCriteria: "Le mot de passe saisi ne répond pas aux critères.",
     passwordInfo: "Assurez-vous que votre mot de passe contienne au moins :",
     passwordRuleDigit:
       "{digitCount, plural, one {1 chiffre} other {{digitCount} chiffres}}",

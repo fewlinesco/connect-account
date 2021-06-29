@@ -162,7 +162,7 @@ export const en = {
     blankPassword: "Password can't be blank.",
     passwordMatch:
       "Your password confirmation does not match your new password.",
-    passwordCriteria: "The password you enter does not meet the criteria.",
+    passwordCriteria: "The password you entered does not meet the criteria.",
     passwordInfo: "Ensure that your password contains at least:",
     passwordRuleDigit:
       "{digitCount, plural, one {1 digit} other {{digitCount} digits}}",
