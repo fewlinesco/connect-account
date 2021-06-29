@@ -70,7 +70,7 @@ const AddIdentityForm: React.FC<{
                 return;
               }
 
-              if (parsedResponse.message === ERRORS_DATA.BAD_REQUEST.message) {
+              if (parsedResponse.code === ERRORS_DATA.BAD_REQUEST.code) {
                 setFormID(uuidv4());
                 setErrorMessage(
                   formatErrorMessage(router.locale || "en", "somethingWrong"),
