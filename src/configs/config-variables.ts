@@ -1,3 +1,5 @@
+import { TracingConfig } from "@fwl/tracing";
+
 type ConfigVariables = {
   featureFlag: string;
   connectAccountURL: string;
@@ -21,15 +23,7 @@ type ConfigVariables = {
   connectTestAccountPassword: string;
   serviceName: string;
   lightstepAccessToken: string;
-  fwlTracingCollectors: {
-    type: string;
-    serviceName: string;
-    authorizationHeader?: {
-      key: string;
-      value: string;
-    };
-    url: string;
-  }[];
+  fwlTracingCollectors: TracingConfig["collectors"];
   managementCredentials: {
     URI: string;
     APIKey: string;
