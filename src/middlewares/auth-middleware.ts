@@ -7,21 +7,18 @@ import {
   UnreachableError,
 } from "@fewlines/connect-client";
 import { Tracer } from "@fwl/tracing";
-import { getServerSideCookies, setServerSideCookies } from "@fwl/web";
+import { getServerSideCookies, HttpStatus } from "@fwl/web";
 import { Middleware } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { UserCookie } from "@src/@types/user-cookie";
-import { getAndPutUser } from "@src/commands/get-and-put-user";
 import { configVariables } from "@src/configs/config-variables";
-import { oauth2Client } from "@src/configs/oauth2-client";
 import {
   NoDBUserFoundError,
   NoUserCookieFoundError,
   UnhandledTokenType,
 } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
-import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
 import { decryptVerifyAccessToken } from "@src/workflows/decrypt-verify-access-token";
 
 async function authentication(
@@ -33,6 +30,8 @@ async function authentication(
     unreachable: ERRORS_DATA.UNREACHABLE,
     databaseUnreachable: ERRORS_DATA.DATABASE_UNREACHABLE,
     badRequest: ERRORS_DATA.BAD_REQUEST,
+    temporaryRedirection: ERRORS_DATA.TEMPORARY_REDIRECT,
+    unauthorized: ERRORS_DATA.UNAUTHORIZED,
   };
 
   return tracer.span("auth-middleware", async (span) => {
@@ -48,104 +47,26 @@ async function authentication(
     }
     span.setDisclosedAttribute("user cookie found", true);
 
-    const { access_token: currentAccessToken, sub } = userCookie;
+    const { access_token: currentAccessToken } = userCookie;
 
     await decryptVerifyAccessToken(currentAccessToken).catch(async (error) => {
       if (error.name === "TokenExpiredError") {
         span.setDisclosedAttribute("is access_token expired", true);
 
-        const user = await getDBUserFromSub(sub).catch((error) => {
-          span.setDisclosedAttribute("database reachable", false);
-          throw webErrorFactory({
-            ...webErrors.databaseUnreachable,
-            parentError: error,
-          });
-        });
-        span.setDisclosedAttribute("database reachable", true);
-
-        if (!user) {
-          span.setDisclosedAttribute("user found on DB", false);
-          throw new NoDBUserFoundError();
+        if (request.url && request.url.startsWith("/api/")) {
+          throw webErrorFactory(webErrors.unauthorized);
         }
-        span.setDisclosedAttribute("user found on DB", true);
 
-        const refreshedTokens = await oauth2Client
-          .refreshTokens(user.refresh_token)
-          .catch((error) => {
-            span.setDisclosedAttribute("is token refreshed", false);
-            if (error instanceof UnreachableError) {
-              throw webErrorFactory({
-                ...webErrors.unreachable,
-                parentError: error,
-              });
-            }
+        const redirectURL = request.url ? request.url : "/account";
 
-            throw error;
-          });
-        span.setDisclosedAttribute("is token refreshed", true);
-
-        await decryptVerifyAccessToken(refreshedTokens.access_token).catch(
-          (error) => {
-            span.setDisclosedAttribute("is access_token valid", false);
-            if (
-              error instanceof MissingJWKSURIError ||
-              error instanceof InvalidAudienceError ||
-              error instanceof MissingKeyIDHS256Error ||
-              error instanceof AlgoNotSupportedError ||
-              error instanceof InvalidKeyIDRS256Error ||
-              error instanceof UnhandledTokenType
-            ) {
-              throw webErrorFactory({
-                ...webErrors.badRequest,
-                parentError: error,
-              });
-            }
-
-            if (error instanceof UnreachableError) {
-              throw webErrorFactory({
-                ...webErrors.unreachable,
-                parentError: error,
-              });
-            }
-
-            throw error;
-          },
+        response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
+        response.setHeader(
+          "location",
+          `/api/auth-connect/refresh-token?next=${encodeURIComponent(
+            redirectURL,
+          )}`,
         );
-        span.setDisclosedAttribute("is refresh access_token valid", true);
-
-        await setServerSideCookies(
-          response,
-          "user-cookie",
-          {
-            access_token: refreshedTokens.access_token,
-            sub,
-          },
-          {
-            shouldCookieBeSealed: true,
-            cookieSalt: configVariables.cookieSalt,
-            maxAge: 24 * 60 * 60,
-            path: "/",
-            httpOnly: true,
-            secure: true,
-          },
-        );
-
-        span.setDisclosedAttribute("is cookie set", true);
-
-        await getAndPutUser(
-          { sub, refresh_token: refreshedTokens.refresh_token },
-          user,
-        ).catch((error) => {
-          span.setDisclosedAttribute("database reachable", false);
-          throw webErrorFactory({
-            ...webErrors.databaseUnreachable,
-            parentError: error,
-          });
-        });
-
-        span.setDisclosedAttribute("user updated on DB", true);
-
-        return;
+        throw webErrorFactory(webErrors.temporaryRedirection);
       }
 
       if (
