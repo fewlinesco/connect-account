@@ -21,6 +21,15 @@ type ConfigVariables = {
   connectTestAccountPassword: string;
   serviceName: string;
   lightstepAccessToken: string;
+  fwlTracingCollectors: {
+    type: string;
+    serviceName: string;
+    authorizationHeader?: {
+      key: string;
+      value: string;
+    };
+    url: string;
+  }[];
   managementCredentials: {
     URI: string;
     APIKey: string;
@@ -51,6 +60,7 @@ const configVariables: ConfigVariables = {
   connectTestAccountPassword: "",
   serviceName: "",
   lightstepAccessToken: "",
+  fwlTracingCollectors: [],
   managementCredentials: {
     URI: "",
     APIKey: "",
@@ -107,6 +117,11 @@ function handleEnvVars(): void {
   configVariables.serviceName = process.env.SERVICE_NAME || "Connect.Account";
   configVariables.lightstepAccessToken =
     process.env.LIGHTSTEP_ACCESS_TOKEN || "";
+  if (process.env.FWL_TRACING_COLLECTORS) {
+    configVariables.fwlTracingCollectors = JSON.parse(
+      process.env.FWL_TRACING_COLLECTORS,
+    );
+  }
   configVariables.managementCredentials = {
     URI: process.env.CONNECT_MANAGEMENT_URL || "",
     APIKey: process.env.CONNECT_MANAGEMENT_API_KEY || "",
