@@ -1,4 +1,5 @@
 import { Identity } from "@fewlines/connect-management";
+import { useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
 import styled from "styled-components";
@@ -9,6 +10,7 @@ import { InputsRadio, Label } from "../input/input-radio-button";
 import { SkeletonTextLine } from "../skeletons/skeletons";
 import { Form } from "./form";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { formatErrorMessage } from "@src/configs/intl";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
@@ -29,6 +31,7 @@ const SendTwoFACodeForm: React.FC<{
     }
   }, [identities]);
 
+  const { locale } = useRouter();
   const { formatMessage } = useIntl();
 
   return (
@@ -58,7 +61,9 @@ const SendTwoFACodeForm: React.FC<{
               return;
             }
 
-            setErrorMessage("Something went wrong. Please try again later");
+            setErrorMessage(
+              formatErrorMessage(locale || "en", "somethingWrong"),
+            );
             setFormID(uuidv4());
             setIsCodeSent(false);
           }
@@ -72,7 +77,7 @@ const SendTwoFACodeForm: React.FC<{
       }}
     >
       {errorMessage ? (
-        <FormErrorMessage>{errorMessage}.</FormErrorMessage>
+        <FormErrorMessage>{errorMessage}</FormErrorMessage>
       ) : null}
       <p>{formatMessage({ id: "info" })}</p>
       {identities ? (

@@ -117,7 +117,10 @@ const patchHandler: Handler = async (request, response) => {
           }
 
           if (error.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
-            throw webErrorFactory(webErrors.invalidUserAddressPayload);
+            throw webErrorFactory({
+              ...webErrors.invalidUserAddressPayload,
+              errorDetails: error.response.data.details,
+            });
           }
 
           throw webErrorFactory(webErrors.unreachable);
@@ -125,7 +128,7 @@ const patchHandler: Handler = async (request, response) => {
       span.setDisclosedAttribute("is Connect.Profile address updated", true);
 
       response.statusCode = HttpStatus.OK;
-      response.json({ updatedUserAddress });
+      response.json(updatedUserAddress);
     },
   );
 };

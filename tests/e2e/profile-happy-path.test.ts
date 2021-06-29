@@ -53,6 +53,8 @@ describe.only("Profile happy path", () => {
         configVariables.connectAccountURL
       ).replace(/\/?$/, "");
 
+      const profileUrl = `${baseURL}/account/profile`;
+
       // Profile creation
       if (isStagingEnv) {
         expect(await text("Create your profile").exists()).toBeTruthy();
@@ -64,7 +66,7 @@ describe.only("Profile happy path", () => {
         );
 
         await click("Add my information");
-        expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+        expect(await currentURL()).toEqual(profileUrl);
       } else {
         await waitFor(2000);
         waitFor(async () => await text("Personal Information").exists());
@@ -150,9 +152,8 @@ describe.only("Profile happy path", () => {
 
       // Update address flow
       await click(link("", below("Addresses")));
-
       expect(await text("Primary").exists()).toBeTruthy();
-      const addressURL = await currentURL();
+
       await click("Update this address");
       expect(await text("Address | edit").exists()).toBeTruthy();
 
@@ -163,7 +164,7 @@ describe.only("Profile happy path", () => {
       );
 
       await click("Update my address");
-      expect(await currentURL()).toEqual(addressURL);
+      expect(await currentURL()).toEqual(profileUrl);
 
       // Mark address as primary flow
       await click("Personal Information");

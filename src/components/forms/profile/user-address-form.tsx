@@ -1,7 +1,9 @@
-import { useRouter } from "next/router";
+import { HttpStatus } from "@fwl/web";
+import { NextRouter, useRouter } from "next/router";
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import { FormErrorMessage } from "../../input/form-error-message";
 import { InputText } from "../../input/input-text";
 import { Form } from "../form";
 import { Address } from "@src/@types/profile";
@@ -10,11 +12,55 @@ import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { fetchJson } from "@src/utils/fetch-json";
 
+type AddressInputErrors = {
+  country?: string;
+  locality?: string;
+  postal_code?: string;
+};
+
+type AddressPayload = Omit<
+  Address,
+  "id" | "sub" | "created_at" | "updated_at" | "primary"
+>;
+
+async function updateOrCreateAddress(
+  router: NextRouter,
+  setErrorFunction: React.Dispatch<React.SetStateAction<AddressInputErrors>>,
+  addressPayload: AddressPayload,
+  addressId?: string,
+): Promise<void> {
+  const url = addressId
+    ? `/api/profile/addresses/${addressId}`
+    : "/api/profile/addresses";
+  const method = addressId ? "PATCH" : "POST";
+
+  return fetchJson(url, method, addressPayload).then(async (response) => {
+    const parsedResponse = await response.json();
+
+    if (
+      response.status === HttpStatus.CREATED ||
+      response.status === HttpStatus.OK
+    ) {
+      router && router.push("/account/profile");
+      return;
+    } else if (
+      response.status === HttpStatus.UNPROCESSABLE_ENTITY &&
+      parsedResponse &&
+      parsedResponse.details
+    ) {
+      setErrorFunction(parsedResponse.details);
+    } else {
+      throw new Error("Something went wrong");
+    }
+  });
+}
+
 const UserAddressForm: React.FC<{
   userAddress?: Address;
   isCreation?: boolean;
 }> = ({ userAddress, isCreation }) => {
-  const [formID] = React.useState<string>(uuidv4());
+  const [formID, setFormID] = React.useState<string>(uuidv4());
+  const [errors, setErrors] = React.useState<AddressInputErrors>({});
 
   const [address, setAddress] = React.useState<Address>({
     id: "",
@@ -54,37 +100,14 @@ const UserAddressForm: React.FC<{
             street_address_2: address.street_address_2,
           };
 
-          if (isCreation) {
-            return fetchJson(
-              "/api/profile/addresses",
-              "POST",
-              addressPayload,
-            ).then(async (response) => {
-              const parsedResponse = await response.json();
-
-              if ("createdAddress" in parsedResponse) {
-                router && router.push("/account/profile");
-                return;
-              }
-
-              throw new Error("Something went wrong");
-            });
-          }
-
-          return fetchJson(
-            `/api/profile/addresses/${address.id}`,
-            "PATCH",
+          await updateOrCreateAddress(
+            router,
+            setErrors,
             addressPayload,
-          ).then(async (response) => {
-            const parsedResponse = await response.json();
+            userAddress?.id,
+          );
 
-            if ("updatedUserAddress" in parsedResponse) {
-              router && router.push(`/account/profile/addresses/${address.id}`);
-              return;
-            }
-
-            throw new Error("Something went wrong");
-          });
+          setFormID(uuidv4());
         }}
       >
         <InputText
@@ -127,6 +150,9 @@ const UserAddressForm: React.FC<{
           label="Locality *"
           required
         />
+        {errors.locality && (
+          <FormErrorMessage>{errors.locality}</FormErrorMessage>
+        )}
         <InputText
           type="text"
           name="postal-code"
@@ -141,6 +167,9 @@ const UserAddressForm: React.FC<{
           label="Postal code *"
           required
         />
+        {errors.postal_code && (
+          <FormErrorMessage>{errors.postal_code}</FormErrorMessage>
+        )}
         <InputText
           type="text"
           name="region"
@@ -168,6 +197,9 @@ const UserAddressForm: React.FC<{
           label="Country *"
           required
         />
+        {errors.country && (
+          <FormErrorMessage>{errors.country}</FormErrorMessage>
+        )}
         <InputText
           type="text"
           name="kind"
