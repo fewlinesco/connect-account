@@ -154,7 +154,7 @@ export const fr = {
     "404Title": "Nous ne trouvons pas la page que vous cherchez.",
     "404Content":
       "Elle peut être expirée, ou il pourrait y avoir une coquille. Peut-être que vous pouvez trouver ce dont vous avez besoin sur notre",
-    homepage: "page d'acceuil.",
+    homepage: "page d'accueil.",
     "500Content":
       "Quelque chose a mal tourné. Nous travaillons à régler ce problème le plus tôt possible.",
     blankPassword: "Le mot de passe ne peut pas être vide.",
@@ -162,7 +162,7 @@ export const fr = {
       "Votre confirmation de mot de passe ne correspond pas à votre nouveau mot de passe.",
     passwordCriteria:
       "Le mot de passe que vous entrez ne répond pas aux critères.",
-    passwordInfo: "Assurez-vous que votre mot de passe contient au moins :",
+    passwordInfo: "Assurez-vous que votre mot de passe contienne au moins :",
     passwordRuleDigit:
       "{digitCount, plural, one {1 chiffre} other {{digitCount} chiffres}}",
     passwordRuleNonDigit:
