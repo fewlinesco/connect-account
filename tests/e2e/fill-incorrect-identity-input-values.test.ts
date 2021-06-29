@@ -26,7 +26,7 @@ describe("Fill incorrect identity input values", () => {
         "--start-maximized",
         "--disable-dev-shm",
       ],
-      headless: false,
+      headless: true,
       observe: false,
       observeTime: 2000,
     });

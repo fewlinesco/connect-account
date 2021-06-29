@@ -174,5 +174,6 @@ export const fr = {
     identityInputCantBeBlank: "Veuillez renseigner le champ suivant.",
     invalidPhoneNumberInput:
       "Le format du numéro de téléphone saisi est invalide.",
+    invalidBody: "Quelque chose s’est mal passé. Veuillez réessayer plus tard.",
   },
 };

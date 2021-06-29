@@ -12,6 +12,7 @@ import { formatErrorMessage } from "@src/configs/intl";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
+import { formatSnakeCaseToCamelCase } from "@src/utils/format";
 
 const VerifyTwoFACodeForm: React.FC<{
   setIsCodeSent: React.Dispatch<React.SetStateAction<boolean>>;
@@ -36,25 +37,24 @@ const VerifyTwoFACodeForm: React.FC<{
         ).then(async (response) => {
           const parsedResponse = await response.json();
           if (response.status >= 400) {
-            if ("message" in parsedResponse) {
+            if ("code" in parsedResponse) {
               if (
-                parsedResponse.message === ERRORS_DATA.INVALID_BODY.message ||
-                parsedResponse.message ===
-                  ERRORS_DATA.INVALID_VALIDATION_CODE.message
+                parsedResponse.code === ERRORS_DATA.INVALID_BODY.code ||
+                parsedResponse.code === ERRORS_DATA.INVALID_VALIDATION_CODE.code
               ) {
                 setFormID(uuidv4());
                 setErrorMessage(
                   formatErrorMessage(
                     router.locale || "en",
-                    "invalidValidationCode",
+                    formatSnakeCaseToCamelCase(parsedResponse.code),
                   ),
                 );
                 return;
               }
 
               if (
-                parsedResponse.message ===
-                ERRORS_DATA.SUDO_EVENT_IDS_NOT_FOUND.message
+                parsedResponse.code ===
+                ERRORS_DATA.SUDO_EVENT_IDS_NOT_FOUND.code
               ) {
                 setFormID(uuidv4());
                 setIsCodeSent(false);

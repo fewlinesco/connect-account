@@ -174,5 +174,7 @@ export const en = {
     invalidValidationCode: "Invalid validation code.",
     identityInputCantBeBlank: "Please fill in the following field.",
     invalidPhoneNumberInput: "Invalid phone number format.",
+    invalidBody: "Something went wrong. Please try again later.",
+    invalidIdentityType: "Invalid identity type.",
   },
 };

@@ -11,8 +11,10 @@ import { Box } from "@src/components/box/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { formatErrorMessage } from "@src/configs/intl";
 import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
+import { formatSnakeCaseToCamelCase } from "@src/utils/format";
 
 const ValidateIdentityForm: React.FC<{
   type: IdentityTypes;
@@ -39,20 +41,25 @@ const ValidateIdentityForm: React.FC<{
             if (response.status >= 400) {
               const parsedResponse = await response.json();
 
-              if ("message" in parsedResponse) {
+              if ("code" in parsedResponse) {
                 if (
-                  parsedResponse.message ===
-                    ERRORS_DATA.INVALID_VALIDATION_CODE.message ||
-                  parsedResponse.message === ERRORS_DATA.INVALID_BODY.message
+                  parsedResponse.code ===
+                    ERRORS_DATA.INVALID_VALIDATION_CODE.code ||
+                  parsedResponse.code === ERRORS_DATA.INVALID_BODY.code
                 ) {
                   setFormID(uuidv4());
-                  setErrorMessage(parsedResponse.message);
+                  setErrorMessage(
+                    formatErrorMessage(
+                      router.locale || "en",
+                      formatSnakeCaseToCamelCase(parsedResponse.code),
+                    ),
+                  );
                   return;
                 }
 
                 if (
-                  parsedResponse.message ===
-                  ERRORS_DATA.TEMPORARY_IDENTITY_EXPIRED.message
+                  parsedResponse.code ===
+                  ERRORS_DATA.TEMPORARY_IDENTITY_EXPIRED.code
                 ) {
                   router && router.push("/account/logins/email/new");
                   return;

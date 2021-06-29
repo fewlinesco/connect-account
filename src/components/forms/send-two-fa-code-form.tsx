@@ -14,6 +14,7 @@ import { formatErrorMessage } from "@src/configs/intl";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
+import { formatSnakeCaseToCamelCase } from "@src/utils/format";
 
 const SendTwoFACodeForm: React.FC<{
   isCodeSent: boolean;
@@ -50,12 +51,16 @@ const SendTwoFACodeForm: React.FC<{
         ).then(async (response) => {
           const parsedResponse = await response.json();
 
-          if ("message" in parsedResponse) {
+          if ("code" in parsedResponse) {
             if (
-              parsedResponse.message ===
-              ERRORS_DATA.INVALID_IDENTITY_TYPE.message
+              parsedResponse.code === ERRORS_DATA.INVALID_IDENTITY_TYPE.code
             ) {
-              setErrorMessage(parsedResponse.message);
+              setErrorMessage(
+                formatErrorMessage(
+                  locale || "en",
+                  formatSnakeCaseToCamelCase(parsedResponse.code),
+                ),
+              );
               setFormID(uuidv4());
               setIsCodeSent(false);
               return;
