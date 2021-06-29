@@ -1890,17 +1890,17 @@
     node-fetch "2.6.1"
     node-jose "2.0.0"
 
-"@fewlines/connect-management@0.6.5":
-  version "0.6.5"
-  resolved "https://registry.yarnpkg.com/@fewlines/connect-management/-/connect-management-0.6.5.tgz#3cdb892d2ac60847d363ca57a1ec8301d9ddbd7f"
-  integrity sha512-mz2+D7h43GU9nb7YymoAt075sIwTuFoSA4M6MhDU9GXeUol+qG8X8OqI41bSV2CxPvaVRsqypwQ1xdBtPhv7Ag==
+"@fewlines/connect-management@0.6.6":
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/@fewlines/connect-management/-/connect-management-0.6.6.tgz#349afd2e0596ef48d2435fc3f12ee8a86f76c3fa"
+  integrity sha512-nGbagXgMyfXrD5HlQJBhdNrsJScYC48bY6e+dxv3KJJgJR+5ltzneP/LwJxnr0f35EviKkcBeCz/7EhjWSx6WQ==
   dependencies:
     apollo-link "1.2.14"
     apollo-link-context "1.0.20"
     apollo-link-http "1.5.17"
     cross-fetch "3.1.4"
-    graphql "15.5.0"
-    graphql-tag "2.12.4"
+    graphql "15.5.1"
+    graphql-tag "2.12.5"
 
 "@fewlines/eslint-config@3.1.2":
   version "3.1.2"
@@ -9110,24 +9110,12 @@ graceful-fs@^4.0.0, graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
   integrity sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
 
-graphql-tag@2.12.4:
-  version "2.12.4"
-  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.12.4.tgz#d34066688a4f09e72d6f4663c74211e9b4b7c4bf"
-  integrity sha512-VV1U4O+9x99EkNpNmCUV5RZwq6MnK4+pGbRYWG+lA/m3uo7TSqJF81OkcOP148gFP6fzdl7JWYBrwWVTS9jXww==
-  dependencies:
-    tslib "^2.1.0"
-
 graphql-tag@2.12.5:
   version "2.12.5"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.12.5.tgz#5cff974a67b417747d05c8d9f5f3cb4495d0db8f"
   integrity sha512-5xNhP4063d16Pz3HBtKprutsPrmHZi5IdUGOWRxA2B6VF7BIRGOHZ5WQvDmJXZuPcBg7rYwaFxvQYjqkSdR3TQ==
   dependencies:
     tslib "^2.1.0"
-
-graphql@15.5.0:
-  version "15.5.0"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.5.0.tgz#39d19494dbe69d1ea719915b578bf920344a69d5"
-  integrity sha512-OmaM7y0kaK31NKG31q4YbD2beNYa6jBBKtMFT6gLYJljHLJr42IqJ8KX08u3Li/0ifzTU5HjmoOOrwa5BRLeDA==
 
 graphql@15.5.1:
   version "15.5.1"
