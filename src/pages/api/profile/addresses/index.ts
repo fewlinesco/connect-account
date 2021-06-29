@@ -94,7 +94,10 @@ const postHandler: Handler = async (request, response) => {
           }
 
           if (error.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
-            throw webErrorFactory(webErrors.invalidUserAddressPayload);
+            throw webErrorFactory({
+              ...webErrors.invalidUserAddressPayload,
+              errorDetails: error.response.data.details,
+            });
           }
 
           throw webErrorFactory(webErrors.unreachable);
@@ -104,8 +107,8 @@ const postHandler: Handler = async (request, response) => {
         true,
       );
 
-      response.statusCode = HttpStatus.OK;
-      response.json({ createdAddress });
+      response.statusCode = HttpStatus.CREATED;
+      response.json(createdAddress);
     },
   );
 };
