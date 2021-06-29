@@ -19,15 +19,15 @@ const ValidateIdentityForm: React.FC<{
   eventId: string;
 }> = ({ type, eventId }) => {
   const [validationCode, setValidationCode] = React.useState<string>("");
-  const [flashMessage, setFlashMessage] = React.useState<string>("");
+  const [errorMessage, setErrorMessage] = React.useState<string>("");
   const [formID, setFormID] = React.useState<string>(uuidv4());
 
   const router = useRouter();
 
   return (
     <>
-      {flashMessage ? (
-        <FormErrorMessage>{flashMessage}.</FormErrorMessage>
+      {errorMessage ? (
+        <FormErrorMessage>{errorMessage}</FormErrorMessage>
       ) : null}
       <Form
         formID={formID}
@@ -46,7 +46,7 @@ const ValidateIdentityForm: React.FC<{
                   parsedResponse.message === ERRORS_DATA.INVALID_BODY.message
                 ) {
                   setFormID(uuidv4());
-                  setFlashMessage(parsedResponse.message);
+                  setErrorMessage(parsedResponse.message);
                   return;
                 }
 
