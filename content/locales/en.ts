@@ -172,5 +172,7 @@ export const en = {
       "{characterCount, plural, one {1 character} other {{characterCount} characters}}",
     somethingWrong: "Something went wrong. Please try again later.",
     invalidValidationCode: "Invalid validation code.",
+    identityInputCantBeBlank: "Please fill in the following fields.",
+    invalidPhoneNumberInput: "Invalid phone number format.",
   },
 };
