@@ -13,22 +13,22 @@ import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 import { verifySudoModeMiddleware } from "@src/middlewares/verify-sudo-mode-middleware";
 
 const SecurityUpdatePage: React.FC = () => {
-  const { data: passwordSetData, error: passwordSetError } = useSWR<
+  const { data: isPasswordSetData, error: isPasswordSetError } = useSWR<
     { isPasswordSet: boolean },
     Error
   >("/api/auth-connect/is-password-set");
 
-  if (passwordSetError) {
-    throw passwordSetError;
+  if (isPasswordSetError) {
+    throw isPasswordSetError;
   }
 
   const { formatMessage } = useIntl();
   let conditionalBreadcrumb;
 
-  if (!passwordSetData) {
+  if (!isPasswordSetData) {
     conditionalBreadcrumb = "";
   } else {
-    conditionalBreadcrumb = passwordSetData.isPasswordSet
+    conditionalBreadcrumb = isPasswordSetData.isPasswordSet
       ? formatMessage({ id: "updateBreadcrumb" })
       : formatMessage({ id: "setBreadcrumb" });
   }
@@ -38,9 +38,9 @@ const SecurityUpdatePage: React.FC = () => {
       <Container>
         <SetPasswordForm
           conditionalBreadcrumbItem={
-            !passwordSetData
+            !isPasswordSetData
               ? ""
-              : passwordSetData.isPasswordSet
+              : isPasswordSetData.isPasswordSet
               ? formatMessage({ id: "update" })
               : formatMessage({ id: "set" })
           }

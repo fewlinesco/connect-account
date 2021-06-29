@@ -110,6 +110,8 @@ export const fr = {
     info: "Choisissez un moyen de contact sur lequel nous enverrons un code de validation:",
     send: "Envoi du code de validation",
     resend: "Renvoyer le code de validation",
+    twoFALabel: "Entrez le code reçu ici :",
+    confirm: "Confirmer",
   },
   "/account/locale": {
     title: "Changer de langue",
@@ -147,5 +149,27 @@ export const fr = {
     back: "Retour",
     close: "Fermer",
     logout: "Vous déconnecter",
+  },
+  errors: {
+    "404Title": "Nous ne trouvons pas la page que vous cherchez.",
+    "404Content":
+      "Elle peut être expirée, ou il pourrait y avoir une coquille. Peut-être que vous pouvez trouver ce dont vous avez besoin sur notre",
+    homepage: "page d'accueil.",
+    "500Content":
+      "Quelque chose a mal tourné. Nous travaillons à régler ce problème le plus tôt possible.",
+    blankPassword: "Le mot de passe ne peut pas être vide.",
+    passwordMatch:
+      "Votre confirmation de mot de passe ne correspond pas à votre nouveau mot de passe.",
+    passwordCriteria: "Le mot de passe saisi ne répond pas aux critères.",
+    passwordInfo: "Assurez-vous que votre mot de passe contienne au moins :",
+    passwordRuleDigit:
+      "{digitCount, plural, one {1 chiffre} other {{digitCount} chiffres}}",
+    passwordRuleNonDigit:
+      "{nonDigitCount, plural, one {1 lettre} other {{nonDigitCount} lettres}}",
+    passwordRuleCharacter:
+      "{characterCount, plural, one {1 caractère} other {{characterCount} caractères}}",
+    somethingWrong:
+      "Quelque chose s’est mal passé. Veuillez réessayer plus tard.",
+    invalidValidationCode: "Code de validation invalide.",
   },
 };
