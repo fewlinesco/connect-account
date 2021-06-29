@@ -30,7 +30,9 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
       <Box>
         {address ? (
           <>
-            <CategoryName>{capitalizeFirstLetter(address.kind)}</CategoryName>
+            {address.kind && (
+              <CategoryName>{capitalizeFirstLetter(address.kind)}</CategoryName>
+            )}
             <AddressValue>{formatStreetAddressToDisplay(address)}</AddressValue>
             <AddressValue isPrimary={address.primary}>
               {formatOtherAddressFieldsToDisplay(address)}

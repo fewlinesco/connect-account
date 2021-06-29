@@ -1,27 +1,30 @@
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
 import { NeutralLink } from "../neutral-link/neutral-link";
+import { formatErrorMessage } from "@src/configs/intl";
 
 const ErrorFallbackComponent: React.FC<{
   statusCode: number;
 }> = ({ statusCode }) => {
+  const { locale } = useRouter();
+
   return (
     <Wrapper statusCode={statusCode}>
       {statusCode === 404 ? (
         <>
-          <h1>We can&apos;t find the page you are looking for.</h1>
+          <h1>{formatErrorMessage(locale || "en", "404Title")}</h1>
           <p>
-            It may have expired, or there could be a typo. Maybe you can find
-            what you need on our{" "}
-            <HomepageLink href="/account">homepage</HomepageLink>.
+            {formatErrorMessage(locale || "en", "404Content")}{" "}
+            <HomepageLink href="/account">
+              {formatErrorMessage(locale || "en", "homepage")}
+            </HomepageLink>
+            .
           </p>
         </>
       ) : (
-        <h2>
-          Something went wrong. We are working on getting this fixed as soon as
-          we can.
-        </h2>
+        <h2>{formatErrorMessage(locale || "en", "500Content")}</h2>
       )}
     </Wrapper>
   );

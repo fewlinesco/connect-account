@@ -112,6 +112,8 @@ export const en = {
     info: "Choose a contact means below that we’ll send a validation code to:",
     send: "Send validation code",
     resend: "Resend validation code",
+    twoFALabel: "Enter received code here:",
+    confirm: "Confirm",
   },
   "/account/locale": {
     title: "Switch Language",
@@ -149,5 +151,26 @@ export const en = {
     back: "Back",
     close: "Close",
     logout: "Logout",
+  },
+  errors: {
+    "404Title": "We can't find the page you are looking for.",
+    "404Content":
+      "It may have expired, or there could be a typo. Maybe you can find what you need on our",
+    homepage: "homepage",
+    "500Content":
+      "Something went wrong. We are working on getting this fixed as soon as we can.",
+    blankPassword: "Password can't be blank.",
+    passwordMatch:
+      "Your password confirmation does not match your new password.",
+    passwordCriteria: "The password you entered does not meet the criteria.",
+    passwordInfo: "Ensure that your password contains at least:",
+    passwordRuleDigit:
+      "{digitCount, plural, one {1 digit} other {{digitCount} digits}}",
+    passwordRuleNonDigit:
+      "{nonDigitCount, plural, one {1 non-digit} other {{nonDigitCount} non-digits}}",
+    passwordRuleCharacter:
+      "{characterCount, plural, one {1 character} other {{characterCount} characters}}",
+    somethingWrong: "Something went wrong. Please try again later.",
+    invalidValidationCode: "Invalid validation code.",
   },
 };

@@ -14,6 +14,11 @@ type WebErrorData = {
 };
 
 const ERRORS_DATA: Record<string, WebErrorData> = {
+  TEMPORARY_REDIRECT: {
+    code: "temporary_redirect",
+    httpStatus: HttpStatus.TEMPORARY_REDIRECT,
+    message: "Temporary redirection",
+  },
   BAD_REQUEST: {
     code: "bad_request",
     httpStatus: HttpStatus.BAD_REQUEST,
@@ -58,6 +63,11 @@ const ERRORS_DATA: Record<string, WebErrorData> = {
     code: "invalid_profile_token",
     httpStatus: HttpStatus.UNAUTHORIZED,
     message: "Invalid Connect.Profile access token",
+  },
+  UNAUTHORIZED: {
+    code: "unauthorized_request",
+    httpStatus: HttpStatus.UNAUTHORIZED,
+    message: "Unauthorized request",
   },
   INVALID_SCOPES: {
     code: "invalid_scopes",
