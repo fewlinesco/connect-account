@@ -188,9 +188,11 @@ const UserAddresses: React.FC<{
         href={`/account/profile/addresses/${primaryAddress.id}`}
       >
         <CategoryContent>
-          <CategoryName>
-            {capitalizeFirstLetter(primaryAddress.kind)}
-          </CategoryName>
+          {primaryAddress.kind && (
+            <CategoryName>
+              {capitalizeFirstLetter(primaryAddress.kind)}
+            </CategoryName>
+          )}
           <AddressValue isPrimary={primaryAddress.primary}>
             {formatStreetAddressToDisplay(primaryAddress)}
           </AddressValue>
