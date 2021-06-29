@@ -59,7 +59,7 @@ const SetPasswordForm: React.FC<{
                     setErrorMessage(
                       formatErrorMessage(
                         router.locale || "en",
-                        "passwordMatch",
+                        "blankPassword",
                       ),
                     );
                     setIsNotSubmitted(true);
