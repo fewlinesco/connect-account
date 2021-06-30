@@ -43,12 +43,14 @@ const IdentityOverview: React.FC<{
               <p>{identity.value}</p>
             </Value>
             {identity.primary && identity.status === "validated" ? (
-              <PrimaryBadge />
+              <PrimaryBadge label={formatMessage({ id: "primary" })} />
             ) : null}
             {identity.status === "validated" ? (
               <React.Fragment />
             ) : (
-              <AwaitingValidationBadge />
+              <AwaitingValidationBadge
+                label={formatMessage({ id: "awaiting" })}
+              />
             )}
           </>
         )}
@@ -58,7 +60,7 @@ const IdentityOverview: React.FC<{
           {identity.status === "unvalidated" && (
             <NeutralLink href={`/account/logins/${identity.type}/validation`}>
               <FakeButton variant={ButtonVariant.PRIMARY}>
-                Proceed to validation
+                {formatMessage({ id: "proceed" })}
               </FakeButton>
             </NeutralLink>
           )}

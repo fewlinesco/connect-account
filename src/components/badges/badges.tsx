@@ -4,19 +4,19 @@ import styled from "styled-components";
 import { AwaitingValidationIcon } from "../icons/awaiting-validation-icon/awaiting-validation-icon";
 import { PrimaryIcon } from "../icons/primary-icon/primary-icon";
 
-const PrimaryBadge: React.FC = () => {
+const PrimaryBadge: React.FC<{ label: string }> = (label) => {
   return (
     <Wrapper>
-      <BadgeLabel>Primary</BadgeLabel>
+      <BadgeLabel>{label}</BadgeLabel>
       <PrimaryIcon />
     </Wrapper>
   );
 };
 
-const AwaitingValidationBadge: React.FC = () => {
+const AwaitingValidationBadge: React.FC<{ label: string }> = (label) => {
   return (
     <AwaitingWrapper>
-      <BadgeLabel>Awaiting validation</BadgeLabel>
+      <BadgeLabel>{label}</BadgeLabel>
       <AwaitingValidationIcon />
     </AwaitingWrapper>
   );

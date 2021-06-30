@@ -49,6 +49,7 @@ export const en = {
   "/account/profile/addresses/[id]": {
     title: "Personal information",
     breadcrumb: "Address",
+    primary: "Primary",
   },
   "/account/profile/addresses/[id]/edit": {
     title: "Personal information",
@@ -95,6 +96,9 @@ export const en = {
     deletePhone: "Delete this phone number",
     updateEmail: "Update this email address",
     updatePhone: "Update this phone number",
+    proceed: "Proceed to validation",
+    awaiting: "Awaiting validation",
+    primary: "Primary",
   },
   "/account/logins/[type]/[id]/update": {
     title: "Logins",

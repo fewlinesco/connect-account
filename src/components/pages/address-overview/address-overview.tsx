@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 
 import { Address } from "@src/@types/profile";
@@ -18,6 +19,7 @@ import {
 } from "@src/utils/format";
 
 const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
+  const { formatMessage } = useIntl();
   const router = useRouter();
   const [primaryConfirmationBoxOpen, setPrimaryConfirmationBoxOpen] =
     React.useState<boolean>(false);
@@ -37,7 +39,9 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
             <AddressValue isPrimary={address.primary}>
               {formatOtherAddressFieldsToDisplay(address)}
             </AddressValue>
-            {address.primary ? <PrimaryBadge /> : null}
+            {address.primary ? (
+              <PrimaryBadge label={formatMessage({ id: "primary" })} />
+            ) : null}
           </>
         ) : (
           <Flex>
