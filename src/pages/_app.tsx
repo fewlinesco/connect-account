@@ -1,3 +1,4 @@
+import { HttpStatus } from "@fwl/web";
 import { SSRProvider } from "@react-aria/ssr";
 import { AppProps } from "next/app";
 import Head from "next/head";
@@ -24,14 +25,14 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
 };
 
 const AccountApp: React.FC = ({ children }) => {
-  const { locale, defaultLocale, pathname } = useRouter();
+  const router = useRouter();
 
-  if (!locale) {
+  if (!router.locale) {
     return <>{children}</>;
   }
 
-  const localeCopy = (locales as Record<string, unknown>)[locale];
-  const messages = (localeCopy as Record<string, unknown>)[pathname] as
+  const localeCopy = (locales as Record<string, unknown>)[router.locale];
+  const messages = (localeCopy as Record<string, unknown>)[router.pathname] as
     | Record<string, string>
     | Record<string, MessageFormatElement[]>
     | undefined;
@@ -39,8 +40,8 @@ const AccountApp: React.FC = ({ children }) => {
   return (
     <SSRProvider>
       <IntlProvider
-        locale={locale}
-        defaultLocale={defaultLocale}
+        locale={router.locale}
+        defaultLocale={router.defaultLocale}
         messages={messages}
         onError={() => null}
       >
@@ -62,6 +63,14 @@ const AccountApp: React.FC = ({ children }) => {
                     const error = new SWRError(
                       "An error occurred while fetching the data.",
                     );
+
+                    if (
+                      response.status === HttpStatus.UNAUTHORIZED &&
+                      response.statusText === "Unauthorized"
+                    ) {
+                      router && router.replace(router.pathname);
+                      return;
+                    }
 
                     error.info = await response.json();
                     error.statusCode = response.status;

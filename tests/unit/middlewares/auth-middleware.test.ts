@@ -1,5 +1,7 @@
 import { defaultPayload, generateHS256JWS } from "@fewlines/connect-client";
 import { getTracer } from "@fwl/tracing";
+import { HttpStatus } from "@fwl/web";
+import { WebError } from "@fwl/web/dist/errors";
 import { wrapMiddlewares } from "@fwl/web/dist/middlewares";
 import { seal, defaults } from "@hapi/iron";
 import { IncomingMessage, ServerResponse } from "http";
@@ -11,6 +13,7 @@ import * as getAndPutUser from "@src/commands/get-and-put-user";
 import { configVariables } from "@src/configs/config-variables";
 import { oauth2Client } from "@src/configs/oauth2-client";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
+import refreshTokenHandler from "@src/pages/api/auth-connect/refresh-token";
 import * as getDBUserFromSub from "@src/queries/get-db-user-from-sub";
 import * as decryptVerifyAccessToken from "@src/workflows/decrypt-verify-access-token";
 
@@ -28,6 +31,13 @@ jest.mock("@src/configs/config-variables", () => {
       connectAccountURL: "http://foo.test",
       dynamoRegion: "eu-west-3",
     },
+  };
+});
+
+jest.mock("@src/configs/rate-limiting-config.ts", () => {
+  return {
+    windowMs: 30000,
+    requestsUntilBlock: 20,
   };
 });
 
@@ -93,8 +103,14 @@ function mockedReqAndRes(sealedJWE: string): {
 
   mockedNextApiRequest.headers = {
     cookie: `user-cookie=${sealedJWE}`,
+    host: "http://localhost:4242/",
   };
-  mockedNextApiRequest.rawHeaders = ["Cookie", `user-cookie=${sealedJWE}`];
+  mockedNextApiRequest.rawHeaders = [
+    "Cookie",
+    `user-cookie=${sealedJWE}`,
+    "host",
+    "http://localhost:4242/",
+  ];
 
   return { mockedNextApiRequest, mockedResponse };
 }
@@ -106,15 +122,14 @@ const mockedHandler: Handler = async (
   return _mockedResponse.end();
 };
 
-describe("auth-middleware", () => {
+describe("Authentication flow", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  describe("Refresh tokens", () => {
-    test("should refresh the user tokens if a `TokenExpiredError` exception is thrown and a user is provided, and should not redirect", async () => {
-      expect.assertions(5);
-
+  describe("auth-middleware", () => {
+    test("should redirect to refresh token api endpoint and refresh the user tokens if a `TokenExpiredError` exception is thrown and a user is provided", async () => {
+      expect.assertions(4);
       const access_token = generateHS256JWS({
         ...defaultPayload,
         exp: Date.now() - 3600000,
@@ -125,7 +140,7 @@ describe("auth-middleware", () => {
       const { mockedNextApiRequest, mockedResponse } =
         mockedReqAndRes(sealedJWS);
 
-      mockedNextApiRequest.headers.referer = "referer/url";
+      mockedNextApiRequest.headers.referer = "http://referer.test/url";
 
       spiedOnDecryptVerifyAccessToken.mockImplementationOnce(async () => {
         class TokenExpiredError extends Error {
@@ -139,9 +154,37 @@ describe("auth-middleware", () => {
         [authMiddleware(getTracer())],
         mockedHandler,
       );
-      await withAuthCallback(mockedNextApiRequest, mockedResponse);
+      await withAuthCallback(mockedNextApiRequest, mockedResponse).catch(
+        (error: WebError) => {
+          expect(error).toBeInstanceOf(WebError);
+          expect(error.message).toEqual("Temporary redirection");
+          expect(error.httpStatus).toEqual(HttpStatus.TEMPORARY_REDIRECT);
+        },
+      );
 
       expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();
+    });
+  });
+
+  describe("refresh-token endpoint", () => {
+    test("should refresh tokens if a user is provided and redirect to last referrer URL", async () => {
+      expect.assertions(4);
+
+      const access_token = generateHS256JWS({
+        ...defaultPayload,
+        exp: Date.now() - 3600000,
+      });
+
+      const sealedJWS = await sealJWS(access_token);
+
+      const { mockedNextApiRequest, mockedResponse } =
+        mockedReqAndRes(sealedJWS);
+
+      mockedNextApiRequest.url = "https://referer.test/url";
+      mockedNextApiRequest.method = "GET";
+
+      await refreshTokenHandler(mockedNextApiRequest, mockedResponse);
+
       expect(spiedOnGetDBUserFromSub).toHaveBeenCalled();
       expect(spiedOnRefreshTokensFlow).toHaveBeenCalled();
       expect(spiedOnDecryptVerifyAccessToken).toHaveBeenCalled();

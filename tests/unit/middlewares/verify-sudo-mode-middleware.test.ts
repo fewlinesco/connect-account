@@ -47,6 +47,7 @@ describe("#Verify Sudo Middleware", () => {
           sudo_mode_ttl: 0,
           sudo_event_ids: [],
         },
+        locale: "en",
       });
     });
 
@@ -77,6 +78,7 @@ describe("#Verify Sudo Middleware", () => {
           sudo_mode_ttl: Date.now() + 10,
           sudo_event_ids: [],
         },
+        locale: "en",
       });
     });
 
