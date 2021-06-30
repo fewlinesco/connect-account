@@ -10,7 +10,9 @@ import { Address } from "@src/@types/profile";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { formatErrorMessage } from "@src/configs/intl";
 import { fetchJson } from "@src/utils/fetch-json";
+import { formatSnakeCaseToCamelCase } from "@src/utils/format";
 
 type AddressInputErrors = {
   country?: string;
@@ -25,7 +27,7 @@ type AddressPayload = Omit<
 
 async function updateOrCreateAddress(
   router: NextRouter,
-  setErrorFunction: React.Dispatch<React.SetStateAction<AddressInputErrors>>,
+  setErrorDispatcher: React.Dispatch<React.SetStateAction<AddressInputErrors>>,
   addressPayload: AddressPayload,
   addressId?: string,
 ): Promise<void> {
@@ -46,9 +48,23 @@ async function updateOrCreateAddress(
     } else if (
       response.status === HttpStatus.UNPROCESSABLE_ENTITY &&
       parsedResponse &&
-      parsedResponse.details
+      parsedResponse.details &&
+      parsedResponse.code
     ) {
-      setErrorFunction(parsedResponse.details);
+      setErrorDispatcher(
+        Object.entries(parsedResponse.details)
+          .map(([field]) => {
+            return {
+              [field]: formatErrorMessage(
+                router.locale || "en",
+                formatSnakeCaseToCamelCase(parsedResponse.code),
+              ),
+            };
+          })
+          .reduce((acc, value) => {
+            return { ...acc, ...value };
+          }, {}),
+      );
     } else {
       throw new Error("Something went wrong");
     }
@@ -59,9 +75,9 @@ const UserAddressForm: React.FC<{
   userAddress?: Address;
   isCreation?: boolean;
 }> = ({ userAddress, isCreation }) => {
+  const router = useRouter();
   const [formID, setFormID] = React.useState<string>(uuidv4());
   const [errors, setErrors] = React.useState<AddressInputErrors>({});
-
   const [address, setAddress] = React.useState<Address>({
     id: "",
     sub: "",
@@ -76,8 +92,6 @@ const UserAddressForm: React.FC<{
     street_address_2: "",
     primary: false,
   });
-
-  const router = useRouter();
 
   React.useEffect(() => {
     if (userAddress) {

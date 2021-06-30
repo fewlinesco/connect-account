@@ -171,5 +171,10 @@ export const fr = {
     somethingWrong:
       "Quelque chose s’est mal passé. Veuillez réessayer plus tard.",
     invalidValidationCode: "Code de validation invalide.",
+    identityInputCantBeBlank: "Veuillez renseigner le champ suivant:",
+    invalidPhoneNumberInput:
+      "Le format du numéro de téléphone saisi est invalide.",
+    invalidBody: "Quelque chose s’est mal passé. Veuillez réessayer plus tard.",
+    invalidUserAddressPayload: "Veuillez remplir le champ ci-dessus.",
   },
 };

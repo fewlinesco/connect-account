@@ -52,10 +52,8 @@ const SetPasswordForm: React.FC<{
                   return;
                 }
 
-                if ("message" in parsedResponse) {
-                  if (
-                    parsedResponse.message === ERRORS_DATA.INVALID_BODY.message
-                  ) {
+                if ("code" in parsedResponse) {
+                  if (parsedResponse.code === ERRORS_DATA.INVALID_BODY.code) {
                     setErrorMessage(
                       formatErrorMessage(
                         router.locale || "en",

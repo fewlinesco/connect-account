@@ -13,8 +13,10 @@ import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { formatErrorMessage } from "@src/configs/intl";
 import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
+import { formatSnakeCaseToCamelCase } from "@src/utils/format";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const AddIdentityForm: React.FC<{
@@ -34,7 +36,7 @@ const AddIdentityForm: React.FC<{
   return (
     <>
       {errorMessage ? (
-        <FormErrorMessage>{errorMessage}.</FormErrorMessage>
+        <FormErrorMessage>{errorMessage}</FormErrorMessage>
       ) : null}
       <Form
         formID={formID}
@@ -51,25 +53,34 @@ const AddIdentityForm: React.FC<{
           ).then(async (response) => {
             const parsedResponse = await response.json();
 
-            if ("message" in parsedResponse) {
+            if ("code" in parsedResponse) {
               if (
-                parsedResponse.message ===
-                  ERRORS_DATA.IDENTITY_INPUT_CANT_BE_BLANK.message ||
-                parsedResponse.message ===
-                  ERRORS_DATA.INVALID_PHONE_NUMBER_INPUT.message
+                parsedResponse.code ===
+                  ERRORS_DATA.IDENTITY_INPUT_CANT_BE_BLANK.code ||
+                parsedResponse.code ===
+                  ERRORS_DATA.INVALID_PHONE_NUMBER_INPUT.code
               ) {
                 setFormID(uuidv4());
-                setErrorMessage(parsedResponse.message);
+                setErrorMessage(
+                  formatErrorMessage(
+                    router.locale || "en",
+                    formatSnakeCaseToCamelCase(parsedResponse.code),
+                  ),
+                );
                 return;
               }
 
-              if (parsedResponse.message === ERRORS_DATA.BAD_REQUEST.message) {
+              if (parsedResponse.code === ERRORS_DATA.BAD_REQUEST.code) {
                 setFormID(uuidv4());
-                setErrorMessage("Something went wrong");
+                setErrorMessage(
+                  formatErrorMessage(router.locale || "en", "somethingWrong"),
+                );
                 return;
               }
 
-              setErrorMessage("Something went wrong. Please try again later");
+              setErrorMessage(
+                formatErrorMessage(router.locale || "en", "somethingWrong"),
+              );
             }
 
             if ("eventId" in parsedResponse) {

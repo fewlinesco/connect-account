@@ -5,6 +5,20 @@ function capitalizeFirstLetter(word: string): string {
   return normalizedWord.charAt(0).toLocaleUpperCase() + normalizedWord.slice(1);
 }
 
+function formatSnakeCaseToCamelCase(input: string): string {
+  return input
+    .trim()
+    .split("_")
+    .map((chunk, index) => {
+      if (index === 0) {
+        return chunk.toLocaleLowerCase();
+      }
+
+      return capitalizeFirstLetter(chunk.toLocaleLowerCase());
+    })
+    .join("");
+}
+
 function formatKakaoTalk(word: string): string {
   return word
     .split("_")
@@ -60,6 +74,7 @@ function formatOtherAddressFieldsToDisplay(address: Address): string {
 
 export {
   capitalizeFirstLetter,
+  formatSnakeCaseToCamelCase,
   formatSpecialSocialIdentities,
   formatStreetAddressToDisplay,
   formatOtherAddressFieldsToDisplay,

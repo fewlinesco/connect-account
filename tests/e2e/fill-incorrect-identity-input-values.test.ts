@@ -12,6 +12,7 @@ import {
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
+import * as locales from "@content/locales";
 import { configVariables } from "@src/configs/config-variables";
 
 describe("Fill incorrect identity input values", () => {
@@ -35,6 +36,8 @@ describe("Fill incorrect identity input values", () => {
     await closeBrowser();
   });
 
+  const localizedErrorStrings = locales.en.errors;
+
   test("It should show error messages if Identity inputs are filled incorrectly in add identity", async () => {
     expect.assertions(9);
 
@@ -47,7 +50,9 @@ describe("Fill incorrect identity input values", () => {
       expect(await text("Email address *").exists()).toBeTruthy();
 
       await click("Add email");
-      expect(await text("Identity input can't be blank").exists()).toBeTruthy();
+      expect(
+        await text(localizedErrorStrings.identityInputCantBeBlank).exists(),
+      ).toBeTruthy();
 
       await write(
         process.env.CONNECT_TEST_ACCOUNT_EMAIL ||
@@ -55,14 +60,18 @@ describe("Fill incorrect identity input values", () => {
         into(textBox({ placeholder: "Enter your email" })),
       );
       await click("Add email");
-      expect(await text("Something went wrong").exists()).toBeTruthy();
+      expect(
+        await text(localizedErrorStrings.somethingWrong).exists(),
+      ).toBeTruthy();
 
       await click("LOGINS");
       await click("+ Add new phone number");
       expect(await text("Phone number *").exists()).toBeTruthy();
 
       await click("Add phone");
-      expect(await text("Identity input can't be blank").exists()).toBeTruthy();
+      expect(
+        await text(localizedErrorStrings.identityInputCantBeBlank).exists(),
+      ).toBeTruthy();
 
       await write(
         "000000000000000000000000000000",
@@ -70,7 +79,7 @@ describe("Fill incorrect identity input values", () => {
       );
       await click("Add phone");
       expect(
-        await text("Invalid phone number format input.").exists(),
+        await text(localizedErrorStrings.invalidPhoneNumberInput).exists(),
       ).toBeTruthy();
     } catch (error) {
       await screenshot({
@@ -94,14 +103,18 @@ describe("Fill incorrect identity input values", () => {
 
       await click("Update this email address");
       await click("Update email");
-      expect(await text("Identity input can't be blank").exists()).toBeTruthy();
+      expect(
+        await text(localizedErrorStrings.identityInputCantBeBlank).exists(),
+      ).toBeTruthy();
 
       await write(
         identityToUpdate,
         into(textBox({ placeholder: "Enter your email" })),
       );
       await click("Update email");
-      expect(await text("Something went wrong").exists()).toBeTruthy();
+      expect(
+        await text(localizedErrorStrings.somethingWrong).exists(),
+      ).toBeTruthy();
     } catch (error) {
       await screenshot({
         path: "./tests/e2e/screenshots/fill-incorrect-update-identity-input-values.test.png",
