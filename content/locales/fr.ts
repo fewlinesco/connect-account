@@ -86,6 +86,12 @@ export const fr = {
     title: "Identifiants",
     emailBreadcrumb: "Adresses e-mail",
     phoneBreadcrumb: "Numéro de téléphone",
+    markEmail: "Marquer cette adresse e-mail comme ma principale",
+    markPhone: "Marquer ce numéro de téléphone comme mon principal",
+    deleteEmail: "Supprimer cette adresse e-mail",
+    deletePhone: "Supprimer ce numéro de téléphone",
+    updateEmail: "Mettre à jour cette adresse e-mail",
+    updatePhone: "Mettre à jour ce numéro de téléphone",
   },
   "/account/logins/[type]/[id]/update": {
     title: "Identifiants",

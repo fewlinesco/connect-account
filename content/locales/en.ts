@@ -89,6 +89,12 @@ export const en = {
     title: "Logins",
     emailBreadcrumb: "Email address",
     phoneBreadcrumb: "Phone number",
+    markEmail: "Mark this email address my primary one",
+    markPhone: "Mark this phone number my primary one",
+    deleteEmail: "Delete this email address",
+    deletePhone: "Delete this phone number",
+    updateEmail: "Update this email address",
+    updatePhone: "Update this phone number",
   },
   "/account/logins/[type]/[id]/update": {
     title: "Logins",
