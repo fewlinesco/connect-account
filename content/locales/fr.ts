@@ -97,6 +97,13 @@ export const fr = {
     title: "Identifiants",
     emailBreadcrumb: "Adresses e-mail | modification",
     phoneBreadcrumb: "Numéro de téléphone | modification",
+    emailPlaceholder: "Entrer votre adresse e-mail",
+    phonePlaceholder: "Entrer votre numéro de téléphone",
+    updateEmail: "Mettre à jour cette adresse e-mail",
+    updatePhone: "Supprimer ce numéro de téléphone",
+    emailInputLabel: "Nouvelle adresse e-mail *",
+    phoneInputLabel: "Nouveau numéro de téléphone *",
+    cancel: "Annuler",
   },
   "/account/logins/[type]/validation/[eventId]": {
     title: "Identifiants",

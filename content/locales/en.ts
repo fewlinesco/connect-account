@@ -100,6 +100,13 @@ export const en = {
     title: "Logins",
     emailBreadcrumb: "Email address | edit",
     phoneBreadcrumb: "Phone number | edit",
+    emailPlaceholder: "Enter your email",
+    phonePlaceholder: "Enter your phone number",
+    updateEmail: "Update this email address",
+    updatePhone: "Update this phone number",
+    emailInputLabel: "New email address *",
+    phoneInputLabel: "New phone number *",
+    cancel: "Cancel",
   },
   "/account/logins/[type]/validation/[eventId]": {
     title: "Logins",
