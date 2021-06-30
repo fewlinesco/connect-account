@@ -175,5 +175,6 @@ export const fr = {
     invalidPhoneNumberInput:
       "Le format du numéro de téléphone saisi est invalide.",
     invalidBody: "Quelque chose s’est mal passé. Veuillez réessayer plus tard.",
+    invalidUserAddressPayload: "Veuillez remplir le champ ci-dessus.",
   },
 };

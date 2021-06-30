@@ -176,5 +176,6 @@ export const en = {
     invalidPhoneNumberInput: "Invalid phone number format.",
     invalidBody: "Something went wrong. Please try again later.",
     invalidIdentityType: "Invalid identity type.",
+    invalidUserAddressPayload: "Please fill in the above field.",
   },
 };
