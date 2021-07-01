@@ -3,7 +3,7 @@ import React from "react";
 import { AwaitingValidationBadge } from "./badges";
 
 const StandardAwaitingValidationBadge = (): JSX.Element => {
-  return <AwaitingValidationBadge label="Awaiting validation" />;
+  return <AwaitingValidationBadge localizedLabel="Awaiting validation" />;
 };
 
 export { StandardAwaitingValidationBadge };

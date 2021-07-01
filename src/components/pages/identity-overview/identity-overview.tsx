@@ -43,13 +43,13 @@ const IdentityOverview: React.FC<{
               <p>{identity.value}</p>
             </Value>
             {identity.primary && identity.status === "validated" ? (
-              <PrimaryBadge label={formatMessage({ id: "primary" })} />
+              <PrimaryBadge localizedLabel={formatMessage({ id: "primary" })} />
             ) : null}
             {identity.status === "validated" ? (
               <React.Fragment />
             ) : (
               <AwaitingValidationBadge
-                label={formatMessage({ id: "awaiting" })}
+                localizedLabel={formatMessage({ id: "awaiting" })}
               />
             )}
           </>

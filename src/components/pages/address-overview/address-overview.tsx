@@ -40,7 +40,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
               {formatOtherAddressFieldsToDisplay(address)}
             </AddressValue>
             {address.primary ? (
-              <PrimaryBadge label={formatMessage({ id: "primary" })} />
+              <PrimaryBadge localizedLabel={formatMessage({ id: "primary" })} />
             ) : null}
           </>
         ) : (

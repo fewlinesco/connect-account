@@ -3,7 +3,7 @@ import React from "react";
 import { PrimaryBadge } from "./badges";
 
 const StandardPrimaryBadge = (): JSX.Element => {
-  return <PrimaryBadge label="Primary" />;
+  return <PrimaryBadge localizedLabel="Primary" />;
 };
 
 export { StandardPrimaryBadge };
