@@ -83,6 +83,16 @@ export const fr = {
     title: "Informations personnelles",
     breadcrumb: "Adresse",
     primary: "Primaire",
+    update: "Mettre à jour cette adresse",
+    delete: "Supprimer cette adresse",
+    mark: "Utiliser cette adresse comme adresse principale",
+    infoMark:
+      "Vous êtes sur le point de définir cette adresse comme principale.",
+    infoDelete: "Vous êtes sur le point de supprimer cette adresse.",
+    deleteButton: "Supprimer",
+    keep: "Garder cette adresse",
+    confirm: "Confirmer",
+    cancel: "Annuler",
   },
   "/account/profile/addresses/[id]/edit": {
     title: "Informations personnelles",
@@ -101,7 +111,7 @@ export const fr = {
     regionLabel: "Région",
     countryLabel: "Pays *",
     addressKindLabel: "Libellé",
-    update: "Mettre à jour cette address",
+    update: "Mettre à jour cette adresse",
     cancel: "Annuler",
   },
   "/account/profile/addresses/new": {
