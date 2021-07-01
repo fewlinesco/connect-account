@@ -46,10 +46,9 @@ describe("UpdateUserProfilePage", () => {
       </SWRConfig>,
     );
 
-    // This will be fixed in an other PR.
-    // expect(
-    //   screen.getByRole("heading", { name: localizedStrings.breadcrumb }),
-    // ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: localizedStrings.breadcrumb }),
+    ).toBeInTheDocument();
 
     const textInputs = await screen.findAllByRole("textbox");
     expect(textInputs).toHaveLength(8);

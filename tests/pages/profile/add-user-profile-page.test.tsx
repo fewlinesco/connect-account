@@ -54,10 +54,11 @@ describe("NewUserProfilePage", () => {
       screen.getByRole("button", { name: localizedStrings.add }),
     ).toHaveAttribute("type", "submit");
 
-    expect(screen.getByRole("link", { name: "Cancel" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Cancel" })).toHaveAttribute(
-      "href",
-      "/account",
-    );
+    expect(
+      screen.getByRole("link", { name: localizedStrings.cancel }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: localizedStrings.cancel }),
+    ).toHaveAttribute("href", "/account");
   });
 });

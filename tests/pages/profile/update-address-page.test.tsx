@@ -62,19 +62,19 @@ describe("EditAddressPage", () => {
     });
 
     expect(
-      screen.getByRole("button", { name: "Update my address" }),
+      screen.getByRole("button", { name: localizedStrings.update }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Update my address" }),
+      screen.getByRole("button", { name: localizedStrings.update }),
     ).toHaveAttribute("type", "submit");
 
     expect(
-      await screen.findByRole("link", { name: "Cancel" }),
+      await screen.findByRole("link", { name: localizedStrings.cancel }),
     ).toBeInTheDocument();
 
     waitFor(async () => {
       expect(
-        await screen.findByRole("link", { name: "Cancel" }),
+        await screen.findByRole("link", { name: localizedStrings.cancel }),
       ).toHaveAttribute(
         "href",
         `/account/profile/addresses/${mockAddresses.primaryAddress.id}`,

@@ -48,17 +48,17 @@ describe("NewAddressPage", () => {
     });
 
     expect(
-      screen.getByRole("button", { name: "Add address" }),
+      screen.getByRole("button", { name: localizedStrings.add }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Add address" })).toHaveAttribute(
-      "type",
-      "submit",
-    );
+    expect(
+      screen.getByRole("button", { name: localizedStrings.add }),
+    ).toHaveAttribute("type", "submit");
 
-    expect(screen.getByRole("link", { name: "Cancel" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Cancel" })).toHaveAttribute(
-      "href",
-      "/account/profile",
-    );
+    expect(
+      screen.getByRole("link", { name: localizedStrings.cancel }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: localizedStrings.cancel }),
+    ).toHaveAttribute("href", "/account/profile");
   });
 });
