@@ -9,6 +9,7 @@ import {
 } from "../../config/testing-library-config";
 import * as mockUserProfile from "../../mocks/user-profile";
 import { userProfile } from "../../mocks/user-profile";
+import * as locales from "@content/locales";
 import { UserProfileForm } from "@src/components/forms/profile/user-profile-form";
 
 jest.mock("@src/configs/db-client", () => {
@@ -22,8 +23,11 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("UpdateUserProfilePage", () => {
+  const path = "/account/profile/user-profile/edit";
+  const localizedStrings = locales.en[path];
+
   beforeAll(() => {
-    setRouterPathname("/account/profile/user-profile/edit");
+    setRouterPathname(path);
   });
 
   it("should render proper user profile form elements", async () => {
@@ -42,10 +46,9 @@ describe("UpdateUserProfilePage", () => {
       </SWRConfig>,
     );
 
-    // Will be fixed in a separate PR
-    // expect(
-    //   screen.getByRole("heading", { name: /profile \| edit/i }),
-    // ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: localizedStrings.breadcrumb }),
+    ).toBeInTheDocument();
 
     const textInputs = await screen.findAllByRole("textbox");
 

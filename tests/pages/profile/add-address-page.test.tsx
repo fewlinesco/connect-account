@@ -6,6 +6,7 @@ import {
   screen,
   setRouterPathname,
 } from "../../config/testing-library-config";
+import * as locales from "@content/locales";
 import NewAddressPage from "@src/pages/account/profile/addresses/new";
 
 jest.mock("@src/configs/db-client", () => {
@@ -19,8 +20,11 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("NewAddressPage", () => {
+  const path = "/account/profile/addresses/new";
+  const localizedStrings = locales.en[path];
+
   beforeAll(() => {
-    setRouterPathname("/account/profile/addresses/new");
+    setRouterPathname(path);
   });
 
   it("should render proper user address form elements", async () => {
@@ -29,7 +33,7 @@ describe("NewAddressPage", () => {
     render(<NewAddressPage />);
 
     expect(
-      screen.getByRole("heading", { name: /address \| new/i }),
+      screen.getByRole("heading", { name: localizedStrings.breadcrumb }),
     ).toBeInTheDocument();
 
     const textInputs = await screen.findAllByRole("textbox");

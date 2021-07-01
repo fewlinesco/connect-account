@@ -9,6 +9,7 @@ import {
   waitFor,
 } from "../../config/testing-library-config";
 import * as mockAddresses from "../../mocks/addresses";
+import * as locales from "@content/locales";
 import EditAddressPage from "@src/pages/account/profile/addresses/[id]/edit";
 
 jest.mock("@src/configs/db-client", () => {
@@ -22,8 +23,11 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("EditAddressPage", () => {
+  const path = "/account/profile/addresses/[id]/edit";
+  const localizedStrings = locales.en[path];
+
   beforeAll(() => {
-    setRouterPathname("/account/profile/addresses/[id]/edit");
+    setRouterPathname(path);
   });
 
   it("should render proper user address form elements", async () => {
@@ -43,7 +47,7 @@ describe("EditAddressPage", () => {
     );
 
     expect(
-      screen.getByRole("heading", { name: /address \| edit/i }),
+      screen.getByRole("heading", { name: localizedStrings.breadcrumb }),
     ).toBeInTheDocument();
 
     const textInputs = await screen.findAllByRole("textbox");

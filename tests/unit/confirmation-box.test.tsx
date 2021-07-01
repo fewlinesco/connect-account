@@ -2,8 +2,14 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import { cache, SWRConfig } from "swr";
 
-import { render, screen, waitFor } from "../config/testing-library-config";
+import {
+  render,
+  screen,
+  setRouterPathname,
+  waitFor,
+} from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
+import * as locales from "@content/locales";
 import IdentityOverviewPage from "@src/pages/account/logins/[type]/[id]";
 
 jest.mock("@src/configs/db-client", () => {
@@ -17,6 +23,13 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("ConfirmationBox", () => {
+  const path = "/account/logins/[type]/[id]";
+  const localizedStrings = locales.en[path];
+
+  beforeAll(() => {
+    setRouterPathname(path);
+  });
+
   afterEach(() => {
     cache.clear();
   });
@@ -69,20 +82,22 @@ describe("ConfirmationBox", () => {
 
     userEvent.click(
       await screen.findByRole("button", {
-        name: /Make this email address my primary one/i,
+        name: localizedStrings.markEmail,
       }),
     );
 
-    expect(
-      await screen.findByText(
-        `You are about to set ${mockIdentities.nonPrimaryEmailIdentity.value} as primary.`,
-      ),
-    ).toBeInTheDocument();
-    expect(
-      await screen.findByRole("button", {
-        name: "Cancel",
-      }),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          `You are about to set ${mockIdentities.nonPrimaryEmailIdentity.value} as primary.`,
+        ),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", {
+          name: "Cancel",
+        }),
+      ).toBeInTheDocument();
+    });
 
     userEvent.click(
       await screen.findByRole("button", {
@@ -90,9 +105,9 @@ describe("ConfirmationBox", () => {
       }),
     );
 
-    waitFor(async () => {
+    waitFor(() => {
       expect(
-        await screen.findByText(
+        screen.getByText(
           new RegExp(
             `You are about to set ${mockIdentities.nonPrimaryEmailIdentity.value} as primary.`,
             "i",
@@ -120,20 +135,22 @@ describe("ConfirmationBox", () => {
 
     userEvent.click(
       await screen.findByRole("button", {
-        name: /Delete this email address/i,
+        name: localizedStrings.deleteEmail,
       }),
     );
 
-    expect(
-      await screen.findByText(
-        `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
-      ),
-    ).toBeInTheDocument();
-    expect(
-      await screen.findByRole("button", {
-        name: "Keep email address",
-      }),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
+        ),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", {
+          name: "Keep email address",
+        }),
+      ).toBeInTheDocument();
+    });
 
     userEvent.click(
       screen.getByRole("button", {
@@ -141,9 +158,9 @@ describe("ConfirmationBox", () => {
       }),
     );
 
-    waitFor(async () => {
+    waitFor(() => {
       expect(
-        await screen.findByText(
+        screen.getByText(
           new RegExp(
             `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
             "i",

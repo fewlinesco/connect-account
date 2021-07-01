@@ -8,6 +8,7 @@ import {
   waitFor,
 } from "../../config/testing-library-config";
 import * as mockAddresses from "../../mocks/addresses";
+import * as locales from "@content/locales";
 import AddressOverviewPage from "@src/pages/account/profile/addresses/[id]";
 
 jest.mock("@src/configs/db-client", () => {
@@ -21,8 +22,11 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("AddressOverviewPage", () => {
+  const path = "/account/profile/addresses/[id]";
+  const localizedStrings = locales.en[path];
+
   beforeAll(() => {
-    setRouterPathname("/account/profile/addresses/[id]");
+    setRouterPathname(path);
   });
 
   afterEach(() => {
@@ -44,7 +48,7 @@ describe("AddressOverviewPage", () => {
     );
 
     expect(
-      await screen.findByRole("heading", { name: /address/i }),
+      await screen.findByRole("heading", { name: localizedStrings.breadcrumb }),
     ).toBeInTheDocument();
   });
 
