@@ -167,7 +167,7 @@ describe("IdentityOverviewPage", () => {
 
       expect(
         screen.queryByRole("button", {
-          name: /Make this email address my primary one/i,
+          name: localizedStrings.markEmail,
         }),
       ).not.toBeInTheDocument();
       expect(
@@ -229,7 +229,7 @@ describe("IdentityOverviewPage", () => {
       ).toBeInTheDocument();
       expect(
         await screen.findByRole("link", {
-          name: /Update this phone number/i,
+          name: localizedStrings.updatePhone,
         }),
       ).toBeInTheDocument();
       expect(
@@ -371,7 +371,7 @@ describe("IdentityOverviewPage", () => {
       );
 
       expect(
-        await screen.findByText(new RegExp(localizedStrings.awaiting, "i")),
+        await screen.findByText(localizedStrings.awaiting),
       ).toBeInTheDocument();
       expect(
         screen.queryByText(localizedStrings.primary),

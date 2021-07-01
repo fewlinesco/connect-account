@@ -133,7 +133,7 @@ const IdentityOverview: React.FC<{
                 setConfirmationBoxOpen(true);
               }}
             >
-              {getIdentityType(identity.type) === IdentityTypes.PHONE
+              {getIdentityType(identity.type) === IdentityTypes.EMAIL
                 ? formatMessage({ id: "deleteEmail" })
                 : formatMessage({ id: "deletePhone" })}
             </Button>
