@@ -48,10 +48,10 @@ describe("NewUserProfilePage", () => {
     });
 
     expect(
-      screen.getByRole("button", { name: "Add my information" }),
+      screen.getByRole("button", { name: localizedStrings.add }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Add my information" }),
+      screen.getByRole("button", { name: localizedStrings.add }),
     ).toHaveAttribute("type", "submit");
 
     expect(screen.getByRole("link", { name: "Cancel" })).toBeInTheDocument();
