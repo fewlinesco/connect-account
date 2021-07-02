@@ -89,7 +89,7 @@ export const en = {
     update: "Update this address",
     delete: "Delete this address",
     mark: "Use this address as my main address",
-    infoMark: "You are about to set this address as main.",
+    infoMark: "You are about to set this address as your primary address.",
     infoDelete: "You are about to delete this address.",
     deleteButton: "Delete",
     keep: "Keep this address",
