@@ -38,89 +38,101 @@ describe("Fill incorrect identity input values", () => {
 
   const localizedErrorStrings = locales.en.errors;
 
-  test("It should show error messages if Identity inputs are filled incorrectly in add identity", async () => {
-    expect.assertions(9);
+  describe("AddIdentity", () => {
+    const localizedStrings = locales.en["/account/logins/[type]/new"];
 
-    try {
-      await authenticateToConnect();
+    test("It should show error messages if Identity inputs are filled incorrectly in add identity", async () => {
+      expect.assertions(9);
 
-      await click("LOGINS");
+      try {
+        await authenticateToConnect();
 
-      await click("Add new email address");
-      expect(await text("Email address *").exists()).toBeTruthy();
+        await click("LOGINS");
 
-      await click("Add email");
-      expect(
-        await text(localizedErrorStrings.identityInputCantBeBlank).exists(),
-      ).toBeTruthy();
+        await click(localizedStrings.addEmail);
+        expect(
+          await text(localizedStrings.emailInputLabel).exists(),
+        ).toBeTruthy();
 
-      await write(
-        process.env.CONNECT_TEST_ACCOUNT_EMAIL ||
-          configVariables.connectTestAccountEmail,
-        into(textBox({ placeholder: "Enter your email" })),
-      );
-      await click("Add email");
-      expect(
-        await text(localizedErrorStrings.somethingWrong).exists(),
-      ).toBeTruthy();
+        await click(localizedStrings.addEmail);
+        expect(
+          await text(localizedErrorStrings.identityInputCantBeBlank).exists(),
+        ).toBeTruthy();
 
-      await click("LOGINS");
-      await click("+ Add new phone number");
-      expect(await text("Phone number *").exists()).toBeTruthy();
+        await write(
+          process.env.CONNECT_TEST_ACCOUNT_EMAIL ||
+            configVariables.connectTestAccountEmail,
+          into(textBox({ placeholder: localizedStrings.emailPlaceholder })),
+        );
+        await click(localizedStrings.addEmail);
+        expect(
+          await text(localizedErrorStrings.somethingWrong).exists(),
+        ).toBeTruthy();
 
-      await click("Add phone");
-      expect(
-        await text(localizedErrorStrings.identityInputCantBeBlank).exists(),
-      ).toBeTruthy();
+        await click("LOGINS");
+        await click("+ Add new phone number");
+        expect(
+          await text(localizedStrings.phoneInputLabel).exists(),
+        ).toBeTruthy();
 
-      await write(
-        "000000000000000000000000000000",
-        into(textBox({ placeholder: "Enter your phone number" })),
-      );
-      await click("Add phone");
-      expect(
-        await text(localizedErrorStrings.invalidPhoneNumberInput).exists(),
-      ).toBeTruthy();
-    } catch (error) {
-      await screenshot({
-        path: "./tests/e2e/screenshots/fill-incorrect-add-identity-input-values.test.png",
-      });
+        await click(localizedStrings.addPhone);
+        expect(
+          await text(localizedErrorStrings.identityInputCantBeBlank).exists(),
+        ).toBeTruthy();
 
-      throw error;
-    }
+        await write(
+          "000000000000000000000000000000",
+          into(textBox({ placeholder: localizedStrings.phonePlaceholder })),
+        );
+        await click("Add phone");
+        expect(
+          await text(localizedErrorStrings.invalidPhoneNumberInput).exists(),
+        ).toBeTruthy();
+      } catch (error) {
+        await screenshot({
+          path: "./tests/e2e/screenshots/fill-incorrect-add-identity-input-values.test.png",
+        });
+
+        throw error;
+      }
+    });
   });
 
-  test("It should show error messages if Identity inputs are filled incorrectly in update identity", async () => {
-    expect.assertions(3);
+  describe("UpdateIdentity", () => {
+    const localizedStrings = locales.en["/account/logins/[type]/[id]/update"];
 
-    try {
-      await click("LOGINS");
-      await click("Show");
-      expect(await text("Hide").exists()).toBeTruthy();
+    test("It should show error messages if Identity inputs are filled incorrectly in update identity", async () => {
+      expect.assertions(3);
 
-      const identityToUpdate = await link(".test", above("Hide")).text();
-      await click(identityToUpdate);
+      try {
+        await click("LOGINS");
+        await click("Show");
+        expect(await text("Hide").exists()).toBeTruthy();
 
-      await click("Update this email address");
-      await click("Update email");
-      expect(
-        await text(localizedErrorStrings.identityInputCantBeBlank).exists(),
-      ).toBeTruthy();
+        const identityToUpdate = await link(".test", above("Hide")).text();
+        await click(identityToUpdate);
 
-      await write(
-        identityToUpdate,
-        into(textBox({ placeholder: "Enter your email" })),
-      );
-      await click("Update email");
-      expect(
-        await text(localizedErrorStrings.somethingWrong).exists(),
-      ).toBeTruthy();
-    } catch (error) {
-      await screenshot({
-        path: "./tests/e2e/screenshots/fill-incorrect-update-identity-input-values.test.png",
-      });
+        await click(localizedStrings.updateEmail);
+        await click("Update email");
+        expect(
+          await text(localizedErrorStrings.identityInputCantBeBlank).exists(),
+        ).toBeTruthy();
 
-      throw error;
-    }
+        await write(
+          identityToUpdate,
+          into(textBox({ placeholder: localizedStrings.emailPlaceholder })),
+        );
+        await click("Update email");
+        expect(
+          await text(localizedErrorStrings.somethingWrong).exists(),
+        ).toBeTruthy();
+      } catch (error) {
+        await screenshot({
+          path: "./tests/e2e/screenshots/fill-incorrect-update-identity-input-values.test.png",
+        });
+
+        throw error;
+      }
+    });
   });
 });
