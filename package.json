@@ -30,8 +30,7 @@
     "e2e:cleaning-profile-staging": "ts-node bin/e2e/cleaning-profile-staging.ts",
     "e2e:setting-sudo-ttl": "ts-node bin/e2e/setting-sudo-ttl.ts",
     "generate-connect-profile-client": "docker run --rm -v ${PWD}/:/local openapitools/openapi-generator-cli generate --input-spec /local/connect-profile-openapi.yml --generator-name typescript-axios --additional-properties supportsES6=true --output /local/connect-profile-client",
-    "heroku:promote-staging-to-prod": "ts-node bin/run-promote.ts",
-    "prepare": "husky install"
+    "heroku:promote-staging-to-prod": "ts-node bin/run-promote.ts"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.19.0",
@@ -101,7 +100,6 @@
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-react": "7.24.0",
     "file-loader": "6.2.0",
-    "husky": "6.0.0",
     "jest": "27.0.5",
     "jest-fetch-mock": "3.0.3",
     "jest-styled-components": "7.0.4",
