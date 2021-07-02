@@ -15,10 +15,21 @@ import {
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
+import * as locales from "@content/locales";
 import { configVariables } from "@src/configs/config-variables";
 
 describe.only("Profile happy path", () => {
   jest.setTimeout(120000);
+
+  const localizedStrings = {
+    navigation: locales.en.navigation,
+    profileOverview: locales.en["/account/profile"],
+    newProfile: locales.en["/account/profile/user-profile/new"],
+    editProfile: locales.en["/account/profile/user-profile/edit"],
+    addressOverview: locales.en["/account/profile/addresses/[id]"],
+    newAddress: locales.en["/account/profile/addresses/new"],
+    editAddress: locales.en["/account/profile/addresses/[id]/edit"],
+  };
 
   beforeAll(async () => {
     await openBrowser({
@@ -57,154 +68,242 @@ describe.only("Profile happy path", () => {
 
       // Profile creation
       if (isStagingEnv) {
-        expect(await text("Create your profile").exists()).toBeTruthy();
-        await click("Create your profile");
-        expect(await text("Profile | new").exists()).toBeTruthy();
+        expect(
+          await text(localizedStrings.navigation.createYourProfile).exists(),
+        ).toBeTruthy();
+        await click(localizedStrings.navigation.createYourProfile);
+        expect(
+          await text(localizedStrings.newProfile.breadcrumb).exists(),
+        ).toBeTruthy();
         await write(
           "Taiko Test",
-          into(textBox({ placeholder: "Enter your full name" })),
+          into(
+            textBox({
+              placeholder: localizedStrings.newProfile.namePlaceholder,
+            }),
+          ),
         );
 
-        await click("Add my information");
+        await click(localizedStrings.newProfile.add);
         expect(await currentURL()).toEqual(profileUrl);
       } else {
         await waitFor(2000);
-        waitFor(async () => await text("Personal Information").exists());
-        await click("Personal Information");
+        waitFor(
+          async () =>
+            await text(
+              localizedStrings.navigation.personalInformation,
+            ).exists(),
+        );
+        await click(localizedStrings.navigation.personalInformation);
       }
 
       // Update user profile flow
       waitFor(
-        async () => await text("Update your personal information").exists(),
+        async () =>
+          await text(localizedStrings.profileOverview.updateInfo).exists(),
       );
-      await click("Update your personal information");
-      expect(await text("Profile | edit").exists()).toBeTruthy();
+      await click(localizedStrings.profileOverview.updateInfo);
+      expect(
+        await text(localizedStrings.editProfile.breadcrumb).exists(),
+      ).toBeTruthy();
 
-      await clear(textBox("Username"));
+      await clear(textBox(localizedStrings.editProfile.usernameLabel));
       await write(
         "Supertest",
-        into(textBox({ placeholder: "Enter your username" })),
+        into(
+          textBox({
+            placeholder: localizedStrings.editProfile.usernamePlaceholder,
+          }),
+        ),
       );
       expect(await textBox({ value: "Supertest" }).exists()).toBeTruthy();
 
-      await click("Update my information");
+      await click(localizedStrings.editProfile.update);
       expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       // Add address flow
-      expect(await text("Add new address").exists()).toBeTruthy();
-      await click(text("Add new address"));
-      expect(await text("Address | new").exists()).toBeTruthy();
+      expect(
+        await text(localizedStrings.profileOverview.addAddress).exists(),
+      ).toBeTruthy();
+      await click(text(localizedStrings.profileOverview.addAddress));
+      expect(
+        await text(localizedStrings.newAddress.breadcrumb).exists(),
+      ).toBeTruthy();
 
       await write(
         "42 Test Road",
-        into(textBox({ placeholder: "Enter your street address" })),
+        into(
+          textBox({
+            placeholder: localizedStrings.newAddress.streetAddressPlaceholder,
+          }),
+        ),
       );
       await write(
         "Test City",
-        into(textBox({ placeholder: "Enter your locality" })),
+        into(
+          textBox({
+            placeholder: localizedStrings.newAddress.localityPlaceholder,
+          }),
+        ),
       );
       await write(
         "42420",
-        into(textBox({ placeholder: "Enter your postal code" })),
+        into(
+          textBox({
+            placeholder: localizedStrings.newAddress.postalCodePlaceholder,
+          }),
+        ),
       );
       await write(
         "Testland",
-        into(textBox({ placeholder: "Enter your country" })),
+        into(
+          textBox({
+            placeholder: localizedStrings.newAddress.countryPlaceholder,
+          }),
+        ),
       );
       await write(
         "Home",
-        into(textBox({ placeholder: "Enter your address kind" })),
+        into(
+          textBox({
+            placeholder: localizedStrings.newAddress.addressKindPlaceholder,
+          }),
+        ),
       );
 
-      await click("Add address");
+      await click(localizedStrings.newAddress.add);
       expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       if (isStagingEnv) {
-        expect(await text("Add new address").exists()).toBeTruthy();
-        await click(text("Add new address"));
+        expect(
+          await text(localizedStrings.profileOverview.addAddress).exists(),
+        ).toBeTruthy();
+        await click(text(localizedStrings.profileOverview.addAddress));
 
-        expect(await text("Address | new").exists()).toBeTruthy();
+        expect(
+          await text(localizedStrings.newAddress.breadcrumb).exists(),
+        ).toBeTruthy();
 
         await write(
           "23 Test Road",
-          into(textBox({ placeholder: "Enter your street address" })),
+          into(
+            textBox({
+              placeholder: localizedStrings.newAddress.streetAddressPlaceholder,
+            }),
+          ),
         );
         await write(
           "Test City",
-          into(textBox({ placeholder: "Enter your locality" })),
+          into(
+            textBox({
+              placeholder: localizedStrings.newAddress.localityPlaceholder,
+            }),
+          ),
         );
         await write(
           "42420",
-          into(textBox({ placeholder: "Enter your postal code" })),
+          into(
+            textBox({
+              placeholder: localizedStrings.newAddress.postalCodePlaceholder,
+            }),
+          ),
         );
         await write(
           "Testland",
-          into(textBox({ placeholder: "Enter your country" })),
+          into(
+            textBox({
+              placeholder: localizedStrings.newAddress.countryPlaceholder,
+            }),
+          ),
         );
         await write(
           "Work",
-          into(textBox({ placeholder: "Enter your address kind" })),
+          into(
+            textBox({
+              placeholder: localizedStrings.newAddress.addressKindPlaceholder,
+            }),
+          ),
         );
 
-        await click("Add address");
+        await click(localizedStrings.newAddress.add);
         expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
       }
 
       // Update address flow
-      await click(link("", below("Addresses")));
-      expect(await text("Primary").exists()).toBeTruthy();
+      await click(
+        link("", below(localizedStrings.profileOverview.addressesSection)),
+      );
+      expect(
+        await text(localizedStrings.addressOverview.primary).exists(),
+      ).toBeTruthy();
 
-      await click("Update this address");
-      expect(await text("Address | edit").exists()).toBeTruthy();
+      await click(localizedStrings.addressOverview.update);
+      expect(
+        await text(localizedStrings.editAddress.breadcrumb).exists(),
+      ).toBeTruthy();
 
-      await clear(textBox("Street address"));
+      await clear(textBox(localizedStrings.editAddress.streetAddressLabel));
       await write(
         "21b Baker Street",
-        into(textBox({ placeholder: "Enter your street address" })),
+        into(
+          textBox({
+            placeholder: localizedStrings.editAddress.streetAddressPlaceholder,
+          }),
+        ),
       );
 
-      await click("Update my address");
+      await click(localizedStrings.editAddress.update);
       expect(await currentURL()).toEqual(profileUrl);
 
       // Mark address as primary flow
-      await click("Personal Information");
+      await click(localizedStrings.navigation.personalInformation);
 
-      expect(await text("Show more (1)").exists()).toBeTruthy();
-      await click("Show more (1)");
+      expect(
+        await text(localizedStrings.profileOverview.showMore).exists(),
+      ).toBeTruthy();
+      await click(localizedStrings.profileOverview.showMore);
       await click(link("Work"));
 
       expect(
-        await text("Use this address as my main address").exists(),
+        await text(localizedStrings.addressOverview.mark).exists(),
       ).toBeTruthy();
-      await click("Use this address as my main address");
+      await click(localizedStrings.addressOverview.mark);
       expect(
-        await text("You are about to set this address as main.").exists(),
+        await text(localizedStrings.addressOverview.infoMark).exists(),
       ).toBeTruthy();
-      await click("Confirm");
+      await click(localizedStrings.addressOverview.confirm);
 
       expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       // Delete address flow
-      await click(link("", below("Addresses")));
-      expect(await text("Primary").exists()).toBeTruthy();
-
-      await click("Delete this address");
+      await click(
+        link("", below(localizedStrings.profileOverview.addressesSection)),
+      );
       expect(
-        await text("You are about to delete this address.").exists(),
+        await text(localizedStrings.addressOverview.primary).exists(),
       ).toBeTruthy();
-      await click("Delete");
+
+      await click(localizedStrings.addressOverview.delete);
+      expect(
+        await text(localizedStrings.addressOverview.infoDelete).exists(),
+      ).toBeTruthy();
+      await click(localizedStrings.addressOverview.deleteButton);
 
       expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       if (isStagingEnv) {
-        await click(link("", below("Addresses")));
-        expect(await text("Primary").exists()).toBeTruthy();
-
-        await click("Delete this address");
+        await click(
+          link("", below(localizedStrings.profileOverview.addressesSection)),
+        );
         expect(
-          await text("You are about to delete this address.").exists(),
+          await text(localizedStrings.addressOverview.primary).exists(),
         ).toBeTruthy();
-        await click("Delete");
+
+        await click(localizedStrings.addressOverview.delete);
+        expect(
+          await text(localizedStrings.addressOverview.infoDelete).exists(),
+        ).toBeTruthy();
+        await click(localizedStrings.addressOverview.deleteButton);
 
         expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
       }

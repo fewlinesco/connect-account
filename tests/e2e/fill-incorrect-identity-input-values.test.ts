@@ -37,24 +37,31 @@ describe("Fill incorrect identity input values", () => {
   });
 
   const localizedErrorStrings = locales.en.errors;
+  const localizedStrings = {
+    accountOverview: locales.en["/account"],
+    identitiesOverview: locales.en["/account/logins"],
+    identityOverview: locales.en["/account/logins/[type]/[id]"],
+    newIdentity: locales.en["/account/logins/[type]/new"],
+    updateIdentity: locales.en["/account/logins/[type]/[id]/update"],
+  };
 
   describe("AddIdentity", () => {
-    const localizedStrings = locales.en["/account/logins/[type]/new"];
-
     test("It should show error messages if Identity inputs are filled incorrectly in add identity", async () => {
       expect.assertions(9);
 
       try {
         await authenticateToConnect();
 
-        await click("LOGINS");
+        await click(localizedStrings.accountOverview.loginsTitle);
 
-        await click(localizedStrings.addEmail);
+        await click(
+          localizedStrings.identitiesOverview.emailAddNewIdentityMessage,
+        );
         expect(
-          await text(localizedStrings.emailInputLabel).exists(),
+          await text(localizedStrings.newIdentity.emailInputLabel).exists(),
         ).toBeTruthy();
 
-        await click(localizedStrings.addEmail);
+        await click(localizedStrings.newIdentity.addEmail);
         expect(
           await text(localizedErrorStrings.identityInputCantBeBlank).exists(),
         ).toBeTruthy();
@@ -62,29 +69,39 @@ describe("Fill incorrect identity input values", () => {
         await write(
           process.env.CONNECT_TEST_ACCOUNT_EMAIL ||
             configVariables.connectTestAccountEmail,
-          into(textBox({ placeholder: localizedStrings.emailPlaceholder })),
+          into(
+            textBox({
+              placeholder: localizedStrings.newIdentity.emailPlaceholder,
+            }),
+          ),
         );
-        await click(localizedStrings.addEmail);
+        await click(localizedStrings.newIdentity.addEmail);
         expect(
           await text(localizedErrorStrings.somethingWrong).exists(),
         ).toBeTruthy();
 
         await click("LOGINS");
-        await click("+ Add new phone number");
+        await click(
+          localizedStrings.identitiesOverview.phoneAddNewIdentityMessage,
+        );
         expect(
-          await text(localizedStrings.phoneInputLabel).exists(),
+          await text(localizedStrings.newIdentity.phoneInputLabel).exists(),
         ).toBeTruthy();
 
-        await click(localizedStrings.addPhone);
+        await click(localizedStrings.newIdentity.addPhone);
         expect(
           await text(localizedErrorStrings.identityInputCantBeBlank).exists(),
         ).toBeTruthy();
 
         await write(
           "000000000000000000000000000000",
-          into(textBox({ placeholder: localizedStrings.phonePlaceholder })),
+          into(
+            textBox({
+              placeholder: localizedStrings.newIdentity.phonePlaceholder,
+            }),
+          ),
         );
-        await click("Add phone");
+        await click(localizedStrings.newIdentity.addPhone);
         expect(
           await text(localizedErrorStrings.invalidPhoneNumberInput).exists(),
         ).toBeTruthy();
@@ -99,30 +116,37 @@ describe("Fill incorrect identity input values", () => {
   });
 
   describe("UpdateIdentity", () => {
-    const localizedStrings = locales.en["/account/logins/[type]/[id]/update"];
-
     test("It should show error messages if Identity inputs are filled incorrectly in update identity", async () => {
       expect.assertions(3);
 
       try {
-        await click("LOGINS");
-        await click("Show");
-        expect(await text("Hide").exists()).toBeTruthy();
+        await click(localizedStrings.accountOverview.loginsTitle);
+        await click(localizedStrings.identitiesOverview.showMore);
+        expect(
+          await text(localizedStrings.identitiesOverview.hide).exists(),
+        ).toBeTruthy();
 
-        const identityToUpdate = await link(".test", above("Hide")).text();
+        const identityToUpdate = await link(
+          ".test",
+          above(localizedStrings.identitiesOverview.hide),
+        ).text();
         await click(identityToUpdate);
 
-        await click(localizedStrings.updateEmail);
-        await click("Update email");
+        await click(localizedStrings.identityOverview.updateEmail);
+        await click(localizedStrings.updateIdentity.updateEmail);
         expect(
           await text(localizedErrorStrings.identityInputCantBeBlank).exists(),
         ).toBeTruthy();
 
         await write(
           identityToUpdate,
-          into(textBox({ placeholder: localizedStrings.emailPlaceholder })),
+          into(
+            textBox({
+              placeholder: localizedStrings.updateIdentity.emailPlaceholder,
+            }),
+          ),
         );
-        await click("Update email");
+        await click(localizedStrings.updateIdentity.updateEmail);
         expect(
           await text(localizedErrorStrings.somethingWrong).exists(),
         ).toBeTruthy();
