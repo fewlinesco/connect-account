@@ -9,6 +9,7 @@ import {
   into,
   link,
   above,
+  waitFor,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
@@ -133,9 +134,10 @@ describe("Fill incorrect identity input values", () => {
         await click(identityToUpdate);
 
         await click(localizedStrings.identityOverview.updateEmail);
+        await waitFor(500);
         await click(localizedStrings.updateIdentity.updateEmail);
         expect(
-          await text(localizedErrorStrings.identityInputCantBeBlank).exists(),
+          text(localizedErrorStrings.identityInputCantBeBlank).exists(),
         ).toBeTruthy();
 
         await write(
