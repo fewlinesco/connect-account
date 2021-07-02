@@ -125,7 +125,7 @@ const UpdateIdentityForm: React.FC<{
                     primary: identity.primary,
                   })
                 }
-                label={formatMessage({ id: "phoneInputLabel" })}
+                label={formatMessage({ id: "emailInputLabel" })}
               />
             ) : (
               <>
