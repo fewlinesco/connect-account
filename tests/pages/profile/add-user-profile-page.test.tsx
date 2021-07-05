@@ -6,6 +6,7 @@ import {
   screen,
   setRouterPathname,
 } from "../../config/testing-library-config";
+import * as locales from "@content/locales";
 import NewUserProfilePage from "@src/pages/account/profile/user-profile/new";
 
 jest.mock("@src/configs/db-client", () => {
@@ -19,8 +20,11 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("NewUserProfilePage", () => {
+  const path = "/account/profile/user-profile/new";
+  const localizedStrings = locales.en[path];
+
   beforeAll(() => {
-    setRouterPathname("/account/profile/user-profile/new");
+    setRouterPathname(path);
   });
 
   it("should render proper user profile form elements", async () => {
@@ -29,7 +33,7 @@ describe("NewUserProfilePage", () => {
     render(<NewUserProfilePage />);
 
     expect(
-      screen.getByRole("heading", { name: /profile \| new/i }),
+      screen.getByRole("heading", { name: localizedStrings.breadcrumb }),
     ).toBeInTheDocument();
 
     const textInputs = await screen.findAllByRole("textbox");
@@ -44,16 +48,17 @@ describe("NewUserProfilePage", () => {
     });
 
     expect(
-      screen.getByRole("button", { name: "Add my information" }),
+      screen.getByRole("button", { name: localizedStrings.add }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Add my information" }),
+      screen.getByRole("button", { name: localizedStrings.add }),
     ).toHaveAttribute("type", "submit");
 
-    expect(screen.getByRole("link", { name: "Cancel" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Cancel" })).toHaveAttribute(
-      "href",
-      "/account",
-    );
+    expect(
+      screen.getByRole("link", { name: localizedStrings.cancel }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: localizedStrings.cancel }),
+    ).toHaveAttribute("href", "/account");
   });
 });

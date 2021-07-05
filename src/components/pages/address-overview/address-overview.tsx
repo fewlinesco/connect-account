@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 
 import { Address } from "@src/@types/profile";
@@ -18,6 +19,7 @@ import {
 } from "@src/utils/format";
 
 const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
+  const { formatMessage } = useIntl();
   const router = useRouter();
   const [primaryConfirmationBoxOpen, setPrimaryConfirmationBoxOpen] =
     React.useState<boolean>(false);
@@ -37,7 +39,9 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
             <AddressValue isPrimary={address.primary}>
               {formatOtherAddressFieldsToDisplay(address)}
             </AddressValue>
-            {address.primary ? <PrimaryBadge /> : null}
+            {address.primary ? (
+              <PrimaryBadge localizedLabel={formatMessage({ id: "primary" })} />
+            ) : null}
           </>
         ) : (
           <Flex>
@@ -50,7 +54,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
         href={address ? `/account/profile/addresses/${address.id}/edit` : "#"}
       >
         <FakeButton variant={ButtonVariant.PRIMARY}>
-          Update this address
+          {formatMessage({ id: "update" })}
         </FakeButton>
       </NeutralLink>
       {address ? (
@@ -64,7 +68,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                 setPrimaryConfirmationBoxOpen(true);
               }}
             >
-              Use this address as my main address
+              {formatMessage({ id: "mark" })}
             </Button>
             <ConfirmationBox
               open={primaryConfirmationBoxOpen}
@@ -72,7 +76,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
               preventAnimation={preventAnimation}
             >
               <>
-                <p>You are about to set this address as main.</p>
+                <p>{formatMessage({ id: "infoMark" })}</p>
                 <Button
                   type="button"
                   variant={ButtonVariant.PRIMARY}
@@ -88,7 +92,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                       });
                   }}
                 >
-                  Confirm
+                  {formatMessage({ id: "confirm" })}
                 </Button>
                 <Button
                   type="button"
@@ -97,7 +101,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                     setPrimaryConfirmationBoxOpen(false);
                   }}
                 >
-                  Cancel
+                  {formatMessage({ id: "cancel" })}
                 </Button>
               </>
             </ConfirmationBox>
@@ -112,7 +116,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
           setDeleteConfirmationBoxOpen(true);
         }}
       >
-        Delete this address
+        {formatMessage({ id: "delete" })}
       </Button>
       <ConfirmationBox
         open={deleteConfirmationBoxOpen}
@@ -120,7 +124,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
         preventAnimation={preventAnimation}
       >
         <>
-          <p>You are about to delete this address.</p>
+          <p>{formatMessage({ id: "infoDelete" })}</p>
           <Button
             type="button"
             variant={ButtonVariant.PRIMARY}
@@ -132,7 +136,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                 });
             }}
           >
-            Delete
+            {formatMessage({ id: "deleteButton" })}
           </Button>
           <Button
             type="button"
@@ -141,7 +145,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
               setDeleteConfirmationBoxOpen(false);
             }}
           >
-            Keep address
+            {formatMessage({ id: "keep" })}
           </Button>
         </>
       </ConfirmationBox>
