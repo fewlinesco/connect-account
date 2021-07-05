@@ -2,6 +2,7 @@ import "react-phone-number-input/style.css";
 import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
@@ -24,6 +25,8 @@ import { getIdentityType } from "@src/utils/get-identity-type";
 const UpdateIdentityForm: React.FC<{
   identity?: Identity;
 }> = ({ identity }) => {
+  const { formatMessage } = useIntl();
+  const router = useRouter();
   const [modifiedIdentity, setIdentity] =
     React.useState<InMemoryTemporaryIdentity>({
       value: "",
@@ -33,8 +36,6 @@ const UpdateIdentityForm: React.FC<{
     });
   const [formID, setFormID] = React.useState<string>(uuidv4());
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
-
-  const router = useRouter();
 
   return (
     <>
@@ -114,7 +115,7 @@ const UpdateIdentityForm: React.FC<{
               <InputText
                 type="text"
                 name="value"
-                placeholder={`Enter your ${identity.type}`}
+                placeholder={formatMessage({ id: "emailPlaceholder" })}
                 value={modifiedIdentity.value}
                 onChange={(value) =>
                   setIdentity({
@@ -124,14 +125,16 @@ const UpdateIdentityForm: React.FC<{
                     primary: identity.primary,
                   })
                 }
-                label="New email address *"
+                label={formatMessage({ id: "emailInputLabel" })}
               />
             ) : (
               <>
-                <label htmlFor="styled-phone-input">Phone number *</label>
+                <label htmlFor="styled-phone-input">
+                  {formatMessage({ id: "phoneInputLabel" })}
+                </label>
                 <StyledPhoneInput
                   id="styled-phone-input"
-                  placeholder="Enter your phone number"
+                  placeholder={formatMessage({ id: "phonePlaceholder" })}
                   value={modifiedIdentity.value}
                   defaultCountry="FR"
                   onChange={(value) => {
@@ -146,11 +149,15 @@ const UpdateIdentityForm: React.FC<{
               </>
             )}
             <Button type="submit" variant={ButtonVariant.PRIMARY}>
-              Update {identity.type}
+              {getIdentityType(identity.type) === IdentityTypes.EMAIL
+                ? formatMessage({ id: "updateEmail" })
+                : formatMessage({ id: "updatePhone" })}
             </Button>
           </Form>
           <NeutralLink href="/account/logins">
-            <FakeButton variant={ButtonVariant.SECONDARY}>Cancel</FakeButton>
+            <FakeButton variant={ButtonVariant.SECONDARY}>
+              {formatMessage({ id: "cancel" })}
+            </FakeButton>
           </NeutralLink>{" "}
         </>
       ) : null}

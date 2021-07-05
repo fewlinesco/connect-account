@@ -1,6 +1,7 @@
 import { HttpStatus } from "@fwl/web";
 import { NextRouter, useRouter } from "next/router";
 import React from "react";
+import { useIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../../input/form-error-message";
@@ -76,6 +77,7 @@ const UserAddressForm: React.FC<{
   isCreation?: boolean;
 }> = ({ userAddress, isCreation }) => {
   const router = useRouter();
+  const { formatMessage } = useIntl();
   const [formID, setFormID] = React.useState<string>(uuidv4());
   const [errors, setErrors] = React.useState<AddressInputErrors>({});
   const [address, setAddress] = React.useState<Address>({
@@ -127,7 +129,7 @@ const UserAddressForm: React.FC<{
         <InputText
           type="text"
           name="street-address"
-          placeholder="Enter your street address"
+          placeholder={formatMessage({ id: "streetAddressPlaceholder" })}
           value={address.street_address}
           onChange={(value) => {
             setAddress({
@@ -135,12 +137,12 @@ const UserAddressForm: React.FC<{
               street_address: value,
             });
           }}
-          label="Street address"
+          label={formatMessage({ id: "streetAddressLabel" })}
         />
         <InputText
           type="text"
           name="street-address-2"
-          placeholder="Enter your complementary street address"
+          placeholder={formatMessage({ id: "streetAddress2Placeholder" })}
           value={address.street_address_2}
           onChange={(value) => {
             setAddress({
@@ -148,12 +150,12 @@ const UserAddressForm: React.FC<{
               street_address_2: value,
             });
           }}
-          label="Complementary street address"
+          label={formatMessage({ id: "streetAddress2Label" })}
         />
         <InputText
           type="text"
           name="locality"
-          placeholder="Enter your locality"
+          placeholder={formatMessage({ id: "localityPlaceholder" })}
           value={address.locality}
           onChange={(value) => {
             setAddress({
@@ -161,7 +163,7 @@ const UserAddressForm: React.FC<{
               locality: value,
             });
           }}
-          label="Locality *"
+          label={formatMessage({ id: "localityLabel" })}
           required
         />
         {errors.locality && (
@@ -170,7 +172,7 @@ const UserAddressForm: React.FC<{
         <InputText
           type="text"
           name="postal-code"
-          placeholder="Enter your postal code"
+          placeholder={formatMessage({ id: "postalCodePlaceholder" })}
           value={address.postal_code}
           onChange={(value) => {
             setAddress({
@@ -178,7 +180,7 @@ const UserAddressForm: React.FC<{
               postal_code: value,
             });
           }}
-          label="Postal code *"
+          label={formatMessage({ id: "postalCodeLabel" })}
           required
         />
         {errors.postal_code && (
@@ -187,7 +189,7 @@ const UserAddressForm: React.FC<{
         <InputText
           type="text"
           name="region"
-          placeholder="Enter your region"
+          placeholder={formatMessage({ id: "regionPlaceholder" })}
           value={address.region}
           onChange={(value) => {
             setAddress({
@@ -195,12 +197,12 @@ const UserAddressForm: React.FC<{
               region: value,
             });
           }}
-          label="Region"
+          label={formatMessage({ id: "regionLabel" })}
         />
         <InputText
           type="text"
           name="country"
-          placeholder="Enter your country"
+          placeholder={formatMessage({ id: "countryPlaceholder" })}
           value={address.country}
           onChange={(value) => {
             setAddress({
@@ -208,7 +210,7 @@ const UserAddressForm: React.FC<{
               country: value,
             });
           }}
-          label="Country *"
+          label={formatMessage({ id: "countryLabel" })}
           required
         />
         {errors.country && (
@@ -217,7 +219,7 @@ const UserAddressForm: React.FC<{
         <InputText
           type="text"
           name="kind"
-          placeholder="Enter your address kind"
+          placeholder={formatMessage({ id: "addressKindPlaceholder" })}
           value={address.kind}
           onChange={(value) => {
             setAddress({
@@ -225,10 +227,12 @@ const UserAddressForm: React.FC<{
               kind: value,
             });
           }}
-          label="Kind"
+          label={formatMessage({ id: "addressKindLabel" })}
         />
         <Button type="submit" variant={ButtonVariant.PRIMARY}>
-          {isCreation ? "Add address" : "Update my address"}
+          {isCreation
+            ? formatMessage({ id: "add" })
+            : formatMessage({ id: "update" })}
         </Button>
       </Form>
       <NeutralLink
@@ -238,7 +242,9 @@ const UserAddressForm: React.FC<{
             : `/account/profile/addresses/${address.id}`
         }
       >
-        <FakeButton variant={ButtonVariant.SECONDARY}>Cancel</FakeButton>
+        <FakeButton variant={ButtonVariant.SECONDARY}>
+          {formatMessage({ id: "cancel" })}
+        </FakeButton>
       </NeutralLink>{" "}
     </>
   );

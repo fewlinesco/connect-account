@@ -9,6 +9,7 @@ import {
 } from "../../config/testing-library-config";
 import * as mockUserProfile from "../../mocks/user-profile";
 import { userProfile } from "../../mocks/user-profile";
+import * as locales from "@content/locales";
 import { UserProfileForm } from "@src/components/forms/profile/user-profile-form";
 
 jest.mock("@src/configs/db-client", () => {
@@ -22,8 +23,11 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("UpdateUserProfilePage", () => {
+  const path = "/account/profile/user-profile/edit";
+  const localizedStrings = locales.en[path];
+
   beforeAll(() => {
-    setRouterPathname("/account/profile/user-profile/edit");
+    setRouterPathname(path);
   });
 
   it("should render proper user profile form elements", async () => {
@@ -42,13 +46,7 @@ describe("UpdateUserProfilePage", () => {
       </SWRConfig>,
     );
 
-    // Will be fixed in a separate PR
-    // expect(
-    //   screen.getByRole("heading", { name: /profile \| edit/i }),
-    // ).toBeInTheDocument();
-
     const textInputs = await screen.findAllByRole("textbox");
-
     expect(textInputs).toHaveLength(8);
 
     textInputs.forEach((input) => {
@@ -59,16 +57,17 @@ describe("UpdateUserProfilePage", () => {
     });
 
     expect(
-      screen.getByRole("button", { name: "Update my information" }),
+      screen.getByRole("button", { name: localizedStrings.update }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Update my information" }),
+      screen.getByRole("button", { name: localizedStrings.update }),
     ).toHaveAttribute("type", "submit");
 
-    expect(screen.getByRole("link", { name: "Cancel" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Cancel" })).toHaveAttribute(
-      "href",
-      "/account/profile",
-    );
+    expect(
+      screen.getByRole("link", { name: localizedStrings.cancel }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: localizedStrings.cancel }),
+    ).toHaveAttribute("href", "/account/profile");
   });
 });
