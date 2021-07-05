@@ -8,6 +8,7 @@ import {
   waitFor,
 } from "../../config/testing-library-config";
 import * as mockAddresses from "../../mocks/addresses";
+import * as locales from "@content/locales";
 import AddressOverviewPage from "@src/pages/account/profile/addresses/[id]";
 
 jest.mock("@src/configs/db-client", () => {
@@ -21,8 +22,11 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("AddressOverviewPage", () => {
+  const path = "/account/profile/addresses/[id]";
+  const localizedStrings = locales.en[path];
+
   beforeAll(() => {
-    setRouterPathname("/account/profile/addresses/[id]");
+    setRouterPathname(path);
   });
 
   afterEach(() => {
@@ -44,7 +48,7 @@ describe("AddressOverviewPage", () => {
     );
 
     expect(
-      await screen.findByRole("heading", { name: /address/i }),
+      await screen.findByRole("heading", { name: localizedStrings.breadcrumb }),
     ).toBeInTheDocument();
   });
 
@@ -85,7 +89,7 @@ describe("AddressOverviewPage", () => {
 
     expect(
       await screen.findByRole("link", {
-        name: /Update this address/i,
+        name: localizedStrings.update,
       }),
     ).toBeInTheDocument();
   });
@@ -106,7 +110,7 @@ describe("AddressOverviewPage", () => {
 
     expect(
       screen.queryByRole("button", {
-        name: /Use this address as my main address/i,
+        name: localizedStrings.mark,
       }),
     ).not.toBeInTheDocument();
   });
@@ -127,7 +131,7 @@ describe("AddressOverviewPage", () => {
 
     expect(
       await screen.findByRole("button", {
-        name: /Use this address as my main address/i,
+        name: localizedStrings.mark,
       }),
     ).toBeInTheDocument();
   });
@@ -148,7 +152,7 @@ describe("AddressOverviewPage", () => {
 
     expect(
       await screen.findByRole("button", {
-        name: /Delete this address/i,
+        name: localizedStrings.delete,
       }),
     ).toBeInTheDocument();
   });
@@ -167,7 +171,7 @@ describe("AddressOverviewPage", () => {
       </SWRConfig>,
     );
 
-    expect(await screen.findByText("Primary")).toBeTruthy();
+    expect(await screen.findByText(localizedStrings.primary)).toBeTruthy();
   });
 
   it("shouldn't display primary badge for a non primary address", async () => {
@@ -185,7 +189,9 @@ describe("AddressOverviewPage", () => {
     );
 
     await waitFor(() => {
-      expect(screen.queryByText("Primary")).not.toBeInTheDocument();
+      expect(
+        screen.queryByText(localizedStrings.primary),
+      ).not.toBeInTheDocument();
     });
   });
 });

@@ -10,9 +10,12 @@ import {
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
+import * as locales from "@content/locales";
 
 describe("Mark Identity as primary", () => {
   jest.setTimeout(60000);
+
+  const localizedErrorStrings = locales.en;
 
   beforeAll(async () => {
     await openBrowser({
@@ -53,9 +56,9 @@ describe("Mark Identity as primary", () => {
         : await link("", below(primaryIdentity)).text();
 
       await click(nonPrimaryYet);
-
-      await click("Make");
-
+      await click(
+        localizedErrorStrings["/account/logins/[type]/[id]"].markEmail,
+      );
       await click("Confirm");
       expect(
         await text(`${nonPrimaryYet} is now your primary email`).exists(),

@@ -1,6 +1,7 @@
 import { ProfileData } from "connect-profile-client";
 import { useRouter } from "next/router";
 import React from "react";
+import { useIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 
 import { InputDatePicker } from "../../input/input-date-picker";
@@ -18,8 +19,8 @@ const UserProfileForm: React.FC<{
   userProfileData?: Profile;
   isCreation?: boolean;
 }> = ({ userProfileData, isCreation }) => {
+  const { formatMessage } = useIntl();
   const [formID] = React.useState<string>(uuidv4());
-
   const [userProfile, setUserProfile] = React.useState<ProfileData>({
     name: "",
     family_name: "",
@@ -81,7 +82,7 @@ const UserProfileForm: React.FC<{
         <InputText
           type="text"
           name="name"
-          placeholder="Enter your full name"
+          placeholder={formatMessage({ id: "namePlaceholder" })}
           value={userProfile.name}
           onChange={(value) => {
             setUserProfile({
@@ -89,13 +90,13 @@ const UserProfileForm: React.FC<{
               name: value,
             });
           }}
-          label="Name *"
+          label={formatMessage({ id: "nameLabel" })}
           required
         />
         <InputText
           type="text"
           name="username"
-          placeholder="Enter your username"
+          placeholder={formatMessage({ id: "usernamePlaceholder" })}
           value={userProfile.preferred_username}
           onChange={(value) => {
             setUserProfile({
@@ -103,10 +104,10 @@ const UserProfileForm: React.FC<{
               preferred_username: value,
             });
           }}
-          label="Username"
+          label={formatMessage({ id: "usernameLabel" })}
         />
         <InputDatePicker
-          label="Birthdate"
+          label={formatMessage({ id: "birthDateLabel" })}
           selected={
             userProfile.birthdate !== "" ? userProfile.birthdate : undefined
           }
@@ -131,7 +132,7 @@ const UserProfileForm: React.FC<{
         <InputText
           type="text"
           name="profile"
-          placeholder="Enter your profile URL"
+          placeholder={formatMessage({ id: "profilePlaceholder" })}
           value={userProfile.profile}
           onChange={(value) => {
             setUserProfile({
@@ -139,12 +140,12 @@ const UserProfileForm: React.FC<{
               profile: value,
             });
           }}
-          label="Profile URL"
+          label={formatMessage({ id: "profileLabel" })}
         />
         <InputText
           type="text"
           name="website"
-          placeholder="Enter your website URL"
+          placeholder={formatMessage({ id: "websitePlaceholder" })}
           value={userProfile.website}
           onChange={(value) => {
             setUserProfile({
@@ -152,12 +153,12 @@ const UserProfileForm: React.FC<{
               website: value,
             });
           }}
-          label="Website URL"
+          label={formatMessage({ id: "websiteLabel" })}
         />
         <InputText
           type="text"
           name="picture"
-          placeholder="Enter your picture URL"
+          placeholder={formatMessage({ id: "picturePlaceholder" })}
           value={userProfile.picture}
           onChange={(value) => {
             setUserProfile({
@@ -165,12 +166,12 @@ const UserProfileForm: React.FC<{
               picture: value,
             });
           }}
-          label="Picture URL"
+          label={formatMessage({ id: "pictureLabel" })}
         />
         <InputText
           type="text"
           name="zoneinfo"
-          placeholder="Enter your zone info"
+          placeholder={formatMessage({ id: "zoneInfoPlaceholder" })}
           value={userProfile.zoneinfo}
           onChange={(value) => {
             setUserProfile({
@@ -178,12 +179,12 @@ const UserProfileForm: React.FC<{
               zoneinfo: value,
             });
           }}
-          label="Zone info"
+          label={formatMessage({ id: "zoneInfoLabel" })}
         />
         <InputText
           type="text"
           name="locale"
-          placeholder="Enter your locale"
+          placeholder={formatMessage({ id: "localePlaceholder" })}
           value={userProfile.locale}
           onChange={(value) => {
             setUserProfile({
@@ -191,14 +192,18 @@ const UserProfileForm: React.FC<{
               locale: value,
             });
           }}
-          label="Locale"
+          label={formatMessage({ id: "localeLabel" })}
         />
         <Button type="submit" variant={ButtonVariant.PRIMARY}>
-          {isCreation ? "Add my information" : "Update my information"}
+          {isCreation
+            ? formatMessage({ id: "add" })
+            : formatMessage({ id: "update" })}
         </Button>
       </Form>
       <NeutralLink href={isCreation ? "/account" : "/account/profile"}>
-        <FakeButton variant={ButtonVariant.SECONDARY}>Cancel</FakeButton>
+        <FakeButton variant={ButtonVariant.SECONDARY}>
+          {formatMessage({ id: "cancel" })}
+        </FakeButton>
       </NeutralLink>{" "}
     </>
   );

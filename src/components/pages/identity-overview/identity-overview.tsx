@@ -1,6 +1,7 @@
 import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 
 import {
@@ -21,37 +22,13 @@ import { getIdentityType } from "@src/utils/get-identity-type";
 const IdentityOverview: React.FC<{
   identity?: Identity;
 }> = ({ identity }) => {
+  const { formatMessage } = useIntl();
+  const router = useRouter();
   const [confirmationBoxOpen, setConfirmationBoxOpen] =
     React.useState<boolean>(false);
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
   const [confirmationBoxContent, setConfirmationBoxContent] =
     React.useState<JSX.Element>(<React.Fragment />);
-  const router = useRouter();
-
-  const deleteIdentity = (identity: Identity): Promise<void> => {
-    const requestData = {
-      type: getIdentityType(identity.type),
-      value: identity.value,
-      id: identity.id,
-    };
-
-    return fetchJson(
-      `/api/identities/${identity.id}`,
-      "DELETE",
-      requestData,
-    ).then(() => {
-      router && router.push("/account/logins");
-    });
-  };
-
-  const markIdentityAsPrimary = (identity: Identity): Promise<void> =>
-    fetchJson(
-      `/api/identities/${identity.id}/mark-as-primary`,
-      "POST",
-      {},
-    ).then(() => {
-      router && router.push("/account/logins");
-    });
 
   return (
     <>
@@ -66,12 +43,14 @@ const IdentityOverview: React.FC<{
               <p>{identity.value}</p>
             </Value>
             {identity.primary && identity.status === "validated" ? (
-              <PrimaryBadge />
+              <PrimaryBadge localizedLabel={formatMessage({ id: "primary" })} />
             ) : null}
             {identity.status === "validated" ? (
               <React.Fragment />
             ) : (
-              <AwaitingValidationBadge />
+              <AwaitingValidationBadge
+                localizedLabel={formatMessage({ id: "awaiting" })}
+              />
             )}
           </>
         )}
@@ -81,7 +60,7 @@ const IdentityOverview: React.FC<{
           {identity.status === "unvalidated" && (
             <NeutralLink href={`/account/logins/${identity.type}/validation`}>
               <FakeButton variant={ButtonVariant.PRIMARY}>
-                Proceed to validation
+                {formatMessage({ id: "proceed" })}
               </FakeButton>
             </NeutralLink>
           )}
@@ -90,10 +69,9 @@ const IdentityOverview: React.FC<{
               href={`/account/logins/${identity.type}/${identity.id}/update`}
             >
               <FakeButton variant={ButtonVariant.PRIMARY}>
-                Update this{" "}
-                {getIdentityType(identity.type) === IdentityTypes.PHONE
-                  ? "phone number"
-                  : "email address"}
+                {getIdentityType(identity.type) === IdentityTypes.EMAIL
+                  ? formatMessage({ id: "updateEmail" })
+                  : formatMessage({ id: "updatePhone" })}
               </FakeButton>
             </NeutralLink>
           )}
@@ -107,19 +85,23 @@ const IdentityOverview: React.FC<{
                   <PrimaryConfirmationBoxContent
                     setOpen={setConfirmationBoxOpen}
                     value={identity.value}
-                    onPress={() => {
-                      markIdentityAsPrimary(identity);
+                    onPress={async () => {
+                      await fetchJson(
+                        `/api/identities/${identity.id}/mark-as-primary`,
+                        "POST",
+                        {},
+                      ).then(() => {
+                        router && router.push("/account/logins");
+                      });
                     }}
                   />,
                 );
                 setConfirmationBoxOpen(true);
               }}
             >
-              Make this{" "}
               {getIdentityType(identity.type) === IdentityTypes.EMAIL
-                ? "email address"
-                : "phone number"}{" "}
-              my primary one
+                ? formatMessage({ id: "markEmail" })
+                : formatMessage({ id: "markPhone" })}
             </Button>
           )}
           {!identity.primary && (
@@ -133,16 +115,27 @@ const IdentityOverview: React.FC<{
                     setOpen={setConfirmationBoxOpen}
                     value={identity.value}
                     type={identity.type}
-                    onPress={() => deleteIdentity(identity)}
+                    onPress={async () => {
+                      await fetchJson(
+                        `/api/identities/${identity.id}`,
+                        "DELETE",
+                        {
+                          type: getIdentityType(identity.type),
+                          value: identity.value,
+                          id: identity.id,
+                        },
+                      ).then(() => {
+                        router && router.push("/account/logins");
+                      });
+                    }}
                   />,
                 );
                 setConfirmationBoxOpen(true);
               }}
             >
-              Delete this{" "}
-              {getIdentityType(identity.type) === IdentityTypes.PHONE
-                ? "phone number"
-                : "email address"}
+              {getIdentityType(identity.type) === IdentityTypes.EMAIL
+                ? formatMessage({ id: "deleteEmail" })
+                : formatMessage({ id: "deletePhone" })}
             </Button>
           )}
         </>

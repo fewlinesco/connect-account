@@ -7,6 +7,7 @@ import {
   screen,
   setRouterPathname,
 } from "../../config/testing-library-config";
+import * as locales from "@content/locales";
 import AddIdentityPage from "@src/pages/account/logins/[type]/new";
 
 jest.mock("@src/configs/db-client", () => {
@@ -20,11 +21,14 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("AddIdentityPage", () => {
-  describe("Identity type : EMAIL", () => {
-    beforeAll(() => {
-      setRouterPathname("/account/logins/[type]/new");
-    });
+  const path = "/account/logins/[type]/new";
+  const localizedStrings = locales.en[path];
 
+  beforeAll(() => {
+    setRouterPathname(path);
+  });
+
+  describe("Identity type : EMAIL", () => {
     it("should render proper email form elements ", () => {
       expect.assertions(8);
 
@@ -37,7 +41,7 @@ describe("AddIdentityPage", () => {
       expect(addIdentityInput).toHaveDisplayValue("test@test.test");
 
       const markAsPrimaryCheckbox = screen.getByRole("checkbox", {
-        name: "Mark this identity as my primary one",
+        name: localizedStrings.markIdentity,
       });
 
       expect(markAsPrimaryCheckbox).toBeInTheDocument();
@@ -46,23 +50,20 @@ describe("AddIdentityPage", () => {
       expect(markAsPrimaryCheckbox).toBeChecked();
 
       expect(
-        screen.getByRole("button", { name: "Add email" }),
+        screen.getByRole("button", { name: localizedStrings.addEmail }),
       ).toBeInTheDocument();
 
-      expect(screen.getByRole("link", { name: "Cancel" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("link", { name: localizedStrings.cancel }),
+      ).toBeInTheDocument();
 
-      expect(screen.getByRole("link", { name: "Cancel" })).toHaveAttribute(
-        "href",
-        "/account/logins",
-      );
+      expect(
+        screen.getByRole("link", { name: localizedStrings.cancel }),
+      ).toHaveAttribute("href", "/account/logins");
     });
   });
 
   describe("Identity type : PHONE", () => {
-    beforeAll(() => {
-      setRouterPathname("/account/logins/phone/new");
-    });
-
     it("should render proper phone form elements ", () => {
       expect.assertions(8);
 
@@ -74,7 +75,7 @@ describe("AddIdentityPage", () => {
       expect(addIdentityInputComponent).toHaveDisplayValue(["06 42 42 42 42"]);
 
       const markAsPrimaryCheckbox = screen.getByRole("checkbox", {
-        name: "Mark this identity as my primary one",
+        name: localizedStrings.markIdentity,
       });
 
       expect(markAsPrimaryCheckbox).toBeInTheDocument();
@@ -83,15 +84,16 @@ describe("AddIdentityPage", () => {
       expect(markAsPrimaryCheckbox).toBeChecked();
 
       expect(
-        screen.getByRole("button", { name: "Add phone" }),
+        screen.getByRole("button", { name: localizedStrings.addPhone }),
       ).toBeInTheDocument();
 
-      expect(screen.getByRole("link", { name: "Cancel" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("link", { name: localizedStrings.cancel }),
+      ).toBeInTheDocument();
 
-      expect(screen.getByRole("link", { name: "Cancel" })).toHaveAttribute(
-        "href",
-        "/account/logins",
-      );
+      expect(
+        screen.getByRole("link", { name: localizedStrings.cancel }),
+      ).toHaveAttribute("href", "/account/logins");
     });
   });
 });

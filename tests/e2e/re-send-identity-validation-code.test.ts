@@ -12,9 +12,15 @@ import {
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
+import * as locales from "@content/locales";
 
 describe("Account Web Application re-send Identity validation code", () => {
   jest.setTimeout(60000);
+
+  const localizedStrings = {
+    overview: locales.en["/account/logins"],
+    new: locales.en["/account/logins/[type]/new"],
+  };
 
   beforeAll(async () => {
     await openBrowser({
@@ -41,18 +47,18 @@ describe("Account Web Application re-send Identity validation code", () => {
       await authenticateToConnect();
 
       await click("LOGINS");
+      await click(link(localizedStrings.overview.emailAddNewIdentityMessage));
+      expect(
+        await text(localizedStrings.new.emailInputLabel).exists(),
+      ).toBeTruthy();
 
-      await click(link("+ Add new email address"));
-
-      expect(await text("Email address *").exists()).toBeTruthy();
       await write(
         "resend-validation-code@taiko.test",
-        into(textBox({ placeholder: "Enter your email" })),
+        into(textBox({ placeholder: localizedStrings.new.emailPlaceholder })),
       );
-      await click("Add email");
+      await click(localizedStrings.new.addEmail);
 
       const firstURL = await currentURL();
-
       await click("Resend validation code");
 
       const secondURL = await currentURL();
