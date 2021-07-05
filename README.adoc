@@ -617,9 +617,53 @@ We want our application to be accessible. To do so, besides following good pract
 
 We made the choice to use https://formatjs.io/docs/getting-started/installation/[react-intl], and to localize our strings to *English* and *French*.
 
+=== Localized string object
+
+Localized strings are located inside `en.ts` and `fr.ts`. The strings are organized following the router *path* they will called on. We then give the string an ID to be able to call them.
+
+> Note that the ID naming is still WIP.
+
 === Client side
 
+To localize client side generated strings, you can use the `useIntl` hook like this:
+
+[source, jsx]
+----
+import React from "react";
+import { useIntl } from "react-intl";
+
+const LocalizedString: React.FC = () => {
+  const { formatMessage } = useIntl();
+
+  return (
+    <p>{formatMessage({ id: "stringID" })}</p>
+  )
+};
+----
+
+This will call the key's value inside the router path's key. *If no value are found, the ID will be used as fallback*.
+
 === Server side
+
+For server side generated strings, we generate an `intl` object, and pass the needed strings (see `intl.ts`).
+
+[source, ts]
+----
+import { createIntl, createIntlCache } from "@formatjs/intl";
+
+import * as locales from "@content/locales";
+
+const cache = createIntlCache();
+const enIntl = createIntl(
+  {
+    locale: "en",
+    messages: { ...locales["en"].alertMessages },
+  },
+  cache,
+);
+
+export "enIntl"
+----
 
 == Testing
 
