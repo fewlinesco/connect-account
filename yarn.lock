@@ -3929,10 +3929,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-phone-number-input@3.0.7":
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/@types/react-phone-number-input/-/react-phone-number-input-3.0.7.tgz#11eb743af21dd9e5ad248e3d73be020a4d386586"
-  integrity sha512-CM7atL6w89Q8WNSC3Gbjvi/28v1DSJaYF8Ig2jPLtuKfelyoeW58dTNv5/6XP3dhB6DTpXM7QxI69gYS9GzgtA==
+"@types/react-phone-number-input@3.0.8":
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/@types/react-phone-number-input/-/react-phone-number-input-3.0.8.tgz#6eb3d957cdc3613d6b7185d8dfc30f32e0e9824c"
+  integrity sha512-k04gx1/3J83cxis5II3CPD3qAI8iF8xSaGmtEMmPc52Gu0HGBWGoccANDNbGobhoRjvfvYOiiI8Tv+bKYyrNmw==
   dependencies:
     "@types/react" "*"
 
