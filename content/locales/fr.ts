@@ -208,6 +208,7 @@ const fr = {
   },
   "/account/locale": {
     title: "Changer de langue",
+    setLocale: "Définir votre langue favorite",
   },
   alertMessages: {
     localeChanged: "Votre langue a été réglée sur",

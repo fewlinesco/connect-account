@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 import useSWR from "swr";
 import { v4 as uuidv4 } from "uuid";
@@ -14,6 +15,7 @@ import { AVAILABLE_LANGUAGE, getLocaleKey } from "@src/utils/get-locale";
 
 const Locale: React.FC = () => {
   const router = useRouter();
+  const { formatMessage } = useIntl();
   const [formID, setFormID] = React.useState<string>(uuidv4());
   const [locale, setLocale] = React.useState<string>("en");
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
@@ -61,7 +63,7 @@ const Locale: React.FC = () => {
         />
         {fetchedLocale ? (
           <Button variant={ButtonVariant.PRIMARY} type="submit">
-            Set your preferred locale
+            {formatMessage({ id: "setLocale" })}
           </Button>
         ) : null}
       </Form>

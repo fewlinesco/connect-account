@@ -206,6 +206,7 @@ const en = {
   },
   "/account/locale": {
     title: "Switch Language",
+    setLocale: "Set your preferred locale",
   },
   alertMessages: {
     localeChanged: "Your language has been set to",
