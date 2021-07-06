@@ -35,6 +35,11 @@ describe("Account Web Application update password", () => {
   });
 
   const localizedErrorStrings = locales.en.errors;
+  const localizedStrings = {
+    accountOverview: locales.en["/account"],
+    security: locales.en["/account/security"],
+    passwordForm: locales.en["/account/security/update"],
+  };
 
   test("It should show error messages if password inputs are filled incorrectly", async () => {
     expect.assertions(12);
@@ -42,34 +47,47 @@ describe("Account Web Application update password", () => {
     try {
       await authenticateToConnect();
 
-      expect(await text("SECURITY").exists()).toBeTruthy();
-      await click("SECURITY");
+      expect(
+        await text(localizedStrings.accountOverview.securityTitle).exists(),
+      ).toBeTruthy();
+      await click(localizedStrings.accountOverview.securityTitle);
 
-      expect(await text("Update your password").exists()).toBeTruthy();
-      await click("Update your password");
+      expect(
+        await text(localizedStrings.security.updatePassword).exists(),
+      ).toBeTruthy();
+      await click(localizedStrings.security.updatePassword);
 
-      expect(await text("New password").exists()).toBeTruthy();
+      expect(
+        await text(localizedStrings.passwordForm.newPasswordLabel).exists(),
+      ).toBeTruthy();
 
-      await focus(textBox({ placeholder: "New password" }));
+      await focus(textBox(localizedStrings.passwordForm.newPasswordLabel));
       await write("q");
 
-      await focus(textBox({ placeholder: "Confirm new password" }));
+      await focus(
+        textBox(localizedStrings.passwordForm.confirmNewPasswordLabel),
+      );
       await write("qq");
 
-      await click("Update password");
+      await click("Update");
       expect(
         await text(localizedErrorStrings.passwordMatch).exists(),
       ).toBeTruthy();
 
-      await focus(textBox({ placeholder: "New password" }));
-      await clear(textBox({ placeholder: "New password" }));
+      await focus(textBox(localizedStrings.passwordForm.newPasswordLabel));
+      await clear(textBox(localizedStrings.passwordForm.newPasswordLabel));
       await write("q");
 
-      await focus(textBox({ placeholder: "Confirm new password" }));
-      await clear(textBox({ placeholder: "Confirm new password" }));
+      await focus(
+        textBox(localizedStrings.passwordForm.confirmNewPasswordLabel),
+      );
+      await clear(
+        textBox(localizedStrings.passwordForm.confirmNewPasswordLabel),
+      );
       await write("q");
 
-      await click("Update password");
+      await click("Update");
+
       expect(
         await text(localizedErrorStrings.passwordCriteria).exists(),
       ).toBeTruthy();
@@ -77,13 +95,17 @@ describe("Account Web Application update password", () => {
       expect(await text("1 non-digit").exists()).toBeTruthy();
       expect(await text("8 characters").exists()).toBeTruthy();
 
-      await focus(textBox({ placeholder: "New password" }));
-      await clear(textBox({ placeholder: "New password" }));
+      await focus(textBox(localizedStrings.passwordForm.newPasswordLabel));
+      await clear(textBox(localizedStrings.passwordForm.newPasswordLabel));
       await write("");
-      await focus(textBox({ placeholder: "Confirm new password" }));
-      await clear(textBox({ placeholder: "Confirm new password" }));
+      await focus(
+        textBox(localizedStrings.passwordForm.confirmNewPasswordLabel),
+      );
+      await clear(
+        textBox(localizedStrings.passwordForm.confirmNewPasswordLabel),
+      );
       await write("");
-      await click("Update password");
+      await click("Update");
       expect(
         await text(localizedErrorStrings.blankPassword).exists(),
       ).toBeTruthy();
