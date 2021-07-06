@@ -43,6 +43,13 @@ const identitiesInputStrings = {
   phoneInputLabel: "Phone number *",
 };
 
+const passwordInputsStrings = {
+  newPasswordPlaceholder: "might-complex-password-42",
+  confirmNewPasswordPlaceholder: "might-complex-password-42",
+  newPasswordLabel: "New password",
+  confirmNewPasswordLabel: "Confirm new password",
+};
+
 const en = {
   "/": {
     info: "You are about to access your account from",
@@ -181,11 +188,12 @@ const en = {
     updatePassword: "Update your password",
   },
   "/account/security/update": {
-    title: "Password",
+    title: "Security",
     setBreadcrumb: "Password | set",
     updateBreadcrumb: "Password | update",
     set: "set",
     update: "update",
+    ...passwordInputsStrings,
   },
   "/account/security/sudo": {
     title: "Security",

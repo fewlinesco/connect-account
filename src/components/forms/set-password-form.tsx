@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 
 import { FormErrorMessage } from "../input/form-error-message";
@@ -27,6 +28,7 @@ const SetPasswordForm: React.FC<{
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const router = useRouter();
+  const { formatMessage } = useIntl();
 
   return (
     <StyledForm
@@ -97,25 +99,24 @@ const SetPasswordForm: React.FC<{
       <ExtendedInputStyle
         type="password"
         name="password-input"
-        placeholder="New password"
+        placeholder={formatMessage({ id: "newPasswordPlaceholder" })}
         value={passwordInput}
         passwordRestrictionError={passwordRestrictionError}
         passwordsNotMatching={passwordsNotMatching}
         onChange={(value) => setPasswordInput(value)}
-        label="New password"
+        label={formatMessage({ id: "newPasswordLabel" })}
       />
       <InputText
         type="password"
         name="password-confirmation-input"
-        placeholder="Confirm new password"
+        placeholder={formatMessage({ id: "confirmNewPasswordPlaceholder" })}
         value={passwordConfirmationInput}
         onChange={(value) => setPasswordConfirmationInput(value)}
-        label="Confirm new password"
+        label={formatMessage({ id: "confirmNewPasswordLabel" })}
       />
-      <Button
-        variant={ButtonVariant.PRIMARY}
-        type="submit"
-      >{`${capitalizeFirstLetter(conditionalBreadcrumbItem)} password`}</Button>
+      <Button variant={ButtonVariant.PRIMARY} type="submit">
+        {capitalizeFirstLetter(conditionalBreadcrumbItem)}
+      </Button>
     </StyledForm>
   );
 };

@@ -34,7 +34,10 @@ const SecurityUpdatePage: React.FC = () => {
   }
 
   return (
-    <Layout breadcrumbs={conditionalBreadcrumb} title="Security">
+    <Layout
+      breadcrumbs={conditionalBreadcrumb}
+      title={formatMessage({ id: "title" })}
+    >
       <Container>
         <SetPasswordForm
           conditionalBreadcrumbItem={
