@@ -1,4 +1,3 @@
-import * as Sentry from "@sentry/node";
 import type { NextPageContext } from "next";
 import NextError, { ErrorProps as NextErrorProps } from "next/error";
 import React from "react";
@@ -20,16 +19,9 @@ type ErrorProps = {
 const CustomErrorComponent = (
   props: CustomErrorComponentProps,
 ): JSX.Element => {
-  const { isReadyToRender, error, statusCode } = props;
-
-  if (!isReadyToRender && error) {
-    // getInitialProps is not called for top-level errors - See https://github.com/vercel/next.js/issues/8592.
-    Sentry.captureException(error);
-  }
-
   return (
     <Layout breadcrumbs={false}>
-      <ErrorFallbackComponent statusCode={statusCode} />
+      <ErrorFallbackComponent statusCode={props.statusCode} />
     </Layout>
   );
 };
@@ -37,7 +29,7 @@ const CustomErrorComponent = (
 CustomErrorComponent.getInitialProps = async (
   props: NextPageContext,
 ): Promise<ErrorProps> => {
-  const { res: response, err: error, asPath } = props;
+  const { res: response, err: error } = props;
 
   const errorInitialProps: ErrorProps = (await NextError.getInitialProps({
     res: response,
@@ -52,26 +44,9 @@ CustomErrorComponent.getInitialProps = async (
     }
 
     if (error) {
-      Sentry.captureException(error);
-
-      return errorInitialProps;
-    }
-  } else {
-    if (error) {
-      if (!("statusCode" in error && error.statusCode === 404)) {
-        Sentry.captureException(error);
-      }
-
       return errorInitialProps;
     }
   }
-
-  // If this point is reached, getInitialProps was called without any
-  // information about what the error might be. This is unexpected and may
-  // indicate a bug introduced in Next.js, so record it in Sentry
-  Sentry.captureException(
-    new Error(`_error.js getInitialProps missing data at path: ${asPath}`),
-  );
 
   return errorInitialProps;
 };

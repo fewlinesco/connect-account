@@ -1,24 +1,10 @@
-import * as Sentry from "@sentry/node";
+import * as Sentry from "@sentry/nextjs";
 import { IncomingMessage } from "http";
 import type { NextApiRequest } from "next";
 
-// Helper to avoid duplicating the `init` call in every `/pages/api` file.
-// Also used in `pages/_app` for the client side, which automatically applies it for all frontend pages.
-if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
-  Sentry.init({
-    dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-    enabled:
-      process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT === "development"
-        ? false
-        : process.env.NODE_ENV === "production",
-    environment:
-      process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT || process.env.NODE_ENV,
-  });
-}
-
-Sentry.configureScope((scope) => {
-  scope.setTag("Node environment", process.env.NODE_ENV);
-});
+// Sentry.configureScope((scope) => {
+//   scope.setTag("Node environment", process.env.NODE_ENV);
+// });
 
 const addRequestScopeToSentry = (
   request: NextApiRequest | IncomingMessage,
