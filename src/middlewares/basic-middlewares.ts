@@ -12,6 +12,7 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { authMiddleware } from "./auth-middleware";
+import { wrappedSentryMiddleware } from "./sentry-middleware";
 import rateLimitingConfig from "@src/configs/rate-limiting-config";
 
 const noAuthBasicMiddlewares = (
@@ -22,6 +23,7 @@ const noAuthBasicMiddlewares = (
   rateLimitingMiddleware(tracer, logger, rateLimitingConfig),
   recoveryMiddleware(tracer),
   errorMiddleware(tracer),
+  wrappedSentryMiddleware(tracer),
   loggingMiddleware(tracer, logger),
   httpsRedirectMiddleware(tracer),
 ];
