@@ -63,6 +63,9 @@ describe.only("Profile happy path", () => {
   const isStagingEnv = (
     process.env.CONNECT_PROFILE_URL || configVariables.connectProfileUrl
   ).includes("staging");
+  // const isStagingEnv = (
+  //   process.env.CONNECT_PROFILE_URL || configVariables.connectProfileUrl
+  // ).includes("staging");
 
   test("it should do Profile flows' happy path", async () => {
     try {

@@ -1,29 +1,56 @@
 import { HttpStatus } from "@fwl/web";
 
 import {
-  ConnectProfileAdminApi,
   Configuration,
+  ConnectProfileAdminApi,
 } from "../../connect-profile-client";
 
-const adminClient = new ConnectProfileAdminApi(
-  new Configuration({
-    apiKey: `API_KEY ${process.env.PROFILE_API_KEY}`,
-    basePath: process.env.CONNECT_PROFILE_URL,
-  }),
-);
+async function cleaningProfileStaging(): Promise<void> {
+  if (process.env.CONNECT_TEST_ACCOUNT_SUB === undefined) {
+    throw new Error(
+      "CONNECT_TEST_ACCOUNT_SUB environment variable is undefined",
+    );
+  }
 
-adminClient
-  .deleteProfile(process.env.CONNECT_TEST_ACCOUNT_SUB || "")
-  .then((response) => {
-    if (response.status === HttpStatus.NO_CONTENT) {
-      console.log(
-        `✅ Profile with sub '${process.env.CONNECT_TEST_ACCOUNT_SUB}' deleted from Connect.Profile`,
-      );
+  if (process.env.CONNECT_PROFILE_API_KEY === undefined) {
+    throw new Error(
+      "CONNECT_PROFILE_API_KEY environment variable is undefined",
+    );
+  }
+
+  if (process.env.CONNECT_PROFILE_URL === undefined) {
+    throw new Error("CONNECT_PROFILE_URL environment variable is undefined");
+  }
+
+  const basePath = process.env.CONNECT_PROFILE_URL.replace(/\/?$/, "");
+  const apiKey = `API_KEY ${process.env.CONNECT_PROFILE_API_KEY}`;
+
+  const profileAdminClient = new ConnectProfileAdminApi(
+    new Configuration({
+      apiKey,
+      basePath,
+    }),
+  );
+
+  try {
+    await profileAdminClient.deleteProfile(
+      process.env.CONNECT_TEST_ACCOUNT_SUB,
+    );
+    console.log("✅ Test user profile deleted");
+  } catch (error) {
+    if (error.response.status === HttpStatus.UNAUTHORIZED) {
+      throw new Error("💥 Unauthorized admin access");
     }
-  })
-  .catch((error) => {
-    if (!(error.message === "Request failed with status code 404")) {
-      console.error("💥", error.message);
-      process.exit(1);
+
+    if (error.response.status === HttpStatus.NOT_FOUND) {
+      console.log("🤖 The user doesn't exist in Connect.Profile's database");
+      return;
     }
-  });
+
+    throw new Error(
+      "💥 Something went wrong, you should manually delete the user profile",
+    );
+  }
+}
+
+cleaningProfileStaging().catch((error) => console.error(error.message));
