@@ -118,7 +118,9 @@ const AddIdentityForm: React.FC<{
               id="styled-phone-input"
               placeholder={formatMessage({ id: "phonePlaceholder" })}
               value={identity.value}
-              defaultCountry="FR"
+              defaultCountry={router.locale === "en" ? "GB" : "FR"}
+              countryOptionsOrder={["GB", "FR", "|", "..."]}
+              addInternationalOption={false}
               onChange={(value) => {
                 setIdentity({
                   value,
