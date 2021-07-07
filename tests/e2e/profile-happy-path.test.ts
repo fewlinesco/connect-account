@@ -91,11 +91,12 @@ describe.only("Profile happy path", () => {
               localizedStrings.navigation.personalInformation,
             ).exists(),
         );
+        await waitFor(1000);
         await click(localizedStrings.navigation.personalInformation);
       }
 
       // Update user profile flow
-      waitFor(
+      await waitFor(
         async () =>
           await text(localizedStrings.profileOverview.updateInfo).exists(),
       );
