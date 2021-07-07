@@ -69,7 +69,7 @@ describe("Account Web Application update password", () => {
       );
       await write("qq");
 
-      await click("Update");
+      await click(localizedStrings.passwordForm.update);
       expect(
         await text(localizedErrorStrings.passwordMatch).exists(),
       ).toBeTruthy();
@@ -86,7 +86,7 @@ describe("Account Web Application update password", () => {
       );
       await write("q");
 
-      await click("Update");
+      await click(localizedStrings.passwordForm.update);
 
       expect(
         await text(localizedErrorStrings.passwordCriteria).exists(),
@@ -105,7 +105,7 @@ describe("Account Web Application update password", () => {
         textBox(localizedStrings.passwordForm.confirmNewPasswordLabel),
       );
       await write("");
-      await click("Update");
+      await click(localizedStrings.passwordForm.update);
       expect(
         await text(localizedErrorStrings.blankPassword).exists(),
       ).toBeTruthy();

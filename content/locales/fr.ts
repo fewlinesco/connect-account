@@ -42,13 +42,6 @@ const identitiesInputStrings = {
   phoneInputLabel: "Numéro de téléphone *",
 };
 
-const passwordInputsStrings = {
-  newPasswordPlaceholder: "mot-de-passe-complexe-42",
-  confirmNewPasswordPlaceholder: "mot-de-passe-complexe-42",
-  newPasswordLabel: "Nouveau mot de passe",
-  confirmNewPasswordLabel: "Confirmer le nouveau mot de passe",
-};
-
 const fr = {
   "/": {
     info: "Vous êtes sur le point d’accéder à votre compte depuis",
@@ -194,7 +187,10 @@ const fr = {
     updateBreadcrumb: "Mot de passe | mettre à jour",
     set: "créer",
     update: "mettre à jour",
-    ...passwordInputsStrings,
+    newPasswordPlaceholder: "mot-de-passe-complexe-42",
+    confirmNewPasswordPlaceholder: "mot-de-passe-complexe-42",
+    newPasswordLabel: "Nouveau mot de passe",
+    confirmNewPasswordLabel: "Confirmer le nouveau mot de passe",
   },
   "/account/security/sudo": {
     title: "Sécurité",
