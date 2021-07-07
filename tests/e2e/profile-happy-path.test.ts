@@ -19,7 +19,7 @@ import { authenticateToConnect } from "./utils/authenticate-to-connect";
 import * as locales from "@content/locales";
 import { configVariables } from "@src/configs/config-variables";
 
-describe.only("Profile happy path", () => {
+describe("Profile happy path", () => {
   jest.setTimeout(120000);
 
   const baseURL = (
