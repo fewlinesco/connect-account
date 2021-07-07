@@ -95,10 +95,11 @@ describe.only("Profile happy path", () => {
       }
 
       // Update user profile flow
-      await waitFor(
+      waitFor(
         async () =>
           await text(localizedStrings.profileOverview.updateInfo).exists(),
       );
+
       await click(localizedStrings.profileOverview.updateInfo);
 
       await text(localizedStrings.editProfile.breadcrumb).exists();
