@@ -37,6 +37,10 @@ describe("Fill incorrect identity input values", () => {
     await closeBrowser();
   });
 
+  beforeEach(async () => {
+    await authenticateToConnect();
+  });
+
   const localizedErrorStrings = locales.en.errors;
   const localizedStrings = {
     accountOverview: locales.en["/account"],
@@ -48,11 +52,7 @@ describe("Fill incorrect identity input values", () => {
 
   describe("AddIdentity", () => {
     test("It should show error messages if Identity inputs are filled incorrectly in add identity", async () => {
-      expect.assertions(9);
-
       try {
-        await authenticateToConnect();
-
         await click(localizedStrings.accountOverview.loginsTitle);
 
         await click(
@@ -118,8 +118,6 @@ describe("Fill incorrect identity input values", () => {
 
   describe("UpdateIdentity", () => {
     test("It should show error messages if Identity inputs are filled incorrectly in update identity", async () => {
-      expect.assertions(3);
-
       try {
         await click(localizedStrings.accountOverview.loginsTitle);
         await click(localizedStrings.identitiesOverview.showMore);
