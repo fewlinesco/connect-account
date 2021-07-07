@@ -120,7 +120,6 @@ const AddIdentityForm: React.FC<{
               value={identity.value}
               defaultCountry={router.locale === "en" ? "GB" : "FR"}
               countryOptionsOrder={["GB", "FR", "|", "..."]}
-              addInternationalOption={false}
               onChange={(value) => {
                 setIdentity({
                   value,
