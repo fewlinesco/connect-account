@@ -369,6 +369,9 @@ Favicons for various OS.
 - *package.json*: We use this file, as much as possible as a centralized config file for various packages, like `ESLint`, `Jest` or `Babel`.
 - *Procfile.dev*: Instructions for Hivemind/Overmind.
 - *README.adoc*: Connect.Account documentation, written in AsciiDoc.
+- *sentry.client.config.js*: Client side sentry config file.
+- *sentry.properties*: Variables used by Sentry to connect the app with its Sentry instance.
+- *sentry.server.config.js*: Server side sentry config file.
 - *tsconfig.json*: TypeScript compiler options.
 - *yarn.lock*: Package manager instructions.
 
@@ -695,7 +698,7 @@ Inside most of our jobs, we used TypeScript written scripts to perform our actio
 
 We are using https://docs.sentry.io/[Sentry] to monitor production and review app's exceptions raised.
 
-A custom utility function, called `addRequestScopeToSentry`, is provided to format the data used for the report.
+Thanks to the https://docs.sentry.io/platforms/javascript/guides/nextjs/[Sentry Next.js SDK], the implementation is now way cleaner. We have added a wrapper around the `withSentry` middleware to be able to use is it with SSR.
 
 == Documentation
 
