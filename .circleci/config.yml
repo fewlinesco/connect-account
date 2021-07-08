@@ -117,6 +117,8 @@ jobs:
             CONNECT_TEST_ACCOUNT_URL: "https://fewlines-account-staging.herokuapp.com"
       - store_artifacts:
           path: ./lhci_reports
+      - store_artifacts:
+          path: ./screenshots
 
 workflows:
   tests-on-push:
