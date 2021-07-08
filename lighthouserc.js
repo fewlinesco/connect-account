@@ -11,7 +11,6 @@ module.exports = {
           "--disable-gpu",
           "--disable-gpu-sandbox",
           "--display",
-          "--incognito",
         ],
       },
       numberOfRuns: 1,
