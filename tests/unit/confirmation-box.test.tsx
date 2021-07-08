@@ -52,14 +52,10 @@ describe("ConfirmationBox", () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByText(
-          `You are about to set ${mockIdentities.nonPrimaryEmailIdentity.value} as primary.`,
-        ),
+        screen.queryByText(localizedStrings.primaryModalContentEmail),
       ).not.toBeInTheDocument();
       expect(
-        screen.queryByText(
-          `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
-        ),
+        screen.queryByText(localizedStrings.deleteModalContentEmail),
       ).not.toBeInTheDocument();
     });
   });
@@ -88,30 +84,25 @@ describe("ConfirmationBox", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(
-          `You are about to set ${mockIdentities.nonPrimaryEmailIdentity.value} as primary.`,
-        ),
+        screen.getByText(localizedStrings.primaryModalContentEmail),
       ).toBeInTheDocument();
       expect(
         screen.getByRole("button", {
-          name: "Cancel",
+          name: localizedStrings.primaryModalCancel,
         }),
       ).toBeInTheDocument();
     });
 
     userEvent.click(
       await screen.findByRole("button", {
-        name: "Cancel",
+        name: localizedStrings.primaryModalCancel,
       }),
     );
 
     waitFor(() => {
       expect(
         screen.getByText(
-          new RegExp(
-            `You are about to set ${mockIdentities.nonPrimaryEmailIdentity.value} as primary.`,
-            "i",
-          ),
+          new RegExp(localizedStrings.primaryModalContentEmail, "i"),
         ),
       ).not.toBeVisible();
     });
@@ -141,30 +132,25 @@ describe("ConfirmationBox", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(
-          `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
-        ),
+        screen.getByText(localizedStrings.deleteModalContentEmail),
       ).toBeInTheDocument();
       expect(
         screen.getByRole("button", {
-          name: "Keep email address",
+          name: localizedStrings.deleteModalCancelEmail,
         }),
       ).toBeInTheDocument();
     });
 
     userEvent.click(
       screen.getByRole("button", {
-        name: "Keep email address",
+        name: localizedStrings.deleteModalCancelEmail,
       }),
     );
 
     waitFor(() => {
       expect(
         screen.getByText(
-          new RegExp(
-            `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
-            "i",
-          ),
+          new RegExp(localizedStrings.deleteModalContentEmail, "i"),
         ),
       ).not.toBeVisible();
     });
