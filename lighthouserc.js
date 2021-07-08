@@ -4,7 +4,6 @@ module.exports = {
       puppeteerScript: "./bin/lighthouse-report.js",
       puppeteerLaunchOptions: {
         args: [
-          "--window-size=1440,1000",
           "--allow-no-sandbox-job",
           "--allow-sandbox-debugging",
           "--no-sandbox",
@@ -14,16 +13,12 @@ module.exports = {
         ],
       },
       numberOfRuns: 1,
-      disableStorageReset: false,
       settings: {
-        disableStorageReset: false,
         maxWaitForLoad: 60000,
-        throttlingMethod: "devtools",
       },
       url: [
         process.env.CONNECT_TEST_ACCOUNT_URL,
         `${process.env.CONNECT_TEST_ACCOUNT_URL}/account/logins`,
-        `${process.env.CONNECT_TEST_ACCOUNT_URL}/account/profile`,
       ],
     },
     upload: {
