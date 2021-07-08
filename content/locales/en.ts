@@ -158,6 +158,17 @@ const en = {
     proceed: "Proceed to validation",
     awaiting: "Awaiting validation",
     primary: "Primary",
+    deleteModalContentEmail: "You are about to delete this email address.",
+    deleteModalContentPhone: "You are about to delete this phone number.",
+    deleteModalConfirm: "Delete",
+    deleteModalCancelEmail: "Keep this email address",
+    deleteModalCancelPhone: "Keep this phone number",
+    primaryModalContentEmail:
+      "You are about to set this email address as primary.",
+    primaryModalContentPhone:
+      "You are about to set this phone number as primary.",
+    primaryModalConfirm: "Confirm",
+    primaryModalCancel: "Cancel",
   },
   "/account/logins/[type]/[id]/update": {
     title: "Logins",

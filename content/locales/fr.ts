@@ -158,7 +158,20 @@ const fr = {
     updatePhone: "Mettre à jour ce numéro de téléphone",
     proceed: "Valider",
     awaiting: "En attente de validation",
-    primary: "Principale",
+    primary: "{identityType, select, email {Principale} other {Principal}}",
+    deleteModalContentEmail:
+      "Vous êtes sur le point de supprimer cette adresse e-mail.",
+    deleteModalContentPhone:
+      "Vous êtes sur le point de supprimer ce numéro de téléphone.",
+    deleteModalConfirm: "Supprimer",
+    deleteModalCancelEmail: "Garder cette adresse email",
+    deleteModalCancelPhone: "Garder ce numéro de téléphone",
+    primaryModalContentEmail:
+      "Vous êtes sur le point de définir cette adresse e-mail comme principale.",
+    primaryModalContentPhone:
+      "Vous êtes sur le point de définir ce numéro de téléphone comme principal.",
+    primaryModalConfirm: "Confirmer",
+    primaryModalCancel: "Annuler",
   },
   "/account/logins/[type]/[id]/update": {
     title: "Identifiants",
