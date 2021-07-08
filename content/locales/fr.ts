@@ -160,16 +160,16 @@ const fr = {
     awaiting: "En attente de validation",
     primary: "{identityType, select, email {Principale} other {Principal}}",
     deleteModalContentEmail:
-      "Vous êtes sur le point de supprimer cette adresse e-mail",
+      "Vous êtes sur le point de supprimer cette adresse e-mail.",
     deleteModalContentPhone:
-      "Vous êtes sur le point de supprimer ce numéro de téléphone",
+      "Vous êtes sur le point de supprimer ce numéro de téléphone.",
     deleteModalConfirm: "Supprimer",
     deleteModalCancelEmail: "Garder cette adresse email",
     deleteModalCancelPhone: "Garder ce numéro de téléphone",
     primaryModalContentEmail:
-      "Vous êtes sur le point de définir cette adresse e-mail comme principale",
+      "Vous êtes sur le point de définir cette adresse e-mail comme principale.",
     primaryModalContentPhone:
-      "Vous êtes sur le point de définir ce numéro de téléphone comme principal",
+      "Vous êtes sur le point de définir ce numéro de téléphone comme principal.",
     primaryModalConfirm: "Confirmer",
     primaryModalCancel: "Annuler",
   },
