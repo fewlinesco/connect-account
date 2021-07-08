@@ -1,4 +1,4 @@
-// let counter = 0;
+let COUNTER = 0;
 
 async function login(page) {
   if (process.env.CONNECT_TEST_ACCOUNT_URL === undefined) {
@@ -55,20 +55,18 @@ async function login(page) {
   await page.waitForTimeout(5000);
 }
 
-async function setup(browser) {
+async function setup(browser, context) {
   const page = await browser.newPage();
   await page.setCacheEnabled(true);
 
-  // if (counter === 0) {
-  //   await page.goto(context.url);
-  // } else {
-  //   await login(page);
-  // }
-
-  await login(page);
+  if (COUNTER === 0) {
+    await login(page);
+  } else {
+    await page.goto(context.url);
+  }
 
   await page.close();
-  // counter++;
+  COUNTER++;
 }
 
 module.exports = setup;

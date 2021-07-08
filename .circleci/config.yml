@@ -113,6 +113,8 @@ jobs:
       - run:
           name: Run Lighthouse audit
           command: npx @lhci/cli autorun
+          environment:
+            CONNECT_TEST_ACCOUNT_URL: "https://fewlines-account-staging.herokuapp.com"
       - store_artifacts:
           path: ./lhci_reports
 
