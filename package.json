@@ -81,7 +81,7 @@
     "@types/jest": "26.0.24",
     "@types/js-cookie": "2.2.7",
     "@types/memjs": "1.2.2",
-    "@types/node": "16.0.0",
+    "@types/node": "16.0.1",
     "@types/react": "17.0.14",
     "@types/react-datepicker": "4.1.2",
     "@types/react-dom": "17.0.8",
