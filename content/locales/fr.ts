@@ -195,11 +195,15 @@ const fr = {
     updatePassword: "Mettre à jour votre mot de passe",
   },
   "/account/security/update": {
-    title: "Mot de passe",
+    title: "Sécurité",
     setBreadcrumb: "Mot de passe | création",
     updateBreadcrumb: "Mot de passe | mettre à jour",
-    set: "créer",
-    update: "mettre à jour",
+    set: "Créer le mot de passe",
+    update: "Mettre à jour le mot de passe",
+    newPasswordPlaceholder: "mot-de-passe-complexe-42",
+    confirmNewPasswordPlaceholder: "mot-de-passe-complexe-42",
+    newPasswordLabel: "Nouveau mot de passe",
+    confirmNewPasswordLabel: "Confirmer le nouveau mot de passe",
   },
   "/account/security/sudo": {
     title: "Sécurité",
@@ -213,6 +217,7 @@ const fr = {
   },
   "/account/locale": {
     title: "Changer de langue",
+    setLocale: "Définir votre langue favorite",
   },
   alertMessages: {
     localeChanged: "Votre langue a été réglée sur",

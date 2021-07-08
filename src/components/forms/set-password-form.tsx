@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { useIntl } from "react-intl";
 import styled from "styled-components";
 
 import { FormErrorMessage } from "../input/form-error-message";
@@ -10,11 +11,10 @@ import { PasswordRulesErrorList } from "@src/components/password-rules-error-lis
 import { formatErrorMessage } from "@src/configs/intl";
 import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
-import { capitalizeFirstLetter } from "@src/utils/format";
 
 const SetPasswordForm: React.FC<{
-  conditionalBreadcrumbItem: string;
-}> = ({ conditionalBreadcrumbItem }) => {
+  submitButtonLabel: string;
+}> = ({ submitButtonLabel }) => {
   const [isNotSubmitted, setIsNotSubmitted] = React.useState(true);
 
   const [passwordInput, setPasswordInput] = React.useState("");
@@ -27,6 +27,7 @@ const SetPasswordForm: React.FC<{
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const router = useRouter();
+  const { formatMessage } = useIntl();
 
   return (
     <StyledForm
@@ -97,25 +98,24 @@ const SetPasswordForm: React.FC<{
       <ExtendedInputStyle
         type="password"
         name="password-input"
-        placeholder="New password"
+        placeholder={formatMessage({ id: "newPasswordPlaceholder" })}
         value={passwordInput}
         passwordRestrictionError={passwordRestrictionError}
         passwordsNotMatching={passwordsNotMatching}
         onChange={(value) => setPasswordInput(value)}
-        label="New password"
+        label={formatMessage({ id: "newPasswordLabel" })}
       />
       <InputText
         type="password"
         name="password-confirmation-input"
-        placeholder="Confirm new password"
+        placeholder={formatMessage({ id: "confirmNewPasswordPlaceholder" })}
         value={passwordConfirmationInput}
         onChange={(value) => setPasswordConfirmationInput(value)}
-        label="Confirm new password"
+        label={formatMessage({ id: "confirmNewPasswordLabel" })}
       />
-      <Button
-        variant={ButtonVariant.PRIMARY}
-        type="submit"
-      >{`${capitalizeFirstLetter(conditionalBreadcrumbItem)} password`}</Button>
+      <Button variant={ButtonVariant.PRIMARY} type="submit">
+        {submitButtonLabel}
+      </Button>
     </StyledForm>
   );
 };

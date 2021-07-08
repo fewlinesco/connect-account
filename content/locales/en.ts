@@ -192,11 +192,15 @@ const en = {
     updatePassword: "Update your password",
   },
   "/account/security/update": {
-    title: "Password",
+    title: "Security",
     setBreadcrumb: "Password | set",
     updateBreadcrumb: "Password | update",
-    set: "set",
-    update: "update",
+    set: "Set password",
+    update: "Update password",
+    newPasswordPlaceholder: "complex-password-42",
+    confirmNewPasswordPlaceholder: "complex-password-42",
+    newPasswordLabel: "New password",
+    confirmNewPasswordLabel: "Confirm new password",
   },
   "/account/security/sudo": {
     title: "Security",
@@ -209,6 +213,7 @@ const en = {
   },
   "/account/locale": {
     title: "Switch Language",
+    setLocale: "Set your preferred locale",
   },
   alertMessages: {
     localeChanged: "Your language has been set to",
