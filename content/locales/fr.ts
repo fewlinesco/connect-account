@@ -158,7 +158,20 @@ const fr = {
     updatePhone: "Mettre à jour ce numéro de téléphone",
     proceed: "Valider",
     awaiting: "En attente de validation",
-    primary: "Principale",
+    primary: "{identityType, select, email {Principale} other {Principal}}",
+    deleteModalContentEmail:
+      "Vous êtes sur le point de supprimer cette adresse e-mail.",
+    deleteModalContentPhone:
+      "Vous êtes sur le point de supprimer ce numéro de téléphone.",
+    deleteModalConfirm: "Supprimer",
+    deleteModalCancelEmail: "Garder cette adresse email",
+    deleteModalCancelPhone: "Garder ce numéro de téléphone",
+    primaryModalContentEmail:
+      "Vous êtes sur le point de définir cette adresse e-mail comme principale.",
+    primaryModalContentPhone:
+      "Vous êtes sur le point de définir ce numéro de téléphone comme principal.",
+    primaryModalConfirm: "Confirmer",
+    primaryModalCancel: "Annuler",
   },
   "/account/logins/[type]/[id]/update": {
     title: "Identifiants",
@@ -182,11 +195,15 @@ const fr = {
     updatePassword: "Mettre à jour votre mot de passe",
   },
   "/account/security/update": {
-    title: "Mot de passe",
+    title: "Sécurité",
     setBreadcrumb: "Mot de passe | création",
     updateBreadcrumb: "Mot de passe | mettre à jour",
-    set: "créer",
-    update: "mettre à jour",
+    set: "Créer le mot de passe",
+    update: "Mettre à jour le mot de passe",
+    newPasswordPlaceholder: "mot-de-passe-complexe-42",
+    confirmNewPasswordPlaceholder: "mot-de-passe-complexe-42",
+    newPasswordLabel: "Nouveau mot de passe",
+    confirmNewPasswordLabel: "Confirmer le nouveau mot de passe",
   },
   "/account/security/sudo": {
     title: "Sécurité",
@@ -200,6 +217,7 @@ const fr = {
   },
   "/account/locale": {
     title: "Changer de langue",
+    setLocale: "Définir votre langue favorite",
   },
   alertMessages: {
     localeChanged: "Votre langue a été réglée sur",

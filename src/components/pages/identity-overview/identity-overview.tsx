@@ -43,7 +43,12 @@ const IdentityOverview: React.FC<{
               <p>{identity.value}</p>
             </Value>
             {identity.primary && identity.status === "validated" ? (
-              <PrimaryBadge localizedLabel={formatMessage({ id: "primary" })} />
+              <PrimaryBadge
+                localizedLabel={formatMessage(
+                  { id: "primary" },
+                  { identityType: identity.type },
+                )}
+              />
             ) : null}
             {identity.status === "validated" ? (
               <React.Fragment />
@@ -84,7 +89,14 @@ const IdentityOverview: React.FC<{
                 setConfirmationBoxContent(
                   <PrimaryConfirmationBoxContent
                     setOpen={setConfirmationBoxOpen}
-                    value={identity.value}
+                    textContent={{
+                      infos:
+                        getIdentityType(identity.type) === IdentityTypes.EMAIL
+                          ? formatMessage({ id: "primaryModalContentEmail" })
+                          : formatMessage({ id: "primaryModalContentPhone" }),
+                      confirm: formatMessage({ id: "primaryModalConfirm" }),
+                      cancel: formatMessage({ id: "primaryModalCancel" }),
+                    }}
                     onPress={async () => {
                       await fetchJson(
                         `/api/identities/${identity.id}/mark-as-primary`,
@@ -113,8 +125,17 @@ const IdentityOverview: React.FC<{
                 setConfirmationBoxContent(
                   <DeleteConfirmationBoxContent
                     setOpen={setConfirmationBoxOpen}
-                    value={identity.value}
-                    type={identity.type}
+                    textContent={{
+                      infos:
+                        getIdentityType(identity.type) === IdentityTypes.EMAIL
+                          ? formatMessage({ id: "deleteModalContentEmail" })
+                          : formatMessage({ id: "deleteModalContentPhone" }),
+                      confirm: formatMessage({ id: "deleteModalConfirm" }),
+                      cancel:
+                        getIdentityType(identity.type) === IdentityTypes.EMAIL
+                          ? formatMessage({ id: "deleteModalCancelEmail" })
+                          : formatMessage({ id: "deleteModalCancelPhone" }),
+                    }}
                     onPress={async () => {
                       await fetchJson(
                         `/api/identities/${identity.id}`,

@@ -158,6 +158,17 @@ const en = {
     proceed: "Proceed to validation",
     awaiting: "Awaiting validation",
     primary: "Primary",
+    deleteModalContentEmail: "You are about to delete this email address.",
+    deleteModalContentPhone: "You are about to delete this phone number.",
+    deleteModalConfirm: "Delete",
+    deleteModalCancelEmail: "Keep this email address",
+    deleteModalCancelPhone: "Keep this phone number",
+    primaryModalContentEmail:
+      "You are about to set this email address as primary.",
+    primaryModalContentPhone:
+      "You are about to set this phone number as primary.",
+    primaryModalConfirm: "Confirm",
+    primaryModalCancel: "Cancel",
   },
   "/account/logins/[type]/[id]/update": {
     title: "Logins",
@@ -181,11 +192,15 @@ const en = {
     updatePassword: "Update your password",
   },
   "/account/security/update": {
-    title: "Password",
+    title: "Security",
     setBreadcrumb: "Password | set",
     updateBreadcrumb: "Password | update",
-    set: "set",
-    update: "update",
+    set: "Set password",
+    update: "Update password",
+    newPasswordPlaceholder: "complex-password-42",
+    confirmNewPasswordPlaceholder: "complex-password-42",
+    newPasswordLabel: "New password",
+    confirmNewPasswordLabel: "Confirm new password",
   },
   "/account/security/sudo": {
     title: "Security",
@@ -198,6 +213,7 @@ const en = {
   },
   "/account/locale": {
     title: "Switch Language",
+    setLocale: "Set your preferred locale",
   },
   alertMessages: {
     localeChanged: "Your language has been set to",
