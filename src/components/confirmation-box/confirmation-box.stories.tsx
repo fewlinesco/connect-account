@@ -1,4 +1,3 @@
-import { IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 import styled from "styled-components";
 
@@ -15,12 +14,6 @@ const PrimaryConfirmationBox = (): JSX.Element => {
   const [confirmationBoxContent, setConfirmationBoxContent] =
     React.useState<JSX.Element>(<React.Fragment />);
 
-  const identity = {
-    type: IdentityTypes.EMAIL,
-    value: "test@fewlines.test",
-    id: "1234567890",
-  };
-
   return (
     <ConfirmationStoryContainer>
       <Button
@@ -32,7 +25,11 @@ const PrimaryConfirmationBox = (): JSX.Element => {
           setConfirmationBoxContent(
             <PrimaryConfirmationBoxContent
               setOpen={setOpen}
-              value={identity.value}
+              textContent={{
+                infos: "You are about to set this email address as primary.",
+                confirm: "Confirm",
+                cancel: "Cancel",
+              }}
               onPress={() => window.alert("DONE")}
             />,
           );
@@ -57,12 +54,6 @@ const DangerConfirmationBox = (): JSX.Element => {
   const [confirmationBoxContent, setConfirmationBoxContent] =
     React.useState<JSX.Element>(<React.Fragment />);
 
-  const identity = {
-    type: IdentityTypes.EMAIL,
-    value: "test@fewlines.test",
-    id: "1234567890",
-  };
-
   return (
     <ConfirmationStoryContainer>
       <div>
@@ -75,8 +66,11 @@ const DangerConfirmationBox = (): JSX.Element => {
             setConfirmationBoxContent(
               <DeleteConfirmationBoxContent
                 setOpen={setOpen}
-                value={identity.value}
-                type={identity.type}
+                textContent={{
+                  infos: "You are about to delete this email address.",
+                  confirm: "Delete",
+                  cancel: "Keep this email address",
+                }}
                 onPress={() => window.alert("Done")}
               />,
             );

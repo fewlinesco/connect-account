@@ -72,7 +72,7 @@ describe("AddIdentityPage", () => {
       const addIdentityInputComponent = screen.getByRole("textbox");
       expect(addIdentityInputComponent).toBeVisible();
       userEvent.type(addIdentityInputComponent, "0642424242");
-      expect(addIdentityInputComponent).toHaveDisplayValue(["06 42 42 42 42"]);
+      expect(addIdentityInputComponent).toHaveDisplayValue(["0642424242"]);
 
       const markAsPrimaryCheckbox = screen.getByRole("checkbox", {
         name: localizedStrings.markIdentity,

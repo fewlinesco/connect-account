@@ -5,19 +5,17 @@ import { Button, ButtonVariant } from "../buttons/buttons";
 
 interface PrimaryConfirmationBoxContentProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  value: string;
+  textContent: { infos: string; confirm: string; cancel: string };
   onPress: () => void;
 }
 
 const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxContentProps> =
-  ({ setOpen, value, onPress }) => {
+  ({ setOpen, textContent, onPress }) => {
     return (
       <>
-        <PrimaryConfirmationText>
-          You are about to set {value} as primary.
-        </PrimaryConfirmationText>
+        <PrimaryConfirmationText>{textContent.infos}</PrimaryConfirmationText>
         <Button type="button" variant={ButtonVariant.PRIMARY} onPress={onPress}>
-          Confirm
+          {textContent.confirm}
         </Button>
         <Button
           type="button"
@@ -26,7 +24,7 @@ const PrimaryConfirmationBoxContent: React.FC<PrimaryConfirmationBoxContentProps
             setOpen(false);
           }}
         >
-          Cancel
+          {textContent.cancel}
         </Button>
       </>
     );
