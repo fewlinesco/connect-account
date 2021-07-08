@@ -1,42 +1,30 @@
-import { IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../buttons/buttons";
-import { getIdentityType } from "@src/utils/get-identity-type";
 
 interface DeleteIdentityProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  type: IdentityTypes;
-  value: string;
+  textContent: { infos: string; confirm: string; cancel: string };
   onPress: () => void;
 }
 
 const DeleteConfirmationBoxContent: React.FC<DeleteIdentityProps> = ({
   setOpen,
-  value,
-  type,
+  textContent,
   onPress,
 }) => (
   <>
-    <DeleteConfirmationText>
-      You are about to delete {value}
-    </DeleteConfirmationText>
+    <DeleteConfirmationText>{textContent.infos}</DeleteConfirmationText>
     <Button type="button" variant={ButtonVariant.DANGER} onPress={onPress}>
-      Delete this{" "}
-      {getIdentityType(type) === IdentityTypes.PHONE
-        ? "phone number"
-        : "email address"}
+      {textContent.confirm}
     </Button>
     <Button
       type="button"
       variant={ButtonVariant.SECONDARY}
       onPress={() => setOpen(false)}
     >
-      Keep{" "}
-      {getIdentityType(type) === IdentityTypes.PHONE
-        ? "phone number"
-        : "email address"}
+      {textContent.cancel}
     </Button>
   </>
 );
