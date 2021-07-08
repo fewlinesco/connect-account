@@ -40,7 +40,7 @@ const SecurityUpdatePage: React.FC = () => {
     >
       <Container>
         <SetPasswordForm
-          conditionalBreadcrumbItem={
+          submitButtonLabel={
             !isPasswordSetData
               ? ""
               : isPasswordSetData.isPasswordSet

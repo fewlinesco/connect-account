@@ -11,11 +11,10 @@ import { PasswordRulesErrorList } from "@src/components/password-rules-error-lis
 import { formatErrorMessage } from "@src/configs/intl";
 import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
-import { capitalizeFirstLetter } from "@src/utils/format";
 
 const SetPasswordForm: React.FC<{
-  conditionalBreadcrumbItem: string;
-}> = ({ conditionalBreadcrumbItem }) => {
+  submitButtonLabel: string;
+}> = ({ submitButtonLabel }) => {
   const [isNotSubmitted, setIsNotSubmitted] = React.useState(true);
 
   const [passwordInput, setPasswordInput] = React.useState("");
@@ -115,7 +114,7 @@ const SetPasswordForm: React.FC<{
         label={formatMessage({ id: "confirmNewPasswordLabel" })}
       />
       <Button variant={ButtonVariant.PRIMARY} type="submit">
-        {capitalizeFirstLetter(conditionalBreadcrumbItem)}
+        {submitButtonLabel}
       </Button>
     </StyledForm>
   );
