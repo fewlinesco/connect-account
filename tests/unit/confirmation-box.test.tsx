@@ -101,9 +101,7 @@ describe("ConfirmationBox", () => {
 
     waitFor(() => {
       expect(
-        screen.getByText(
-          new RegExp(localizedStrings.primaryModalContentEmail, "i"),
-        ),
+        screen.getByText(new RegExp(localizedStrings.primaryModalContentEmail)),
       ).not.toBeVisible();
     });
   });
@@ -149,9 +147,7 @@ describe("ConfirmationBox", () => {
 
     waitFor(() => {
       expect(
-        screen.getByText(
-          new RegExp(localizedStrings.deleteModalContentEmail, "i"),
-        ),
+        screen.getByText(new RegExp(localizedStrings.deleteModalContentEmail)),
       ).not.toBeVisible();
     });
   });
