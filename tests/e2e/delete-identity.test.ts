@@ -9,6 +9,7 @@ import {
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
+import * as locales from "@content/locales";
 
 describe("Delete Identity", () => {
   jest.setTimeout(60000);
@@ -31,32 +32,48 @@ describe("Delete Identity", () => {
     await closeBrowser();
   });
 
+  const localizedAlertMessagesStrings = locales.en.alertMessages;
+  const localizedStrings = {
+    accountOverview: locales.en["/account"],
+    identitiesOverview: locales.en["/account/logins"],
+    identityOverview: locales.en["/account/logins/[type]/[id]"],
+  };
+
   test("It should navigate to the show of the Identity, and delete it", async () => {
     expect.assertions(9);
 
     try {
       await authenticateToConnect();
 
-      await click("LOGINS");
+      await click(localizedStrings.accountOverview.loginsTitle);
 
-      await click("Show");
+      await click(localizedStrings.identitiesOverview.showMore);
 
       await click(link("_delete_"));
 
-      await click(text("Delete this email address"));
-
-      expect(await text("You are about to delete").exists()).toBeTruthy();
-      await click("Delete this email address");
+      await click(text(localizedStrings.identityOverview.deleteEmail));
 
       expect(
-        await text("Email address has been deleted").exists(),
+        await text(
+          localizedStrings.identityOverview.deleteModalContentEmail,
+        ).exists(),
+      ).toBeTruthy();
+      await click(localizedStrings.identityOverview.deleteModalConfirm);
+
+      expect(
+        await text(localizedAlertMessagesStrings.emailDeleted).exists(),
       ).toBeTruthy();
 
-      await click("Show");
+      await click(localizedStrings.identitiesOverview.showMore);
 
-      expect(await text("Hide").exists()).toBeTruthy();
+      expect(
+        await text(localizedStrings.identitiesOverview.hide).exists(),
+      ).toBeTruthy();
 
-      const primaryIdentity = await link("", below("Email addresses")).text();
+      const primaryIdentity = await link(
+        "",
+        below(localizedStrings.identitiesOverview.emailTitle),
+      ).text();
 
       const secondIdentity = await link("", below(primaryIdentity)).text();
 
