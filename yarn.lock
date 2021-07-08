@@ -3943,10 +3943,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-phone-number-input@3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@types/react-phone-number-input/-/react-phone-number-input-3.0.8.tgz#6eb3d957cdc3613d6b7185d8dfc30f32e0e9824c"
-  integrity sha512-k04gx1/3J83cxis5II3CPD3qAI8iF8xSaGmtEMmPc52Gu0HGBWGoccANDNbGobhoRjvfvYOiiI8Tv+bKYyrNmw==
+"@types/react-phone-number-input@3.0.9":
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/@types/react-phone-number-input/-/react-phone-number-input-3.0.9.tgz#838f948eb942a7b07e73cd3f9034e04c5f140829"
+  integrity sha512-q+icHZCNVhs6balnjAy9LcbyGAtwP386Od1GlLmt97HWTPkmWc6Zi/cBtJrT1dFYRMW5YonXh7fyU6NxcNeVMg==
   dependencies:
     "@types/react" "*"
 
