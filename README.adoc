@@ -263,7 +263,7 @@ if you want to automatically fix linting issues.
 | `LIGHTSTEP_ACCESS_TOKEN`
 | Your Lightstep access token.
 
-| `NEXT_PUBLIC_SENTRY_AUTH_TOKEN`
+| `SENTRY_AUTH_TOKEN`
 | Auth token required to contact Sentry.
 
 | `NEXT_PUBLIC_SENTRY_ENVIRONMENT`
