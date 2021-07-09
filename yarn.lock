@@ -3833,10 +3833,10 @@
   dependencies:
     "@types/unist" "*"
 
-"@types/memjs@1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@types/memjs/-/memjs-1.2.2.tgz#985f771c01d6d88604afd4770f39b8d04677f930"
-  integrity sha512-OWp2NrMWy75AnjS94u7wWhacC3eijsH3sNaQAo+0VLiNKStZFCLwHKZus0lBe1MdHMYlbslxjEjid+5ISU4zHw==
+"@types/memjs@1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@types/memjs/-/memjs-1.2.3.tgz#018dd2ce22aa327c075ec6e49b1eed3a0d6bc7c2"
+  integrity sha512-1kaamvIfEZ5cLAcLHNKAtfJR3mDfA9/OmmXGeQPlqQ/Grhgwj+wKw96N/ejG92Osj7lZbBRnT/8Axz0ME2q0Kw==
   dependencies:
     "@types/node" "*"
 
