@@ -41,7 +41,7 @@ describe("Account Web Application re-send Identity validation code", () => {
   });
 
   test("It should re-send an Identity validation code", async () => {
-    expect.assertions(5);
+    expect.assertions(2);
 
     try {
       await authenticateToConnect();

@@ -12,9 +12,9 @@ async function cleaningProfileStaging(): Promise<void> {
     );
   }
 
-  if (process.env.CONNECT_PROFILE_STAGING_API_KEY === undefined) {
+  if (process.env.CONNECT_PROFILE_API_KEY === undefined) {
     throw new Error(
-      "CONNECT_PROFILE_STAGING_API_KEY environment variable is undefined",
+      "CONNECT_PROFILE_API_KEY environment variable is undefined",
     );
   }
 
@@ -23,7 +23,7 @@ async function cleaningProfileStaging(): Promise<void> {
   }
 
   const basePath = process.env.CONNECT_PROFILE_URL.replace(/\/?$/, "");
-  const apiKey = `API_KEY ${process.env.CONNECT_PROFILE_STAGING_API_KEY}`;
+  const apiKey = `API_KEY ${process.env.CONNECT_PROFILE_API_KEY}`;
 
   const profileAdminClient = new ConnectProfileAdminApi(
     new Configuration({
@@ -43,7 +43,8 @@ async function cleaningProfileStaging(): Promise<void> {
     }
 
     if (error.response.status === HttpStatus.NOT_FOUND) {
-      throw new Error("💥 User not found");
+      console.log("🤖 The user doesn't exist in Connect.Profile's database");
+      return;
     }
 
     throw new Error(
@@ -52,4 +53,4 @@ async function cleaningProfileStaging(): Promise<void> {
   }
 }
 
-cleaningProfileStaging();
+cleaningProfileStaging().catch((error) => console.error(error.message));
