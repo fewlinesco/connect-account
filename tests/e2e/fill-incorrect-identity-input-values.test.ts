@@ -52,6 +52,7 @@ describe("Fill incorrect identity input values", () => {
 
   describe("AddIdentity", () => {
     test("It should show error messages if Identity inputs are filled incorrectly in add identity", async () => {
+      expect.assertions(6);
       try {
         await click(localizedStrings.accountOverview.loginsTitle);
 
@@ -118,6 +119,7 @@ describe("Fill incorrect identity input values", () => {
 
   describe("UpdateIdentity", () => {
     test("It should show error messages if Identity inputs are filled incorrectly in update identity", async () => {
+      expect.assertions(3);
       try {
         await click(localizedStrings.accountOverview.loginsTitle);
         await click(localizedStrings.identitiesOverview.showMore);

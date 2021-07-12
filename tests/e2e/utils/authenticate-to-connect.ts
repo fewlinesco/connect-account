@@ -10,18 +10,15 @@ async function authenticateToConnect(): Promise<void> {
       process.env.CONNECT_TEST_ACCOUNT_URL || configVariables.connectAccountURL,
     );
 
-    expect(await text("Access my account").exists()).toBeTruthy();
     await click("Access my account");
 
     const isAlreadyLoggedIn = await text("already logged in").exists(1000, 50);
     if (isAlreadyLoggedIn) {
       await click("Continue");
     } else {
-      expect(await text("Email").exists()).toBeTruthy();
       await write(configVariables.connectTestAccountEmail);
       await press("Enter");
 
-      expect(await text("Password").exists()).toBeTruthy();
       await write(configVariables.connectTestAccountPassword);
       await press("Enter", { navigationTimeout: 60000 });
 

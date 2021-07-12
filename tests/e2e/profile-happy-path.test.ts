@@ -65,6 +65,7 @@ describe("Profile happy path", () => {
   ).includes("staging");
 
   test("it should do Profile flows' happy path", async () => {
+    expect.assertions(isStagingEnv ? 3 : 2);
     try {
       // Profile creation
       if (isStagingEnv) {
@@ -128,6 +129,7 @@ describe("Profile happy path", () => {
   });
 
   test("it should do Addresses flows' happy path", async () => {
+    expect.assertions(isStagingEnv ? 18 : 12);
     try {
       // Add address flow
       await goto(profileUrl);
