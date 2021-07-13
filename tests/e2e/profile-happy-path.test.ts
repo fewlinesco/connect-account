@@ -22,6 +22,10 @@ import { configVariables } from "@src/configs/config-variables";
 describe("Profile happy path", () => {
   jest.setTimeout(120000);
 
+  const isStagingEnv = (
+    process.env.CONNECT_PROFILE_URL || configVariables.connectProfileUrl
+  ).includes("staging");
+
   const baseURL = (
     process.env.CONNECT_TEST_ACCOUNT_URL || configVariables.connectAccountURL
   ).replace(/\/?$/, "");
@@ -59,10 +63,6 @@ describe("Profile happy path", () => {
   afterAll(async () => {
     await closeBrowser();
   });
-
-  const isStagingEnv = (
-    process.env.CONNECT_PROFILE_URL || configVariables.connectProfileUrl
-  ).includes("staging");
 
   test("it should do Profile flows' happy path", async () => {
     expect.assertions(isStagingEnv ? 3 : 2);
