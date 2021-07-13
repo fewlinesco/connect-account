@@ -53,28 +53,28 @@ jobs:
       - run: 
           name: Preparing test user
           command: yarn e2e:setting-sudo-ttl
-      - when: 
-          condition: 
-            matches: { pattern: ".*?\\bstaging\\b.*?", value: << pipeline.parameters.target_url >> }
-          steps:
-            - run: 
-                name: Setting Profile and Account staging URL env var
-                command: |
-                  echo "export CONNECT_PROFILE_URL=https://fewlines-profile-staging.herokuapp.com/" >> $BASH_ENV
-                  echo "export CONNECT_TEST_ACCOUNT_URL=https://account-staging.fewlines.tech/" >> $BASH_ENV
+      # - when: 
+      #     condition: 
+      #       matches: { pattern: ".*?\\bstaging\\b.*?", value: << pipeline.parameters.target_url >> }
+          # steps:
+      - run: 
+          name: Setting Profile and Account staging URL env var
+          command: |
+            echo "export CONNECT_PROFILE_URL=https://fewlines-profile-staging.herokuapp.com/" >> $BASH_ENV
+            echo "export CONNECT_TEST_ACCOUNT_URL=https://account-staging.fewlines.tech/" >> $BASH_ENV
       - run:
           name: Running e2e tests
-          command: CONNECT_TEST_ACCOUNT_EMAIL="taiko_${CIRCLE_SHA1}@fewlines.test" DEBUG="taiko:*" yarn test:e2e 
+          command: CONNECT_TEST_ACCOUNT_EMAIL="taiko_${CIRCLE_SHA1}@fewlines.test" yarn test:e2e 
       - store_artifacts:
           path: ./tests/e2e/screenshots
-      - when: 
-          condition: 
-            matches: { pattern: ".*?\\bstaging\\b.*?", value: << pipeline.parameters.target_url >> }
-          steps:
-            - run: 
-                name: Cleaning Profile Staging
-                command: yarn e2e:delete-profile-user
-                when: always
+      # - when: 
+      #     condition: 
+      #       matches: { pattern: ".*?\\bstaging\\b.*?", value: << pipeline.parameters.target_url >> }
+      #     steps:
+      - run: 
+          name: Cleaning Profile Staging
+          command: yarn e2e:delete-profile-user
+          when: always
       - run: 
           name: Removing Connect test user
           command: yarn e2e:remove-test-user
