@@ -64,7 +64,7 @@ jobs:
                   echo "export CONNECT_TEST_ACCOUNT_URL=https://account-staging.fewlines.tech/" >> $BASH_ENV
       - run:
           name: Running e2e tests
-          command: CONNECT_TEST_ACCOUNT_EMAIL="taiko_${CIRCLE_SHA1}@fewlines.test" yarn test:e2e 
+          command: CONNECT_TEST_ACCOUNT_EMAIL="taiko_${CIRCLE_SHA1}@fewlines.test" DEBUG="taiko:*" yarn test:e2e 
       - store_artifacts:
           path: ./tests/e2e/screenshots
       - when: 
