@@ -22,10 +22,9 @@ import { configVariables } from "@src/configs/config-variables";
 describe("Profile happy path", () => {
   jest.setTimeout(120000);
 
-  const isStagingEnv = true;
-  // const isStagingEnv = (
-  //   process.env.CONNECT_PROFILE_URL || configVariables.connectProfileUrl
-  // ).includes("staging");
+  const isStagingEnv = (
+    process.env.CONNECT_PROFILE_URL || configVariables.connectProfileUrl
+  ).includes("staging");
 
   const baseURL = (
     process.env.CONNECT_TEST_ACCOUNT_URL || configVariables.connectAccountURL
