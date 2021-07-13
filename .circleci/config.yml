@@ -29,7 +29,7 @@ jobs:
     steps:
       - install-dependencies
       - run:
-          name: "Launching Profile mock server"
+          name: Launching Profile mock server
           command: docker-compose up -d profile_mock_server
       - run:
           name: Run lint
@@ -91,6 +91,35 @@ jobs:
           name: Promote Heroku staging app to production
           command: yarn heroku:promote-staging-to-prod
 
+  lighthouse:
+    docker:
+      - image: cimg/node:14.17.0-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Connect.Account dependencies
+          command: yarn install
+      - run:
+          name: Install Puppeteer
+          command: yarn add -D puppeteer
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Run Lighthouse audit
+          command: npx @lhci/cli autorun
+          environment:
+            CONNECT_TEST_ACCOUNT_URL: "https://fewlines-account-staging.herokuapp.com"
+      - store_artifacts:
+          path: ./lhci_reports
+      - store_artifacts:
+          path: ./screenshots
+
 workflows:
   tests-on-push:
     when:
@@ -108,3 +137,4 @@ workflows:
             branches:
               only:
                 - main
+      - lighthouse
