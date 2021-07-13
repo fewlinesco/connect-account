@@ -8,7 +8,6 @@ async function authenticateToConnect(): Promise<void> {
 
     await goto(
       process.env.CONNECT_TEST_ACCOUNT_URL || configVariables.connectAccountURL,
-      { navigationTimeout: 60000 },
     );
 
     await click("Access my account");
