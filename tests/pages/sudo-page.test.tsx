@@ -2,7 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import userEvent from "@testing-library/user-event";
 import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
-import { cache, SWRConfig } from "swr";
+import { mutate, SWRConfig } from "swr";
 
 import {
   render,
@@ -118,7 +118,7 @@ describe("SudoPage", () => {
 
       const primaryIdentities = [mockIdentities.primaryPhoneIdentity];
 
-      cache.set("/api/identity?primary=true", primaryIdentities);
+      mutate("/api/identity?primary=true", primaryIdentities);
 
       render(
         <SWRConfig
