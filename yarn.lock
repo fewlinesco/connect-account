@@ -3985,10 +3985,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-phone-number-input@3.0.9":
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/@types/react-phone-number-input/-/react-phone-number-input-3.0.9.tgz#838f948eb942a7b07e73cd3f9034e04c5f140829"
-  integrity sha512-q+icHZCNVhs6balnjAy9LcbyGAtwP386Od1GlLmt97HWTPkmWc6Zi/cBtJrT1dFYRMW5YonXh7fyU6NxcNeVMg==
+"@types/react-phone-number-input@3.0.10":
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/@types/react-phone-number-input/-/react-phone-number-input-3.0.10.tgz#bcf835ac8238130411b4f95c6a6cc8b870fda5d9"
+  integrity sha512-A2FjMoVGtzeqZUh9vD+5YdjKqrOoHRn5Xm7hmA9hz+AIOu2E/5rjieEOiuhbxckoM4zrPxhbhJBMkiNuQFqygw==
   dependencies:
     "@types/react" "*"
 
