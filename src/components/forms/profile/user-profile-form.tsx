@@ -50,7 +50,7 @@ const UserProfileForm: React.FC<{
   const { formatMessage } = useIntl();
   const [formID] = React.useState<string>(uuidv4());
   const [userProfile, setUserProfile] = React.useState<ProfileData>({
-    name: "",
+    name: "Clem",
     family_name: "",
     given_name: "",
     middle_name: "",
