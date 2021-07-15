@@ -12,7 +12,6 @@ import {
   below,
   currentURL,
   waitFor,
-  goto,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
@@ -21,6 +20,10 @@ import { configVariables } from "@src/configs/config-variables";
 
 describe("Profile happy path", () => {
   jest.setTimeout(120000);
+
+  const isStagingEnv = (
+    process.env.CONNECT_PROFILE_URL || configVariables.connectProfileUrl
+  ).includes("staging");
 
   const baseURL = (
     process.env.CONNECT_TEST_ACCOUNT_URL || configVariables.connectAccountURL
@@ -60,12 +63,8 @@ describe("Profile happy path", () => {
     await closeBrowser();
   });
 
-  const isStagingEnv = (
-    process.env.CONNECT_PROFILE_URL || configVariables.connectProfileUrl
-  ).includes("staging");
-
   test("it should do Profile flows' happy path", async () => {
-    expect.assertions(isStagingEnv ? 3 : 2);
+    expect.assertions(isStagingEnv ? 21 : 14);
     try {
       // Profile creation
       if (isStagingEnv) {
@@ -120,19 +119,6 @@ describe("Profile happy path", () => {
 
       await click(localizedStrings.editProfile.update);
       expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
-    } catch (error) {
-      await screenshot({
-        path: "./tests/e2e/screenshots/profile-happy-path.png",
-      });
-      throw error;
-    }
-  });
-
-  test("it should do Addresses flows' happy path", async () => {
-    expect.assertions(isStagingEnv ? 18 : 12);
-    try {
-      // Add address flow
-      await goto(profileUrl);
 
       await click(text(localizedStrings.profileOverview.addAddress));
 
@@ -319,7 +305,7 @@ describe("Profile happy path", () => {
       }
     } catch (error) {
       await screenshot({
-        path: "./tests/e2e/screenshots/addresses-happy-path.png",
+        path: "./tests/e2e/screenshots/profile-happy-path.png",
       });
       throw error;
     }
