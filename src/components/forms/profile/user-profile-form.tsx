@@ -1,7 +1,9 @@
+import { HttpStatus } from "@fwl/web";
 import { ProfileData } from "connect-profile-client";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
+import { mutate } from "swr";
 import { v4 as uuidv4 } from "uuid";
 
 import { InputDatePicker } from "../../input/input-date-picker";
@@ -15,6 +17,33 @@ import { fetchJson } from "@src/utils/fetch-json";
 
 import "react-datepicker/dist/react-datepicker.css";
 
+type ProfilePayload = Omit<Profile, "id" | "sub" | "updated_at">;
+
+async function updateOrCreateProfile(
+  router: NextRouter,
+  profilePayload: ProfilePayload,
+  isCreation?: boolean,
+): Promise<void> {
+  const url = "/api/profile/user-profile";
+  const method = isCreation ? "POST" : "PATCH";
+  console.log({ method });
+
+  return fetchJson(url, method, profilePayload).then(async (response) => {
+    const parsedResponse = await response.json();
+
+    if (
+      response.status === HttpStatus.CREATED ||
+      response.status === HttpStatus.OK
+    ) {
+      mutate("/api/profile/user-profile", parsedResponse);
+      router && router.push("/account/profile");
+      return;
+    } else {
+      throw new Error("Something went wrong");
+    }
+  });
+}
+
 const UserProfileForm: React.FC<{
   userProfileData?: Profile;
   isCreation?: boolean;
@@ -22,7 +51,7 @@ const UserProfileForm: React.FC<{
   const { formatMessage } = useIntl();
   const [formID] = React.useState<string>(uuidv4());
   const [userProfile, setUserProfile] = React.useState<ProfileData>({
-    name: "",
+    name: "Clem",
     family_name: "",
     given_name: "",
     middle_name: "",
@@ -50,33 +79,12 @@ const UserProfileForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
-          if (isCreation) {
-            return fetchJson("/api/profile/user-profile", "POST", {
-              userProfilePayload: userProfile,
-            }).then(async (response) => {
-              const parsedResponse = await response.json();
-
-              if ("createdUserProfile" in parsedResponse) {
-                router && router.push("/account/profile");
-                return;
-              }
-
-              throw new Error("Something went wrong");
-            });
-          }
-
-          return fetchJson("/api/profile/user-profile", "PATCH", {
-            userProfilePayload: userProfile,
-          }).then(async (response) => {
-            const parsedResponse = await response.json();
-
-            if ("updatedUserProfile" in parsedResponse) {
-              router && router.push("/account/profile");
-              return;
-            }
-
-            throw new Error("Something went wrong");
-          });
+          console.log("sqsdqs");
+          await updateOrCreateProfile(
+            router,
+            userProfile as ProfilePayload,
+            isCreation,
+          );
         }}
       >
         <InputText
