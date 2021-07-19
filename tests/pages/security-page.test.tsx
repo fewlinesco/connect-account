@@ -1,5 +1,5 @@
 import React from "react";
-import { cache, SWRConfig } from "swr";
+import { SWRConfig } from "swr";
 
 import {
   render,
@@ -25,10 +25,6 @@ describe("SecurityPage", () => {
 
   beforeAll(() => {
     setRouterPathname(path);
-  });
-
-  afterEach(() => {
-    cache.clear();
   });
 
   test("It should render the security layout", async () => {

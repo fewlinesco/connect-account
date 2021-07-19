@@ -1,6 +1,6 @@
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { cache, SWRConfig } from "swr";
+import { SWRConfig } from "swr";
 
 import {
   render,
@@ -28,10 +28,6 @@ describe("ConfirmationBox", () => {
 
   beforeAll(() => {
     setRouterPathname(path);
-  });
-
-  afterEach(() => {
-    cache.clear();
   });
 
   it("shouldn't display any confirmation box on first render", async () => {

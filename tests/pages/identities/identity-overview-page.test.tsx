@@ -1,5 +1,5 @@
 import React from "react";
-import { cache, SWRConfig } from "swr";
+import { mutate, SWRConfig } from "swr";
 
 import {
   render,
@@ -29,13 +29,12 @@ describe("IdentityOverviewPage", () => {
     setRouterPathname(path);
   });
 
-  afterEach(() => {
-    cache.clear();
-  });
-
   describe("Identity type: EMAIL", () => {
     it("should display the relevant delete & mark as primary buttons but not validate identity one for a non primary validated email address", async () => {
       expect.assertions(4);
+
+      const identity = mockIdentities.nonPrimaryEmailIdentity;
+      mutate(`/api/identities/${identity.id}`, identity);
 
       render(
         <SWRConfig
@@ -71,6 +70,9 @@ describe("IdentityOverviewPage", () => {
     it("shouldn't display primary badge nor the awaiting validation one for a non primary validated email", async () => {
       expect.assertions(2);
 
+      const identity = mockIdentities.nonPrimaryEmailIdentity;
+      mutate(`/api/identities/${identity.id}`, identity);
+
       render(
         <SWRConfig
           value={{
@@ -96,6 +98,9 @@ describe("IdentityOverviewPage", () => {
 
     it("shouldn't display the delete, mark as primary & validate identity buttons for a primary email address", async () => {
       expect.assertions(3);
+
+      const identity = mockIdentities.primaryEmailIdentity;
+      mutate(`/api/identities/${identity.id}`, identity);
 
       render(
         <SWRConfig
@@ -128,6 +133,9 @@ describe("IdentityOverviewPage", () => {
     it("should display primary badge and not the awaiting validation one for a primary email", async () => {
       expect.assertions(2);
 
+      const identity = mockIdentities.primaryPhoneIdentity;
+      mutate(`/api/identities/${identity.id}`, identity);
+
       render(
         <SWRConfig
           value={{
@@ -151,6 +159,9 @@ describe("IdentityOverviewPage", () => {
 
     it("should display the delete & validate identity buttons but not mark as primary one for an unvalidated email address", async () => {
       expect.assertions(3);
+
+      const identity = mockIdentities.unvalidatedEmailIdentity;
+      mutate(`/api/identities/${identity.id}`, identity);
 
       render(
         <SWRConfig
@@ -183,6 +194,9 @@ describe("IdentityOverviewPage", () => {
     it("should display the awaiting validation badge and not primary one for an unvalidated email", async () => {
       expect.assertions(2);
 
+      const identity = mockIdentities.unvalidatedEmailIdentity;
+      mutate(`/api/identities/${identity.id}`, identity);
+
       render(
         <SWRConfig
           value={{
@@ -208,6 +222,9 @@ describe("IdentityOverviewPage", () => {
   describe("Identity type: PHONE", () => {
     it("should display the relevant delete & mark as primary buttons but not validate identity one for a non primary validated phone number", async () => {
       expect.assertions(4);
+
+      const identity = mockIdentities.nonPrimaryPhoneIdentity;
+      mutate(`/api/identities/${identity.id}`, identity);
 
       render(
         <SWRConfig
@@ -243,6 +260,9 @@ describe("IdentityOverviewPage", () => {
     it("shouldn't display primary badge nor the awaiting validation one for a non primary validated phone number", async () => {
       expect.assertions(2);
 
+      const identity = mockIdentities.nonPrimaryPhoneIdentity;
+      mutate(`/api/identities/${identity.id}`, identity);
+
       render(
         <SWRConfig
           value={{
@@ -268,6 +288,9 @@ describe("IdentityOverviewPage", () => {
 
     it("shouldn't display the delete, mark as primary & validate identity buttons for a primary phone number", async () => {
       expect.assertions(3);
+
+      const identity = mockIdentities.primaryPhoneIdentity;
+      mutate(`/api/identities/${identity.id}`, identity);
 
       render(
         <SWRConfig
@@ -304,6 +327,9 @@ describe("IdentityOverviewPage", () => {
     it("should display primary badge and not the awaiting validation one for a primary phone number", async () => {
       expect.assertions(2);
 
+      const identity = mockIdentities.primaryPhoneIdentity;
+      mutate(`/api/identities/${identity.id}`, identity);
+
       render(
         <SWRConfig
           value={{
@@ -325,6 +351,9 @@ describe("IdentityOverviewPage", () => {
 
     it("should display the delete & validate identity buttons but not mark as primary one for an unvalidated phone number", async () => {
       expect.assertions(3);
+
+      const identity = mockIdentities.unvalidatedPhoneIdentity;
+      mutate(`/api/identities/${identity.id}`, identity);
 
       render(
         <SWRConfig
@@ -356,6 +385,9 @@ describe("IdentityOverviewPage", () => {
 
     it("should display the awaiting validation badge and not primary one for an unvalidated phone number", async () => {
       expect.assertions(2);
+
+      const identity = mockIdentities.unvalidatedPhoneIdentity;
+      mutate(`/api/identities/${identity.id}`, identity);
 
       render(
         <SWRConfig

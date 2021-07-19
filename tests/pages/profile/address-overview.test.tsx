@@ -1,5 +1,5 @@
 import React from "react";
-import { cache, SWRConfig } from "swr";
+import { SWRConfig } from "swr";
 
 import {
   render,
@@ -27,10 +27,6 @@ describe("AddressOverviewPage", () => {
 
   beforeAll(() => {
     setRouterPathname(path);
-  });
-
-  afterEach(() => {
-    cache.clear();
   });
 
   it("should render proper address breadcrumbs", async () => {
