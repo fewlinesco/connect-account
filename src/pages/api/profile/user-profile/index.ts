@@ -73,7 +73,7 @@ const patchHandler: Handler = async (request, response) => {
       const { userProfileClient } = await wrappedProfileClient(request, span);
 
       const { data: updatedUserProfile } = await userProfileClient
-        .patchProfile(request.body.userProfilePayload)
+        .patchProfile(request.body)
         .then((profileData) => {
           const locale = getLocaleFromRequest(request, span);
 
@@ -113,7 +113,7 @@ const patchHandler: Handler = async (request, response) => {
       );
 
       response.statusCode = HttpStatus.OK;
-      response.json({ updatedUserProfile });
+      response.json(updatedUserProfile);
     },
   );
 };
@@ -133,7 +133,7 @@ const postHandler: Handler = async (request, response) => {
       const { userProfileClient } = await wrappedProfileClient(request, span);
 
       const { data: createdUserProfile } = await userProfileClient
-        .createProfile(request.body.userProfilePayload)
+        .createProfile(request.body)
         .then((profileData) => {
           const locale = getLocaleFromRequest(request, span);
 
@@ -168,8 +168,8 @@ const postHandler: Handler = async (request, response) => {
         true,
       );
 
-      response.statusCode = HttpStatus.OK;
-      response.json({ createdUserProfile });
+      response.statusCode = HttpStatus.CREATED;
+      response.json(createdUserProfile);
     },
   );
 };
