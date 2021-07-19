@@ -18,8 +18,18 @@ import { authenticateToConnect } from "./utils/authenticate-to-connect";
 import * as locales from "@content/locales";
 import { configVariables } from "@src/configs/config-variables";
 
-describe.only("Profile happy path", () => {
+describe("Profile happy path", () => {
   jest.setTimeout(120000);
+
+  const isStagingEnv = (
+    process.env.CONNECT_PROFILE_URL || configVariables.connectProfileUrl
+  ).includes("staging");
+
+  const baseURL = (
+    process.env.CONNECT_TEST_ACCOUNT_URL || configVariables.connectAccountURL
+  ).replace(/\/?$/, "");
+
+  const profileUrl = `${baseURL}/account/profile`;
 
   const localizedStrings = {
     navigation: locales.en.navigation,
@@ -45,36 +55,25 @@ describe.only("Profile happy path", () => {
     });
   });
 
+  beforeEach(async () => {
+    await authenticateToConnect();
+  });
+
   afterAll(async () => {
     await closeBrowser();
   });
 
-  const isStagingEnv = (
-    process.env.CONNECT_PROFILE_URL || configVariables.connectProfileUrl
-  ).includes("staging");
-
-  test("it should do Profile and Addresses flows' happy path", async () => {
-    expect.assertions(isStagingEnv ? 28 : 19);
-
+  test("it should do Profile flows' happy path", async () => {
+    expect.assertions(isStagingEnv ? 21 : 14);
     try {
-      await authenticateToConnect();
-
-      const baseURL = (
-        process.env.CONNECT_TEST_ACCOUNT_URL ||
-        configVariables.connectAccountURL
-      ).replace(/\/?$/, "");
-
-      const profileUrl = `${baseURL}/account/profile`;
-
       // Profile creation
       if (isStagingEnv) {
-        expect(
-          await text(localizedStrings.navigation.createYourProfile).exists(),
-        ).toBeTruthy();
         await click(localizedStrings.navigation.createYourProfile);
         expect(
           await text(localizedStrings.newProfile.breadcrumb).exists(),
         ).toBeTruthy();
+
+        waitFor(1000);
         await write(
           "Taiko Test",
           into(
@@ -85,29 +84,29 @@ describe.only("Profile happy path", () => {
         );
 
         await click(localizedStrings.newProfile.add);
-        expect(await currentURL()).toEqual(profileUrl);
       } else {
-        await waitFor(2000);
         waitFor(
           async () =>
             await text(
               localizedStrings.navigation.personalInformation,
             ).exists(),
         );
+        await waitFor(1000);
         await click(localizedStrings.navigation.personalInformation);
       }
 
       // Update user profile flow
-      waitFor(
+      await waitFor(
         async () =>
           await text(localizedStrings.profileOverview.updateInfo).exists(),
       );
+
       await click(localizedStrings.profileOverview.updateInfo);
-      expect(
-        await text(localizedStrings.editProfile.breadcrumb).exists(),
-      ).toBeTruthy();
+
+      await text(localizedStrings.editProfile.breadcrumb).exists();
 
       await clear(textBox(localizedStrings.editProfile.usernameLabel));
+
       await write(
         "Supertest",
         into(
@@ -121,11 +120,8 @@ describe.only("Profile happy path", () => {
       await click(localizedStrings.editProfile.update);
       expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
-      // Add address flow
-      expect(
-        await text(localizedStrings.profileOverview.addAddress).exists(),
-      ).toBeTruthy();
       await click(text(localizedStrings.profileOverview.addAddress));
+
       expect(
         await text(localizedStrings.newAddress.breadcrumb).exists(),
       ).toBeTruthy();

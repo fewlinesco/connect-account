@@ -42,7 +42,7 @@ describe("Account Web Application update password", () => {
   };
 
   test("It should show error messages if password inputs are filled incorrectly", async () => {
-    expect.assertions(12);
+    expect.assertions(9);
 
     try {
       await authenticateToConnect();

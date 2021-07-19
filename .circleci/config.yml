@@ -73,7 +73,7 @@ jobs:
           steps:
             - run: 
                 name: Cleaning Profile Staging
-                command: yarn e2e:cleaning-profile-staging
+                command: yarn e2e:delete-profile-user
                 when: always
       - run: 
           name: Removing Connect test user

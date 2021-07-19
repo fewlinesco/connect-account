@@ -1,7 +1,7 @@
 import { Identity } from "@fewlines/connect-management";
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { cache, SWRConfig } from "swr";
+import { mutate, SWRConfig } from "swr";
 
 import {
   render,
@@ -30,10 +30,6 @@ describe("LoginsOverviewPage", () => {
 
   beforeAll(() => {
     setRouterPathname(path);
-  });
-
-  afterEach(() => {
-    cache.clear();
   });
 
   describe("Identity type: EMAIL", () => {
@@ -117,7 +113,7 @@ describe("LoginsOverviewPage", () => {
 
       const identities = [mockIdentities.primaryEmailIdentity];
 
-      cache.set("/api/identities", identities);
+      mutate("/api/identities", identities);
 
       render(
         <SWRConfig
@@ -161,7 +157,7 @@ describe("LoginsOverviewPage", () => {
 
       const identities: Identity[] = [];
 
-      cache.set("/api/identities", identities);
+      mutate("/api/identities", identities);
 
       render(
         <SWRConfig
@@ -272,7 +268,7 @@ describe("LoginsOverviewPage", () => {
 
       const identities = [mockIdentities.primaryPhoneIdentity];
 
-      cache.set("/api/identities", identities);
+      mutate("/api/identities", identities);
 
       render(
         <SWRConfig
@@ -315,7 +311,7 @@ describe("LoginsOverviewPage", () => {
 
       const identities: Identity[] = [];
 
-      cache.set("/api/identities", identities);
+      mutate("/api/identities", identities);
 
       render(
         <SWRConfig

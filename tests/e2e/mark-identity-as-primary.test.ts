@@ -41,7 +41,7 @@ describe("Mark Identity as primary", () => {
   };
 
   test("It should correctly mark another identity to primary status and going back to logins overview page", async () => {
-    expect.assertions(6);
+    expect.assertions(3);
 
     try {
       await authenticateToConnect();
