@@ -168,6 +168,7 @@ describe("Profile happy path", () => {
       );
 
       await click(localizedStrings.newAddress.add);
+      await waitFor(2000);
       expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       if (isStagingEnv) {
