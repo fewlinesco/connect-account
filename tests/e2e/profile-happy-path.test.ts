@@ -223,6 +223,7 @@ describe("Profile happy path", () => {
         );
 
         await click(localizedStrings.newAddress.add);
+        await waitFor(2000);
         expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
       }
 
@@ -250,6 +251,7 @@ describe("Profile happy path", () => {
       );
 
       await click(localizedStrings.editAddress.update);
+      await waitFor(2000);
       expect(await currentURL()).toEqual(profileUrl);
 
       // Mark address as primary flow
