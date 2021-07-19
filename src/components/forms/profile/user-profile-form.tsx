@@ -79,7 +79,6 @@ const UserProfileForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
-          console.log("sqsdqs");
           await updateOrCreateProfile(
             router,
             userProfile as ProfilePayload,
