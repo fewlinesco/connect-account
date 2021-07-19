@@ -698,7 +698,7 @@ Inside most of our jobs, we used TypeScript written scripts to perform our actio
 
 We are using https://docs.sentry.io/[Sentry] to monitor production and review app's exceptions raised.
 
-Thanks to the https://docs.sentry.io/platforms/javascript/guides/nextjs/[Sentry Next.js SDK], the implementation is now way cleaner. We have added a wrapper around the `withSentry` middleware to be able to use is it with SSR.
+We're using https://docs.sentry.io/platforms/javascript/guides/nextjs/[Sentry Next.js SDK] and have added a wrapper around the `withSentry` middleware to be able to use is it with SSR.
 
 == Documentation
 
