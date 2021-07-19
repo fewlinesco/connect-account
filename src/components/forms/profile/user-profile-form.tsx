@@ -26,7 +26,6 @@ async function updateOrCreateProfile(
 ): Promise<void> {
   const url = "/api/profile/user-profile";
   const method = isCreation ? "POST" : "PATCH";
-  console.log({ method });
 
   return fetchJson(url, method, profilePayload).then(async (response) => {
     const parsedResponse = await response.json();
@@ -51,7 +50,7 @@ const UserProfileForm: React.FC<{
   const { formatMessage } = useIntl();
   const [formID] = React.useState<string>(uuidv4());
   const [userProfile, setUserProfile] = React.useState<ProfileData>({
-    name: "Clem",
+    name: "",
     family_name: "",
     given_name: "",
     middle_name: "",
