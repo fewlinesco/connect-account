@@ -34,7 +34,7 @@
     "heroku:promote-staging-to-prod": "ts-node bin/run-promote.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.21.0",
+    "@aws-sdk/client-dynamodb": "3.22.0",
     "@aws-sdk/util-dynamodb": "3.22.0",
     "@fewlines/connect-client": "0.5.1",
     "@fewlines/connect-management": "0.7.0",
