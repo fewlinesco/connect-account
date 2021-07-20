@@ -7,7 +7,7 @@ import {
   IdentityTypes,
 } from "@fewlines/connect-management/dist/src/types";
 
-async function createTestUser(): Promise<void> {
+async function createTestUser(): Promise<string> {
   if (process.env.CIRCLE_SHA1 === undefined) {
     throw new Error("CIRCLE_SHA1 environment variable is undefined");
   }
@@ -80,7 +80,12 @@ async function createTestUser(): Promise<void> {
     },
   );
 
-  process.stdout.write(userId);
+  return userId;
 }
 
-createTestUser();
+createTestUser()
+  .then((userId) => console.log(`✅ User created created with id: "${userId}"`))
+  .catch((error) => {
+    console.error("💥", error);
+    process.exit(1);
+  });
