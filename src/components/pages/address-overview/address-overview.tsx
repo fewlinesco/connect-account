@@ -115,7 +115,6 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                       {},
                     )
                       .then(() => {
-                        console.log(addresses);
                         const modifiedAddresses = [
                           ...(addresses || ([] as Address[])),
                         ];
@@ -190,16 +189,13 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                   router && router.push("/account/profile");
 
                   if (addresses && address) {
-                    console.log("🏘", addresses);
                     const addressToDelete = addresses.find(
                       (a) => a.id === address.id,
                     );
                     if (addressToDelete) {
                       const index = addresses.indexOf(addressToDelete);
-                      console.log(index);
                       const modifiedAddresses = [...addresses];
                       modifiedAddresses.splice(index, 1);
-                      console.log(modifiedAddresses);
                       await mutate("/api/profile/addresses", modifiedAddresses);
                     }
                   }
