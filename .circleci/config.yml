@@ -49,7 +49,7 @@ jobs:
       - install-dependencies
       - run:
           name: Creating Connect test user
-          command: yarn e2e:create-test-user  | cut -d\ " " -f7 | grep "id:" | xargs -I '{}' echo "export CONNECT_TEST_ACCOUNT_SUB={}" >> $BASH_ENV
+          command: yarn e2e:create-test-user #  | cut -d\ " " -f7 | grep "id:" | xargs -I '{}' echo "export CONNECT_TEST_ACCOUNT_SUB={}" >> $BASH_ENV
           # command: echo "export CONNECT_TEST_ACCOUNT_SUB=$(yarn e2e:create-test-user | xargs | cut -d' ' -f7 | cut -c-36)" >> $BASH_ENV
       - run: 
           name: Preparing test user
