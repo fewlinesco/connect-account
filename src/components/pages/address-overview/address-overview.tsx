@@ -186,8 +186,6 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
             onPress={() => {
               fetchJson(`/api/profile/addresses/${address?.id}`, "DELETE", {})
                 .then(async () => {
-                  router && router.push("/account/profile");
-
                   if (addresses && address) {
                     const addressToDelete = addresses.find(
                       (a) => a.id === address.id,
@@ -199,6 +197,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                       await mutate("/api/profile/addresses", modifiedAddresses);
                     }
                   }
+                  router && router.push("/account/profile");
                 })
                 .catch((error) => {
                   throw error;
