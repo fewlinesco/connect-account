@@ -13,6 +13,7 @@ import { WhiteSwitchIcon } from "../icons/switch-icon/white-switch-icon/white-sw
 import { WhiteWorldIcon } from "../icons/world-icon/white-world-icon/white-world-icon";
 import { LogoutAnchor } from "../logout-anchor/logout-anchor";
 import { NeutralLink } from "../neutral-link/neutral-link";
+import { SkeletonTextLine } from "../skeletons/skeletons";
 import { getNavigationSections } from "./navigation-sections";
 import { Profile } from "@src/@types/profile";
 import { formatNavigation } from "@src/configs/intl";
@@ -55,7 +56,21 @@ const MobileNavigationBar: React.FC = () => {
         {isOpen ? (
           <MenuList>
             {getNavigationSections(userProfile ? false : true).map(
-              ([title, { href, icon }]) => {
+              ([title, { href, icon }], index) => {
+                if (index === 1 && !userProfile) {
+                  return (
+                    <ListItem href="#" key={title + href}>
+                      <ListItemLabel>
+                        {icon}
+                        <SizedDiv>
+                          <SkeletonTextLine fontSize={1.6} width={100} />
+                        </SizedDiv>
+                      </ListItemLabel>
+                      <RightChevron />
+                    </ListItem>
+                  );
+                }
+
                 return (
                   <ListItem
                     href={href}
@@ -202,6 +217,11 @@ const SpecialLink = styled(NeutralLink)`
   & div {
     color: ${({ theme }) => theme.colors.background};
   }
+`;
+
+const SizedDiv = styled.div`
+  width: 7rem;
+  margin: 0 0 0 1.5rem;
 `;
 
 export { MobileNavigationBar };
