@@ -2,6 +2,7 @@
 // The config you add here will be used whenever the server handles a request.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
+import { WebError } from "@fwl/web/dist/errors";
 import * as Sentry from "@sentry/nextjs";
 
 Sentry.init({
@@ -13,4 +14,11 @@ Sentry.init({
     process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT === "development"
       ? false
       : process.env.NODE_ENV === "production",
+  beforeSend(event, hint) {
+    if (hint.originalException instanceof WebError) {
+      return null;
+    }
+
+    return event;
+  },
 });
