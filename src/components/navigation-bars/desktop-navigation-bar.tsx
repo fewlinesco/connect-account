@@ -1,4 +1,3 @@
-import { HttpStatus } from "@fwl/web";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
@@ -10,44 +9,35 @@ import { BlackWorldIcon } from "../icons/world-icon/black-world-icon/black-world
 import { LogoutAnchor } from "../logout-anchor/logout-anchor";
 import { NeutralLink } from "../neutral-link/neutral-link";
 import { Separator } from "../separator/separator";
+import { SkeletonTextLine } from "../skeletons/skeletons";
 import { getNavigationSections } from "./navigation-sections";
 import { Profile } from "@src/@types/profile";
 import { formatNavigation } from "@src/configs/intl";
 import { SWRError } from "@src/errors/errors";
+import { navigationFetcher } from "@src/queries/swr-navigation-fetcher";
 
 const DesktopNavigationBar: React.FC = () => {
   const { locale } = useRouter();
 
   const { data: userProfile } = useSWR<Profile, SWRError>(
     `/api/profile/user-profile`,
-    async (url) => {
-      return await fetch(url).then(async (response) => {
-        if (!response.ok) {
-          const error = new SWRError(
-            "An error occurred while fetching the data.",
-          );
-
-          if (response.status === HttpStatus.NOT_FOUND) {
-            error.info = await response.json();
-            error.statusCode = response.status;
-            return;
-          }
-
-          error.info = await response.json();
-          error.statusCode = response.status;
-          throw error;
-        }
-
-        return response.json();
-      });
-    },
+    navigationFetcher,
   );
 
   return (
     <>
       <Header />
       {getNavigationSections(userProfile ? false : true).map(
-        ([title, { href, icon }]) => {
+        ([title, { href, icon }], index) => {
+          if (index === 1 && !userProfile) {
+            return (
+              <ListItem href="#" key={title + href}>
+                {icon}
+                <SkeletonTextLine fontSize={1.6} width={50} />
+              </ListItem>
+            );
+          }
+
           return (
             <ListItem href={href} key={title + href}>
               {icon}
@@ -77,7 +67,8 @@ const ListItem = styled(NeutralLink)`
   padding-right: 0;
   padding-left: ${({ theme }) => theme.spaces.xs};
 
-  p {
+  p,
+  div {
     margin: 0 0 0 1.5rem;
   }
 `;
