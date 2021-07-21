@@ -1,4 +1,3 @@
-import { HttpStatus } from "@fwl/web";
 import React from "react";
 import { useIntl } from "react-intl";
 import styled from "styled-components";
@@ -12,32 +11,13 @@ import { SectionBox } from "@src/components/shadow-box/section-box";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
+import { navigationFetcher } from "@src/queries/swr-navigation-fetcher";
 import { getNavSectionHref } from "@src/utils/getNavSectionHref";
 
 const AccountOverview: React.FC = () => {
   const { data: userProfile } = useSWR<Profile, SWRError>(
     `/api/profile/user-profile`,
-    async (url) => {
-      return await fetch(url).then(async (response) => {
-        if (!response.ok) {
-          const error = new SWRError(
-            "An error occurred while fetching the data.",
-          );
-
-          if (response.status === HttpStatus.NOT_FOUND) {
-            error.info = await response.json();
-            error.statusCode = response.status;
-            return;
-          }
-
-          error.info = await response.json();
-          error.statusCode = response.status;
-          throw error;
-        }
-
-        return response.json();
-      });
-    },
+    navigationFetcher,
   );
 
   const { formatMessage } = useIntl();
@@ -46,6 +26,7 @@ const AccountOverview: React.FC = () => {
     <>
       {getSectionListContent(userProfile ? false : true).map(
         ([sectionName, { textID, icon }], index) => {
+          console.log("FLAG", userProfile);
           if (index === 0 && !userProfile) {
             return (
               <SectionBox key={sectionName}>

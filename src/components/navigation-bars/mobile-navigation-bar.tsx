@@ -1,4 +1,3 @@
-import { HttpStatus } from "@fwl/web";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
@@ -19,6 +18,7 @@ import { Profile } from "@src/@types/profile";
 import { formatNavigation } from "@src/configs/intl";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
+import { navigationFetcher } from "@src/queries/swr-navigation-fetcher";
 
 const MobileNavigationBar: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -26,27 +26,7 @@ const MobileNavigationBar: React.FC = () => {
 
   const { data: userProfile } = useSWR<Profile, SWRError>(
     `/api/profile/user-profile`,
-    async (url) => {
-      return await fetch(url).then(async (response) => {
-        if (!response.ok) {
-          const error = new SWRError(
-            "An error occurred while fetching the data.",
-          );
-
-          if (response.status === HttpStatus.NOT_FOUND) {
-            error.info = await response.json();
-            error.statusCode = response.status;
-            return;
-          }
-
-          error.info = await response.json();
-          error.statusCode = response.status;
-          throw error;
-        }
-
-        return response.json();
-      });
-    },
+    navigationFetcher,
   );
 
   return (
