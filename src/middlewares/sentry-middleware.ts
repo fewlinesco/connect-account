@@ -1,36 +1,9 @@
 import { Tracer } from "@fwl/tracing";
 import { Middleware } from "@fwl/web/dist/middlewares";
+import { withSentry } from "@sentry/nextjs";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import Sentry, { addRequestScopeToSentry } from "@src/utils/sentry";
-
-async function sentryReport(
-  tracer: Tracer,
-  error: Record<string, unknown>,
-  request: NextApiRequest,
-): Promise<void> {
-  return tracer.span("sentry-middleware", async (span) => {
-    addRequestScopeToSentry(request);
-
-    span.setDisclosedAttribute("http.status_code", error.httpStatus);
-    span.setDisclosedAttribute("error.name", error.name);
-    span.setDisclosedAttribute("error.message", error.message);
-
-    if ("statusCode" in error && error.statusCode === 404) {
-      throw error;
-    }
-
-    Sentry.withScope((scope) => {
-      scope.setTag(request.url || "no URL found", error.name as string);
-      scope.setTag("trace.id", span.getTraceId());
-      Sentry.captureException(error);
-    });
-
-    throw error;
-  });
-}
-
-function sentryMiddleware(
+function wrappedSentryMiddleware(
   tracer: Tracer,
 ): Middleware<NextApiRequest, NextApiResponse> {
   return (handler) => {
@@ -38,13 +11,19 @@ function sentryMiddleware(
       request: NextApiRequest,
       response: NextApiResponse,
     ): Promise<void> => {
-      try {
-        return await handler(request, response);
-      } catch (error) {
-        await sentryReport(tracer, error, request);
-      }
+      return tracer.span("sentry-middleware", async (span) => {
+        try {
+          return withSentry(handler)(request, response);
+        } catch (error) {
+          span.setDisclosedAttribute("http.status_code", error.httpStatus);
+          span.setDisclosedAttribute("error.name", error.name);
+          span.setDisclosedAttribute("error.message", error.message);
+
+          throw error;
+        }
+      });
     };
   };
 }
 
-export { sentryMiddleware };
+export { wrappedSentryMiddleware };
