@@ -26,7 +26,6 @@ const AccountOverview: React.FC = () => {
     <>
       {getSectionListContent(userProfile ? false : true).map(
         ([sectionName, { textID, icon }], index) => {
-          console.log("FLAG", userProfile);
           if (index === 0 && !userProfile) {
             return (
               <SectionBox key={sectionName}>
