@@ -288,6 +288,7 @@ describe("Profile happy path", () => {
       ).toBeTruthy();
       await click(localizedStrings.addressOverview.deleteButton);
 
+      waitFor(3000);
       expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       if (isStagingEnv) {
