@@ -73,7 +73,7 @@ describe("Profile happy path", () => {
           await text(localizedStrings.newProfile.breadcrumb).exists(),
         ).toBeTruthy();
 
-        waitFor(1000);
+        await waitFor(1000);
         await write(
           "Taiko Test",
           into(
@@ -85,7 +85,7 @@ describe("Profile happy path", () => {
 
         await click(localizedStrings.newProfile.add);
       } else {
-        waitFor(
+        await waitFor(
           async () =>
             await text(
               localizedStrings.navigation.personalInformation,
