@@ -19,7 +19,7 @@ import * as locales from "@content/locales";
 import { configVariables } from "@src/configs/config-variables";
 
 describe("Profile happy path", () => {
-  jest.setTimeout(120000);
+  jest.setTimeout(130000);
 
   const isStagingEnv = (
     process.env.CONNECT_PROFILE_URL || configVariables.connectProfileUrl
@@ -73,7 +73,7 @@ describe("Profile happy path", () => {
           await text(localizedStrings.newProfile.breadcrumb).exists(),
         ).toBeTruthy();
 
-        waitFor(1000);
+        await waitFor(1000);
         await write(
           "Taiko Test",
           into(
@@ -85,7 +85,7 @@ describe("Profile happy path", () => {
 
         await click(localizedStrings.newProfile.add);
       } else {
-        waitFor(
+        await waitFor(
           async () =>
             await text(
               localizedStrings.navigation.personalInformation,
@@ -168,6 +168,7 @@ describe("Profile happy path", () => {
       );
 
       await click(localizedStrings.newAddress.add);
+      await waitFor(2000);
       expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       if (isStagingEnv) {
@@ -222,6 +223,7 @@ describe("Profile happy path", () => {
         );
 
         await click(localizedStrings.newAddress.add);
+        await waitFor(2000);
         expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
       }
 
@@ -249,6 +251,7 @@ describe("Profile happy path", () => {
       );
 
       await click(localizedStrings.editAddress.update);
+      await waitFor(2000);
       expect(await currentURL()).toEqual(profileUrl);
 
       // Mark address as primary flow
@@ -285,7 +288,8 @@ describe("Profile happy path", () => {
       ).toBeTruthy();
       await click(localizedStrings.addressOverview.deleteButton);
 
-      expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+      await waitFor(2000);
+      expect(await currentURL()).toEqual(profileUrl);
 
       if (isStagingEnv) {
         await click(
@@ -300,8 +304,8 @@ describe("Profile happy path", () => {
           await text(localizedStrings.addressOverview.infoDelete).exists(),
         ).toBeTruthy();
         await click(localizedStrings.addressOverview.deleteButton);
-
-        expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+        await waitFor(2000);
+        expect(await currentURL()).toEqual(profileUrl);
       }
     } catch (error) {
       await screenshot({
