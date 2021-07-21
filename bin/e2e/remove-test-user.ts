@@ -3,7 +3,7 @@ import {
   getUserIdFromIdentityValue,
 } from "@fewlines/connect-management";
 
-async function removeTestUser(): Promise<void> {
+async function removeTestUser(): Promise<string> {
   if (process.env.CIRCLE_SHA1 === undefined) {
     throw new Error("CIRCLE_SHA1 environment variable is undefined");
   }
@@ -43,6 +43,15 @@ async function removeTestUser(): Promise<void> {
     },
     testUserId,
   );
+
+  return testUserId;
 }
 
-removeTestUser();
+removeTestUser()
+  .then((userId) =>
+    console.log(`✅ User with id "${userId}" has been deleted.`),
+  )
+  .catch((error) => {
+    console.error("💥", error);
+    process.exit(1);
+  });
