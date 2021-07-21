@@ -289,9 +289,7 @@ describe("Profile happy path", () => {
       await click(localizedStrings.addressOverview.deleteButton);
 
       await waitFor(2000);
-      let url = await currentURL();
-      expect(url).toEqual(profileUrl);
-      // expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+      expect(await currentURL()).toEqual(profileUrl);
 
       if (isStagingEnv) {
         await click(
@@ -307,9 +305,7 @@ describe("Profile happy path", () => {
         ).toBeTruthy();
         await click(localizedStrings.addressOverview.deleteButton);
         await waitFor(2000);
-        url = await currentURL();
-        expect(url).toEqual(profileUrl);
-        // expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+        expect(await currentURL()).toEqual(profileUrl);
       }
     } catch (error) {
       await screenshot({
