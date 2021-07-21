@@ -19,7 +19,7 @@ import * as locales from "@content/locales";
 import { configVariables } from "@src/configs/config-variables";
 
 describe("Profile happy path", () => {
-  jest.setTimeout(120000);
+  jest.setTimeout(130000);
 
   const isStagingEnv = (
     process.env.CONNECT_PROFILE_URL || configVariables.connectProfileUrl
@@ -288,8 +288,10 @@ describe("Profile happy path", () => {
       ).toBeTruthy();
       await click(localizedStrings.addressOverview.deleteButton);
 
-      waitFor(3000);
-      expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+      await waitFor(2000);
+      let url = await currentURL();
+      expect(url).toEqual(profileUrl);
+      // expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
 
       if (isStagingEnv) {
         await click(
@@ -304,8 +306,10 @@ describe("Profile happy path", () => {
           await text(localizedStrings.addressOverview.infoDelete).exists(),
         ).toBeTruthy();
         await click(localizedStrings.addressOverview.deleteButton);
-
-        expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+        await waitFor(2000);
+        url = await currentURL();
+        expect(url).toEqual(profileUrl);
+        // expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
       }
     } catch (error) {
       await screenshot({
