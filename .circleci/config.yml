@@ -114,7 +114,7 @@ jobs:
           name: Run Lighthouse audit
           command: npx @lhci/cli autorun
           environment:
-            CONNECT_TEST_ACCOUNT_URL: "https://account-staging.fewlines.tech"
+            CONNECT_TEST_ACCOUNT_URL: << pipeline.parameters.target_url >>
       - store_artifacts:
           path: ./lhci_reports
       - store_artifacts:
