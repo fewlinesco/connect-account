@@ -93,9 +93,6 @@ async function setup(browser, context) {
       await login(page);
     }
 
-    const cookies = await page.cookies();
-    console.log(cookies);
-
     COUNTER++;
     return page.close();
   } catch (error) {
