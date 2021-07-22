@@ -8,25 +8,28 @@ async function authenticateToConnect(): Promise<void> {
 
     await goto(
       process.env.CONNECT_TEST_ACCOUNT_URL || configVariables.connectAccountURL,
+      { navigationTimeout: 60000 },
     );
 
-    expect(await text("Access my account").exists()).toBeTruthy();
     await click("Access my account");
 
-    expect(await text("Email").exists()).toBeTruthy();
-    await write(configVariables.connectTestAccountEmail);
-    await press("Enter");
+    const isAlreadyLoggedIn = await text("already logged in").exists(1000, 50);
+    if (isAlreadyLoggedIn) {
+      await click("Continue");
+    } else {
+      await write(configVariables.connectTestAccountEmail);
+      await press("Enter");
 
-    expect(await text("Password").exists()).toBeTruthy();
-    await write(configVariables.connectTestAccountPassword);
-    await press("Enter", { navigationTimeout: 60000 });
+      await write(configVariables.connectTestAccountPassword);
+      await press("Enter", { navigationTimeout: 60000 });
 
-    const needScopeAcceptance = await text(
-      "would like to have access to these information about you",
-    ).exists(10000, 50);
+      const needScopeAcceptance = await text(
+        "would like to have access to these information about you",
+      ).exists(10000, 50);
 
-    if (needScopeAcceptance) {
-      await click("Accept");
+      if (needScopeAcceptance) {
+        await click("Accept");
+      }
     }
   } catch (error) {
     await screenshot({

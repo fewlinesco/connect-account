@@ -2,6 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import { NextRouter, useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
+import useSWR, { mutate } from "swr";
 import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../../input/form-error-message";
@@ -12,6 +13,7 @@ import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { formatErrorMessage } from "@src/configs/intl";
+import { SWRError } from "@src/errors/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 import { formatSnakeCaseToCamelCase } from "@src/utils/format";
 
@@ -30,6 +32,7 @@ async function updateOrCreateAddress(
   router: NextRouter,
   setErrorDispatcher: React.Dispatch<React.SetStateAction<AddressInputErrors>>,
   addressPayload: AddressPayload,
+  addresses: Address[],
   addressId?: string,
 ): Promise<void> {
   const url = addressId
@@ -44,6 +47,25 @@ async function updateOrCreateAddress(
       response.status === HttpStatus.CREATED ||
       response.status === HttpStatus.OK
     ) {
+      const address = addresses.find(
+        (address) => address.id === parsedResponse.id,
+      );
+      if (address) {
+        const index = addresses.indexOf(address);
+        const modifiedAddresses = [...addresses];
+        modifiedAddresses[index] = parsedResponse;
+        await mutate("/api/profile/addresses", modifiedAddresses);
+        await mutate(
+          `/api/profile/addresses/${parsedResponse.id}`,
+          parsedResponse,
+        );
+      } else {
+        await mutate("/api/profile/addresses", [...addresses, parsedResponse]);
+        await mutate(
+          `/api/profile/addresses/${parsedResponse.id}`,
+          parsedResponse,
+        );
+      }
       router && router.push("/account/profile");
       return;
     } else if (
@@ -94,6 +116,30 @@ const UserAddressForm: React.FC<{
     street_address_2: "",
     primary: false,
   });
+  const [addresses, setAddresses] = React.useState<Address[]>([]);
+  useSWR<Address[], SWRError>(`/api/profile/addresses`, async (url) => {
+    return await fetch(url).then(async (response) => {
+      if (!response.ok) {
+        const error = new SWRError(
+          "An error occurred while fetching the data.",
+        );
+
+        if (response.status === HttpStatus.NOT_FOUND) {
+          error.info = await response.json();
+          error.statusCode = response.status;
+          return;
+        }
+
+        error.info = await response.json();
+        error.statusCode = response.status;
+        throw error;
+      }
+
+      const addresses = await response.json();
+      setAddresses(addresses);
+      return addresses;
+    });
+  });
 
   React.useEffect(() => {
     if (userAddress) {
@@ -120,6 +166,7 @@ const UserAddressForm: React.FC<{
             router,
             setErrors,
             addressPayload,
+            addresses,
             userAddress?.id,
           );
 

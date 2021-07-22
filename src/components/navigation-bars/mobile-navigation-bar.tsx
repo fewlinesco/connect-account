@@ -1,4 +1,3 @@
-import { HttpStatus } from "@fwl/web";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
@@ -13,11 +12,13 @@ import { WhiteSwitchIcon } from "../icons/switch-icon/white-switch-icon/white-sw
 import { WhiteWorldIcon } from "../icons/world-icon/white-world-icon/white-world-icon";
 import { LogoutAnchor } from "../logout-anchor/logout-anchor";
 import { NeutralLink } from "../neutral-link/neutral-link";
+import { SkeletonTextLine } from "../skeletons/skeletons";
 import { getNavigationSections } from "./navigation-sections";
 import { Profile } from "@src/@types/profile";
 import { formatNavigation } from "@src/configs/intl";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
+import { navigationFetcher } from "@src/queries/swr-navigation-fetcher";
 
 const MobileNavigationBar: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -25,27 +26,7 @@ const MobileNavigationBar: React.FC = () => {
 
   const { data: userProfile } = useSWR<Profile, SWRError>(
     `/api/profile/user-profile`,
-    async (url) => {
-      return await fetch(url).then(async (response) => {
-        if (!response.ok) {
-          const error = new SWRError(
-            "An error occurred while fetching the data.",
-          );
-
-          if (response.status === HttpStatus.NOT_FOUND) {
-            error.info = await response.json();
-            error.statusCode = response.status;
-            return;
-          }
-
-          error.info = await response.json();
-          error.statusCode = response.status;
-          throw error;
-        }
-
-        return response.json();
-      });
-    },
+    navigationFetcher,
   );
 
   return (
@@ -55,7 +36,21 @@ const MobileNavigationBar: React.FC = () => {
         {isOpen ? (
           <MenuList>
             {getNavigationSections(userProfile ? false : true).map(
-              ([title, { href, icon }]) => {
+              ([title, { href, icon }], index) => {
+                if (index === 1 && !userProfile) {
+                  return (
+                    <ListItem href="#" key={title + href}>
+                      <ListItemLabel>
+                        {icon}
+                        <SizedDiv>
+                          <SkeletonTextLine fontSize={1.6} width={100} />
+                        </SizedDiv>
+                      </ListItemLabel>
+                      <RightChevron />
+                    </ListItem>
+                  );
+                }
+
                 return (
                   <ListItem
                     href={href}
@@ -202,6 +197,11 @@ const SpecialLink = styled(NeutralLink)`
   & div {
     color: ${({ theme }) => theme.colors.background};
   }
+`;
+
+const SizedDiv = styled.div`
+  width: 7rem;
+  margin: 0 0 0 1.5rem;
 `;
 
 export { MobileNavigationBar };
