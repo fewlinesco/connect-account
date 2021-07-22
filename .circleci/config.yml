@@ -58,7 +58,7 @@ jobs:
             matches: { pattern: ".*?\\bstaging\\b.*?", value: << pipeline.parameters.target_url >> }
           steps:
             - run: 
-                name: Setting Profile and Account staging URL env var
+                name: Setting Connect.Profile and Connect.Account staging URL env var
                 command: |
                   echo "export CONNECT_PROFILE_URL=https://fewlines-profile-staging.herokuapp.com/" >> $BASH_ENV
                   echo "export CONNECT_TEST_ACCOUNT_URL=https://account-staging.fewlines.tech/" >> $BASH_ENV
@@ -117,7 +117,7 @@ jobs:
             matches: { pattern: ".*?\\bstaging\\b.*?", value: << pipeline.parameters.target_url >> }
           steps:
             - run: 
-                name: Setting Profile and Account staging URL env var
+                name: Setting Connect.Account staging URL env var
                 command: echo "export CONNECT_TEST_ACCOUNT_URL=https://account-staging.fewlines.tech/" >> $BASH_ENV
       - run:
           name: Run Lighthouse audit
