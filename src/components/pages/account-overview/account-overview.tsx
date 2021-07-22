@@ -15,7 +15,7 @@ import { navigationFetcher } from "@src/queries/swr-navigation-fetcher";
 import { getNavSectionHref } from "@src/utils/getNavSectionHref";
 
 const AccountOverview: React.FC = () => {
-  const { data: userProfile } = useSWR<Profile, SWRError>(
+  const { data: userProfile, isValidating } = useSWR<Profile, SWRError>(
     `/api/profile/user-profile`,
     navigationFetcher,
   );
@@ -26,7 +26,7 @@ const AccountOverview: React.FC = () => {
     <>
       {getSectionListContent(userProfile ? false : true).map(
         ([sectionName, { textID, icon }], index) => {
-          if (index === 0 && !userProfile) {
+          if (index === 0 && isValidating) {
             return (
               <SectionBox key={sectionName}>
                 <SectionLink href={getNavSectionHref(sectionName)}>
