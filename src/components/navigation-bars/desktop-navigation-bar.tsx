@@ -19,7 +19,7 @@ import { navigationFetcher } from "@src/queries/swr-navigation-fetcher";
 const DesktopNavigationBar: React.FC = () => {
   const { locale } = useRouter();
 
-  const { data: userProfile } = useSWR<Profile, SWRError>(
+  const { data: userProfile, isValidating } = useSWR<Profile, SWRError>(
     `/api/profile/user-profile`,
     navigationFetcher,
   );
@@ -29,7 +29,7 @@ const DesktopNavigationBar: React.FC = () => {
       <Header />
       {getNavigationSections(userProfile ? false : true).map(
         ([title, { href, icon }], index) => {
-          if (index === 1 && !userProfile) {
+          if (index === 1 && isValidating) {
             return (
               <ListItem href="#" key={title + href}>
                 {icon}
