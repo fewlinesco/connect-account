@@ -94,6 +94,8 @@ jobs:
   lighthouse:
     docker:
       - image: cimg/node:14.17.0-browsers
+    environment:
+      CONNECT_TEST_ACCOUNT_URL: << pipeline.parameters.target_url >>
     steps:
       - checkout
       - restore_cache:
@@ -110,11 +112,16 @@ jobs:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
+      - when: 
+          condition: 
+            matches: { pattern: ".*?\\bstaging\\b.*?", value: << pipeline.parameters.target_url >> }
+          steps:
+            - run: 
+                name: Setting Profile and Account staging URL env var
+                command: echo "export CONNECT_TEST_ACCOUNT_URL=https://account-staging.fewlines.tech/" >> $BASH_ENV
       - run:
           name: Run Lighthouse audit
           command: npx @lhci/cli autorun
-          environment:
-            CONNECT_TEST_ACCOUNT_URL: << pipeline.parameters.target_url >>
       - store_artifacts:
           path: ./lhci_reports
       - store_artifacts:
