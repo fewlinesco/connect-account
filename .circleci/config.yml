@@ -29,7 +29,7 @@ jobs:
     steps:
       - install-dependencies
       - run:
-          name: "Launching Profile mock server"
+          name: Launching Profile mock server
           command: docker-compose up -d profile_mock_server
       - run:
           name: Run lint
@@ -58,7 +58,7 @@ jobs:
             matches: { pattern: ".*?\\bstaging\\b.*?", value: << pipeline.parameters.target_url >> }
           steps:
             - run: 
-                name: Setting Profile and Account staging URL env var
+                name: Setting Connect.Profile and Connect.Account staging URL env var
                 command: |
                   echo "export CONNECT_PROFILE_URL=https://fewlines-profile-staging.herokuapp.com/" >> $BASH_ENV
                   echo "export CONNECT_TEST_ACCOUNT_URL=https://account-staging.fewlines.tech/" >> $BASH_ENV
@@ -91,6 +91,42 @@ jobs:
           name: Promote Heroku staging app to production
           command: yarn heroku:promote-staging-to-prod
 
+  lighthouse:
+    docker:
+      - image: cimg/node:14.17.0-browsers
+    environment:
+      CONNECT_TEST_ACCOUNT_URL: << pipeline.parameters.target_url >>
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Connect.Account dependencies
+          command: yarn install
+      - run:
+          name: Install Puppeteer
+          command: yarn add -D puppeteer
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+      - when: 
+          condition: 
+            matches: { pattern: ".*?\\bstaging\\b.*?", value: << pipeline.parameters.target_url >> }
+          steps:
+            - run: 
+                name: Setting Connect.Account staging URL env var
+                command: echo "export CONNECT_TEST_ACCOUNT_URL=https://account-staging.fewlines.tech/" >> $BASH_ENV
+      - run:
+          name: Run Lighthouse audit
+          command: npx @lhci/cli autorun
+      - store_artifacts:
+          path: ./lhci_reports
+      - store_artifacts:
+          path: ./screenshots
+
 workflows:
   tests-on-push:
     when:
@@ -108,3 +144,4 @@ workflows:
             branches:
               only:
                 - main
+      - lighthouse

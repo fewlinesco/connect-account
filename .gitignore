@@ -28,3 +28,4 @@ Procfile
 storybook-static
 yarn-debug.log*
 yarn-error.log*
+lhci_reports
