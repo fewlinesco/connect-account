@@ -1987,6 +1987,19 @@
     intl-messageformat "9.7.1"
     tslib "^2.1.0"
 
+"@formatjs/intl@1.13.3":
+  version "1.13.3"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl/-/intl-1.13.3.tgz#636e5c816794638a5906d17ae015a8ce9e776764"
+  integrity sha512-89G1qxR7lUaCp2tc2bg3ohBpm6M1kWPXSjQ7JO7Fo2uDrqlWcfGC5ObPp9x06CxsV6aMXRUIuydV7QcuRQrjvg==
+  dependencies:
+    "@formatjs/ecma402-abstract" "1.9.4"
+    "@formatjs/fast-memoize" "1.1.1"
+    "@formatjs/icu-messageformat-parser" "2.0.7"
+    "@formatjs/intl-displaynames" "5.1.6"
+    "@formatjs/intl-listformat" "6.2.6"
+    intl-messageformat "9.8.0"
+    tslib "^2.1.0"
+
 "@fwl/logging@0.1.2":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@fwl/logging/-/logging-0.1.2.tgz#dc462f4e98c3db5dcd767ebafb06824fde1694ce"
@@ -9133,6 +9146,15 @@ intl-messageformat@9.7.1:
   version "9.7.1"
   resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-9.7.1.tgz#98e3f6d063413196ff7b63f63bcc3975ad67e83c"
   integrity sha512-DNiuD+/59G9qaYu3U0KgwCV0zpN9XRoUvc8izSNCNAA5MknhiIUONFE0WtScP+E/7JfoENu+CX57P/SURRbI0A==
+  dependencies:
+    "@formatjs/fast-memoize" "1.1.1"
+    "@formatjs/icu-messageformat-parser" "2.0.7"
+    tslib "^2.1.0"
+
+intl-messageformat@9.8.0:
+  version "9.8.0"
+  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-9.8.0.tgz#a032cac18039929d8ea3f9dffe38f7207f7545be"
+  integrity sha512-di+/42/tyU+N0vwbnIRrgdpAIqlg4m3zYzjS0No7i9KljjclhF1HagcmLKYPo+6YisThzhA2h1mRNQdwtEAqCA==
   dependencies:
     "@formatjs/fast-memoize" "1.1.1"
     "@formatjs/icu-messageformat-parser" "2.0.7"
