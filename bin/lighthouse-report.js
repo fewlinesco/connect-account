@@ -31,10 +31,16 @@ async function login(page) {
     console.log("Page opened.");
     await page.goto(process.env.CONNECT_TEST_ACCOUNT_URL);
     console.log("App loaded.");
+    await page.screenshot({
+      path: getTargetedPath("link-not-clicked"),
+    });
 
     await page.click("a");
     console.log("Login button clicked.");
     await page.waitForTimeout(5000);
+    await page.screenshot({
+      path: getTargetedPath("link-clicked"),
+    });
 
     await page.waitForSelector("input[type=email]", {
       visible: true,
@@ -49,6 +55,9 @@ async function login(page) {
     );
     await page.click("[type=submit]");
     console.log("Email submitted.");
+    await page.screenshot({
+      path: getTargetedPath("email-submitted"),
+    });
     await page.waitForTimeout(5000);
 
     await page.waitForSelector("input[type=password]", {
@@ -66,6 +75,9 @@ async function login(page) {
     if ((await page.$("[type=submit]")) !== null) {
       await page.click("[type=submit]");
     }
+    await page.screenshot({
+      path: getTargetedPath("pwd-submitted"),
+    });
 
     return page.waitForTimeout(5000);
   } catch (error) {
