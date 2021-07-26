@@ -163,9 +163,7 @@ describe("LoginsOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identities };
-            },
+            fetcher: () => identities,
           }}
         >
           <LoginsOverviewPage />
@@ -317,9 +315,7 @@ describe("LoginsOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => {
-              return { identities };
-            },
+            fetcher: () => identities,
           }}
         >
           <LoginsOverviewPage />
