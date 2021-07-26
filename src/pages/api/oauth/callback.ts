@@ -34,7 +34,7 @@ const handler: Handler = (request, response): Promise<void> => {
       .getTokensFromAuthorizationCode(`${request.query.code}`)
       .catch((error) => {
         if (error instanceof UnreachableError) {
-          span.setAttribute("authorization_code", "failed");
+          span.setDisclosedAttribute("authorization_code", "failed");
 
           throw webErrorFactory({
             ...webErrors.unreachable,
@@ -44,6 +44,7 @@ const handler: Handler = (request, response): Promise<void> => {
 
         throw error;
       });
+
     span.setAttribute("authorization_code", request.query.code);
     span.setDisclosedAttribute("query.error", request.query.error);
 
@@ -71,6 +72,7 @@ const handler: Handler = (request, response): Promise<void> => {
 
       throw error;
     });
+
     span.setDisclosedAttribute("is access_token valid", true);
 
     const oAuth2UserInfo = {
