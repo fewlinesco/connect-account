@@ -9,7 +9,7 @@
     "CONNECT_ACCOUNT_TEST_APP_ID": "c44fd1a4-4478-43c6-aa91-59bf22d12840",
     "CONNECT_APPLICATION_CLIENT_ID": "n2YjIYUXqn5YWJf-qvmUNg==",
     "CONNECT_APPLICATION_SCOPES": "email phone openid profile address",
-    "CONNECT_AUDIENCE": "connect-account",
+    "CONNECT_AUDIENCE": "connect-account-test",
     "CONNECT_JWT_ALGORITHM": "RS256",
     "CONNECT_MANAGEMENT_URL": "https://management.connect.prod.fewlines.tech/graphql",
     "CONNECT_OPEN_ID_CONFIGURATION_URL": "https://fewlines.connect.test.fewlines.tech/.well-known/openid-configuration",
