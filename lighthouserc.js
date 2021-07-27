@@ -13,6 +13,7 @@ module.exports = {
         ],
       },
       numberOfRuns: 1,
+      disableStorageReset: false,
       settings: {
         maxWaitForLoad: 60000,
       },
