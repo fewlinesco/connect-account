@@ -1,4 +1,3 @@
-import fetch from "cross-fetch";
 import {
   openBrowser,
   closeBrowser,
@@ -9,46 +8,11 @@ import {
   focus,
   textBox,
   clear,
-  waitFor,
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
+import { checkVerificationCode } from "./utils/check-verification-code";
 import * as locales from "@content/locales";
-
-async function checkVerificationCode(): Promise<void> {
-  const shouldDoCodeVerification = await text("send validation code").exists();
-  if (shouldDoCodeVerification) {
-    await waitFor(2000);
-    await click("Send validation code");
-    await waitFor(1000);
-    const response = await fetch(
-      "https://mocks.prod.connect.connect.aws.eu-west-2.k8s.fewlines.net/mail/email",
-    );
-    const emails = (await response.json()) as unknown as {
-      headers: { to: string };
-      id: string;
-      text: string;
-      time: number;
-    }[];
-    const email = emails
-      .sort((a, b) => (a.time < b.time ? 1 : -1))
-      .find(
-        (email) => email.headers.to === process.env.CONNECT_TEST_ACCOUNT_EMAIL,
-      );
-    if (email) {
-      const match = email.text.match(/code (\d{6}) /);
-      if (match) {
-        const code = match[1];
-        fetch(
-          `https://mocks.prod.connect.connect.aws.eu-west-2.k8s.fewlines.net/mail/email/${email.id}`,
-          { method: "DELETE" },
-        );
-        await write(code);
-        await click("confirm");
-      }
-    }
-  }
-}
 
 describe("Account Web Application update password", () => {
   jest.setTimeout(90000);
