@@ -28,7 +28,7 @@ async function login(page) {
   }
 
   try {
-    console.log("Page opened.");
+    console.log("Starting auth on Connect.");
     await page.goto(process.env.CONNECT_TEST_ACCOUNT_URL);
     console.log("App loaded.");
 
