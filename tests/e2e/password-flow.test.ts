@@ -11,10 +11,11 @@ import {
 } from "taiko";
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
+import { checkVerificationCode } from "./utils/check-verification-code";
 import * as locales from "@content/locales";
 
 describe("Account Web Application update password", () => {
-  jest.setTimeout(60000);
+  jest.setTimeout(90000);
 
   beforeAll(async () => {
     await openBrowser({
@@ -57,6 +58,7 @@ describe("Account Web Application update password", () => {
       ).toBeTruthy();
       await click(localizedStrings.security.updatePassword);
 
+      await checkVerificationCode();
       expect(
         await text(localizedStrings.passwordForm.newPasswordLabel).exists(),
       ).toBeTruthy();

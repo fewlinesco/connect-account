@@ -50,9 +50,6 @@ jobs:
       - run:
           name: Creating Connect test user
           command: yarn e2e:create-test-user | grep "id:" | sed "s/.*://g" | xargs -I '{}' echo "export CONNECT_TEST_ACCOUNT_SUB={}" >> $BASH_ENV
-      - run: 
-          name: Preparing test user
-          command: yarn e2e:setting-sudo-ttl
       - when: 
           condition: 
             matches: { pattern: ".*?\\bstaging\\b.*?", value: << pipeline.parameters.target_url >> }
