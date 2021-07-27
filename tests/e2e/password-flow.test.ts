@@ -19,14 +19,8 @@ async function checkVerificationCode(): Promise<void> {
   const shouldDoCodeVerification = await text("send validation code").exists();
   if (shouldDoCodeVerification) {
     await waitFor(2000);
-    await screenshot({
-      path: "./tests/e2e/screenshots/1.png",
-    });
     await click("Send validation code");
     await waitFor(1000);
-    await screenshot({
-      path: "./tests/e2e/screenshots/2.png",
-    });
     const response = await fetch(
       "https://mocks.prod.connect.connect.aws.eu-west-2.k8s.fewlines.net/mail/email",
     );
@@ -50,13 +44,7 @@ async function checkVerificationCode(): Promise<void> {
           { method: "DELETE" },
         );
         await write(code);
-        await screenshot({
-          path: "./tests/e2e/screenshots/3.png",
-        });
         await click("confirm");
-        await screenshot({
-          path: "./tests/e2e/screenshots/4.png",
-        });
       }
     }
   }
