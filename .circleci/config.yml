@@ -121,8 +121,6 @@ jobs:
           command: npx @lhci/cli autorun
       - store_artifacts:
           path: ./lhci_reports
-      - store_artifacts:
-          path: ./screenshots
       - run:
           name: Comment manifest to relative GitHub PR 
           command: |
@@ -135,14 +133,16 @@ jobs:
               pr_comment_url=$(echo $pr_response | jq -r ".[]._links.comments.href")
             fi
 
-            cat ./lhci_reports/manifest.json | jq '{body: .}' > manifest.txt
-            cat ./manifest.txt
-            curl --location --request POST "$pr_comment_url" \
-              -u $FRIEDA_GH_USER:$FRIEDA_GH_PAT \
-              -H "Accept: application/vnd.github.v3+json" \
-              --header 'Content-Type: application/json' \
-              --data-raw @./manifest.txt
+            yarn e2e:cast-json-manifest-to-html
 
+            # cat ./lhci_reports/manifest.json | jq '{body: .}' > manifest.json
+            # cat ./manifest.json
+
+            # curl --location --request POST "$pr_comment_url" \
+              # -u $FRIEDA_GH_USER:$FRIEDA_GH_PAT \
+              # --header 'Content-Type: application/json' \
+              # -H "Accept: application/vnd.github.v3+json" \
+              # --data @./manifest.json
 workflows:
   tests-on-push:
     when:
