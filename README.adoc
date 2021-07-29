@@ -263,17 +263,35 @@ if you want to automatically fix linting issues.
 | `LIGHTSTEP_ACCESS_TOKEN`
 | Your Lightstep access token.
 
+| `FWL_TRACING_COLLECTORS`
+| Config of the collectors used for tracing purposes.
+
 | `SENTRY_AUTH_TOKEN`
 | Auth token required to contact Sentry.
 
 | `NEXT_PUBLIC_SENTRY_ENVIRONMENT`
 | Should be set to `development`. Used to prevent sentry report when working with a built version, locally.
 
+| `MEMCACHED_CLIENT_PASSWORD`
+| Password used to initiate the Memcached Client for rate limiting.
+
+| `MEMCACHED_CLIENT_USERNAME`
+| Username used to initiate the Memcached Client for rate limiting.
+
+| `MEMCACHED_CLIENT_SERVERS`
+| Address of the Memcached Client servers. 
+
 | `CONNECT_TEST_ACCOUNT_EMAIL`
 | Email of the Connect account that will be used for e2e tests.
 
 | `CONNECT_TEST_ACCOUNT_PASSWORD`
 | Password of the Connect account that will be used for e2e tests.
+
+| `CONNECT_TEST_ACCOUNT_SUB`
+| Sub of the Connect account that will be used for e2e tests.
+
+| `CONNECT_TEST_ACCOUNT_URL`
+| URL of the Connect Account application that will be used for e2e tests.
 
 | `CONNECT_PROFILE_URL`
 | URL of Connect.Profile server.
