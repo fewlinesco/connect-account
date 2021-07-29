@@ -124,7 +124,7 @@ jobs:
       - store_artifacts:
           path: ./screenshots
       - run:
-          name: Comment manifest to GitHub
+          name: Comment manifest to relative GitHub PR 
           command: |
             pr_response=$(curl --location --request GET "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
             -u $FRIEDA_GH_USER:$FRIEDA_GH_PAT)
@@ -135,12 +135,13 @@ jobs:
               pr_comment_url=$(echo $pr_response | jq -r ".[]._links.comments.href")
             fi
 
-            cat ./lhci_reports/manifest.json | jq "{body: .}" > manifest.json
-            cat ./manifest.json
+            cat ./lhci_reports/manifest.json | jq '{body: .}' > manifest.txt
+            cat ./manifest.txt
             curl --location --request POST "$pr_comment_url" \
               -u $FRIEDA_GH_USER:$FRIEDA_GH_PAT \
+              -H "Accept: application/vnd.github.v3+json" \
               --header 'Content-Type: application/json' \
-              --data "@./manifest.json"
+              --data-raw @./manifest.txt
 
 workflows:
   tests-on-push:
