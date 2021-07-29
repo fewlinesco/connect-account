@@ -330,7 +330,7 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 === bin/
 
 - *dynamodb/*: Scripts to interact with your local DynamoDB instead of the AWS CLI, which requires sensitives admin credentials.
-- *e2e/*: Scripts related to e2e tests, used in Github Actions.
+- *e2e/*: Scripts related to e2e tests, used in our CI/CD pipeline or in local environment.
 
 === doc/
 
@@ -348,8 +348,11 @@ Favicons for various OS.
 - *configs/*: 
   * *config-variables.ts*: Entry point used to verify env vars sourcing, and prevent the app to run if forgotten.
   * *db-client.ts*: Singleton of the DynamoDB client.
+  * *intl.ts*: 
   * *logger.ts*: Singleton of the logger client provided by `@fwl/web`.
   * *oauth2-client.ts*: Singleton of the OAuth2 Client provided by `@fewlines/connect-client`.
+  * *profile-client.ts*: Singleton of the Profile Client provided by Connect Profile.
+  * *rate-limiting-config.ts*: Config used for the rate limiting middleware provided by `@fwl/web`.
   * *tracer.ts*: Singleton of the tracer client provided by `@fwl/web`.
 - *design-system/*:
   * *globals/*: Global style components.
@@ -360,7 +363,7 @@ Favicons for various OS.
 - *middlewares/*: Reusable wrappers to add various features to server side actions.
 - *pages/*: NextJS router.
 - *queries/*: Read (i.e. `GET`) database actions.
-- *utils/*: Small snippets/functions used multiple times throughout the application
+- *utils/*: Small snippets/functions used multiple times throughout the application.
 - *workflows/*: workflows used in multiples places.
 
 === tests/
@@ -378,8 +381,10 @@ Favicons for various OS.
 - *app.json*: Building instructions for Heroku.
 - *assets.d.ts*: Type declaration allowing the import of assets in TypeScript files.
 - *Brewfile*: Tools needed that will be installed via Brew for MacOS users.
+- *connect-profile-openapi.yml*: OpenAPI file of Connect Profile.
 - *docker-compose.yml*: Instructions to launch DynamoDB and the observability tools.
 - *Dockerfile*: Instructions for Docker image build process.
+- *lighthouserc.js*: Instructions for Lighthouse reviews.
 - *next-env.d.ts*: Adds NextJS types globally.
 - *next.config.js*: Extended webpack compiler config used by NextJS.
 - *nginx.conf*: Local proxy configuration.
