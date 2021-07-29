@@ -304,7 +304,7 @@ To understand the flow of `connect-account`, you should read the `connect` https
 
 == @fewlines/connect-client
 
-To understand the abstraction added by the `@fewlines/connect-client`, please read the https://github.com/fewlinesco/connect-js/tree/main/client[documentation]
+To understand the abstraction added by the `@fewlines/connect-client`, please read the https://github.com/fewlinesco/connect-js/tree/main/client[documentation].
 
 == Source Code Organization
 
@@ -705,17 +705,17 @@ We are using https://github.com/testing-library/dom-testing-library[Testing Libr
 
 We are using https://github.com/getgauge/taiko[Taiko] to test our workflows.
 
-=== Github Actions
+=== CI/CD pipeline
 
-To automate our test processes, we use https://docs.github.com/en/actions[Github Actions] to execute workflows, which allow us to run our test suites on new commit pushed to each pull request.
+To automate our test processes, we use https://circleci.com[CircleCI], which allow us to run our test suites on new commit pushed to each pull request.
 
-Regarding our main flow for end to end tests (i.e `e2e-test.yml`), here is the gist of it. 
-Since we had to trigger different flows based on a third party event (i.e. `review app deployment`), we couldn't leverage Github checks management automation on PR.
-Once we receive the status of the deployment from our third party actor, we run our end to end test suite (`e2e-tests` job inside `e2e-test.yml`) if the review app deployment is a success, or we skip it in the case of a failure during the process.
+Several flows (or `jobs`) are executed in this context and orchestrated in workflows inside the `config.yml` file: 
 
-All of these cases are handled at job-level, mostly thanks to https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#job-status-check-functions[job status check functions], which permit to control more precisely jobs execution via conditional statements. 
+- *lint-and-tests*: runs code linting and integration/unit tests.
+- *e2e-tests*: runs e2e tests suite on a deployed Connect Account version.
+- *lighthouse*: runs Lighthouse reports on a deployed Connect Account version.
+- *promote-to-production*: use to automate production deployment from staging when all tests suite is successful.
 
-Inside most of our jobs, we used TypeScript written scripts to perform our actions.
 
 == Monitoring
 
