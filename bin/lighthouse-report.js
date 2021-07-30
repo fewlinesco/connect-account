@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const fs = require("fs");
-
 let COUNTER = 0;
 const SCREENSHOTS_DIR_PATH = "/home/circleci/project/screenshots";
 
@@ -28,7 +25,7 @@ async function login(page) {
   }
 
   try {
-    console.log("Page opened.");
+    console.log("Starting auth on Connect.");
     await page.goto(process.env.CONNECT_TEST_ACCOUNT_URL);
     console.log("App loaded.");
 
@@ -83,10 +80,6 @@ async function setup(browser, context) {
   await page.setCacheEnabled(true);
 
   try {
-    if (!fs.existsSync(SCREENSHOTS_DIR_PATH)) {
-      fs.mkdirSync(SCREENSHOTS_DIR_PATH);
-    }
-
     if (COUNTER !== 1) {
       await page.goto(context.url);
     } else {
