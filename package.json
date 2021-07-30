@@ -29,6 +29,7 @@
     "e2e:create-test-user": "ts-node bin/e2e/create-test-user.ts",
     "e2e:remove-test-user": "ts-node bin/e2e/remove-test-user.ts",
     "e2e:delete-profile-user": "ts-node bin/e2e/delete-profile-user.ts",
+    "e2e:cast-json-manifest-to-html": "node bin/lighthouse/lh-manifest-to-html.mjs",
     "generate-connect-profile-client": "docker run --rm -v ${PWD}/:/local openapitools/openapi-generator-cli generate --input-spec /local/connect-profile-openapi.yml --generator-name typescript-axios --additional-properties supportsES6=true --output /local/connect-profile-client",
     "heroku:promote-staging-to-prod": "ts-node bin/run-promote.ts"
   },
