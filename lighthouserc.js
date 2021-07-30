@@ -13,13 +13,21 @@ module.exports = {
         ],
       },
       numberOfRuns: 1,
+      disableStorageReset: false,
       settings: {
         maxWaitForLoad: 60000,
       },
       url: [
         process.env.CONNECT_TEST_ACCOUNT_URL,
-        `${process.env.CONNECT_TEST_ACCOUNT_URL}account/logins`,
+        `${process.env.CONNECT_TEST_ACCOUNT_URL}account/`,
         `${process.env.CONNECT_TEST_ACCOUNT_URL}account/profile`,
+        `${process.env.CONNECT_TEST_ACCOUNT_URL}account/profile/user-profile/new`,
+        `${process.env.CONNECT_TEST_ACCOUNT_URL}account/logins`,
+        `${process.env.CONNECT_TEST_ACCOUNT_URL}account/logins/email/new`,
+        `${process.env.CONNECT_TEST_ACCOUNT_URL}account/logins/phone/new`,
+        `${process.env.CONNECT_TEST_ACCOUNT_URL}account/security`,
+        `${process.env.CONNECT_TEST_ACCOUNT_URL}account/security/sudo`,
+        `${process.env.CONNECT_TEST_ACCOUNT_URL}account/locale`,
       ],
     },
     upload: {
