@@ -2,13 +2,17 @@
 const { withSentryConfig } = require("@sentry/nextjs");
 
 const moduleExports = {
+  trailingSlash: true,
+  i18n: {
+    locales: ["en", "fr"],
+    defaultLocale: "en",
+  },
   future: {
     webpack5: true,
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback.fs = false;
-
       config.resolve.alias["@sentry/node"] = "@sentry/browser";
     }
 
@@ -29,11 +33,8 @@ const moduleExports = {
 
     return config;
   },
-  i18n: {
-    locales: ["en", "fr"],
-    defaultLocale: "en",
-  },
 };
+
 const SentryWebpackPluginOptions = {
   silent: true, // Suppresses all logs
   // For all available options, see:
