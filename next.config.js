@@ -7,9 +7,6 @@ const moduleExports = {
     locales: ["en", "fr"],
     defaultLocale: "en",
   },
-  future: {
-    webpack5: true,
-  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback.fs = false;
