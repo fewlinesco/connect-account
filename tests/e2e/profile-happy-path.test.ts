@@ -29,7 +29,7 @@ describe("Profile happy path", () => {
     process.env.CONNECT_TEST_ACCOUNT_URL || configVariables.connectAccountURL
   ).replace(/\/?$/, "");
 
-  const profileUrl = `${baseURL}/account/profile`;
+  const profileUrl = `${baseURL}/account/profile/`;
 
   const localizedStrings = {
     navigation: locales.en.navigation,
@@ -169,7 +169,7 @@ describe("Profile happy path", () => {
 
       await click(localizedStrings.newAddress.add);
       await waitFor(2000);
-      expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+      expect(await currentURL()).toEqual(`${baseURL}/account/profile/`);
 
       if (isStagingEnv) {
         expect(
@@ -224,7 +224,7 @@ describe("Profile happy path", () => {
 
         await click(localizedStrings.newAddress.add);
         await waitFor(2000);
-        expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+        expect(await currentURL()).toEqual(`${baseURL}/account/profile/`);
       }
 
       // Update address flow
@@ -272,7 +272,7 @@ describe("Profile happy path", () => {
       ).toBeTruthy();
       await click(localizedStrings.addressOverview.confirm);
 
-      expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+      expect(await currentURL()).toEqual(`${baseURL}/account/profile/`);
 
       // Delete address flow
       await click(
