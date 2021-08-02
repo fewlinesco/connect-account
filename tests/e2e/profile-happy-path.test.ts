@@ -118,7 +118,7 @@ describe("Profile happy path", () => {
       expect(await textBox({ value: "Supertest" }).exists()).toBeTruthy();
 
       await click(localizedStrings.editProfile.update);
-      expect(await currentURL()).toEqual(`${baseURL}/account/profile`);
+      expect(await currentURL()).toEqual(`${baseURL}/account/profile/`);
 
       await click(text(localizedStrings.profileOverview.addAddress));
 
