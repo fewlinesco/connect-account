@@ -134,6 +134,7 @@ const AddIdentityForm: React.FC<{
         <InputCheckbox
           name="primary"
           onChange={() => {
+            console.log("Hello");
             setIdentity({
               ...identity,
               primary: !identity.primary,
