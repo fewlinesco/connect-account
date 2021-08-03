@@ -10,11 +10,13 @@ import { SWRConfig } from "swr";
 
 import * as locales from "@content/locales";
 import { AlertMessages } from "@src/components/alert-message/alert-messages";
+import { CookieBanner } from "@src/components/cookie-banner/cookie-banner";
 import { GlobalStyle } from "@src/design-system/globals/global-style";
 import { theme } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
+  console.log(pageProps);
   return (
     <AccountApp>
       <Component {...pageProps} />
@@ -81,6 +83,7 @@ const AccountApp: React.FC = ({ children }) => {
           >
             {children}
           </SWRConfig>
+          <CookieBanner />
         </ThemeProvider>
       </IntlProvider>
     </SSRProvider>

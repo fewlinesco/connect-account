@@ -4,6 +4,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import styled from "styled-components";
 
+import { CookieIcon } from "../icons/cookie-icon/cookie-icon";
 import { CrossIcon } from "../icons/cross-icon/cross-icon";
 import { Triangle } from "../icons/triangle/triangle";
 import { deviceBreakpoints } from "@src/design-system/theme";
@@ -147,10 +148,38 @@ const CloseConfirmationBoxButton: React.FC<{ onPress: () => void }> = (
   );
 };
 
+const CookieButton: React.FC<{ onPress: () => void }> = (props) => {
+  const cookieButtonRef = React.useRef(null);
+
+  const { buttonProps } = useButton(
+    { ...props, elementType: "div" },
+    cookieButtonRef,
+  );
+
+  return (
+    <CookieButtonStyle {...buttonProps} ref={cookieButtonRef}>
+      <CookieIcon />
+    </CookieButtonStyle>
+  );
+};
+
+const CookieButtonStyle = styled.div`
+  width: 4rem;
+  height: 4rem;
+  border-radius: ${({ theme }) => theme.radii[3]};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: ${({ theme }) => theme.shadows.box};
+  color: ${({ theme }) => theme.colors.primary};
+  cursor: pointer;
+`;
+
 export {
   Button,
   StyledButton,
   ButtonVariant,
   ShowMoreButton,
   CloseConfirmationBoxButton,
+  CookieButton,
 };
