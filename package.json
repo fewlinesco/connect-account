@@ -103,7 +103,7 @@
     "jest-fetch-mock": "3.0.3",
     "jest-styled-components": "7.0.5",
     "prettier": "2.3.2",
-    "taiko": "1.2.5",
+    "taiko": "1.2.6",
     "ts-jest": "27.0.4",
     "ts-node": "10.1.0",
     "tsconfig-paths-webpack-plugin": "3.5.1",
