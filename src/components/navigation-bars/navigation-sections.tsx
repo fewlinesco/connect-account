@@ -11,19 +11,19 @@ import { SecurityIcon } from "@src/components/icons/security-icon/security-icon"
 function getNavigationSections(): [string, { href: string; icon: Element }][] {
   const NAVIGATION_SECTIONS = {
     home: {
-      href: "/account",
+      href: "/account/",
       icon: <HomeIcon />,
     },
     personalInformation: {
-      href: "/account/profile",
+      href: "/account/profile/",
       icon: <UserIcon />,
     },
     logins: {
-      href: "/account/logins",
+      href: "/account/logins/",
       icon: <KeyIcon />,
     },
     security: {
-      href: "/account/security",
+      href: "/account/security/",
       icon: <LockIcon />,
     },
   };

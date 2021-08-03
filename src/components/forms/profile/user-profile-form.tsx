@@ -35,7 +35,7 @@ async function updateOrCreateProfile(
       response.status === HttpStatus.OK
     ) {
       mutate("/api/profile/user-profile", parsedResponse);
-      router && router.push("/account/profile");
+      router && router.push("/account/profile/");
       return;
     } else {
       throw new Error("Something went wrong");
@@ -206,7 +206,7 @@ const UserProfileForm: React.FC<{
             : formatMessage({ id: "update" })}
         </Button>
       </Form>
-      <NeutralLink href={isCreation ? "/account" : "/account/profile"}>
+      <NeutralLink href={isCreation ? "/account" : "/account/profile/"}>
         <FakeButton variant={ButtonVariant.SECONDARY}>
           {formatMessage({ id: "cancel" })}
         </FakeButton>

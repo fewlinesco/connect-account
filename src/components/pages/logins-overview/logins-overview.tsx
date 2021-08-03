@@ -58,7 +58,7 @@ const LoginsOverview: React.FC = () => {
           />
         </Flex>
       ) : null}
-      <NeutralLink href={`/account/logins/email/new`}>
+      <NeutralLink href={`/account/logins/email/new/`}>
         <FakeButton variant={ButtonVariant.SECONDARY}>
           {`+ ${formatMessage({ id: "emailAddNewIdentityMessage" })}`}
         </FakeButton>

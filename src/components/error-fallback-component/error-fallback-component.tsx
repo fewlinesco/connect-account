@@ -17,7 +17,7 @@ const ErrorFallbackComponent: React.FC<{
           <h1>{formatErrorMessage(locale || "en", "404Title")}</h1>
           <p>
             {formatErrorMessage(locale || "en", "404Content")}{" "}
-            <HomepageLink href="/account">
+            <HomepageLink href="/account/">
               {formatErrorMessage(locale || "en", "homepage")}
             </HomepageLink>
             .

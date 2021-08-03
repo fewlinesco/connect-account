@@ -33,7 +33,7 @@ const EmailSection: React.FC<{
         disableClick={false}
         href={`/account/logins/${primaryIdentity.type.toLowerCase()}/${
           primaryIdentity.id
-        }`}
+        }/`}
       >
         <IdentityValue
           primary={primaryIdentity.primary}
@@ -51,7 +51,7 @@ const EmailSection: React.FC<{
                 <Separator />
                 <BoxedLink
                   disableClick={false}
-                  href={`/account/logins/${type.toLowerCase()}/${id}`}
+                  href={`/account/logins/${type.toLowerCase()}/${id}/`}
                 >
                   <IdentityValue primary={primary} status={status}>
                     {value}
@@ -88,7 +88,7 @@ const PhoneSection: React.FC<{
         disableClick={false}
         href={`/account/logins/${primaryIdentity.type.toLowerCase()}/${
           primaryIdentity.id
-        }`}
+        }/`}
       >
         <IdentityValue
           primary={primaryIdentity.primary}
@@ -106,7 +106,7 @@ const PhoneSection: React.FC<{
                 <Separator />
                 <BoxedLink
                   disableClick={false}
-                  href={`/account/logins/${type.toLowerCase()}/${id}`}
+                  href={`/account/logins/${type.toLowerCase()}/${id}/`}
                 >
                   <IdentityValue primary={primary} status={status}>
                     {value}

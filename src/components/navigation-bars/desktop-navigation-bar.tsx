@@ -26,7 +26,7 @@ const DesktopNavigationBar: React.FC = () => {
         );
       })}
       <Separator />
-      <SwitchLanguageItem href="/account/locale">
+      <SwitchLanguageItem href="/account/locale/">
         <SwitchLanguageLabel>
           <BlackWorldIcon />
           <p>{formatNavigation(locale || "en", "language")}</p>
