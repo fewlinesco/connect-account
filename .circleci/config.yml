@@ -122,9 +122,6 @@ jobs:
       - store_artifacts:
           path: ./lhci_reports
       - run:
-          name: Generate GitHub comment 
-          command: echo "export gh_manifest_comment=$(yarn e2e:cast-json-manifest-to-html)" >> $BASH_ENV
-      - run:
           name: Comment manifest to relative GitHub PR 
           command: |
             yarn e2e:cast-json-manifest-to-html
@@ -140,10 +137,8 @@ jobs:
 
             curl --location --request POST "$pr_comment_url" \
               -u $FRIEDA_GH_USER:$FRIEDA_GH_PAT \
-              # --header 'Content-Type: application/json' \
-              # --header 'Content-Type: text/html' \
               --header "Accept: application/vnd.github.v3+json" \
-              --data @./HTMLManifest.txt
+              --data @./html-manifest.txt
 
 workflows:
   tests-on-push:
