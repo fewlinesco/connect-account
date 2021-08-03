@@ -50,12 +50,9 @@ const en = {
   },
   "/account": {
     breadcrumb: "Welcome to your account",
-    createProfileTitle: "CREATE YOUR PROFILE",
     updateProfileTitle: "PERSONAL INFORMATION",
     loginsTitle: "LOGINS",
     securityTitle: "SECURITY",
-    createProfile:
-      "Add personal information about you, like your name, or addresses.",
     updateProfile:
       "Update personal information about you, like your name, or addresses.",
     logins:

@@ -1,62 +1,33 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import styled from "styled-components";
-import useSWR from "swr";
 
-import { Profile } from "@src/@types/profile";
 import { RightChevron } from "@src/components/icons/right-chevron/right-chevron";
 import { getSectionListContent } from "@src/components/navigation-bars/navigation-sections";
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SectionBox } from "@src/components/shadow-box/section-box";
-import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 import { deviceBreakpoints } from "@src/design-system/theme";
-import { SWRError } from "@src/errors/errors";
-import { navigationFetcher } from "@src/queries/swr-navigation-fetcher";
 import { getNavSectionHref } from "@src/utils/getNavSectionHref";
 
 const AccountOverview: React.FC = () => {
-  const { data: userProfile, isValidating } = useSWR<Profile, SWRError>(
-    `/api/profile/user-profile`,
-    navigationFetcher,
-  );
-
   const { formatMessage } = useIntl();
 
   return (
     <>
-      {getSectionListContent(userProfile ? false : true).map(
-        ([sectionName, { textID, icon }], index) => {
-          if (index === 0 && isValidating) {
-            return (
-              <SectionBox key={sectionName}>
-                <SectionLink href={getNavSectionHref(sectionName)}>
-                  {icon}
-                  <TextBox>
-                    <SkeletonTextLine fontSize={1.6} width={50} />
-                    <SkeletonTextLine fontSize={1.6} width={100} />
-                  </TextBox>
-                  <RightChevron />
-                </SectionLink>
-              </SectionBox>
-            );
-          }
-
-          return (
-            <SectionBox key={sectionName}>
-              <SectionLink href={getNavSectionHref(sectionName)}>
-                {icon}
-                <TextBox>
-                  <SectionName>
-                    {formatMessage({ id: sectionName })}
-                  </SectionName>
-                  {formatMessage({ id: textID })}
-                </TextBox>
-                <RightChevron />
-              </SectionLink>
-            </SectionBox>
-          );
-        },
-      )}
+      {getSectionListContent().map(([sectionName, { textID, icon }]) => {
+        return (
+          <SectionBox key={sectionName}>
+            <SectionLink href={getNavSectionHref(sectionName)}>
+              {icon}
+              <TextBox>
+                <SectionName>{formatMessage({ id: sectionName })}</SectionName>
+                {formatMessage({ id: textID })}
+              </TextBox>
+              <RightChevron />
+            </SectionLink>
+          </SectionBox>
+        );
+      })}
     </>
   );
 };

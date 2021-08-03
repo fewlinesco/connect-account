@@ -49,7 +49,7 @@ describe("AccountPage", () => {
   });
 
   it("should display each account section", async () => {
-    const sectionContent = getSectionListContent(false);
+    const sectionContent = getSectionListContent();
     expect.assertions(sectionContent.length * 2);
 
     render(<AccountPage />);
