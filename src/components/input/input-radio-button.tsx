@@ -67,7 +67,7 @@ const Label = styled.label`
     position: relative;
     width: 2rem;
     height: 2rem;
-    background-color: white;
+    background-color: ${({ theme }) => theme.colors.background};
     border-radius: ${({ theme }) => theme.radii[3]};
     border: ${({ theme }) => theme.borders.normal} black;
   }

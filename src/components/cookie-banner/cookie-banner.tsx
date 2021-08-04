@@ -2,9 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 import { CookieButton, ButtonVariant, StyledButton } from "../buttons/buttons";
+import { SentryIcon } from "../icons/sentry-logo/sentry-icon";
+import { InputSwitch } from "../input/input-switch";
 
 const CookieBanner: React.FC = () => {
   const [isBannerOpen, setIsBannerOpen] = React.useState<boolean>(true);
+  const [isSentryAuthorized, setIsSentryAuthorized] =
+    React.useState<boolean>(true);
   return (
     <CookieBannerWrapper>
       <CookieButton onPress={() => setIsBannerOpen(!isBannerOpen)} />
@@ -14,9 +18,19 @@ const CookieBanner: React.FC = () => {
           <ModalTextContent>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
             bibendum arcu vel neque sagittis, eu laoreet diam dapibus. Ut id
-            lectus nec ante maximus mollis nec id nulla.{" "}
+            lectus nec ante maximus mollis nec id nulla.
           </ModalTextContent>
           <CategoryTitle>Monitoring</CategoryTitle>
+          <Card>
+            <SentryIcon />
+            <InputSwitch
+              groupName="monitoringPref"
+              labelText="Sentry"
+              isSelected={isSentryAuthorized}
+              onChange={(_e) => setIsSentryAuthorized(!isSentryAuthorized)}
+            />
+          </Card>
+
           <ButtonsWrapper>
             <CookieButtons type="button" variant={ButtonVariant.GHOST}>
               Refuse all
@@ -91,6 +105,15 @@ const CookieButtons = styled(StyledButton)`
     border-radius: 0 0 0 ${theme.radii[0]};
     border-top: 0.1rem solid ${theme.colors.separator}
       `};
+`;
+
+const Card = styled.div`
+  width: 100%;
+  padding: 1.5rem;
+  background-color: ${({ theme }) => theme.colors.background};
+  box-shadow: ${({ theme }) => theme.shadows.box};
+  display: flex;
+  justify-content: space-around;
 `;
 
 export { CookieBanner };
