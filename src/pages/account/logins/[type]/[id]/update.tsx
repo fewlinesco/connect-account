@@ -44,7 +44,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ identityId: string }>(
     context,
     basicMiddlewares(getTracer(), logger),
-    "/account/logins/[type]/[id]/update",
+    "/account/logins/[type]/[id]/update/",
     () => {
       if (!context?.params?.id) {
         return {
