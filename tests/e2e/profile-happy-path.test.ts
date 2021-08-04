@@ -250,8 +250,10 @@ describe("Profile happy path", () => {
         ),
       );
 
-      await click(localizedStrings.editAddress.update);
-      await waitFor(2000);
+      await click(localizedStrings.editAddress.update, {
+        waitForEvents: ["loadEventFired"],
+      });
+
       expect(await currentURL()).toEqual(profileUrl);
 
       // Mark address as primary flow
@@ -286,9 +288,10 @@ describe("Profile happy path", () => {
       expect(
         await text(localizedStrings.addressOverview.infoDelete).exists(),
       ).toBeTruthy();
-      await click(localizedStrings.addressOverview.deleteButton);
+      await click(localizedStrings.addressOverview.deleteButton, {
+        waitForEvents: ["loadEventFired"],
+      });
 
-      await waitFor(2000);
       expect(await currentURL()).toEqual(profileUrl);
 
       if (isStagingEnv) {
@@ -303,8 +306,10 @@ describe("Profile happy path", () => {
         expect(
           await text(localizedStrings.addressOverview.infoDelete).exists(),
         ).toBeTruthy();
-        await click(localizedStrings.addressOverview.deleteButton);
-        await waitFor(2000);
+        await click(localizedStrings.addressOverview.deleteButton, {
+          waitForEvents: ["loadEventFired"],
+        });
+
         expect(await currentURL()).toEqual(profileUrl);
       }
     } catch (error) {
