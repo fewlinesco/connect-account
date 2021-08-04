@@ -39,11 +39,11 @@ describe("Fill incorrect identity input values", () => {
 
   const localizedErrorStrings = locales.en.errors;
   const localizedStrings = {
-    accountOverview: locales.en["/account"],
-    identitiesOverview: locales.en["/account/logins"],
-    identityOverview: locales.en["/account/logins/[type]/[id]"],
-    newIdentity: locales.en["/account/logins/[type]/new"],
-    updateIdentity: locales.en["/account/logins/[type]/[id]/update"],
+    accountOverview: locales.en["/account/"],
+    identitiesOverview: locales.en["/account/logins/"],
+    identityOverview: locales.en["/account/logins/[type]/[id]/"],
+    newIdentity: locales.en["/account/logins/[type]/new/"],
+    updateIdentity: locales.en["/account/logins/[type]/[id]/update/"],
   };
 
   describe("AddIdentity", () => {

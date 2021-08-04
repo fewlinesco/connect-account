@@ -33,12 +33,12 @@ describe("Profile happy path", () => {
 
   const localizedStrings = {
     navigation: locales.en.navigation,
-    profileOverview: locales.en["/account/profile"],
-    newProfile: locales.en["/account/profile/user-profile/new"],
-    editProfile: locales.en["/account/profile/user-profile/edit"],
-    addressOverview: locales.en["/account/profile/addresses/[id]"],
-    newAddress: locales.en["/account/profile/addresses/new"],
-    editAddress: locales.en["/account/profile/addresses/[id]/edit"],
+    profileOverview: locales.en["/account/profile/"],
+    newProfile: locales.en["/account/profile/user-profile/new/"],
+    editProfile: locales.en["/account/profile/user-profile/edit/"],
+    addressOverview: locales.en["/account/profile/addresses/[id]/"],
+    newAddress: locales.en["/account/profile/addresses/new/"],
+    editAddress: locales.en["/account/profile/addresses/[id]/edit/"],
   };
 
   beforeAll(async () => {

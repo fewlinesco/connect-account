@@ -48,7 +48,7 @@ const en = {
     info: "You are about to access your account from",
     callToAction: "Access my account",
   },
-  "/account": {
+  "/account/": {
     breadcrumb: "Welcome to your account",
     updateProfileTitle: "PERSONAL INFORMATION",
     loginsTitle: "LOGINS",
@@ -60,7 +60,7 @@ const en = {
     security:
       "Set or change your password. You can check your connections history here.",
   },
-  "/account/profile": {
+  "/account/profile/": {
     title: "Personal information",
     breadcrumb: "Basic information about you",
     profileSection: "Profile",
@@ -79,20 +79,20 @@ const en = {
     showMore: "Show more",
     hide: "Hide",
   },
-  "/account/profile/user-profile/new": {
+  "/account/profile/user-profile/new/": {
     title: "Personal information",
     breadcrumb: "Profile | new",
     info: "Please fill in these information to create your profile.",
     update: "Update my information",
     ...profileInputStrings,
   },
-  "/account/profile/user-profile/edit": {
+  "/account/profile/user-profile/edit/": {
     title: "Personal information",
     breadcrumb: "Profile | edit",
     update: "Update my information",
     ...profileInputStrings,
   },
-  "/account/profile/addresses/[id]": {
+  "/account/profile/addresses/[id]/": {
     title: "Personal information",
     breadcrumb: "Address",
     primary: "Primary",
@@ -106,19 +106,19 @@ const en = {
     confirm: "Confirm",
     cancel: "Cancel",
   },
-  "/account/profile/addresses/[id]/edit": {
+  "/account/profile/addresses/[id]/edit/": {
     title: "Personal information",
     breadcrumb: "Address | edit",
     update: "Update this address",
     ...addressInputStrings,
   },
-  "/account/profile/addresses/new": {
+  "/account/profile/addresses/new/": {
     title: "Personal information",
     breadcrumb: "Address | new",
     add: "Add this address",
     ...addressInputStrings,
   },
-  "/account/logins": {
+  "/account/logins/": {
     title: "Logins",
     breadcrumb: "Your emails, phones and social logins",
     emailTitle: "Email addresses",
@@ -132,7 +132,7 @@ const en = {
     showMore: "Show more",
     hide: "Hide",
   },
-  "/account/logins/[type]/new": {
+  "/account/logins/[type]/new/": {
     title: "Logins",
     emailBreadcrumb: "Email address",
     phoneBreadcrumb: "Phone number",
@@ -142,7 +142,7 @@ const en = {
     cancel: "Cancel",
     ...identitiesInputStrings,
   },
-  "/account/logins/[type]/[id]": {
+  "/account/logins/[type]/[id]/": {
     title: "Logins",
     emailBreadcrumb: "Email address",
     phoneBreadcrumb: "Phone number",
@@ -167,7 +167,7 @@ const en = {
     primaryModalConfirm: "Confirm",
     primaryModalCancel: "Cancel",
   },
-  "/account/logins/[type]/[id]/update": {
+  "/account/logins/[type]/[id]/update/": {
     title: "Logins",
     emailBreadcrumb: "Email address | edit",
     phoneBreadcrumb: "Phone number | edit",
@@ -176,19 +176,19 @@ const en = {
     cancel: "Cancel",
     ...identitiesInputStrings,
   },
-  "/account/logins/[type]/validation/[eventId]": {
+  "/account/logins/[type]/validation/[eventId]/": {
     title: "Logins",
     emailBreadcrumb: "Email address | validation",
     phoneBreadcrumb: "Phone number | validation",
   },
-  "/account/security": {
+  "/account/security/": {
     title: "Security",
     sectionTitle: "Password",
     breadcrumb: "Password, login history and more",
     setPassword: "Set your password",
     updatePassword: "Update your password",
   },
-  "/account/security/update": {
+  "/account/security/update/": {
     title: "Security",
     setBreadcrumb: "Password | set",
     updateBreadcrumb: "Password | update",
@@ -199,7 +199,7 @@ const en = {
     newPasswordLabel: "New password",
     confirmNewPasswordLabel: "Confirm new password",
   },
-  "/account/security/sudo": {
+  "/account/security/sudo/": {
     title: "Security",
     warning: "You need double factor authentication to access this page",
     info: "Choose a contact means below that we’ll send a validation code to:",
@@ -208,7 +208,7 @@ const en = {
     twoFALabel: "Enter received code here:",
     confirm: "Confirm",
   },
-  "/account/locale": {
+  "/account/locale/": {
     title: "Switch Language",
     setLocale: "Set your preferred locale",
   },

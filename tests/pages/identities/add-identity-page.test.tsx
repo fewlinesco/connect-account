@@ -21,7 +21,7 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("AddIdentityPage", () => {
-  const path = "/account/logins/[type]/new";
+  const path = "/account/logins/[type]/new/";
   const localizedStrings = locales.en[path];
 
   beforeAll(() => {

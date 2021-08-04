@@ -35,9 +35,9 @@ describe("Mark Identity as primary", () => {
 
   const localizedAlertMessagesStrings = locales.en.alertMessages;
   const localizedStrings = {
-    accountOverview: locales.en["/account"],
-    identitiesOverview: locales.en["/account/logins"],
-    identityOverview: locales.en["/account/logins/[type]/[id]"],
+    accountOverview: locales.en["/account/"],
+    identitiesOverview: locales.en["/account/logins/"],
+    identityOverview: locales.en["/account/logins/[type]/[id]/"],
   };
 
   test("It should correctly mark another identity to primary status and going back to logins overview page", async () => {

@@ -22,7 +22,7 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("IdentityOverviewPage", () => {
-  const path = "/account/logins/[type]/[id]";
+  const path = "/account/logins/[type]/[id]/";
   const localizedStrings = locales.en[path];
 
   beforeAll(() => {

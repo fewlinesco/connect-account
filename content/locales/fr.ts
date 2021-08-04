@@ -47,7 +47,7 @@ const fr = {
     info: "Vous êtes sur le point d’accéder à votre compte depuis",
     callToAction: "Accéder à mon compte",
   },
-  "/account": {
+  "/account/": {
     breadcrumb: "Bienvenue sur votre compte",
     updateProfileTitle: "INFORMATIONS PERSONNELLES",
     loginsTitle: "IDENTIFIANTS",
@@ -59,7 +59,7 @@ const fr = {
     security:
       "Définissez ou modifiez votre mot de passe. Vous pouvez consulter l’historique de vos connexions ici.",
   },
-  "/account/profile": {
+  "/account/profile/": {
     title: "Informations personnelles",
     breadcrumb: "Renseignements personnels vous concernant",
     profileSection: "Profil",
@@ -78,20 +78,20 @@ const fr = {
     showMore: "Afficher plus",
     hide: "Cacher",
   },
-  "/account/profile/user-profile/new": {
+  "/account/profile/user-profile/new/": {
     title: "Informations personnelles",
     breadcrumb: "Profil | création",
     info: "Veuillez remplir ces informations pour créer votre profil.",
     add: "Ajouter mes informations",
     ...profileInputStrings,
   },
-  "/account/profile/user-profile/edit": {
+  "/account/profile/user-profile/edit/": {
     title: "Informations personnelles",
     breadcrumb: "Profil | modification",
     update: "Mettre à jour mes informations",
     ...profileInputStrings,
   },
-  "/account/profile/addresses/[id]": {
+  "/account/profile/addresses/[id]/": {
     title: "Informations personnelles",
     breadcrumb: "Adresse",
     primary: "Principale",
@@ -106,19 +106,19 @@ const fr = {
     confirm: "Confirmer",
     cancel: "Annuler",
   },
-  "/account/profile/addresses/[id]/edit": {
+  "/account/profile/addresses/[id]/edit/": {
     title: "Informations personnelles",
     breadcrumb: "Adresse | modification",
     update: "Mettre à jour cette adresse",
     ...addressInputStrings,
   },
-  "/account/profile/addresses/new": {
+  "/account/profile/addresses/new/": {
     title: "Personal information",
     breadcrumb: "Address | création",
     add: "Ajouter cette adresse",
     ...addressInputStrings,
   },
-  "/account/logins": {
+  "/account/logins/": {
     title: "Identifiants",
     breadcrumb: "Vos e-mails, téléphones et identifiants de réseaux sociaux",
     emailTitle: "Adresses e-mail",
@@ -133,7 +133,7 @@ const fr = {
     showMore: "Afficher plus",
     hide: "Cacher",
   },
-  "/account/logins/[type]/new": {
+  "/account/logins/[type]/new/": {
     title: "Identifiants",
     emailBreadcrumb: "Adresses e-mail",
     phoneBreadcrumb: "Numéro de téléphone",
@@ -143,7 +143,7 @@ const fr = {
     cancel: "Annuler",
     ...identitiesInputStrings,
   },
-  "/account/logins/[type]/[id]": {
+  "/account/logins/[type]/[id]/": {
     title: "Identifiants",
     emailBreadcrumb: "Adresses e-mail",
     phoneBreadcrumb: "Numéro de téléphone",
@@ -170,7 +170,7 @@ const fr = {
     primaryModalConfirm: "Confirmer",
     primaryModalCancel: "Annuler",
   },
-  "/account/logins/[type]/[id]/update": {
+  "/account/logins/[type]/[id]/update/": {
     title: "Identifiants",
     emailBreadcrumb: "Adresses e-mail | modification",
     phoneBreadcrumb: "Numéro de téléphone | modification",
@@ -179,19 +179,19 @@ const fr = {
     cancel: "Annuler",
     ...identitiesInputStrings,
   },
-  "/account/logins/[type]/validation/[eventId]": {
+  "/account/logins/[type]/validation/[eventId]/": {
     title: "Identifiants",
     emailBreadcrumb: "Adresses e-mail | validation",
     phoneBreadcrumb: "Numéro de téléphone | validation",
   },
-  "/account/security": {
+  "/account/security/": {
     title: "Sécurité",
     sectionTitle: "Mot de passe",
     breadcrumb: "Mot de passe, historique de connexion et plus",
     setPassword: "Créer votre mot de passe",
     updatePassword: "Mettre à jour votre mot de passe",
   },
-  "/account/security/update": {
+  "/account/security/update/": {
     title: "Sécurité",
     setBreadcrumb: "Mot de passe | création",
     updateBreadcrumb: "Mot de passe | mettre à jour",
@@ -202,7 +202,7 @@ const fr = {
     newPasswordLabel: "Nouveau mot de passe",
     confirmNewPasswordLabel: "Confirmer le nouveau mot de passe",
   },
-  "/account/security/sudo": {
+  "/account/security/sudo/": {
     title: "Sécurité",
     warning:
       "Vous avez besoin d’une authentification à double facteur pour accéder à cette page",
@@ -212,7 +212,7 @@ const fr = {
     twoFALabel: "Saisissez le code reçu ici :",
     confirm: "Confirmer",
   },
-  "/account/locale": {
+  "/account/locale/": {
     title: "Changer de langue",
     setLocale: "Définir votre langue favorite",
   },

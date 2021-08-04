@@ -37,9 +37,9 @@ describe("Account Web Application update password", () => {
 
   const localizedErrorStrings = locales.en.errors;
   const localizedStrings = {
-    accountOverview: locales.en["/account"],
-    security: locales.en["/account/security"],
-    passwordForm: locales.en["/account/security/update"],
+    accountOverview: locales.en["/account/"],
+    security: locales.en["/account/security/"],
+    passwordForm: locales.en["/account/security/update/"],
   };
 
   test("It should show error messages if password inputs are filled incorrectly", async () => {

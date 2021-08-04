@@ -23,7 +23,7 @@ jest.mock("@src/configs/db-client", () => {
 const eventId = "foo";
 
 describe("ValidateIdentityPage", () => {
-  const path = "/account/logins/[type]/validation/[eventId]";
+  const path = "/account/logins/[type]/validation/[eventId]/";
   const localizedStrings = locales.en[path];
 
   describe("Identity type : EMAIL", () => {

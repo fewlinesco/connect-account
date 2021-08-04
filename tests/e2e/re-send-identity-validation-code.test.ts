@@ -18,8 +18,8 @@ describe("Account Web Application re-send Identity validation code", () => {
   jest.setTimeout(60000);
 
   const localizedStrings = {
-    overview: locales.en["/account/logins"],
-    new: locales.en["/account/logins/[type]/new"],
+    overview: locales.en["/account/logins/"],
+    new: locales.en["/account/logins/[type]/new/"],
   };
 
   beforeAll(async () => {

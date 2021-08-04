@@ -4,7 +4,7 @@ import { text, waitFor, click, write } from "taiko";
 import * as locales from "@content/locales";
 
 const localizedStrings = {
-  sudo: locales.en["/account/security/sudo"],
+  sudo: locales.en["/account/security/sudo/"],
 };
 
 async function checkVerificationCode(): Promise<void> {

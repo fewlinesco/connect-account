@@ -25,7 +25,7 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("LoginsOverviewPage", () => {
-  const path = "/account/logins";
+  const path = "/account/logins/";
   const localizedStrings = locales.en[path];
 
   beforeAll(() => {

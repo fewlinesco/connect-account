@@ -34,9 +34,9 @@ describe("Delete Identity", () => {
 
   const localizedAlertMessagesStrings = locales.en.alertMessages;
   const localizedStrings = {
-    accountOverview: locales.en["/account"],
-    identitiesOverview: locales.en["/account/logins"],
-    identityOverview: locales.en["/account/logins/[type]/[id]"],
+    accountOverview: locales.en["/account/"],
+    identitiesOverview: locales.en["/account/logins/"],
+    identityOverview: locales.en["/account/logins/[type]/[id]/"],
   };
 
   test("It should navigate to the show of the Identity, and delete it", async () => {

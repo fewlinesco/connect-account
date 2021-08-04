@@ -20,7 +20,7 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("NewUserProfilePage", () => {
-  const path = "/account/profile/user-profile/new";
+  const path = "/account/profile/user-profile/new/";
   const localizedStrings = locales.en[path];
 
   beforeAll(() => {

@@ -33,12 +33,12 @@ describe("AccountPage", () => {
     for await (const [sectionName, { textID }] of sectionContent) {
       expect(
         await screen.findByText(
-          (locales.en["/account"] as Record<string, string>)[sectionName],
+          (locales.en["/account/"] as Record<string, string>)[sectionName],
         ),
       ).toBeInTheDocument();
       expect(
         await screen.findByText(
-          (locales.en["/account"] as Record<string, string>)[textID],
+          (locales.en["/account/"] as Record<string, string>)[textID],
         ),
       ).toBeInTheDocument();
     }
