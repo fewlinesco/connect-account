@@ -59,6 +59,6 @@ describe("NewUserProfilePage", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: localizedStrings.cancel }),
-    ).toHaveAttribute("href", "/account");
+    ).toHaveAttribute("href", "/account/");
   });
 });

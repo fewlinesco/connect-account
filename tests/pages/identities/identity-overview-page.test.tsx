@@ -183,7 +183,7 @@ describe("IdentityOverviewPage", () => {
       ).not.toBeInTheDocument();
       expect(
         await screen.findByRole("link", { name: localizedStrings.proceed }),
-      ).toHaveAttribute("href", "/account/logins/EMAIL/validation");
+      ).toHaveAttribute("href", "/account/logins/EMAIL/validation/");
       expect(
         await screen.findByRole("button", {
           name: localizedStrings.deleteEmail,
