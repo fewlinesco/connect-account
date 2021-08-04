@@ -58,7 +58,6 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
   max-width: 40rem;
-  z-index: 2;
 
   @media ${deviceBreakpoints.m} {
     width: 80%;
