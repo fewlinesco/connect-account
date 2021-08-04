@@ -13,17 +13,8 @@ import {
   checkBox,
 } from "taiko";
 
-import { authenticateToConnect } from "./utils/authenticate-to-connect";
-import { getCode } from "./utils/check-verification-code";
+import { authenticateToConnect, getCode, step } from "./utils";
 import * as locales from "@content/locales";
-
-const step = (step: string, title = false): void => {
-  process.stdout.write(
-    title
-      ? `🤖\u001b[1m${step.toUpperCase()}\u001b[0m\n`
-      : `🤖\u001b[33m Test step:\u001b[0m\u001b[32m ${step}\u001b[0m\n`,
-  );
-};
 
 describe("Identity flows", () => {
   jest.setTimeout(180000);
@@ -57,10 +48,10 @@ describe("Identity flows", () => {
 
   it("Should be able to create a new identity", async () => {
     try {
-      step("identities CRUD flows", true);
+      expect.assertions(6);
 
+      step("identities CRUD flows", true);
       await authenticateToConnect();
-      step("Login done");
 
       await click(localizedStrings.identitiesOverview.title);
       await waitFor(1000);

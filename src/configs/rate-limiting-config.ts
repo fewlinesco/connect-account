@@ -4,7 +4,7 @@ const memcachedUrl = `${process.env.MEMCACHED_CLIENT_USERNAME}:${process.env.MEM
 const memcachedClient = memjs.Client.create(memcachedUrl);
 const rateLimitingConfig = {
   windowMs: 300000,
-  requestsUntilBlock: 2000,
+  requestsUntilBlock: 200,
   memcachedClient,
 };
 export default rateLimitingConfig;
