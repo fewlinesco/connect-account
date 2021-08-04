@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { CookieButton } from "../buttons/buttons";
+import { CookieButton, ButtonVariant, StyledButton } from "../buttons/buttons";
 
 const CookieBanner: React.FC = () => {
   const [isBannerOpen, setIsBannerOpen] = React.useState<boolean>(true);
@@ -17,6 +17,14 @@ const CookieBanner: React.FC = () => {
             lectus nec ante maximus mollis nec id nulla.{" "}
           </ModalTextContent>
           <CategoryTitle>Monitoring</CategoryTitle>
+          <ButtonsWrapper>
+            <CookieButtons type="button" variant={ButtonVariant.GHOST}>
+              Refuse all
+            </CookieButtons>
+            <CookieButtons type="button" variant={ButtonVariant.PRIMARY}>
+              Accept all
+            </CookieButtons>
+          </ButtonsWrapper>
         </CookieModal>
       ) : (
         <></>
@@ -58,6 +66,31 @@ const ModalTextContent = styled.p`
 
 const CategoryTitle = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.h2};
+`;
+
+const ButtonsWrapper = styled.div`
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+`;
+
+const CookieButtons = styled(StyledButton)`
+  margin-bottom: 0;
+  ${({ theme, variant }) =>
+    variant === ButtonVariant.PRIMARY &&
+    `
+      border-radius: 0 0 ${theme.radii[0]} 0;
+      `};
+
+  ${({ theme, variant }) =>
+    variant === ButtonVariant.GHOST &&
+    `
+    color: ${theme.colors.primary};
+    border-radius: 0 0 0 ${theme.radii[0]};
+    border-top: 0.1rem solid ${theme.colors.separator}
+      `};
 `;
 
 export { CookieBanner };
