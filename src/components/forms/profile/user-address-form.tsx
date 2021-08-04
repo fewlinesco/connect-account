@@ -66,7 +66,7 @@ async function updateOrCreateAddress(
           parsedResponse,
         );
       }
-      router && router.push("/account/profile");
+      router && router.push("/account/profile/");
       return;
     } else if (
       response.status === HttpStatus.UNPROCESSABLE_ENTITY &&

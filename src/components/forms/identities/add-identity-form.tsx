@@ -87,7 +87,7 @@ const AddIdentityForm: React.FC<{
             if ("eventId" in parsedResponse) {
               router &&
                 router.push(
-                  `/account/logins/${type}/validation/${parsedResponse.eventId}`,
+                  `/account/logins/${type}/validation/${parsedResponse.eventId}/`,
                 );
             }
           });

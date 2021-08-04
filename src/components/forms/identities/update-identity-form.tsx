@@ -105,7 +105,7 @@ const UpdateIdentityForm: React.FC<{
                 if ("eventId" in parsedResponse) {
                   router &&
                     router.push(
-                      `/account/logins/${identity.type}/validation/${parsedResponse.eventId}`,
+                      `/account/logins/${identity.type}/validation/${parsedResponse.eventId}/`,
                     );
                 }
               });

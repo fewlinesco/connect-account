@@ -140,7 +140,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                           );
                         }
 
-                        router && router.push("/account/profile");
+                        router && router.push("/account/profile/");
                       })
                       .catch((error) => {
                         throw error;
@@ -197,7 +197,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                       await mutate("/api/profile/addresses", modifiedAddresses);
                     }
                   }
-                  router && router.push("/account/profile");
+                  router && router.push("/account/profile/");
                 })
                 .catch((error) => {
                   throw error;

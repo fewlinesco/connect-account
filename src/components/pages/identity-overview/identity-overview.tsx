@@ -103,7 +103,7 @@ const IdentityOverview: React.FC<{
                         "POST",
                         {},
                       ).then(() => {
-                        router && router.push("/account/logins");
+                        router && router.push("/account/logins/");
                       });
                     }}
                   />,
@@ -146,7 +146,7 @@ const IdentityOverview: React.FC<{
                           id: identity.id,
                         },
                       ).then(() => {
-                        router && router.push("/account/logins");
+                        router && router.push("/account/logins/");
                       });
                     }}
                   />,

@@ -27,7 +27,7 @@ const ProfilePage: React.FC = () => {
       await fetch(url).then(async (response) => {
         if (!response.ok) {
           if (response.status === HttpStatus.NOT_FOUND) {
-            router && router.replace("/account/profile/user-profile/new");
+            router && router.replace("/account/profile/user-profile/new/");
             return;
           }
 
