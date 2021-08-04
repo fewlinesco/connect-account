@@ -10,7 +10,7 @@ const LogoutAnchor: React.FC = () => {
   const { locale } = useRouter();
 
   return (
-    <NeutralLink href="/api/logout">
+    <NeutralLink href="/api/logout/">
       <FakeButton variant={ButtonVariant.LIGHT_GREY}>
         {formatNavigation(locale || "en", "logout")}
       </FakeButton>

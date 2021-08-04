@@ -206,7 +206,7 @@ const UserProfileForm: React.FC<{
             : formatMessage({ id: "update" })}
         </Button>
       </Form>
-      <NeutralLink href={isCreation ? "/account" : "/account/profile"}>
+      <NeutralLink href={isCreation ? "/account/" : "/account/profile/"}>
         <FakeButton variant={ButtonVariant.SECONDARY}>
           {formatMessage({ id: "cancel" })}
         </FakeButton>

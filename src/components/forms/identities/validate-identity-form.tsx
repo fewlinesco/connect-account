@@ -88,7 +88,7 @@ const ValidateIdentityForm: React.FC<{
           variant={ButtonVariant.PRIMARY}
         >{`Confirm ${type.toLowerCase()}`}</Button>
       </Form>
-      <NeutralLink href="/account/logins">
+      <NeutralLink href="/account/logins/">
         <FakeButton variant={ButtonVariant.SECONDARY}>
           Discard all changes
         </FakeButton>

@@ -79,7 +79,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
         )}
       </Box>
       <NeutralLink
-        href={address ? `/account/profile/addresses/${address.id}/edit` : "#"}
+        href={address ? `/account/profile/addresses/${address.id}/edit/` : "#"}
       >
         <FakeButton variant={ButtonVariant.PRIMARY}>
           {formatMessage({ id: "update" })}

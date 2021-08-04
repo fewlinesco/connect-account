@@ -147,7 +147,7 @@ const AddIdentityForm: React.FC<{
             : formatMessage({ id: "addPhone" })}
         </Button>
       </Form>
-      <NeutralLink href="/account/logins">
+      <NeutralLink href="/account/logins/">
         <FakeButton variant={ButtonVariant.SECONDARY}>
           {formatMessage({ id: "cancel" })}
         </FakeButton>

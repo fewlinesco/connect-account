@@ -17,7 +17,7 @@ describe("ErrorFallback component", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: localizedStrings.homepage }),
-    ).toHaveAttribute("href", "/account");
+    ).toHaveAttribute("href", "/account/");
   });
 
   test("should render the right content for others status code error", () => {

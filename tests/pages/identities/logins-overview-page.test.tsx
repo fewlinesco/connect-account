@@ -66,7 +66,7 @@ describe("LoginsOverviewPage", () => {
         "href",
         `/account/logins/${mockIdentities.primaryEmailIdentity.type.toLowerCase()}/${
           mockIdentities.primaryEmailIdentity.id
-        }`,
+        }/`,
       );
       expect(
         screen.queryByRole("link", {
@@ -98,7 +98,7 @@ describe("LoginsOverviewPage", () => {
         "href",
         `/account/logins/${mockIdentities.nonPrimaryEmailIdentity.type.toLowerCase()}/${
           mockIdentities.nonPrimaryEmailIdentity.id
-        }`,
+        }/`,
       );
 
       expect(
@@ -139,7 +139,7 @@ describe("LoginsOverviewPage", () => {
         "href",
         `/account/logins/${mockIdentities.primaryEmailIdentity.type.toLowerCase()}/${
           mockIdentities.primaryEmailIdentity.id
-        }`,
+        }/`,
       );
       expect(
         screen.queryByText(/Show more \([0-9]+\)/),
@@ -220,7 +220,7 @@ describe("LoginsOverviewPage", () => {
         "href",
         `/account/logins/${mockIdentities.primaryPhoneIdentity.type.toLowerCase()}/${
           mockIdentities.primaryPhoneIdentity.id
-        }`,
+        }/`,
       );
       expect(
         screen.queryByRole("link", {
@@ -252,7 +252,7 @@ describe("LoginsOverviewPage", () => {
         "href",
         `/account/logins/${mockIdentities.nonPrimaryPhoneIdentity.type.toLowerCase()}/${
           mockIdentities.nonPrimaryPhoneIdentity.id
-        }`,
+        }/`,
       );
       expect(
         screen.getByRole("link", {
@@ -292,7 +292,7 @@ describe("LoginsOverviewPage", () => {
         "href",
         `/account/logins/${mockIdentities.primaryPhoneIdentity.type.toLowerCase()}/${
           mockIdentities.primaryPhoneIdentity.id
-        }`,
+        }/`,
       );
       expect(
         screen.queryByText(/Show more \([0-9]+\)/),

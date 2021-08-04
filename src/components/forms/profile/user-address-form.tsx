@@ -285,8 +285,8 @@ const UserAddressForm: React.FC<{
       <NeutralLink
         href={
           isCreation
-            ? "/account/profile"
-            : `/account/profile/addresses/${address.id}`
+            ? "/account/profile/"
+            : `/account/profile/addresses/${address.id}/`
         }
       >
         <FakeButton variant={ButtonVariant.SECONDARY}>
