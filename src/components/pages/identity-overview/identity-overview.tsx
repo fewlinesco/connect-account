@@ -63,7 +63,7 @@ const IdentityOverview: React.FC<{
       {identity ? (
         <>
           {identity.status === "unvalidated" && (
-            <NeutralLink href={`/account/logins/${identity.type}/validation`}>
+            <NeutralLink href={`/account/logins/${identity.type}/validation/`}>
               <FakeButton variant={ButtonVariant.PRIMARY}>
                 {formatMessage({ id: "proceed" })}
               </FakeButton>
@@ -71,7 +71,7 @@ const IdentityOverview: React.FC<{
           )}
           {identity.status === "validated" && (
             <NeutralLink
-              href={`/account/logins/${identity.type}/${identity.id}/update`}
+              href={`/account/logins/${identity.type}/${identity.id}/update/`}
             >
               <FakeButton variant={ButtonVariant.PRIMARY}>
                 {getIdentityType(identity.type) === IdentityTypes.EMAIL
@@ -103,7 +103,7 @@ const IdentityOverview: React.FC<{
                         "POST",
                         {},
                       ).then(() => {
-                        router && router.push("/account/logins");
+                        router && router.push("/account/logins/");
                       });
                     }}
                   />,
@@ -146,7 +146,7 @@ const IdentityOverview: React.FC<{
                           id: identity.id,
                         },
                       ).then(() => {
-                        router && router.push("/account/logins");
+                        router && router.push("/account/logins/");
                       });
                     }}
                   />,

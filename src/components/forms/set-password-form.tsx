@@ -71,7 +71,7 @@ const SetPasswordForm: React.FC<{
                 }
 
                 if ("isUpdated" in parsedResponse) {
-                  router && router.push("/account/security");
+                  router && router.push("/account/security/");
                 }
               })
               .catch((error) => {

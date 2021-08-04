@@ -77,7 +77,7 @@ describe("EditAddressPage", () => {
         await screen.findByRole("link", { name: localizedStrings.cancel }),
       ).toHaveAttribute(
         "href",
-        `/account/profile/addresses/${mockAddresses.primaryAddress.id}`,
+        `/account/profile/addresses/${mockAddresses.primaryAddress.id}/`,
       );
     });
   });

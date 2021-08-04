@@ -17,7 +17,7 @@ async function authenticateToConnect(): Promise<void> {
 
     const isAlreadyLoggedIn = await text("already logged in").exists(1000, 50);
     if (isAlreadyLoggedIn) {
-      printStep("🔒 Alredy logged in");
+      printStep("🔒 Already logged in");
       await click("Continue");
     } else {
       printStep("🔒 Logging in");
