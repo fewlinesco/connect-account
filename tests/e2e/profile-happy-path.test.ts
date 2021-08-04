@@ -14,7 +14,7 @@ import {
   waitFor,
 } from "taiko";
 
-import { authenticateToConnect, step } from "./utils";
+import { authenticateToConnect, printStep } from "./utils";
 import * as locales from "@content/locales";
 import { configVariables } from "@src/configs/config-variables";
 
@@ -62,13 +62,13 @@ describe("Profile happy path", () => {
   test("it should do Profile flows' happy path", async () => {
     expect.assertions(isStagingEnv ? 21 : 14);
 
-    step("Profile happy path", true);
+    printStep("Profile happy path", true);
 
     await authenticateToConnect();
 
     try {
       if (isStagingEnv) {
-        step("Profile create");
+        printStep("Profile create");
         await click(localizedStrings.navigation.createYourProfile);
         expect(
           await text(localizedStrings.newProfile.breadcrumb).exists(),
@@ -96,7 +96,7 @@ describe("Profile happy path", () => {
         await click(localizedStrings.navigation.personalInformation);
       }
 
-      step("Profile update");
+      printStep("Profile update");
       await waitFor(
         async () =>
           await text(localizedStrings.profileOverview.updateInfo).exists(),
@@ -121,7 +121,7 @@ describe("Profile happy path", () => {
       await click(localizedStrings.editProfile.update);
       expect(await currentURL()).toEqual(`${baseURL}/account/profile/`);
 
-      step("Address create");
+      printStep("Address create");
 
       await click(text(localizedStrings.profileOverview.addAddress));
 
@@ -230,7 +230,7 @@ describe("Profile happy path", () => {
         expect(await currentURL()).toEqual(`${baseURL}/account/profile/`);
       }
 
-      step("Address update");
+      printStep("Address update");
       await click(
         link("", below(localizedStrings.profileOverview.addressesSection)),
       );
@@ -259,7 +259,7 @@ describe("Profile happy path", () => {
 
       expect(await currentURL()).toEqual(profileUrl);
 
-      step("Mark address as primary");
+      printStep("Mark address as primary");
       await click(localizedStrings.navigation.personalInformation);
 
       expect(
@@ -279,7 +279,7 @@ describe("Profile happy path", () => {
 
       expect(await currentURL()).toEqual(`${baseURL}/account/profile/`);
 
-      step("Address delete");
+      printStep("Address delete");
       await click(
         link("", below(localizedStrings.profileOverview.addressesSection)),
       );

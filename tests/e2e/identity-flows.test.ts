@@ -13,7 +13,11 @@ import {
   checkBox,
 } from "taiko";
 
-import { authenticateToConnect, getCode, step } from "./utils";
+import {
+  authenticateToConnect,
+  getEmailValidationCode,
+  printStep,
+} from "./utils";
 import * as locales from "@content/locales";
 
 describe("Identity flows", () => {
@@ -50,7 +54,7 @@ describe("Identity flows", () => {
     try {
       expect.assertions(6);
 
-      step("identities CRUD flows", true);
+      printStep("identities CRUD flows", true);
       await authenticateToConnect();
 
       await click(localizedStrings.identitiesOverview.title);
@@ -66,7 +70,7 @@ describe("Identity flows", () => {
           : 0;
       })();
 
-      step("Email submit");
+      printStep("Email submit");
       await click(
         localizedStrings.identitiesOverview.emailAddNewIdentityMessage,
       );
@@ -82,7 +86,7 @@ describe("Identity flows", () => {
       await click(checkBox(below(newEmailAddress)));
       await click(localizedStrings.createIdentity.addEmail);
 
-      step("Email confirm");
+      printStep("Email confirm");
       expect(
         await text(localizedAlertMessagesStrings.confirmationCodeEmail).exists(
           50,
@@ -91,7 +95,7 @@ describe("Identity flows", () => {
       ).toBe(true);
 
       await waitFor(1000);
-      const code = await getCode(newEmailAddress);
+      const code = await getEmailValidationCode(newEmailAddress);
       await write(code);
 
       await click("Confirm email", { waitForEvents: ["loadEventFired"] });
@@ -106,7 +110,7 @@ describe("Identity flows", () => {
       expect(newLoginsCount).toBe(initialLoginsCount + 1);
       expect(await text(newEmailAddress).exists()).toBe(true);
 
-      step("Email mark as primary");
+      printStep("Email mark as primary");
 
       await click(text(localizedStrings.identitiesOverview.showMore));
       await click(process.env.CONNECT_TEST_ACCOUNT_EMAIL || "");
@@ -119,7 +123,7 @@ describe("Identity flows", () => {
 
       await waitFor(1000);
 
-      step("Email update");
+      printStep("Email update");
 
       await click(text(localizedStrings.identitiesOverview.showMore));
       await click(newEmailAddress);
@@ -138,14 +142,14 @@ describe("Identity flows", () => {
       await click(localizedStrings.identityOverview.updateEmail);
 
       await waitFor(1000);
-      await write(await getCode(updatedEmailAddress));
+      await write(await getEmailValidationCode(updatedEmailAddress));
       await click("Confirm email", { waitForEvents: ["loadEventFired"] });
 
       await waitFor(2000);
       await click(text(localizedStrings.identitiesOverview.showMore));
       expect(await text(updatedEmailAddress).exists()).toBe(true);
 
-      step("Email delete");
+      printStep("Email delete");
 
       await click(updatedEmailAddress);
 

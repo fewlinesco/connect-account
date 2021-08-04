@@ -1,4 +1,4 @@
-const step = (step: string, title = false): void => {
+const printStep = (step: string, title = false): void => {
   process.stdout.write(
     title
       ? `🤖\u001b[1m ${step.toUpperCase()}\u001b[0m\n`
@@ -6,6 +6,6 @@ const step = (step: string, title = false): void => {
   );
 };
 
-export { step };
+export { printStep };
 export { authenticateToConnect } from "./authenticate-to-connect";
-export { getCode } from "./check-verification-code";
+export { getEmailValidationCode } from "./check-verification-code";

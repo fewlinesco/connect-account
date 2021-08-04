@@ -7,7 +7,7 @@ const localizedStrings = {
   sudo: locales.en["/account/security/sudo"],
 };
 
-async function getCode(emailAddress: string): Promise<string> {
+async function getEmailValidationCode(emailAddress: string): Promise<string> {
   const emailMockUrl =
     "https://mocks.prod.connect.connect.aws.eu-west-2.k8s.fewlines.net/mail/email";
 
@@ -45,10 +45,12 @@ async function checkVerificationCode(): Promise<void> {
     await waitFor(2000);
     await click(localizedStrings.sudo.send);
     await waitFor(1000);
-    const code = await getCode(process.env.CONNECT_TEST_ACCOUNT_EMAIL || "");
+    const code = await getEmailValidationCode(
+      process.env.CONNECT_TEST_ACCOUNT_EMAIL || "",
+    );
     await write(code);
     await click(localizedStrings.sudo.confirm);
   }
 }
 
-export { checkVerificationCode, getCode };
+export { checkVerificationCode, getEmailValidationCode };
