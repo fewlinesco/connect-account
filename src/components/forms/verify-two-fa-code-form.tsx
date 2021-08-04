@@ -31,7 +31,7 @@ const VerifyTwoFACodeForm: React.FC<{
         setFormID(uuidv4());
 
         await fetchJson(
-          "/api/auth-connect/verify-two-fa-validation-code",
+          "/api/auth-connect/verify-two-fa-validation-code/",
           "POST",
           { verificationCode },
         ).then(async (response) => {

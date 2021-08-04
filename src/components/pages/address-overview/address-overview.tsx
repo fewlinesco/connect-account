@@ -31,7 +31,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
 
   const { data: addresses } = useSWR<Address[], SWRError>(
-    "/api/profile/addresses",
+    "/api/profile/addresses/",
     async (url) => {
       return await fetch(url).then(async (response) => {
         if (!response.ok) {
@@ -110,7 +110,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                   variant={ButtonVariant.PRIMARY}
                   onPress={() => {
                     fetchJson(
-                      `/api/profile/addresses/${address?.id}/mark-as-primary`,
+                      `/api/profile/addresses/${address?.id}/mark-as-primary/`,
                       "POST",
                       {},
                     )
@@ -184,7 +184,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
             type="button"
             variant={ButtonVariant.PRIMARY}
             onPress={() => {
-              fetchJson(`/api/profile/addresses/${address?.id}`, "DELETE", {})
+              fetchJson(`/api/profile/addresses/${address?.id}/`, "DELETE", {})
                 .then(async () => {
                   if (addresses && address) {
                     const addressToDelete = addresses.find(

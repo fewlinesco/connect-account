@@ -121,7 +121,7 @@ const handler: Handler = (request, response): Promise<void> => {
 const wrappedHandler = wrapMiddlewares(
   noAuthBasicMiddlewares(getTracer(), logger),
   handler,
-  "/api/oauth/callback",
+  "/api/oauth/callback/",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

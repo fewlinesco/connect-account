@@ -48,7 +48,7 @@ const AddIdentityForm: React.FC<{
           };
 
           await fetchJson(
-            "/api/auth-connect/send-identity-validation-code",
+            "/api/auth-connect/send-identity-validation-code/",
             "POST",
             body,
           ).then(async (response) => {

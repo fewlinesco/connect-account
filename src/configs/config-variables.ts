@@ -64,14 +64,14 @@ const configVariables: ConfigVariables = {
 
 function getConnectAccountURL(): string {
   if (process.env.CONNECT_ACCOUNT_HOSTNAME) {
-    return `https://${process.env.CONNECT_ACCOUNT_HOSTNAME}`;
+    return `https://${process.env.CONNECT_ACCOUNT_HOSTNAME}/`;
   }
 
   if (process.env.HEROKU_APP_NAME) {
-    return `https://${process.env.HEROKU_APP_NAME}.herokuapp.com`;
+    return `https://${process.env.HEROKU_APP_NAME}.herokuapp.com/`;
   }
 
-  return "https://connect-account.local:29704";
+  return "https://connect-account.local:29704/";
 }
 
 function handleEnvVars(): void {
@@ -98,7 +98,7 @@ function handleEnvVars(): void {
   configVariables.cookieSalt = process.env.CONNECT_ACCOUNT_SESSION_SALT || "";
   configVariables.connectOpenIdConfigurationUrl =
     process.env.CONNECT_OPEN_ID_CONFIGURATION_URL || "";
-  configVariables.connectAccountRedirectURI = `${connectAccountURL}/api/oauth/callback`;
+  configVariables.connectAccountRedirectURI = `${connectAccountURL}/api/oauth/callback/`;
   configVariables.connectAudience = process.env.CONNECT_AUDIENCE || "";
   configVariables.connectJwtAlgorithm = process.env.CONNECT_JWT_ALGORITHM || "";
   configVariables.accountJwePrivateKey =

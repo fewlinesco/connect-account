@@ -196,7 +196,7 @@ const handler: Handler = async (request, response) => {
 const wrappedHandler = wrapMiddlewares(
   basicMiddlewares(getTracer(), logger),
   handler,
-  "/api/auth-connect/verify-two-fa-validation-code",
+  "/api/auth-connect/verify-two-fa-validation-code/",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
