@@ -14,7 +14,7 @@ import {
   waitFor,
 } from "taiko";
 
-import { authenticateToConnect } from "./utils/authenticate-to-connect";
+import { authenticateToConnect, step } from "./utils";
 import * as locales from "@content/locales";
 import { configVariables } from "@src/configs/config-variables";
 
@@ -55,19 +55,20 @@ describe("Profile happy path", () => {
     });
   });
 
-  beforeEach(async () => {
-    await authenticateToConnect();
-  });
-
   afterAll(async () => {
     await closeBrowser();
   });
 
   test("it should do Profile flows' happy path", async () => {
     expect.assertions(isStagingEnv ? 21 : 14);
+
+    step("Profile happy path", true);
+
+    await authenticateToConnect();
+
     try {
-      // Profile creation
       if (isStagingEnv) {
+        step("Profile create");
         await click(localizedStrings.navigation.createYourProfile);
         expect(
           await text(localizedStrings.newProfile.breadcrumb).exists(),
@@ -95,7 +96,7 @@ describe("Profile happy path", () => {
         await click(localizedStrings.navigation.personalInformation);
       }
 
-      // Update user profile flow
+      step("Profile update");
       await waitFor(
         async () =>
           await text(localizedStrings.profileOverview.updateInfo).exists(),
@@ -119,6 +120,8 @@ describe("Profile happy path", () => {
 
       await click(localizedStrings.editProfile.update);
       expect(await currentURL()).toEqual(`${baseURL}/account/profile/`);
+
+      step("Address create");
 
       await click(text(localizedStrings.profileOverview.addAddress));
 
@@ -227,7 +230,7 @@ describe("Profile happy path", () => {
         expect(await currentURL()).toEqual(`${baseURL}/account/profile/`);
       }
 
-      // Update address flow
+      step("Address update");
       await click(
         link("", below(localizedStrings.profileOverview.addressesSection)),
       );
@@ -256,7 +259,7 @@ describe("Profile happy path", () => {
 
       expect(await currentURL()).toEqual(profileUrl);
 
-      // Mark address as primary flow
+      step("Mark address as primary");
       await click(localizedStrings.navigation.personalInformation);
 
       expect(
@@ -276,7 +279,7 @@ describe("Profile happy path", () => {
 
       expect(await currentURL()).toEqual(`${baseURL}/account/profile/`);
 
-      // Delete address flow
+      step("Address delete");
       await click(
         link("", below(localizedStrings.profileOverview.addressesSection)),
       );
