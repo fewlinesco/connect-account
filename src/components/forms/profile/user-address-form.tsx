@@ -54,15 +54,15 @@ async function updateOrCreateAddress(
         const index = addresses.indexOf(address);
         const modifiedAddresses = [...addresses];
         modifiedAddresses[index] = parsedResponse;
-        await mutate("/api/profile/addresses", modifiedAddresses);
+        await mutate("/api/profile/addresses/", modifiedAddresses);
         await mutate(
-          `/api/profile/addresses/${parsedResponse.id}`,
+          `/api/profile/addresses/${parsedResponse.id}/`,
           parsedResponse,
         );
       } else {
-        await mutate("/api/profile/addresses", [...addresses, parsedResponse]);
+        await mutate("/api/profile/addresses/", [...addresses, parsedResponse]);
         await mutate(
-          `/api/profile/addresses/${parsedResponse.id}`,
+          `/api/profile/addresses/${parsedResponse.id}/`,
           parsedResponse,
         );
       }

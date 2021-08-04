@@ -129,13 +129,13 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                         );
                         if (addressToMark && oldMarkedAddress) {
                           addressToMark.primary = true;
-                          mutate("/api/profile/addresses", modifiedAddresses);
+                          mutate("/api/profile/addresses/", modifiedAddresses);
                           mutate(
-                            `/api/profile/addresses/${oldMarkedAddress.id}`,
+                            `/api/profile/addresses/${oldMarkedAddress.id}/`,
                             oldMarkedAddress,
                           );
                           mutate(
-                            `/api/profile/addresses/${addressToMark.id}`,
+                            `/api/profile/addresses/${addressToMark.id}/`,
                             oldMarkedAddress,
                           );
                         }
@@ -194,7 +194,10 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                       const index = addresses.indexOf(addressToDelete);
                       const modifiedAddresses = [...addresses];
                       modifiedAddresses.splice(index, 1);
-                      await mutate("/api/profile/addresses", modifiedAddresses);
+                      await mutate(
+                        "/api/profile/addresses/",
+                        modifiedAddresses,
+                      );
                     }
                   }
                   router && router.push("/account/profile/");

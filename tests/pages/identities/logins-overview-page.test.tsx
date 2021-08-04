@@ -113,7 +113,7 @@ describe("LoginsOverviewPage", () => {
 
       const identities = [mockIdentities.primaryEmailIdentity];
 
-      mutate("/api/identities", identities);
+      mutate("/api/identities/", identities);
 
       render(
         <SWRConfig
@@ -157,7 +157,7 @@ describe("LoginsOverviewPage", () => {
 
       const identities: Identity[] = [];
 
-      mutate("/api/identities", identities);
+      mutate("/api/identities/", identities);
 
       render(
         <SWRConfig
@@ -266,7 +266,7 @@ describe("LoginsOverviewPage", () => {
 
       const identities = [mockIdentities.primaryPhoneIdentity];
 
-      mutate("/api/identities", identities);
+      mutate("/api/identities/", identities);
 
       render(
         <SWRConfig
@@ -309,7 +309,7 @@ describe("LoginsOverviewPage", () => {
 
       const identities: Identity[] = [];
 
-      mutate("/api/identities", identities);
+      mutate("/api/identities/", identities);
 
       render(
         <SWRConfig

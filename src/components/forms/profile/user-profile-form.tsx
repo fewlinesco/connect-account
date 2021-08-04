@@ -34,7 +34,7 @@ async function updateOrCreateProfile(
       response.status === HttpStatus.CREATED ||
       response.status === HttpStatus.OK
     ) {
-      mutate("/api/profile/user-profile", parsedResponse);
+      mutate("/api/profile/user-profile/", parsedResponse);
       router && router.push("/account/profile/");
       return;
     } else {
