@@ -79,8 +79,6 @@ describe("Identity flows", () => {
           }),
         ),
       );
-      await checkBox(below(newEmailAddress)).check();
-      await checkBox(below(newEmailAddress)).uncheck();
       await click(checkBox(below(newEmailAddress)));
       await click(localizedStrings.createIdentity.addEmail);
 
