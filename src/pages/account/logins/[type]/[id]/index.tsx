@@ -20,7 +20,7 @@ const IdentityOverviewPage: React.FC<{
   const { formatMessage } = useIntl();
 
   const { data: identity, error } = useSWR<Identity, SWRError>(
-    `/api/identities/${identityId}`,
+    `/api/identities/${identityId}/`,
   );
 
   if (error) {

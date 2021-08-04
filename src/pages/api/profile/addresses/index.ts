@@ -20,7 +20,7 @@ const getHandler: Handler = async (request, response) => {
   };
 
   return getTracer().span(
-    "GET /api/profile/addresses handler",
+    "GET /api/profile/addresses/ handler",
     async (span) => {
       const { userAddressClient } = await wrappedProfileClient(request, span);
 
@@ -64,7 +64,7 @@ const postHandler: Handler = async (request, response) => {
   };
 
   return getTracer().span(
-    "POST /api/profile/addresses handler",
+    "POST /api/profile/addresses/ handler",
     async (span) => {
       const { userAddressClient } = await wrappedProfileClient(request, span);
 
@@ -116,8 +116,8 @@ const postHandler: Handler = async (request, response) => {
 const middlewares = basicMiddlewares(getTracer(), logger);
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .get(wrapMiddlewares(middlewares, getHandler, "GET /api/profile/addresses"))
+  .get(wrapMiddlewares(middlewares, getHandler, "GET /api/profile/addresses/"))
   .post(
-    wrapMiddlewares(middlewares, postHandler, "POST /api/profile/addresses"),
+    wrapMiddlewares(middlewares, postHandler, "POST /api/profile/addresses/"),
   )
   .getHandler();

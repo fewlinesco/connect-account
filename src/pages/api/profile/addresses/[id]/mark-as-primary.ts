@@ -22,7 +22,7 @@ const markAsPrimaryHandler: Handler = async (request, response) => {
   };
 
   return getTracer().span(
-    "POST /api/profile/addresses/[id]/mark-as-primary handler",
+    "POST /api/profile/addresses/[id]/mark-as-primary/ handler",
     async (span) => {
       const addressId = request.query.id;
 
@@ -83,7 +83,7 @@ export default new Endpoint<NextApiRequest, NextApiResponse>()
     wrapMiddlewares(
       middlewares,
       markAsPrimaryHandler,
-      "POST /api/profile/addresses/[id]/mark-as-primary",
+      "POST /api/profile/addresses/[id]/mark-as-primary/",
     ),
   )
   .getHandler();

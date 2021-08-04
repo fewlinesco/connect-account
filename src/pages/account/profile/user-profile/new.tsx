@@ -20,7 +20,7 @@ const NewUserProfilePage: React.FC = () => {
   const router = useRouter();
   const { formatMessage } = useIntl();
   const { error: userProfileError } = useSWR<Profile, SWRError>(
-    `/api/profile/user-profile`,
+    `/api/profile/user-profile/`,
     async (url) =>
       await fetch(url).then(async (response) => {
         if (!response.ok) {

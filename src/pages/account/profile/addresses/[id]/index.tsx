@@ -17,7 +17,7 @@ const AddressOverviewPage: React.FC<{ addressId: string }> = ({
 }) => {
   const { formatMessage } = useIntl();
   const { data: address, error } = useSWR<Address, Error>(
-    `/api/profile/addresses/${addressId}`,
+    `/api/profile/addresses/${addressId}/`,
   );
 
   if (error) {

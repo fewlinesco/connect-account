@@ -98,7 +98,7 @@ function handleEnvVars(): void {
   configVariables.cookieSalt = process.env.CONNECT_ACCOUNT_SESSION_SALT || "";
   configVariables.connectOpenIdConfigurationUrl =
     process.env.CONNECT_OPEN_ID_CONFIGURATION_URL || "";
-  configVariables.connectAccountRedirectURI = `${connectAccountURL}/api/oauth/callback`;
+  configVariables.connectAccountRedirectURI = `${connectAccountURL}/api/oauth/callback/`;
   configVariables.connectAudience = process.env.CONNECT_AUDIENCE || "";
   configVariables.connectJwtAlgorithm = process.env.CONNECT_JWT_ALGORITHM || "";
   configVariables.accountJwePrivateKey =

@@ -18,7 +18,7 @@ const UpdateUserProfilePage: React.FC = () => {
   const { data: userProfile, error: userProfileError } = useSWR<
     Profile,
     SWRError
-  >(`/api/profile/user-profile`);
+  >(`/api/profile/user-profile/`);
 
   if (userProfileError) {
     throw userProfileError;

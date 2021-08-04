@@ -15,7 +15,7 @@ import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 const EditAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
   const { formatMessage } = useIntl();
   const { data: address, error } = useSWR<Address, Error>(
-    `/api/profile/addresses/${addressId}`,
+    `/api/profile/addresses/${addressId}/`,
   );
 
   if (error) {

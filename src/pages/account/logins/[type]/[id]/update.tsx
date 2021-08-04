@@ -18,7 +18,7 @@ const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
 }) => {
   const { formatMessage } = useIntl();
   const { data: identity, error } = useSWR<Identity, Error>(
-    `/api/identities/${identityId}`,
+    `/api/identities/${identityId}/`,
   );
 
   if (error) {

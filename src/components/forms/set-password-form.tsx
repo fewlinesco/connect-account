@@ -41,7 +41,7 @@ const SetPasswordForm: React.FC<{
 
         if (isNotSubmitted) {
           if (passwordInput === passwordConfirmationInput) {
-            await fetchJson("/api/auth-connect/set-password", "POST", {
+            await fetchJson("/api/auth-connect/set-password/", "POST", {
               passwordInput,
             })
               .then(async (response) => {

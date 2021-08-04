@@ -14,7 +14,7 @@ const TwoFA: React.FC = () => {
   const [isCodeSent, setIsCodeSent] = React.useState<boolean>(false);
 
   const { data: primaryIdentities, error } = useSWR<Identity[], Error>(
-    "/api/identities?primary=true",
+    "/api/identities?primary=true/",
   );
 
   if (error) {
