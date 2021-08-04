@@ -17,7 +17,7 @@ import { authenticateToConnect, getCode, step } from "./utils";
 import * as locales from "@content/locales";
 
 describe("Identity flows", () => {
-  jest.setTimeout(180000);
+  jest.setTimeout(750000);
 
   beforeAll(async () => {
     await openBrowser({
