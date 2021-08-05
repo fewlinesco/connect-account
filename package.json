@@ -43,7 +43,7 @@
     "@fwl/tracing": "0.10.3",
     "@fwl/web": "0.13.0",
     "@hapi/iron": "6.0.0",
-    "@react-aria/button": "3.3.2",
+    "@react-aria/button": "3.3.3",
     "@react-aria/link": "3.1.3",
     "@react-aria/ssr": "3.0.2",
     "@react-aria/textfield": "3.3.0",
