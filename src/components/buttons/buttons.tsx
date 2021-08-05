@@ -173,6 +173,10 @@ const CookieButtonStyle = styled.div`
   box-shadow: ${({ theme }) => theme.shadows.box};
   color: ${({ theme }) => theme.colors.primary};
   cursor: pointer;
+
+  @media ${deviceBreakpoints.m} {
+    display: none;
+  }
 `;
 
 export {

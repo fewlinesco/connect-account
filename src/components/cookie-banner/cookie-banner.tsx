@@ -3,9 +3,11 @@ import React from "react";
 import styled from "styled-components";
 
 import { CookieButton, ButtonVariant, StyledButton } from "../buttons/buttons";
+import { ClickAwayListener } from "../click-away-listener";
 import { SentryIcon } from "../icons/sentry-logo/sentry-icon";
 import { InputSwitch } from "../input/input-switch";
 import { formatCookieBannerMessage } from "@src/configs/intl";
+import { deviceBreakpoints } from "@src/design-system/theme";
 
 const CookieBanner: React.FC = () => {
   const router = useRouter();
@@ -19,21 +21,23 @@ const CookieBanner: React.FC = () => {
     <CookieBannerWrapper>
       <CookieButton onPress={() => setIsModalOpen(!isModalOpen)} />
       {isModalOpen ? (
-        <CookieModal>
-          <ModalTitle>Cookies</ModalTitle>
-          <ModalTextContent>
-            {formatCookieBannerMessage(
-              router.locale || "en",
-              "generalDescription",
-            )}
-          </ModalTextContent>
-          <CategoryTitle>
-            {formatCookieBannerMessage(
-              router.locale || "en",
-              "monitoringCategory",
-            )}
-          </CategoryTitle>
-          {/* <ToggleAllWrapper>
+        <>
+          <CookieModal>
+            <Content>
+              <ModalTitle>Cookies</ModalTitle>
+              <ModalTextContent>
+                {formatCookieBannerMessage(
+                  router.locale || "en",
+                  "generalDescription",
+                )}
+              </ModalTextContent>
+              <CategoryTitle>
+                {formatCookieBannerMessage(
+                  router.locale || "en",
+                  "monitoringCategory",
+                )}
+              </CategoryTitle>
+              {/* <ToggleAllWrapper>
             <InputSwitch
               groupName="overallPref"
               labelText={formatCookieBannerMessage(
@@ -47,33 +51,37 @@ const CookieBanner: React.FC = () => {
               }}
             />
           </ToggleAllWrapper> */}
-          <Card>
-            <SentryIcon />
-            <FlexContainer>
-              <InputSwitch
-                groupName="monitoringPref"
-                labelText="Sentry"
-                isSelected={isSentryAuthorized}
-                onChange={(_e) => setIsSentryAuthorized(!isSentryAuthorized)}
-              />
-              <ServiceDesc>
-                {formatCookieBannerMessage(
-                  router.locale || "en",
-                  "sentryDescription",
-                )}
-              </ServiceDesc>
-            </FlexContainer>
-          </Card>
-
-          <ButtonsWrapper>
-            <CookieButtons type="button" variant={ButtonVariant.GHOST}>
-              {formatCookieBannerMessage(router.locale || "en", "refuseAll")}
-            </CookieButtons>
-            <CookieButtons type="button" variant={ButtonVariant.PRIMARY}>
-              {formatCookieBannerMessage(router.locale || "en", "acceptAll")}
-            </CookieButtons>
-          </ButtonsWrapper>
-        </CookieModal>
+              <Card>
+                <SentryIcon />
+                <FlexContainer>
+                  <InputSwitch
+                    groupName="monitoringPref"
+                    labelText="Sentry"
+                    isSelected={isSentryAuthorized}
+                    onChange={(_e) =>
+                      setIsSentryAuthorized(!isSentryAuthorized)
+                    }
+                  />
+                  <ServiceDesc>
+                    {formatCookieBannerMessage(
+                      router.locale || "en",
+                      "sentryDescription",
+                    )}
+                  </ServiceDesc>
+                </FlexContainer>
+              </Card>
+            </Content>
+            <ButtonsWrapper>
+              <CookieButtons type="button" variant={ButtonVariant.GHOST}>
+                {formatCookieBannerMessage(router.locale || "en", "refuseAll")}
+              </CookieButtons>
+              <CookieButtons type="button" variant={ButtonVariant.PRIMARY}>
+                {formatCookieBannerMessage(router.locale || "en", "acceptAll")}
+              </CookieButtons>
+            </ButtonsWrapper>
+          </CookieModal>
+          <Overlay />
+        </>
       ) : (
         <></>
       )}
@@ -85,26 +93,49 @@ const CookieBannerWrapper = styled.div`
   position: fixed;
   left: 2rem;
   bottom: 2rem;
+
+  @media ${deviceBreakpoints.m} {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+`;
+
+const Overlay = styled(ClickAwayListener)`
+  display: none;
+
+  @media ${deviceBreakpoints.m} {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
 `;
 
 const CookieModal = styled.div`
   width: 42rem;
-  min-height: 32rem;
   position: absolute;
   bottom: 5rem;
   left: 2rem;
-  z-index: 1;
   background-color: ${({ theme }) => theme.colors.background};
   box-shadow: ${({ theme }) => theme.shadows.box};
   border-radius: ${({ theme }) => theme.radii[0]};
-  padding: ${({ theme }) => theme.spaces.xs} ${({ theme }) => theme.spaces.xs} 0;
-  display: flex;
-  flex-direction: column;
+  z-index: 2;
+
+  @media ${deviceBreakpoints.m} {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
 `;
 
-const ModalTitle = styled.p`
+const Content = styled.div`
+  padding: ${({ theme }) => theme.spaces.xs} ${({ theme }) => theme.spaces.xs} 0;
+  margin-bottom: 1.25rem;
+`;
+
+const ModalTitle = styled.h2`
   font-size: ${({ theme }) => theme.fontSizes.h1};
   margin-bottom: 1.25rem;
+  font-weight: normal;
 `;
 
 const ModalTextContent = styled.p`
@@ -112,17 +143,13 @@ const ModalTextContent = styled.p`
   margin-bottom: 1.5rem;
 `;
 
-const CategoryTitle = styled.p`
+const CategoryTitle = styled.h3`
   font-size: ${({ theme }) => theme.fontSizes.h2};
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 `;
 
 const ButtonsWrapper = styled.div`
   display: flex;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
 `;
 
 const CookieButtons = styled(StyledButton)`
@@ -171,6 +198,10 @@ const ServiceDesc = styled.p`
   color: ${({ theme }) => theme.colors.lightGrey};
   width: 85%;
   margin-top: 0.2rem;
+
+  @media ${deviceBreakpoints.m} {
+    width: 80%;
+  }
 `;
 
 export { CookieBanner };
