@@ -45,7 +45,7 @@
     "@hapi/iron": "6.0.0",
     "@react-aria/button": "3.3.3",
     "@react-aria/link": "3.1.4",
-    "@react-aria/ssr": "3.0.2",
+    "@react-aria/ssr": "3.0.3",
     "@react-aria/textfield": "3.3.0",
     "@sentry/nextjs": "6.10.0",
     "@types/axios": "0.14.0",
