@@ -275,6 +275,17 @@ const en = {
     invalidIdentityType: "Invalid identity type.",
     invalidUserAddressPayload: "Please fill in the above field.",
   },
+  cookieBanner: {
+    generalDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam bibendum arcu vel neque sagittis, eu laoreet diam dapibus. Ut id lectus nec ante maximus mollis nec id nulla.",
+    monitoringCategory: "Monitoring",
+    toggle: "Toggle all",
+    sentryDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam bibendum arcu vel neque sagittis",
+    acceptAll: "Accept all",
+    accept: "Accept",
+    refuseAll: "Refuse all",
+  },
 };
 
 export { en };

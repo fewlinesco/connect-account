@@ -1,16 +1,19 @@
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
 import { CookieButton, ButtonVariant, StyledButton } from "../buttons/buttons";
 import { SentryIcon } from "../icons/sentry-logo/sentry-icon";
 import { InputSwitch } from "../input/input-switch";
+import { formatCookieBannerMessage } from "@src/configs/intl";
 
 const CookieBanner: React.FC = () => {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(true);
   const [isSentryAuthorized, setIsSentryAuthorized] =
     React.useState<boolean>(true);
-  const [isAllServicesAuthorized, setIsAllServicesAuthorized] =
-    React.useState<boolean>(true);
+  // const [isAllServicesAuthorized, setIsAllServicesAuthorized] =
+  //   React.useState<boolean>(true);
 
   return (
     <CookieBannerWrapper>
@@ -19,22 +22,31 @@ const CookieBanner: React.FC = () => {
         <CookieModal>
           <ModalTitle>Cookies</ModalTitle>
           <ModalTextContent>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-            bibendum arcu vel neque sagittis, eu laoreet diam dapibus. Ut id
-            lectus nec ante maximus mollis nec id nulla.
+            {formatCookieBannerMessage(
+              router.locale || "en",
+              "generalDescription",
+            )}
           </ModalTextContent>
-          <CategoryTitle>Monitoring</CategoryTitle>
-          <ToggleAllWrapper>
+          <CategoryTitle>
+            {formatCookieBannerMessage(
+              router.locale || "en",
+              "monitoringCategory",
+            )}
+          </CategoryTitle>
+          {/* <ToggleAllWrapper>
             <InputSwitch
               groupName="overallPref"
-              labelText="Toggle all"
+              labelText={formatCookieBannerMessage(
+                router.locale || "en",
+                "toggle",
+              )}
               isSelected={isAllServicesAuthorized}
               onChange={(_e) => {
                 setIsAllServicesAuthorized(!isAllServicesAuthorized);
                 setIsSentryAuthorized(!isAllServicesAuthorized);
               }}
             />
-          </ToggleAllWrapper>
+          </ToggleAllWrapper> */}
           <Card>
             <SentryIcon />
             <FlexContainer>
@@ -45,18 +57,20 @@ const CookieBanner: React.FC = () => {
                 onChange={(_e) => setIsSentryAuthorized(!isSentryAuthorized)}
               />
               <ServiceDesc>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-                bibendum arcu vel neque sagittis
+                {formatCookieBannerMessage(
+                  router.locale || "en",
+                  "sentryDescription",
+                )}
               </ServiceDesc>
             </FlexContainer>
           </Card>
 
           <ButtonsWrapper>
             <CookieButtons type="button" variant={ButtonVariant.GHOST}>
-              Refuse all
+              {formatCookieBannerMessage(router.locale || "en", "refuseAll")}
             </CookieButtons>
             <CookieButtons type="button" variant={ButtonVariant.PRIMARY}>
-              Accept all
+              {formatCookieBannerMessage(router.locale || "en", "acceptAll")}
             </CookieButtons>
           </ButtonsWrapper>
         </CookieModal>
@@ -75,7 +89,7 @@ const CookieBannerWrapper = styled.div`
 
 const CookieModal = styled.div`
   width: 42rem;
-  height: 34rem;
+  min-height: 32rem;
   position: absolute;
   bottom: 5rem;
   left: 2rem;
@@ -100,6 +114,7 @@ const ModalTextContent = styled.p`
 
 const CategoryTitle = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.h2};
+  margin-bottom: 1rem;
 `;
 
 const ButtonsWrapper = styled.div`
@@ -127,9 +142,9 @@ const CookieButtons = styled(StyledButton)`
       `};
 `;
 
-const ToggleAllWrapper = styled.div`
-  padding: 1rem 1.5rem 1rem 0;
-`;
+// const ToggleAllWrapper = styled.div`
+//   padding: 1rem 1.5rem 1rem 0;
+// `;
 
 const Card = styled.div`
   width: 100%;

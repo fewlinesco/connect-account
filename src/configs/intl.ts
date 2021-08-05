@@ -48,6 +48,22 @@ const frErrorIntl = createIntl(
   cache,
 );
 
+const enCookieIntl = createIntl(
+  {
+    locale: "en",
+    messages: { ...locales["en"].cookieBanner },
+  },
+  cache,
+);
+
+const frCookieIntl = createIntl(
+  {
+    locale: "fr",
+    messages: { ...locales["fr"].cookieBanner },
+  },
+  cache,
+);
+
 function formatAlertMessage(locale: string, id: string): string {
   switch (locale) {
     case "fr":
@@ -91,6 +107,19 @@ function formatErrorMessage(
   }
 }
 
+function formatCookieBannerMessage(locale: string, id: string): string {
+  switch (locale) {
+    case "fr":
+      return frCookieIntl.formatMessage({ id });
+    case "en":
+      return enCookieIntl.formatMessage({ id });
+    default:
+      throw new Error(
+        `${locale} locale not allowed. Please choose one of the following:\n- en\n- fr`,
+      );
+  }
+}
+
 function getLocaleFromRequest(request: NextApiRequest, span: Span): string {
   if (!request.headers["accept-language"]) {
     const locale = request.cookies["NEXT_LOCALE"] || "en";
@@ -118,4 +147,5 @@ export {
   getLocaleFromRequest,
   formatNavigation,
   formatErrorMessage,
+  formatCookieBannerMessage,
 };
