@@ -26,11 +26,14 @@ const InputSwitch: React.FC<{
 const Label = styled.label`
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
   width: 100%;
   cursor: pointer;
-  margin-left: 1rem;
+
+  p {
+    font-size: ${({ theme }) => theme.fontSizes.s};
+  }
 
   span {
     position: relative;

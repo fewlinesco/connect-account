@@ -2,7 +2,7 @@ import React from "react";
 
 const SentryIcon: React.FC = () => {
   return (
-    <svg width="20" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path fill="url(#a)" d="M0 0h20v17.6H0z" />
       <defs>
         <pattern

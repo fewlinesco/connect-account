@@ -6,13 +6,16 @@ import { SentryIcon } from "../icons/sentry-logo/sentry-icon";
 import { InputSwitch } from "../input/input-switch";
 
 const CookieBanner: React.FC = () => {
-  const [isBannerOpen, setIsBannerOpen] = React.useState<boolean>(true);
+  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(true);
   const [isSentryAuthorized, setIsSentryAuthorized] =
     React.useState<boolean>(true);
+  const [isAllServicesAuthorized, setIsAllServicesAuthorized] =
+    React.useState<boolean>(true);
+
   return (
     <CookieBannerWrapper>
-      <CookieButton onPress={() => setIsBannerOpen(!isBannerOpen)} />
-      {isBannerOpen ? (
+      <CookieButton onPress={() => setIsModalOpen(!isModalOpen)} />
+      {isModalOpen ? (
         <CookieModal>
           <ModalTitle>Cookies</ModalTitle>
           <ModalTextContent>
@@ -21,14 +24,31 @@ const CookieBanner: React.FC = () => {
             lectus nec ante maximus mollis nec id nulla.
           </ModalTextContent>
           <CategoryTitle>Monitoring</CategoryTitle>
+          <ToggleAllWrapper>
+            <InputSwitch
+              groupName="overallPref"
+              labelText="Toggle all"
+              isSelected={isAllServicesAuthorized}
+              onChange={(_e) => {
+                setIsAllServicesAuthorized(!isAllServicesAuthorized);
+                setIsSentryAuthorized(!isAllServicesAuthorized);
+              }}
+            />
+          </ToggleAllWrapper>
           <Card>
             <SentryIcon />
-            <InputSwitch
-              groupName="monitoringPref"
-              labelText="Sentry"
-              isSelected={isSentryAuthorized}
-              onChange={(_e) => setIsSentryAuthorized(!isSentryAuthorized)}
-            />
+            <FlexContainer>
+              <InputSwitch
+                groupName="monitoringPref"
+                labelText="Sentry"
+                isSelected={isSentryAuthorized}
+                onChange={(_e) => setIsSentryAuthorized(!isSentryAuthorized)}
+              />
+              <ServiceDesc>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+                bibendum arcu vel neque sagittis
+              </ServiceDesc>
+            </FlexContainer>
           </Card>
 
           <ButtonsWrapper>
@@ -55,7 +75,7 @@ const CookieBannerWrapper = styled.div`
 
 const CookieModal = styled.div`
   width: 42rem;
-  height: 39rem;
+  height: 34rem;
   position: absolute;
   bottom: 5rem;
   left: 2rem;
@@ -107,13 +127,35 @@ const CookieButtons = styled(StyledButton)`
       `};
 `;
 
+const ToggleAllWrapper = styled.div`
+  padding: 1rem 1.5rem 1rem 0;
+`;
+
 const Card = styled.div`
   width: 100%;
-  padding: 1.5rem;
+  padding: 1.25rem 1.5rem;
   background-color: ${({ theme }) => theme.colors.background};
   box-shadow: ${({ theme }) => theme.shadows.box};
   display: flex;
   justify-content: space-around;
+
+  svg {
+    flex-shrink: 0;
+    align-self: center;
+  }
+`;
+
+const FlexContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+`;
+
+const ServiceDesc = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  color: ${({ theme }) => theme.colors.lightGrey};
+  width: 85%;
+  margin-top: 0.2rem;
 `;
 
 export { CookieBanner };
