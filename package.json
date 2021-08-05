@@ -46,7 +46,7 @@
     "@react-aria/button": "3.3.3",
     "@react-aria/link": "3.1.4",
     "@react-aria/ssr": "3.0.3",
-    "@react-aria/textfield": "3.3.0",
+    "@react-aria/textfield": "3.3.1",
     "@sentry/nextjs": "6.10.0",
     "@types/axios": "0.14.0",
     "apollo-link-context": "1.0.20",
