@@ -53,6 +53,7 @@ const Wrapper = styled.div`
   @media ${deviceBreakpoints.m} {
     top: 7rem;
     align-items: flex-start;
+    height: auto;
   }
 `;
 
