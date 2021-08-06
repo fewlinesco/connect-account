@@ -1,7 +1,7 @@
-= Connect Account
+= Connect.Account
 :toc: preamble
 
-Connect Account is an open source web application, which aims at providing all the business logic to handle Connect identities, profile and addresses data, and a default frontend for users to use.
+Connect.Account is an open source web application, which aims at providing all the business logic to handle Connect identities, profile and addresses data, and a default frontend for users to use.
 
 == Flows
 
@@ -291,7 +291,7 @@ if you want to automatically fix linting issues.
 | Sub of the Connect account that will be used for e2e tests.
 
 | `CONNECT_TEST_ACCOUNT_URL`
-| URL of the Connect Account application that will be used for e2e tests.
+| URL of the Connect.Account application that will be used for e2e tests.
 
 | `CONNECT_PROFILE_URL`
 | URL of Connect.Profile server.
@@ -348,7 +348,7 @@ Favicons for various OS.
 - *configs/*: 
   * *config-variables.ts*: Entry point used to verify env vars sourcing, and prevent the app to run if forgotten.
   * *db-client.ts*: Singleton of the DynamoDB client.
-  * *intl.ts*: 
+  * *intl.ts*: File regrouping all the `intl` object, which are instances to store the cache of all Intl.* APIs, configurations, compiled messages and such.
   * *logger.ts*: Singleton of the logger client provided by `@fwl/web`.
   * *oauth2-client.ts*: Singleton of the OAuth2 Client provided by `@fewlines/connect-client`.
   * *profile-client.ts*: Singleton of the Profile Client provided by Connect Profile.
@@ -384,7 +384,7 @@ Favicons for various OS.
 - *connect-profile-openapi.yml*: OpenAPI file of Connect Profile.
 - *docker-compose.yml*: Instructions to launch DynamoDB and the observability tools.
 - *Dockerfile*: Instructions for Docker image build process.
-- *lighthouserc.js*: Instructions for Lighthouse reviews.
+- *lighthouserc.js*: Instructions for Lighthouse audits.
 - *next-env.d.ts*: Adds NextJS types globally.
 - *next.config.js*: Extended webpack compiler config used by NextJS.
 - *nginx.conf*: Local proxy configuration.
@@ -711,10 +711,10 @@ To automate our test processes, we use https://circleci.com[CircleCI], which all
 
 Several flows (or `jobs`) are executed in this context and orchestrated in workflows inside the `config.yml` file: 
 
-- *lint-and-tests*: runs code linting and integration/unit tests.
-- *e2e-tests*: runs e2e tests suite on a deployed Connect Account version.
-- *lighthouse*: runs Lighthouse reports on a deployed Connect Account version.
-- *promote-to-production*: use to automate production deployment from staging when all tests suite is successful.
+- *lint-and-tests*: runs the code linting and the integration/unit tests.
+- *e2e-tests*: runs the e2e test suite on a deployed Connect.Account version.
+- *lighthouse*: runs the Lighthouse audits on a deployed Connect.Account version.
+- *promote-to-production*: used to automate the production deployment from staging when the test suite is successful.
 
 
 == Monitoring
