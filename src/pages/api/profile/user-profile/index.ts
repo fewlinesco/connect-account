@@ -20,7 +20,7 @@ const getHandler: Handler = async (request, response) => {
   };
 
   return getTracer().span(
-    "GET /api/profile/user-profile handler",
+    "GET /api/profile/user-profile/ handler",
     async (span) => {
       const { userProfileClient } = await wrappedProfileClient(request, span);
 
@@ -68,7 +68,7 @@ const patchHandler: Handler = async (request, response) => {
   };
 
   return getTracer().span(
-    "PATCH /api/profile/user-profile handler",
+    "PATCH /api/profile/user-profile/ handler",
     async (span) => {
       const { userProfileClient } = await wrappedProfileClient(request, span);
 
@@ -128,7 +128,7 @@ const postHandler: Handler = async (request, response) => {
   };
 
   return getTracer().span(
-    "POST /api/profile/user-profile handler",
+    "POST /api/profile/user-profile/ handler",
     async (span) => {
       const { userProfileClient } = await wrappedProfileClient(request, span);
 
@@ -178,16 +178,20 @@ const middlewares = basicMiddlewares(getTracer(), logger);
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
   .get(
-    wrapMiddlewares(middlewares, getHandler, "GET /api/profile/user-profile"),
+    wrapMiddlewares(middlewares, getHandler, "GET /api/profile/user-profile/"),
   )
   .patch(
     wrapMiddlewares(
       middlewares,
       patchHandler,
-      "PATCH /api/profile/user-profile",
+      "PATCH /api/profile/user-profile/",
     ),
   )
   .post(
-    wrapMiddlewares(middlewares, postHandler, "POST /api/profile/user-profile"),
+    wrapMiddlewares(
+      middlewares,
+      postHandler,
+      "POST /api/profile/user-profile/",
+    ),
   )
   .getHandler();

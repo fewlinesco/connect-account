@@ -34,7 +34,7 @@ const ValidateIdentityForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
-          await fetchJson("/api/auth-connect/verify-validation-code", "POST", {
+          await fetchJson("/api/auth-connect/verify-validation-code/", "POST", {
             validationCode,
             eventId,
           }).then(async (response) => {
@@ -99,7 +99,7 @@ const ValidateIdentityForm: React.FC<{
         variant={ButtonVariant.SECONDARY}
         onPress={async () => {
           await fetchJson(
-            "/api/auth-connect/re-send-identity-validation-code",
+            "/api/auth-connect/re-send-identity-validation-code/",
             "POST",
             { eventId },
           )

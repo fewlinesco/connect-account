@@ -20,7 +20,7 @@ const IdentityOverviewPage: React.FC<{
   const { formatMessage } = useIntl();
 
   const { data: identity, error } = useSWR<Identity, SWRError>(
-    `/api/identities/${identityId}`,
+    `/api/identities/${identityId}/`,
   );
 
   if (error) {
@@ -46,7 +46,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ identityId: string }>(
     context,
     basicMiddlewares(getTracer(), logger),
-    "/account/logins/[type]/[id]",
+    "/account/logins/[type]/[id]/",
     () => {
       if (!context?.params?.id) {
         return {

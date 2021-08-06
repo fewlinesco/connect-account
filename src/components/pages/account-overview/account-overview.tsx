@@ -16,7 +16,7 @@ import { getNavSectionHref } from "@src/utils/getNavSectionHref";
 
 const AccountOverview: React.FC = () => {
   const { data: userProfile, isValidating } = useSWR<Profile, SWRError>(
-    `/api/profile/user-profile`,
+    `/api/profile/user-profile/`,
     navigationFetcher,
   );
 

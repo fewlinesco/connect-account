@@ -18,7 +18,7 @@ const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
 }) => {
   const { formatMessage } = useIntl();
   const { data: identity, error } = useSWR<Identity, Error>(
-    `/api/identities/${identityId}`,
+    `/api/identities/${identityId}/`,
   );
 
   if (error) {
@@ -44,7 +44,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ identityId: string }>(
     context,
     basicMiddlewares(getTracer(), logger),
-    "/account/logins/[type]/[id]/update",
+    "/account/logins/[type]/[id]/update/",
     () => {
       if (!context?.params?.id) {
         return {
