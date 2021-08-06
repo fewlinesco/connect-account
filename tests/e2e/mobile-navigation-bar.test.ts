@@ -29,6 +29,12 @@ describe("Log in with a smart phone, open and close the navigation bar", () => {
     try {
       await authenticateToConnect();
 
+      const needCookieAcceptance = await text("Cookies").exists(10000, 50);
+
+      if (needCookieAcceptance) {
+        await click("Accept all");
+      }
+
       await click("Menu");
       expect(await text("Close").exists()).toBeTruthy();
       expect(await text("Home").exists()).toBeTruthy();
