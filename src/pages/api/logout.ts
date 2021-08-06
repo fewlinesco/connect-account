@@ -32,7 +32,7 @@ const handler: Handler = (_request, response): Promise<void> => {
 const wrappedHandler = wrapMiddlewares(
   basicMiddlewares(getTracer(), logger),
   handler,
-  "/api/logout",
+  "/api/logout/",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

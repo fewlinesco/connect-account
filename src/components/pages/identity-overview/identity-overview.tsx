@@ -99,7 +99,7 @@ const IdentityOverview: React.FC<{
                     }}
                     onPress={async () => {
                       await fetchJson(
-                        `/api/identities/${identity.id}/mark-as-primary`,
+                        `/api/identities/${identity.id}/mark-as-primary/`,
                         "POST",
                         {},
                       ).then(() => {
@@ -138,7 +138,7 @@ const IdentityOverview: React.FC<{
                     }}
                     onPress={async () => {
                       await fetchJson(
-                        `/api/identities/${identity.id}`,
+                        `/api/identities/${identity.id}/`,
                         "DELETE",
                         {
                           type: getIdentityType(identity.type),
