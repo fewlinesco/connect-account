@@ -51,7 +51,7 @@ describe("ValidateIdentityPage", () => {
 
       expect(
         screen.getByRole("link", { name: "Discard all changes" }),
-      ).toHaveAttribute("href", "/account/logins");
+      ).toHaveAttribute("href", "/account/logins/");
 
       expect(
         screen.getByRole("button", { name: "Resend validation code" }),
@@ -94,7 +94,7 @@ describe("ValidateIdentityPage", () => {
 
       expect(
         screen.getByRole("link", { name: "Discard all changes" }),
-      ).toHaveAttribute("href", "/account/logins");
+      ).toHaveAttribute("href", "/account/logins/");
 
       expect(
         screen.getByRole("button", { name: "Resend validation code" }),

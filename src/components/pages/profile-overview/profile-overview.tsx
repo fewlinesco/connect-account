@@ -112,7 +112,7 @@ const ProfileOverview: React.FC<{
           )}
         </UserInfoSection>
       </SectionBox>
-      <NeutralLink href={"/account/profile/user-profile/edit"}>
+      <NeutralLink href={"/account/profile/user-profile/edit/"}>
         <FakeButton variant={ButtonVariant.PRIMARY}>
           {formatMessage({ id: "updateInfo" })}
         </FakeButton>
@@ -140,7 +140,7 @@ const ProfileOverview: React.FC<{
         </Flex>
       ) : null}
       {userAddresses ? (
-        <NeutralLink href="/account/profile/addresses/new">
+        <NeutralLink href="/account/profile/addresses/new/">
           <FakeButton variant={ButtonVariant.SECONDARY}>
             + {formatMessage({ id: "addAddress" })}
           </FakeButton>
@@ -185,7 +185,7 @@ const UserAddresses: React.FC<{
     <>
       <BoxedLink
         disableClick={false}
-        href={`/account/profile/addresses/${primaryAddress.id}`}
+        href={`/account/profile/addresses/${primaryAddress.id}/`}
       >
         <CategoryContent>
           {primaryAddress.kind && (
@@ -210,7 +210,7 @@ const UserAddresses: React.FC<{
                 <Separator />
                 <BoxedLink
                   disableClick={false}
-                  href={`/account/profile/addresses/${address.id}`}
+                  href={`/account/profile/addresses/${address.id}/`}
                 >
                   <CategoryContent>
                     <CategoryName>

@@ -34,7 +34,7 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(4);
 
       const identity = mockIdentities.nonPrimaryEmailIdentity;
-      mutate(`/api/identities/${identity.id}`, identity);
+      mutate(`/api/identities/${identity.id}/`, identity);
 
       render(
         <SWRConfig
@@ -71,7 +71,7 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(2);
 
       const identity = mockIdentities.nonPrimaryEmailIdentity;
-      mutate(`/api/identities/${identity.id}`, identity);
+      mutate(`/api/identities/${identity.id}/`, identity);
 
       render(
         <SWRConfig
@@ -100,7 +100,7 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(3);
 
       const identity = mockIdentities.primaryEmailIdentity;
-      mutate(`/api/identities/${identity.id}`, identity);
+      mutate(`/api/identities/${identity.id}/`, identity);
 
       render(
         <SWRConfig
@@ -134,7 +134,7 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(2);
 
       const identity = mockIdentities.primaryPhoneIdentity;
-      mutate(`/api/identities/${identity.id}`, identity);
+      mutate(`/api/identities/${identity.id}/`, identity);
 
       render(
         <SWRConfig
@@ -161,7 +161,7 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(3);
 
       const identity = mockIdentities.unvalidatedEmailIdentity;
-      mutate(`/api/identities/${identity.id}`, identity);
+      mutate(`/api/identities/${identity.id}/`, identity);
 
       render(
         <SWRConfig
@@ -183,7 +183,7 @@ describe("IdentityOverviewPage", () => {
       ).not.toBeInTheDocument();
       expect(
         await screen.findByRole("link", { name: localizedStrings.proceed }),
-      ).toHaveAttribute("href", "/account/logins/EMAIL/validation");
+      ).toHaveAttribute("href", "/account/logins/EMAIL/validation/");
       expect(
         await screen.findByRole("button", {
           name: localizedStrings.deleteEmail,
@@ -195,7 +195,7 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(2);
 
       const identity = mockIdentities.unvalidatedEmailIdentity;
-      mutate(`/api/identities/${identity.id}`, identity);
+      mutate(`/api/identities/${identity.id}/`, identity);
 
       render(
         <SWRConfig
@@ -224,7 +224,7 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(4);
 
       const identity = mockIdentities.nonPrimaryPhoneIdentity;
-      mutate(`/api/identities/${identity.id}`, identity);
+      mutate(`/api/identities/${identity.id}/`, identity);
 
       render(
         <SWRConfig
@@ -261,7 +261,7 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(2);
 
       const identity = mockIdentities.nonPrimaryPhoneIdentity;
-      mutate(`/api/identities/${identity.id}`, identity);
+      mutate(`/api/identities/${identity.id}/`, identity);
 
       render(
         <SWRConfig
@@ -290,7 +290,7 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(3);
 
       const identity = mockIdentities.primaryPhoneIdentity;
-      mutate(`/api/identities/${identity.id}`, identity);
+      mutate(`/api/identities/${identity.id}/`, identity);
 
       render(
         <SWRConfig
@@ -328,7 +328,7 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(2);
 
       const identity = mockIdentities.primaryPhoneIdentity;
-      mutate(`/api/identities/${identity.id}`, identity);
+      mutate(`/api/identities/${identity.id}/`, identity);
 
       render(
         <SWRConfig
@@ -353,7 +353,7 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(3);
 
       const identity = mockIdentities.unvalidatedPhoneIdentity;
-      mutate(`/api/identities/${identity.id}`, identity);
+      mutate(`/api/identities/${identity.id}/`, identity);
 
       render(
         <SWRConfig
@@ -387,7 +387,7 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(2);
 
       const identity = mockIdentities.unvalidatedPhoneIdentity;
-      mutate(`/api/identities/${identity.id}`, identity);
+      mutate(`/api/identities/${identity.id}/`, identity);
 
       render(
         <SWRConfig

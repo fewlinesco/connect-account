@@ -34,7 +34,7 @@ const ValidateIdentityForm: React.FC<{
       <Form
         formID={formID}
         onSubmit={async () => {
-          await fetchJson("/api/auth-connect/verify-validation-code", "POST", {
+          await fetchJson("/api/auth-connect/verify-validation-code/", "POST", {
             validationCode,
             eventId,
           }).then(async (response) => {
@@ -61,13 +61,13 @@ const ValidateIdentityForm: React.FC<{
                   parsedResponse.code ===
                   ERRORS_DATA.TEMPORARY_IDENTITY_EXPIRED.code
                 ) {
-                  router && router.push("/account/logins/email/new");
+                  router && router.push("/account/logins/email/new/");
                   return;
                 }
               }
             }
 
-            router && router.push("/account/logins");
+            router && router.push("/account/logins/");
           });
         }}
       >
@@ -88,7 +88,7 @@ const ValidateIdentityForm: React.FC<{
           variant={ButtonVariant.PRIMARY}
         >{`Confirm ${type.toLowerCase()}`}</Button>
       </Form>
-      <NeutralLink href="/account/logins">
+      <NeutralLink href="/account/logins/">
         <FakeButton variant={ButtonVariant.SECONDARY}>
           Discard all changes
         </FakeButton>
@@ -99,13 +99,13 @@ const ValidateIdentityForm: React.FC<{
         variant={ButtonVariant.SECONDARY}
         onPress={async () => {
           await fetchJson(
-            "/api/auth-connect/re-send-identity-validation-code",
+            "/api/auth-connect/re-send-identity-validation-code/",
             "POST",
             { eventId },
           )
             .then(async (response) => await response.json())
             .then(({ eventId }) =>
-              router.push(`/account/logins/${type}/validation/${eventId}`),
+              router.push(`/account/logins/${type}/validation/${eventId}/`),
             );
         }}
       >

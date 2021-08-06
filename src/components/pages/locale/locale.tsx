@@ -20,7 +20,7 @@ const Locale: React.FC = () => {
   const [locale, setLocale] = React.useState<string>("en");
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
-  const { data: fetchedLocale } = useSWR<string, SWRError>(`/api/locale`);
+  const { data: fetchedLocale } = useSWR<string, SWRError>(`/api/locale/`);
 
   React.useEffect(() => {
     fetchedLocale && setLocale(fetchedLocale);
@@ -38,7 +38,7 @@ const Locale: React.FC = () => {
             return;
           }
 
-          await fetchJson("/api/locale", "PATCH", { locale }).then(
+          await fetchJson("/api/locale/", "PATCH", { locale }).then(
             async (response) => {
               if (response.status >= 400) {
                 setErrorMessage("Something went wrong. Please try again later");
@@ -46,7 +46,7 @@ const Locale: React.FC = () => {
                 return;
               }
 
-              router && router.push("/account", undefined, { locale });
+              router && router.push("/account/", undefined, { locale });
               return;
             },
           );

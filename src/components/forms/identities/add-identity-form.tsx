@@ -48,7 +48,7 @@ const AddIdentityForm: React.FC<{
           };
 
           await fetchJson(
-            "/api/auth-connect/send-identity-validation-code",
+            "/api/auth-connect/send-identity-validation-code/",
             "POST",
             body,
           ).then(async (response) => {
@@ -87,7 +87,7 @@ const AddIdentityForm: React.FC<{
             if ("eventId" in parsedResponse) {
               router &&
                 router.push(
-                  `/account/logins/${type}/validation/${parsedResponse.eventId}`,
+                  `/account/logins/${type}/validation/${parsedResponse.eventId}/`,
                 );
             }
           });
@@ -147,7 +147,7 @@ const AddIdentityForm: React.FC<{
             : formatMessage({ id: "addPhone" })}
         </Button>
       </Form>
-      <NeutralLink href="/account/logins">
+      <NeutralLink href="/account/logins/">
         <FakeButton variant={ButtonVariant.SECONDARY}>
           {formatMessage({ id: "cancel" })}
         </FakeButton>

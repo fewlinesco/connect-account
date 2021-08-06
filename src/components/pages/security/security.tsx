@@ -10,7 +10,7 @@ import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 
 const Security: React.FC = () => {
   const { data, error } = useSWR<{ isPasswordSet: boolean }, Error>(
-    "/api/auth-connect/is-password-set",
+    "/api/auth-connect/is-password-set/",
   );
 
   if (error) {
@@ -23,7 +23,7 @@ const Security: React.FC = () => {
     <>
       <h2>{formatMessage({ id: "sectionTitle" })}</h2>
       <SectionBox>
-        <SecurityLink href={!data ? "#" : "/account/security/update"}>
+        <SecurityLink href={!data ? "#" : "/account/security/update/"}>
           {!data ? (
             <SkeletonTextLine fontSize={1.4} width={50} />
           ) : (

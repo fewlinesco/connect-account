@@ -23,7 +23,7 @@ const LoginsOverview: React.FC = () => {
   const [hidePhoneList, setHidePhoneList] = React.useState<boolean>(true);
 
   const { data: identities, error } = useSWR<Identity[], Error>(
-    "/api/identities",
+    "/api/identities/",
   );
 
   if (error) {
@@ -58,7 +58,7 @@ const LoginsOverview: React.FC = () => {
           />
         </Flex>
       ) : null}
-      <NeutralLink href={`/account/logins/email/new`}>
+      <NeutralLink href={`/account/logins/email/new/`}>
         <FakeButton variant={ButtonVariant.SECONDARY}>
           {`+ ${formatMessage({ id: "emailAddNewIdentityMessage" })}`}
         </FakeButton>
@@ -86,7 +86,7 @@ const LoginsOverview: React.FC = () => {
           />
         </Flex>
       ) : null}
-      <NeutralLink href={`/account/logins/phone/new`}>
+      <NeutralLink href={`/account/logins/phone/new/`}>
         <FakeButton variant={ButtonVariant.SECONDARY}>
           {`+ ${formatMessage({ id: "phoneAddNewIdentityMessage" })}`}
         </FakeButton>

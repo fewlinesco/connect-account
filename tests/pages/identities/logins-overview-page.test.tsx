@@ -66,7 +66,7 @@ describe("LoginsOverviewPage", () => {
         "href",
         `/account/logins/${mockIdentities.primaryEmailIdentity.type.toLowerCase()}/${
           mockIdentities.primaryEmailIdentity.id
-        }`,
+        }/`,
       );
       expect(
         screen.queryByRole("link", {
@@ -98,7 +98,7 @@ describe("LoginsOverviewPage", () => {
         "href",
         `/account/logins/${mockIdentities.nonPrimaryEmailIdentity.type.toLowerCase()}/${
           mockIdentities.nonPrimaryEmailIdentity.id
-        }`,
+        }/`,
       );
 
       expect(
@@ -113,7 +113,7 @@ describe("LoginsOverviewPage", () => {
 
       const identities = [mockIdentities.primaryEmailIdentity];
 
-      mutate("/api/identities", identities);
+      mutate("/api/identities/", identities);
 
       render(
         <SWRConfig
@@ -139,7 +139,7 @@ describe("LoginsOverviewPage", () => {
         "href",
         `/account/logins/${mockIdentities.primaryEmailIdentity.type.toLowerCase()}/${
           mockIdentities.primaryEmailIdentity.id
-        }`,
+        }/`,
       );
       expect(
         screen.queryByText(/Show more \([0-9]+\)/),
@@ -157,7 +157,7 @@ describe("LoginsOverviewPage", () => {
 
       const identities: Identity[] = [];
 
-      mutate("/api/identities", identities);
+      mutate("/api/identities/", identities);
 
       render(
         <SWRConfig
@@ -220,7 +220,7 @@ describe("LoginsOverviewPage", () => {
         "href",
         `/account/logins/${mockIdentities.primaryPhoneIdentity.type.toLowerCase()}/${
           mockIdentities.primaryPhoneIdentity.id
-        }`,
+        }/`,
       );
       expect(
         screen.queryByRole("link", {
@@ -252,7 +252,7 @@ describe("LoginsOverviewPage", () => {
         "href",
         `/account/logins/${mockIdentities.nonPrimaryPhoneIdentity.type.toLowerCase()}/${
           mockIdentities.nonPrimaryPhoneIdentity.id
-        }`,
+        }/`,
       );
       expect(
         screen.getByRole("link", {
@@ -266,7 +266,7 @@ describe("LoginsOverviewPage", () => {
 
       const identities = [mockIdentities.primaryPhoneIdentity];
 
-      mutate("/api/identities", identities);
+      mutate("/api/identities/", identities);
 
       render(
         <SWRConfig
@@ -292,7 +292,7 @@ describe("LoginsOverviewPage", () => {
         "href",
         `/account/logins/${mockIdentities.primaryPhoneIdentity.type.toLowerCase()}/${
           mockIdentities.primaryPhoneIdentity.id
-        }`,
+        }/`,
       );
       expect(
         screen.queryByText(/Show more \([0-9]+\)/),
@@ -309,7 +309,7 @@ describe("LoginsOverviewPage", () => {
 
       const identities: Identity[] = [];
 
-      mutate("/api/identities", identities);
+      mutate("/api/identities/", identities);
 
       render(
         <SWRConfig

@@ -26,7 +26,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares<{ type: string }>(
     context,
     basicMiddlewares(getTracer(), logger),
-    "/account/security/sudo",
+    "/account/security/sudo/",
   );
 };
 

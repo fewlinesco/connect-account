@@ -1,9 +1,11 @@
 import { text, click, screenshot, write, press, goto, setConfig } from "taiko";
 
+import { printStep } from "./index";
 import { configVariables } from "@src/configs/config-variables";
 
 async function authenticateToConnect(): Promise<void> {
   try {
+    printStep("🔒 Begin authentication");
     setConfig({ retryTimeout: 30000 });
 
     await goto(
@@ -15,8 +17,10 @@ async function authenticateToConnect(): Promise<void> {
 
     const isAlreadyLoggedIn = await text("already logged in").exists(1000, 50);
     if (isAlreadyLoggedIn) {
+      printStep("🔒 Already logged in");
       await click("Continue");
     } else {
+      printStep("🔒 Logging in");
       await write(configVariables.connectTestAccountEmail);
       await press("Enter");
 
@@ -30,6 +34,7 @@ async function authenticateToConnect(): Promise<void> {
       if (needScopeAcceptance) {
         await click("Accept");
       }
+      printStep("🔓🔑 Authenticated");
     }
   } catch (error) {
     await screenshot({

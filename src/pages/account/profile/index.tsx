@@ -22,12 +22,12 @@ const ProfilePage: React.FC = () => {
     Profile,
     SWRError
   >(
-    `/api/profile/user-profile`,
+    `/api/profile/user-profile/`,
     async (url) =>
       await fetch(url).then(async (response) => {
         if (!response.ok) {
           if (response.status === HttpStatus.NOT_FOUND) {
-            router && router.replace("/account/profile/user-profile/new");
+            router && router.replace("/account/profile/user-profile/new/");
             return;
           }
 
@@ -50,7 +50,7 @@ const ProfilePage: React.FC = () => {
   const { data: userAddresses, error: userAddressesError } = useSWR<
     Address[],
     SWRError
-  >(`/api/profile/addresses`);
+  >(`/api/profile/addresses/`);
 
   if (userAddressesError) {
     throw userAddressesError;
@@ -75,7 +75,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
     context,
     basicMiddlewares(getTracer(), logger),
-    "/account/profile",
+    "/account/profile/",
     () => {
       return { props: {} };
     },

@@ -64,7 +64,7 @@ async function authentication(
           "location",
           `/api/auth-connect/refresh-token?next=${encodeURIComponent(
             redirectURL,
-          )}`,
+          )}/`,
         );
         throw webErrorFactory(webErrors.temporaryRedirection);
       }

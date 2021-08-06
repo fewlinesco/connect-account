@@ -141,7 +141,7 @@ const handler: Handler = (request, response): Promise<void> => {
 const wrappedHandler = wrapMiddlewares(
   basicMiddlewares(getTracer(), logger),
   handler,
-  "/api/auth-connect/send-two-fa-validation-code",
+  "/api/auth-connect/send-two-fa-validation-code/",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
