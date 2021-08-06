@@ -161,7 +161,7 @@ const handler: Handler = (request, response): Promise<void> => {
 const wrappedHandler = wrapMiddlewares(
   noAuthBasicMiddlewares(getTracer(), logger),
   handler,
-  "/api/auth-connect/refresh-token",
+  "/api/auth-connect/refresh-token/",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

@@ -169,6 +169,6 @@ const destroy: Handler = (request, response): Promise<void> => {
 const middlewares = basicMiddlewares(getTracer(), logger);
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .get(wrapMiddlewares(middlewares, get, "/api/identities/[id]"))
-  .delete(wrapMiddlewares(middlewares, destroy, "/api/identities/[id]"))
+  .get(wrapMiddlewares(middlewares, get, "/api/identities/[id]/"))
+  .delete(wrapMiddlewares(middlewares, destroy, "/api/identities/[id]/"))
   .getHandler();

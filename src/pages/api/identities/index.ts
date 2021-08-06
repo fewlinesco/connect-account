@@ -78,7 +78,7 @@ const index: Handler = (request, response): Promise<void> => {
 const wrappedHandler = wrapMiddlewares(
   basicMiddlewares(getTracer(), logger),
   index,
-  "/api/identities",
+  "/api/identities/",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

@@ -14,7 +14,7 @@
     "CONNECT_MANAGEMENT_URL": "https://management.connect.prod.fewlines.tech/graphql",
     "CONNECT_OPEN_ID_CONFIGURATION_URL": "https://fewlines.connect.test.fewlines.tech/.well-known/openid-configuration",
     "CONNECT_PROVIDER_URL": "https://fewlines.connect.prod.fewlines.tech",
-    "CONNECT_REDIRECT_URI": "https://account-staging.fewlines.tech/api/oauth/callback",
+    "CONNECT_REDIRECT_URI": "https://account-staging.fewlines.tech/api/oauth/callback/",
     "DYNAMODB_ENDPOINT": "https://dynamodb.eu-west-3.amazonaws.com",
     "DYNAMODB_REGION": "eu-west-3",
     "DYNAMODB_TABLE_NAME": "fewlines-connect-account-review",

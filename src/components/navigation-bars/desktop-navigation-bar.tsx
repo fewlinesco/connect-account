@@ -20,7 +20,7 @@ const DesktopNavigationBar: React.FC = () => {
   const { locale } = useRouter();
 
   const { data: userProfile, isValidating } = useSWR<Profile, SWRError>(
-    `/api/profile/user-profile`,
+    `/api/profile/user-profile/`,
     navigationFetcher,
   );
 

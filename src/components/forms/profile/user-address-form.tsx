@@ -36,8 +36,8 @@ async function updateOrCreateAddress(
   addressId?: string,
 ): Promise<void> {
   const url = addressId
-    ? `/api/profile/addresses/${addressId}`
-    : "/api/profile/addresses";
+    ? `/api/profile/addresses/${addressId}/`
+    : "/api/profile/addresses/";
   const method = addressId ? "PATCH" : "POST";
 
   return fetchJson(url, method, addressPayload).then(async (response) => {
@@ -54,15 +54,15 @@ async function updateOrCreateAddress(
         const index = addresses.indexOf(address);
         const modifiedAddresses = [...addresses];
         modifiedAddresses[index] = parsedResponse;
-        await mutate("/api/profile/addresses", modifiedAddresses);
+        await mutate("/api/profile/addresses/", modifiedAddresses);
         await mutate(
-          `/api/profile/addresses/${parsedResponse.id}`,
+          `/api/profile/addresses/${parsedResponse.id}/`,
           parsedResponse,
         );
       } else {
-        await mutate("/api/profile/addresses", [...addresses, parsedResponse]);
+        await mutate("/api/profile/addresses/", [...addresses, parsedResponse]);
         await mutate(
-          `/api/profile/addresses/${parsedResponse.id}`,
+          `/api/profile/addresses/${parsedResponse.id}/`,
           parsedResponse,
         );
       }
@@ -117,7 +117,7 @@ const UserAddressForm: React.FC<{
     primary: false,
   });
   const [addresses, setAddresses] = React.useState<Address[]>([]);
-  useSWR<Address[], SWRError>(`/api/profile/addresses`, async (url) => {
+  useSWR<Address[], SWRError>(`/api/profile/addresses/`, async (url) => {
     return await fetch(url).then(async (response) => {
       if (!response.ok) {
         const error = new SWRError(

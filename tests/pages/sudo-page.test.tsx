@@ -118,7 +118,7 @@ describe("SudoPage", () => {
 
       const primaryIdentities = [mockIdentities.primaryPhoneIdentity];
 
-      mutate("/api/identity?primary=true", primaryIdentities);
+      mutate("/api/identity?primary=true/", primaryIdentities);
 
       render(
         <SWRConfig
