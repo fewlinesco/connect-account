@@ -13,6 +13,12 @@ async function authenticateToConnect(): Promise<void> {
       { navigationTimeout: 60000 },
     );
 
+    const needCookieAcceptance = await text("Cookies").exists(10000, 50);
+
+    if (needCookieAcceptance) {
+      await click("Accept all");
+    }
+
     await click("Access my account");
 
     const isAlreadyLoggedIn = await text("already logged in").exists(1000, 50);

@@ -220,7 +220,6 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
 
   @media ${deviceBreakpoints.m} {
     display: none;
