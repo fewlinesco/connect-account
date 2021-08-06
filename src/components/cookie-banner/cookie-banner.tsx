@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { CookieButton, ButtonVariant, StyledButton } from "../buttons/buttons";
+import { CookieButton, ButtonVariant, Button } from "../buttons/buttons";
 import { ClickAwayListener } from "../click-away-listener";
 import { SentryIcon } from "../icons/sentry-logo/sentry-icon";
 import { InputSwitch } from "../input/input-switch";
@@ -72,12 +72,23 @@ const CookieBanner: React.FC = () => {
               </Card>
             </Content>
             <ButtonsWrapper>
-              <CookieButtons type="button" variant={ButtonVariant.GHOST}>
+              <Button
+                type="button"
+                variant={ButtonVariant.GHOST_COOKIE}
+                onPress={() => setIsModalOpen(false)}
+              >
                 {formatCookieBannerMessage(router.locale || "en", "refuseAll")}
-              </CookieButtons>
-              <CookieButtons type="button" variant={ButtonVariant.PRIMARY}>
+              </Button>
+              <Button
+                type="button"
+                variant={ButtonVariant.PRIMARY_COOKIE}
+                onPress={() => {
+                  console.log("hello");
+                  setIsModalOpen(false);
+                }}
+              >
                 {formatCookieBannerMessage(router.locale || "en", "acceptAll")}
-              </CookieButtons>
+              </Button>
             </ButtonsWrapper>
           </CookieModal>
           <Overlay />
@@ -93,6 +104,7 @@ const CookieBannerWrapper = styled.div`
   position: fixed;
   left: 2rem;
   bottom: 2rem;
+  z-index: 3;
 
   @media ${deviceBreakpoints.m} {
     bottom: 0;
@@ -150,23 +162,6 @@ const CategoryTitle = styled.h3`
 
 const ButtonsWrapper = styled.div`
   display: flex;
-`;
-
-const CookieButtons = styled(StyledButton)`
-  margin-bottom: 0;
-  ${({ theme, variant }) =>
-    variant === ButtonVariant.PRIMARY &&
-    `
-      border-radius: 0 0 ${theme.radii[0]} 0;
-      `};
-
-  ${({ theme, variant }) =>
-    variant === ButtonVariant.GHOST &&
-    `
-    color: ${theme.colors.primary};
-    border-radius: 0 0 0 ${theme.radii[0]};
-    border-top: 0.1rem solid ${theme.colors.separator}
-      `};
 `;
 
 // const ToggleAllWrapper = styled.div`

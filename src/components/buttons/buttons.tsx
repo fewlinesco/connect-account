@@ -15,6 +15,8 @@ enum ButtonVariant {
   LIGHT_GREY = "LIGHT_GREY",
   DANGER = "DANGER",
   GHOST = "GHOST",
+  PRIMARY_COOKIE = "PRIMARY_COOKIE",
+  GHOST_COOKIE = "GHOST_COOKIE",
 }
 
 interface ButtonProps extends AriaButtonProps {
@@ -88,6 +90,25 @@ const StyledButton = styled.button<Record<string, unknown>>`
       background: ${theme.colors.background};
       color: ${theme.colors.red};
   `};
+
+  ${({ theme, variant }) =>
+    variant === ButtonVariant.PRIMARY_COOKIE &&
+    `
+      margin-bottom: 0;
+      border-radius: 0 0 ${theme.radii[0]} 0;
+      background: ${theme.colors.primary};
+      color: ${theme.colors.background};
+      `};
+
+  ${({ theme, variant }) =>
+    variant === ButtonVariant.GHOST_COOKIE &&
+    `
+    margin-bottom: 0;
+    color: ${theme.colors.primary};
+    background: ${theme.colors.background};
+    border-radius: 0 0 0 ${theme.radii[0]};
+    border-top: 0.1rem solid ${theme.colors.separator}
+      `};
 `;
 
 interface ShowMoreButtonProps extends AriaButtonProps {
