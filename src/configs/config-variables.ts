@@ -75,13 +75,11 @@ function getConnectAccountURL(): string {
 }
 
 function handleEnvVars(): void {
-  const connectAccountURL = getConnectAccountURL();
-
   configVariables.featureFlag =
     process.env.NEXT_PUBLIC_FEATURE_FLAG || process.env.NODE_ENV === "test"
       ? "false"
       : "";
-  configVariables.connectAccountURL = connectAccountURL;
+  configVariables.connectAccountURL = getConnectAccountURL();
   configVariables.dynamoRegion = process.env.DYNAMODB_REGION || "";
   configVariables.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";
   configVariables.dynamoAccessKeyID = process.env.DYNAMODB_ACCESS_KEY_ID || "";
@@ -98,7 +96,7 @@ function handleEnvVars(): void {
   configVariables.cookieSalt = process.env.CONNECT_ACCOUNT_SESSION_SALT || "";
   configVariables.connectOpenIdConfigurationUrl =
     process.env.CONNECT_OPEN_ID_CONFIGURATION_URL || "";
-  configVariables.connectAccountRedirectURI = `${connectAccountURL}api/oauth/callback/`;
+  configVariables.connectAccountRedirectURI = `${getConnectAccountURL()}api/oauth/callback/`;
   configVariables.connectAudience = process.env.CONNECT_AUDIENCE || "";
   configVariables.connectJwtAlgorithm = process.env.CONNECT_JWT_ALGORITHM || "";
   configVariables.accountJwePrivateKey =
@@ -111,16 +109,17 @@ function handleEnvVars(): void {
   configVariables.serviceName = process.env.SERVICE_NAME || "Connect.Account";
   configVariables.lightstepAccessToken =
     process.env.LIGHTSTEP_ACCESS_TOKEN || "";
-  if (process.env.FWL_TRACING_COLLECTORS) {
-    configVariables.fwlTracingCollectors = JSON.parse(
-      process.env.FWL_TRACING_COLLECTORS,
-    );
-  }
   configVariables.managementCredentials = {
     URI: process.env.CONNECT_MANAGEMENT_URL || "",
     APIKey: process.env.CONNECT_MANAGEMENT_API_KEY || "",
   };
   configVariables.connectProfileUrl = process.env.CONNECT_PROFILE_URL || "";
+
+  if (process.env.FWL_TRACING_COLLECTORS) {
+    configVariables.fwlTracingCollectors = JSON.parse(
+      process.env.FWL_TRACING_COLLECTORS,
+    );
+  }
 }
 
 handleEnvVars();
