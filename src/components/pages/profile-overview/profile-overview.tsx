@@ -252,14 +252,14 @@ const UserPicture = styled.img`
 `;
 
 const PictureCategoryName = styled.p`
-  color: ${({ theme }) => theme.colors.lightGrey};
+  color: ${({ theme }) => theme.colors.breadcrumbs};
   font-size: ${({ theme }) => theme.fontSizes.s};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   letter-spacing: 0.2rem;
 `;
 
 const CategoryName = styled.p`
-  color: ${({ theme }) => theme.colors.lightGrey};
+  color: ${({ theme }) => theme.colors.breadcrumbs};
   font-size: ${({ theme }) => theme.fontSizes.s};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   letter-spacing: 0.2rem;
