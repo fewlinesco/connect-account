@@ -188,7 +188,7 @@ const FlexContainer = styled.div`
 
 const ServiceDesc = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xs};
-  color: ${({ theme }) => theme.colors.lightGrey};
+  color: ${({ theme }) => theme.colors.breadcrumbs};
   width: 85%;
   margin-top: 0.2rem;
 

@@ -45,7 +45,7 @@ const Label = styled.label`
       height: 1.4rem;
       width: 1.4rem;
       position: absolute;
-      background-color: ${({ theme }) => theme.colors.lightGrey};
+      background-color: ${({ theme }) => theme.colors.breadcrumbs};
       border-radius: ${({ theme }) => theme.radii[3]};
       top: 0.2rem;
       left: 0.2rem;
