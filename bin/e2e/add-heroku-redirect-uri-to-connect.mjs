@@ -109,7 +109,7 @@ async function addHerokuRedirectURIToConnect() {
     "https://" +
     process.env.HEROKU_APP_NAME +
     ".herokuapp.com" +
-    "/api/oauth/callback";
+    "/api/oauth/callback/";
 
   const updatedTestApp = {
     ...testApp,

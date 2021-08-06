@@ -80,7 +80,7 @@ const handler: Handler = async (request, response) => {
 const wrappedHandler = wrapMiddlewares(
   basicMiddlewares(getTracer(), logger),
   handler,
-  "/api/auth-connect/set-password",
+  "/api/auth-connect/set-password/",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

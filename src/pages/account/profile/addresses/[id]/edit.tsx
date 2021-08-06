@@ -15,7 +15,7 @@ import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 const EditAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
   const { formatMessage } = useIntl();
   const { data: address, error } = useSWR<Address, Error>(
-    `/api/profile/addresses/${addressId}`,
+    `/api/profile/addresses/${addressId}/`,
   );
 
   if (error) {
@@ -41,7 +41,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
     context,
     basicMiddlewares(getTracer(), logger),
-    "/account/profile/address/[id]/edit",
+    "/account/profile/address/[id]/edit/",
     () => {
       if (!context?.params?.id) {
         return {

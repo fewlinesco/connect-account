@@ -66,7 +66,7 @@ const handler: Handler = (request, response): Promise<void> => {
 const wrappedHandler = wrapMiddlewares(
   basicMiddlewares(getTracer(), logger),
   handler,
-  "/api/auth-connect/is-password-set",
+  "/api/auth-connect/is-password-set/",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

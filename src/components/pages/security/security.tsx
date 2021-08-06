@@ -10,7 +10,7 @@ import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 
 const Security: React.FC = () => {
   const { data, error } = useSWR<{ isPasswordSet: boolean }, Error>(
-    "/api/auth-connect/is-password-set",
+    "/api/auth-connect/is-password-set/",
   );
 
   if (error) {

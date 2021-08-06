@@ -24,7 +24,7 @@ async function updateOrCreateProfile(
   profilePayload: ProfilePayload,
   isCreation?: boolean,
 ): Promise<void> {
-  const url = "/api/profile/user-profile";
+  const url = "/api/profile/user-profile/";
   const method = isCreation ? "POST" : "PATCH";
 
   return fetchJson(url, method, profilePayload).then(async (response) => {
@@ -34,7 +34,7 @@ async function updateOrCreateProfile(
       response.status === HttpStatus.CREATED ||
       response.status === HttpStatus.OK
     ) {
-      mutate("/api/profile/user-profile", parsedResponse);
+      mutate("/api/profile/user-profile/", parsedResponse);
       router && router.push("/account/profile/");
       return;
     } else {
