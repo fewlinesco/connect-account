@@ -102,7 +102,7 @@ const StyledButton = styled.button<Record<string, unknown>>`
       @media ${deviceBreakpoints.m} {
         height: 5rem;  
       }
-      `};
+  `};
 
   ${({ theme, variant }) =>
     variant === ButtonVariant.GHOST_COOKIE &&
@@ -116,7 +116,7 @@ const StyledButton = styled.button<Record<string, unknown>>`
     @media ${deviceBreakpoints.m} {
         height: 5rem;  
     };
-    `};
+  `};
 `;
 
 interface ShowMoreButtonProps extends AriaButtonProps {
