@@ -93,9 +93,7 @@ const CookieBanner: React.FC = () => {
           </CookieModal>
           <Overlay />
         </>
-      ) : (
-        <></>
-      )}
+      ) : null}
     </CookieBannerWrapper>
   );
 };
