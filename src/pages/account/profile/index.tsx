@@ -50,7 +50,27 @@ const ProfilePage: React.FC = () => {
   const { data: userAddresses, error: userAddressesError } = useSWR<
     Address[],
     SWRError
-  >(`/api/profile/addresses/`);
+  >(
+    `/api/profile/addresses/`,
+    async (url) =>
+      await fetch(url).then(async (response) => {
+        if (!response.ok) {
+          if (response.status === HttpStatus.NOT_FOUND) {
+            router && router.replace("/account/profile/user-profile/new/");
+            return;
+          }
+
+          const error = new SWRError(
+            "An error occurred while fetching the data.",
+          );
+          error.info = await response.json();
+          error.statusCode = response.status;
+          throw error;
+        }
+
+        return response.json();
+      }),
+  );
 
   if (userAddressesError) {
     throw userAddressesError;

@@ -25,7 +25,6 @@ const NewUserProfilePage: React.FC = () => {
       await fetch(url).then(async (response) => {
         if (!response.ok) {
           if (response.status === HttpStatus.NOT_FOUND) {
-            router && router.replace("/account/profile/");
             return;
           }
 
@@ -37,6 +36,7 @@ const NewUserProfilePage: React.FC = () => {
           throw error;
         }
 
+        router && router.replace("/account/profile/");
         return response.json();
       }),
   );
