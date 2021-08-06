@@ -7,6 +7,12 @@ describe("Dev buttons", () => {
   test("They should not be pushed", () => {
     render(<AccountApp />);
 
-    expect(screen.queryAllByRole("button").length).toBe(0);
+    const buttons = screen.queryAllByRole("button");
+
+    const devButtons = buttons.filter((btn) =>
+      btn.className.includes("DevButton"),
+    );
+
+    expect(devButtons.length).toBe(0);
   });
 });

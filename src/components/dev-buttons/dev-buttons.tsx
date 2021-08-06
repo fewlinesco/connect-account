@@ -44,7 +44,7 @@ const DevButtons: React.FC = () => {
 
 const DevSection = styled.div`
   position: fixed;
-  left: 2rem;
+  right: 2rem;
   bottom: 2rem;
 `;
 
