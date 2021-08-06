@@ -11,6 +11,7 @@ import { SWRConfig } from "swr";
 import * as locales from "@content/locales";
 import { AlertMessages } from "@src/components/alert-message/alert-messages";
 import { CookieBanner } from "@src/components/cookie-banner/cookie-banner";
+import { configVariables } from "@src/configs/config-variables";
 import { GlobalStyle } from "@src/design-system/globals/global-style";
 import { theme } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
@@ -82,7 +83,7 @@ const AccountApp: React.FC = ({ children }) => {
           >
             {children}
           </SWRConfig>
-          <CookieBanner />
+          {configVariables.featureFlag && <CookieBanner />}
         </ThemeProvider>
       </IntlProvider>
     </SSRProvider>
