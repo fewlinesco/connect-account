@@ -37,7 +37,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
     context,
     basicMiddlewares(getTracer(), logger),
-    "/profile/user-profile/new",
+    "/profile/user-profile/new/",
     () => {
       return { props: {} };
     },

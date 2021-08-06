@@ -91,6 +91,6 @@ const middlewares: Middleware<NextApiRequest, NextApiResponse>[] =
   basicMiddlewares(getTracer(), logger);
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
-  .get(wrapMiddlewares(middlewares, getHandler, "GET /api/locale"))
-  .patch(wrapMiddlewares(middlewares, patchHandler, "POST /api/locale"))
+  .get(wrapMiddlewares(middlewares, getHandler, "GET /api/locale/"))
+  .patch(wrapMiddlewares(middlewares, patchHandler, "POST /api/locale/"))
   .getHandler();

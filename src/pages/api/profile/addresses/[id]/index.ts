@@ -22,7 +22,7 @@ const getHandler: Handler = async (request, response) => {
   };
 
   return getTracer().span(
-    "GET /api/profile/addresses/[id] handler",
+    "GET /api/profile/addresses/[id]/ handler",
     async (span) => {
       const addressId = request.query.id;
 
@@ -77,7 +77,7 @@ const patchHandler: Handler = async (request, response) => {
   };
 
   return getTracer().span(
-    "PATCH /api/profile/addresses/[id] handler",
+    "PATCH /api/profile/addresses/[id]/ handler",
     async (span) => {
       const addressId = request.query.id;
 
@@ -143,7 +143,7 @@ const deleteHandler: Handler = async (request, response) => {
   };
 
   return getTracer().span(
-    "DELETE /api/profile/addresses/[id] handler",
+    "DELETE /api/profile/addresses/[id]/ handler",
     async (span) => {
       const addressId = request.query.id;
 
@@ -197,20 +197,24 @@ const middlewares = basicMiddlewares(getTracer(), logger);
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()
   .get(
-    wrapMiddlewares(middlewares, getHandler, "GET /api/profile/addresses/[id]"),
+    wrapMiddlewares(
+      middlewares,
+      getHandler,
+      "GET /api/profile/addresses/[id]/",
+    ),
   )
   .patch(
     wrapMiddlewares(
       middlewares,
       patchHandler,
-      "PATCH /api/profile/addresses/[id]",
+      "PATCH /api/profile/addresses/[id]/",
     ),
   )
   .delete(
     wrapMiddlewares(
       middlewares,
       deleteHandler,
-      "DELETE /api/profile/addresses/[id]",
+      "DELETE /api/profile/addresses/[id]/",
     ),
   )
   .getHandler();

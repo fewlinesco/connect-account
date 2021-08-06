@@ -43,7 +43,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
   }>(
     context,
     basicMiddlewares(getTracer(), logger),
-    "/account/logins/[type]/validation/[eventId]",
+    "/account/logins/[type]/validation/[eventId]/",
     () => {
       if (!context?.params?.type) {
         return {

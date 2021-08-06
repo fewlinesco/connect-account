@@ -17,7 +17,7 @@ const AddressOverviewPage: React.FC<{ addressId: string }> = ({
 }) => {
   const { formatMessage } = useIntl();
   const { data: address, error } = useSWR<Address, Error>(
-    `/api/profile/addresses/${addressId}`,
+    `/api/profile/addresses/${addressId}/`,
   );
 
   if (error) {
@@ -40,7 +40,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
     context,
     basicMiddlewares(getTracer(), logger),
-    "account/profile/addresses/[id]",
+    "account/profile/addresses/[id]/",
     () => {
       if (!context?.params?.id) {
         return {

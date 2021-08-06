@@ -130,7 +130,7 @@ const markAsPrimary: Handler = async (request, response) => {
 const markAsPrimaryWrappedHandler = wrapMiddlewares(
   basicMiddlewares(getTracer(), logger),
   markAsPrimary,
-  "/api/identities/[id]/mark-as-primary",
+  "/api/identities/[id]/mark-as-primary/",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

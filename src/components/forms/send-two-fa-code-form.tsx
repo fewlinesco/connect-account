@@ -45,7 +45,7 @@ const SendTwoFACodeForm: React.FC<{
         };
 
         await fetchJson(
-          "/api/auth-connect/send-two-fa-validation-code",
+          "/api/auth-connect/send-two-fa-validation-code/",
           "POST",
           body,
         ).then(async (response) => {
