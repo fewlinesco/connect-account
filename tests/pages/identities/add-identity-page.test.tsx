@@ -59,7 +59,7 @@ describe("AddIdentityPage", () => {
 
       expect(
         screen.getByRole("link", { name: localizedStrings.cancel }),
-      ).toHaveAttribute("href", "/account/logins");
+      ).toHaveAttribute("href", "/account/logins/");
     });
   });
 
@@ -93,7 +93,7 @@ describe("AddIdentityPage", () => {
 
       expect(
         screen.getByRole("link", { name: localizedStrings.cancel }),
-      ).toHaveAttribute("href", "/account/logins");
+      ).toHaveAttribute("href", "/account/logins/");
     });
   });
 });

@@ -187,7 +187,7 @@ const handler: Handler = (request, response): Promise<void> => {
 const wrappedHandler = wrapMiddlewares(
   basicMiddlewares(getTracer(), logger),
   handler,
-  "/api/auth-connect/re-send-identity-validation-code",
+  "/api/auth-connect/re-send-identity-validation-code/",
 );
 
 export default new Endpoint<NextApiRequest, NextApiResponse>()

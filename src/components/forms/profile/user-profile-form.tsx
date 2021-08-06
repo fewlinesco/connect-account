@@ -24,7 +24,7 @@ async function updateOrCreateProfile(
   profilePayload: ProfilePayload,
   isCreation?: boolean,
 ): Promise<void> {
-  const url = "/api/profile/user-profile";
+  const url = "/api/profile/user-profile/";
   const method = isCreation ? "POST" : "PATCH";
 
   return fetchJson(url, method, profilePayload).then(async (response) => {
@@ -34,8 +34,8 @@ async function updateOrCreateProfile(
       response.status === HttpStatus.CREATED ||
       response.status === HttpStatus.OK
     ) {
-      mutate("/api/profile/user-profile", parsedResponse);
-      router && router.push("/account/profile");
+      mutate("/api/profile/user-profile/", parsedResponse);
+      router && router.push("/account/profile/");
       return;
     } else {
       throw new Error("Something went wrong");
@@ -206,7 +206,7 @@ const UserProfileForm: React.FC<{
             : formatMessage({ id: "update" })}
         </Button>
       </Form>
-      <NeutralLink href={isCreation ? "/account" : "/account/profile"}>
+      <NeutralLink href={isCreation ? "/account/" : "/account/profile/"}>
         <FakeButton variant={ButtonVariant.SECONDARY}>
           {formatMessage({ id: "cancel" })}
         </FakeButton>

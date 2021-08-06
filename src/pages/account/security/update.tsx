@@ -16,7 +16,7 @@ const SecurityUpdatePage: React.FC = () => {
   const { data: isPasswordSetData, error: isPasswordSetError } = useSWR<
     { isPasswordSet: boolean },
     Error
-  >("/api/auth-connect/is-password-set");
+  >("/api/auth-connect/is-password-set/");
 
   if (isPasswordSetError) {
     throw isPasswordSetError;
@@ -60,7 +60,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       ...basicMiddlewares(getTracer(), logger),
       verifySudoModeMiddleware(getTracer(), context.resolvedUrl),
     ],
-    "/account/security/update",
+    "/account/security/update/",
   );
 };
 

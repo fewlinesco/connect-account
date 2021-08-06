@@ -31,7 +31,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
 
   const { data: addresses } = useSWR<Address[], SWRError>(
-    "/api/profile/addresses",
+    "/api/profile/addresses/",
     async (url) => {
       return await fetch(url).then(async (response) => {
         if (!response.ok) {
@@ -79,7 +79,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
         )}
       </Box>
       <NeutralLink
-        href={address ? `/account/profile/addresses/${address.id}/edit` : "#"}
+        href={address ? `/account/profile/addresses/${address.id}/edit/` : "#"}
       >
         <FakeButton variant={ButtonVariant.PRIMARY}>
           {formatMessage({ id: "update" })}
@@ -110,7 +110,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                   variant={ButtonVariant.PRIMARY}
                   onPress={() => {
                     fetchJson(
-                      `/api/profile/addresses/${address?.id}/mark-as-primary`,
+                      `/api/profile/addresses/${address?.id}/mark-as-primary/`,
                       "POST",
                       {},
                     )
@@ -129,18 +129,18 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                         );
                         if (addressToMark && oldMarkedAddress) {
                           addressToMark.primary = true;
-                          mutate("/api/profile/addresses", modifiedAddresses);
+                          mutate("/api/profile/addresses/", modifiedAddresses);
                           mutate(
-                            `/api/profile/addresses/${oldMarkedAddress.id}`,
+                            `/api/profile/addresses/${oldMarkedAddress.id}/`,
                             oldMarkedAddress,
                           );
                           mutate(
-                            `/api/profile/addresses/${addressToMark.id}`,
+                            `/api/profile/addresses/${addressToMark.id}/`,
                             oldMarkedAddress,
                           );
                         }
 
-                        router && router.push("/account/profile");
+                        router && router.push("/account/profile/");
                       })
                       .catch((error) => {
                         throw error;
@@ -184,7 +184,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
             type="button"
             variant={ButtonVariant.PRIMARY}
             onPress={() => {
-              fetchJson(`/api/profile/addresses/${address?.id}`, "DELETE", {})
+              fetchJson(`/api/profile/addresses/${address?.id}/`, "DELETE", {})
                 .then(async () => {
                   if (addresses && address) {
                     const addressToDelete = addresses.find(
@@ -194,10 +194,13 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                       const index = addresses.indexOf(addressToDelete);
                       const modifiedAddresses = [...addresses];
                       modifiedAddresses.splice(index, 1);
-                      await mutate("/api/profile/addresses", modifiedAddresses);
+                      await mutate(
+                        "/api/profile/addresses/",
+                        modifiedAddresses,
+                      );
                     }
                   }
-                  router && router.push("/account/profile");
+                  router && router.push("/account/profile/");
                 })
                 .catch((error) => {
                   throw error;
