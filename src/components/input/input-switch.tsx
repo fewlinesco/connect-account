@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import { deviceBreakpoints } from "@src/design-system/theme";
+
 const InputSwitch: React.FC<{
   groupName: string;
   labelText: string;
@@ -31,10 +33,6 @@ const Label = styled.label`
   width: 100%;
   cursor: pointer;
 
-  p {
-    font-size: ${({ theme }) => theme.fontSizes.s};
-  }
-
   span {
     position: relative;
     width: 3.6rem;
@@ -58,6 +56,21 @@ const Label = styled.label`
   input:checked + span:after {
     background-color: ${({ theme }) => theme.colors.primary};
     left: 2rem;
+  }
+
+  @media ${deviceBreakpoints.m} {
+    span {
+      height: 2rem;
+
+      :after {
+        height: 1.6rem;
+        width: 1.6rem;
+      }
+    }
+
+    input:checked + span:after {
+      left: 1.8rem;
+    }
   }
 `;
 

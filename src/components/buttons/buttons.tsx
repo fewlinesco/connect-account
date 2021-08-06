@@ -98,6 +98,10 @@ const StyledButton = styled.button<Record<string, unknown>>`
       border-radius: 0 0 ${theme.radii[0]} 0;
       background: ${theme.colors.primary};
       color: ${theme.colors.background};
+
+      @media ${deviceBreakpoints.m} {
+        height: 5rem;  
+      }
       `};
 
   ${({ theme, variant }) =>
@@ -107,8 +111,12 @@ const StyledButton = styled.button<Record<string, unknown>>`
     color: ${theme.colors.primary};
     background: ${theme.colors.background};
     border-radius: 0 0 0 ${theme.radii[0]};
-    border-top: 0.1rem solid ${theme.colors.separator}
-      `};
+    border-top: 0.1rem solid ${theme.colors.separator};
+
+    @media ${deviceBreakpoints.m} {
+        height: 5rem;  
+    };
+    `};
 `;
 
 interface ShowMoreButtonProps extends AriaButtonProps {
