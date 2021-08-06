@@ -14,7 +14,7 @@ import {
   waitFor,
 } from "taiko";
 
-import { authenticateToConnect } from "./utils/authenticate-to-connect";
+import { authenticateToConnect, printStep } from "./utils";
 import * as locales from "@content/locales";
 import { configVariables } from "@src/configs/config-variables";
 
@@ -55,19 +55,20 @@ describe("Profile happy path", () => {
     });
   });
 
-  beforeEach(async () => {
-    await authenticateToConnect();
-  });
-
   afterAll(async () => {
     await closeBrowser();
   });
 
   test("it should do Profile flows' happy path", async () => {
     expect.assertions(isStagingEnv ? 21 : 14);
+
+    printStep("Profile happy path", true);
+
+    await authenticateToConnect();
+
     try {
-      // Profile creation
       if (isStagingEnv) {
+        printStep("Profile create");
         await click(localizedStrings.navigation.createYourProfile);
         expect(
           await text(localizedStrings.newProfile.breadcrumb).exists(),
@@ -95,7 +96,7 @@ describe("Profile happy path", () => {
         await click(localizedStrings.navigation.personalInformation);
       }
 
-      // Update user profile flow
+      printStep("Profile update");
       await waitFor(
         async () =>
           await text(localizedStrings.profileOverview.updateInfo).exists(),
@@ -119,6 +120,8 @@ describe("Profile happy path", () => {
 
       await click(localizedStrings.editProfile.update);
       expect(await currentURL()).toEqual(`${baseURL}/account/profile/`);
+
+      printStep("Address create");
 
       await click(text(localizedStrings.profileOverview.addAddress));
 
@@ -227,7 +230,7 @@ describe("Profile happy path", () => {
         expect(await currentURL()).toEqual(`${baseURL}/account/profile/`);
       }
 
-      // Update address flow
+      printStep("Address update");
       await click(
         link("", below(localizedStrings.profileOverview.addressesSection)),
       );
@@ -250,11 +253,13 @@ describe("Profile happy path", () => {
         ),
       );
 
-      await click(localizedStrings.editAddress.update);
-      await waitFor(2000);
+      await click(localizedStrings.editAddress.update, {
+        waitForEvents: ["loadEventFired"],
+      });
+
       expect(await currentURL()).toEqual(profileUrl);
 
-      // Mark address as primary flow
+      printStep("Mark address as primary");
       await click(localizedStrings.navigation.personalInformation);
 
       expect(
@@ -274,7 +279,7 @@ describe("Profile happy path", () => {
 
       expect(await currentURL()).toEqual(`${baseURL}/account/profile/`);
 
-      // Delete address flow
+      printStep("Address delete");
       await click(
         link("", below(localizedStrings.profileOverview.addressesSection)),
       );
@@ -286,9 +291,10 @@ describe("Profile happy path", () => {
       expect(
         await text(localizedStrings.addressOverview.infoDelete).exists(),
       ).toBeTruthy();
-      await click(localizedStrings.addressOverview.deleteButton);
+      await click(localizedStrings.addressOverview.deleteButton, {
+        waitForEvents: ["loadEventFired"],
+      });
 
-      await waitFor(2000);
       expect(await currentURL()).toEqual(profileUrl);
 
       if (isStagingEnv) {
@@ -303,8 +309,10 @@ describe("Profile happy path", () => {
         expect(
           await text(localizedStrings.addressOverview.infoDelete).exists(),
         ).toBeTruthy();
-        await click(localizedStrings.addressOverview.deleteButton);
-        await waitFor(2000);
+        await click(localizedStrings.addressOverview.deleteButton, {
+          waitForEvents: ["loadEventFired"],
+        });
+
         expect(await currentURL()).toEqual(profileUrl);
       }
     } catch (error) {

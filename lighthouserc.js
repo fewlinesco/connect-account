@@ -1,7 +1,7 @@
 module.exports = {
   ci: {
     collect: {
-      puppeteerScript: "./bin/lighthouse-report.js",
+      puppeteerScript: "./bin/lighthouse/lighthouse-report.js",
       puppeteerLaunchOptions: {
         args: [
           "--allow-no-sandbox-job",

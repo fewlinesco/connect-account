@@ -7,7 +7,7 @@ import { NeutralLink } from "../neutral-link/neutral-link";
 const Header: React.FC = () => {
   return (
     <Flex>
-      <NeutralLink href="/account">
+      <NeutralLink href="/account/">
         <Logo />
       </NeutralLink>
       <AppName>Account</AppName>

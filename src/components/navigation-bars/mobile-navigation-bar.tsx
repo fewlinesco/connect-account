@@ -72,7 +72,7 @@ const MobileNavigationBar: React.FC = () => {
         <SubSection>
           {isOpen ? (
             <MenuItem color="primary" onClick={() => setIsOpen(false)}>
-              <SpecialLink href="/account/locale">
+              <SpecialLink href="/account/locale/">
                 <Content>
                   <LanguagesOptions>
                     <WhiteWorldIcon />

@@ -61,13 +61,13 @@ const ValidateIdentityForm: React.FC<{
                   parsedResponse.code ===
                   ERRORS_DATA.TEMPORARY_IDENTITY_EXPIRED.code
                 ) {
-                  router && router.push("/account/logins/email/new");
+                  router && router.push("/account/logins/email/new/");
                   return;
                 }
               }
             }
 
-            router && router.push("/account/logins");
+            router && router.push("/account/logins/");
           });
         }}
       >
@@ -88,7 +88,7 @@ const ValidateIdentityForm: React.FC<{
           variant={ButtonVariant.PRIMARY}
         >{`Confirm ${type.toLowerCase()}`}</Button>
       </Form>
-      <NeutralLink href="/account/logins">
+      <NeutralLink href="/account/logins/">
         <FakeButton variant={ButtonVariant.SECONDARY}>
           Discard all changes
         </FakeButton>
@@ -105,7 +105,7 @@ const ValidateIdentityForm: React.FC<{
           )
             .then(async (response) => await response.json())
             .then(({ eventId }) =>
-              router.push(`/account/logins/${type}/validation/${eventId}`),
+              router.push(`/account/logins/${type}/validation/${eventId}/`),
             );
         }}
       >

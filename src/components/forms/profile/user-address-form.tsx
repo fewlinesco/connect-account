@@ -66,7 +66,7 @@ async function updateOrCreateAddress(
           parsedResponse,
         );
       }
-      router && router.push("/account/profile");
+      router && router.push("/account/profile/");
       return;
     } else if (
       response.status === HttpStatus.UNPROCESSABLE_ENTITY &&
@@ -285,8 +285,8 @@ const UserAddressForm: React.FC<{
       <NeutralLink
         href={
           isCreation
-            ? "/account/profile"
-            : `/account/profile/addresses/${address.id}`
+            ? "/account/profile/"
+            : `/account/profile/addresses/${address.id}/`
         }
       >
         <FakeButton variant={ButtonVariant.SECONDARY}>
