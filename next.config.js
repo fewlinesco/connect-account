@@ -33,6 +33,20 @@ const moduleExports = {
 
     return config;
   },
+  headers: async () => {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value:
+              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; base-uri 'self'; form-action 'self'",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 const SentryWebpackPluginOptions = {
