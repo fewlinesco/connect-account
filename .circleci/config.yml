@@ -102,8 +102,8 @@ jobs:
           name: Install Connect.Account dependencies
           command: yarn install
       - run:
-          name: Install Puppeteer
-          command: yarn add -D puppeteer
+          name: Install Puppeteer and the Lighthouse CLI
+          command: yarn add -D puppeteer @lhci/cli
       - save_cache:
           name: Save Yarn Package Cache
           key: dependency-cache-{{ checksum "yarn.lock" }}
@@ -118,7 +118,7 @@ jobs:
                 command: echo "export CONNECT_TEST_ACCOUNT_URL=https://account-staging.fewlines.tech/" >> $BASH_ENV
       - run:
           name: Run Lighthouse audit
-          command: npx @lhci/cli autorun
+          command: yarn lhci autorun
       - store_artifacts:
           path: ./lhci_reports
       - run:

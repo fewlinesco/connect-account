@@ -69,7 +69,7 @@ describe("Profile happy path", () => {
     try {
       if (isStagingEnv) {
         printStep("Profile create");
-        await click(localizedStrings.navigation.createYourProfile);
+        await click(localizedStrings.navigation.personalInformation);
         expect(
           await text(localizedStrings.newProfile.breadcrumb).exists(),
         ).toBeTruthy();
@@ -106,6 +106,7 @@ describe("Profile happy path", () => {
 
       await text(localizedStrings.editProfile.breadcrumb).exists();
 
+      await waitFor(3000);
       await clear(textBox(localizedStrings.editProfile.usernameLabel));
 
       await write(

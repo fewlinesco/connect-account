@@ -40,6 +40,10 @@ const getHandler: Handler = async (request, response) => {
             throw webErrorFactory(webErrors.invalidScopes);
           }
 
+          if (error.response.status === HttpStatus.NOT_FOUND) {
+            throw webErrorFactory(webErrors.profileDataNotFound);
+          }
+
           throw webErrorFactory(webErrors.unreachable);
         });
 

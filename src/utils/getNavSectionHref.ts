@@ -2,8 +2,6 @@ function getNavSectionHref(sectionName: string): string {
   switch (sectionName) {
     case "updateProfileTitle":
       return "/account/profile";
-    case "createProfileTitle":
-      return "/account/profile/user-profile/new";
     case "loginsTitle":
       return "/account/logins";
     case "securityTitle":
