@@ -4,6 +4,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import styled from "styled-components";
 
+import { CookieIcon } from "../icons/cookie-icon/cookie-icon";
 import { CrossIcon } from "../icons/cross-icon/cross-icon";
 import { Triangle } from "../icons/triangle/triangle";
 import { deviceBreakpoints } from "@src/design-system/theme";
@@ -14,6 +15,8 @@ enum ButtonVariant {
   LIGHT_GREY = "LIGHT_GREY",
   DANGER = "DANGER",
   GHOST = "GHOST",
+  PRIMARY_COOKIE = "PRIMARY_COOKIE",
+  GHOST_COOKIE = "GHOST_COOKIE",
 }
 
 interface ButtonProps extends AriaButtonProps {
@@ -87,6 +90,33 @@ const StyledButton = styled.button<Record<string, unknown>>`
       background: ${theme.colors.background};
       color: ${theme.colors.red};
   `};
+
+  ${({ theme, variant }) =>
+    variant === ButtonVariant.PRIMARY_COOKIE &&
+    `
+      margin-bottom: 0;
+      border-radius: 0 0 ${theme.radii[0]} 0;
+      background: ${theme.colors.primary};
+      color: ${theme.colors.background};
+
+      @media ${deviceBreakpoints.m} {
+        height: 5rem;  
+      }
+  `};
+
+  ${({ theme, variant }) =>
+    variant === ButtonVariant.GHOST_COOKIE &&
+    `
+    margin-bottom: 0;
+    color: ${theme.colors.primary};
+    background: ${theme.colors.background};
+    border-radius: 0 0 0 ${theme.radii[0]};
+    border-top: 0.1rem solid ${theme.colors.separator};
+
+    @media ${deviceBreakpoints.m} {
+        height: 5rem;  
+    };
+  `};
 `;
 
 interface ShowMoreButtonProps extends AriaButtonProps {
@@ -147,10 +177,42 @@ const CloseConfirmationBoxButton: React.FC<{ onPress: () => void }> = (
   );
 };
 
+const CookieButton: React.FC<{ onPress: () => void }> = (props) => {
+  const cookieButtonRef = React.useRef(null);
+
+  const { buttonProps } = useButton(
+    { ...props, elementType: "div" },
+    cookieButtonRef,
+  );
+
+  return (
+    <CookieButtonStyle {...buttonProps} ref={cookieButtonRef}>
+      <CookieIcon />
+    </CookieButtonStyle>
+  );
+};
+
+const CookieButtonStyle = styled.div`
+  width: 4rem;
+  height: 4rem;
+  border-radius: ${({ theme }) => theme.radii[3]};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: ${({ theme }) => theme.shadows.box};
+  color: ${({ theme }) => theme.colors.primary};
+  cursor: pointer;
+
+  @media ${deviceBreakpoints.m} {
+    display: none;
+  }
+`;
+
 export {
   Button,
   StyledButton,
   ButtonVariant,
   ShowMoreButton,
   CloseConfirmationBoxButton,
+  CookieButton,
 };

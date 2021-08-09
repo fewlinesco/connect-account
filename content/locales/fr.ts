@@ -280,6 +280,17 @@ const fr = {
     invalidBody: "Quelque chose s’est mal passé. Veuillez réessayer plus tard.",
     invalidUserAddressPayload: "Veuillez remplir le champ ci-dessus.",
   },
+  cookieBanner: {
+    generalDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam bibendum arcu vel neque sagittis, eu laoreet diam dapibus. Ut id lectus nec ante maximus mollis nec id nulla.",
+    monitoringCategory: "Monitoring",
+    toggle: "Tout sélectionner",
+    sentryDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam bibendum arcu vel neque sagittis",
+    acceptAll: "Tout accepter",
+    accept: "Accepter",
+    refuseAll: "Tout refuser",
+  },
 };
 
 export { fr };

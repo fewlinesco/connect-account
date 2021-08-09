@@ -1,7 +1,7 @@
-= Connect Account
+= Connect.Account
 :toc: preamble
 
-Connect Account is an open source web application, which aims at providing all the business logic to handle Connect identities, profile and addresses data, and a default frontend for users to use.
+Connect.Account is an open source web application, which aims at providing all the business logic to handle Connect identities, profile and addresses data, and a default frontend for users to use.
 
 == Flows
 
@@ -263,17 +263,35 @@ if you want to automatically fix linting issues.
 | `LIGHTSTEP_ACCESS_TOKEN`
 | Your Lightstep access token.
 
+| `FWL_TRACING_COLLECTORS`
+| Config of the collectors used for tracing purposes.
+
 | `SENTRY_AUTH_TOKEN`
 | Auth token required to contact Sentry.
 
 | `NEXT_PUBLIC_SENTRY_ENVIRONMENT`
 | Should be set to `development`. Used to prevent sentry report when working with a built version, locally.
 
+| `MEMCACHED_CLIENT_PASSWORD`
+| Password used to initiate the Memcached Client for rate limiting.
+
+| `MEMCACHED_CLIENT_USERNAME`
+| Username used to initiate the Memcached Client for rate limiting.
+
+| `MEMCACHED_CLIENT_SERVERS`
+| Address of the Memcached Client servers. 
+
 | `CONNECT_TEST_ACCOUNT_EMAIL`
 | Email of the Connect account that will be used for e2e tests.
 
 | `CONNECT_TEST_ACCOUNT_PASSWORD`
 | Password of the Connect account that will be used for e2e tests.
+
+| `CONNECT_TEST_ACCOUNT_SUB`
+| Sub of the Connect account that will be used for e2e tests.
+
+| `CONNECT_TEST_ACCOUNT_URL`
+| URL of the Connect.Account application that will be used for e2e tests.
 
 | `CONNECT_PROFILE_URL`
 | URL of Connect.Profile server.
@@ -286,7 +304,7 @@ To understand the flow of `connect-account`, you should read the `connect` https
 
 == @fewlines/connect-client
 
-To understand the abstraction added by the `@fewlines/connect-client`, please read the https://github.com/fewlinesco/connect-js/tree/main/client[documentation]
+To understand the abstraction added by the `@fewlines/connect-client`, please read the https://github.com/fewlinesco/connect-js/tree/main/client[documentation].
 
 == Source Code Organization
 
@@ -312,7 +330,7 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 === bin/
 
 - *dynamodb/*: Scripts to interact with your local DynamoDB instead of the AWS CLI, which requires sensitives admin credentials.
-- *e2e/*: Scripts related to e2e tests, used in Github Actions.
+- *e2e/*: Scripts related to e2e tests, used in our CI/CD pipeline or in local environment.
 
 === doc/
 
@@ -330,8 +348,11 @@ Favicons for various OS.
 - *configs/*: 
   * *config-variables.ts*: Entry point used to verify env vars sourcing, and prevent the app to run if forgotten.
   * *db-client.ts*: Singleton of the DynamoDB client.
+  * *intl.ts*: File regrouping all the `intl` object, which are instances to store the cache of all Intl.* APIs, configurations, compiled messages and such.
   * *logger.ts*: Singleton of the logger client provided by `@fwl/web`.
   * *oauth2-client.ts*: Singleton of the OAuth2 Client provided by `@fewlines/connect-client`.
+  * *profile-client.ts*: Singleton of the Profile Client provided by Connect Profile.
+  * *rate-limiting-config.ts*: Config used for the rate limiting middleware provided by `@fwl/web`.
   * *tracer.ts*: Singleton of the tracer client provided by `@fwl/web`.
 - *design-system/*:
   * *globals/*: Global style components.
@@ -342,7 +363,7 @@ Favicons for various OS.
 - *middlewares/*: Reusable wrappers to add various features to server side actions.
 - *pages/*: NextJS router.
 - *queries/*: Read (i.e. `GET`) database actions.
-- *utils/*: Small snippets/functions used multiple times throughout the application
+- *utils/*: Small snippets/functions used multiple times throughout the application.
 - *workflows/*: workflows used in multiples places.
 
 === tests/
@@ -360,8 +381,10 @@ Favicons for various OS.
 - *app.json*: Building instructions for Heroku.
 - *assets.d.ts*: Type declaration allowing the import of assets in TypeScript files.
 - *Brewfile*: Tools needed that will be installed via Brew for MacOS users.
+- *connect-profile-openapi.yml*: OpenAPI file of Connect Profile.
 - *docker-compose.yml*: Instructions to launch DynamoDB and the observability tools.
 - *Dockerfile*: Instructions for Docker image build process.
+- *lighthouserc.js*: Instructions for Lighthouse audits.
 - *next-env.d.ts*: Adds NextJS types globally.
 - *next.config.js*: Extended webpack compiler config used by NextJS.
 - *nginx.conf*: Local proxy configuration.
@@ -682,17 +705,17 @@ We are using https://github.com/testing-library/dom-testing-library[Testing Libr
 
 We are using https://github.com/getgauge/taiko[Taiko] to test our workflows.
 
-=== Github Actions
+=== CI/CD pipeline
 
-To automate our test processes, we use https://docs.github.com/en/actions[Github Actions] to execute workflows, which allow us to run our test suites on new commit pushed to each pull request.
+To automate our test processes, we use https://circleci.com[CircleCI], which allow us to run our test suites on new commit pushed to each pull request.
 
-Regarding our main flow for end to end tests (i.e `e2e-test.yml`), here is the gist of it. 
-Since we had to trigger different flows based on a third party event (i.e. `review app deployment`), we couldn't leverage Github checks management automation on PR.
-Once we receive the status of the deployment from our third party actor, we run our end to end test suite (`e2e-tests` job inside `e2e-test.yml`) if the review app deployment is a success, or we skip it in the case of a failure during the process.
+Several flows (or `jobs`) are executed in this context and orchestrated in workflows inside the `config.yml` file: 
 
-All of these cases are handled at job-level, mostly thanks to https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#job-status-check-functions[job status check functions], which permit to control more precisely jobs execution via conditional statements. 
+- *lint-and-tests*: runs the code linting and the integration/unit tests.
+- *e2e-tests*: runs the e2e test suite on a deployed Connect.Account version.
+- *lighthouse*: runs the Lighthouse audits on a deployed Connect.Account version.
+- *promote-to-production*: used to automate the production deployment from staging when the test suite is successful.
 
-Inside most of our jobs, we used TypeScript written scripts to perform our actions.
 
 == Monitoring
 

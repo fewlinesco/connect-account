@@ -232,7 +232,7 @@ const Flex = styled.div`
 `;
 
 const CategoryName = styled.p`
-  color: ${({ theme }) => theme.colors.lightGrey};
+  color: ${({ theme }) => theme.colors.breadcrumbs};
   font-size: ${({ theme }) => theme.fontSizes.s};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   letter-spacing: 0.2rem;
