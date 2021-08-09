@@ -12,7 +12,7 @@ import { Middleware } from "@fwl/web/dist/middlewares";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { UserCookie } from "@src/@types/user-cookie";
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 import {
   NoDBUserFoundError,
   NoUserCookieFoundError,
@@ -38,7 +38,7 @@ async function authentication(
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
-      cookieSalt: configVariables.cookieSalt,
+      cookieSalt: CONFIG_VARIABLES.cookieSalt,
     });
 
     if (!userCookie) {

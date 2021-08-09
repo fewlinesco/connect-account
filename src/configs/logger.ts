@@ -1,8 +1,8 @@
 import { createLogger, EncoderTypeEnum } from "@fwl/logging";
 
-import { configVariables } from "./config-variables";
+import { CONFIG_VARIABLES } from "./config-variables";
 
 export const logger = createLogger({
-  service: configVariables.serviceName,
+  service: CONFIG_VARIABLES.serviceName,
   encoder: EncoderTypeEnum.JSON,
 });
