@@ -1,4 +1,3 @@
-import { HttpStatus } from "@fwl/web";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
@@ -15,30 +14,14 @@ import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { SWRError } from "@src/errors/errors";
 import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
+import { newProfileSWRFetcher } from "@src/queries/new-profile-swr-fetcher";
 
 const NewUserProfilePage: React.FC = () => {
   const router = useRouter();
   const { formatMessage } = useIntl();
-  const { error: userProfileError } = useSWR<Profile, SWRError>(
-    `/api/profile/user-profile/`,
-    async (url) =>
-      await fetch(url).then(async (response) => {
-        if (!response.ok) {
-          if (response.status === HttpStatus.NOT_FOUND) {
-            return;
-          }
-
-          const error = new SWRError(
-            "An error occurred while fetching the data.",
-          );
-          error.info = await response.json();
-          error.statusCode = response.status;
-          throw error;
-        }
-
-        router && router.replace("/account/profile/");
-        return response.json();
-      }),
+  const { error: userProfileError } = useSWR<Profile | undefined, SWRError>(
+    [`/api/profile/user-profile/`, router],
+    newProfileSWRFetcher,
   );
 
   if (userProfileError) {

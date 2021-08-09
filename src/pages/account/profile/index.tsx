@@ -1,4 +1,3 @@
-import { HttpStatus } from "@fwl/web";
 import { getServerSidePropsWithMiddlewares } from "@fwl/web/dist/next";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
@@ -14,6 +13,7 @@ import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { SWRError } from "@src/errors/errors";
 import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
+import { profileOverviewSWRFetcher } from "@src/queries/profile-overview-swr-fetcher";
 
 const ProfilePage: React.FC = () => {
   const router = useRouter();
@@ -21,27 +21,7 @@ const ProfilePage: React.FC = () => {
   const { data: userProfile, error: userProfileError } = useSWR<
     Profile,
     SWRError
-  >(
-    `/api/profile/user-profile/`,
-    async (url) =>
-      await fetch(url).then(async (response) => {
-        if (!response.ok) {
-          if (response.status === HttpStatus.NOT_FOUND) {
-            router && router.replace("/account/profile/user-profile/new/");
-            return;
-          }
-
-          const error = new SWRError(
-            "An error occurred while fetching the data.",
-          );
-          error.info = await response.json();
-          error.statusCode = response.status;
-          throw error;
-        }
-
-        return response.json();
-      }),
-  );
+  >([`/api/profile/user-profile/`, router], profileOverviewSWRFetcher);
 
   if (userProfileError) {
     throw userProfileError;
@@ -50,27 +30,7 @@ const ProfilePage: React.FC = () => {
   const { data: userAddresses, error: userAddressesError } = useSWR<
     Address[],
     SWRError
-  >(
-    `/api/profile/addresses/`,
-    async (url) =>
-      await fetch(url).then(async (response) => {
-        if (!response.ok) {
-          if (response.status === HttpStatus.NOT_FOUND) {
-            router && router.replace("/account/profile/user-profile/new/");
-            return;
-          }
-
-          const error = new SWRError(
-            "An error occurred while fetching the data.",
-          );
-          error.info = await response.json();
-          error.statusCode = response.status;
-          throw error;
-        }
-
-        return response.json();
-      }),
-  );
+  >(`/api/profile/addresses/`, profileOverviewSWRFetcher);
 
   if (userAddressesError) {
     throw userAddressesError;
