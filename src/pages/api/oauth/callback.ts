@@ -12,7 +12,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import { getAndPutUser } from "@src/commands/get-and-put-user";
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 import { getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import { oauth2Client } from "@src/configs/oauth2-client";
@@ -98,7 +98,7 @@ const handler: Handler = (request, response): Promise<void> => {
       },
       {
         shouldCookieBeSealed: true,
-        cookieSalt: configVariables.cookieSalt,
+        cookieSalt: CONFIG_VARIABLES.cookieSalt,
         maxAge: 24 * 60 * 60,
         path: "/",
         httpOnly: true,

@@ -14,7 +14,7 @@ import {
 
 import { authenticateToConnect } from "./utils/authenticate-to-connect";
 import * as locales from "@content/locales";
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 
 describe("Fill incorrect identity input values", () => {
   jest.setTimeout(60000);
@@ -67,7 +67,7 @@ describe("Fill incorrect identity input values", () => {
 
         await write(
           process.env.CONNECT_TEST_ACCOUNT_EMAIL ||
-            configVariables.connectTestAccountEmail,
+            CONFIG_VARIABLES.connectTestAccountEmail,
           into(
             textBox({
               placeholder: localizedStrings.newIdentity.emailPlaceholder,

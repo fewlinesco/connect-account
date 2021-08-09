@@ -1,7 +1,7 @@
 import { PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, NativeAttributeValue } from "@aws-sdk/util-dynamodb";
 
-import { configVariables } from "../../src/configs/config-variables";
+import { CONFIG_VARIABLES } from "../../src/configs/config-variables";
 import { dynamoDbClient } from "../../src/configs/db-client";
 
 async function putUser(userData: {
@@ -10,7 +10,7 @@ async function putUser(userData: {
   try {
     const Item = marshall(userData);
     const params = {
-      TableName: configVariables.dynamoTableName,
+      TableName: CONFIG_VARIABLES.dynamoTableName,
       Item,
     };
 

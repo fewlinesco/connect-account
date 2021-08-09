@@ -19,7 +19,7 @@ import { SudoEventId } from "@src/@types/dynamo-user";
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertSudoEventId } from "@src/commands/insert-sudo-event-id";
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import { NoDBUserFoundError } from "@src/errors/errors";
@@ -49,7 +49,7 @@ const handler: Handler = (request, response): Promise<void> => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
         isCookieSealed: true,
-        cookieSalt: configVariables.cookieSalt,
+        cookieSalt: CONFIG_VARIABLES.cookieSalt,
       });
 
       if (!userCookie) {
@@ -65,7 +65,7 @@ const handler: Handler = (request, response): Promise<void> => {
       };
 
       return await sendTwoFAVerificationCode(
-        configVariables.managementCredentials,
+        CONFIG_VARIABLES.managementCredentials,
         {
           callbackUrl: callbackUrl || "/",
           identity,

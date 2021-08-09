@@ -1,4 +1,4 @@
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 import { oauth2Client } from "@src/configs/oauth2-client";
 import {
   EnvVar_IsJweSigned_MustBeABoolean,
@@ -10,7 +10,7 @@ const mockConfigGetter = jest.fn();
 
 jest.mock("@src/configs/config-variables", () => {
   return {
-    get configVariables() {
+    get CONFIG_VARIABLES() {
       return mockConfigGetter();
     },
   };
@@ -36,7 +36,7 @@ describe("decryptVerifyAccessToken", () => {
     expect.assertions(3);
 
     mockConfigGetter.mockReturnValue({
-      ...configVariables,
+      ...CONFIG_VARIABLES,
       accountJwePrivateKey: "foo-bar",
       connectJwtAlgorithm: "RS256",
       isJweSigned: "true",
@@ -75,7 +75,7 @@ describe("decryptVerifyAccessToken", () => {
     expect.assertions(3);
 
     mockConfigGetter.mockReturnValue({
-      ...configVariables,
+      ...CONFIG_VARIABLES,
       accountJwePrivateKey: "foo-bar",
       connectJwtAlgorithm: "RS256",
       isJweSigned: "false",
@@ -114,7 +114,7 @@ describe("decryptVerifyAccessToken", () => {
     expect.assertions(3);
 
     mockConfigGetter.mockReturnValue({
-      ...configVariables,
+      ...CONFIG_VARIABLES,
       accountJwePrivateKey: "foo-bar",
       connectJwtAlgorithm: "RS256",
       isJweSigned: "true",
@@ -172,7 +172,7 @@ describe("decryptVerifyAccessToken", () => {
     expect.assertions(2);
 
     mockConfigGetter.mockReturnValue({
-      ...configVariables,
+      ...CONFIG_VARIABLES,
       accountJwePrivateKey: "foo-bar",
       connectJwtAlgorithm: "RS256",
       isJweSigned: "2",

@@ -3,7 +3,7 @@ import { getServerSideCookies } from "@fwl/web";
 import { NextApiRequest } from "next";
 
 import { Configuration, ConnectProfileApi } from "../../connect-profile-client";
-import { configVariables } from "./config-variables";
+import { CONFIG_VARIABLES } from "./config-variables";
 import { UserCookie } from "@src/@types/user-cookie";
 import { NoUserCookieFoundError } from "@src/errors/errors";
 import { getProfileAndAddressAccessTokens } from "@src/utils/get-profile-and-address-access-tokens";
@@ -12,7 +12,7 @@ function initProfileClient(accessToken: string): ConnectProfileApi {
   return new ConnectProfileApi(
     new Configuration({
       accessToken,
-      basePath: configVariables.connectProfileUrl,
+      basePath: CONFIG_VARIABLES.connectProfileUrl,
     }),
   );
 }
@@ -27,7 +27,7 @@ async function wrappedProfileClient(
   const userCookie = await getServerSideCookies<UserCookie>(request, {
     cookieName: "user-cookie",
     isCookieSealed: true,
-    cookieSalt: configVariables.cookieSalt,
+    cookieSalt: CONFIG_VARIABLES.cookieSalt,
   });
 
   if (!userCookie) {

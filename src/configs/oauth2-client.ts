@@ -2,15 +2,15 @@ import OAuth2Client, {
   OAuth2ClientConstructor,
 } from "@fewlines/connect-client";
 
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 
 const oauth2ClientConstructorProps: OAuth2ClientConstructor = {
-  openIDConfigurationURL: configVariables.connectOpenIdConfigurationUrl,
-  clientID: configVariables.connectApplicationClientId,
-  clientSecret: configVariables.connectApplicationClientSecret,
-  redirectURI: configVariables.connectAccountRedirectURI,
-  audience: configVariables.connectAudience,
-  scopes: configVariables.connectApplicationScopes.split(" "),
+  openIDConfigurationURL: CONFIG_VARIABLES.connectOpenIdConfigurationUrl,
+  clientID: CONFIG_VARIABLES.connectApplicationClientId,
+  clientSecret: CONFIG_VARIABLES.connectApplicationClientSecret,
+  redirectURI: CONFIG_VARIABLES.connectAccountRedirectURI,
+  audience: CONFIG_VARIABLES.connectAudience,
+  scopes: CONFIG_VARIABLES.connectApplicationScopes.split(" "),
 };
 
 const oauth2Client = new OAuth2Client(oauth2ClientConstructorProps);
