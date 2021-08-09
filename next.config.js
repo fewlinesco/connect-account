@@ -41,7 +41,7 @@ const moduleExports = {
           {
             key: "Content-Security-Policy",
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; base-uri 'self'; form-action 'self'",
+              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src 'self' *.sentry.io; img-src 'self'; style-src 'self' 'unsafe-inline'; base-uri 'self'; form-action 'self'",
           },
         ],
       },
