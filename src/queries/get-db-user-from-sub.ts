@@ -3,12 +3,12 @@ import { unmarshall } from "@aws-sdk/util-dynamodb";
 
 import { DynamoUser, SudoEventId } from "@src/@types/dynamo-user";
 import { TemporaryIdentity } from "@src/@types/temporary-identity";
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 import { dynamoDbClient } from "@src/configs/db-client";
 
 async function getDBUserFromSub(sub: string): Promise<DynamoUser | null> {
   const getItem = {
-    TableName: configVariables.dynamoTableName,
+    TableName: CONFIG_VARIABLES.dynamoTableName,
     Key: {
       sub: { S: sub },
     },

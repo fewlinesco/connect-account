@@ -1,6 +1,6 @@
 import { JWTPayload } from "@fewlines/connect-client";
 
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 import { oauth2Client } from "@src/configs/oauth2-client";
 import {
   EnvVar_IsJweSigned_MustBeABoolean,
@@ -15,10 +15,10 @@ async function decryptVerifyAccessToken(
   if (tokenPartsCount === 3) {
     return oauth2Client.verifyJWT<JWTPayload>(
       accessToken,
-      configVariables.connectJwtAlgorithm,
+      CONFIG_VARIABLES.connectJwtAlgorithm,
     );
   } else if (tokenPartsCount === 5) {
-    const isAccessTokenSigned = JSON.parse(configVariables.isJweSigned);
+    const isAccessTokenSigned = JSON.parse(CONFIG_VARIABLES.isJweSigned);
 
     if (typeof isAccessTokenSigned !== "boolean") {
       throw new EnvVar_IsJweSigned_MustBeABoolean();
@@ -26,14 +26,14 @@ async function decryptVerifyAccessToken(
 
     const decodedToken = await oauth2Client.decryptJWE<JWTPayload | string>(
       accessToken,
-      configVariables.accountJwePrivateKey,
+      CONFIG_VARIABLES.accountJwePrivateKey,
       isAccessTokenSigned,
     );
 
     if (isAccessTokenSigned && typeof decodedToken === "string") {
       return oauth2Client.verifyJWT<JWTPayload>(
         decodedToken,
-        configVariables.connectJwtAlgorithm,
+        CONFIG_VARIABLES.connectJwtAlgorithm,
       );
     } else {
       return decodedToken as JWTPayload;

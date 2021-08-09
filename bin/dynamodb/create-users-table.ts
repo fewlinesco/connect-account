@@ -3,11 +3,11 @@ import {
   ListTablesCommand,
 } from "@aws-sdk/client-dynamodb";
 
-import { configVariables } from "../../src/configs/config-variables";
+import { CONFIG_VARIABLES } from "../../src/configs/config-variables";
 import { dynamoDbClient } from "../../src/configs/db-client";
 
 const usersTableSchema = {
-  TableName: configVariables.dynamoTableName,
+  TableName: CONFIG_VARIABLES.dynamoTableName,
   KeySchema: [{ AttributeName: "sub", KeyType: "HASH" }],
   AttributeDefinitions: [{ AttributeName: "sub", AttributeType: "S" }],
   ProvisionedThroughput: {

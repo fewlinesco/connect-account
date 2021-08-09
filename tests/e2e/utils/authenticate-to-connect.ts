@@ -1,7 +1,7 @@
 import { text, click, screenshot, write, press, goto, setConfig } from "taiko";
 
 import { printStep } from "./index";
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 
 async function authenticateToConnect(): Promise<void> {
   try {
@@ -9,7 +9,8 @@ async function authenticateToConnect(): Promise<void> {
     setConfig({ retryTimeout: 30000 });
 
     await goto(
-      process.env.CONNECT_TEST_ACCOUNT_URL || configVariables.connectAccountURL,
+      process.env.CONNECT_TEST_ACCOUNT_URL ||
+        CONFIG_VARIABLES.connectAccountURL,
       { navigationTimeout: 60000 },
     );
 
@@ -27,10 +28,10 @@ async function authenticateToConnect(): Promise<void> {
       await click("Continue");
     } else {
       printStep("🔒 Logging in");
-      await write(configVariables.connectTestAccountEmail);
+      await write(CONFIG_VARIABLES.connectTestAccountEmail);
       await press("Enter");
 
-      await write(configVariables.connectTestAccountPassword);
+      await write(CONFIG_VARIABLES.connectTestAccountPassword);
       await press("Enter", { navigationTimeout: 60000 });
 
       const needScopeAcceptance = await text(

@@ -16,17 +16,17 @@ import {
 
 import { authenticateToConnect, printStep } from "./utils";
 import * as locales from "@content/locales";
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 
 describe("Profile happy path", () => {
   jest.setTimeout(130000);
 
   const isStagingEnv = (
-    process.env.CONNECT_PROFILE_URL || configVariables.connectProfileUrl
+    process.env.CONNECT_PROFILE_URL || CONFIG_VARIABLES.connectProfileUrl
   ).includes("staging");
 
   const baseURL = (
-    process.env.CONNECT_TEST_ACCOUNT_URL || configVariables.connectAccountURL
+    process.env.CONNECT_TEST_ACCOUNT_URL || CONFIG_VARIABLES.connectAccountURL
   ).replace(/\/?$/, "");
 
   const profileUrl = `${baseURL}/account/profile/`;

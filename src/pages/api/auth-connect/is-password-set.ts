@@ -9,7 +9,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
@@ -25,7 +25,7 @@ const handler: Handler = (request, response): Promise<void> => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
-      cookieSalt: configVariables.cookieSalt,
+      cookieSalt: CONFIG_VARIABLES.cookieSalt,
     });
 
     if (!userCookie) {
@@ -36,7 +36,7 @@ const handler: Handler = (request, response): Promise<void> => {
     }
 
     const isPasswordSet = await isUserPasswordSet(
-      configVariables.managementCredentials,
+      CONFIG_VARIABLES.managementCredentials,
       userCookie.sub,
     ).catch((error) => {
       span.setDisclosedAttribute("is password set info found", false);

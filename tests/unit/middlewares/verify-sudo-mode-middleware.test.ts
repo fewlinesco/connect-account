@@ -9,7 +9,7 @@ import * as query from "@src/workflows/get-db-user-from-user-cookie";
 
 jest.mock("@src/configs/config-variables", () => {
   return {
-    configVariables: {
+    CONFIG_VARIABLES: {
       cookieSalt: "#*b+x3ZXE3-h[E+Q5YC5`jr~y%CA~R-[",
       connectOpenIdConfigurationUrl: "",
       connectApplicationClientId: "",

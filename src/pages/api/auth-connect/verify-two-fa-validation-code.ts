@@ -17,7 +17,7 @@ import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
 import { insertSudoModeTTL } from "@src/commands/insert-sudo-mode-ttl";
 import { removeExpiredSudoEventIds } from "@src/commands/remove-expired-sudo-event-ids";
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
@@ -51,7 +51,7 @@ const handler: Handler = async (request, response) => {
       const userCookie = await getServerSideCookies<UserCookie>(request, {
         cookieName: "user-cookie",
         isCookieSealed: true,
-        cookieSalt: configVariables.cookieSalt,
+        cookieSalt: CONFIG_VARIABLES.cookieSalt,
       });
 
       if (!userCookie) {
@@ -133,7 +133,7 @@ const handler: Handler = async (request, response) => {
         }
 
         const { status: verifiedResult } = await checkVerificationCode(
-          configVariables.managementCredentials,
+          CONFIG_VARIABLES.managementCredentials,
           {
             code: verificationCode,
             eventId: event_id,

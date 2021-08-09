@@ -31,7 +31,7 @@ type ConfigVariables = {
   connectProfileUrl: string;
 };
 
-const configVariables: ConfigVariables = {
+const CONFIG_VARIABLES: ConfigVariables = {
   featureFlag: "",
   connectAccountURL: "",
   dynamoRegion: "",
@@ -75,48 +75,49 @@ function getConnectAccountURL(): string {
 }
 
 function handleEnvVars(): void {
-  configVariables.featureFlag =
+  CONFIG_VARIABLES.featureFlag =
     process.env.NEXT_PUBLIC_FEATURE_FLAG || process.env.NODE_ENV === "test"
       ? "false"
       : "";
-  configVariables.connectAccountURL = getConnectAccountURL();
-  configVariables.dynamoRegion = process.env.DYNAMODB_REGION || "";
-  configVariables.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";
-  configVariables.dynamoAccessKeyID = process.env.DYNAMODB_ACCESS_KEY_ID || "";
-  configVariables.dynamoSecretAccessKey =
+  CONFIG_VARIABLES.connectAccountURL = getConnectAccountURL();
+  CONFIG_VARIABLES.dynamoRegion = process.env.DYNAMODB_REGION || "";
+  CONFIG_VARIABLES.dynamoDbEndpoint = process.env.DYNAMODB_ENDPOINT || "";
+  CONFIG_VARIABLES.dynamoAccessKeyID = process.env.DYNAMODB_ACCESS_KEY_ID || "";
+  CONFIG_VARIABLES.dynamoSecretAccessKey =
     process.env.DYNAMODB_SECRET_ACCESS_KEY || "";
-  configVariables.dynamoTableName = process.env.DYNAMODB_TABLE_NAME || "";
-  configVariables.connectProviderUrl = process.env.CONNECT_PROVIDER_URL || "";
-  configVariables.connectApplicationClientId =
+  CONFIG_VARIABLES.dynamoTableName = process.env.DYNAMODB_TABLE_NAME || "";
+  CONFIG_VARIABLES.connectProviderUrl = process.env.CONNECT_PROVIDER_URL || "";
+  CONFIG_VARIABLES.connectApplicationClientId =
     process.env.CONNECT_APPLICATION_CLIENT_ID || "";
-  configVariables.connectApplicationClientSecret =
+  CONFIG_VARIABLES.connectApplicationClientSecret =
     process.env.CONNECT_APPLICATION_CLIENT_SECRET || "";
-  configVariables.connectApplicationScopes =
+  CONFIG_VARIABLES.connectApplicationScopes =
     process.env.CONNECT_APPLICATION_SCOPES || "";
-  configVariables.cookieSalt = process.env.CONNECT_ACCOUNT_SESSION_SALT || "";
-  configVariables.connectOpenIdConfigurationUrl =
+  CONFIG_VARIABLES.cookieSalt = process.env.CONNECT_ACCOUNT_SESSION_SALT || "";
+  CONFIG_VARIABLES.connectOpenIdConfigurationUrl =
     process.env.CONNECT_OPEN_ID_CONFIGURATION_URL || "";
-  configVariables.connectAccountRedirectURI = `${getConnectAccountURL()}api/oauth/callback/`;
-  configVariables.connectAudience = process.env.CONNECT_AUDIENCE || "";
-  configVariables.connectJwtAlgorithm = process.env.CONNECT_JWT_ALGORITHM || "";
-  configVariables.accountJwePrivateKey =
+  CONFIG_VARIABLES.connectAccountRedirectURI = `${getConnectAccountURL()}api/oauth/callback/`;
+  CONFIG_VARIABLES.connectAudience = process.env.CONNECT_AUDIENCE || "";
+  CONFIG_VARIABLES.connectJwtAlgorithm =
+    process.env.CONNECT_JWT_ALGORITHM || "";
+  CONFIG_VARIABLES.accountJwePrivateKey =
     process.env.ACCOUNT_JWE_PRIVATE_KEY || "";
-  configVariables.isJweSigned = process.env.IS_JWE_SIGNED || "";
-  configVariables.connectTestAccountEmail =
+  CONFIG_VARIABLES.isJweSigned = process.env.IS_JWE_SIGNED || "";
+  CONFIG_VARIABLES.connectTestAccountEmail =
     process.env.CONNECT_TEST_ACCOUNT_EMAIL || "";
-  configVariables.connectTestAccountPassword =
+  CONFIG_VARIABLES.connectTestAccountPassword =
     process.env.CONNECT_TEST_ACCOUNT_PASSWORD || "";
-  configVariables.serviceName = process.env.SERVICE_NAME || "Connect.Account";
-  configVariables.lightstepAccessToken =
+  CONFIG_VARIABLES.serviceName = process.env.SERVICE_NAME || "Connect.Account";
+  CONFIG_VARIABLES.lightstepAccessToken =
     process.env.LIGHTSTEP_ACCESS_TOKEN || "";
-  configVariables.managementCredentials = {
+  CONFIG_VARIABLES.managementCredentials = {
     URI: process.env.CONNECT_MANAGEMENT_URL || "",
     APIKey: process.env.CONNECT_MANAGEMENT_API_KEY || "",
   };
-  configVariables.connectProfileUrl = process.env.CONNECT_PROFILE_URL || "";
+  CONFIG_VARIABLES.connectProfileUrl = process.env.CONNECT_PROFILE_URL || "";
 
   if (process.env.FWL_TRACING_COLLECTORS) {
-    configVariables.fwlTracingCollectors = JSON.parse(
+    CONFIG_VARIABLES.fwlTracingCollectors = JSON.parse(
       process.env.FWL_TRACING_COLLECTORS,
     );
   }
@@ -124,4 +125,4 @@ function handleEnvVars(): void {
 
 handleEnvVars();
 
-export { configVariables };
+export { CONFIG_VARIABLES };

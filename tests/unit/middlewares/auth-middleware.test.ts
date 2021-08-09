@@ -10,7 +10,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import * as getAndPutUser from "@src/commands/get-and-put-user";
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 import { oauth2Client } from "@src/configs/oauth2-client";
 import { authMiddleware } from "@src/middlewares/auth-middleware";
 import refreshTokenHandler from "@src/pages/api/auth-connect/refresh-token";
@@ -19,7 +19,7 @@ import * as decryptVerifyAccessToken from "@src/workflows/decrypt-verify-access-
 
 jest.mock("@src/configs/config-variables", () => {
   return {
-    configVariables: {
+    CONFIG_VARIABLES: {
       cookieSalt: "#*b+x3ZXE3-h[E+Q5YC5`jr~y%CA~R-[",
       connectOpenIdConfigurationUrl: "",
       connectApplicationClientId: "",
@@ -82,7 +82,7 @@ async function sealJWS(access_token: string, salt?: string): Promise<string> {
       access_token,
       sub: "2a14bdd2-3628-4912-a76e-fd514b5c27a8",
     }),
-    salt || configVariables.cookieSalt,
+    salt || CONFIG_VARIABLES.cookieSalt,
     defaults,
   );
 }
