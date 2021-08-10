@@ -10,10 +10,6 @@ import { ServerStyleSheet } from "styled-components";
 import { generateCSP } from "@src/utils/generate-csp";
 import { generateNonce } from "@src/utils/generate-nonce";
 
-// interface ExtendedDocumentProps extends DocumentInitialProps {
-//   nonce: string;
-// }
-
 export default class MyDocument extends Document {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
   static async getInitialProps(ctx: any): Promise<DocumentInitialProps> {
@@ -76,12 +72,6 @@ export default class MyDocument extends Document {
           <meta
             httpEquiv="Content-Security-Policy"
             content={generateCSP(nonce)}
-          />
-          <script
-            nonce={nonce}
-            dangerouslySetInnerHTML={{
-              __html: `window.__webpack_nonce__ = "${nonce}"`,
-            }}
           />
         </Head>
         <body>

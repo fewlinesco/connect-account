@@ -3,12 +3,13 @@ import { CSP } from "@src/@types/csp-header-directives";
 function generateCSP(nonce: string): string {
   const csp: Partial<Record<CSP, string>> = {
     "default-src": `'self'`,
-    "script-src": `'self' 'nonce-${nonce}'`,
+    "script-src": `'nonce-${nonce}' 'strict-dynamic'`,
     "connect-src": `'self' *.sentry.io`,
     "img-src": `'self'`,
-    "style-src": `'self' 'nonce-${nonce}'`,
+    "style-src": `'self' 'unsafe-inline'`,
     "base-uri": `'self'`,
     "form-action": `'self'`,
+    "object-src": `'none'`,
   };
 
   // Override directives outside production because Nextjs dev env uses eval() and inline script injection for fast refresh
