@@ -14,6 +14,13 @@ export default class MyDocument extends Document {
 
     const originalRenderPage = ctx.renderPage;
 
+    ctx.res.setHeader(
+      "Content-Security-Policy",
+      `default-src 'self'; script-src 'self' ${
+        process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'"
+      }; connect-src 'self' *.sentry.io; img-src 'self'; style-src 'self'; base-uri 'self'; form-action 'self'`,
+    );
+
     try {
       ctx.renderPage = () =>
         originalRenderPage({

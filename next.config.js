@@ -33,23 +33,23 @@ const moduleExports = {
 
     return config;
   },
-  headers: async () => {
-    const cspHeaderValues = `default-src 'self'; script-src ${
-      process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'"
-    }; connect-src 'self' *.sentry.io; img-src 'self'; style-src 'self'; base-uri 'self'; form-action 'self'`;
+  // headers: async () => {
+  //   const cspHeaderValues = `default-src 'self'; script-src 'self' ${
+  //     process.env.NODE_ENV === "production" ? "" : "'unsafe-eval'"
+  //   }; connect-src 'self' *.sentry.io; img-src 'self'; style-src 'self'; base-uri 'self'; form-action 'self'`;
 
-    return [
-      {
-        source: "/(.*)",
-        headers: [
-          {
-            key: "Content-Security-Policy",
-            value: cspHeaderValues,
-          },
-        ],
-      },
-    ];
-  },
+  //   return [
+  //     {
+  //       source: "/(.*)",
+  //       headers: [
+  //         {
+  //           key: "Content-Security-Policy",
+  //           value: cspHeaderValues,
+  //         },
+  //       ],
+  //     },
+  //   ];
+  // },
 };
 
 const SentryWebpackPluginOptions = {
