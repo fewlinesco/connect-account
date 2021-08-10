@@ -77,6 +77,12 @@ export default class MyDocument extends Document {
             httpEquiv="Content-Security-Policy"
             content={generateCSP(nonce)}
           />
+          <script
+            nonce={nonce}
+            dangerouslySetInnerHTML={{
+              __html: `window.__webpack_nonce__ = "${nonce}"`,
+            }}
+          />
         </Head>
         <body>
           <Main />
