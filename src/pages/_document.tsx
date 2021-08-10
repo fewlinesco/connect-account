@@ -10,12 +10,24 @@ import { ServerStyleSheet } from "styled-components";
 import { generateCSP } from "@src/utils/generate-csp";
 import { generateNonce } from "@src/utils/generate-nonce";
 
-export default class MyDocument extends Document {
+interface ExtendedDocumentProps extends DocumentInitialProps {
+  nonce: string;
+}
+
+export default class MyDocument extends Document<ExtendedDocumentProps> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-  static async getInitialProps(ctx: any): Promise<DocumentInitialProps> {
+  static async getInitialProps(ctx: any): Promise<ExtendedDocumentProps> {
     const sheet = new ServerStyleSheet();
 
     const originalRenderPage = ctx.renderPage;
+
+    const nonce = generateNonce();
+
+    let res;
+    if (ctx) {
+      res = ctx.res;
+      res.setHeader("Content-Security-Policy", generateCSP(nonce));
+    }
 
     try {
       ctx.renderPage = () =>
@@ -28,6 +40,7 @@ export default class MyDocument extends Document {
 
       return {
         ...initialProps,
+        nonce,
         styles: (
           <>
             {initialProps.styles}
@@ -41,7 +54,8 @@ export default class MyDocument extends Document {
   }
 
   render(): JSX.Element {
-    const nonce = generateNonce();
+    const { nonce } = this.props;
+
     return (
       <Html lang="en">
         <Head nonce={nonce}>
@@ -69,10 +83,10 @@ export default class MyDocument extends Document {
             name="description"
             content="Connect Account let you handle your Connect account and profile data."
           />
-          <meta
+          {/* <meta
             httpEquiv="Content-Security-Policy"
             content={generateCSP(nonce)}
-          />
+          /> */}
         </Head>
         <body>
           <Main />
