@@ -10,23 +10,18 @@ import { ServerStyleSheet } from "styled-components";
 import { generateCSP } from "@src/utils/generate-csp";
 import { generateNonce } from "@src/utils/generate-nonce";
 
-interface ExtendedDocumentProps extends DocumentInitialProps {
-  nonce: string;
-}
+// interface ExtendedDocumentProps extends DocumentInitialProps {
+//   nonce: string;
+// }
 
-export default class MyDocument extends Document<ExtendedDocumentProps> {
+export default class MyDocument extends Document {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-  static async getInitialProps(ctx: any): Promise<ExtendedDocumentProps> {
+  static async getInitialProps(ctx: any): Promise<DocumentInitialProps> {
     const sheet = new ServerStyleSheet();
 
     const originalRenderPage = ctx.renderPage;
 
-    const nonce = generateNonce();
-
-    console.log("nonce: ", nonce);
-
     try {
-      ctx.res.setHeader("Content-Security-Policy", generateCSP(nonce));
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App: AppType) => (props: AppProps) =>
@@ -37,7 +32,6 @@ export default class MyDocument extends Document<ExtendedDocumentProps> {
 
       return {
         ...initialProps,
-        nonce,
         styles: (
           <>
             {initialProps.styles}
@@ -51,8 +45,7 @@ export default class MyDocument extends Document<ExtendedDocumentProps> {
   }
 
   render(): JSX.Element {
-    const { nonce } = this.props;
-    console.log(nonce);
+    const nonce = generateNonce();
     return (
       <Html lang="en">
         <Head nonce={nonce}>
@@ -79,6 +72,10 @@ export default class MyDocument extends Document<ExtendedDocumentProps> {
           <meta
             name="description"
             content="Connect Account let you handle your Connect account and profile data."
+          />
+          <meta
+            httpEquiv="Content-Security-Policy"
+            content={generateCSP(nonce)}
           />
         </Head>
         <body>

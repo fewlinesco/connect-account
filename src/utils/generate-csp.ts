@@ -6,7 +6,7 @@ function generateCSP(nonce: string): string {
     "script-src": `'self' 'nonce-${nonce}'`,
     "connect-src": `'self' *.sentry.io`,
     "img-src": `'self'`,
-    "style-src": `'self 'nonce-${nonce}'`,
+    "style-src": `'self' 'nonce-${nonce}'`,
     "base-uri": `'self'`,
     "form-action": `'self'`,
   };
