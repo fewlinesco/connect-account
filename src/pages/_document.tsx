@@ -8,17 +8,25 @@ import React from "react";
 import { ServerStyleSheet } from "styled-components";
 
 import { generateCSP } from "@src/utils/generate-csp";
+import { generateNonce } from "@src/utils/generate-nonce";
 
-export default class MyDocument extends Document {
+interface ExtendedDocumentProps extends DocumentInitialProps {
+  nonce: string;
+}
+
+export default class MyDocument extends Document<ExtendedDocumentProps> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-  static async getInitialProps(ctx: any): Promise<DocumentInitialProps> {
+  static async getInitialProps(ctx: any): Promise<ExtendedDocumentProps> {
     const sheet = new ServerStyleSheet();
 
     const originalRenderPage = ctx.renderPage;
 
-    ctx.res.setHeader("Content-Security-Policy", generateCSP());
+    const nonce = generateNonce();
+
+    console.log("nonce: ", nonce);
 
     try {
+      ctx.res.setHeader("Content-Security-Policy", generateCSP(nonce));
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App: AppType) => (props: AppProps) =>
@@ -29,6 +37,7 @@ export default class MyDocument extends Document {
 
       return {
         ...initialProps,
+        nonce,
         styles: (
           <>
             {initialProps.styles}
@@ -42,9 +51,11 @@ export default class MyDocument extends Document {
   }
 
   render(): JSX.Element {
+    const { nonce } = this.props;
+    console.log(nonce);
     return (
       <Html lang="en">
-        <Head>
+        <Head nonce={nonce}>
           <link
             rel="apple-touch-icon"
             sizes="180x180"
@@ -72,7 +83,7 @@ export default class MyDocument extends Document {
         </Head>
         <body>
           <Main />
-          <NextScript />
+          <NextScript nonce={nonce} />
         </body>
       </Html>
     );
