@@ -4,7 +4,7 @@ import { NextApiRequest } from "next";
 
 import { DynamoUser } from "@src/@types/dynamo-user";
 import { UserCookie } from "@src/@types/user-cookie";
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 import { NoUserCookieFoundError } from "@src/errors/errors";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { getDBUserFromSub } from "@src/queries/get-db-user-from-sub";
@@ -23,7 +23,7 @@ const getUserFromCookie = async (
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
-      cookieSalt: configVariables.cookieSalt,
+      cookieSalt: CONFIG_VARIABLES.cookieSalt,
     });
 
     if (!userCookie) {

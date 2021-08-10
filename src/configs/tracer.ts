@@ -1,8 +1,8 @@
 import { getTracer, startTracer, Tracer } from "@fwl/tracing";
 
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 
-startTracer({ collectors: configVariables.fwlTracingCollectors });
+startTracer({ collectors: CONFIG_VARIABLES.fwlTracingCollectors });
 
 function tracer(): Tracer {
   return getTracer();

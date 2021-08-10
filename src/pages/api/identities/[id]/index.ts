@@ -17,7 +17,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { Handler } from "@src/@types/handler";
 import { UserCookie } from "@src/@types/user-cookie";
-import { configVariables } from "@src/configs/config-variables";
+import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 import { formatAlertMessage, getLocaleFromRequest } from "@src/configs/intl";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
@@ -38,7 +38,7 @@ const get: Handler = async (request, response) => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
-      cookieSalt: configVariables.cookieSalt,
+      cookieSalt: CONFIG_VARIABLES.cookieSalt,
     });
 
     if (!userCookie) {
@@ -54,7 +54,7 @@ const get: Handler = async (request, response) => {
       throw webErrorFactory(webErrors.invalidQueryString);
     }
 
-    const identity = await getIdentity(configVariables.managementCredentials, {
+    const identity = await getIdentity(CONFIG_VARIABLES.managementCredentials, {
       userId: userCookie.sub,
       identityId,
     }).catch((error) => {
@@ -110,7 +110,7 @@ const destroy: Handler = (request, response): Promise<void> => {
     const userCookie = await getServerSideCookies<UserCookie>(request, {
       cookieName: "user-cookie",
       isCookieSealed: true,
-      cookieSalt: configVariables.cookieSalt,
+      cookieSalt: CONFIG_VARIABLES.cookieSalt,
     });
 
     if (!userCookie) {
@@ -125,7 +125,7 @@ const destroy: Handler = (request, response): Promise<void> => {
       identityValue: value,
     };
 
-    return removeIdentityFromUser(configVariables.managementCredentials, data)
+    return removeIdentityFromUser(CONFIG_VARIABLES.managementCredentials, data)
       .then(() => {
         span.setDisclosedAttribute("is Identity removed", true);
 

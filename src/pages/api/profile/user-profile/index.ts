@@ -161,7 +161,10 @@ const postHandler: Handler = async (request, response) => {
             throw webErrorFactory(webErrors.invalidUserProfilePayload);
           }
 
-          throw webErrorFactory(webErrors.unreachable);
+          throw webErrorFactory({
+            ...webErrors.unreachable,
+            parentError: error,
+          });
         });
       span.setDisclosedAttribute(
         "is Connect.Profile UserProfile created",

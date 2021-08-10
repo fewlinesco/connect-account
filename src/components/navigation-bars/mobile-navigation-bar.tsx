@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
-import useSWR from "swr";
 
 import { ClickAwayListener } from "../click-away-listener";
 import { Arrow } from "../icons/arrow/arrow";
@@ -12,22 +11,13 @@ import { WhiteSwitchIcon } from "../icons/switch-icon/white-switch-icon/white-sw
 import { WhiteWorldIcon } from "../icons/world-icon/white-world-icon/white-world-icon";
 import { LogoutAnchor } from "../logout-anchor/logout-anchor";
 import { NeutralLink } from "../neutral-link/neutral-link";
-import { SkeletonTextLine } from "../skeletons/skeletons";
 import { getNavigationSections } from "./navigation-sections";
-import { Profile } from "@src/@types/profile";
 import { formatNavigation } from "@src/configs/intl";
 import { deviceBreakpoints } from "@src/design-system/theme";
-import { SWRError } from "@src/errors/errors";
-import { navigationFetcher } from "@src/queries/swr-navigation-fetcher";
 
 const MobileNavigationBar: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const router = useRouter();
-
-  const { data: userProfile, isValidating } = useSWR<Profile, SWRError>(
-    `/api/profile/user-profile/`,
-    navigationFetcher,
-  );
 
   return (
     <>
@@ -35,37 +25,21 @@ const MobileNavigationBar: React.FC = () => {
       <Container>
         {isOpen ? (
           <MenuList>
-            {getNavigationSections(userProfile ? false : true).map(
-              ([title, { href, icon }], index) => {
-                if (index === 1 && isValidating) {
-                  return (
-                    <ListItem href="#" key={title + href}>
-                      <ListItemLabel>
-                        {icon}
-                        <SizedDiv>
-                          <SkeletonTextLine fontSize={1.6} width={100} />
-                        </SizedDiv>
-                      </ListItemLabel>
-                      <RightChevron />
-                    </ListItem>
-                  );
-                }
-
-                return (
-                  <ListItem
-                    href={href}
-                    onClick={() => setIsOpen(false)}
-                    key={title + href}
-                  >
-                    <ListItemLabel>
-                      {icon}
-                      <p>{formatNavigation(router.locale || "en", title)}</p>
-                    </ListItemLabel>
-                    <RightChevron />
-                  </ListItem>
-                );
-              },
-            )}
+            {getNavigationSections().map(([title, { href, icon }]) => {
+              return (
+                <ListItem
+                  href={href}
+                  onClick={() => setIsOpen(false)}
+                  key={title + href}
+                >
+                  <ListItemLabel>
+                    {icon}
+                    <p>{formatNavigation(router.locale || "en", title)}</p>
+                  </ListItemLabel>
+                  <RightChevron />
+                </ListItem>
+              );
+            })}
             <LogoutAnchor />
           </MenuList>
         ) : null}
@@ -197,11 +171,6 @@ const SpecialLink = styled(NeutralLink)`
   & div {
     color: ${({ theme }) => theme.colors.background};
   }
-`;
-
-const SizedDiv = styled.div`
-  width: 7rem;
-  margin: 0 0 0 1.5rem;
 `;
 
 export { MobileNavigationBar };
