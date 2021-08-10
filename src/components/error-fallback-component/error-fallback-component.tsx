@@ -24,7 +24,7 @@ const ErrorFallbackComponent: React.FC<{
           </p>
         </>
       ) : (
-        <h2>{formatErrorMessage(locale || "en", "500Content")}</h2>
+        <h3>{formatErrorMessage(locale || "en", "500Content")}</h3>
       )}
     </Wrapper>
   );
