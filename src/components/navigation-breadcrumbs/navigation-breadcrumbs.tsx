@@ -7,9 +7,9 @@ const NavigationBreadcrumbs: React.FC<{
 }> = ({ breadcrumbs }) => {
   if (breadcrumbs === "") {
     return (
-      <h3>
+      <h2>
         <SkeletonTextLine fontSize={1.4} width={40} />
-      </h3>
+      </h2>
     );
   }
 
@@ -17,7 +17,7 @@ const NavigationBreadcrumbs: React.FC<{
     return null;
   }
 
-  return <h3>{breadcrumbs}</h3>;
+  return <h2>{breadcrumbs}</h2>;
 };
 
 export { NavigationBreadcrumbs };

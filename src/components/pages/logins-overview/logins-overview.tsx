@@ -36,7 +36,7 @@ const LoginsOverview: React.FC = () => {
   return (
     <>
       <Timeline />
-      <h2>{formatMessage({ id: "emailTitle" })}</h2>
+      <h3>{formatMessage({ id: "emailTitle" })}</h3>
       <SectionBox>
         {!identities ? (
           <BoxedLink disableClick={true} href="#">
@@ -64,7 +64,7 @@ const LoginsOverview: React.FC = () => {
         </FakeButton>
       </NeutralLink>
       <Timeline />
-      <h2>{formatMessage({ id: "phoneTitle" })}</h2>
+      <h3>{formatMessage({ id: "phoneTitle" })}</h3>
       <SectionBox>
         {!identities ? (
           <BoxedLink disableClick={true} href="#">
@@ -92,7 +92,7 @@ const LoginsOverview: React.FC = () => {
         </FakeButton>
       </NeutralLink>
       <TimelineEnd />
-      <h2>{formatMessage({ id: "socialTitle" })}</h2>
+      <h3>{formatMessage({ id: "socialTitle" })}</h3>
       <SectionBox>
         {!identities ? (
           <BoxedLink disableClick={true} href="#">
