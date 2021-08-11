@@ -1,6 +1,10 @@
 module.exports = {
-  purge: [],
-  darkMode: false, // or 'media' or 'class'
+  purge: [
+    "./src/pages/**/*.tsx",
+    "./src/components/**/*.tsx",
+    "./src/utils/get-social-identities-icon.tsx",
+  ],
+  darkMode: false,
   theme: {
     extend: {},
   },
@@ -8,4 +12,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-}
+};
