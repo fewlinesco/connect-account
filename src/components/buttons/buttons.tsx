@@ -135,31 +135,18 @@ const ShowMoreButton: React.FC<ShowMoreButtonProps> = (props) => {
   const { formatMessage } = useIntl();
 
   return (
-    <ShowMoreButtonStyle {...buttonProps} ref={showMoreButtonRef}>
-      {hideList ? (
-        <div>
-          {`${formatMessage({ id: "showMore" })} (${quantity}) `}
-          <Triangle rotate={hideList} />
-        </div>
-      ) : (
-        <div>
-          {`${formatMessage({ id: "hide" })} (${quantity}) `}
-          <Triangle rotate={hideList} />
-        </div>
-      )}
-    </ShowMoreButtonStyle>
+    <div
+      {...buttonProps}
+      ref={showMoreButtonRef}
+      className="flex justify-center items-center h-16 mb-8 py-8 cursor-pointer"
+    >
+      <p className="mr-2">{`${formatMessage({
+        id: hideList ? "showMore" : "hide",
+      })} (${quantity}) `}</p>
+      <Triangle rotate={hideList} />
+    </div>
   );
 };
-
-const ShowMoreButtonStyle = styled.div<Record<string, unknown>>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 4.5rem;
-  margin-bottom: 2rem;
-  padding: 0 2rem;
-  cursor: pointer;
-`;
 
 const CloseConfirmationBoxButton: React.FC<{ onPress: () => void }> = (
   props,
