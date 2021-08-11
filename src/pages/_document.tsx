@@ -23,7 +23,6 @@ export default class MyDocument extends Document<ExtendedDocumentProps> {
 
     const nonce = generateNonce();
 
-    console.log("ctx", ctx);
     let res;
     if (ctx.res !== undefined) {
       res = ctx.res;
@@ -84,10 +83,6 @@ export default class MyDocument extends Document<ExtendedDocumentProps> {
             name="description"
             content="Connect Account let you handle your Connect account and profile data."
           />
-          {/* <meta
-            httpEquiv="Content-Security-Policy"
-            content={generateCSP(nonce)}
-          /> */}
         </Head>
         <body>
           <Main />

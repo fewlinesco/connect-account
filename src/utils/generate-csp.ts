@@ -15,7 +15,6 @@ function generateCSP(nonce: string): string {
   // Override directives outside production because Nextjs dev env uses eval() and inline script injection for fast refresh
   if (process.env.NODE_ENV !== "production") {
     csp["script-src"] = `'self' 'unsafe-eval' 'unsafe-inline'`;
-    csp["style-src"] = `'self' 'unsafe-inline'`;
   }
 
   return Object.entries(csp).reduce(
