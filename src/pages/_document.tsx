@@ -23,8 +23,9 @@ export default class MyDocument extends Document<ExtendedDocumentProps> {
 
     const nonce = generateNonce();
 
+    console.log("ctx", ctx);
     let res;
-    if (ctx) {
+    if (ctx.res !== undefined) {
       res = ctx.res;
       res.setHeader("Content-Security-Policy", generateCSP(nonce));
     }
