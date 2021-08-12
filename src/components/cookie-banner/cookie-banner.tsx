@@ -15,12 +15,12 @@ const CookieBanner: React.FC = () => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
-  const { data: consentCookie } = useSWR<Record<string, boolean>, SWRError>(
+  const { data: consentCookie } = useSWR<Record<string, string>, SWRError>(
     `/api/consent-cookie/`,
   );
 
   React.useEffect(() => {
-    if (!consentCookie) {
+    if (consentCookie && !consentCookie.isSet) {
       setIsModalOpen(true);
     } else {
       setIsModalOpen(false);

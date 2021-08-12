@@ -11,9 +11,13 @@ import { noAuthBasicMiddlewares } from "@src/middlewares/basic-middlewares";
 const getHandler: Handler = (request, response): Promise<void> => {
   return getTracer().span("get-consent-cookie handler", async (_span) => {
     const consentCookie = request.cookies["user-consent"];
+    const consentCookieResponse = {
+      isSet: consentCookie ? true : false,
+      content: consentCookie ? consentCookie : null,
+    };
     response.statusCode = HttpStatus.OK;
     response.setHeader("Content-Type", "application/json");
-    return response.end(consentCookie);
+    return response.end(JSON.stringify(consentCookieResponse));
   });
 };
 
