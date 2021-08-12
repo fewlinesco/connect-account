@@ -59,7 +59,8 @@ const handler: Handler = (request, response): Promise<void> => {
 
     span.setDisclosedAttribute("is password set info found", true);
     response.statusCode = HttpStatus.OK;
-    response.json({ isPasswordSet });
+    response.end(JSON.stringify(isPasswordSet));
+    return;
   });
 };
 

@@ -9,7 +9,7 @@ import { SectionBox } from "@src/components/shadow-box/section-box";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 
 const Security: React.FC = () => {
-  const { data, error } = useSWR<{ isPasswordSet: boolean }, Error>(
+  const { data: isPasswordSet, error } = useSWR<string, Error>(
     "/api/auth-connect/is-password-set/",
   );
 
@@ -23,12 +23,12 @@ const Security: React.FC = () => {
     <>
       <h3>{formatMessage({ id: "sectionTitle" })}</h3>
       <SectionBox>
-        <SecurityLink href={!data ? "#" : "/account/security/update/"}>
-          {!data ? (
+        <SecurityLink href={!isPasswordSet ? "#" : "/account/security/update/"}>
+          {!isPasswordSet ? (
             <SkeletonTextLine fontSize={1.4} width={50} />
           ) : (
             <p>
-              {data.isPasswordSet
+              {JSON.parse(isPasswordSet)
                 ? formatMessage({ id: "updatePassword" })
                 : formatMessage({ id: "setPassword" })}
             </p>
