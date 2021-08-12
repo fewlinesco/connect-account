@@ -1,21 +1,31 @@
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
+import useSWR from "swr";
 
 import { CookieButton, ButtonVariant, Button } from "../buttons/buttons";
 import { ClickAwayListener } from "../click-away-listener";
 import { SentryIcon } from "../icons/sentry-logo/sentry-icon";
-import { InputSwitch } from "../input/input-switch";
 import { formatCookieBannerMessage } from "@src/configs/intl";
 import { deviceBreakpoints } from "@src/design-system/theme";
+import { SWRError } from "@src/errors/errors";
+import { fetchJson } from "@src/utils/fetch-json";
 
 const CookieBanner: React.FC = () => {
   const router = useRouter();
-  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(true);
-  const [isSentryAuthorized, setIsSentryAuthorized] =
-    React.useState<boolean>(true);
-  // const [isAllServicesAuthorized, setIsAllServicesAuthorized] =
-  //   React.useState<boolean>(true);
+  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+
+  const { data: consentCookie } = useSWR<Record<string, boolean>, SWRError>(
+    `/api/consent-cookie/`,
+  );
+
+  React.useEffect(() => {
+    if (!consentCookie) {
+      setIsModalOpen(true);
+    } else {
+      setIsModalOpen(false);
+    }
+  }, [consentCookie]);
 
   return (
     <CookieBannerWrapper>
@@ -37,31 +47,10 @@ const CookieBanner: React.FC = () => {
                   "monitoringCategory",
                 )}
               </CategoryTitle>
-              {/* <ToggleAllWrapper>
-            <InputSwitch
-              groupName="overallPref"
-              labelText={formatCookieBannerMessage(
-                router.locale || "en",
-                "toggle",
-              )}
-              isSelected={isAllServicesAuthorized}
-              onChange={(_e) => {
-                setIsAllServicesAuthorized(!isAllServicesAuthorized);
-                setIsSentryAuthorized(!isAllServicesAuthorized);
-              }}
-            />
-          </ToggleAllWrapper> */}
               <Card>
                 <SentryIcon />
                 <FlexContainer>
-                  <InputSwitch
-                    groupName="monitoringPref"
-                    labelText="Sentry"
-                    isSelected={isSentryAuthorized}
-                    onChange={(_e) =>
-                      setIsSentryAuthorized(!isSentryAuthorized)
-                    }
-                  />
+                  <ServiceName>Sentry</ServiceName>
                   <ServiceDesc>
                     {formatCookieBannerMessage(
                       router.locale || "en",
@@ -75,19 +64,28 @@ const CookieBanner: React.FC = () => {
               <Button
                 type="button"
                 variant={ButtonVariant.GHOST_COOKIE}
-                onPress={() => setIsModalOpen(false)}
+                onPress={async () => {
+                  await fetchJson("/api/consent-cookie/", "PATCH", {
+                    sentry: false,
+                  }).then((_response) => {
+                    setIsModalOpen(false);
+                  });
+                }}
               >
-                {formatCookieBannerMessage(router.locale || "en", "refuseAll")}
+                {formatCookieBannerMessage(router.locale || "en", "refuse")}
               </Button>
               <Button
                 type="button"
                 variant={ButtonVariant.PRIMARY_COOKIE}
-                onPress={() => {
-                  console.log("hello");
-                  setIsModalOpen(false);
+                onPress={async () => {
+                  await fetchJson("/api/consent-cookie/", "PATCH", {
+                    sentry: true,
+                  }).then((_response) => {
+                    setIsModalOpen(false);
+                  });
                 }}
               >
-                {formatCookieBannerMessage(router.locale || "en", "acceptAll")}
+                {formatCookieBannerMessage(router.locale || "en", "accept")}
               </Button>
             </ButtonsWrapper>
           </CookieModal>
@@ -146,6 +144,7 @@ const ModalTitle = styled.h2`
   font-size: ${({ theme }) => theme.fontSizes.h1};
   margin-bottom: 1.25rem;
   font-weight: normal;
+  color: ${({ theme }) => theme.colors.black};
 `;
 
 const ModalTextContent = styled.p`
@@ -154,17 +153,13 @@ const ModalTextContent = styled.p`
 `;
 
 const CategoryTitle = styled.h3`
-  font-size: ${({ theme }) => theme.fontSizes.h2};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
   margin-bottom: 1.25rem;
 `;
 
 const ButtonsWrapper = styled.div`
   display: flex;
 `;
-
-// const ToggleAllWrapper = styled.div`
-//   padding: 1rem 1.5rem 1rem 0;
-// `;
 
 const Card = styled.div`
   width: 100%;
@@ -183,14 +178,18 @@ const Card = styled.div`
 const FlexContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 1rem;
+  margin-left: 2rem;
+`;
+
+const ServiceName = styled.h4`
+  font-size: ${({ theme }) => theme.fontSizes.s};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
 `;
 
 const ServiceDesc = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xs};
   color: ${({ theme }) => theme.colors.breadcrumbs};
-  width: 85%;
-  margin-top: 0.2rem;
+  margin-top: 0.4rem;
 
   @media ${deviceBreakpoints.m} {
     width: 80%;

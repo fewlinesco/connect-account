@@ -284,6 +284,7 @@ const en = {
     acceptAll: "Accept all",
     accept: "Accept",
     refuseAll: "Refuse all",
+    refuse: "Refuse",
   },
 };
 
