@@ -177,9 +177,10 @@ const CloseConfirmationBoxButton: React.FC<{ onPress: () => void }> = (
   );
 };
 
-const CookieButton: React.FC<{ onPress: () => void }> = (props) => {
+const CookieButton: React.FC<{ onPress: () => void; isOpen: boolean }> = (
+  props,
+) => {
   const cookieButtonRef = React.useRef(null);
-
   const { buttonProps } = useButton(
     { ...props, elementType: "div" },
     cookieButtonRef,
@@ -187,7 +188,7 @@ const CookieButton: React.FC<{ onPress: () => void }> = (props) => {
 
   return (
     <CookieButtonStyle {...buttonProps} ref={cookieButtonRef}>
-      <CookieIcon />
+      {props.isOpen ? <CrossIcon /> : <CookieIcon />}
     </CookieButtonStyle>
   );
 };
@@ -202,6 +203,11 @@ const CookieButtonStyle = styled.div`
   box-shadow: ${({ theme }) => theme.shadows.box};
   color: ${({ theme }) => theme.colors.primary};
   cursor: pointer;
+  transition: all 0.1s ease-in-out;
+
+  :hover {
+    transform: scale(1.1);
+  }
 
   @media ${deviceBreakpoints.m} {
     display: none;

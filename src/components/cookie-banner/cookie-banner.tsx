@@ -29,7 +29,10 @@ const CookieBanner: React.FC = () => {
 
   return (
     <CookieBannerWrapper>
-      <CookieButton onPress={() => setIsModalOpen(!isModalOpen)} />
+      <CookieButton
+        onPress={() => setIsModalOpen(!isModalOpen)}
+        isOpen={isModalOpen}
+      />
       {isModalOpen ? (
         <>
           <CookieModal>
