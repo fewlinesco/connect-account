@@ -35,9 +35,11 @@ const getHandler: Handler = (request, response): Promise<void> => {
     span.setDisclosedAttribute("user cookie found", true);
 
     const locale = getLocaleFromRequest(request, span);
+
     response.statusCode = HttpStatus.OK;
-    response.json(JSON.stringify(locale));
-    return;
+    return response.end(JSON.stringify(locale));
+    // response.json(JSON.stringify(locale));
+    // return;
   });
 };
 
