@@ -7,12 +7,27 @@ import Document, { Html, Main, Head, NextScript } from "next/document";
 import React from "react";
 import { ServerStyleSheet } from "styled-components";
 
-export default class MyDocument extends Document {
+import { generateCSP } from "@src/utils/generate-csp";
+import { generateNonce } from "@src/utils/generate-nonce";
+
+interface ExtendedDocumentProps extends DocumentInitialProps {
+  nonce: string;
+}
+
+export default class MyDocument extends Document<ExtendedDocumentProps> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-  static async getInitialProps(ctx: any): Promise<DocumentInitialProps> {
+  static async getInitialProps(ctx: any): Promise<ExtendedDocumentProps> {
     const sheet = new ServerStyleSheet();
 
     const originalRenderPage = ctx.renderPage;
+
+    const nonce = generateNonce();
+
+    let res;
+    if (ctx.res !== undefined) {
+      res = ctx.res;
+      res.setHeader("Content-Security-Policy", generateCSP(nonce));
+    }
 
     try {
       ctx.renderPage = () =>
@@ -25,6 +40,7 @@ export default class MyDocument extends Document {
 
       return {
         ...initialProps,
+        nonce,
         styles: (
           <>
             {initialProps.styles}
@@ -38,9 +54,11 @@ export default class MyDocument extends Document {
   }
 
   render(): JSX.Element {
+    const { nonce } = this.props;
+
     return (
       <Html lang="en">
-        <Head>
+        <Head nonce={nonce}>
           <link
             rel="apple-touch-icon"
             sizes="180x180"
@@ -68,7 +86,7 @@ export default class MyDocument extends Document {
         </Head>
         <body>
           <Main />
-          <NextScript />
+          <NextScript nonce={nonce} />
         </body>
       </Html>
     );
