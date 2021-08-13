@@ -13,7 +13,6 @@ const moduleExports = {
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback.fs = false;
-      config.resolve.alias["@sentry/node"] = "@sentry/browser";
     }
 
     config.module.rules.push({
