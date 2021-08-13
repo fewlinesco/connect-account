@@ -25,6 +25,9 @@ async function login(page) {
   }
 
   try {
+    // set a consent cookie for the cookie banner to not be displayed by default in mobile
+    page.setCookie({ name: "user_content", value: { sentry: true } });
+
     console.log("Starting auth on Connect.");
     await page.goto(process.env.CONNECT_TEST_ACCOUNT_URL);
     console.log("App loaded.");
