@@ -83,7 +83,6 @@ const CookieBanner: React.FC = () => {
                 type="button"
                 variant={ButtonVariant.PRIMARY_COOKIE}
                 onPress={() => {
-                  console.log("hello");
                   setIsModalOpen(false);
                 }}
               >

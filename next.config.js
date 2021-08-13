@@ -33,6 +33,7 @@ const moduleExports = {
 
     return config;
   },
+  productionBrowserSourceMaps: true,
 };
 
 const SentryWebpackPluginOptions = {
