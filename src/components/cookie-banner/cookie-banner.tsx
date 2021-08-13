@@ -193,10 +193,6 @@ const ServiceDesc = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.xs};
   color: ${({ theme }) => theme.colors.breadcrumbs};
   margin-top: 0.4rem;
-
-  @media ${deviceBreakpoints.m} {
-    width: 80%;
-  }
 `;
 
 export { CookieBanner };
