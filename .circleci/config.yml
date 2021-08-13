@@ -149,12 +149,4 @@ workflows:
   e2e-tests-after-heroku-deploy:
     when: << pipeline.parameters.deployed_on_heroku >>
     jobs: 
-      - e2e-tests
-      - promote-to-production:
-          requires:
-            - e2e-tests
-          filters:
-            branches:
-              only:
-                - main
       - lighthouse

@@ -46,7 +46,6 @@ async function login(page) {
       },
     );
     await page.click("[type=submit]");
-    console.log("Email submitted.");
     await page.waitForTimeout(5000);
 
     await page.waitForSelector("input[type=password]", {
@@ -83,7 +82,7 @@ async function setup(browser, context) {
 
     if (COUNTER === 0) {
       await page.setCookie({
-        name: "user_consent",
+        name: "user-consent",
         expires: 2147483647,
         httpOnly: false,
         value: JSON.stringify({ sentry: true }),
@@ -91,10 +90,8 @@ async function setup(browser, context) {
         domain: new URL(context.url).hostname,
       });
       await page.goto(context.url);
-      console.log(await page.cookies());
     } else if (COUNTER !== 1) {
       await page.goto(context.url);
-      console.log(await page.cookies());
     } else {
       await login(page);
     }

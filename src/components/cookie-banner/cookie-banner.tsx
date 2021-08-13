@@ -17,9 +17,11 @@ const CookieBanner: React.FC = () => {
 
   const { data: consentCookie } = useSWR<Record<string, string>, SWRError>(
     `/api/consent-cookie/`,
+    { refreshInterval: 0 },
   );
 
   React.useEffect(() => {
+    console.log("consent cookie in component:", consentCookie);
     if (consentCookie && !consentCookie.isSet) {
       setIsModalOpen(true);
     } else {
