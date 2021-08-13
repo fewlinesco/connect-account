@@ -21,7 +21,6 @@ const CookieBanner: React.FC = () => {
   );
 
   React.useEffect(() => {
-    console.log("consent cookie in component:", consentCookie);
     if (consentCookie && !consentCookie.isSet) {
       setIsModalOpen(true);
     } else {

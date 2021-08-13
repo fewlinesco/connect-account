@@ -27,7 +27,6 @@ async function login(page) {
   try {
     console.log("Starting auth on Connect.");
     await page.goto(process.env.CONNECT_TEST_ACCOUNT_URL);
-    console.log(await page.cookies());
     console.log("App loaded.");
 
     await page.click("a");
@@ -46,6 +45,7 @@ async function login(page) {
       },
     );
     await page.click("[type=submit]");
+    console.log("Email submitted.");
     await page.waitForTimeout(5000);
 
     await page.waitForSelector("input[type=password]", {
@@ -78,9 +78,8 @@ async function setup(browser, context) {
   const page = await browser.newPage();
 
   try {
-    // set a consent cookie for the cookie banner to not be displayed by default in mobile
-
     if (COUNTER === 0) {
+      // set a consent cookie for the cookie banner to not be displayed by default in mobile
       await page.setCookie({
         name: "user-consent",
         expires: 2147483647,

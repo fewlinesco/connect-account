@@ -15,7 +15,6 @@ const getHandler: Handler = (request, response): Promise<void> => {
       isSet: consentCookie ? true : false,
       content: consentCookie ? consentCookie : null,
     };
-    console.log("consent cookie:", consentCookie);
     response.statusCode = HttpStatus.OK;
     response.setHeader("Content-Type", "application/json");
     return response.end(JSON.stringify(consentCookieResponse));
