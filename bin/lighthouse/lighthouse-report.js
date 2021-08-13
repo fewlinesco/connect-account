@@ -83,7 +83,7 @@ async function setup(browser, context) {
 
     if (COUNTER === 0) {
       await page.setCookie({
-        name: "user_content",
+        name: "user_consent",
         expires: 2147483647,
         httpOnly: false,
         value: JSON.stringify({ sentry: true }),
