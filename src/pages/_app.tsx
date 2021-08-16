@@ -83,7 +83,7 @@ const AccountApp: React.FC = ({ children }) => {
           >
             {children}
           </SWRConfig>
-          {CONFIG_VARIABLES.featureFlag && <CookieBanner />}
+          {CONFIG_VARIABLES.featureFlag ? <CookieBanner /> : null}
         </ThemeProvider>
       </IntlProvider>
     </SSRProvider>
