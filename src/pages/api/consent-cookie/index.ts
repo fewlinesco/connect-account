@@ -9,12 +9,14 @@ import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { noAuthBasicMiddlewares } from "@src/middlewares/basic-middlewares";
 
 const getHandler: Handler = (request, response): Promise<void> => {
-  return getTracer().span("get-consent-cookie handler", async (_span) => {
+  return getTracer().span("get-consent-cookie handler", async (span) => {
     const consentCookie = request.cookies["user-consent"];
     const consentCookieResponse = {
       isSet: consentCookie ? true : false,
       content: consentCookie ? consentCookie : null,
     };
+
+    span.setDisclosedAttribute("consent cookie content", consentCookieResponse);
     response.statusCode = HttpStatus.OK;
     response.setHeader("Content-Type", "application/json");
     return response.end(JSON.stringify(consentCookieResponse));

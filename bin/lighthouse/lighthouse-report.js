@@ -79,7 +79,6 @@ async function setup(browser, context) {
 
   try {
     if (COUNTER === 0) {
-      // set a consent cookie for the cookie banner to not be displayed by default in mobile
       await page.setCookie({
         name: "user-consent",
         expires: 2147483647,
@@ -98,7 +97,6 @@ async function setup(browser, context) {
     COUNTER++;
     return page.close();
   } catch (error) {
-    console.log(error);
     await page.screenshot({
       path: getTargetedPath("setup"),
     });

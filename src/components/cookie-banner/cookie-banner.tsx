@@ -71,7 +71,7 @@ const CookieBanner: React.FC = () => {
                 onPress={async () => {
                   await fetchJson("/api/consent-cookie/", "PATCH", {
                     sentry: false,
-                  }).then((_response) => {
+                  }).then(() => {
                     setIsModalOpen(false);
                   });
                 }}
@@ -84,7 +84,7 @@ const CookieBanner: React.FC = () => {
                 onPress={async () => {
                   await fetchJson("/api/consent-cookie/", "PATCH", {
                     sentry: true,
-                  }).then((_response) => {
+                  }).then(() => {
                     setIsModalOpen(false);
                   });
                 }}

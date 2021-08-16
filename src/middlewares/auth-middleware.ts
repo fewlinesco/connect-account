@@ -60,7 +60,6 @@ async function authentication(
         const redirectURL = request.url ? request.url : "/account";
 
         response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
-        console.log(encodeURIComponent(redirectURL));
         response.setHeader(
           "location",
           `/api/auth-connect/refresh-token?next=${encodeURIComponent(
