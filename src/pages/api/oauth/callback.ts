@@ -111,7 +111,7 @@ const handler: Handler = (request, response): Promise<void> => {
     span.setDisclosedAttribute("locale", locale);
 
     response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
-      Location: locale === "en" ? "/account" : `/${locale}/account`,
+      Location: locale === "en" ? "/account/" : `/${locale}/account/`,
     });
     response.end();
     return;
