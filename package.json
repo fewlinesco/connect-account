@@ -34,8 +34,8 @@
     "heroku:promote-staging-to-prod": "ts-node bin/run-promote.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.25.0",
-    "@aws-sdk/util-dynamodb": "3.25.0",
+    "@aws-sdk/client-dynamodb": "3.26.0",
+    "@aws-sdk/util-dynamodb": "3.26.0",
     "@fewlines/connect-client": "0.5.1",
     "@fewlines/connect-management": "0.8.0",
     "@formatjs/intl": "1.13.5",
@@ -82,7 +82,7 @@
     "@types/js-cookie": "2.2.7",
     "@types/memjs": "1.2.3",
     "@types/node": "16.6.1",
-    "@types/react": "17.0.17",
+    "@types/react": "17.0.18",
     "@types/react-datepicker": "4.1.4",
     "@types/react-dom": "17.0.9",
     "@types/react-phone-number-input": "3.0.10",
