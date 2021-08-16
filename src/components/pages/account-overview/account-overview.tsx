@@ -7,7 +7,7 @@ import { getSectionListContent } from "@src/components/navigation-bars/navigatio
 import { NeutralLink } from "@src/components/neutral-link/neutral-link";
 import { SectionBox } from "@src/components/shadow-box/section-box";
 import { deviceBreakpoints } from "@src/design-system/theme";
-import { getNavSectionHref } from "@src/utils/getNavSectionHref";
+import { getNavSectionHref } from "@src/utils/get-nav-section-href";
 
 const AccountOverview: React.FC = () => {
   const { formatMessage } = useIntl();
