@@ -32,7 +32,7 @@ describe("Log in with a smart phone, open and close the navigation bar", () => {
       const needCookieAcceptance = await text("Cookies").exists(10000, 50);
 
       if (needCookieAcceptance) {
-        await click("Accept all");
+        await click("Accept");
       }
 
       await click("Menu");

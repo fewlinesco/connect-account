@@ -76,11 +76,19 @@ async function login(page) {
 
 async function setup(browser, context) {
   const page = await browser.newPage();
-  await page.setViewport({ width: 1440, height: 1000 });
-  await page.setCacheEnabled(true);
 
   try {
-    if (COUNTER !== 1) {
+    if (COUNTER === 0) {
+      await page.setCookie({
+        name: "user-consent",
+        expires: 2147483647,
+        httpOnly: false,
+        value: JSON.stringify({ sentry: true }),
+        path: "/",
+        domain: new URL(context.url).hostname,
+      });
+      await page.goto(context.url);
+    } else if (COUNTER !== 1) {
       await page.goto(context.url);
     } else {
       await login(page);

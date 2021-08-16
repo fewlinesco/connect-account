@@ -290,6 +290,7 @@ const fr = {
     acceptAll: "Tout accepter",
     accept: "Accepter",
     refuseAll: "Tout refuser",
+    refuse: "Refuser",
   },
 };
 
