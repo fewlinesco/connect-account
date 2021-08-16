@@ -17,7 +17,7 @@ async function authenticateToConnect(): Promise<void> {
     const needCookieAcceptance = await text("Cookies").exists(10000, 50);
 
     if (needCookieAcceptance) {
-      await click("Accept all");
+      await click("Accept");
     }
 
     await click("Access my account");

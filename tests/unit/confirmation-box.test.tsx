@@ -95,7 +95,7 @@ describe("ConfirmationBox", () => {
       }),
     );
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(
         screen.getByText(new RegExp(localizedStrings.primaryModalContentEmail)),
       ).not.toBeVisible();
@@ -141,7 +141,7 @@ describe("ConfirmationBox", () => {
       }),
     );
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(
         screen.getByText(new RegExp(localizedStrings.deleteModalContentEmail)),
       ).not.toBeVisible();

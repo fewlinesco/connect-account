@@ -1,0 +1,47 @@
+@tailwind base;
+@layer base {
+  html {
+		/* This font size means that '1rem' is exactly equal to '10px', which makes setting REM values very simple. */
+		font-size: 62.5%;
+	}
+
+  * {
+		scroll-behavior: smooth;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu,Cantarell, 'Helvetica Neue', sans-serif;
+  }
+
+  body {
+		background-color: hsl(0, 0%, 100%);
+		line-height: 1;
+		color: hsl(235, 90%, 12%);
+		font-size: 1.6rem;
+	}
+
+	h1 {
+		font-size: 2.2rem;
+    font-weight: bold;
+	}
+
+	h2 {
+		font-size: 1.4rem;
+		color: hsl(190, 4%, 33%);
+    margin: 0 0 4rem 0;
+	}
+
+	h3 {
+		font-size: 1.8rem;
+    margin: 0 0 2rem 0;
+    font-weight: bold;
+	}
+
+	h3:not(:first-of-type) {
+    margin: 4rem 0 2rem 0;
+	}
+
+	p {
+		font-size: "1.6rem";
+	}
+}
+
+@tailwind components;
+@tailwind utilities;

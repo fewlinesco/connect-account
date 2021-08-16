@@ -12,9 +12,11 @@ import * as locales from "@content/locales";
 import { AlertMessages } from "@src/components/alert-message/alert-messages";
 import { CookieBanner } from "@src/components/cookie-banner/cookie-banner";
 import { CONFIG_VARIABLES } from "@src/configs/config-variables";
-import { GlobalStyle } from "@src/design-system/globals/global-style";
 import { theme } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
+
+import "tailwindcss/tailwind.css";
+import "@src/design-system/globals/global-style.css";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
@@ -53,7 +55,6 @@ const AccountApp: React.FC = ({ children }) => {
             />
             <title>Connect Account</title>
           </Head>
-          <GlobalStyle />
           <AlertMessages />
           <SWRConfig
             value={{
@@ -83,7 +84,7 @@ const AccountApp: React.FC = ({ children }) => {
           >
             {children}
           </SWRConfig>
-          {CONFIG_VARIABLES.featureFlag && <CookieBanner />}
+          {CONFIG_VARIABLES.featureFlag ? <CookieBanner /> : null}
         </ThemeProvider>
       </IntlProvider>
     </SSRProvider>
