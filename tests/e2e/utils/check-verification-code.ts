@@ -48,6 +48,7 @@ async function checkVerificationCode(): Promise<void> {
     const code = await getEmailValidationCode(
       process.env.CONNECT_TEST_ACCOUNT_EMAIL || "",
     );
+    console.log(code);
     await write(code);
     await click(localizedStrings.sudo.confirm);
   }
