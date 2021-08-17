@@ -1,16 +1,28 @@
 import React from "react";
 
 const Logo: React.FC = () => {
+  const [viewportWidth, setViewportWidth] = React.useState<number>(0);
+
+  React.useEffect(() => {
+    setViewportWidth(document && document.documentElement.clientWidth);
+  }, []);
+
   return (
     <svg
       width="114"
       height="24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      aria-labelledby="provider-logo-title"
+      aria-labelledby={`provider-logo-title${
+        viewportWidth && viewportWidth < 1024 ? "-mobile" : ""
+      }`}
       role="img"
     >
-      <title id="provider-logo-title">
+      <title
+        id={`provider-logo-title${
+          viewportWidth && viewportWidth < 1024 ? "-mobile" : ""
+        }`}
+      >
         Fewlines logo - Go back to homepage
       </title>
       <path
