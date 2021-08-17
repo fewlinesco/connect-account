@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 import { ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
-import { HomeDesktopBackground } from "@src/components/icons/home-desktop-background/home-desktop-background";
-import { HomeMobileBackground } from "@src/components/icons/home-mobile-background/home-mobile-background";
+import { HomeDesktopBackground } from "@src/components/icons/home-desktop-background";
+import { HomeMobileBackground } from "@src/components/icons/home-mobile-background";
 import { NeutralLink } from "@src/components/neutral-link";
 import { SectionBox } from "@src/components/section-box";
 import { deviceBreakpoints } from "@src/design-system/theme";

@@ -3,12 +3,12 @@ import React from "react";
 import styled from "styled-components";
 
 import { ClickAwayListener } from "../click-away-listener";
-import { Arrow } from "../icons/arrow/arrow";
-import { BurgerIcon } from "../icons/burger-icon/burger-icon";
-import { NavBarCrossIcon } from "../icons/navbar-cross-icon/navbar-cross-icon";
-import { RightChevron } from "../icons/right-chevron/right-chevron";
-import { WhiteSwitchIcon } from "../icons/switch-icon/white-switch-icon/white-switch-icon";
-import { WhiteWorldIcon } from "../icons/world-icon/white-world-icon/white-world-icon";
+import { Arrow } from "../icons/arrow";
+import { BurgerIcon } from "../icons/burger-icon";
+import { NavBarCrossIcon } from "../icons/navbar-cross-icon";
+import { RightChevron } from "../icons/right-chevron";
+import { WhiteSwitchIcon } from "../icons/switch-icon/white-switch-icon";
+import { WhiteWorldIcon } from "../icons/world-icon/white-world-icon";
 import { LogoutAnchor } from "../logout-anchor";
 import { NeutralLink } from "../neutral-link";
 import { getNavigationSections } from "./navigation-sections";

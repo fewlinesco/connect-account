@@ -3,7 +3,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import styled from "styled-components";
 
-import { RightChevron } from "../../icons/right-chevron/right-chevron";
+import { RightChevron } from "../../icons/right-chevron";
 import { Separator } from "../../separator";
 import { BoxedLink } from "@src/components/boxed-link";
 import {

@@ -4,9 +4,9 @@ import React from "react";
 import { useIntl } from "react-intl";
 import styled from "styled-components";
 
-import { CookieIcon } from "../icons/cookie-icon/cookie-icon";
-import { CrossIcon } from "../icons/cross-icon/cross-icon";
-import { Triangle } from "../icons/triangle/triangle";
+import { CookieIcon } from "../icons/cookie-icon";
+import { CrossIcon } from "../icons/cross-icon";
+import { Triangle } from "../icons/triangle";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 enum ButtonVariant {

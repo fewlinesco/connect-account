@@ -3,8 +3,8 @@ import React from "react";
 import styled from "styled-components";
 
 import { Header } from "../header";
-import { BlackSwitchIcon } from "../icons/switch-icon/black-switch-icon/black-switch-icon";
-import { BlackWorldIcon } from "../icons/world-icon/black-world-icon/black-world-icon";
+import { BlackSwitchIcon } from "../icons/switch-icon/black-switch-icon";
+import { BlackWorldIcon } from "../icons/world-icon/black-world-icon";
 import { LogoutAnchor } from "../logout-anchor";
 import { NeutralLink } from "../neutral-link";
 import { Separator } from "../separator";
