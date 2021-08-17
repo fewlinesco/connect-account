@@ -5,7 +5,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 import useSWR from "swr";
 
-import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { IdentityOverview } from "@src/components/pages/identity-overview/identity-overview";
 import { logger } from "@src/configs/logger";
@@ -35,9 +34,9 @@ const IdentityOverviewPage: React.FC<{
 
   return (
     <Layout breadcrumbs={breadcrumbs} title={formatMessage({ id: "title" })}>
-      <Container>
+      <div className="container mb-40 lg:mb-0">
         <IdentityOverview identity={identity} />
-      </Container>
+      </div>
     </Layout>
   );
 };

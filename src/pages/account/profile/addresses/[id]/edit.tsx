@@ -5,7 +5,6 @@ import { useIntl } from "react-intl";
 import useSWR from "swr";
 
 import { Address } from "@src/@types/profile";
-import { Container } from "@src/components/containers/container";
 import { UserAddressForm } from "@src/components/forms/profile/user-address-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
@@ -27,12 +26,12 @@ const EditAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <Container>
+      <div className="container mb-40 lg:mb-0">
         <UserAddressForm
           userAddress={address ? address : undefined}
           isCreation={false}
         />
-      </Container>
+      </div>
     </Layout>
   );
 };

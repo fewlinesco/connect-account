@@ -7,7 +7,6 @@ import styled from "styled-components";
 import useSWR from "swr";
 
 import { Profile } from "@src/@types/profile";
-import { Container } from "@src/components/containers/container";
 import { UserProfileForm } from "@src/components/forms/profile/user-profile-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
@@ -33,10 +32,10 @@ const NewUserProfilePage: React.FC = () => {
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <Container>
+      <div className="container mb-40 lg:mb-0">
         <InformativeMessage>{formatMessage({ id: "info" })}</InformativeMessage>
         <UserProfileForm isCreation={true} />
-      </Container>
+      </div>
     </Layout>
   );
 };

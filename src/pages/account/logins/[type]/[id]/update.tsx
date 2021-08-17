@@ -5,7 +5,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 import useSWR from "swr";
 
-import { Container } from "@src/components/containers/container";
 import { UpdateIdentityForm } from "@src/components/forms/identities/update-identity-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
@@ -33,9 +32,9 @@ const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
 
   return (
     <Layout breadcrumbs={breadcrumbs} title={formatMessage({ id: "title" })}>
-      <Container>
+      <div className="container mb-40 lg:mb-0">
         <UpdateIdentityForm identity={identity} />
-      </Container>
+      </div>
     </Layout>
   );
 };

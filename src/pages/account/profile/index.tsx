@@ -6,7 +6,6 @@ import { useIntl } from "react-intl";
 import useSWR from "swr";
 
 import { Address, Profile } from "@src/@types/profile";
-import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { ProfileOverview } from "@src/components/pages/profile-overview/profile-overview";
 import { logger } from "@src/configs/logger";
@@ -41,12 +40,12 @@ const ProfilePage: React.FC = () => {
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <Container>
+      <div className="container mb-40 lg:mb-0">
         <ProfileOverview
           userProfile={userProfile}
           userAddresses={userAddresses}
         />
-      </Container>
+      </div>
     </Layout>
   );
 };

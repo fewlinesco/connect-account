@@ -3,7 +3,6 @@ import type { GetServerSideProps } from "next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Container } from "@src/components/containers/container";
 import { UserAddressForm } from "@src/components/forms/profile/user-address-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
@@ -18,9 +17,9 @@ const NewAddressPage: React.FC = () => {
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <Container>
+      <div className="container mb-40 lg:mb-0">
         <UserAddressForm isCreation={true} />
-      </Container>
+      </div>
     </Layout>
   );
 };

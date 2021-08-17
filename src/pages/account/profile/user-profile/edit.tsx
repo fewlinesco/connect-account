@@ -5,7 +5,6 @@ import { useIntl } from "react-intl";
 import useSWR from "swr";
 
 import { Profile } from "@src/@types/profile";
-import { Container } from "@src/components/containers/container";
 import { UserProfileForm } from "@src/components/forms/profile/user-profile-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
@@ -29,9 +28,9 @@ const UpdateUserProfilePage: React.FC = () => {
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <Container>
+      <div className="container mb-40 lg:mb-0">
         <UserProfileForm userProfileData={userProfile} />
-      </Container>
+      </div>
     </Layout>
   );
 };

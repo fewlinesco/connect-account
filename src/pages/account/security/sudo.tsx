@@ -3,7 +3,6 @@ import type { GetServerSideProps } from "next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { TwoFA } from "@src/components/pages/two-fa/two-fa";
 import { logger } from "@src/configs/logger";
@@ -15,9 +14,9 @@ const SudoPage: React.FC = () => {
 
   return (
     <Layout breadcrumbs={false} title={formatMessage({ id: "title" })}>
-      <Container>
+      <div className="container mb-40 lg:mb-0">
         <TwoFA />
-      </Container>
+      </div>
     </Layout>
   );
 };
