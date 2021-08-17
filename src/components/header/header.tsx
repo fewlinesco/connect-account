@@ -4,11 +4,11 @@ import styled from "styled-components";
 import { Logo } from "../logo/logo";
 import { NeutralLink } from "../neutral-link/neutral-link";
 
-const Header: React.FC = () => {
+const Header: React.FC<{ viewport: "desktop" | "mobile" }> = ({ viewport }) => {
   return (
     <Flex>
       <NeutralLink href="/account/">
-        <Logo />
+        <Logo viewport={viewport} />
       </NeutralLink>
       <AppName>Account</AppName>
     </Flex>
