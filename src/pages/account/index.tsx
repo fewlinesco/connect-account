@@ -14,9 +14,7 @@ const AccountPage: React.FC = () => {
 
   return (
     <Layout breadcrumbs={false} title={formatMessage({ id: "breadcrumb" })}>
-      <div className="container mb-40 lg:mb-0">
-        <AccountOverview />
-      </div>
+      <AccountOverview />
     </Layout>
   );
 };

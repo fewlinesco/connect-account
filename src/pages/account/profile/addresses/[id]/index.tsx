@@ -28,9 +28,7 @@ const AddressOverviewPage: React.FC<{ addressId: string }> = ({
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <div className="container mb-40 lg:mb-0">
-        <AddressOverview address={address} />
-      </div>
+      <AddressOverview address={address} />
     </Layout>
   );
 };

@@ -23,9 +23,7 @@ const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
       }
       title={formatMessage({ id: "title" })}
     >
-      <div className="container mb-40 lg:mb-0">
-        <AddIdentityForm type={type} />
-      </div>
+      <AddIdentityForm type={type} />
     </Layout>
   );
 };

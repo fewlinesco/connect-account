@@ -28,9 +28,7 @@ const ValidateIdentityPage: React.FC<{
       }
       title={formatMessage({ id: "title" })}
     >
-      <div className="container mb-40 lg:mb-0">
-        <ValidateIdentityForm type={type} eventId={eventId} />
-      </div>
+      <ValidateIdentityForm type={type} eventId={eventId} />
     </Layout>
   );
 };

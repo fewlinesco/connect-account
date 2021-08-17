@@ -37,17 +37,15 @@ const SecurityUpdatePage: React.FC = () => {
       breadcrumbs={conditionalBreadcrumb}
       title={formatMessage({ id: "title" })}
     >
-      <div className="container mb-40 lg:mb-0">
-        <SetPasswordForm
-          submitButtonLabel={
-            !isPasswordSetData
-              ? ""
-              : isPasswordSetData.isPasswordSet
-              ? formatMessage({ id: "update" })
-              : formatMessage({ id: "set" })
-          }
-        />
-      </div>
+      <SetPasswordForm
+        submitButtonLabel={
+          !isPasswordSetData
+            ? ""
+            : isPasswordSetData.isPasswordSet
+            ? formatMessage({ id: "update" })
+            : formatMessage({ id: "set" })
+        }
+      />
     </Layout>
   );
 };

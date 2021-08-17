@@ -26,12 +26,10 @@ const EditAddressPage: React.FC<{ addressId: string }> = ({ addressId }) => {
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <div className="container mb-40 lg:mb-0">
-        <UserAddressForm
-          userAddress={address ? address : undefined}
-          isCreation={false}
-        />
-      </div>
+      <UserAddressForm
+        userAddress={address ? address : undefined}
+        isCreation={false}
+      />
     </Layout>
   );
 };

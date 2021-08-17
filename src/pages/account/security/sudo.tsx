@@ -14,9 +14,7 @@ const SudoPage: React.FC = () => {
 
   return (
     <Layout breadcrumbs={false} title={formatMessage({ id: "title" })}>
-      <div className="container mb-40 lg:mb-0">
-        <TwoFA />
-      </div>
+      <TwoFA />
     </Layout>
   );
 };

@@ -17,9 +17,7 @@ const SecurityPage: React.FC = () => {
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <div className="container mb-40 lg:mb-0">
-        <Security />
-      </div>
+      <Security />
     </Layout>
   );
 };

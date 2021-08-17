@@ -28,9 +28,7 @@ const UpdateUserProfilePage: React.FC = () => {
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <div className="container mb-40 lg:mb-0">
-        <UserProfileForm userProfileData={userProfile} />
-      </div>
+      <UserProfileForm userProfileData={userProfile} />
     </Layout>
   );
 };

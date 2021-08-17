@@ -40,12 +40,10 @@ const ProfilePage: React.FC = () => {
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <div className="container mb-40 lg:mb-0">
-        <ProfileOverview
-          userProfile={userProfile}
-          userAddresses={userAddresses}
-        />
-      </div>
+      <ProfileOverview
+        userProfile={userProfile}
+        userAddresses={userAddresses}
+      />
     </Layout>
   );
 };

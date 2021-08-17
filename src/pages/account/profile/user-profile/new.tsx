@@ -32,10 +32,8 @@ const NewUserProfilePage: React.FC = () => {
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <div className="container mb-40 lg:mb-0">
-        <InformativeMessage>{formatMessage({ id: "info" })}</InformativeMessage>
-        <UserProfileForm isCreation={true} />
-      </div>
+      <InformativeMessage>{formatMessage({ id: "info" })}</InformativeMessage>
+      <UserProfileForm isCreation={true} />
     </Layout>
   );
 };

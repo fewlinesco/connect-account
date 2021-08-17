@@ -32,9 +32,7 @@ const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
 
   return (
     <Layout breadcrumbs={breadcrumbs} title={formatMessage({ id: "title" })}>
-      <div className="container mb-40 lg:mb-0">
-        <UpdateIdentityForm identity={identity} />
-      </div>
+      <UpdateIdentityForm identity={identity} />
     </Layout>
   );
 };
