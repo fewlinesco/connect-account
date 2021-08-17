@@ -3,7 +3,6 @@ import type { GetServerSideProps } from "next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { Locale } from "@src/components/pages/locale/locale";
 import { logger } from "@src/configs/logger";
@@ -15,9 +14,9 @@ const LocalePage: React.FC = () => {
 
   return (
     <Layout breadcrumbs={false} title={formatMessage({ id: "title" })}>
-      <Container>
+      <div className="container h-auto mb-40 lg:mb-0">
         <Locale />
-      </Container>
+      </div>
     </Layout>
   );
 };

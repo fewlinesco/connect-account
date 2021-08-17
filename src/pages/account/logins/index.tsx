@@ -3,7 +3,6 @@ import { GetServerSideProps } from "next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { LoginsOverview } from "@src/components/pages/logins-overview/logins-overview";
 import { logger } from "@src/configs/logger";
@@ -18,9 +17,9 @@ const LoginsOverviewPage: React.FC = () => {
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <Container>
+      <div className="container mb-40 lg:mb-0">
         <LoginsOverview />
-      </Container>
+      </div>
     </Layout>
   );
 };

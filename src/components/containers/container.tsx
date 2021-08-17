@@ -6,7 +6,7 @@ const Container = styled.div`
   width: 100%;
 
   @media ${deviceBreakpoints.m} {
-    height: auto;
+    /* height: auto; */
     margin: 0 0 10rem 0;
   }
 `;
