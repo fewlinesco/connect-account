@@ -24,6 +24,8 @@ async function getEmailValidationCode(emailAddress: string): Promise<string> {
     .sort((a, b) => (a.time < b.time ? 1 : -1))
     .find((email) => email.headers.to === emailAddress);
 
+  console.log(email);
+
   if (email) {
     const match = email.text.match(/code (\d{6}) /);
     if (match) {
