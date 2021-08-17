@@ -6,8 +6,8 @@ import { ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { HomeDesktopBackground } from "@src/components/icons/home-desktop-background/home-desktop-background";
 import { HomeMobileBackground } from "@src/components/icons/home-mobile-background/home-mobile-background";
-import { NeutralLink } from "@src/components/neutral-link/neutral-link";
-import { SectionBox } from "@src/components/shadow-box/section-box";
+import { NeutralLink } from "@src/components/neutral-link";
+import { SectionBox } from "@src/components/section-box";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Home: React.FC<{ authorizeURL: string; providerName: string }> = ({

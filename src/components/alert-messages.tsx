@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import React from "react";
 import styled from "styled-components";
 
-import { CrossIcon } from "../icons/cross-icon/cross-icon";
+import { CrossIcon } from "./icons/cross-icon/cross-icon";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const AlertMessages: React.FC = () => {

@@ -3,9 +3,9 @@ import React from "react";
 import styled from "styled-components";
 import useSWR from "swr";
 
-import { CookieButton, ButtonVariant, Button } from "../buttons/buttons";
-import { ClickAwayListener } from "../click-away-listener";
-import { SentryIcon } from "../icons/sentry-logo/sentry-icon";
+import { CookieButton, ButtonVariant, Button } from "./buttons/buttons";
+import { ClickAwayListener } from "./click-away-listener";
+import { SentryIcon } from "./icons/sentry-logo/sentry-icon";
 import { formatCookieBannerMessage } from "@src/configs/intl";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";

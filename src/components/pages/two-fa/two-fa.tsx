@@ -7,7 +7,7 @@ import useSWR from "swr";
 import { SendTwoFACodeForm } from "@src/components/forms/send-two-fa-code-form";
 import { VerifyTwoFACodeForm } from "@src/components/forms/verify-two-fa-code-form";
 import { LockIcon } from "@src/components/icons/lock-icon/lock-icon";
-import { Separator } from "@src/components/separator/separator";
+import { Separator } from "@src/components/separator";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const TwoFA: React.FC = () => {

@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React from "react";
 
-import { ButtonVariant } from "../buttons/buttons";
-import { NeutralLink } from "../neutral-link/neutral-link";
+import { ButtonVariant } from "./buttons/buttons";
+import { NeutralLink } from "./neutral-link";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { formatNavigation } from "@src/configs/intl";
 

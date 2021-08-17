@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import { AwaitingValidationIcon } from "../icons/awaiting-validation-icon/awaiting-validation-icon";
-import { PrimaryIcon } from "../icons/primary-icon/primary-icon";
+import { AwaitingValidationIcon } from "./icons/awaiting-validation-icon/awaiting-validation-icon";
+import { PrimaryIcon } from "./icons/primary-icon/primary-icon";
 
 const PrimaryBadge: React.FC<{ localizedLabel: string }> = ({
   localizedLabel,

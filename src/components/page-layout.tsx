@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Header } from "./header/header";
+import { Header } from "./header";
 import { DesktopNavigationBar } from "./navigation-bars/desktop-navigation-bar";
 import { MobileNavigationBar } from "./navigation-bars/mobile-navigation-bar";
-import { NavigationBreadcrumbs } from "./navigation-breadcrumbs/navigation-breadcrumbs";
+import { NavigationBreadcrumbs } from "./navigation-breadcrumbs";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Layout: React.FC<{

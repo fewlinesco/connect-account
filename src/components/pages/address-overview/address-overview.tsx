@@ -6,13 +6,13 @@ import styled from "styled-components";
 import useSWR, { mutate } from "swr";
 
 import { Address } from "@src/@types/profile";
-import { PrimaryBadge } from "@src/components/badges/badges";
-import { Box } from "@src/components/box/box";
+import { PrimaryBadge } from "@src/components/badges";
+import { Box } from "@src/components/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { ConfirmationBox } from "@src/components/confirmation-box/confirmation-box";
-import { NeutralLink } from "@src/components/neutral-link/neutral-link";
-import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
+import { NeutralLink } from "@src/components/neutral-link";
+import { SkeletonTextLine } from "@src/components/skeletons";
 import { SWRError } from "@src/errors/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 import {

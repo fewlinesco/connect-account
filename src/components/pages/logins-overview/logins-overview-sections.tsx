@@ -4,8 +4,8 @@ import { useIntl } from "react-intl";
 import styled from "styled-components";
 
 import { RightChevron } from "../../icons/right-chevron/right-chevron";
-import { Separator } from "../../separator/separator";
-import { BoxedLink } from "@src/components/boxed-link/boxed-link";
+import { Separator } from "../../separator";
+import { BoxedLink } from "@src/components/boxed-link";
 import {
   capitalizeFirstLetter,
   formatSpecialSocialIdentities,

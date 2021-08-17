@@ -4,9 +4,9 @@ import styled from "styled-components";
 import useSWR from "swr";
 
 import { RightChevron } from "@src/components/icons/right-chevron/right-chevron";
-import { NeutralLink } from "@src/components/neutral-link/neutral-link";
-import { SectionBox } from "@src/components/shadow-box/section-box";
-import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
+import { NeutralLink } from "@src/components/neutral-link";
+import { SectionBox } from "@src/components/section-box";
+import { SkeletonTextLine } from "@src/components/skeletons";
 
 const Security: React.FC = () => {
   const { data, error } = useSWR<{ isPasswordSet: boolean }, Error>(

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Logo } from "../logo/logo";
-import { NeutralLink } from "../neutral-link/neutral-link";
+import { Logo } from "./logo";
+import { NeutralLink } from "./neutral-link";
 
 const Header: React.FC = () => {
   return (

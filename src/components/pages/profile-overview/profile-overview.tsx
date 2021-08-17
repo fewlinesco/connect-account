@@ -3,15 +3,15 @@ import { useIntl } from "react-intl";
 import styled from "styled-components";
 
 import { Address, Profile } from "@src/@types/profile";
-import { BoxedLink } from "@src/components/boxed-link/boxed-link";
+import { BoxedLink } from "@src/components/boxed-link";
 import { ButtonVariant, ShowMoreButton } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { DefaultProfilePictureIcon } from "@src/components/icons/default-profile-picture/default-profile-picture";
 import { RightChevron } from "@src/components/icons/right-chevron/right-chevron";
-import { NeutralLink } from "@src/components/neutral-link/neutral-link";
-import { Separator } from "@src/components/separator/separator";
-import { SectionBox } from "@src/components/shadow-box/section-box";
-import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
+import { NeutralLink } from "@src/components/neutral-link";
+import { SectionBox } from "@src/components/section-box";
+import { Separator } from "@src/components/separator";
+import { SkeletonTextLine } from "@src/components/skeletons";
 import {
   capitalizeFirstLetter,
   formatOtherAddressFieldsToDisplay,

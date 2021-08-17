@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { NeutralLink } from "../neutral-link/neutral-link";
+import { NeutralLink } from "./neutral-link";
 import { formatErrorMessage } from "@src/configs/intl";
 
 const ErrorFallbackComponent: React.FC<{

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { SkeletonTextLine } from "../skeletons/skeletons";
+import { SkeletonTextLine } from "./skeletons";
 
 const NavigationBreadcrumbs: React.FC<{
   breadcrumbs: string | false;
