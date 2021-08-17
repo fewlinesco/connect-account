@@ -293,6 +293,9 @@ if you want to automatically fix linting issues.
 | `CONNECT_TEST_ACCOUNT_URL`
 | URL of the Connect.Account application that will be used for e2e tests.
 
+| `CONNECT_ACCOUNT_TEST_NO_PROFILE`
+| Set to true if you need to do a Lighthouse audit on `/profile/user-profile/new`.
+
 | `CONNECT_PROFILE_URL`
 | URL of Connect.Profile server.
 |===
