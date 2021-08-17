@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 import useSWR from "swr";
 
 import { Layout } from "@src/components/page-layout";
-import { IdentityOverview } from "@src/components/pages/identity-overview/identity-overview";
+import { IdentityOverview } from "@src/components/pages/identity-overview";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { SWRError } from "@src/errors/errors";
