@@ -1,12 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 
 import { Button, ButtonVariant } from "../buttons/buttons";
-import { Container } from "../containers/container";
 import { ConfirmationBox } from "./confirmation-box";
 import { DeleteConfirmationBoxContent } from "./delete-confirmation-box-content";
 import { PrimaryConfirmationBoxContent } from "./primary-confirmation-box-content";
-import { deviceBreakpoints } from "@src/design-system/theme";
 
 const PrimaryConfirmationBox = (): JSX.Element => {
   const [open, setOpen] = React.useState<boolean>(false);
@@ -15,7 +12,7 @@ const PrimaryConfirmationBox = (): JSX.Element => {
     React.useState<JSX.Element>(<React.Fragment />);
 
   return (
-    <ConfirmationStoryContainer>
+    <div className="container mx-auto lg:w-3/5">
       <Button
         type="button"
         variant={ButtonVariant.PRIMARY}
@@ -44,7 +41,7 @@ const PrimaryConfirmationBox = (): JSX.Element => {
       >
         {confirmationBoxContent}
       </ConfirmationBox>
-    </ConfirmationStoryContainer>
+    </div>
   );
 };
 
@@ -55,7 +52,7 @@ const DangerConfirmationBox = (): JSX.Element => {
     React.useState<JSX.Element>(<React.Fragment />);
 
   return (
-    <ConfirmationStoryContainer>
+    <div className="container mx-auto lg:w-3/5">
       <div>
         <Button
           type="button"
@@ -86,18 +83,9 @@ const DangerConfirmationBox = (): JSX.Element => {
       >
         {confirmationBoxContent}
       </ConfirmationBox>
-    </ConfirmationStoryContainer>
+    </div>
   );
 };
-
-const ConfirmationStoryContainer = styled(Container)`
-  width: 60%;
-  margin: 0 auto;
-
-  @media ${deviceBreakpoints.m} {
-    width: 100%;
-  }
-`;
 
 export default {
   title: "components/Confirmation Box",

@@ -1,13 +1,12 @@
 import React from "react";
 
-import { Container } from "../containers/container";
 import { ErrorFallbackComponent } from "./error-fallback-component";
 
 const StandardErrorFallback = (): JSX.Element => {
   return (
-    <Container>
+    <div className="container mb-40 lg:mb-0">
       <ErrorFallbackComponent statusCode={504} />
-    </Container>
+    </div>
   );
 };
 
