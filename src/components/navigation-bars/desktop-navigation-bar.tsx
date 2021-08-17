@@ -2,12 +2,12 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 
-import { Header } from "../header/header";
-import { BlackSwitchIcon } from "../icons/switch-icon/black-switch-icon/black-switch-icon";
-import { BlackWorldIcon } from "../icons/world-icon/black-world-icon/black-world-icon";
-import { LogoutAnchor } from "../logout-anchor/logout-anchor";
-import { NeutralLink } from "../neutral-link/neutral-link";
-import { Separator } from "../separator/separator";
+import { Header } from "../header";
+import { BlackSwitchIcon } from "../icons/switch-icon/black-switch-icon";
+import { BlackWorldIcon } from "../icons/world-icon/black-world-icon";
+import { LogoutAnchor } from "../logout-anchor";
+import { NeutralLink } from "../neutral-link";
+import { Separator } from "../separator";
 import { getNavigationSections } from "./navigation-sections";
 import { formatNavigation } from "@src/configs/intl";
 

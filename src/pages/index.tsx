@@ -12,7 +12,7 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 import { Main } from "@src/components/page-layout";
-import { Home } from "@src/components/pages/home/home";
+import { Home } from "@src/components/pages/home";
 import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 import { logger } from "@src/configs/logger";
 import { oauth2Client } from "@src/configs/oauth2-client";

@@ -4,7 +4,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { Layout } from "@src/components/page-layout";
-import { Locale } from "@src/components/pages/locale/locale";
+import { Locale } from "@src/components/pages/locale";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { basicMiddlewares } from "@src/middlewares/basic-middlewares";

@@ -4,7 +4,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { Layout } from "@src/components/page-layout";
-import { TwoFA } from "@src/components/pages/two-fa/two-fa";
+import { TwoFA } from "@src/components/pages/two-fa";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { basicMiddlewares } from "@src/middlewares/basic-middlewares";

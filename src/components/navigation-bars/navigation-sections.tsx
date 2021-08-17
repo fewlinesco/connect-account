@@ -1,12 +1,12 @@
 import React from "react";
 
-import { HomeIcon } from "../icons/home-icon/home-icon";
-import { KeyIcon } from "../icons/key-icon/key-icon";
-import { LockIcon } from "../icons/lock-icon/lock-icon";
-import { UserIcon } from "../icons/user-icon/user-icon";
-import { LoginsIcon } from "@src/components/icons/logins-icon/logins-icon";
-import { ProfileIcon } from "@src/components/icons/profile-icon/profile-icon";
-import { SecurityIcon } from "@src/components/icons/security-icon/security-icon";
+import { HomeIcon } from "../icons/home-icon";
+import { KeyIcon } from "../icons/key-icon";
+import { LockIcon } from "../icons/lock-icon";
+import { UserIcon } from "../icons/user-icon";
+import { LoginsIcon } from "@src/components/icons/logins-icon";
+import { ProfileIcon } from "@src/components/icons/profile-icon";
+import { SecurityIcon } from "@src/components/icons/security-icon";
 
 function getNavigationSections(): [string, { href: string; icon: Element }][] {
   const NAVIGATION_SECTIONS = {

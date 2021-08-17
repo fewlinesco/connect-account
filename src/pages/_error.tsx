@@ -1,7 +1,7 @@
 import type { NextPageContext } from "next";
 import React from "react";
 
-import { ErrorFallbackComponent } from "@src/components/error-fallback-component/error-fallback-component";
+import { ErrorFallbackComponent } from "@src/components/error-fallback-component";
 import { Layout } from "@src/components/page-layout";
 
 const CustomErrorComponent = ({

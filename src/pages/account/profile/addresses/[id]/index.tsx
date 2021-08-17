@@ -6,7 +6,7 @@ import useSWR from "swr";
 
 import { Address } from "@src/@types/profile";
 import { Layout } from "@src/components/page-layout";
-import { AddressOverview } from "@src/components/pages/address-overview/address-overview";
+import { AddressOverview } from "@src/components/pages/address-overview";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { basicMiddlewares } from "@src/middlewares/basic-middlewares";

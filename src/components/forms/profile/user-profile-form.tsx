@@ -12,7 +12,7 @@ import { Form } from "../form";
 import { Profile } from "@src/@types/profile";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
-import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { NeutralLink } from "@src/components/neutral-link";
 import { fetchJson } from "@src/utils/fetch-json";
 
 import "react-datepicker/dist/react-datepicker.css";

@@ -6,16 +6,16 @@ import useSWR from "swr";
 
 import { ButtonVariant, ShowMoreButton } from "../../buttons/buttons";
 import { FakeButton } from "../../buttons/fake-button";
-import { NeutralLink } from "../../neutral-link/neutral-link";
-import { SectionBox } from "../../shadow-box/section-box";
-import { TimelineEnd, Timeline } from "../../timelines/timelines";
+import { NeutralLink } from "../../neutral-link";
+import { SectionBox } from "../../section-box";
+import { TimelineEnd, Timeline } from "../../timelines";
 import {
   EmailSection,
   PhoneSection,
   SocialSection,
 } from "./logins-overview-sections";
-import { BoxedLink } from "@src/components/boxed-link/boxed-link";
-import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
+import { BoxedLink } from "@src/components/boxed-link";
+import { SkeletonTextLine } from "@src/components/skeletons";
 import { sortIdentities } from "@src/utils/sort-identities";
 
 const LoginsOverview: React.FC = () => {

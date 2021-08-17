@@ -13,7 +13,7 @@ import { Form } from "../form";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
-import { NeutralLink } from "@src/components/neutral-link/neutral-link";
+import { NeutralLink } from "@src/components/neutral-link";
 import { formatErrorMessage } from "@src/configs/intl";
 import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
