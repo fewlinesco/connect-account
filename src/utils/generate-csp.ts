@@ -3,9 +3,9 @@ import { CSP } from "@src/@types/csp-header-directives";
 function generateCSP(nonce: string): string {
   const csp: Partial<Record<CSP, string>> = {
     "default-src": `'self'`,
-    "script-src": `'self' ajax.cloudflare.com 'nonce-${nonce}'`,
+    "script-src": `'self' ajax.cloudflare.com static.cloudflareinsights.com 'nonce-${nonce}'`,
     "connect-src": `'self' *.sentry.io`,
-    "img-src": `'self'`,
+    "img-src": `'self' data: https:`,
     "style-src": `'self' 'unsafe-inline'`,
     "base-uri": `'self'`,
     "form-action": `'self'`,
