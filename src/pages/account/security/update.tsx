@@ -4,7 +4,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 import useSWR from "swr";
 
-import { Container } from "@src/components/containers/container";
 import { SetPasswordForm } from "@src/components/forms/set-password-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
@@ -38,17 +37,15 @@ const SecurityUpdatePage: React.FC = () => {
       breadcrumbs={conditionalBreadcrumb}
       title={formatMessage({ id: "title" })}
     >
-      <Container>
-        <SetPasswordForm
-          submitButtonLabel={
-            !isPasswordSetData
-              ? ""
-              : isPasswordSetData.isPasswordSet
-              ? formatMessage({ id: "update" })
-              : formatMessage({ id: "set" })
-          }
-        />
-      </Container>
+      <SetPasswordForm
+        submitButtonLabel={
+          !isPasswordSetData
+            ? ""
+            : isPasswordSetData.isPasswordSet
+            ? formatMessage({ id: "update" })
+            : formatMessage({ id: "set" })
+        }
+      />
     </Layout>
   );
 };

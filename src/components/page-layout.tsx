@@ -30,7 +30,7 @@ const Layout: React.FC<{
             </MainTitle>
           ) : null}
           <NavigationBreadcrumbs breadcrumbs={breadcrumbs} />
-          {children}
+          <div className="container mb-40 lg:mb-0">{children}</div>
         </ChildrenContainer>
       </Flex>
     </Main>

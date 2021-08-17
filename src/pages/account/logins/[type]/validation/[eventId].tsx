@@ -5,7 +5,6 @@ import { GetServerSideProps } from "next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Container } from "@src/components/containers/container";
 import { ValidateIdentityForm } from "@src/components/forms/identities/validate-identity-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
@@ -29,9 +28,7 @@ const ValidateIdentityPage: React.FC<{
       }
       title={formatMessage({ id: "title" })}
     >
-      <Container>
-        <ValidateIdentityForm type={type} eventId={eventId} />
-      </Container>
+      <ValidateIdentityForm type={type} eventId={eventId} />
     </Layout>
   );
 };

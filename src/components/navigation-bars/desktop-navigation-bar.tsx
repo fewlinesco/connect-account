@@ -30,8 +30,8 @@ const DesktopNavigationBar: React.FC = () => {
         <SwitchLanguageLabel>
           <BlackWorldIcon />
           <p>{formatNavigation(locale || "en", "language")}</p>
+          <BlackSwitchIcon />
         </SwitchLanguageLabel>
-        <BlackSwitchIcon />
       </SwitchLanguageItem>
       <LogoutAnchor />
     </>
@@ -54,15 +54,18 @@ const ListItem = styled(NeutralLink)`
 const SwitchLanguageItem = styled(NeutralLink)`
   display: flex;
   justify-content: space-between;
-  padding: ${({ theme }) => theme.spaces.xs};
+  padding: 2.5rem 2rem;
 `;
 
 const SwitchLanguageLabel = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   p {
-    margin: 0 0 0 ${({ theme }) => theme.spaces.xs};
+    flex-grow: 2.7;
+    margin-left: 3rem;
   }
 `;
 

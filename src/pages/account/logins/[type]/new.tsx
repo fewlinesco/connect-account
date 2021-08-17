@@ -4,7 +4,6 @@ import { GetServerSideProps } from "next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Container } from "@src/components/containers/container";
 import { AddIdentityForm } from "@src/components/forms/identities/add-identity-form";
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
@@ -24,9 +23,7 @@ const AddIdentityPage: React.FC<{ type: IdentityTypes }> = ({ type }) => {
       }
       title={formatMessage({ id: "title" })}
     >
-      <Container>
-        <AddIdentityForm type={type} />
-      </Container>
+      <AddIdentityForm type={type} />
     </Layout>
   );
 };

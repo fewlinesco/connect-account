@@ -5,7 +5,6 @@ import { useIntl } from "react-intl";
 import useSWR from "swr";
 
 import { Address } from "@src/@types/profile";
-import { Container } from "@src/components/containers/container";
 import { Layout } from "@src/components/page-layout";
 import { AddressOverview } from "@src/components/pages/address-overview/address-overview";
 import { logger } from "@src/configs/logger";
@@ -29,9 +28,7 @@ const AddressOverviewPage: React.FC<{ addressId: string }> = ({
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <Container>
-        <AddressOverview address={address} />
-      </Container>
+      <AddressOverview address={address} />
     </Layout>
   );
 };
