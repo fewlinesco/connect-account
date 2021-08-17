@@ -1,16 +1,16 @@
 import React from "react";
 
-const Logo: React.FC = () => {
+const Logo: React.FC<{ viewport: "desktop" | "mobile" }> = ({ viewport }) => {
   return (
     <svg
       width="114"
       height="24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      aria-labelledby="provider-logo-title"
+      aria-labelledby={`provider-logo-title-${viewport}`}
       role="img"
     >
-      <title id="provider-logo-title">
+      <title id={`provider-logo-title-${viewport}`}>
         Fewlines logo - Go back to homepage
       </title>
       <path

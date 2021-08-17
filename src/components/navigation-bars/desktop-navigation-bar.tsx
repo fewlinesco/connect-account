@@ -16,7 +16,7 @@ const DesktopNavigationBar: React.FC = () => {
 
   return (
     <>
-      <Header />
+      <Header viewport="desktop" />
       {getNavigationSections().map(([title, { href, icon }]) => {
         return (
           <ListItem href={href} key={title + href}>

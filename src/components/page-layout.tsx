@@ -14,7 +14,7 @@ const Layout: React.FC<{
   return (
     <Main>
       <MobileDisplayOnly>
-        <Header />
+        <Header viewport="mobile" />
         <MobileNavigationBar />
       </MobileDisplayOnly>
       <Flex>
