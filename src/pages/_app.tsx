@@ -9,8 +9,8 @@ import { ThemeProvider } from "styled-components";
 import { SWRConfig } from "swr";
 
 import * as locales from "@content/locales";
-import { AlertMessages } from "@src/components/alert-message/alert-messages";
-import { CookieBanner } from "@src/components/cookie-banner/cookie-banner";
+import { AlertMessages } from "@src/components/alert-messages";
+import { CookieBanner } from "@src/components/cookie-banner";
 import { CONFIG_VARIABLES } from "@src/configs/config-variables";
 import { theme } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";

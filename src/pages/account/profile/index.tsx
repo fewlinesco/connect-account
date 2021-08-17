@@ -7,7 +7,7 @@ import useSWR from "swr";
 
 import { Address, Profile } from "@src/@types/profile";
 import { Layout } from "@src/components/page-layout";
-import { ProfileOverview } from "@src/components/pages/profile-overview/profile-overview";
+import { ProfileOverview } from "@src/components/pages/profile-overview";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { SWRError } from "@src/errors/errors";

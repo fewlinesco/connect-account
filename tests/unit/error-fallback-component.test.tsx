@@ -2,7 +2,7 @@ import React from "react";
 
 import { render, screen } from "../config/testing-library-config";
 import * as locales from "@content/locales";
-import { ErrorFallbackComponent } from "@src/components/error-fallback-component/error-fallback-component";
+import { ErrorFallbackComponent } from "@src/components/error-fallback-component";
 
 describe("ErrorFallback component", () => {
   const localizedStrings = locales.en.errors;

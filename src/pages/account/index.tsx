@@ -4,7 +4,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { Layout } from "@src/components/page-layout";
-import { AccountOverview } from "@src/components/pages/account-overview/account-overview";
+import { AccountOverview } from "@src/components/pages/account-overview";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { basicMiddlewares } from "@src/middlewares/basic-middlewares";

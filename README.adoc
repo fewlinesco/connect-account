@@ -150,23 +150,6 @@ To run the e2e tests suite on local environment :
 yarn test:e2e:local
 ----
 
-=== Storybook
-
-If you wish to run the Storybook server, you can run the following: 
-
-[source, shell]
-----
-yarn storybook
-----
-
-Note that it can take some time for Storybook to run, even when the compilation is done.
-If you wish to build it, you can run the following:
-
-[source, shell]
-----
-yarn build-storybook
-----
-
 === Linting
 
 We use a set of strict linting rules through `TypeScript` and `ESLint`. While `TypeScript` config is pretty standard, the `ESLint` one is mostly set with our own custom package, called https://www.npmjs.com/package/@fewlines/eslint-config[@fewlines/eslint-config]. You should read the documentation if you want the full power of the config while using `VSCode`.
@@ -324,11 +307,6 @@ We are also using the `Command Query Responsibility Segregation`(CQRS) pattern t
 - *workflows/*: GitHub Actions used to run tests during CI/CD process flow.
 - */dependabot.yml*: Config file for dependabot.
 - */PULL_REQUEST_TEMPLATE.md*: Template used when opening a pull request on GitHub.
-
-=== .storybook/
-
-- */main.js*: Config file for Storybook.
-- */preview.js*: File used to inject, through decorators, the design-system theme and global style.
 
 === bin/
 
@@ -612,31 +590,6 @@ We are using DynamoDB as our persistence layer. Its K/V structure allows fast pe
 
 We store the `access_token` and `sub` in what we call a `UserCookie`. It is a sealed object living in the user's browser.
 We also store alert messages in the user cookies, with no sealing.
-
-== Storybook
-
-We chose to document, and develope our components in isolation using https://storybook.js.org/[Storybook 6].
-
-To create a story, all you have to do is create a file named as the component, add the `.stories` part and follow this template:
-
-[source, jsx]
-----
-import React from "react";
-
-import { Component } from "./Component";
-
-const SubNameOfTheStory = (): JSX.Element => {
-  return <Component />;
-};
-
-export { SubNameOfTheStory };
-export default {
-  title: "Title you want to display, usually the name of the component",
-  component: Component,
-};
-----
-
-> Note that the story needs to be at the same level as the component.
 
 == Accessibility
 

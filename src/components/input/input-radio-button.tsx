@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Separator } from "@src/components/separator/separator";
+import { Separator } from "@src/components/separator";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 const InputsRadio: React.FC<{

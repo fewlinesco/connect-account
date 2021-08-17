@@ -1,17 +1,17 @@
 import { IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 
-import { AppleIcon } from "@src/components/icons/apple-icon/apple-icon";
-import { FacebookIcon } from "@src/components/icons/facebook-icon/facebook-icon";
-import { GithubIcon } from "@src/components/icons/github-icon/github-icon";
-import { GoogleIcon } from "@src/components/icons/google-icon/google-icon";
-import { KakaoTalkIcon } from "@src/components/icons/kakao-talk-icon/kakao-talk-icon";
-import { LineIcon } from "@src/components/icons/line-icon/line-icon";
-import { MicrosoftIcon } from "@src/components/icons/microsoft-icon/microsoft-icon";
-import { NaverIcon } from "@src/components/icons/naver-icon/naver-icon";
-import { PaypalIcon } from "@src/components/icons/paypal-icon/paypal-icon";
-import { StravaIcon } from "@src/components/icons/strava-icon/strava-icon";
-import { VKontakteIcon } from "@src/components/icons/vkontakte-icon/vkontakte-icon";
+import { AppleIcon } from "@src/components/icons/apple-icon";
+import { FacebookIcon } from "@src/components/icons/facebook-icon";
+import { GithubIcon } from "@src/components/icons/github-icon";
+import { GoogleIcon } from "@src/components/icons/google-icon";
+import { KakaoTalkIcon } from "@src/components/icons/kakao-talk-icon";
+import { LineIcon } from "@src/components/icons/line-icon";
+import { MicrosoftIcon } from "@src/components/icons/microsoft-icon";
+import { NaverIcon } from "@src/components/icons/naver-icon";
+import { PaypalIcon } from "@src/components/icons/paypal-icon";
+import { StravaIcon } from "@src/components/icons/strava-icon";
+import { VKontakteIcon } from "@src/components/icons/vkontakte-icon";
 
 const SOCIAL_IDENTITIES_ICONS = {
   APPLE: <AppleIcon />,

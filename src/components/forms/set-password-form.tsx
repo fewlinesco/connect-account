@@ -7,7 +7,7 @@ import { FormErrorMessage } from "../input/form-error-message";
 import { InputText } from "../input/input-text";
 import { StyledForm } from "./form";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
-import { PasswordRulesErrorList } from "@src/components/password-rules-error-list/password-rules-error-list";
+import { PasswordRulesErrorList } from "@src/components/password-rules-error-list";
 import { formatErrorMessage } from "@src/configs/intl";
 import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
