@@ -1,11 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 
 import { Header } from "./header";
 import { DesktopNavigationBar } from "./navigation-bars/desktop-navigation-bar";
 import { MobileNavigationBar } from "./navigation-bars/mobile-navigation-bar";
 import { NavigationBreadcrumbs } from "./navigation-breadcrumbs";
-import { deviceBreakpoints } from "@src/design-system/theme";
 
 const Layout: React.FC<{
   breadcrumbs: string | false;
@@ -13,77 +11,34 @@ const Layout: React.FC<{
 }> = ({ children, title, breadcrumbs }) => {
   return (
     <main className="w-full h-auto lg:h-screen max-w-screen-lg mx-auto">
-      <MobileDisplayOnly>
+      <div className="block lg:hidden">
         <Header viewport="mobile" />
         <MobileNavigationBar />
-      </MobileDisplayOnly>
-      <Flex>
-        <DesktopNavigationBarWrapper>
+      </div>
+      <div className="flex">
+        <div className="hidden lg:block w-2/6 font-semibold">
           <DesktopNavigationBar />
-        </DesktopNavigationBarWrapper>
-        <ChildrenContainer titleText={title} breadcrumbs={breadcrumbs}>
+        </div>
+        <div
+          className={`${
+            !title && !breadcrumbs ? "flex items-center" : ""
+          } w-11/12 lg:w-3/5 mx-auto`}
+        >
           {title ? (
-            <MainTitle
-              needSpacing={breadcrumbs || breadcrumbs === "" ? false : true}
+            <h1
+              className={`${
+                !breadcrumbs ? "mb-10 lg:mb-16" : ""
+              } mt-2 pt:4 lg:pt-10 pb-4`}
             >
               {title}
-            </MainTitle>
+            </h1>
           ) : null}
           <NavigationBreadcrumbs breadcrumbs={breadcrumbs} />
           <div className="container mb-40 lg:mb-0">{children}</div>
-        </ChildrenContainer>
-      </Flex>
+        </div>
+      </div>
     </main>
   );
 };
-
-const Flex = styled.div`
-  display: flex;
-`;
-
-const DesktopNavigationBarWrapper = styled.div`
-  min-width: 24rem;
-  width: 30%;
-  font-weight: ${({ theme }) => theme.fontWeights.semibold};
-
-  @media ${deviceBreakpoints.m} {
-    display: none;
-  }
-`;
-
-const ChildrenContainer = styled.div<{
-  breadcrumbs: string | false;
-  titleText?: string;
-}>`
-  width: 60%;
-  margin: 0 auto;
-
-  ${({ titleText, breadcrumbs }) =>
-    !titleText &&
-    !breadcrumbs &&
-    `
-      display: flex;
-      align-items: center;
-  `};
-
-  @media ${deviceBreakpoints.m} {
-    width: 90%;
-  }
-`;
-
-const MobileDisplayOnly = styled.div`
-  display: none;
-
-  @media ${deviceBreakpoints.m} {
-    display: block;
-  }
-`;
-
-const MainTitle = styled.h1<{ needSpacing?: boolean }>`
-  padding: 2.4rem 0 ${({ theme }) => theme.spaces.xxs};
-  margin-top: 0.5rem;
-  ${({ theme, needSpacing }) =>
-    needSpacing && `margin-bottom: ${theme.spaces.s}`}
-`;
 
 export { Layout };
