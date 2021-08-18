@@ -57,7 +57,7 @@ async function authentication(
           throw webErrorFactory(webErrors.unauthorized);
         }
 
-        const redirectURL = request.url ? request.url : "/account";
+        const redirectURL = request.url ? request.url : "/account/";
 
         response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
         response.setHeader(
