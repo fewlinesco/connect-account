@@ -21,6 +21,7 @@ const IdentityOverview: React.FC<{
 }> = ({ identity }) => {
   const { formatMessage } = useIntl();
   const router = useRouter();
+
   const [confirmationBoxOpen, setConfirmationBoxOpen] =
     React.useState<boolean>(false);
   const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
