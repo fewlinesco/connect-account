@@ -12,7 +12,7 @@ const Layout: React.FC<{
   title?: string;
 }> = ({ children, title, breadcrumbs }) => {
   return (
-    <Main>
+    <main className="w-full h-auto lg:h-screen max-w-screen-lg mx-auto">
       <MobileDisplayOnly>
         <Header viewport="mobile" />
         <MobileNavigationBar />
@@ -33,20 +33,9 @@ const Layout: React.FC<{
           <div className="container mb-40 lg:mb-0">{children}</div>
         </ChildrenContainer>
       </Flex>
-    </Main>
+    </main>
   );
 };
-
-const Main = styled.main`
-  width: 100%;
-  height: 100vh;
-  max-width: 102.4rem;
-  margin: 0 auto;
-
-  @media ${deviceBreakpoints.m} {
-    height: auto;
-  }
-`;
 
 const Flex = styled.div`
   display: flex;
@@ -97,4 +86,4 @@ const MainTitle = styled.h1<{ needSpacing?: boolean }>`
     needSpacing && `margin-bottom: ${theme.spaces.s}`}
 `;
 
-export { Layout, Main };
+export { Layout };
