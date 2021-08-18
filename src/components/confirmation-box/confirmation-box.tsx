@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { CloseConfirmationBoxButton } from "../buttons/buttons";
-import { ClickAwayListener } from "../click-away-listener";
+import { ModalOverlay } from "../modal-overlay";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
 interface ConfirmationBoxProps {
@@ -30,11 +30,11 @@ const ConfirmationBox: React.FC<ConfirmationBoxProps> = ({
   return (
     <>
       {open && (
-        <ClickAwayListener
+        <ModalOverlay
           onClick={() => {
             setOpen(false);
           }}
-          data-testid="clickAwayListener"
+          data-testid="modalOverlay"
         />
       )}
       <Box open={open} preventAnimation={preventAnimation}>
@@ -57,7 +57,7 @@ const Box = styled.div<Pick<ConfirmationBoxProps, "open" | "preventAnimation">>`
   right: 50%;
   transform: translate(50%, 50%);
   border-radius: ${({ theme }) => theme.radii[0]};
-  z-index: 3;
+  z-index: 30;
 
   @media ${deviceBreakpoints.m} {
     position: fixed;
