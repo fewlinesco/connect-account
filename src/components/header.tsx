@@ -1,36 +1,19 @@
 import React from "react";
-import styled from "styled-components";
 
 import { Logo } from "./logo";
 import { NeutralLink } from "./neutral-link";
 
 const Header: React.FC<{ viewport: "desktop" | "mobile" }> = ({ viewport }) => {
   return (
-    <Flex>
+    <div className="flex items-center m-8">
       <NeutralLink href="/account/">
         <Logo viewport={viewport} />
       </NeutralLink>
-      <AppName>Account</AppName>
-    </Flex>
+      <p className="flex items-center h-16 font-normal text-2xl pl-4 ml-4 border-l border-gray">
+        Account
+      </p>
+    </div>
   );
 };
-
-const Flex = styled.div`
-  display: flex;
-  align-items: center;
-  margin: ${({ theme }) => `${theme.spaces.xs} ${theme.spaces.xs}`};
-`;
-
-const AppName = styled.p`
-  display: flex;
-  align-items: center;
-  height: ${({ theme }) => theme.spaces.s};
-  padding-left: ${({ theme }) => theme.spaces.xxs};
-  margin-left: ${({ theme }) => theme.spaces.xxs};
-  border-left: ${({ theme }) =>
-    `${theme.colors.blacks[0]} ${theme.borders.thin}`};
-  font-weight: ${({ theme }) => theme.fontWeights.normal};
-  font-size: ${({ theme }) => theme.fontSizes.s};
-`;
 
 export { Header };

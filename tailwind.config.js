@@ -9,11 +9,12 @@ module.exports = {
     colors: {
       primary: "hsl(235, 75%, 38%)",
       background: "hsl(0, 0%, 100%)",
-      black: {
-        DEFAULT: "hsl(0, 0%, 0%)",
-      },
+      black: "hsl(0, 0%, 0%)",
       box: "hsl(240, 25%, 98%)",
       separator: "hsl(220, 11%, 95%)",
+      gray: {
+        DEFAULT: "hsl(0, 0%, 90%)",
+      },
     },
     rounded: {
       DEFAULT: "0.5rem",
