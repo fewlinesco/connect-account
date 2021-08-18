@@ -12,6 +12,8 @@ module.exports = {
       black: {
         DEFAULT: "hsl(0, 0%, 0%)",
       },
+      box: "hsl(240, 25%, 98%)",
+      separator: "hsl(220, 11%, 95%)",
     },
     rounded: {
       DEFAULT: "0.5rem",
