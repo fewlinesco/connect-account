@@ -8,12 +8,14 @@ module.exports = {
   theme: {
     colors: {
       primary: "hsl(235, 75%, 38%)",
-      background: "hsl(0, 0%, 100%)",
+      background: "hsl(235, 90%, 12%)",
       black: "hsl(0, 0%, 0%)",
+      red: "hsl(0, 79%, 63%)",
       box: "hsl(240, 25%, 98%)",
       separator: "hsl(220, 11%, 95%)",
       gray: {
         DEFAULT: "hsl(0, 0%, 90%)",
+        light: "hsl(220, 11%, 95%)",
       },
     },
     rounded: {

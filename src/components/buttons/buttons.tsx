@@ -19,6 +19,41 @@ enum ButtonVariant {
   GHOST_COOKIE = "GHOST_COOKIE",
 }
 
+function getButtonStyle(variant?: ButtonVariant): string {
+  const baseButtonStyle =
+    "h-16 rounded text-m cursor-pointer w-full mb-4 break-all";
+
+  if (variant === ButtonVariant.PRIMARY) {
+    return `${baseButtonStyle} bg-primary text-background`;
+  }
+
+  if (variant === ButtonVariant.SECONDARY) {
+    return `${baseButtonStyle} bg-background text-primary border border-primary border-solid`;
+  }
+
+  if (variant === ButtonVariant.LIGHT_GREY) {
+    return `${baseButtonStyle} mb-0 lg:mb-4 py-12 px-16 lg:p-0 text-black bg-background lg:bg-grey-light text-base border border-solid border-grey-light lg:border-none`;
+  }
+
+  if (variant === ButtonVariant.DANGER) {
+    return `${baseButtonStyle} bg-red text-background`;
+  }
+
+  if (variant === ButtonVariant.GHOST) {
+    return `${baseButtonStyle} bg-background text-red`;
+  }
+
+  if (variant === ButtonVariant.PRIMARY_COOKIE) {
+    return `${baseButtonStyle} h-20 mb-0 bg-primary text-background rounded-t-none rounded-br-lg rounded-bl-none`;
+  }
+
+  if (variant === ButtonVariant.GHOST_COOKIE) {
+    return `${baseButtonStyle} mb-0 text-primary bg-background rounded-t-none rounded-br-none rounded-bl-lg border-t border-solid border-separator`;
+  }
+
+  return baseButtonStyle;
+}
+
 interface ButtonProps extends AriaButtonProps {
   type: "button" | "submit" | "reset";
   onPress?: () => void;
@@ -31,93 +66,16 @@ const Button: React.FC<ButtonProps> = (props) => {
   const { buttonProps } = useButton(props, buttonRef);
 
   return (
-    <StyledButton {...buttonProps} variant={variant} ref={buttonRef}>
+    <button
+      {...buttonProps}
+      variant={variant}
+      ref={buttonRef}
+      className={getButtonStyle(variant)}
+    >
       {children}
-    </StyledButton>
+    </button>
   );
 };
-
-const StyledButton = styled.button<Record<string, unknown>>`
-  height: 4rem;
-  border-radius: ${({ theme }) => theme.radii[0]};
-  font-size: ${({ theme }) => theme.fontSizes.s};
-  cursor: pointer;
-  margin-bottom: ${({ theme }) => theme.spaces.xxs};
-  width: 100%;
-  word-break: break-all;
-
-  ${({ theme, variant }) =>
-    variant === ButtonVariant.PRIMARY &&
-    `
-      background: ${theme.colors.primary};
-      color: ${theme.colors.background};
-  `};
-
-  ${({ theme, variant }) =>
-    variant === ButtonVariant.SECONDARY &&
-    `
-      background: ${theme.colors.background};
-      border: 0.1rem solid ${theme.colors.primary};
-      color: ${theme.colors.primary};
-  `};
-
-  ${({ theme, variant }) =>
-    variant === ButtonVariant.LIGHT_GREY &&
-    `
-    color: ${theme.colors.black};
-    background: #F0F1F3;
-    font-size: ${theme.fontSizes.paragraph};
-
-    @media ${deviceBreakpoints.m} {
-      margin-bottom: 0;
-      padding: 3rem 4rem;
-      width: 100%;
-      background: ${theme.colors.background};
-      border-top: ${theme.colors.blacks[0]} ${theme.borders.thin};
-    }
-  `};
-
-  ${({ theme, variant }) =>
-    variant === ButtonVariant.DANGER &&
-    `
-      background: ${theme.colors.red};
-      color: ${theme.colors.background};
-  `};
-
-  ${({ theme, variant }) =>
-    variant === ButtonVariant.GHOST &&
-    `
-      background: ${theme.colors.background};
-      color: ${theme.colors.red};
-  `};
-
-  ${({ theme, variant }) =>
-    variant === ButtonVariant.PRIMARY_COOKIE &&
-    `
-      margin-bottom: 0;
-      border-radius: 0 0 ${theme.radii[0]} 0;
-      background: ${theme.colors.primary};
-      color: ${theme.colors.background};
-
-      @media ${deviceBreakpoints.m} {
-        height: 5rem;  
-      }
-  `};
-
-  ${({ theme, variant }) =>
-    variant === ButtonVariant.GHOST_COOKIE &&
-    `
-    margin-bottom: 0;
-    color: ${theme.colors.primary};
-    background: ${theme.colors.background};
-    border-radius: 0 0 0 ${theme.radii[0]};
-    border-top: 0.1rem solid ${theme.colors.separator};
-
-    @media ${deviceBreakpoints.m} {
-        height: 5rem;  
-    };
-  `};
-`;
 
 interface ShowMoreButtonProps extends AriaButtonProps {
   hideList: boolean;
@@ -205,7 +163,7 @@ const CookieButtonStyle = styled.div`
 
 export {
   Button,
-  StyledButton,
+  getButtonStyle,
   ButtonVariant,
   ShowMoreButton,
   CloseModalCrossButton,
