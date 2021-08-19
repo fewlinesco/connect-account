@@ -102,8 +102,8 @@ describe("Identity flows", () => {
 
       await waitFor(1000);
       const newLoginsCount = await (async () => {
-        const content = await (
-          await text(localizedStrings.identitiesOverview.showMore)
+        const content = await text(
+          localizedStrings.identitiesOverview.showMore,
         ).text();
         return +content.replace(/[^\d]/g, "");
       })();
@@ -161,7 +161,7 @@ describe("Identity flows", () => {
       ).toBe(true);
       await waitFor(1000);
 
-      const showMore = await text(localizedStrings.identitiesOverview.showMore);
+      const showMore = text(localizedStrings.identitiesOverview.showMore);
       const showMoreExists = await showMore.exists(0, 0);
 
       const loginsCountAfterDelete = showMoreExists
