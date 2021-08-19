@@ -3,9 +3,9 @@ import { useIntl } from "react-intl";
 
 import { SectionBox } from "@src/components/boxes";
 import { ButtonVariant } from "@src/components/buttons/buttons";
-import { FakeButton } from "@src/components/buttons/fake-button";
 import { HomeDesktopBackground } from "@src/components/icons/home-desktop-background";
 import { HomeMobileBackground } from "@src/components/icons/home-mobile-background";
+import { LinkStyledAsButton } from "@src/components/link-styled-as-button";
 import { NeutralLink } from "@src/components/neutral-link";
 
 const Home: React.FC<{ authorizeURL: string; providerName: string }> = ({
@@ -23,9 +23,9 @@ const Home: React.FC<{ authorizeURL: string; providerName: string }> = ({
           {formatMessage({ id: "info" })} {providerName}
         </p>
         <NeutralLink href={authorizeURL}>
-          <FakeButton variant={ButtonVariant.PRIMARY}>
+          <LinkStyledAsButton variant={ButtonVariant.PRIMARY}>
             {formatMessage({ id: "callToAction" })}
-          </FakeButton>
+          </LinkStyledAsButton>
         </NeutralLink>
       </SectionBox>
     </>

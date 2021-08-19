@@ -5,7 +5,7 @@ import styled from "styled-components";
 import useSWR from "swr";
 
 import { ButtonVariant, ShowMoreButton } from "../../buttons/buttons";
-import { FakeButton } from "../../buttons/fake-button";
+import { LinkStyledAsButton } from "../../link-styled-as-button";
 import { NeutralLink } from "../../neutral-link";
 import { TimelineEnd, Timeline } from "../../timelines";
 import {
@@ -59,9 +59,9 @@ const LoginsOverview: React.FC = () => {
         </Flex>
       ) : null}
       <NeutralLink href={`/account/logins/email/new/`}>
-        <FakeButton variant={ButtonVariant.SECONDARY}>
+        <LinkStyledAsButton variant={ButtonVariant.SECONDARY}>
           {`+ ${formatMessage({ id: "emailAddNewIdentityMessage" })}`}
-        </FakeButton>
+        </LinkStyledAsButton>
       </NeutralLink>
       <Timeline />
       <h3>{formatMessage({ id: "phoneTitle" })}</h3>
@@ -87,9 +87,9 @@ const LoginsOverview: React.FC = () => {
         </Flex>
       ) : null}
       <NeutralLink href={`/account/logins/phone/new/`}>
-        <FakeButton variant={ButtonVariant.SECONDARY}>
+        <LinkStyledAsButton variant={ButtonVariant.SECONDARY}>
           {`+ ${formatMessage({ id: "phoneAddNewIdentityMessage" })}`}
-        </FakeButton>
+        </LinkStyledAsButton>
       </NeutralLink>
       <TimelineEnd />
       <h3>{formatMessage({ id: "socialTitle" })}</h3>

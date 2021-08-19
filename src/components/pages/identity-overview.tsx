@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { AwaitingValidationBadge, PrimaryBadge } from "@src/components/badges";
 import { Box } from "@src/components/boxes";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
-import { FakeButton } from "@src/components/buttons/fake-button";
+import { LinkStyledAsButton } from "@src/components/link-styled-as-button";
 import { Modal, ModalVariant } from "@src/components/modals";
 import { NeutralLink } from "@src/components/neutral-link";
 import { SkeletonTextLine } from "@src/components/skeletons";
@@ -59,20 +59,20 @@ const IdentityOverview: React.FC<{
         <>
           {identity.status === "unvalidated" && (
             <NeutralLink href={`/account/logins/${identity.type}/validation/`}>
-              <FakeButton variant={ButtonVariant.PRIMARY}>
+              <LinkStyledAsButton variant={ButtonVariant.PRIMARY}>
                 {formatMessage({ id: "proceed" })}
-              </FakeButton>
+              </LinkStyledAsButton>
             </NeutralLink>
           )}
           {identity.status === "validated" && (
             <NeutralLink
               href={`/account/logins/${identity.type}/${identity.id}/update/`}
             >
-              <FakeButton variant={ButtonVariant.PRIMARY}>
+              <LinkStyledAsButton variant={ButtonVariant.PRIMARY}>
                 {getIdentityType(identity.type) === IdentityTypes.EMAIL
                   ? formatMessage({ id: "updateEmail" })
                   : formatMessage({ id: "updatePhone" })}
-              </FakeButton>
+              </LinkStyledAsButton>
             </NeutralLink>
           )}
           {!identity.primary && identity.status === "validated" && (

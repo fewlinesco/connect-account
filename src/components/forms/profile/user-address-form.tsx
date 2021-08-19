@@ -10,7 +10,7 @@ import { InputText } from "../../input/input-text";
 import { Form } from "../form";
 import { Address } from "@src/@types/profile";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
-import { FakeButton } from "@src/components/buttons/fake-button";
+import { LinkStyledAsButton } from "@src/components/link-styled-as-button";
 import { NeutralLink } from "@src/components/neutral-link";
 import { formatErrorMessage } from "@src/configs/intl";
 import { SWRError } from "@src/errors/errors";
@@ -289,9 +289,9 @@ const UserAddressForm: React.FC<{
             : `/account/profile/addresses/${address.id}/`
         }
       >
-        <FakeButton variant={ButtonVariant.SECONDARY}>
+        <LinkStyledAsButton variant={ButtonVariant.SECONDARY}>
           {formatMessage({ id: "cancel" })}
-        </FakeButton>
+        </LinkStyledAsButton>
       </NeutralLink>{" "}
     </>
   );

@@ -11,7 +11,7 @@ import { InputText } from "../../input/input-text";
 import { Form } from "../form";
 import { Profile } from "@src/@types/profile";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
-import { FakeButton } from "@src/components/buttons/fake-button";
+import { LinkStyledAsButton } from "@src/components/link-styled-as-button";
 import { NeutralLink } from "@src/components/neutral-link";
 import { fetchJson } from "@src/utils/fetch-json";
 
@@ -207,9 +207,9 @@ const UserProfileForm: React.FC<{
         </Button>
       </Form>
       <NeutralLink href={isCreation ? "/account/" : "/account/profile/"}>
-        <FakeButton variant={ButtonVariant.SECONDARY}>
+        <LinkStyledAsButton variant={ButtonVariant.SECONDARY}>
           {formatMessage({ id: "cancel" })}
-        </FakeButton>
+        </LinkStyledAsButton>
       </NeutralLink>{" "}
     </>
   );

@@ -10,7 +10,7 @@ import { Address } from "@src/@types/profile";
 import { PrimaryBadge } from "@src/components/badges";
 import { Box } from "@src/components/boxes";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
-import { FakeButton } from "@src/components/buttons/fake-button";
+import { LinkStyledAsButton } from "@src/components/link-styled-as-button";
 import { NeutralLink } from "@src/components/neutral-link";
 import { SkeletonTextLine } from "@src/components/skeletons";
 import { SWRError } from "@src/errors/errors";
@@ -81,9 +81,9 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
       <NeutralLink
         href={address ? `/account/profile/addresses/${address.id}/edit/` : "#"}
       >
-        <FakeButton variant={ButtonVariant.PRIMARY}>
+        <LinkStyledAsButton variant={ButtonVariant.PRIMARY}>
           {formatMessage({ id: "update" })}
-        </FakeButton>
+        </LinkStyledAsButton>
       </NeutralLink>
       {address && !address.primary ? (
         <>

@@ -3,7 +3,7 @@ import React from "react";
 
 import { ButtonVariant } from "./buttons/buttons";
 import { NeutralLink } from "./neutral-link";
-import { FakeButton } from "@src/components/buttons/fake-button";
+import { LinkStyledAsButton } from "@src/components/link-styled-as-button";
 import { formatNavigation } from "@src/configs/intl";
 
 const LogoutAnchor: React.FC = () => {
@@ -11,9 +11,9 @@ const LogoutAnchor: React.FC = () => {
 
   return (
     <NeutralLink href="/api/logout/">
-      <FakeButton variant={ButtonVariant.LIGHT_GREY}>
+      <LinkStyledAsButton variant={ButtonVariant.LIGHT_GREY}>
         {formatNavigation(locale || "en", "logout")}
-      </FakeButton>
+      </LinkStyledAsButton>
     </NeutralLink>
   );
 };

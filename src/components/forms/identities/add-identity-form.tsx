@@ -12,7 +12,7 @@ import { StyledPhoneInput } from "../../input/styled-phone-input";
 import { Form } from "../form";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
-import { FakeButton } from "@src/components/buttons/fake-button";
+import { LinkStyledAsButton } from "@src/components/link-styled-as-button";
 import { NeutralLink } from "@src/components/neutral-link";
 import { formatErrorMessage } from "@src/configs/intl";
 import { ERRORS_DATA } from "@src/errors/web-errors";
@@ -148,9 +148,9 @@ const AddIdentityForm: React.FC<{
         </Button>
       </Form>
       <NeutralLink href="/account/logins/">
-        <FakeButton variant={ButtonVariant.SECONDARY}>
+        <LinkStyledAsButton variant={ButtonVariant.SECONDARY}>
           {formatMessage({ id: "cancel" })}
-        </FakeButton>
+        </LinkStyledAsButton>
       </NeutralLink>
     </>
   );
