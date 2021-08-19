@@ -13,21 +13,23 @@ import { getNavigationSections } from "./navigation-sections";
 import { formatNavigation } from "@src/configs/intl";
 
 const MobileNavigationBar: React.FC = () => {
-  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
   const router = useRouter();
 
   return (
     <>
-      {isOpen ? <ModalOverlay onClick={() => setIsOpen(false)} /> : null}
+      {isMenuOpen ? (
+        <ModalOverlay onClick={() => setIsMenuOpen(false)} />
+      ) : null}
       <div className="block lg:hidden fixed bottom-0 left-0 w-full bg-background z-20">
-        {isOpen ? (
+        {isMenuOpen ? (
           <>
             {getNavigationSections().map(([title, { href, icon }]) => {
               return (
                 <NeutralLink
                   className="h-28 flex items-center justify-between px-8"
                   href={href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setIsMenuOpen(false)}
                   key={title + href}
                 >
                   {icon}
@@ -42,10 +44,10 @@ const MobileNavigationBar: React.FC = () => {
           </>
         ) : null}
         <div className="h-28 flex border-t border-separator">
-          {isOpen ? (
+          {isMenuOpen ? (
             <div
               className="flex w-1/2 items-center bg-primary "
-              onClick={() => setIsOpen(false)}
+              onClick={() => setIsMenuOpen(false)}
             >
               <NeutralLink
                 className="flex w-full items-center justify-evenly "
@@ -68,9 +70,9 @@ const MobileNavigationBar: React.FC = () => {
           )}
           <div
             className="flex w-1/2 justify-around items-center bg-box border-l border-separator"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isOpen ? (
+            {isMenuOpen ? (
               <>
                 <p>{formatNavigation(router.locale || "en", "close")}</p>
                 <NavBarCrossIcon />
