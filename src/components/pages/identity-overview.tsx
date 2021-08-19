@@ -8,8 +8,6 @@ import { AwaitingValidationBadge, PrimaryBadge } from "@src/components/badges";
 import { Box } from "@src/components/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
-import { ConfirmationBox } from "@src/components/confirmation-box/confirmation-box";
-import { DeleteConfirmationBoxContent } from "@src/components/confirmation-box/delete-confirmation-box-content";
 import { Modal, ModalVariant } from "@src/components/confirmation-box/modal";
 import { NeutralLink } from "@src/components/neutral-link";
 import { SkeletonTextLine } from "@src/components/skeletons";
@@ -23,6 +21,8 @@ const IdentityOverview: React.FC<{
   const router = useRouter();
 
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
+    React.useState<boolean>(false);
+  const [isDeletionModalOpen, setIsDeletionModalOpen] =
     React.useState<boolean>(false);
 
   return (
@@ -79,7 +79,11 @@ const IdentityOverview: React.FC<{
             <Button
               type="button"
               variant={ButtonVariant.SECONDARY}
-              onPress={() => setIsConfirmationModalOpen(true)}
+              onPress={() => {
+                setIsDeletionModalOpen(false);
+                setIsConfirmationModalOpen(true);
+                return;
+              }}
             >
               {getIdentityType(identity.type) === IdentityTypes.EMAIL
                 ? formatMessage({ id: "markEmail" })
@@ -114,37 +118,8 @@ const IdentityOverview: React.FC<{
               type="button"
               variant={ButtonVariant.GHOST}
               onPress={() => {
-                setPreventAnimation(false);
-                setConfirmationBoxContent(
-                  <DeleteConfirmationBoxContent
-                    setOpen={setConfirmationBoxOpen}
-                    textContent={{
-                      infos:
-                        getIdentityType(identity.type) === IdentityTypes.EMAIL
-                          ? formatMessage({ id: "deleteModalContentEmail" })
-                          : formatMessage({ id: "deleteModalContentPhone" }),
-                      confirm: formatMessage({ id: "deleteModalConfirm" }),
-                      cancel:
-                        getIdentityType(identity.type) === IdentityTypes.EMAIL
-                          ? formatMessage({ id: "deleteModalCancelEmail" })
-                          : formatMessage({ id: "deleteModalCancelPhone" }),
-                    }}
-                    onPress={async () => {
-                      await fetchJson(
-                        `/api/identities/${identity.id}/`,
-                        "DELETE",
-                        {
-                          type: getIdentityType(identity.type),
-                          value: identity.value,
-                          id: identity.id,
-                        },
-                      ).then(() => {
-                        router && router.push("/account/logins/");
-                      });
-                    }}
-                  />,
-                );
-                setConfirmationBoxOpen(true);
+                setIsConfirmationModalOpen(false);
+                setIsDeletionModalOpen(true);
               }}
             >
               {getIdentityType(identity.type) === IdentityTypes.EMAIL
@@ -152,29 +127,34 @@ const IdentityOverview: React.FC<{
                 : formatMessage({ id: "deletePhone" })}
             </Button>
           )}
+          {isDeletionModalOpen ? (
+            <Modal
+              variant={ModalVariant.DELETION}
+              textContent={{
+                info:
+                  getIdentityType(identity.type) === IdentityTypes.EMAIL
+                    ? formatMessage({ id: "deleteModalContentEmail" })
+                    : formatMessage({ id: "deleteModalContentPhone" }),
+                confirm: formatMessage({ id: "deleteModalConfirm" }),
+                cancel:
+                  getIdentityType(identity.type) === IdentityTypes.EMAIL
+                    ? formatMessage({ id: "deleteModalCancelEmail" })
+                    : formatMessage({ id: "deleteModalCancelPhone" }),
+              }}
+              setIsModalOpen={setIsDeletionModalOpen}
+              onConfirmationPress={async () => {
+                await fetchJson(`/api/identities/${identity.id}/`, "DELETE", {
+                  type: getIdentityType(identity.type),
+                  value: identity.value,
+                  id: identity.id,
+                }).then(() => {
+                  router && router.push("/account/logins/");
+                });
+              }}
+            />
+          ) : null}
         </>
       ) : null}
-      {isModalOpen ? (
-        <Modal
-          variant={ModalVariant.CONFIRMATION}
-          textContent={{
-            info: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
-            confirm: "Confirm",
-            cancel: "Cancel",
-          }}
-          setIsModalOpen={setIsModalOpen}
-          onConfirmationPress={() => {
-            return;
-          }}
-        />
-      ) : null}
-      <ConfirmationBox
-        open={isModalOpen}
-        setOpen={setIsModalOpen}
-        preventAnimation={preventAnimation}
-      >
-        {confirmationBoxContent}
-      </ConfirmationBox>
     </>
   );
 };

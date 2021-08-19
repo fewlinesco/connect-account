@@ -7,6 +7,7 @@ import { CrossIcon } from "../icons/cross-icon";
 
 enum ModalVariant {
   CONFIRMATION = "CONFIRMATION",
+  DELETION = "DELETION",
 }
 
 const ModalWrapper: React.FC<{
@@ -63,6 +64,30 @@ const Modal: React.FC<{
         <Button
           type="button"
           variant={ButtonVariant.PRIMARY}
+          onPress={onConfirmationPress}
+        >
+          {textContent.confirm}
+        </Button>
+        <Button
+          type="button"
+          variant={ButtonVariant.SECONDARY}
+          onPress={() => {
+            setIsModalOpen(false);
+          }}
+        >
+          {textContent.cancel}
+        </Button>
+      </ModalWrapper>
+    );
+  }
+
+  if (variant === ModalVariant.DELETION) {
+    return (
+      <ModalWrapper setIsModalOpen={setIsModalOpen}>
+        <ModalInfo>{textContent.info}</ModalInfo>
+        <Button
+          type="button"
+          variant={ButtonVariant.DANGER}
           onPress={onConfirmationPress}
         >
           {textContent.confirm}
