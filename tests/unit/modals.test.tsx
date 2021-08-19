@@ -22,7 +22,7 @@ jest.mock("@src/configs/db-client", () => {
   };
 });
 
-describe("ConfirmationBox", () => {
+describe("Modals", () => {
   const path = "/account/logins/[type]/[id]";
   const localizedStrings = locales.en[path];
 
@@ -37,7 +37,8 @@ describe("ConfirmationBox", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => mockIdentities.nonPrimaryEmailIdentity,
+          fetcher: async () =>
+            Promise.resolve(mockIdentities.nonPrimaryEmailIdentity),
         }}
       >
         <IdentityOverviewPage
@@ -57,13 +58,14 @@ describe("ConfirmationBox", () => {
   });
 
   it("should display primary confirmation box after clicking on mark as primary button & close it by clicking on cancel button", async () => {
-    expect.assertions(3);
+    expect.assertions(5);
 
     render(
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => mockIdentities.nonPrimaryEmailIdentity,
+          fetcher: async () =>
+            Promise.resolve(mockIdentities.nonPrimaryEmailIdentity),
         }}
       >
         <IdentityOverviewPage
@@ -72,11 +74,12 @@ describe("ConfirmationBox", () => {
       </SWRConfig>,
     );
 
-    userEvent.click(
-      await screen.findByRole("button", {
-        name: localizedStrings.markEmail,
-      }),
-    );
+    const markEmailAsPrimaryButton = await screen.findByRole("button", {
+      name: localizedStrings.markEmail,
+    });
+
+    expect(markEmailAsPrimaryButton).toBeInTheDocument();
+    userEvent.click(markEmailAsPrimaryButton);
 
     await waitFor(() => {
       expect(
@@ -89,27 +92,27 @@ describe("ConfirmationBox", () => {
       ).toBeInTheDocument();
     });
 
-    userEvent.click(
-      await screen.findByRole("button", {
-        name: localizedStrings.primaryModalCancel,
-      }),
-    );
+    const cancelMarkEmailAsPrimaryButton = await screen.findByRole("button", {
+      name: localizedStrings.primaryModalCancel,
+    });
+
+    expect(cancelMarkEmailAsPrimaryButton).toBeInTheDocument();
+    userEvent.click(cancelMarkEmailAsPrimaryButton);
 
     await waitFor(() => {
-      expect(
-        screen.getByText(new RegExp(localizedStrings.primaryModalContentEmail)),
-      ).not.toBeVisible();
+      expect(cancelMarkEmailAsPrimaryButton).not.toBeInTheDocument();
     });
   });
 
   it("should display delete confirmation box after clicking on delete button & close it by clicking on cancel button", async () => {
-    expect.assertions(3);
+    expect.assertions(5);
 
     render(
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => mockIdentities.nonPrimaryEmailIdentity,
+          fetcher: async () =>
+            Promise.resolve(mockIdentities.nonPrimaryEmailIdentity),
         }}
       >
         <IdentityOverviewPage
@@ -118,11 +121,12 @@ describe("ConfirmationBox", () => {
       </SWRConfig>,
     );
 
-    userEvent.click(
-      await screen.findByRole("button", {
-        name: localizedStrings.deleteEmail,
-      }),
-    );
+    const deleteEmailButton = await screen.findByRole("button", {
+      name: localizedStrings.deleteEmail,
+    });
+
+    expect(deleteEmailButton).toBeInTheDocument();
+    userEvent.click(deleteEmailButton);
 
     await waitFor(() => {
       expect(
@@ -135,60 +139,51 @@ describe("ConfirmationBox", () => {
       ).toBeInTheDocument();
     });
 
-    userEvent.click(
-      screen.getByRole("button", {
-        name: localizedStrings.deleteModalCancelEmail,
-      }),
-    );
+    const cancelDeleteEmailButton = await screen.findByRole("button", {
+      name: localizedStrings.deleteModalCancelEmail,
+    });
+
+    expect(cancelDeleteEmailButton).toBeInTheDocument();
+    userEvent.click(cancelDeleteEmailButton);
 
     await waitFor(() => {
-      expect(
-        screen.getByText(new RegExp(localizedStrings.deleteModalContentEmail)),
-      ).not.toBeVisible();
+      expect(cancelDeleteEmailButton).not.toBeInTheDocument();
     });
   });
 
-  // it("should close confirmation box when clicking outside of it", async () => {
-  //   expect.assertions(1);
+  //   it("should close confirmation box when clicking outside of it", async () => {
+  //     expect.assertions(4);
 
-  //   render(
-  //     <SWRConfig
-  //       value={{
-  //         dedupingInterval: 0,
-  //         fetcher: () => {
-  //           return { identity: mockIdentities.nonPrimaryEmailIdentity };
-  //         },
-  //       }}
-  //     >
-  //       <IdentityOverviewPage
-  //         identityId={mockIdentities.nonPrimaryEmailIdentity.id}
-  //       />
-  //     </SWRConfig>,
-  //   );
+  //     render(
+  //       <SWRConfig
+  //         value={{
+  //           dedupingInterval: 0,
+  //           fetcher: async () =>
+  //             Promise.resolve(mockIdentities.nonPrimaryEmailIdentity),
+  //         }}
+  //       >
+  //         <IdentityOverviewPage
+  //           identityId={mockIdentities.nonPrimaryEmailIdentity.id}
+  //         />
+  //       </SWRConfig>,
+  //     );
 
-  //   userEvent.click(
-  //     await screen.findByRole("button", {
-  //       name: /Delete this email address/i,
-  //     }),
-  //   );
-
-  // expect(
-  //   await screen.findByText(
-  //     `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
-  //   ),
-  // ).toBeInTheDocument();
-
-  //   userEvent.click(screen.getByTestId("modalOverlay"));
-
-  //   await screen
-  //     .findByText(
-  //       new RegExp(
-  //         `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
-  //         "i",
-  //       ),
-  //     )
-  //     .then((waitedElement) => {
-  //       expect(waitedElement).not.toBeVisible();
+  //     const deleteEmailButton = await screen.findByRole("button", {
+  //       name: localizedStrings.deleteEmail,
   //     });
-  // });
+  //     expect(
+  //       await screen.findByRole("button", {
+  //         name: localizedStrings.deleteEmail,
+  //       }),
+  //     ).toBeInTheDocument();
+
+  //     const modalOverlay = await screen.findByTestId("modal-overlay");
+  //     expect(modalOverlay).toBeInTheDocument();
+  //     userEvent.click(modalOverlay);
+
+  //     await waitFor(() => {
+  //       expect(deleteEmailButton).not.toBeInTheDocument();
+  //       expect(modalOverlay).not.toBeInTheDocument();
+  //     });
+  //   });
 });

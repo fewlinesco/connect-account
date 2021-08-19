@@ -148,9 +148,7 @@ const ShowMoreButton: React.FC<ShowMoreButtonProps> = (props) => {
   );
 };
 
-const CloseConfirmationBoxButton: React.FC<{ onPress: () => void }> = (
-  props,
-) => {
+const CloseModalCrossButton: React.FC<{ onPress: () => void }> = (props) => {
   const closeConfirmationBoxButtonRef = React.useRef(null);
   const { buttonProps } = useButton(
     { ...props, elementType: "div" },
@@ -158,7 +156,11 @@ const CloseConfirmationBoxButton: React.FC<{ onPress: () => void }> = (
   );
 
   return (
-    <div {...buttonProps} className="cross" ref={closeConfirmationBoxButtonRef}>
+    <div
+      {...buttonProps}
+      className="absolute top-8 right-8 cursor-pointer"
+      ref={closeConfirmationBoxButtonRef}
+    >
       <CrossIcon />
     </div>
   );
@@ -206,6 +208,6 @@ export {
   StyledButton,
   ButtonVariant,
   ShowMoreButton,
-  CloseConfirmationBoxButton,
+  CloseModalCrossButton,
   CookieButton,
 };
