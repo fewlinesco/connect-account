@@ -148,47 +148,53 @@ describe("Modal", () => {
     });
   });
 
-  // it("should close confirmation box when clicking outside of it", async () => {
-  //   expect.assertions(1);
+  it("should close confirmation box when clicking outside of it", async () => {
+    expect.assertions(1);
 
-  //   render(
-  //     <SWRConfig
-  //       value={{
-  //         dedupingInterval: 0,
-  //         fetcher: () => {
-  //           return { identity: mockIdentities.nonPrimaryEmailIdentity };
-  //         },
-  //       }}
-  //     >
-  //       <IdentityOverviewPage
-  //         identityId={mockIdentities.nonPrimaryEmailIdentity.id}
-  //       />
-  //     </SWRConfig>,
-  //   );
+    render(
+      <SWRConfig
+        value={{
+          dedupingInterval: 0,
+          fetcher: () => {
+            return { identity: mockIdentities.nonPrimaryEmailIdentity };
+          },
+        }}
+      >
+        <IdentityOverviewPage
+          identityId={mockIdentities.nonPrimaryEmailIdentity.id}
+        />
+      </SWRConfig>,
+    );
 
-  //   userEvent.click(
-  //     await screen.findByRole("button", {
-  //       name: /Delete this email address/i,
-  //     }),
-  //   );
+    await waitFor(() => {
+      expect(
+        screen.getByText(localizedStrings.deleteModalContentEmail),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", {
+          name: localizedStrings.deleteModalCancelEmail,
+        }),
+      ).toBeInTheDocument();
+    });
 
-  // expect(
-  //   await screen.findByText(
-  //     `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
-  //   ),
-  // ).toBeInTheDocument();
+    userEvent.click(
+      screen.getByRole("button", {
+        name: localizedStrings.deleteModalCancelEmail,
+      }),
+    );
 
-  //   userEvent.click(screen.getByTestId("modalOverlay"));
+    await waitFor(() => {
+      expect(
+        screen.getByText(new RegExp(localizedStrings.deleteModalContentEmail)),
+      ).not.toBeVisible();
+    });
 
-  //   await screen
-  //     .findByText(
-  //       new RegExp(
-  //         `You are about to delete ${mockIdentities.nonPrimaryEmailIdentity.value}`,
-  //         "i",
-  //       ),
-  //     )
-  //     .then((waitedElement) => {
-  //       expect(waitedElement).not.toBeVisible();
-  //     });
-  // });
+    userEvent.click(screen.getByTestId("modalOverlay"));
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(new RegExp(localizedStrings.deleteModalContentEmail)),
+      ).not.toBeVisible();
+    });
+  });
 });
