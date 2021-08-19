@@ -43,7 +43,7 @@ const Modal: React.FC<{
   variant: ModalVariant;
   textContent: { info: string; confirm: string; cancel: string };
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  onConfirmationPress: () => void;
+  onConfirmationPress: () => Promise<void>;
 }> = ({ setIsModalOpen, variant, onConfirmationPress, textContent }) => {
   React.useEffect(() => {
     const escapePressed = (event: KeyboardEvent): void => {
