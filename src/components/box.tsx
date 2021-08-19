@@ -1,10 +1,6 @@
-import style from "styled-components";
+import React from "react";
 
-const Box = style.div`
-    background-color: ${({ theme }) => theme.colors.box};
-    padding: ${({ theme }) => theme.spaces.xs} ${({ theme }) =>
-  theme.spaces.xs};
-    margin: 0 0 ${({ theme }) => theme.spaces.xs} 0 
-`;
-
+const Box: React.FC = ({ children }) => {
+  return <div className="bg-box mb-8 p-8">{children}</div>;
+};
 export { Box };
