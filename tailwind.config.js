@@ -20,6 +20,17 @@ module.exports = {
       DEFAULT: "0.5rem",
       none: 0,
     },
+    // We are redefining fontSizes here, because since we set 1rem to be equal to 10px
+    // in global-style.css, the ones provided by Tailwind were too small.
+    fontSize: {
+      xs: "1rem",
+      s: "1.2rem",
+      m: "1.4rem",
+      base: "1.6rem",
+      l: "1.8rem",
+      xl: "2rem",
+      xxl: "2.2rem",
+    },
     extend: {},
   },
   variants: {

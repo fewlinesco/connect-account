@@ -9,7 +9,7 @@ const Header: React.FC<{ viewport: "desktop" | "mobile" }> = ({ viewport }) => {
       <NeutralLink href="/account/">
         <Logo viewport={viewport} />
       </NeutralLink>
-      <p className="flex items-center h-16 font-normal text-2xl pl-4 ml-4 border-l border-gray">
+      <p className="flex items-center h-16 font-normal text-m pl-4 ml-4 border-l border-gray">
         Account
       </p>
     </div>
