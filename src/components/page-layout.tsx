@@ -11,14 +11,14 @@ const Layout: React.FC<{
 }> = ({ children, title, breadcrumbs }) => {
   return (
     <main className="w-full h-auto lg:h-screen max-w-screen-lg mx-auto">
-      <div className="block lg:hidden">
+      <nav className="block lg:hidden">
         <Header viewport="mobile" />
         <MobileNavigationBar />
-      </div>
+      </nav>
       <div className="flex">
-        <div className="hidden lg:block w-2/6 font-semibold">
+        <nav className="hidden lg:block w-2/6 font-semibold">
           <DesktopNavigationBar />
-        </div>
+        </nav>
         <div
           className={`${
             !title && !breadcrumbs ? "flex items-center" : ""

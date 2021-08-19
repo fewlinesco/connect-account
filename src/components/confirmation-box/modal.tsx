@@ -2,8 +2,8 @@ import { useButton } from "@react-aria/button";
 import React from "react";
 
 import { Button, ButtonVariant } from "../buttons/buttons";
-import { ClickAwayListener } from "../click-away-listener";
 import { CrossIcon } from "../icons/cross-icon";
+import { ModalOverlay } from "../modal-overlay";
 
 enum ModalVariant {
   CONFIRMATION = "CONFIRMATION",
@@ -26,11 +26,11 @@ const ModalWrapper: React.FC<{
 
   return (
     <>
-      <ClickAwayListener
+      <ModalOverlay
         onClick={() => {
           setIsModalOpen(false);
         }}
-        data-testid="clickAwayListener"
+        data-testid="modalOverlay"
       />
       <div className="flex flex-col items-center px-16 pt-16 pb-8 lg:p-20 bg-background fixed lg:absolute bottom-0 right-0 lg:right-2/4 lg:bottom-2/4 w-full lg:w-3/5 rounded-none lg:rounded-lg z-30 transform-none lg:translate-x-2/4 lg:translate-y-2/4">
         <CloseModalCrossButton onPress={() => setIsModalOpen(false)} />
