@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { FormErrorMessage } from "../../input/form-error-message";
 import { InputText } from "../../input/input-text";
 import { Form } from "../form";
-import { Box } from "@src/components/box";
+import { Box } from "@src/components/boxes";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link";

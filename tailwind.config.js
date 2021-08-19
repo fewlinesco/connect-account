@@ -31,6 +31,10 @@ module.exports = {
       xl: "2rem",
       xxl: "2.2rem",
     },
+    boxShadow: {
+      base: "0 0.1rem 0.3rem hsla(240, 4%, 26%, 0.15), 0 2rem 3rem hsla(240, 4%, 26%, 0.07)",
+      box: "0 0 1.6rem hsla(235, 75%, 38%, 0.08)",
+    },
     extend: {},
   },
   variants: {
