@@ -22,7 +22,7 @@ jest.mock("@src/configs/db-client", () => {
   };
 });
 
-describe("ConfirmationBox", () => {
+describe("Modal", () => {
   const path = "/account/logins/[type]/[id]";
   const localizedStrings = locales.en[path];
 
