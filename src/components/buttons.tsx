@@ -21,7 +21,7 @@ enum ButtonVariant {
 
 function getButtonStyle(variant?: ButtonVariant): string {
   const baseButtonStyle =
-    "h-16 rounded text-m cursor-pointer w-full mb-4 break-all";
+    "h-16 mb-4 rounded text-m cursor-pointer w-full break-all";
 
   if (variant === ButtonVariant.PRIMARY) {
     return `${baseButtonStyle} bg-primary text-background`;
@@ -32,7 +32,7 @@ function getButtonStyle(variant?: ButtonVariant): string {
   }
 
   if (variant === ButtonVariant.LIGHT_GREY) {
-    return `${baseButtonStyle} mb-0 lg:mb-4 py-12 px-16 lg:p-0 text-black bg-background lg:bg-grey-light text-base border border-solid border-grey-light lg:border-none`;
+    return `${baseButtonStyle} mb-0 lg:mb-4 py-12 px-16 lg:p-0 text-black bg-background lg:bg-gray-light text-base border border-solid border-gray-light lg:border-none`;
   }
 
   if (variant === ButtonVariant.DANGER) {

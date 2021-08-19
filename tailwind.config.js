@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     colors: {
       primary: "hsl(235, 75%, 38%)",
-      background: "hsl(0, 0, 100%)",
+      background: "hsl(0, 0%, 100%)",
       black: "hsl(235, 90%, 12%)",
       red: "hsl(0, 79%, 63%)",
       box: "hsl(240, 25%, 98%)",

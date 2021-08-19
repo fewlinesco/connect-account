@@ -23,7 +23,7 @@ const Home: React.FC<{ authorizeURL: string; providerName: string }> = ({
           {formatMessage({ id: "info" })} {providerName}
         </p>
         <NeutralLink href={authorizeURL}>
-          <LinkStyledAsButton variant={ButtonVariant.PRIMARY}>
+          <LinkStyledAsButton variant={ButtonVariant.PRIMARY} className="mb-0">
             {formatMessage({ id: "callToAction" })}
           </LinkStyledAsButton>
         </NeutralLink>
