@@ -1,8 +1,7 @@
-import style from "styled-components";
+import React from "react";
 
-const Separator = style.div`
-    border: 0.1rem solid ${({ theme }) => theme.colors.separator};
-    cursor: default;
-`;
+const Separator: React.FC = () => {
+  return <hr className="border-t-2 border-separator" />;
+};
 
 export { Separator };
