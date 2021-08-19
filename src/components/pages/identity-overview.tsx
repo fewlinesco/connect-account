@@ -10,7 +10,7 @@ import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { ConfirmationBox } from "@src/components/confirmation-box/confirmation-box";
 import { DeleteConfirmationBoxContent } from "@src/components/confirmation-box/delete-confirmation-box-content";
-import { PrimaryConfirmationBoxContent } from "@src/components/confirmation-box/primary-confirmation-box-content";
+import { Modal, ModalVariant } from "@src/components/confirmation-box/modal";
 import { NeutralLink } from "@src/components/neutral-link";
 import { SkeletonTextLine } from "@src/components/skeletons";
 import { fetchJson } from "@src/utils/fetch-json";
@@ -22,11 +22,8 @@ const IdentityOverview: React.FC<{
   const { formatMessage } = useIntl();
   const router = useRouter();
 
-  const [confirmationBoxOpen, setConfirmationBoxOpen] =
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
     React.useState<boolean>(false);
-  const [preventAnimation, setPreventAnimation] = React.useState<boolean>(true);
-  const [confirmationBoxContent, setConfirmationBoxContent] =
-    React.useState<JSX.Element>(<React.Fragment />);
 
   return (
     <>
@@ -82,38 +79,36 @@ const IdentityOverview: React.FC<{
             <Button
               type="button"
               variant={ButtonVariant.SECONDARY}
-              onPress={() => {
-                setPreventAnimation(false);
-                setConfirmationBoxContent(
-                  <PrimaryConfirmationBoxContent
-                    setOpen={setConfirmationBoxOpen}
-                    textContent={{
-                      infos:
-                        getIdentityType(identity.type) === IdentityTypes.EMAIL
-                          ? formatMessage({ id: "primaryModalContentEmail" })
-                          : formatMessage({ id: "primaryModalContentPhone" }),
-                      confirm: formatMessage({ id: "primaryModalConfirm" }),
-                      cancel: formatMessage({ id: "primaryModalCancel" }),
-                    }}
-                    onPress={async () => {
-                      await fetchJson(
-                        `/api/identities/${identity.id}/mark-as-primary/`,
-                        "POST",
-                        {},
-                      ).then(() => {
-                        router && router.push("/account/logins/");
-                      });
-                    }}
-                  />,
-                );
-                setConfirmationBoxOpen(true);
-              }}
+              onPress={() => setIsConfirmationModalOpen(true)}
             >
               {getIdentityType(identity.type) === IdentityTypes.EMAIL
                 ? formatMessage({ id: "markEmail" })
                 : formatMessage({ id: "markPhone" })}
             </Button>
           )}
+          {isConfirmationModalOpen ? (
+            <Modal
+              variant={ModalVariant.CONFIRMATION}
+              textContent={{
+                info:
+                  getIdentityType(identity.type) === IdentityTypes.EMAIL
+                    ? formatMessage({ id: "primaryModalContentEmail" })
+                    : formatMessage({ id: "primaryModalContentPhone" }),
+                confirm: formatMessage({ id: "primaryModalConfirm" }),
+                cancel: formatMessage({ id: "primaryModalCancel" }),
+              }}
+              setIsModalOpen={setIsConfirmationModalOpen}
+              onConfirmationPress={async () => {
+                await fetchJson(
+                  `/api/identities/${identity.id}/mark-as-primary/`,
+                  "POST",
+                  {},
+                ).then(() => {
+                  router && router.push("/account/logins/");
+                });
+              }}
+            />
+          ) : null}
           {!identity.primary && (
             <Button
               type="button"
@@ -159,9 +154,23 @@ const IdentityOverview: React.FC<{
           )}
         </>
       ) : null}
+      {isModalOpen ? (
+        <Modal
+          variant={ModalVariant.CONFIRMATION}
+          textContent={{
+            info: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
+            confirm: "Confirm",
+            cancel: "Cancel",
+          }}
+          setIsModalOpen={setIsModalOpen}
+          onConfirmationPress={() => {
+            return;
+          }}
+        />
+      ) : null}
       <ConfirmationBox
-        open={confirmationBoxOpen}
-        setOpen={setConfirmationBoxOpen}
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
         preventAnimation={preventAnimation}
       >
         {confirmationBoxContent}
