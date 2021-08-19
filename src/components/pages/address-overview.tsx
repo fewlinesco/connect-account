@@ -85,7 +85,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
           {formatMessage({ id: "update" })}
         </FakeButton>
       </NeutralLink>
-      {address && address.primary ? (
+      {address && !address.primary ? (
         <>
           <Button
             type="button"
