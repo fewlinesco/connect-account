@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import useSWR from "swr";
 
-import { CookieButton, ButtonVariant, Button } from "./buttons/buttons";
+import { CookieButton, ButtonVariant, Button } from "./buttons";
 import { SentryIcon } from "./icons/sentry-icon";
 import { ModalOverlay } from "./modal-overlay";
 import { formatCookieBannerMessage } from "@src/configs/intl";

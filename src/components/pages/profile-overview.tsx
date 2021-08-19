@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Address, Profile } from "@src/@types/profile";
 import { BoxedLink } from "@src/components/boxed-link";
 import { SectionBox } from "@src/components/boxes";
-import { ButtonVariant, ShowMoreButton } from "@src/components/buttons/buttons";
+import { ButtonVariant, ShowMoreButton } from "@src/components/buttons";
 import { DefaultProfilePictureIcon } from "@src/components/icons/default-profile-picture";
 import { RightChevron } from "@src/components/icons/right-chevron";
 import { LinkStyledAsButton } from "@src/components/link-styled-as-button";

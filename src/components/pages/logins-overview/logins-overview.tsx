@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import styled from "styled-components";
 import useSWR from "swr";
 
-import { ButtonVariant, ShowMoreButton } from "../../buttons/buttons";
+import { ButtonVariant, ShowMoreButton } from "../../buttons";
 import { LinkStyledAsButton } from "../../link-styled-as-button";
 import { NeutralLink } from "../../neutral-link";
 import { TimelineEnd, Timeline } from "../../timelines";

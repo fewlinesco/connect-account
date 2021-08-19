@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getButtonStyle, ButtonVariant } from "./buttons/buttons";
+import { getButtonStyle, ButtonVariant } from "./buttons";
 
 const LinkStyledAsButton: React.FC<{ variant: ButtonVariant }> = ({
   variant,

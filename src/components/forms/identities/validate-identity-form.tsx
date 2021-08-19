@@ -8,7 +8,7 @@ import { FormErrorMessage } from "../../input/form-error-message";
 import { InputText } from "../../input/input-text";
 import { Form } from "../form";
 import { Box } from "@src/components/boxes";
-import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { Button, ButtonVariant } from "@src/components/buttons";
 import { LinkStyledAsButton } from "@src/components/link-styled-as-button";
 import { NeutralLink } from "@src/components/neutral-link";
 import { formatErrorMessage } from "@src/configs/intl";

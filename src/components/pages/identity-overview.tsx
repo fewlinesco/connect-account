@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 import { AwaitingValidationBadge, PrimaryBadge } from "@src/components/badges";
 import { Box } from "@src/components/boxes";
-import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { Button, ButtonVariant } from "@src/components/buttons";
 import { LinkStyledAsButton } from "@src/components/link-styled-as-button";
 import { Modal, ModalVariant } from "@src/components/modals";
 import { NeutralLink } from "@src/components/neutral-link";

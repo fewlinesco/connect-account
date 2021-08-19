@@ -2,7 +2,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { SectionBox } from "@src/components/boxes";
-import { ButtonVariant } from "@src/components/buttons/buttons";
+import { ButtonVariant } from "@src/components/buttons";
 import { HomeDesktopBackground } from "@src/components/icons/home-desktop-background";
 import { HomeMobileBackground } from "@src/components/icons/home-mobile-background";
 import { LinkStyledAsButton } from "@src/components/link-styled-as-button";

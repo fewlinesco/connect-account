@@ -11,7 +11,7 @@ import { InputText } from "../../input/input-text";
 import { StyledPhoneInput } from "../../input/styled-phone-input";
 import { Form } from "../form";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
-import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { Button, ButtonVariant } from "@src/components/buttons";
 import { LinkStyledAsButton } from "@src/components/link-styled-as-button";
 import { NeutralLink } from "@src/components/neutral-link";
 import { formatErrorMessage } from "@src/configs/intl";

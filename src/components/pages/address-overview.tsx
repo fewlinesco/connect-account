@@ -9,7 +9,7 @@ import { Modal, ModalVariant } from "../modals";
 import { Address } from "@src/@types/profile";
 import { PrimaryBadge } from "@src/components/badges";
 import { Box } from "@src/components/boxes";
-import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { Button, ButtonVariant } from "@src/components/buttons";
 import { LinkStyledAsButton } from "@src/components/link-styled-as-button";
 import { NeutralLink } from "@src/components/neutral-link";
 import { SkeletonTextLine } from "@src/components/skeletons";

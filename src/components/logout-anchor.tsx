@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 
-import { ButtonVariant } from "./buttons/buttons";
+import { ButtonVariant } from "./buttons";
 import { NeutralLink } from "./neutral-link";
 import { LinkStyledAsButton } from "@src/components/link-styled-as-button";
 import { formatNavigation } from "@src/configs/intl";

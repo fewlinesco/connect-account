@@ -10,7 +10,7 @@ import { InputDatePicker } from "../../input/input-date-picker";
 import { InputText } from "../../input/input-text";
 import { Form } from "../form";
 import { Profile } from "@src/@types/profile";
-import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { Button, ButtonVariant } from "@src/components/buttons";
 import { LinkStyledAsButton } from "@src/components/link-styled-as-button";
 import { NeutralLink } from "@src/components/neutral-link";
 import { fetchJson } from "@src/utils/fetch-json";

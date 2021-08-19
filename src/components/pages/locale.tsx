@@ -5,7 +5,7 @@ import styled from "styled-components";
 import useSWR from "swr";
 import { v4 as uuidv4 } from "uuid";
 
-import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { Button, ButtonVariant } from "@src/components/buttons";
 import { Form } from "@src/components/forms/form";
 import { FormErrorMessage } from "@src/components/input/form-error-message";
 import { InputsRadio } from "@src/components/input/input-radio-button";

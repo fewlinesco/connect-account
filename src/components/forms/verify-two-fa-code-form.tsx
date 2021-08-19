@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { FormErrorMessage } from "../input/form-error-message";
 import { InputText } from "../input/input-text";
 import { Form } from "./form";
-import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { Button, ButtonVariant } from "@src/components/buttons";
 import { formatErrorMessage } from "@src/configs/intl";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { ERRORS_DATA } from "@src/errors/web-errors";

@@ -1,10 +1,6 @@
 import React from "react";
 
-import {
-  Button,
-  ButtonVariant,
-  CloseModalCrossButton,
-} from "./buttons/buttons";
+import { Button, ButtonVariant, CloseModalCrossButton } from "./buttons";
 import { ModalOverlay } from "./modal-overlay";
 
 enum ModalVariant {
