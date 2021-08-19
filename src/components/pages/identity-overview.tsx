@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import styled from "styled-components";
 
 import { AwaitingValidationBadge, PrimaryBadge } from "@src/components/badges";
-import { Box } from "@src/components/box";
+import { Box } from "@src/components/boxes";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { ConfirmationBox } from "@src/components/confirmation-box/confirmation-box";

@@ -4,12 +4,12 @@ import styled from "styled-components";
 
 import { Address, Profile } from "@src/@types/profile";
 import { BoxedLink } from "@src/components/boxed-link";
+import { SectionBox } from "@src/components/boxes";
 import { ButtonVariant, ShowMoreButton } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { DefaultProfilePictureIcon } from "@src/components/icons/default-profile-picture";
 import { RightChevron } from "@src/components/icons/right-chevron";
 import { NeutralLink } from "@src/components/neutral-link";
-import { SectionBox } from "@src/components/section-box";
 import { Separator } from "@src/components/separator";
 import { SkeletonTextLine } from "@src/components/skeletons";
 import {

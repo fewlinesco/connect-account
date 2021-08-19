@@ -3,9 +3,9 @@ import { useIntl } from "react-intl";
 import styled from "styled-components";
 import useSWR from "swr";
 
+import { SectionBox } from "@src/components/boxes";
 import { RightChevron } from "@src/components/icons/right-chevron";
 import { NeutralLink } from "@src/components/neutral-link";
-import { SectionBox } from "@src/components/section-box";
 import { SkeletonTextLine } from "@src/components/skeletons";
 
 const Security: React.FC = () => {

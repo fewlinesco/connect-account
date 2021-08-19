@@ -2,10 +2,10 @@ import React from "react";
 import { useIntl } from "react-intl";
 import styled from "styled-components";
 
+import { SectionBox } from "@src/components/boxes";
 import { RightChevron } from "@src/components/icons/right-chevron";
 import { getSectionListContent } from "@src/components/navigation-bars/navigation-sections";
 import { NeutralLink } from "@src/components/neutral-link";
-import { SectionBox } from "@src/components/section-box";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { getNavSectionHref } from "@src/utils/get-nav-section-href";
 

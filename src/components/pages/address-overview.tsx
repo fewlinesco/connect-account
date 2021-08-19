@@ -7,7 +7,7 @@ import useSWR, { mutate } from "swr";
 
 import { Address } from "@src/@types/profile";
 import { PrimaryBadge } from "@src/components/badges";
-import { Box } from "@src/components/box";
+import { Box } from "@src/components/boxes";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { ConfirmationBox } from "@src/components/confirmation-box/confirmation-box";

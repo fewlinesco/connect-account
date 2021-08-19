@@ -12,7 +12,7 @@ import { StyledPhoneInput } from "../../input/styled-phone-input";
 import { SkeletonTextLine } from "../../skeletons";
 import { Form } from "../form";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
-import { Box } from "@src/components/box";
+import { Box } from "@src/components/boxes";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
 import { NeutralLink } from "@src/components/neutral-link";
