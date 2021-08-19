@@ -11,7 +11,8 @@ const ModalOverlay: React.FC<{ onClick?: () => void; className?: string }> = ({
         className
       }
       onClick={onClick}
-    ></div>
+      data-testid="modal-overlay"
+    />
   );
 };
 

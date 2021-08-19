@@ -25,7 +25,6 @@ const IdentityOverview: React.FC<{
   const [isDeletionModalOpen, setIsDeletionModalOpen] =
     React.useState<boolean>(false);
 
-  console.log(identity);
   return (
     <>
       <Box>
