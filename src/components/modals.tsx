@@ -1,8 +1,10 @@
-import { useButton } from "@react-aria/button";
 import React from "react";
 
-import { Button, ButtonVariant } from "./buttons/buttons";
-import { CrossIcon } from "./icons/cross-icon";
+import {
+  Button,
+  ButtonVariant,
+  CloseModalCrossButton,
+} from "./buttons/buttons";
 import { ModalOverlay } from "./modal-overlay";
 
 enum ModalVariant {
@@ -106,24 +108,6 @@ const Modal: React.FC<{
   }
 
   throw new Error("Invalid ModalVariant");
-};
-
-const CloseModalCrossButton: React.FC<{ onPress: () => void }> = (props) => {
-  const closeConfirmationBoxButtonRef = React.useRef(null);
-  const { buttonProps } = useButton(
-    { ...props, elementType: "div" },
-    closeConfirmationBoxButtonRef,
-  );
-
-  return (
-    <div
-      {...buttonProps}
-      className="absolute top-8 right-8 cursor-pointer"
-      ref={closeConfirmationBoxButtonRef}
-    >
-      <CrossIcon />
-    </div>
-  );
 };
 
 const ModalInfo: React.FC = ({ children }) => {

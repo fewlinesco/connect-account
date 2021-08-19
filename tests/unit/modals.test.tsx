@@ -23,20 +23,22 @@ jest.mock("@src/configs/db-client", () => {
 });
 
 describe("Modals", () => {
-  const localizedStrings = locales.en["/account/logins/[type]/[id]"];
+  const path = "/account/logins/[type]/[id]";
+  const localizedStrings = locales.en[path];
 
   beforeAll(() => {
-    setRouterPathname("/account/logins/email/[id]");
+    setRouterPathname(path);
   });
 
-  it.only("shouldn't display any confirmation box on first render", async () => {
+  it("shouldn't display any confirmation box on first render", async () => {
     expect.assertions(2);
 
     render(
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => mockIdentities.nonPrimaryEmailIdentity,
+          fetcher: async () =>
+            Promise.resolve(mockIdentities.nonPrimaryEmailIdentity),
         }}
       >
         <IdentityOverviewPage
@@ -55,14 +57,15 @@ describe("Modals", () => {
     });
   });
 
-  it("should display primary confirmation box after clicking on mark as primary button & close it by clicking on cancel button", async () => {
+  it.only("should display primary confirmation box after clicking on mark as primary button & close it by clicking on cancel button", async () => {
     expect.assertions(3);
 
     render(
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => mockIdentities.nonPrimaryEmailIdentity,
+          fetcher: async () =>
+            Promise.resolve(mockIdentities.nonPrimaryEmailIdentity),
         }}
       >
         <IdentityOverviewPage
@@ -71,13 +74,19 @@ describe("Modals", () => {
       </SWRConfig>,
     );
 
-    userEvent.click(
-      await screen.findByRole("button", {
-        name: localizedStrings.markEmail,
-      }),
-    );
+    // userEvent.click(
+    //   await screen.findByRole("button", {
+    //     name: `/${localizedStrings.markEmail}/i`,
+    //   }),
+    // );
 
     await waitFor(() => {
+      userEvent.click(
+        screen.getByRole("button", {
+          name: `/${localizedStrings.markEmail}/i`,
+        }),
+      );
+
       expect(
         screen.getByText(localizedStrings.primaryModalContentEmail),
       ).toBeInTheDocument();

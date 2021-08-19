@@ -8,7 +8,7 @@ import { AwaitingValidationBadge, PrimaryBadge } from "@src/components/badges";
 import { Box } from "@src/components/box";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { FakeButton } from "@src/components/buttons/fake-button";
-import { Modal, ModalVariant } from "@src/components/modal";
+import { Modal, ModalVariant } from "@src/components/modals";
 import { NeutralLink } from "@src/components/neutral-link";
 import { SkeletonTextLine } from "@src/components/skeletons";
 import { fetchJson } from "@src/utils/fetch-json";
@@ -25,6 +25,7 @@ const IdentityOverview: React.FC<{
   const [isDeletionModalOpen, setIsDeletionModalOpen] =
     React.useState<boolean>(false);
 
+  console.log(identity);
   return (
     <>
       <Box>
