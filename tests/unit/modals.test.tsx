@@ -22,15 +22,14 @@ jest.mock("@src/configs/db-client", () => {
   };
 });
 
-describe("Modal", () => {
-  const path = "/account/logins/[type]/[id]";
-  const localizedStrings = locales.en[path];
+describe("Modals", () => {
+  const localizedStrings = locales.en["/account/logins/[type]/[id]"];
 
   beforeAll(() => {
-    setRouterPathname(path);
+    setRouterPathname("/account/logins/email/[id]");
   });
 
-  it("shouldn't display any confirmation box on first render", async () => {
+  it.only("shouldn't display any confirmation box on first render", async () => {
     expect.assertions(2);
 
     render(
