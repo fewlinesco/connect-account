@@ -1,9 +1,9 @@
 import { useButton } from "@react-aria/button";
 import React from "react";
 
-import { Button, ButtonVariant } from "../buttons/buttons";
-import { CrossIcon } from "../icons/cross-icon";
-import { ModalOverlay } from "../modal-overlay";
+import { Button, ButtonVariant } from "./buttons/buttons";
+import { CrossIcon } from "./icons/cross-icon";
+import { ModalOverlay } from "./modal-overlay";
 
 enum ModalVariant {
   MARK_AS_PRIMARY = "MARK_AS_PRIMARY",

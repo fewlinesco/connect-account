@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import styled from "styled-components";
 import useSWR, { mutate } from "swr";
 
-import { Modal, ModalVariant } from "../confirmation-box/modal";
+import { Modal, ModalVariant } from "../modal";
 import { Address } from "@src/@types/profile";
 import { PrimaryBadge } from "@src/components/badges";
 import { Box } from "@src/components/box";
