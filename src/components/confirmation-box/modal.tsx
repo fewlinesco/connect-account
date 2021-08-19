@@ -6,7 +6,7 @@ import { CrossIcon } from "../icons/cross-icon";
 import { ModalOverlay } from "../modal-overlay";
 
 enum ModalVariant {
-  CONFIRMATION = "CONFIRMATION",
+  MARK_AS_PRIMARY = "MARK_AS_PRIMARY",
   DELETION = "DELETION",
 }
 
@@ -32,7 +32,7 @@ const ModalWrapper: React.FC<{
         }}
         data-testid="modalOverlay"
       />
-      <div className="flex flex-col items-center px-16 pt-16 pb-8 lg:p-20 bg-background fixed lg:absolute bottom-0 right-0 lg:right-2/4 lg:bottom-2/4 w-full lg:w-3/5 rounded-none lg:rounded-lg z-30 transform-none lg:translate-x-2/4 lg:translate-y-2/4">
+      <div className="flex flex-col items-center px-16 pt-16 pb-8 lg:p-20 bg-background fixed lg:absolute bottom-0 right-0 lg:right-2/4 lg:bottom-2/4 w-full lg:w-3/5 xl:w-1/5 rounded-none lg:rounded-lg z-30 transform-none lg:transform lg:translate-x-2/4 lg:translate-y-2/4">
         <CloseModalCrossButton onPress={() => setIsModalOpen(false)} />
         {children}
       </div>
@@ -57,7 +57,7 @@ const Modal: React.FC<{
     return () => window.removeEventListener("keyup", escapePressed);
   });
 
-  if (variant === ModalVariant.CONFIRMATION) {
+  if (variant === ModalVariant.MARK_AS_PRIMARY) {
     return (
       <ModalWrapper setIsModalOpen={setIsModalOpen}>
         <ModalInfo>{textContent.info}</ModalInfo>

@@ -20,7 +20,7 @@ const IdentityOverview: React.FC<{
   const { formatMessage } = useIntl();
   const router = useRouter();
 
-  const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
+  const [isMarkAsPrimaryModalOpen, setIsMarkAsPrimaryModalOpen] =
     React.useState<boolean>(false);
   const [isDeletionModalOpen, setIsDeletionModalOpen] =
     React.useState<boolean>(false);
@@ -81,7 +81,7 @@ const IdentityOverview: React.FC<{
               variant={ButtonVariant.SECONDARY}
               onPress={() => {
                 setIsDeletionModalOpen(false);
-                setIsConfirmationModalOpen(true);
+                setIsMarkAsPrimaryModalOpen(true);
                 return;
               }}
             >
@@ -90,9 +90,9 @@ const IdentityOverview: React.FC<{
                 : formatMessage({ id: "markPhone" })}
             </Button>
           )}
-          {isConfirmationModalOpen ? (
+          {isMarkAsPrimaryModalOpen ? (
             <Modal
-              variant={ModalVariant.CONFIRMATION}
+              variant={ModalVariant.MARK_AS_PRIMARY}
               textContent={{
                 info:
                   getIdentityType(identity.type) === IdentityTypes.EMAIL
@@ -101,7 +101,7 @@ const IdentityOverview: React.FC<{
                 confirm: formatMessage({ id: "primaryModalConfirm" }),
                 cancel: formatMessage({ id: "primaryModalCancel" }),
               }}
-              setIsModalOpen={setIsConfirmationModalOpen}
+              setIsModalOpen={setIsMarkAsPrimaryModalOpen}
               onConfirmationPress={async () => {
                 await fetchJson(
                   `/api/identities/${identity.id}/mark-as-primary/`,
@@ -118,7 +118,7 @@ const IdentityOverview: React.FC<{
               type="button"
               variant={ButtonVariant.GHOST}
               onPress={() => {
-                setIsConfirmationModalOpen(false);
+                setIsMarkAsPrimaryModalOpen(false);
                 setIsDeletionModalOpen(true);
               }}
             >
