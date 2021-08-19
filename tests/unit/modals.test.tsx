@@ -151,39 +151,39 @@ describe("Modals", () => {
     });
   });
 
-//   it("should close confirmation box when clicking outside of it", async () => {
-//     expect.assertions(4);
+  //   it("should close confirmation box when clicking outside of it", async () => {
+  //     expect.assertions(4);
 
-//     render(
-//       <SWRConfig
-//         value={{
-//           dedupingInterval: 0,
-//           fetcher: async () =>
-//             Promise.resolve(mockIdentities.nonPrimaryEmailIdentity),
-//         }}
-//       >
-//         <IdentityOverviewPage
-//           identityId={mockIdentities.nonPrimaryEmailIdentity.id}
-//         />
-//       </SWRConfig>,
-//     );
+  //     render(
+  //       <SWRConfig
+  //         value={{
+  //           dedupingInterval: 0,
+  //           fetcher: async () =>
+  //             Promise.resolve(mockIdentities.nonPrimaryEmailIdentity),
+  //         }}
+  //       >
+  //         <IdentityOverviewPage
+  //           identityId={mockIdentities.nonPrimaryEmailIdentity.id}
+  //         />
+  //       </SWRConfig>,
+  //     );
 
-//     const deleteEmailButton = await screen.findByRole("button", {
-//       name: localizedStrings.deleteEmail,
-//     });
-//     expect(
-//       await screen.findByRole("button", {
-//         name: localizedStrings.deleteEmail,
-//       }),
-//     ).toBeInTheDocument();
+  //     const deleteEmailButton = await screen.findByRole("button", {
+  //       name: localizedStrings.deleteEmail,
+  //     });
+  //     expect(
+  //       await screen.findByRole("button", {
+  //         name: localizedStrings.deleteEmail,
+  //       }),
+  //     ).toBeInTheDocument();
 
-//     const modalOverlay = await screen.findByTestId("modal-overlay");
-//     expect(modalOverlay).toBeInTheDocument();
-//     userEvent.click(modalOverlay);
+  //     const modalOverlay = await screen.findByTestId("modal-overlay");
+  //     expect(modalOverlay).toBeInTheDocument();
+  //     userEvent.click(modalOverlay);
 
-//     await waitFor(() => {
-//       expect(deleteEmailButton).not.toBeInTheDocument();
-//       expect(modalOverlay).not.toBeInTheDocument();
-//     });
-//   });
-// });
+  //     await waitFor(() => {
+  //       expect(deleteEmailButton).not.toBeInTheDocument();
+  //       expect(modalOverlay).not.toBeInTheDocument();
+  //     });
+  //   });
+});
