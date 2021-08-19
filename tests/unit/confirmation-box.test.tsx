@@ -178,7 +178,7 @@ describe("ConfirmationBox", () => {
   //   ),
   // ).toBeInTheDocument();
 
-  //   userEvent.click(screen.getByTestId("clickAwayListener"));
+  //   userEvent.click(screen.getByTestId("modalOverlay"));
 
   //   await screen
   //     .findByText(

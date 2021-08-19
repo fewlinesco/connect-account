@@ -4,8 +4,8 @@ import styled from "styled-components";
 import useSWR from "swr";
 
 import { CookieButton, ButtonVariant, Button } from "./buttons/buttons";
-import { ClickAwayListener } from "./click-away-listener";
 import { SentryIcon } from "./icons/sentry-icon";
+import { ModalOverlay } from "./modal-overlay";
 import { formatCookieBannerMessage } from "@src/configs/intl";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
@@ -93,7 +93,7 @@ const CookieBanner: React.FC = () => {
               </Button>
             </ButtonsWrapper>
           </CookieModal>
-          <Overlay />
+          <ModalOverlay className="lg:hidden" />
         </>
       ) : null}
     </CookieBannerWrapper>
@@ -104,21 +104,12 @@ const CookieBannerWrapper = styled.div`
   position: fixed;
   left: 2rem;
   bottom: 2rem;
-  z-index: 3;
+  z-index: 20;
 
   @media ${deviceBreakpoints.m} {
     bottom: 0;
     left: 0;
     width: 100%;
-  }
-`;
-
-const Overlay = styled(ClickAwayListener)`
-  display: none;
-
-  @media ${deviceBreakpoints.m} {
-    display: block;
-    background-color: rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -130,7 +121,7 @@ const CookieModal = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
   box-shadow: ${({ theme }) => theme.shadows.box};
   border-radius: ${({ theme }) => theme.radii[0]};
-  z-index: 2;
+  z-index: 20;
 
   @media ${deviceBreakpoints.m} {
     bottom: 0;

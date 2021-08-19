@@ -1,176 +1,93 @@
 import { useRouter } from "next/router";
 import React from "react";
-import styled from "styled-components";
 
-import { ClickAwayListener } from "../click-away-listener";
 import { Arrow } from "../icons/arrow";
 import { BurgerIcon } from "../icons/burger-icon";
 import { NavBarCrossIcon } from "../icons/navbar-cross-icon";
 import { RightChevron } from "../icons/right-chevron";
-import { WhiteSwitchIcon } from "../icons/switch-icon/white-switch-icon";
 import { WhiteWorldIcon } from "../icons/world-icon/white-world-icon";
 import { LogoutAnchor } from "../logout-anchor";
+import { ModalOverlay } from "../modal-overlay";
 import { NeutralLink } from "../neutral-link";
 import { getNavigationSections } from "./navigation-sections";
 import { formatNavigation } from "@src/configs/intl";
-import { deviceBreakpoints } from "@src/design-system/theme";
 
 const MobileNavigationBar: React.FC = () => {
-  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
   const router = useRouter();
 
   return (
     <>
-      {isOpen ? <ClickAwayListener onClick={() => setIsOpen(false)} /> : null}
-      <Container>
-        {isOpen ? (
-          <MenuList>
+      {isMenuOpen ? (
+        <ModalOverlay onClick={() => setIsMenuOpen(false)} />
+      ) : null}
+      <div className="block lg:hidden fixed bottom-0 left-0 w-full bg-background z-20">
+        {isMenuOpen ? (
+          <>
             {getNavigationSections().map(([title, { href, icon }]) => {
               return (
-                <ListItem
+                <NeutralLink
+                  className="h-28 flex items-center justify-between px-8"
                   href={href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setIsMenuOpen(false)}
                   key={title + href}
                 >
-                  <ListItemLabel>
-                    {icon}
-                    <p>{formatNavigation(router.locale || "en", title)}</p>
-                  </ListItemLabel>
+                  {icon}
+                  <p className="ml-6 flex-grow">
+                    {formatNavigation(router.locale || "en", title)}
+                  </p>
                   <RightChevron />
-                </ListItem>
+                </NeutralLink>
               );
             })}
             <LogoutAnchor />
-          </MenuList>
+          </>
         ) : null}
-        <SubSection>
-          {isOpen ? (
-            <MenuItem color="primary" onClick={() => setIsOpen(false)}>
-              <SpecialLink href="/account/locale/">
-                <Content>
-                  <LanguagesOptions>
-                    <WhiteWorldIcon />
-                    <div>
-                      {formatNavigation(router.locale || "en", "language")}
-                    </div>
-                  </LanguagesOptions>
-                  <WhiteSwitchIcon />
-                </Content>
-              </SpecialLink>
-            </MenuItem>
+        <div className="h-28 flex border-t border-separator">
+          {isMenuOpen ? (
+            <div
+              className="flex w-1/2 items-center bg-primary "
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <NeutralLink
+                className="flex w-full items-center justify-evenly "
+                href="/account/locale/"
+              >
+                <WhiteWorldIcon />
+                <p className="text-background">
+                  {formatNavigation(router.locale || "en", "language")}
+                </p>
+              </NeutralLink>
+            </div>
           ) : (
-            <MenuItem onClick={() => router.back()}>
-              <Content>
-                <Arrow />
-                <div>{formatNavigation(router.locale || "en", "back")}</div>
-              </Content>
-            </MenuItem>
+            <div
+              className="flex w-1/2 justify-around items-center bg-box "
+              onClick={() => router.back()}
+            >
+              <Arrow />
+              <p>{formatNavigation(router.locale || "en", "back")}</p>
+            </div>
           )}
-          <MenuItem borderLeft={true} onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? (
-              <Content>
-                <div>{formatNavigation(router.locale || "en", "close")}</div>
+          <div
+            className="flex w-1/2 justify-around items-center bg-box border-l border-separator"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? (
+              <>
+                <p>{formatNavigation(router.locale || "en", "close")}</p>
                 <NavBarCrossIcon />
-              </Content>
+              </>
             ) : (
-              <Content>
-                <div>{formatNavigation(router.locale || "en", "menu")}</div>
+              <>
+                <p>{formatNavigation(router.locale || "en", "menu")}</p>
                 <BurgerIcon />
-              </Content>
+              </>
             )}
-          </MenuItem>
-        </SubSection>
-      </Container>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
-
-const Container = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 2;
-  display: none;
-
-  @media ${deviceBreakpoints.m} {
-    display: block;
-  }
-`;
-
-const SubSection = styled.div`
-  height: 7.2rem;
-  display: flex;
-  border-top: 0.1rem solid ${({ theme }) => theme.colors.separator};
-`;
-
-const MenuItem = styled.div<{
-  color?: string;
-  borderLeft?: boolean;
-}>`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  background-color: ${({ theme }) => theme.colors.box};
-
-  ${({ color, theme }) =>
-    color === "primary" &&
-    `
-    background-color: ${theme.colors.primary};
-    color: ${theme.colors.background}
-  `};
-
-  ${({ borderLeft, theme }) =>
-    borderLeft &&
-    `
-    border-left: 0.1rem solid ${theme.colors.separator};
-  `};
-`;
-
-const Content = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin: 0 ${({ theme }) => theme.spaces.xs};
-`;
-
-const LanguagesOptions = styled.div`
-  display: flex;
-  align-items: center;
-
-  div {
-    margin: 0 0 0 ${({ theme }) => theme.spaces.xxs};
-  }
-`;
-
-const MenuList = styled.div`
-  background-color: ${({ theme }) => theme.colors.background};
-  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
-`;
-
-const ListItem = styled(NeutralLink)`
-  height: 7.2rem;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 ${({ theme }) => theme.spaces.xs};
-
-  p {
-    margin: 0 0 0 1.5rem;
-  }
-`;
-
-const ListItemLabel = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const SpecialLink = styled(NeutralLink)`
-  & div {
-    color: ${({ theme }) => theme.colors.background};
-  }
-`;
 
 export { MobileNavigationBar };
