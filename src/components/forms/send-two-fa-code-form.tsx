@@ -103,7 +103,6 @@ const SendTwoFACodeForm: React.FC<{
         }}
         isReady={identities ? true : false}
       />
-
       <Button
         variant={isCodeSent ? ButtonVariant.SECONDARY : ButtonVariant.PRIMARY}
         type="submit"

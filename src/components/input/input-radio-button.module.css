@@ -1,7 +1,3 @@
-input:checked + .disguisedSpan {
-  border: 0.2rem solid theme("colors.black");
-}
-
 input:checked + .disguisedSpan:after {
   content: "";
   height: 1rem;
