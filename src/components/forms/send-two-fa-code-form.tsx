@@ -84,7 +84,6 @@ const SendTwoFACodeForm: React.FC<{
         <FormErrorMessage>{errorMessage}</FormErrorMessage>
       ) : null}
       <p>{formatMessage({ id: "info" })}</p>
-
       <InputsRadio
         groupName="contactChoice"
         inputsValues={
