@@ -9,8 +9,7 @@ import { Modal, ModalVariant } from "../modals";
 import { Address } from "@src/@types/profile";
 import { PrimaryBadge } from "@src/components/badges";
 import { Box } from "@src/components/boxes";
-import { Button, ButtonVariant } from "@src/components/buttons";
-import { LinkStyledAsButton } from "@src/components/link-styled-as-button";
+import { Button } from "@src/components/buttons";
 import { NeutralLink } from "@src/components/neutral-link";
 import { SkeletonTextLine } from "@src/components/skeletons";
 import { SWRError } from "@src/errors/errors";
@@ -81,15 +80,15 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
       <NeutralLink
         href={address ? `/account/profile/addresses/${address.id}/edit/` : "#"}
       >
-        <LinkStyledAsButton variant={ButtonVariant.PRIMARY}>
+        <div className="btn btn-primary btn-neutral-link">
           {formatMessage({ id: "update" })}
-        </LinkStyledAsButton>
+        </div>
       </NeutralLink>
       {address && !address.primary ? (
         <>
           <Button
             type="button"
-            variant={ButtonVariant.SECONDARY}
+            className="btn btn-secondary"
             onPress={() => {
               setIsDeletionModalOpen(false);
               setIsMarkAsPrimaryModalOpen(true);
@@ -153,7 +152,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
       ) : null}
       <Button
         type="button"
-        variant={ButtonVariant.GHOST}
+        className="btn btn-ghost"
         onPress={() => {
           setIsMarkAsPrimaryModalOpen(false);
           setIsDeletionModalOpen(true);

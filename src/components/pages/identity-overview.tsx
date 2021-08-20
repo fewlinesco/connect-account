@@ -6,8 +6,7 @@ import styled from "styled-components";
 
 import { AwaitingValidationBadge, PrimaryBadge } from "@src/components/badges";
 import { Box } from "@src/components/boxes";
-import { Button, ButtonVariant } from "@src/components/buttons";
-import { LinkStyledAsButton } from "@src/components/link-styled-as-button";
+import { Button } from "@src/components/buttons";
 import { Modal, ModalVariant } from "@src/components/modals";
 import { NeutralLink } from "@src/components/neutral-link";
 import { SkeletonTextLine } from "@src/components/skeletons";
@@ -59,26 +58,26 @@ const IdentityOverview: React.FC<{
         <>
           {identity.status === "unvalidated" && (
             <NeutralLink href={`/account/logins/${identity.type}/validation/`}>
-              <LinkStyledAsButton variant={ButtonVariant.PRIMARY}>
+              <div className="btn btn-primary btn-neutral-link">
                 {formatMessage({ id: "proceed" })}
-              </LinkStyledAsButton>
+              </div>
             </NeutralLink>
           )}
           {identity.status === "validated" && (
             <NeutralLink
               href={`/account/logins/${identity.type}/${identity.id}/update/`}
             >
-              <LinkStyledAsButton variant={ButtonVariant.PRIMARY}>
+              <div className="btn btn-primary btn-neutral-link">
                 {getIdentityType(identity.type) === IdentityTypes.EMAIL
                   ? formatMessage({ id: "updateEmail" })
                   : formatMessage({ id: "updatePhone" })}
-              </LinkStyledAsButton>
+              </div>
             </NeutralLink>
           )}
           {!identity.primary && identity.status === "validated" && (
             <Button
               type="button"
-              variant={ButtonVariant.SECONDARY}
+              className="btn btn-secondary"
               onPress={() => {
                 setIsDeletionModalOpen(false);
                 setIsMarkAsPrimaryModalOpen(true);
@@ -116,7 +115,7 @@ const IdentityOverview: React.FC<{
           {!identity.primary && (
             <Button
               type="button"
-              variant={ButtonVariant.GHOST}
+              className="btn btn-ghost"
               onPress={() => {
                 setIsMarkAsPrimaryModalOpen(false);
                 setIsDeletionModalOpen(true);

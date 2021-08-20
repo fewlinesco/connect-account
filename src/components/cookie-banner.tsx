@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import useSWR from "swr";
 
-import { CookieButton, ButtonVariant, Button } from "./buttons";
+import { CookieButton, Button } from "./buttons";
 import { SentryIcon } from "./icons/sentry-icon";
 import { ModalOverlay } from "./modal-overlay";
 import { formatCookieBannerMessage } from "@src/configs/intl";
@@ -67,7 +67,7 @@ const CookieBanner: React.FC = () => {
             <ButtonsWrapper>
               <Button
                 type="button"
-                variant={ButtonVariant.GHOST_COOKIE}
+                className="btn btn-cookie-ghost"
                 onPress={async () => {
                   await fetchJson("/api/consent-cookie/", "PATCH", {
                     sentry: false,
@@ -80,7 +80,7 @@ const CookieBanner: React.FC = () => {
               </Button>
               <Button
                 type="button"
-                variant={ButtonVariant.PRIMARY_COOKIE}
+                className="btn btn-cookie-primary"
                 onPress={async () => {
                   await fetchJson("/api/consent-cookie/", "PATCH", {
                     sentry: true,

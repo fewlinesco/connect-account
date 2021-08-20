@@ -9,69 +9,64 @@ import { CrossIcon } from "./icons/cross-icon";
 import { Triangle } from "./icons/triangle";
 import { deviceBreakpoints } from "@src/design-system/theme";
 
-enum ButtonVariant {
-  PRIMARY = "PRIMARY",
-  SECONDARY = "SECONDARY",
-  LIGHT_GREY = "LIGHT_GREY",
-  DANGER = "DANGER",
-  GHOST = "GHOST",
-  PRIMARY_COOKIE = "PRIMARY_COOKIE",
-  GHOST_COOKIE = "GHOST_COOKIE",
-}
+// enum ButtonVariant {
+//   PRIMARY = "PRIMARY",
+//   SECONDARY = "SECONDARY",
+//   LIGHT_GREY = "LIGHT_GREY",
+//   DANGER = "DANGER",
+//   GHOST = "GHOST",
+//   PRIMARY_COOKIE = "PRIMARY_COOKIE",
+//   GHOST_COOKIE = "GHOST_COOKIE",
+// }
 
-function getButtonStyle(variant?: ButtonVariant): string {
-  const baseButtonStyle =
-    "h-16 mb-4 rounded text-m cursor-pointer w-full break-all";
+// function getButtonStyle(variant?: ButtonVariant): string {
+//   const baseButtonStyle =
+//     "h-16 mb-4 rounded text-m cursor-pointer w-full break-all";
 
-  if (variant === ButtonVariant.PRIMARY) {
-    return `${baseButtonStyle} bg-primary text-background`;
-  }
+//   if (variant === ButtonVariant.PRIMARY) {
+//     return `${baseButtonStyle} bg-primary text-background`;
+//   }
 
-  if (variant === ButtonVariant.SECONDARY) {
-    return `${baseButtonStyle} bg-background text-primary border border-primary border-solid`;
-  }
+//   if (variant === ButtonVariant.SECONDARY) {
+//     return `${baseButtonStyle} bg-background text-primary border border-primary border-solid`;
+//   }
 
-  if (variant === ButtonVariant.LIGHT_GREY) {
-    return `${baseButtonStyle} mb-0 lg:mb-4 py-12 px-16 lg:p-0 text-black bg-background lg:bg-gray-light text-base border border-solid border-gray-light lg:border-none`;
-  }
+//   if (variant === ButtonVariant.LIGHT_GREY) {
+//     return `${baseButtonStyle} mb-0 lg:mb-4 py-12 px-16 lg:p-0 text-black bg-background lg:bg-gray-light text-base border border-solid border-gray-light lg:border-none`;
+//   }
 
-  if (variant === ButtonVariant.DANGER) {
-    return `${baseButtonStyle} bg-red text-background`;
-  }
+//   if (variant === ButtonVariant.DANGER) {
+//     return `${baseButtonStyle} bg-red text-background`;
+//   }
 
-  if (variant === ButtonVariant.GHOST) {
-    return `${baseButtonStyle} bg-background text-red`;
-  }
+//   if (variant === ButtonVariant.GHOST) {
+//     return `${baseButtonStyle} bg-background text-red`;
+//   }
 
-  if (variant === ButtonVariant.PRIMARY_COOKIE) {
-    return `${baseButtonStyle} h-20 mb-0 bg-primary text-background rounded-t-none rounded-br-lg rounded-bl-none`;
-  }
+//   if (variant === ButtonVariant.PRIMARY_COOKIE) {
+//     return `${baseButtonStyle} h-20 mb-0 bg-primary text-background rounded-t-none rounded-br-lg rounded-bl-none`;
+//   }
 
-  if (variant === ButtonVariant.GHOST_COOKIE) {
-    return `${baseButtonStyle} mb-0 text-primary bg-background rounded-t-none rounded-br-none rounded-bl-lg border-t border-solid border-separator`;
-  }
+//   if (variant === ButtonVariant.GHOST_COOKIE) {
+//     return `${baseButtonStyle} mb-0 text-primary bg-background rounded-t-none rounded-br-none rounded-bl-lg border-t border-solid border-separator`;
+//   }
 
-  return baseButtonStyle;
-}
+//   return baseButtonStyle;
+// }
 
 interface ButtonProps extends AriaButtonProps {
   type: "button" | "submit" | "reset";
   onPress?: () => void;
-  variant?: ButtonVariant;
+  className: string;
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
-  const { variant, children } = props;
+  const { className, children } = props;
   const buttonRef = React.useRef(null);
   const { buttonProps } = useButton(props, buttonRef);
 
   return (
-    <button
-      {...buttonProps}
-      variant={variant}
-      ref={buttonRef}
-      className={getButtonStyle(variant)}
-    >
+    <button {...buttonProps} ref={buttonRef} className={className}>
       {children}
     </button>
   );
@@ -161,11 +156,4 @@ const CookieButtonStyle = styled.div`
   }
 `;
 
-export {
-  Button,
-  getButtonStyle,
-  ButtonVariant,
-  ShowMoreButton,
-  CloseModalCrossButton,
-  CookieButton,
-};
+export { Button, ShowMoreButton, CloseModalCrossButton, CookieButton };

@@ -4,8 +4,7 @@ import { useIntl } from "react-intl";
 import styled from "styled-components";
 import useSWR from "swr";
 
-import { ButtonVariant, ShowMoreButton } from "../../buttons";
-import { LinkStyledAsButton } from "../../link-styled-as-button";
+import { ShowMoreButton } from "../../buttons";
 import { NeutralLink } from "../../neutral-link";
 import { TimelineEnd, Timeline } from "../../timelines";
 import {
@@ -59,9 +58,9 @@ const LoginsOverview: React.FC = () => {
         </Flex>
       ) : null}
       <NeutralLink href={`/account/logins/email/new/`}>
-        <LinkStyledAsButton variant={ButtonVariant.SECONDARY}>
+        <div className="btn btn-secondary btn-neutral-link">
           {`+ ${formatMessage({ id: "emailAddNewIdentityMessage" })}`}
-        </LinkStyledAsButton>
+        </div>
       </NeutralLink>
       <Timeline />
       <h3>{formatMessage({ id: "phoneTitle" })}</h3>
@@ -87,9 +86,9 @@ const LoginsOverview: React.FC = () => {
         </Flex>
       ) : null}
       <NeutralLink href={`/account/logins/phone/new/`}>
-        <LinkStyledAsButton variant={ButtonVariant.SECONDARY}>
+        <div className="btn btn-secondary btn-neutral-link">
           {`+ ${formatMessage({ id: "phoneAddNewIdentityMessage" })}`}
-        </LinkStyledAsButton>
+        </div>
       </NeutralLink>
       <TimelineEnd />
       <h3>{formatMessage({ id: "socialTitle" })}</h3>

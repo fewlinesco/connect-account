@@ -9,7 +9,7 @@ import { FormErrorMessage } from "../input/form-error-message";
 import { InputsRadio, Label } from "../input/input-radio-button";
 import { SkeletonTextLine } from "../skeletons";
 import { Form } from "./form";
-import { Button, ButtonVariant } from "@src/components/buttons";
+import { Button } from "@src/components/buttons";
 import { formatErrorMessage } from "@src/configs/intl";
 import { deviceBreakpoints } from "@src/design-system/theme";
 import { ERRORS_DATA } from "@src/errors/web-errors";
@@ -109,7 +109,7 @@ const SendTwoFACodeForm: React.FC<{
       )}
 
       <Button
-        variant={isCodeSent ? ButtonVariant.SECONDARY : ButtonVariant.PRIMARY}
+        className={isCodeSent ? "btn btn-secondary" : "btn btn-primary"}
         type="submit"
       >
         {isCodeSent
