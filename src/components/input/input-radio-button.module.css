@@ -1,0 +1,16 @@
+input:checked + .disguisedSpan:after {
+  content: "";
+  height: 1rem;
+  width: 1rem;
+  background-color: theme("colors.primary");
+  position: absolute;
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input:focus + .disguisedSpan {
+  outline: Highlight auto 0.1rem;
+  outline: -webkit-focus-ring-color auto 0.1rem;
+}
