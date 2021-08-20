@@ -6,8 +6,7 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../input/form-error-message";
-import { InputsRadio, Label } from "../input/input-radio-button";
-import { SkeletonTextLine } from "../skeletons";
+import { InputsRadio } from "../input/input-radio-button";
 import { Form } from "./form";
 import { Button } from "@src/components/buttons";
 import { formatErrorMessage } from "@src/configs/intl";
@@ -85,12 +84,14 @@ const SendTwoFACodeForm: React.FC<{
         <FormErrorMessage>{errorMessage}</FormErrorMessage>
       ) : null}
       <p>{formatMessage({ id: "info" })}</p>
-      {identities ? (
-        <InputsRadio
-          groupName="contactChoice"
-          inputsValues={identities.map((identity) => identity.value)}
-          selectedInput={selectedIdentity ? selectedIdentity.value : ""}
-          onChange={({ target }) => {
+      <InputsRadio
+        groupName="contactChoice"
+        inputsValues={
+          identities ? identities.map((identity) => identity.value) : []
+        }
+        selectedInput={selectedIdentity ? selectedIdentity.value : ""}
+        onChange={({ target }) => {
+          if (identities) {
             const newIdentity = identities.find(
               (identity) => identity.value === target.value,
             );
@@ -98,16 +99,10 @@ const SendTwoFACodeForm: React.FC<{
             if (newIdentity) {
               setSelectedIdentity(newIdentity);
             }
-          }}
-          isReady={true}
-        />
-      ) : (
-        <InputRadioWrapper>
-          <SkeletonTextLine fontSize={1.6} width={50} />
-          <span />
-        </InputRadioWrapper>
-      )}
-
+          }
+        }}
+        isReady={identities ? true : false}
+      />
       <Button
         className={isCodeSent ? "btn btn-secondary" : "btn btn-primary"}
         type="submit"
@@ -136,24 +131,6 @@ const ContactChoiceForm = styled(Form)`
     p {
       padding-left: 0;
     }
-  }
-`;
-
-const InputRadioWrapper = styled(Label)`
-  span {
-    border: ${({ theme }) => theme.borders.normal};
-  }
-
-  span:after {
-    content: "";
-    height: 1rem;
-    width: 1rem;
-    background-color: ${({ theme }) => theme.colors.primary};
-    position: absolute;
-    border-radius: ${({ theme }) => theme.radii[3]};
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
   }
 `;
 

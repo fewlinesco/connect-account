@@ -4,14 +4,9 @@ const Box: React.FC = ({ children }) => {
   return <div className="bg-box mb-8 p-8">{children}</div>;
 };
 
-const SectionBox: React.FC<{ className?: string }> = ({
-  className,
-  children,
-}) => {
+const SectionBox: React.FC = ({ children }) => {
   return (
-    <div className={"bg-background mb-4 rounded shadow-box " + className}>
-      {children}
-    </div>
+    <div className="bg-background mb-4 rounded shadow-box">{children}</div>
   );
 };
 
