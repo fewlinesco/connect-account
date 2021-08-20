@@ -19,6 +19,7 @@ module.exports = {
     rounded: {
       DEFAULT: "0.5rem",
       none: 0,
+      full: "50%",
     },
     // We are redefining fontSizes here, because since we set 1rem to be equal to 10px
     // in global-style.css, the ones provided by Tailwind were too small.
