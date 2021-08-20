@@ -2,7 +2,6 @@ import { Identity } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
-import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../input/form-error-message";
@@ -10,7 +9,6 @@ import { InputsRadio } from "../input/input-radio-button";
 import { Form } from "./form";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { formatErrorMessage } from "@src/configs/intl";
-import { deviceBreakpoints } from "@src/design-system/theme";
 import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
 import { formatSnakeCaseToCamelCase } from "@src/utils/format";
@@ -35,7 +33,8 @@ const SendTwoFACodeForm: React.FC<{
   const { formatMessage } = useIntl();
 
   return (
-    <ContactChoiceForm
+    <Form
+      className="py-8"
       formID={formID}
       onSubmit={async () => {
         const body = {
@@ -83,7 +82,7 @@ const SendTwoFACodeForm: React.FC<{
       {errorMessage ? (
         <FormErrorMessage>{errorMessage}</FormErrorMessage>
       ) : null}
-      <p>{formatMessage({ id: "info" })}</p>
+      <p className="pb-8 lg:pl-4">{formatMessage({ id: "info" })}</p>
       <InputsRadio
         groupName="contactChoice"
         inputsValues={
@@ -111,27 +110,8 @@ const SendTwoFACodeForm: React.FC<{
           ? formatMessage({ id: "resend" })
           : formatMessage({ id: "send" })}
       </Button>
-    </ContactChoiceForm>
+    </Form>
   );
 };
-
-const ContactChoiceForm = styled(Form)`
-  padding: ${({ theme }) => theme.spaces.xs} 0;
-
-  & > p {
-    padding-bottom: ${({ theme }) => theme.spaces.xs};
-    padding-left: ${({ theme }) => theme.spaces.xs};
-  }
-
-  button {
-    margin: ${({ theme }) => theme.spaces.xs} 0 0 0;
-  }
-
-  @media ${deviceBreakpoints.m} {
-    p {
-      padding-left: 0;
-    }
-  }
-`;
 
 export { SendTwoFACodeForm };

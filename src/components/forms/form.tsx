@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 
 type FormProps = {
   formID?: string;
@@ -21,7 +20,7 @@ const Form: React.FC<FormProps> = ({
   }, [formID]);
 
   return (
-    <StyledForm
+    <form
       method="post"
       className={className}
       onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
@@ -35,13 +34,8 @@ const Form: React.FC<FormProps> = ({
       }}
     >
       {children}
-    </StyledForm>
+    </form>
   );
 };
 
-const StyledForm = styled.form`
-  display: column;
-  align-items: center;
-`;
-
-export { Form, StyledForm };
+export { Form };

@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { FormErrorMessage } from "../input/form-error-message";
 import { InputText } from "../input/input-text";
-import { StyledForm } from "./form";
+import { Form } from "./form";
 import { Button, ButtonVariant } from "@src/components/buttons/buttons";
 import { PasswordRulesErrorList } from "@src/components/password-rules-error-list";
 import { formatErrorMessage } from "@src/configs/intl";
@@ -30,9 +30,9 @@ const SetPasswordForm: React.FC<{
   const { formatMessage } = useIntl();
 
   return (
-    <StyledForm
+    <Form
       onSubmit={async (event) => {
-        event.preventDefault();
+        event && event.preventDefault();
 
         setIsNotSubmitted(false);
         setPasswordsNotMatching(false);
@@ -116,7 +116,7 @@ const SetPasswordForm: React.FC<{
       <Button variant={ButtonVariant.PRIMARY} type="submit">
         {submitButtonLabel}
       </Button>
-    </StyledForm>
+    </Form>
   );
 };
 
