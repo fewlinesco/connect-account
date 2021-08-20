@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
-import { Button, ButtonVariant } from "../../src/components/buttons";
+import { Button } from "../../src/components/buttons";
 import { Form } from "../../src/components/forms/form";
 import { render, screen } from "../config/testing-library-config";
 
@@ -16,7 +16,7 @@ describe("Form", () => {
           return;
         }}
       >
-        <Button variant={ButtonVariant.PRIMARY} type="submit">
+        <Button className="btn btn-primary" type="submit">
           Submit
         </Button>
       </Form>,
