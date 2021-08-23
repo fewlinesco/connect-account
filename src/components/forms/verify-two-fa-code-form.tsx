@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
-import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../input/form-error-message";
@@ -9,7 +8,6 @@ import { InputText } from "../input/input-text";
 import { Form } from "./form";
 import { Button } from "@src/components/buttons";
 import { formatErrorMessage } from "@src/configs/intl";
-import { deviceBreakpoints } from "@src/design-system/theme";
 import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
 import { formatSnakeCaseToCamelCase } from "@src/utils/format";
@@ -77,7 +75,7 @@ const VerifyTwoFACodeForm: React.FC<{
       {errorMessage ? (
         <FormErrorMessage>{errorMessage}</FormErrorMessage>
       ) : null}
-      <MultipleInputsMasked
+      <InputText
         type="text"
         name="verificationCode"
         onChange={(value) => setVerificationCode(value)}
@@ -94,32 +92,12 @@ const VerifyTwoFACodeForm: React.FC<{
           <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
           <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
         </div>
-      </MultipleInputsMasked>
+      </InputText>
       <Button className="btn btn-primary mb-0" type="submit">
         {formatMessage({ id: "confirm" })}
       </Button>
     </Form>
   );
 };
-
-const MultipleInputsMasked = styled(InputText)`
-  border: 0;
-  background: none;
-  letter-spacing: 4.85rem;
-  width: 75%;
-  font-size: ${({ theme }) => theme.fontSizes.paragraph};
-  font-family: monospace, monospace;
-  caret-color: transparent;
-  position: relative;
-  left: 2rem;
-  margin: ${({ theme }) => theme.spaces.xs} 0;
-
-  @media ${deviceBreakpoints.m} {
-    letter-spacing: 3.15rem;
-    width: 27rem;
-    left: 1.2rem;
-    padding-left: 1.5rem;
-  }
-`;
 
 export { VerifyTwoFACodeForm };
