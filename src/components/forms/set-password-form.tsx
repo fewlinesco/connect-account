@@ -2,10 +2,11 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../input/form-error-message";
 import { InputText } from "../input/input-text";
-import { StyledForm } from "./form";
+import { Form } from "./form";
 import { Button } from "@src/components/buttons";
 import { PasswordRulesErrorList } from "@src/components/password-rules-error-list";
 import { formatErrorMessage } from "@src/configs/intl";
@@ -15,7 +16,7 @@ import { fetchJson } from "@src/utils/fetch-json";
 const SetPasswordForm: React.FC<{
   submitButtonLabel: string;
 }> = ({ submitButtonLabel }) => {
-  const [isNotSubmitted, setIsNotSubmitted] = React.useState(true);
+  const [formID, setFormID] = React.useState<string>(uuidv4());
 
   const [passwordInput, setPasswordInput] = React.useState("");
   const [passwordConfirmationInput, setPasswordConfirmationInput] =
@@ -30,57 +31,52 @@ const SetPasswordForm: React.FC<{
   const { formatMessage } = useIntl();
 
   return (
-    <StyledForm
+    <Form
+      formID={formID}
       onSubmit={async (event) => {
-        event.preventDefault();
+        event && event.preventDefault();
 
-        setIsNotSubmitted(false);
         setPasswordsNotMatching(false);
         setPasswordRestrictionError(undefined);
         setErrorMessage(null);
 
-        if (isNotSubmitted) {
-          if (passwordInput === passwordConfirmationInput) {
-            await fetchJson("/api/auth-connect/set-password/", "POST", {
-              passwordInput,
-            })
-              .then(async (response) => {
-                const parsedResponse = await response.json();
+        if (passwordInput === passwordConfirmationInput) {
+          await fetchJson("/api/auth-connect/set-password/", "POST", {
+            passwordInput,
+          })
+            .then(async (response) => {
+              const parsedResponse = await response.json();
 
-                if ("details" in parsedResponse) {
-                  setPasswordRestrictionError(parsedResponse.details);
-                  setIsNotSubmitted(true);
+              if ("details" in parsedResponse) {
+                setPasswordRestrictionError(parsedResponse.details);
+                setFormID(uuidv4());
+                return;
+              }
+
+              if ("code" in parsedResponse) {
+                if (parsedResponse.code === ERRORS_DATA.INVALID_BODY.code) {
+                  setErrorMessage(
+                    formatErrorMessage(router.locale || "en", "blankPassword"),
+                  );
+                  setFormID(uuidv4());
                   return;
                 }
 
-                if ("code" in parsedResponse) {
-                  if (parsedResponse.code === ERRORS_DATA.INVALID_BODY.code) {
-                    setErrorMessage(
-                      formatErrorMessage(
-                        router.locale || "en",
-                        "blankPassword",
-                      ),
-                    );
-                    setIsNotSubmitted(true);
-                    return;
-                  }
+                setErrorMessage(
+                  formatErrorMessage(router.locale || "en", "somethingWrong"),
+                );
+              }
 
-                  setErrorMessage(
-                    formatErrorMessage(router.locale || "en", "somethingWrong"),
-                  );
-                }
-
-                if ("isUpdated" in parsedResponse) {
-                  router && router.push("/account/security/");
-                }
-              })
-              .catch((error) => {
-                throw error;
-              });
-          } else {
-            setIsNotSubmitted(true);
-            setPasswordsNotMatching(true);
-          }
+              if ("isUpdated" in parsedResponse) {
+                router && router.push("/account/security/");
+              }
+            })
+            .catch((error) => {
+              throw error;
+            });
+        } else {
+          setFormID(uuidv4());
+          setPasswordsNotMatching(true);
         }
       }}
     >
@@ -88,9 +84,9 @@ const SetPasswordForm: React.FC<{
         <PasswordRulesErrorList rules={passwordRestrictionError} />
       ) : null}
       {passwordsNotMatching ? (
-        <MismatchedPassword>
+        <FormErrorMessage>
           {formatErrorMessage(router.locale || "en", "passwordMatch")}
-        </MismatchedPassword>
+        </FormErrorMessage>
       ) : null}
       {errorMessage ? (
         <FormErrorMessage>{errorMessage}</FormErrorMessage>
@@ -116,14 +112,9 @@ const SetPasswordForm: React.FC<{
       <Button className="btn btn-primary" type="submit">
         {submitButtonLabel}
       </Button>
-    </StyledForm>
+    </Form>
   );
 };
-
-const MismatchedPassword = styled.p`
-  color: ${({ theme }) => theme.colors.red};
-  margin-bottom: 2rem;
-`;
 
 const ExtendedInputStyle = styled(InputText)<{
   passwordRestrictionError?: Record<string, string>;

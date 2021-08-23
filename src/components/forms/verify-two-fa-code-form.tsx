@@ -25,7 +25,8 @@ const VerifyTwoFACodeForm: React.FC<{
   const { formatMessage } = useIntl();
 
   return (
-    <ExtendedStyledForm
+    <Form
+      className="pt-8"
       formID={formID}
       onSubmit={async () => {
         setFormID(uuidv4());
@@ -85,77 +86,39 @@ const VerifyTwoFACodeForm: React.FC<{
         maxLength={6}
         autoFocus={true}
       >
-        <InputMask>
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-        </InputMask>
+        <div className="flex justify-between w-96 lg:w-4/6 absolute top-0 my-8">
+          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
+          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
+          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
+          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
+          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
+          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
+        </div>
       </MultipleInputsMasked>
-      <Button className="btn btn-primary" type="submit">
+      <Button className="btn btn-primary mb-0" type="submit">
         {formatMessage({ id: "confirm" })}
       </Button>
-    </ExtendedStyledForm>
+    </Form>
   );
 };
-
-const ExtendedStyledForm = styled(Form)`
-  padding: ${({ theme }) => theme.spaces.xs} 0 0 0;
-
-  p {
-    margin-bottom: ${({ theme }) => theme.spaces.xs};
-  }
-
-  button {
-    margin-bottom: 0;
-  }
-`;
 
 const MultipleInputsMasked = styled(InputText)`
   border: 0;
   background: none;
-  letter-spacing: 4.65rem;
+  letter-spacing: 4.85rem;
   width: 75%;
   font-size: ${({ theme }) => theme.fontSizes.paragraph};
   font-family: monospace, monospace;
   caret-color: transparent;
   position: relative;
-  left: 2.4rem;
+  left: 2rem;
   margin: ${({ theme }) => theme.spaces.xs} 0;
 
   @media ${deviceBreakpoints.m} {
-    letter-spacing: 3.3rem;
+    letter-spacing: 3.15rem;
     width: 27rem;
-    left: 0.9rem;
+    left: 1.2rem;
     padding-left: 1.5rem;
-  }
-`;
-
-const InputMask = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 65%;
-  position: absolute;
-  top: 0;
-  margin: ${({ theme }) => theme.spaces.xs} 0;
-
-  span {
-    background: ${({ theme }) => theme.colors.background};
-    border: 0.1rem solid ${({ theme }) => theme.colors.blacks[2]};
-    height: 4rem;
-    border-radius: ${({ theme }) => theme.radii[0]};
-    width: 4rem;
-    z-index: 0;
-  }
-
-  @media ${deviceBreakpoints.m} {
-    width: 24.8rem;
-
-    span {
-      width: 3.5rem;
-    }
   }
 `;
 
