@@ -1,10 +1,8 @@
 import { AlertMessage as AlertMessageDataStructure } from "@fwl/web";
 import Cookies from "js-cookie";
 import React from "react";
-import styled from "styled-components";
 
 import { CrossIcon } from "./icons/cross-icon";
-import { deviceBreakpoints } from "@src/design-system/theme";
 
 const AlertMessages: React.FC = () => {
   const [alertMessages, setAlertMessages] = React.useState<
@@ -31,7 +29,7 @@ const AlertMessages: React.FC = () => {
   }
 
   return (
-    <Wrapper>
+    <div className="z-10 w-11/12 lg:w-3/12 flex flex-col items-end justify-center absolute top-4 right-4">
       {alertMessages.map(({ id, text, expiresAt }) => {
         if (expiresAt < Date.now()) {
           return null;
@@ -47,7 +45,7 @@ const AlertMessages: React.FC = () => {
           />
         );
       })}
-    </Wrapper>
+    </div>
   );
 };
 
@@ -84,10 +82,10 @@ const AlertMessage: React.FC<
   }
 
   return (
-    <Alert>
-      <p>{text}</p>
+    <div className="flex items-center justify-between w-full bg-black text-background rounded py-6 px-12">
+      <p className="break-words leading-relaxed">{text}</p>
       <div
-        className="cross"
+        className="text-background ml-4 cursor-pointer"
         onClick={() => {
           setShowAlertMessage(false);
           setAlertMessages(
@@ -97,55 +95,8 @@ const AlertMessage: React.FC<
       >
         <CrossIcon />
       </div>
-    </Alert>
+    </div>
   );
 };
-
-const Wrapper = styled.div`
-  position: absolute;
-  top: 1rem;
-  right: 50%;
-  transform: translate(50%);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
-  z-index: 1;
-  width: 102.4rem;
-
-  @media ${deviceBreakpoints.m} {
-    width: 100%;
-  }
-`;
-
-const Alert = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-right: 4.4rem;
-  background-color: ${({ theme }) => theme.colors.black};
-  color: ${({ theme }) => theme.colors.background};
-  border-radius: ${({ theme }) => theme.radii[0]};
-  padding: 1.6rem 3rem;
-  border-bottom: 0.1rem solid white;
-  width: 60%;
-
-  p {
-    font-size: ${({ theme }) => theme.fontSizes.s};
-    word-break: break-word;
-    line-height: 1.6rem;
-  }
-
-  .cross {
-    color: ${({ theme }) => theme.colors.background};
-    margin: 0 0 0 ${({ theme }) => theme.spaces.xxs};
-    cursor: pointer;
-  }
-
-  @media ${deviceBreakpoints.m} {
-    width: 90%;
-    margin: 0 auto;
-  }
-`;
 
 export { AlertMessages, AlertMessage };
