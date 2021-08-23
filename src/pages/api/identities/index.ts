@@ -15,8 +15,9 @@ import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
 import { ERRORS_DATA, webErrorFactory } from "@src/errors/web-errors";
 import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
+import { getIdentityType } from "@src/utils/get-identity-type";
 
-const index: Handler = (request, response): Promise<void> => {
+const getHandler: Handler = (request, response): Promise<void> => {
   const webErrors = {
     badRequest: ERRORS_DATA.BAD_REQUEST,
     identityNotFound: ERRORS_DATA.IDENTITY_NOT_FOUND,
@@ -41,16 +42,16 @@ const index: Handler = (request, response): Promise<void> => {
       CONFIG_VARIABLES.managementCredentials,
       userCookie.sub,
     )
-      .then((identities) => {
-        return request.query.primary && request.query.primary === "true"
-          ? identities.filter((identity) => {
+      .then((unfilteredIdentities) => {
+        return request.query.primary && request.query.primary === "true/"
+          ? unfilteredIdentities.filter((identity) => {
               return (
                 identity.primary &&
-                (identity.type == IdentityTypes.EMAIL.toLowerCase() ||
-                  identity.type == IdentityTypes.PHONE.toLowerCase())
+                (getIdentityType(identity.type) === IdentityTypes.EMAIL ||
+                  getIdentityType(identity.type) === IdentityTypes.PHONE)
               );
             })
-          : identities;
+          : unfilteredIdentities;
       })
       .catch((error) => {
         span.setDisclosedAttribute("identities found", false);
@@ -72,12 +73,13 @@ const index: Handler = (request, response): Promise<void> => {
     span.setDisclosedAttribute("identities found", true);
     response.statusCode = HttpStatus.OK;
     response.json(identities);
+    return;
   });
 };
 
 const wrappedHandler = wrapMiddlewares(
   basicMiddlewares(getTracer(), logger),
-  index,
+  getHandler,
   "/api/identities/",
 );
 
