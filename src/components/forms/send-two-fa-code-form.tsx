@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { FormErrorMessage } from "../input/form-error-message";
 import { InputsRadio } from "../input/input-radio-button";
 import { Form } from "./form";
-import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { Button } from "@src/components/buttons";
 import { formatErrorMessage } from "@src/configs/intl";
 import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
@@ -103,7 +103,7 @@ const SendTwoFACodeForm: React.FC<{
         isReady={identities ? true : false}
       />
       <Button
-        variant={isCodeSent ? ButtonVariant.SECONDARY : ButtonVariant.PRIMARY}
+        className={isCodeSent ? "btn btn-secondary" : "btn btn-primary"}
         type="submit"
       >
         {isCodeSent

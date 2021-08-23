@@ -10,8 +10,7 @@ import { InputDatePicker } from "../../input/input-date-picker";
 import { InputText } from "../../input/input-text";
 import { Form } from "../form";
 import { Profile } from "@src/@types/profile";
-import { Button, ButtonVariant } from "@src/components/buttons/buttons";
-import { FakeButton } from "@src/components/buttons/fake-button";
+import { Button } from "@src/components/buttons";
 import { NeutralLink } from "@src/components/neutral-link";
 import { fetchJson } from "@src/utils/fetch-json";
 
@@ -200,16 +199,16 @@ const UserProfileForm: React.FC<{
           }}
           label={formatMessage({ id: "localeLabel" })}
         />
-        <Button type="submit" variant={ButtonVariant.PRIMARY}>
+        <Button type="submit" className="btn btn-primary">
           {isCreation
             ? formatMessage({ id: "add" })
             : formatMessage({ id: "update" })}
         </Button>
       </Form>
       <NeutralLink href={isCreation ? "/account/" : "/account/profile/"}>
-        <FakeButton variant={ButtonVariant.SECONDARY}>
+        <div className="btn btn-secondary btn-neutral-link">
           {formatMessage({ id: "cancel" })}
-        </FakeButton>
+        </div>
       </NeutralLink>{" "}
     </>
   );

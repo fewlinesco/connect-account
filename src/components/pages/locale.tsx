@@ -5,7 +5,7 @@ import styled from "styled-components";
 import useSWR from "swr";
 import { v4 as uuidv4 } from "uuid";
 
-import { Button, ButtonVariant } from "@src/components/buttons/buttons";
+import { Button } from "@src/components/buttons";
 import { Form } from "@src/components/forms/form";
 import { FormErrorMessage } from "@src/components/input/form-error-message";
 import { InputsRadio } from "@src/components/input/input-radio-button";
@@ -62,7 +62,7 @@ const Locale: React.FC = () => {
           isReady={fetchedLocale ? true : false}
         />
         {fetchedLocale ? (
-          <Button variant={ButtonVariant.PRIMARY} type="submit">
+          <Button className="btn btn-primary" type="submit">
             {formatMessage({ id: "setLocale" })}
           </Button>
         ) : null}

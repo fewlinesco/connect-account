@@ -1,8 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { ButtonVariant } from "@src/components/buttons/buttons";
-import { FakeButton } from "@src/components/buttons/fake-button";
 import { HomeDesktopBackground } from "@src/components/icons/home-desktop-background";
 import { HomeMobileBackground } from "@src/components/icons/home-mobile-background";
 import { NeutralLink } from "@src/components/neutral-link";
@@ -22,9 +20,9 @@ const Home: React.FC<{ authorizeURL: string; providerName: string }> = ({
           {formatMessage({ id: "info" })} {providerName}
         </p>
         <NeutralLink href={authorizeURL}>
-          <FakeButton variant={ButtonVariant.PRIMARY}>
+          <div className="btn btn-primary btn-neutral-link mb-0">
             {formatMessage({ id: "callToAction" })}
-          </FakeButton>
+          </div>
         </NeutralLink>
       </div>
     </>
