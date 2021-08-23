@@ -9,8 +9,7 @@ import { FormErrorMessage } from "../../input/form-error-message";
 import { InputText } from "../../input/input-text";
 import { Form } from "../form";
 import { Address } from "@src/@types/profile";
-import { Button, ButtonVariant } from "@src/components/buttons/buttons";
-import { FakeButton } from "@src/components/buttons/fake-button";
+import { Button } from "@src/components/buttons";
 import { NeutralLink } from "@src/components/neutral-link";
 import { formatErrorMessage } from "@src/configs/intl";
 import { SWRError } from "@src/errors/errors";
@@ -276,7 +275,7 @@ const UserAddressForm: React.FC<{
           }}
           label={formatMessage({ id: "addressKindLabel" })}
         />
-        <Button type="submit" variant={ButtonVariant.PRIMARY}>
+        <Button type="submit" className="btn btn-primary">
           {isCreation
             ? formatMessage({ id: "add" })
             : formatMessage({ id: "update" })}
@@ -289,9 +288,9 @@ const UserAddressForm: React.FC<{
             : `/account/profile/addresses/${address.id}/`
         }
       >
-        <FakeButton variant={ButtonVariant.SECONDARY}>
+        <div className="btn btn-secondary btn-neutral-link">
           {formatMessage({ id: "cancel" })}
-        </FakeButton>
+        </div>
       </NeutralLink>{" "}
     </>
   );

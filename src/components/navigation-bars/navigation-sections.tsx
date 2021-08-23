@@ -39,13 +39,13 @@ function getSectionListContent(): [
   { textID: string; icon: Element },
 ][] {
   const SECTION_LIST_CONTENT = {
-    loginsTitle: {
-      textID: "logins",
-      icon: <LoginsIcon />,
-    },
     updateProfileTitle: {
       textID: "updateProfile",
       icon: <ProfileIcon />,
+    },
+    loginsTitle: {
+      textID: "logins",
+      icon: <LoginsIcon />,
     },
     securityTitle: {
       textID: "security",
