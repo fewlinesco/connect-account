@@ -41,43 +41,45 @@
 	p {
 		font-size: "1.6rem";
 	}
+
+	.btn {
+		@apply h-16 mb-4 rounded text-m cursor-pointer w-full break-all;
+	}
+
+	.btn-primary {
+		@apply bg-primary text-background;
+	}
+
+	.btn-secondary {
+		@apply bg-background text-primary border border-primary border-solid;
+	}
+
+	.btn-light-grey {
+		@apply mb-0 lg:mb-4 py-12 px-16 lg:p-0 text-black bg-background lg:bg-gray-light text-base border border-solid border-gray-light lg:border-none;
+	}
+
+	.btn-danger {
+		@apply bg-red text-background;
+	}
+
+	.btn-ghost {
+		@apply bg-background text-red;
+	}
+
+	.btn-cookie-primary {
+		@apply h-20 mb-0 bg-primary text-background rounded-t-none rounded-br-lg rounded-bl-none;
+	}
+
+	.btn-cookie-ghost {
+		@apply mb-0 text-primary bg-background rounded-t-none rounded-br-none rounded-bl-lg border-t border-solid border-separator;
+	}
+
+	.btn-neutral-link {
+		@apply flex items-center justify-center;
+	}
 }
 
 @tailwind components;
 @tailwind utilities;
 
-.btn {
-	@apply h-16 mb-4 rounded text-m cursor-pointer w-full break-all;
-}
 
-.btn-primary {
-	@apply bg-primary text-background;
-}
-
-.btn-secondary {
-	@apply bg-background text-primary border border-primary border-solid;
-}
-
-.btn-light-grey {
-	@apply mb-0 lg:mb-4 py-12 px-16 lg:p-0 text-black bg-background lg:bg-gray-light text-base border border-solid border-gray-light lg:border-none;
-}
-
-.btn-danger {
-	@apply bg-red text-background;
-}
-
-.btn-ghost {
-	@apply bg-background text-red;
-}
-
-.btn-cookie-primary {
-	@apply h-20 mb-0 bg-primary text-background rounded-t-none rounded-br-lg rounded-bl-none;
-}
-
-.btn-cookie-ghost {
-	@apply mb-0 text-primary bg-background rounded-t-none rounded-br-none rounded-bl-lg border-t border-solid border-separator;
-}
-
-.btn-neutral-link {
-	@apply flex items-center justify-center;
-}
