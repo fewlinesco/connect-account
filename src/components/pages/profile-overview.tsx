@@ -5,8 +5,7 @@ import styled from "styled-components";
 import { Address, Profile } from "@src/@types/profile";
 import { BoxedLink } from "@src/components/boxed-link";
 import { SectionBox } from "@src/components/boxes";
-import { ButtonVariant, ShowMoreButton } from "@src/components/buttons/buttons";
-import { FakeButton } from "@src/components/buttons/fake-button";
+import { ShowMoreButton } from "@src/components/buttons";
 import { DefaultProfilePictureIcon } from "@src/components/icons/default-profile-picture";
 import { RightChevron } from "@src/components/icons/right-chevron";
 import { NeutralLink } from "@src/components/neutral-link";
@@ -113,9 +112,9 @@ const ProfileOverview: React.FC<{
         </UserInfoSection>
       </SectionBox>
       <NeutralLink href={"/account/profile/user-profile/edit/"}>
-        <FakeButton variant={ButtonVariant.PRIMARY}>
+        <div className="btn btn-primary btn-neutral-link">
           {formatMessage({ id: "updateInfo" })}
-        </FakeButton>
+        </div>
       </NeutralLink>
       <h3>{formatMessage({ id: "addressesSection" })}</h3>
       <SectionBox>
@@ -141,9 +140,9 @@ const ProfileOverview: React.FC<{
       ) : null}
       {userAddresses ? (
         <NeutralLink href="/account/profile/addresses/new/">
-          <FakeButton variant={ButtonVariant.SECONDARY}>
+          <div className="btn btn-secondary btn-neutral-link">
             + {formatMessage({ id: "addAddress" })}
-          </FakeButton>
+          </div>
         </NeutralLink>
       ) : null}
     </>

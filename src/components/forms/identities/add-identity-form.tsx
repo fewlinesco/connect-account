@@ -11,8 +11,7 @@ import { InputText } from "../../input/input-text";
 import { StyledPhoneInput } from "../../input/styled-phone-input";
 import { Form } from "../form";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
-import { Button, ButtonVariant } from "@src/components/buttons/buttons";
-import { FakeButton } from "@src/components/buttons/fake-button";
+import { Button } from "@src/components/buttons";
 import { NeutralLink } from "@src/components/neutral-link";
 import { formatErrorMessage } from "@src/configs/intl";
 import { ERRORS_DATA } from "@src/errors/web-errors";
@@ -141,16 +140,16 @@ const AddIdentityForm: React.FC<{
           }}
           label={formatMessage({ id: "markIdentity" })}
         />
-        <Button variant={ButtonVariant.PRIMARY} type="submit">
+        <Button className="btn btn-primary" type="submit">
           {getIdentityType(type) === IdentityTypes.EMAIL
             ? formatMessage({ id: "addEmail" })
             : formatMessage({ id: "addPhone" })}
         </Button>
       </Form>
       <NeutralLink href="/account/logins/">
-        <FakeButton variant={ButtonVariant.SECONDARY}>
+        <div className="btn btn-secondary btn-neutral-link">
           {formatMessage({ id: "cancel" })}
-        </FakeButton>
+        </div>
       </NeutralLink>
     </>
   );
