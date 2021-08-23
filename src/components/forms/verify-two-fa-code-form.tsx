@@ -105,19 +105,19 @@ const VerifyTwoFACodeForm: React.FC<{
 const MultipleInputsMasked = styled(InputText)`
   border: 0;
   background: none;
-  letter-spacing: 4.65rem;
+  letter-spacing: 4.85rem;
   width: 75%;
   font-size: ${({ theme }) => theme.fontSizes.paragraph};
   font-family: monospace, monospace;
   caret-color: transparent;
   position: relative;
-  left: 2.4rem;
+  left: 2rem;
   margin: ${({ theme }) => theme.spaces.xs} 0;
 
   @media ${deviceBreakpoints.m} {
-    letter-spacing: 3.3rem;
+    letter-spacing: 3.15rem;
     width: 27rem;
-    left: 0.9rem;
+    left: 1.2rem;
     padding-left: 1.5rem;
   }
 `;
