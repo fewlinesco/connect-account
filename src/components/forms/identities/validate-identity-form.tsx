@@ -8,8 +8,7 @@ import { FormErrorMessage } from "../../input/form-error-message";
 import { InputText } from "../../input/input-text";
 import { Form } from "../form";
 import { Box } from "@src/components/boxes";
-import { Button, ButtonVariant } from "@src/components/buttons/buttons";
-import { FakeButton } from "@src/components/buttons/fake-button";
+import { Button } from "@src/components/buttons";
 import { NeutralLink } from "@src/components/neutral-link";
 import { formatErrorMessage } from "@src/configs/intl";
 import { ERRORS_DATA } from "@src/errors/web-errors";
@@ -85,18 +84,18 @@ const ValidateIdentityForm: React.FC<{
         />
         <Button
           type="submit"
-          variant={ButtonVariant.PRIMARY}
+          className="btn btn-primary"
         >{`Confirm ${type.toLowerCase()}`}</Button>
       </Form>
       <NeutralLink href="/account/logins/">
-        <FakeButton variant={ButtonVariant.SECONDARY}>
+        <div className="btn btn-secondary btn-neutral-link">
           Discard all changes
-        </FakeButton>
+        </div>
       </NeutralLink>
       <DidntReceiveCode>Didn&apos;t receive code?</DidntReceiveCode>
       <Button
         type="button"
-        variant={ButtonVariant.SECONDARY}
+        className="btn btn-secondary"
         onPress={async () => {
           await fetchJson(
             "/api/auth-connect/re-send-identity-validation-code/",
