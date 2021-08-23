@@ -15,6 +15,7 @@ import { AVAILABLE_LANGUAGE, getLocaleKey } from "@src/utils/get-locale";
 const Locale: React.FC = () => {
   const router = useRouter();
   const { formatMessage } = useIntl();
+
   const [formID, setFormID] = React.useState<string>(uuidv4());
   const [locale, setLocale] = React.useState<string>("en");
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
