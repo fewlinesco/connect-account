@@ -2,7 +2,6 @@ import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
-import styled from "styled-components";
 
 import { AwaitingValidationBadge, PrimaryBadge } from "@src/components/badges";
 import { Box } from "@src/components/boxes";
@@ -28,14 +27,14 @@ const IdentityOverview: React.FC<{
     <>
       <Box>
         {!identity ? (
-          <Value>
+          <div className="text-bold my-8 break-all">
             <SkeletonTextLine fontSize={1.6} width={50} />
-          </Value>
+          </div>
         ) : (
           <>
-            <Value>
+            <div className="font-bold my-8 break-all">
               <p>{identity.value}</p>
-            </Value>
+            </div>
             {identity.primary && identity.status === "validated" ? (
               <PrimaryBadge
                 localizedLabel={formatMessage(
@@ -157,11 +156,5 @@ const IdentityOverview: React.FC<{
     </>
   );
 };
-
-const Value = styled.div`
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-  margin: ${({ theme }) => theme.spaces.xs} 0;
-  word-break: break-all;
-`;
 
 export { IdentityOverview };
