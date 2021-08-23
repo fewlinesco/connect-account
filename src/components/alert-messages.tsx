@@ -29,7 +29,7 @@ const AlertMessages: React.FC = () => {
   }
 
   return (
-    <div className="z-10 w-full lg:w-max flex flex-col items-end justify-center absolute top-4 right-2/4 transform translate-x-2/4">
+    <div className="z-10 w-11/12 lg:w-3/12 flex flex-col items-end justify-center absolute top-4 right-4">
       {alertMessages.map(({ id, text, expiresAt }) => {
         if (expiresAt < Date.now()) {
           return null;
@@ -82,7 +82,7 @@ const AlertMessage: React.FC<
   }
 
   return (
-    <div className="flex items-center justify-between w-11/12 m-auto lg:mr-16 bg-black text-background rounded py-6 px-12">
+    <div className="flex items-center justify-between w-full bg-black text-background rounded py-6 px-12">
       <p className="break-words leading-relaxed">{text}</p>
       <div
         className="text-background ml-4 cursor-pointer"
