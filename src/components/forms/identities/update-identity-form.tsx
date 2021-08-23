@@ -3,7 +3,6 @@ import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
-import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../../input/form-error-message";
@@ -39,13 +38,13 @@ const UpdateIdentityForm: React.FC<{
   return (
     <>
       <Box>
-        <Value>
+        <div className="my-8 font-bold break-all">
           {!identity ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             <p>{identity.value}</p>
           )}
-        </Value>
+        </div>
       </Box>
       {errorMessage ? (
         <FormErrorMessage>{errorMessage}</FormErrorMessage>
@@ -164,11 +163,5 @@ const UpdateIdentityForm: React.FC<{
     </>
   );
 };
-
-const Value = styled.div`
-  margin: ${({ theme }) => theme.spaces.xs} 0;
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-  word-break: break-all;
-`;
 
 export { UpdateIdentityForm };
