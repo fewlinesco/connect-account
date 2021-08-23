@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
-import styled from "styled-components";
 import useSWR from "swr";
 import { v4 as uuidv4 } from "uuid";
 
@@ -71,13 +70,4 @@ const Locale: React.FC = () => {
   );
 };
 
-const ListItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin: ${({ theme }) => theme.spaces.xxs} 0;
-  height: 4.8rem;
-`;
-
-export { Locale, ListItem };
+export { Locale };

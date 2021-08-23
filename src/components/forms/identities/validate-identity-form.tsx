@@ -1,7 +1,6 @@
 import { IdentityTypes } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
-import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../../input/form-error-message";
@@ -71,7 +70,7 @@ const ValidateIdentityForm: React.FC<{
         }}
       >
         <Box>
-          <Value>Enter the validation code below</Value>
+          <p className="text-m font-light">Enter the validation code below</p>
         </Box>
         <InputText
           type="text"
@@ -92,7 +91,7 @@ const ValidateIdentityForm: React.FC<{
           Discard all changes
         </div>
       </NeutralLink>
-      <DidntReceiveCode>Didn&apos;t receive code?</DidntReceiveCode>
+      <p className="mt-16 mb-8">Didn&apos;t receive code?</p>
       <Button
         type="button"
         className="btn btn-secondary"
@@ -113,14 +112,5 @@ const ValidateIdentityForm: React.FC<{
     </>
   );
 };
-
-const DidntReceiveCode = styled.p`
-  margin: ${({ theme }) => theme.spaces.s} 0 ${({ theme }) => theme.spaces.xs};
-`;
-
-const Value = styled.p`
-  font-weight: ${({ theme }) => theme.fontWeights.light};
-  font-size: ${({ theme }) => theme.fontSizes.s};
-`;
 
 export { ValidateIdentityForm };
