@@ -16,6 +16,7 @@ module.exports = {
       gray: {
         DEFAULT: "hsl(0, 0%, 90%)",
         light: "hsl(220, 11%, 95%)",
+        dark: "hsl(0, 0%, 60%)",
       },
     },
     rounded: {

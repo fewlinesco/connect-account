@@ -103,7 +103,9 @@ const SendTwoFACodeForm: React.FC<{
         isReady={identities ? true : false}
       />
       <Button
-        className={isCodeSent ? "btn btn-secondary" : "btn btn-primary"}
+        className={
+          isCodeSent ? "btn btn-secondary mt-8" : "btn btn-primary mt-8"
+        }
         type="submit"
       >
         {isCodeSent

@@ -87,15 +87,15 @@ const VerifyTwoFACodeForm: React.FC<{
         autoFocus={true}
       >
         <div className="flex justify-between w-96 lg:w-4/6 absolute top-0 my-8">
-          <span className="bg-background border rounded h-16 w-14 lg:w-16" />
-          <span className="bg-background border rounded h-16 w-14 lg:w-16" />
-          <span className="bg-background border rounded h-16 w-14 lg:w-16" />
-          <span className="bg-background border rounded h-16 w-14 lg:w-16" />
-          <span className="bg-background border rounded h-16 w-14 lg:w-16" />
-          <span className="bg-background border rounded h-16 w-14 lg:w-16" />
+          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
+          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
+          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
+          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
+          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
+          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
         </div>
       </MultipleInputsMasked>
-      <Button className="btn btn-primary" type="submit">
+      <Button className="btn btn-primary mb-0" type="submit">
         {formatMessage({ id: "confirm" })}
       </Button>
     </Form>
