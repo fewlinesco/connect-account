@@ -6,7 +6,6 @@ import { SectionBox } from "@src/components/boxes";
 import { RightChevron } from "@src/components/icons/right-chevron";
 import { getSectionListContent } from "@src/components/navigation-bars/navigation-sections";
 import { NeutralLink } from "@src/components/neutral-link";
-import { deviceBreakpoints } from "@src/design-system/theme";
 import { getNavSectionHref } from "@src/utils/get-nav-section-href";
 
 const AccountOverview: React.FC = () => {
@@ -19,10 +18,12 @@ const AccountOverview: React.FC = () => {
           <SectionBox key={sectionName}>
             <SectionLink href={getNavSectionHref(sectionName)}>
               {icon}
-              <TextBox>
-                <SectionName>{formatMessage({ id: sectionName })}</SectionName>
+              <div className="text-s leading-loose w-3/5 md:w-9/12">
+                <p className="text-m font-semibold tracking-widest">
+                  {formatMessage({ id: sectionName })}
+                </p>
                 {formatMessage({ id: textID })}
-              </TextBox>
+              </div>
               <RightChevron />
             </SectionLink>
           </SectionBox>
@@ -37,31 +38,6 @@ const SectionLink = styled(NeutralLink)`
   justify-content: space-between;
   align-items: center;
   padding: ${({ theme }) => theme.spaces.xs};
-`;
-
-const TextBox = styled.div`
-  max-width: 70%;
-  flex-grow: 2;
-  font-size: ${({ theme }) => theme.fontSizes.xs};
-  line-height: ${({ theme }) => theme.lineHeights.title};
-
-  div {
-    margin: 1.5rem 0;
-  }
-
-  @media ${deviceBreakpoints.m} {
-    max-width: 50%;
-  }
-
-  @media ${deviceBreakpoints.s} {
-    max-width: 60%;
-  }
-`;
-
-const SectionName = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.s};
-  font-weight: ${({ theme }) => theme.fontWeights.semibold};
-  letter-spacing: ${({ theme }) => theme.letterSpacing.tracked};
 `;
 
 export { AccountOverview };
