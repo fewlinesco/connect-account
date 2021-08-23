@@ -88,9 +88,9 @@ const SetPasswordForm: React.FC<{
         <PasswordRulesErrorList rules={passwordRestrictionError} />
       ) : null}
       {passwordsNotMatching ? (
-        <MismatchedPassword>
+        <FormErrorMessage>
           {formatErrorMessage(router.locale || "en", "passwordMatch")}
-        </MismatchedPassword>
+        </FormErrorMessage>
       ) : null}
       {errorMessage ? (
         <FormErrorMessage>{errorMessage}</FormErrorMessage>
@@ -119,11 +119,6 @@ const SetPasswordForm: React.FC<{
     </Form>
   );
 };
-
-const MismatchedPassword = styled.p`
-  color: ${({ theme }) => theme.colors.red};
-  margin-bottom: 2rem;
-`;
 
 const ExtendedInputStyle = styled(InputText)<{
   passwordRestrictionError?: Record<string, string>;
