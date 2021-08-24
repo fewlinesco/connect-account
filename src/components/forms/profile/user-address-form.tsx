@@ -211,6 +211,7 @@ const UserAddressForm: React.FC<{
           }}
           label={formatMessage({ id: "localityLabel" })}
           required
+          hasError={errors.locality ? true : false}
         />
         {errors.locality && (
           <FormErrorMessage>{errors.locality}</FormErrorMessage>
@@ -228,6 +229,7 @@ const UserAddressForm: React.FC<{
           }}
           label={formatMessage({ id: "postalCodeLabel" })}
           required
+          hasError={errors.postal_code ? true : false}
         />
         {errors.postal_code && (
           <FormErrorMessage>{errors.postal_code}</FormErrorMessage>
@@ -258,6 +260,7 @@ const UserAddressForm: React.FC<{
           }}
           label={formatMessage({ id: "countryLabel" })}
           required
+          hasError={errors.country ? true : false}
         />
         {errors.country && (
           <FormErrorMessage>{errors.country}</FormErrorMessage>

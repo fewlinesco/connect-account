@@ -45,11 +45,8 @@ const InputText: React.FC<InputTextProps> = (props) => {
         <input
           {...(inputProps as React.InputHTMLAttributes<HTMLInputElement>)}
           ref={inputRef}
-          className={
-            hasError
-              ? "bg-background border border-red rounded h-16 pl-6 w-full mt-4 mb-8 relative placeholder-gray-dark text-m "
-              : "bg-background border border-gray-dark rounded h-16 pl-6 w-full mt-4 mb-8 relative placeholder-gray-dark text-m "
-          }
+          className={`bg-background border rounded h-16 pl-6 w-full mt-4 mb-8 relative placeholder-gray-dark text-m 
+            ${hasError ? "border-red" : "border-gray-dark"}`}
           required={required}
         />
       )}

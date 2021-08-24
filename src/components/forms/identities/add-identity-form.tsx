@@ -107,6 +107,7 @@ const AddIdentityForm: React.FC<{
               });
             }}
             label={formatMessage({ id: "emailInputLabel" })}
+            hasError={errorMessage ? true : false}
           />
         ) : (
           <>

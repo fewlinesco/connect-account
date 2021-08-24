@@ -80,6 +80,7 @@ const ValidateIdentityForm: React.FC<{
           value={validationCode}
           onChange={(value) => setValidationCode(value)}
           label="Validation code"
+          hasError={errorMessage ? true : false}
         />
         <Button
           type="submit"
