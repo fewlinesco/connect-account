@@ -2,6 +2,7 @@ import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
+import { mutate } from "swr";
 
 import { AwaitingValidationBadge, PrimaryBadge } from "@src/components/badges";
 import { Box } from "@src/components/boxes";
@@ -13,8 +14,8 @@ import { fetchJson } from "@src/utils/fetch-json";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
 const IdentityOverview: React.FC<{
-  identity?: Identity;
-}> = ({ identity }) => {
+  identities?: Identity[];
+}> = ({ identities }) => {
   const { formatMessage } = useIntl();
   const router = useRouter();
 
@@ -23,27 +24,36 @@ const IdentityOverview: React.FC<{
   const [isDeletionModalOpen, setIsDeletionModalOpen] =
     React.useState<boolean>(false);
 
+  const currentIdentity = identities?.find(({ id }) => router.query.id === id);
+  const primaryIdentity = currentIdentity
+    ? identities?.find(
+        ({ type, primary }) =>
+          currentIdentity.type === type && primary === true,
+      )
+    : undefined;
+
   return (
     <>
       <Box>
-        {!identity ? (
+        {!currentIdentity ? (
           <div className="text-bold my-8 break-all">
             <SkeletonTextLine fontSize={1.6} width={50} />
           </div>
         ) : (
           <>
             <div className="font-bold my-8 break-all">
-              <p>{identity.value}</p>
+              <p>{currentIdentity.value}</p>
             </div>
-            {identity.primary && identity.status === "validated" ? (
+            {currentIdentity.primary &&
+            currentIdentity.status === "validated" ? (
               <PrimaryBadge
                 localizedLabel={formatMessage(
                   { id: "primary" },
-                  { identityType: identity.type },
+                  { identityType: currentIdentity.type },
                 )}
               />
             ) : null}
-            {identity.status === "validated" ? (
+            {currentIdentity.status === "validated" ? (
               <React.Fragment />
             ) : (
               <AwaitingValidationBadge
@@ -53,27 +63,29 @@ const IdentityOverview: React.FC<{
           </>
         )}
       </Box>
-      {identity ? (
+      {currentIdentity ? (
         <>
-          {identity.status === "unvalidated" && (
-            <NeutralLink href={`/account/logins/${identity.type}/validation/`}>
+          {currentIdentity.status === "unvalidated" && (
+            <NeutralLink
+              href={`/account/logins/${currentIdentity.type}/validation/`}
+            >
               <div className="btn btn-primary btn-neutral-link">
                 {formatMessage({ id: "proceed" })}
               </div>
             </NeutralLink>
           )}
-          {identity.status === "validated" && (
+          {currentIdentity.status === "validated" && (
             <NeutralLink
-              href={`/account/logins/${identity.type}/${identity.id}/update/`}
+              href={`/account/logins/${currentIdentity.type}/${currentIdentity.id}/update/`}
             >
               <div className="btn btn-primary btn-neutral-link">
-                {getIdentityType(identity.type) === IdentityTypes.EMAIL
+                {getIdentityType(currentIdentity.type) === IdentityTypes.EMAIL
                   ? formatMessage({ id: "updateEmail" })
                   : formatMessage({ id: "updatePhone" })}
               </div>
             </NeutralLink>
           )}
-          {!identity.primary && identity.status === "validated" && (
+          {!currentIdentity.primary && currentIdentity.status === "validated" && (
             <Button
               type="button"
               className="btn btn-secondary"
@@ -83,7 +95,7 @@ const IdentityOverview: React.FC<{
                 return;
               }}
             >
-              {getIdentityType(identity.type) === IdentityTypes.EMAIL
+              {getIdentityType(currentIdentity.type) === IdentityTypes.EMAIL
                 ? formatMessage({ id: "markEmail" })
                 : formatMessage({ id: "markPhone" })}
             </Button>
@@ -93,7 +105,7 @@ const IdentityOverview: React.FC<{
               variant={ModalVariant.MARK_AS_PRIMARY}
               textContent={{
                 info:
-                  getIdentityType(identity.type) === IdentityTypes.EMAIL
+                  getIdentityType(currentIdentity.type) === IdentityTypes.EMAIL
                     ? formatMessage({ id: "primaryModalContentEmail" })
                     : formatMessage({ id: "primaryModalContentPhone" }),
                 confirm: formatMessage({ id: "primaryModalConfirm" }),
@@ -102,16 +114,36 @@ const IdentityOverview: React.FC<{
               setIsModalOpen={setIsMarkAsPrimaryModalOpen}
               onConfirmationPress={async () => {
                 await fetchJson(
-                  `/api/identities/${identity.id}/mark-as-primary/`,
+                  `/api/identities/${currentIdentity.id}/mark-as-primary/`,
                   "POST",
                   {},
-                ).then(() => {
+                ).then(async () => {
+                  if (identities) {
+                    await mutate(
+                      "/api/identities/",
+                      identities.map((identity) => {
+                        if (identity.id === currentIdentity.id) {
+                          return { ...identity, primary: true };
+                        }
+
+                        if (
+                          primaryIdentity &&
+                          identity.id === primaryIdentity.id
+                        ) {
+                          return { ...identity, primary: false };
+                        }
+
+                        return identity;
+                      }),
+                    );
+                  }
+
                   router && router.push("/account/logins/");
                 });
               }}
             />
           ) : null}
-          {!identity.primary && (
+          {!currentIdentity.primary && (
             <Button
               type="button"
               className="btn btn-ghost"
@@ -120,7 +152,7 @@ const IdentityOverview: React.FC<{
                 setIsDeletionModalOpen(true);
               }}
             >
-              {getIdentityType(identity.type) === IdentityTypes.EMAIL
+              {getIdentityType(currentIdentity.type) === IdentityTypes.EMAIL
                 ? formatMessage({ id: "deleteEmail" })
                 : formatMessage({ id: "deletePhone" })}
             </Button>
@@ -130,22 +162,26 @@ const IdentityOverview: React.FC<{
               variant={ModalVariant.DELETION}
               textContent={{
                 info:
-                  getIdentityType(identity.type) === IdentityTypes.EMAIL
+                  getIdentityType(currentIdentity.type) === IdentityTypes.EMAIL
                     ? formatMessage({ id: "deleteModalContentEmail" })
                     : formatMessage({ id: "deleteModalContentPhone" }),
                 confirm: formatMessage({ id: "deleteModalConfirm" }),
                 cancel:
-                  getIdentityType(identity.type) === IdentityTypes.EMAIL
+                  getIdentityType(currentIdentity.type) === IdentityTypes.EMAIL
                     ? formatMessage({ id: "deleteModalCancelEmail" })
                     : formatMessage({ id: "deleteModalCancelPhone" }),
               }}
               setIsModalOpen={setIsDeletionModalOpen}
               onConfirmationPress={async () => {
-                await fetchJson(`/api/identities/${identity.id}/`, "DELETE", {
-                  type: getIdentityType(identity.type),
-                  value: identity.value,
-                  id: identity.id,
-                }).then(() => {
+                await fetchJson(
+                  `/api/identities/${currentIdentity.id}/`,
+                  "DELETE",
+                  {
+                    type: getIdentityType(currentIdentity.type),
+                    value: currentIdentity.value,
+                    id: currentIdentity.id,
+                  },
+                ).then(() => {
                   router && router.push("/account/logins/");
                 });
               }}
