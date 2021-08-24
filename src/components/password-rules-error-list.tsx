@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import React from "react";
-import styled from "styled-components";
 
 import { formatErrorMessage } from "@src/configs/intl";
 
@@ -16,42 +15,32 @@ const PasswordRulesErrorList: React.FC<{
   const { locale } = useRouter();
 
   return (
-    <PasswordRestrictionErrorWrapper>
-      <p>{formatErrorMessage(locale || "en", "passwordCriteria")}</p>
-      <p>{formatErrorMessage(locale || "en", "passwordInfo")}</p>
-      <ul>
-        <li>
+    <div className=" mb-12 ml-8 text-red">
+      <p className="leading-10">
+        {formatErrorMessage(locale || "en", "passwordCriteria")}
+      </p>
+      <p className="leading-10">
+        {formatErrorMessage(locale || "en", "passwordInfo")}
+      </p>
+      <ul className="list-disc">
+        <li className="list-inside my-4">
           {formatErrorMessage(locale || "en", "passwordRuleDigit", {
             digitCount: min_digits_minimum,
           })}
         </li>
-        <li>
+        <li className="list-inside my-4">
           {formatErrorMessage(locale || "en", "passwordRuleNonDigit", {
             nonDigitCount: min_non_digits_minimum,
           })}
         </li>
-        <li>
+        <li className="list-inside my-4">
           {formatErrorMessage(locale || "en", "passwordRuleCharacter", {
             characterCount: min_total_characters_minimum,
           })}
         </li>
       </ul>
-    </PasswordRestrictionErrorWrapper>
+    </div>
   );
 };
-
-const PasswordRestrictionErrorWrapper = styled.div`
-  margin: 0 0 3rem 2rem;
-  color: ${({ theme }) => theme.colors.red};
-
-  p {
-    line-height: ${({ theme }) => theme.lineHeights.copy};
-  }
-
-  li {
-    list-style: inside;
-    margin: 1rem 0;
-  }
-`;
 
 export { PasswordRulesErrorList };
