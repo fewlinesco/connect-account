@@ -1,8 +1,21 @@
 import Link from "next/link";
 import React from "react";
-import styled from "styled-components";
 
 import { generateAlertMessage } from "@src/utils/generate-alert-message";
+
+const DevButton: React.FC<{ onClick?: () => void }> = ({
+  onClick,
+  children,
+}) => {
+  return (
+    <button
+      className="rounded bg-secondary cursor-pointer mx-4 py-4 px-8"
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
+};
 
 const AddAlertMessage: React.FC = () => {
   const cookiesList = encodeURIComponent(
@@ -35,25 +48,11 @@ const Navigation: React.FC = () => {
 
 const DevButtons: React.FC = () => {
   return (
-    <DevSection>
+    <div className="fixed right-8 bottom-8">
       <AddAlertMessage />
       <Navigation />
-    </DevSection>
+    </div>
   );
 };
-
-const DevSection = styled.div`
-  position: fixed;
-  right: 2rem;
-  bottom: 2rem;
-`;
-
-const DevButton = styled.button`
-  padding: 1rem 2rem;
-  margin: 0 1rem;
-  border-radius: ${({ theme }) => theme.radii[0]};
-  background-color: ${({ theme }) => theme.colors.secondary};
-  cursor: pointer;
-`;
 
 export { DevButtons };
