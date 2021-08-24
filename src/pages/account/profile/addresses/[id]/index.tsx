@@ -9,13 +9,14 @@ import { Layout } from "@src/components/page-layout";
 import { AddressOverview } from "@src/components/pages/address-overview";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
+import { SWRError } from "@src/errors/errors";
 import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 
 const AddressOverviewPage: React.FC<{ addressId: string }> = ({
   addressId,
 }) => {
   const { formatMessage } = useIntl();
-  const { data: address, error } = useSWR<Address, Error>(
+  const { data: address, error } = useSWR<Address, SWRError>(
     `/api/profile/addresses/${addressId}/`,
   );
 

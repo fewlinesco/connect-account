@@ -9,11 +9,12 @@ import { VerifyTwoFACodeForm } from "@src/components/forms/verify-two-fa-code-fo
 import { LockIcon } from "@src/components/icons/lock-icon";
 import { Separator } from "@src/components/separator";
 import { deviceBreakpoints } from "@src/design-system/theme";
+import { SWRError } from "@src/errors/errors";
 
 const TwoFA: React.FC = () => {
   const [isCodeSent, setIsCodeSent] = React.useState<boolean>(false);
 
-  const { data: primaryIdentities, error } = useSWR<Identity[], Error>(
+  const { data: primaryIdentities, error } = useSWR<Identity[], SWRError>(
     "/api/identities?primary=true/",
   );
 

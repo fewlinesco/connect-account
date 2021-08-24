@@ -7,9 +7,10 @@ import { SectionBox } from "@src/components/boxes";
 import { RightChevron } from "@src/components/icons/right-chevron";
 import { NeutralLink } from "@src/components/neutral-link";
 import { SkeletonTextLine } from "@src/components/skeletons";
+import { SWRError } from "@src/errors/errors";
 
 const Security: React.FC = () => {
-  const { data, error } = useSWR<{ isPasswordSet: boolean }, Error>(
+  const { data, error } = useSWR<{ isPasswordSet: boolean }, SWRError>(
     "/api/auth-connect/is-password-set/",
   );
 
