@@ -1,7 +1,6 @@
 import { Identity } from "@fewlines/connect-management";
 import React from "react";
 import { useIntl } from "react-intl";
-import styled from "styled-components";
 import useSWR from "swr";
 
 import { ShowMoreButton } from "../../buttons";
@@ -49,13 +48,13 @@ const LoginsOverview: React.FC = () => {
         )}
       </SectionBox>
       {identities && sortedIdentities.emailIdentities.length > 1 ? (
-        <Flex>
+        <div className="flex justify-center">
           <ShowMoreButton
             hideList={hideEmailList}
             quantity={sortedIdentities.emailIdentities.length - 1}
             onPress={() => setHideEmailList(!hideEmailList)}
           />
-        </Flex>
+        </div>
       ) : null}
       <NeutralLink href={`/account/logins/email/new/`}>
         <div className="btn btn-secondary btn-neutral-link">
@@ -77,13 +76,13 @@ const LoginsOverview: React.FC = () => {
         )}
       </SectionBox>
       {identities && sortedIdentities.phoneIdentities.length > 1 ? (
-        <Flex>
+        <div className="flex justify-center">
           <ShowMoreButton
             hideList={hidePhoneList}
             quantity={sortedIdentities.phoneIdentities.length - 1}
             onPress={() => setHidePhoneList(!hidePhoneList)}
           />
-        </Flex>
+        </div>
       ) : null}
       <NeutralLink href={`/account/logins/phone/new/`}>
         <div className="btn btn-secondary btn-neutral-link">
@@ -104,10 +103,5 @@ const LoginsOverview: React.FC = () => {
     </>
   );
 };
-
-const Flex = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 
 export { LoginsOverview };

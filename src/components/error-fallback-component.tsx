@@ -11,7 +11,11 @@ const ErrorFallbackComponent: React.FC<{
   const { locale } = useRouter();
 
   return (
-    <Wrapper statusCode={statusCode}>
+    <div
+      className={`${
+        statusCode !== 404 ? "mt-16" : ""
+      } w-full h-60 flex flex-col justify-around rounded bg-background shadow-base text-center p-8`}
+    >
       {statusCode === 404 ? (
         <>
           <h1>{formatErrorMessage(locale || "en", "404Title")}</h1>
@@ -24,27 +28,13 @@ const ErrorFallbackComponent: React.FC<{
           </p>
         </>
       ) : (
-        <h3>{formatErrorMessage(locale || "en", "500Content")}</h3>
+        <h3 className="mb-0">
+          {formatErrorMessage(locale || "en", "500Content")}
+        </h3>
       )}
-    </Wrapper>
+    </div>
   );
 };
-
-const Wrapper = styled.div<{ statusCode: number }>`
-  width: 100%;
-  min-height: 15rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  border-radius: ${({ theme }) => theme.radii[1]};
-  background-color: ${({ theme }) => theme.colors.background};
-  box-shadow: ${({ theme }) => theme.shadows.base};
-  padding: ${({ theme }) => theme.spaces.xs};
-  text-align: center;
-  margin-top: ${({ statusCode, theme }) =>
-    statusCode !== 404 ? theme.spaces.s : ""};
-`;
 
 const HomepageLink = styled(NeutralLink)`
   color: ${({ theme }) => theme.colors.primary};

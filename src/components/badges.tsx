@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 
 import { AwaitingValidationIcon } from "./icons/awaiting-validation-icon";
 import { PrimaryIcon } from "./icons/primary-icon";
@@ -8,10 +7,10 @@ const PrimaryBadge: React.FC<{ localizedLabel: string }> = ({
   localizedLabel,
 }) => {
   return (
-    <Wrapper>
-      <BadgeLabel>{localizedLabel}</BadgeLabel>
+    <div className="flex justify-center items-center bg-primary rounded-full text-background mb-4 h-10 w-36">
+      <div className="text-s mr-2">{localizedLabel}</div>
       <PrimaryIcon />
-    </Wrapper>
+    </div>
   );
 };
 
@@ -19,39 +18,11 @@ const AwaitingValidationBadge: React.FC<{ localizedLabel: string }> = ({
   localizedLabel,
 }) => {
   return (
-    <AwaitingWrapper>
-      <BadgeLabel>{localizedLabel}</BadgeLabel>
+    <div className="flex justify-center items-center bg-red rounded-full h-10 w-64 mb-4">
+      <div className="text-s mr-2">{localizedLabel}</div>
       <AwaitingValidationIcon />
-    </AwaitingWrapper>
+    </div>
   );
 };
-
-const AwaitingWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: ${({ theme }) => theme.colors.red};
-  border-radius: ${({ theme }) => theme.radii[2]};
-  height: 2.4rem;
-  color: ${({ theme }) => theme.colors.background};
-  width: 15.8rem;
-  margin-bottom: 1rem;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: ${({ theme }) => theme.colors.primary};
-  border-radius: ${({ theme }) => theme.radii[2]};
-  height: 2.4rem;
-  color: ${({ theme }) => theme.colors.background};
-  width: 9.4rem;
-`;
-
-const BadgeLabel = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.xs};
-  margin-right: 0.3rem;
-`;
 
 export { PrimaryBadge, AwaitingValidationBadge };
