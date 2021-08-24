@@ -37,7 +37,7 @@ const InputText: React.FC<InputTextProps> = (props) => {
           <input
             {...(inputProps as React.InputHTMLAttributes<HTMLInputElement>)}
             ref={inputRef}
-            className="outline-none border-none bg-transparent relative left-11 lg:left-8 my-8 lg:pl-6 h-16 font-mono text-base"
+            className="outline-none border-none bg-transparent relative left-11 lg:left-8 my-8 lg:pl-6 h-16 font-mono"
             required={required}
           />
         </div>
