@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../input/form-error-message";
-import { InputText } from "../input/input-text";
+import { InputText } from "../input/input-text/input-text";
 import { Form } from "./form";
 import { Button } from "@src/components/buttons";
 import { PasswordRulesErrorList } from "@src/components/password-rules-error-list";

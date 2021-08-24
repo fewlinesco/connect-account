@@ -4,10 +4,10 @@ import { useIntl } from "react-intl";
 import useSWR from "swr";
 import { v4 as uuidv4 } from "uuid";
 
+import { InputsRadio } from "../input/input-radio-button/input-radio-button";
 import { Button } from "@src/components/buttons";
 import { Form } from "@src/components/forms/form";
 import { FormErrorMessage } from "@src/components/input/form-error-message";
-import { InputsRadio } from "@src/components/input/input-radio-button";
 import { SWRError } from "@src/errors/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 import { AVAILABLE_LANGUAGE, getLocaleKey } from "@src/utils/get-locale";
