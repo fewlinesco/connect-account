@@ -15,10 +15,11 @@ type InputTextProps = {
   maxLength?: number;
   children?: React.ReactNode;
   required?: boolean;
+  hasError?: boolean;
 };
 
 const InputText: React.FC<InputTextProps> = (props) => {
-  const { label, children, required } = props;
+  const { label, hasError, children, required } = props;
 
   const inputRef = React.useRef(null);
   const { labelProps, inputProps } = useTextField(props, inputRef);
@@ -44,7 +45,11 @@ const InputText: React.FC<InputTextProps> = (props) => {
         <input
           {...(inputProps as React.InputHTMLAttributes<HTMLInputElement>)}
           ref={inputRef}
-          className="bg-background border border-gray-dark rounded h-16 pl-6 w-full mt-4 mb-8 relative placeholder-gray-dark text-m"
+          className={
+            hasError
+              ? "bg-background border border-red rounded h-16 pl-6 w-full mt-4 mb-8 relative placeholder-gray-dark text-m "
+              : "bg-background border border-gray-dark rounded h-16 pl-6 w-full mt-4 mb-8 relative placeholder-gray-dark text-m "
+          }
           required={required}
         />
       )}

@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
-import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../input/form-error-message";
@@ -91,15 +90,16 @@ const SetPasswordForm: React.FC<{
       {errorMessage ? (
         <FormErrorMessage>{errorMessage}</FormErrorMessage>
       ) : null}
-      <ExtendedInputStyle
+      <InputText
         type="password"
         name="password-input"
         placeholder={formatMessage({ id: "newPasswordPlaceholder" })}
         value={passwordInput}
-        passwordRestrictionError={passwordRestrictionError}
-        passwordsNotMatching={passwordsNotMatching}
         onChange={(value) => setPasswordInput(value)}
         label={formatMessage({ id: "newPasswordLabel" })}
+        hasError={
+          passwordsNotMatching || passwordRestrictionError ? true : false
+        }
       />
       <InputText
         type="password"
@@ -115,14 +115,5 @@ const SetPasswordForm: React.FC<{
     </Form>
   );
 };
-
-const ExtendedInputStyle = styled(InputText)<{
-  passwordRestrictionError?: Record<string, string>;
-  passwordsNotMatching?: boolean;
-}>`
-  ${({ theme, passwordRestrictionError, passwordsNotMatching }) =>
-    (passwordRestrictionError || passwordsNotMatching) &&
-    `border-color: ${theme.colors.red};`}
-`;
 
 export { SetPasswordForm };
