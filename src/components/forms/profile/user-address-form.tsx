@@ -6,10 +6,10 @@ import useSWR, { mutate } from "swr";
 import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../../input/form-error-message";
-import { InputText } from "../../input/input-text";
 import { Form } from "../form";
 import { Address } from "@src/@types/profile";
 import { Button } from "@src/components/buttons";
+import { InputText } from "@src/components/input/input-text/input-text";
 import { NeutralLink } from "@src/components/neutral-link";
 import { formatErrorMessage } from "@src/configs/intl";
 import { SWRError } from "@src/errors/errors";
@@ -211,6 +211,7 @@ const UserAddressForm: React.FC<{
           }}
           label={formatMessage({ id: "localityLabel" })}
           required
+          hasError={errors.locality ? true : false}
         />
         {errors.locality && (
           <FormErrorMessage>{errors.locality}</FormErrorMessage>
@@ -228,6 +229,7 @@ const UserAddressForm: React.FC<{
           }}
           label={formatMessage({ id: "postalCodeLabel" })}
           required
+          hasError={errors.postal_code ? true : false}
         />
         {errors.postal_code && (
           <FormErrorMessage>{errors.postal_code}</FormErrorMessage>
@@ -258,6 +260,7 @@ const UserAddressForm: React.FC<{
           }}
           label={formatMessage({ id: "countryLabel" })}
           required
+          hasError={errors.country ? true : false}
         />
         {errors.country && (
           <FormErrorMessage>{errors.country}</FormErrorMessage>

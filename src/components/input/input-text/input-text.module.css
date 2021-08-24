@@ -1,0 +1,17 @@
+.multipleInputsMasked:focus-within span {
+  outline: Highlight auto 0.1rem;
+  outline: -webkit-focus-ring-color auto 0.1rem;
+}
+
+.multipleInputsMasked input {
+  caret-color: transparent;
+  letter-spacing: 3.15rem;
+  width: 27rem;
+}
+
+@media (min-width: 1024px){
+  .multipleInputsMasked input {
+  width: 75%;
+  letter-spacing: 4.85rem;
+ }
+}

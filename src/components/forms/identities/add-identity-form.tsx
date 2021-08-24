@@ -7,11 +7,11 @@ import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../../input/form-error-message";
 import { InputCheckbox } from "../../input/input-checkbox";
-import { InputText } from "../../input/input-text";
 import { StyledPhoneInput } from "../../input/styled-phone-input";
 import { Form } from "../form";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Button } from "@src/components/buttons";
+import { InputText } from "@src/components/input/input-text/input-text";
 import { NeutralLink } from "@src/components/neutral-link";
 import { formatErrorMessage } from "@src/configs/intl";
 import { ERRORS_DATA } from "@src/errors/web-errors";
@@ -107,6 +107,7 @@ const AddIdentityForm: React.FC<{
               });
             }}
             label={formatMessage({ id: "emailInputLabel" })}
+            hasError={errorMessage ? true : false}
           />
         ) : (
           <>
