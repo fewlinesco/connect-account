@@ -22,7 +22,7 @@ const TwoFA: React.FC = () => {
   const { formatMessage } = useIntl();
 
   return (
-    <div className="font-normal leading-10 bg-box px-8 py-12 lg:px-24 lg:py-16 rounded ">
+    <div className="font-normal leading-10 bg-box px-8 py-12 lg:px-24 lg:py-16 rounded">
       <div className="flex items-center text-red mb-8">
         <LockIcon />
         <p className="leading-9 ml-8">{formatMessage({ id: "warning" })}</p>

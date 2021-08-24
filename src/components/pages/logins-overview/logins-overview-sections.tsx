@@ -105,7 +105,6 @@ const PhoneSection: React.FC<{
         >
           {primaryIdentity.value}
         </p>
-
         <RightChevron />
       </BoxedLink>
       {!hideEmailList && secondaryIdentities.length > 0 ? (
