@@ -2332,10 +2332,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-phone-number-input@3.0.10":
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/@types/react-phone-number-input/-/react-phone-number-input-3.0.10.tgz#bcf835ac8238130411b4f95c6a6cc8b870fda5d9"
-  integrity sha512-A2FjMoVGtzeqZUh9vD+5YdjKqrOoHRn5Xm7hmA9hz+AIOu2E/5rjieEOiuhbxckoM4zrPxhbhJBMkiNuQFqygw==
+"@types/react-phone-number-input@3.0.11":
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/@types/react-phone-number-input/-/react-phone-number-input-3.0.11.tgz#c5f547b3a1250db109cdf7d329b345f997f07d65"
+  integrity sha512-ZPcO3XDPA5qVXnAVvTxB4R2Ys4fFEcwjEc8yXtolp1YHrhUA8dEmo6v9TzTuP5inVIeK+apn0RDpJ9h9QGAOaA==
   dependencies:
     "@types/react" "*"
 
