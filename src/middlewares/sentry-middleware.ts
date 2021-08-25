@@ -13,7 +13,7 @@ function wrappedSentryMiddleware(
     ): Promise<void> => {
       return tracer.span("sentry-middleware", async (span) => {
         try {
-          return withSentry(handler)(request, response);
+          return await withSentry(handler)(request, response);
         } catch (error) {
           span.setDisclosedAttribute("http.status_code", error.httpStatus);
           span.setDisclosedAttribute("error.name", error.name);
