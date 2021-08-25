@@ -1,6 +1,6 @@
 import React from "react";
 
-import classes from "./skeleton.module.css";
+import classes from "./skeletons.module.css";
 
 const SkeletonTextLine: React.FC<{
   fontSize: 1.4 | 1.6;

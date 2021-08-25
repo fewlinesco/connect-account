@@ -10,7 +10,7 @@ import { PrimaryBadge } from "@src/components/badges";
 import { Box } from "@src/components/boxes";
 import { Button } from "@src/components/buttons";
 import { NeutralLink } from "@src/components/neutral-link";
-import { SkeletonTextLine } from "@src/components/skeletons";
+import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 import { SWRError } from "@src/errors/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 import {

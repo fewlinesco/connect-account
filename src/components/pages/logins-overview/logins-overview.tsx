@@ -13,7 +13,7 @@ import {
 } from "./logins-overview-sections";
 import { BoxedLink } from "@src/components/boxed-link";
 import { SectionBox } from "@src/components/boxes";
-import { SkeletonTextLine } from "@src/components/skeletons";
+import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 import { sortIdentities } from "@src/utils/sort-identities";
 
 const LoginsOverview: React.FC = () => {

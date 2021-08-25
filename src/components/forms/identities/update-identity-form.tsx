@@ -7,13 +7,13 @@ import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../../input/form-error-message";
 import { StyledPhoneInput } from "../../input/styled-phone-input";
-import { SkeletonTextLine } from "../../skeletons";
 import { Form } from "../form";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Box } from "@src/components/boxes";
 import { Button } from "@src/components/buttons";
 import { InputText } from "@src/components/input/input-text/input-text";
 import { NeutralLink } from "@src/components/neutral-link";
+import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 import { formatErrorMessage } from "@src/configs/intl";
 import { ERRORS_DATA } from "@src/errors/web-errors";
 import { fetchJson } from "@src/utils/fetch-json";
