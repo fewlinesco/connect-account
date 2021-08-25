@@ -1,13 +1,11 @@
 import { useRouter } from "next/router";
 import React from "react";
-import styled from "styled-components";
 import useSWR from "swr";
 
 import { CookieButton, Button } from "./buttons";
 import { SentryIcon } from "./icons/sentry-icon";
 import { ModalOverlay } from "./modal-overlay";
 import { formatCookieBannerMessage } from "@src/configs/intl";
-import { deviceBreakpoints } from "@src/design-system/theme";
 import { SWRError } from "@src/errors/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 
@@ -29,42 +27,42 @@ const CookieBanner: React.FC = () => {
   }, [consentCookie]);
 
   return (
-    <CookieBannerWrapper>
+    <div className="fixed w-full bottom-0 left-0 lg:left-8 lg:bottom-8 z-20">
       <CookieButton
         onPress={() => setIsModalOpen(!isModalOpen)}
         isOpen={isModalOpen}
       />
       {isModalOpen ? (
         <>
-          <CookieModal>
-            <Content>
-              <ModalTitle>Cookies</ModalTitle>
-              <ModalTextContent>
+          <div className="w-full lg:max-w-2xl absolute bottom-0 left-0 lg:bottom-20 lg:left-8 bg-background shadow-box rounded z-20">
+            <div className="pt-8 px-8 mb-5">
+              <h2 className="text-xxl text-black mb-5 font-normal ">Cookies</h2>
+              <p className="leading-tight mb-6">
                 {formatCookieBannerMessage(
                   router.locale || "en",
                   "generalDescription",
                 )}
-              </ModalTextContent>
-              <CategoryTitle>
+              </p>
+              <h3 className="font-medium mb-5">
                 {formatCookieBannerMessage(
                   router.locale || "en",
                   "monitoringCategory",
                 )}
-              </CategoryTitle>
-              <Card>
+              </h3>
+              <div className="w-full py-5 px-6 bg-background shadow-box flex justify-around items-center">
                 <SentryIcon />
-                <FlexContainer>
-                  <ServiceName>Sentry</ServiceName>
-                  <ServiceDesc>
+                <div className="flex flex-col ml-8">
+                  <h4 className="font-medium text-m">Sentry</h4>
+                  <p className="text-s mt-2 text-gray-darker">
                     {formatCookieBannerMessage(
                       router.locale || "en",
                       "sentryDescription",
                     )}
-                  </ServiceDesc>
-                </FlexContainer>
-              </Card>
-            </Content>
-            <ButtonsWrapper>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex">
               <Button
                 type="button"
                 className="btn btn-cookie-ghost"
@@ -91,100 +89,13 @@ const CookieBanner: React.FC = () => {
               >
                 {formatCookieBannerMessage(router.locale || "en", "accept")}
               </Button>
-            </ButtonsWrapper>
-          </CookieModal>
+            </div>
+          </div>
           <ModalOverlay className="lg:hidden" />
         </>
       ) : null}
-    </CookieBannerWrapper>
+    </div>
   );
 };
-
-const CookieBannerWrapper = styled.div`
-  position: fixed;
-  left: 2rem;
-  bottom: 2rem;
-  z-index: 20;
-
-  @media ${deviceBreakpoints.m} {
-    bottom: 0;
-    left: 0;
-    width: 100%;
-  }
-`;
-
-const CookieModal = styled.div`
-  width: 42rem;
-  position: absolute;
-  bottom: 5rem;
-  left: 2rem;
-  background-color: ${({ theme }) => theme.colors.background};
-  box-shadow: ${({ theme }) => theme.shadows.box};
-  border-radius: ${({ theme }) => theme.radii[0]};
-  z-index: 20;
-
-  @media ${deviceBreakpoints.m} {
-    bottom: 0;
-    left: 0;
-    width: 100%;
-  }
-`;
-
-const Content = styled.div`
-  padding: ${({ theme }) => theme.spaces.xs} ${({ theme }) => theme.spaces.xs} 0;
-  margin-bottom: 1.25rem;
-`;
-
-const ModalTitle = styled.h2`
-  font-size: ${({ theme }) => theme.fontSizes.h1};
-  margin-bottom: 1.25rem;
-  font-weight: normal;
-  color: ${({ theme }) => theme.colors.black};
-`;
-
-const ModalTextContent = styled.p`
-  line-height: 1.25;
-  margin-bottom: 1.5rem;
-`;
-
-const CategoryTitle = styled.h3`
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  margin-bottom: 1.25rem;
-`;
-
-const ButtonsWrapper = styled.div`
-  display: flex;
-`;
-
-const Card = styled.div`
-  width: 100%;
-  padding: 1.25rem 1.5rem;
-  background-color: ${({ theme }) => theme.colors.background};
-  box-shadow: ${({ theme }) => theme.shadows.box};
-  display: flex;
-  justify-content: space-around;
-
-  svg {
-    flex-shrink: 0;
-    align-self: center;
-  }
-`;
-
-const FlexContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 2rem;
-`;
-
-const ServiceName = styled.h4`
-  font-size: ${({ theme }) => theme.fontSizes.s};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-`;
-
-const ServiceDesc = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.xs};
-  color: ${({ theme }) => theme.colors.breadcrumbs};
-  margin-top: 0.4rem;
-`;
 
 export { CookieBanner };
