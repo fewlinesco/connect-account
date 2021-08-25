@@ -138,7 +138,7 @@ const IdentityOverview: React.FC<{
                     );
                   }
 
-                  router && router.push("/account/logins/");
+                  return router && router.push("/account/logins/");
                 });
               }}
             />
@@ -182,7 +182,14 @@ const IdentityOverview: React.FC<{
                     id: currentIdentity.id,
                   },
                 ).then(() => {
-                  router && router.push("/account/logins/");
+                  if (identities) {
+                    mutate(
+                      "/api/identities/",
+                      identities.filter(({ id }) => id !== currentIdentity.id),
+                    );
+                  }
+
+                  return router && router.push("/account/logins/");
                 });
               }}
             />
