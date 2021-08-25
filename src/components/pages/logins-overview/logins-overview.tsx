@@ -38,7 +38,7 @@ const LoginsOverview: React.FC = () => {
       <SectionBox>
         {!identities ? (
           <BoxedLink disableClick={true} href="#">
-            <SkeletonTextLine fontSize={1.6} width={50} />
+            <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
           </BoxedLink>
         ) : (
           <EmailSection
@@ -66,7 +66,7 @@ const LoginsOverview: React.FC = () => {
       <SectionBox>
         {!identities ? (
           <BoxedLink disableClick={true} href="#">
-            <SkeletonTextLine fontSize={1.6} width={50} />
+            <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
           </BoxedLink>
         ) : (
           <PhoneSection
@@ -94,7 +94,7 @@ const LoginsOverview: React.FC = () => {
       <SectionBox>
         {!identities ? (
           <BoxedLink disableClick={true} href="#">
-            <SkeletonTextLine fontSize={1.6} width={50} />
+            <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
           </BoxedLink>
         ) : (
           <SocialSection identityList={sortedIdentities.socialIdentities} />

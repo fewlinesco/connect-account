@@ -28,7 +28,7 @@ const IdentityOverview: React.FC<{
       <Box>
         {!identity ? (
           <div className="text-bold my-8 break-all">
-            <SkeletonTextLine fontSize={1.6} width={50} />
+            <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
           </div>
         ) : (
           <>

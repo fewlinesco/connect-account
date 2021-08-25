@@ -40,7 +40,7 @@ const UpdateIdentityForm: React.FC<{
       <Box>
         <div className="my-8 font-bold break-all">
           {!identity ? (
-            <SkeletonTextLine fontSize={1.6} width={50} />
+            <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
           ) : (
             <p>{identity.value}</p>
           )}
