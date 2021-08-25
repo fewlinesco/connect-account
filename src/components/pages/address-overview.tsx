@@ -121,7 +121,7 @@ const AddressOverview: React.FC<{ addressToDisplay?: Address }> = ({
               setIsModalOpen={setIsMarkAsPrimaryModalOpen}
               onConfirmationPress={async () => {
                 await fetchJson(
-                  `/api/profile/addresses/${addressToDisplay?.id}/mark-as-primary/`,
+                  `/api/profile/addresses/${addressToDisplay.id}/mark-as-primary/`,
                   "POST",
                   {},
                 ).then(() => {
@@ -149,7 +149,7 @@ const AddressOverview: React.FC<{ addressToDisplay?: Address }> = ({
                     );
                     mutate(
                       `/api/profile/addresses/${addressToMark.id}/`,
-                      oldMarkedAddress,
+                      addressToMark,
                     );
                   }
 
@@ -172,7 +172,7 @@ const AddressOverview: React.FC<{ addressToDisplay?: Address }> = ({
       >
         {formatMessage({ id: "delete" })}
       </Button>
-      {isDeletionModalOpen ? (
+      {isDeletionModalOpen && addressToDisplay ? (
         <Modal
           variant={ModalVariant.DELETION}
           textContent={{
@@ -183,21 +183,15 @@ const AddressOverview: React.FC<{ addressToDisplay?: Address }> = ({
           setIsModalOpen={setIsDeletionModalOpen}
           onConfirmationPress={async () => {
             await fetchJson(
-              `/api/profile/addresses/${addressToDisplay?.id}/`,
+              `/api/profile/addresses/${addressToDisplay.id}/`,
               "DELETE",
               {},
             ).then(() => {
-              if (addresses && addressToDisplay) {
-                const addressToDelete = addresses.find(
-                  (address) => address.id === addressToDisplay.id,
+              if (addresses) {
+                mutate(
+                  "/api/profile/addresses/",
+                  addresses.filter(({ id }) => id !== addressToDisplay.id),
                 );
-
-                if (addressToDelete) {
-                  const index = addresses.indexOf(addressToDelete);
-                  const modifiedAddresses = [...addresses];
-                  modifiedAddresses.splice(index, 1);
-                  mutate("/api/profile/addresses/", modifiedAddresses);
-                }
               }
 
               return router && router.push("/account/profile/");
