@@ -34,8 +34,7 @@ const getHandler: Handler = (request, response): Promise<void> => {
     if (!userCookie) {
       response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
       response.setHeader("location", "/");
-      response.end();
-      return;
+      return response.end();
     }
 
     const identities = await getIdentities(

@@ -24,8 +24,7 @@ const handler: Handler = (_request, response): Promise<void> => {
 
     response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
     response.setHeader("location", "/");
-    response.end();
-    return;
+    return response.end();
   });
 };
 
