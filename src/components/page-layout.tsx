@@ -21,13 +21,13 @@ const Layout: React.FC<{
         </nav>
         <div
           className={`${
-            !title && !breadcrumbs ? "flex items-center" : ""
+            !title && breadcrumbs === false ? "flex items-center" : ""
           } w-11/12 lg:w-3/5 mx-auto`}
         >
           {title ? (
             <h1
               className={`${
-                !breadcrumbs ? "mb-10 lg:mb-16" : ""
+                breadcrumbs === false ? "mb-10 lg:mb-16" : ""
               } mt-2 pt:4 lg:pt-10 pb-4`}
             >
               {title}
