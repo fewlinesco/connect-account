@@ -1,11 +1,12 @@
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { SWRConfig } from "swr";
+import { mutate, SWRConfig } from "swr";
 
 import {
   render,
   screen,
   setRouterPathname,
+  setRouterQuery,
   waitFor,
 } from "../config/testing-library-config";
 import * as mockIdentities from "../mocks/identities";
@@ -25,9 +26,12 @@ jest.mock("@src/configs/db-client", () => {
 describe("Modals", () => {
   const path = "/account/logins/[type]/[id]";
   const localizedStrings = locales.en[path];
+  const displayedIdentity = mockIdentities.nonPrimaryEmailIdentity;
 
   beforeAll(() => {
     setRouterPathname(path);
+    setRouterQuery({ id: displayedIdentity.id });
+    mutate("/api/identities/", [displayedIdentity]);
   });
 
   it("shouldn't display any confirmation box on first render", async () => {
@@ -37,13 +41,10 @@ describe("Modals", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: async () =>
-            Promise.resolve(mockIdentities.nonPrimaryEmailIdentity),
+          fetcher: async () => Promise.resolve([displayedIdentity]),
         }}
       >
-        <IdentityOverviewPage
-          identityId={mockIdentities.nonPrimaryEmailIdentity.id}
-        />
+        <IdentityOverviewPage identityId={displayedIdentity.id} />
       </SWRConfig>,
     );
 
@@ -64,13 +65,10 @@ describe("Modals", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: async () =>
-            Promise.resolve(mockIdentities.nonPrimaryEmailIdentity),
+          fetcher: async () => Promise.resolve([displayedIdentity]),
         }}
       >
-        <IdentityOverviewPage
-          identityId={mockIdentities.nonPrimaryEmailIdentity.id}
-        />
+        <IdentityOverviewPage identityId={displayedIdentity.id} />
       </SWRConfig>,
     );
 
@@ -111,13 +109,10 @@ describe("Modals", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: async () =>
-            Promise.resolve(mockIdentities.nonPrimaryEmailIdentity),
+          fetcher: async () => Promise.resolve([displayedIdentity]),
         }}
       >
-        <IdentityOverviewPage
-          identityId={mockIdentities.nonPrimaryEmailIdentity.id}
-        />
+        <IdentityOverviewPage identityId={displayedIdentity.id} />
       </SWRConfig>,
     );
 
