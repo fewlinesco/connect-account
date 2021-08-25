@@ -17,7 +17,9 @@ module.exports = {
         DEFAULT: "hsl(0, 0%, 90%)",
         light: "hsl(220, 11%, 95%)",
         dark: "hsl(0, 0%, 60%)",
+        darker: "hsl(190, 4%, 33%)",
       },
+      transparent: "transparent",
     },
     rounded: {
       DEFAULT: "0.5rem",
@@ -38,6 +40,9 @@ module.exports = {
     boxShadow: {
       base: "0 0.1rem 0.3rem hsla(240, 4%, 26%, 0.15), 0 2rem 3rem hsla(240, 4%, 26%, 0.07)",
       box: "0 0 1.6rem hsla(235, 75%, 38%, 0.08)",
+    },
+    fontFamily: {
+      mono: ["monospace"],
     },
     extend: {},
   },

@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../input/form-error-message";
-import { InputsRadio } from "../input/input-radio-button";
+import { InputsRadio } from "../input/input-radio-button/input-radio-button";
 import { Form } from "./form";
 import { Button } from "@src/components/buttons";
 import { formatErrorMessage } from "@src/configs/intl";

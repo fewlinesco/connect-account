@@ -1,6 +1,5 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import styled from "styled-components";
 
 import { Address, Profile } from "@src/@types/profile";
 import { BoxedLink } from "@src/components/boxed-link";
@@ -29,18 +28,22 @@ const ProfileOverview: React.FC<{
       <h3>{formatMessage({ id: "profileSection" })}</h3>
       <SectionBox>
         <BoxedLink disableClick={false} href="#">
-          <Flex>
+          <div className="flex items-center justify-center">
             {!userProfile || !userProfile.picture ? (
-              <DefaultProfilePictureIconWrapper>
+              <div className="mr-6">
                 <DefaultProfilePictureIcon />
-              </DefaultProfilePictureIconWrapper>
+              </div>
             ) : (
-              <UserPicture src={userProfile.picture} alt="user" />
+              <img
+                className="w-28 h-28 rounded-full mr-6"
+                src={userProfile.picture}
+                alt="user"
+              />
             )}
-            <PictureCategoryName>
+            <p className="text-gray-darker text-m font-medium tracking-widest">
               {formatMessage({ id: "profilePicture" })}
-            </PictureCategoryName>
-          </Flex>
+            </p>
+          </div>
         </BoxedLink>
         <Separator />
         <UserInfoSection categoryName={formatMessage({ id: "name" })} href="#">
@@ -130,13 +133,13 @@ const ProfileOverview: React.FC<{
         )}
       </SectionBox>
       {userAddresses && userAddresses.length > 1 ? (
-        <Flex>
+        <div className="flex items-center justify-center">
           <ShowMoreButton
             hideList={hideAddressList}
             quantity={userAddresses.length - 1}
             onPress={() => setHideAddressList(!hideAddressList)}
           />
-        </Flex>
+        </div>
       ) : null}
       {userAddresses ? (
         <NeutralLink href="/account/profile/addresses/new/">
@@ -156,10 +159,12 @@ const UserInfoSection: React.FC<{
   return (
     <>
       <BoxedLink disableClick={false} href={href}>
-        <CategoryContent>
-          <CategoryName>{categoryName}</CategoryName>
+        <div className="w-full flex flex-col">
+          <p className="text-gray-darker text-m font-medium tracking-widest mb-3">
+            {categoryName}
+          </p>
           {children}
-        </CategoryContent>
+        </div>
       </BoxedLink>
       <Separator />
     </>
@@ -177,28 +182,36 @@ const UserAddresses: React.FC<{
   );
 
   return !primaryAddress ? (
-    <NoAddressesParagraph>
+    <p className="flex items-center h-28 mr-2 px-8">
       {formatMessage({ id: "noAddresses" })}
-    </NoAddressesParagraph>
+    </p>
   ) : (
     <>
       <BoxedLink
         disableClick={false}
         href={`/account/profile/addresses/${primaryAddress.id}/`}
       >
-        <CategoryContent>
+        <div className="w-full flex flex-col">
           {primaryAddress.kind && (
-            <CategoryName>
+            <p className="text-gray-darker text-m font-medium tracking-widest mb-3">
               {capitalizeFirstLetter(primaryAddress.kind)}
-            </CategoryName>
+            </p>
           )}
-          <AddressValue isPrimary={primaryAddress.primary}>
+          <p
+            className={`truncate w-11/12 leading-10  ${
+              primaryAddress.primary ? "font-semibold" : ""
+            }`}
+          >
             {formatStreetAddressToDisplay(primaryAddress)}
-          </AddressValue>
-          <AddressValue isPrimary={primaryAddress.primary}>
+          </p>
+          <p
+            className={`truncate w-11/12 leading-10  ${
+              primaryAddress.primary ? "font-semibold" : ""
+            }`}
+          >
             {formatOtherAddressFieldsToDisplay(primaryAddress)}
-          </AddressValue>
-        </CategoryContent>
+          </p>
+        </div>
         <RightChevron />
       </BoxedLink>
       {!hideAddressList && addressList.length > 0 ? (
@@ -211,17 +224,25 @@ const UserAddresses: React.FC<{
                   disableClick={false}
                   href={`/account/profile/addresses/${address.id}/`}
                 >
-                  <CategoryContent>
-                    <CategoryName>
+                  <div className="w-full flex flex-col">
+                    <p className="text-gray-darker text-m font-medium tracking-widest mb-3">
                       {capitalizeFirstLetter(address.kind)}
-                    </CategoryName>
-                    <AddressValue isPrimary={address.primary}>
+                    </p>
+                    <p
+                      className={`truncate w-11/12 leading-10  ${
+                        address.primary ? "font-semibold" : ""
+                      }`}
+                    >
                       {formatStreetAddressToDisplay(address)}
-                    </AddressValue>
-                    <AddressValue isPrimary={address.primary}>
+                    </p>
+                    <p
+                      className={`truncate w-11/12 leading-10 ${
+                        address.primary ? "font-semibold" : ""
+                      }`}
+                    >
                       {formatOtherAddressFieldsToDisplay(address)}
-                    </AddressValue>
-                  </CategoryContent>
+                    </p>
+                  </div>
                   <RightChevron />
                 </BoxedLink>
               </React.Fragment>
@@ -232,62 +253,5 @@ const UserAddresses: React.FC<{
     </>
   );
 };
-
-const Flex = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const DefaultProfilePictureIconWrapper = styled.div`
-  margin-right: 1.6rem;
-`;
-
-const UserPicture = styled.img`
-  width: 6.4rem;
-  height: 6.4rem;
-  border-radius: ${({ theme }) => theme.radii[2]};
-  margin-right: 1.6rem;
-`;
-
-const PictureCategoryName = styled.p`
-  color: ${({ theme }) => theme.colors.breadcrumbs};
-  font-size: ${({ theme }) => theme.fontSizes.s};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  letter-spacing: 0.2rem;
-`;
-
-const CategoryName = styled.p`
-  color: ${({ theme }) => theme.colors.breadcrumbs};
-  font-size: ${({ theme }) => theme.fontSizes.s};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  letter-spacing: 0.2rem;
-  margin-bottom: 0.7rem;
-`;
-
-const CategoryContent = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const NoAddressesParagraph = styled.p`
-  display: flex;
-  align-items: center;
-  height: 7.2rem;
-  margin-right: 0.5rem;
-  padding: 0 2rem;
-`;
-
-const AddressValue = styled.p<{ isPrimary: boolean }>`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 90%;
-  line-height: ${({ theme }) => theme.lineHeights.copy};
-
-  font-weight: ${({ isPrimary, theme }) =>
-    isPrimary && theme.fontWeights.semibold};
-`;
 
 export { ProfileOverview };

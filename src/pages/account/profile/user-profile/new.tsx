@@ -3,7 +3,6 @@ import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
-import styled from "styled-components";
 import useSWR from "swr";
 
 import { Profile } from "@src/@types/profile";
@@ -32,17 +31,11 @@ const NewUserProfilePage: React.FC = () => {
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <InformativeMessage>{formatMessage({ id: "info" })}</InformativeMessage>
+      <p className="font-semibold mb-8">{formatMessage({ id: "info" })}</p>
       <UserProfileForm isCreation={true} />
     </Layout>
   );
 };
-
-const InformativeMessage = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.paragraph};
-  font-weight: ${({ theme }) => theme.fontWeights.semibold};
-  margin-bottom: 2rem;
-`;
 
 const getServerSideProps: GetServerSideProps = async (context) => {
   return getServerSidePropsWithMiddlewares(
