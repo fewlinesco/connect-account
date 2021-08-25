@@ -19,7 +19,9 @@ import {
   formatStreetAddressToDisplay,
 } from "@src/utils/format";
 
-const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
+const AddressOverview: React.FC<{ addressToDisplay?: Address }> = ({
+  addressToDisplay,
+}) => {
   const { formatMessage } = useIntl();
   const router = useRouter();
 
@@ -56,24 +58,24 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
   return (
     <>
       <Box>
-        {address ? (
+        {addressToDisplay ? (
           <>
-            {address.kind && (
+            {addressToDisplay.kind && (
               <p className="text-gray-darker text-m font-medium tracking-widest mb-3">
-                {capitalizeFirstLetter(address.kind)}
+                {capitalizeFirstLetter(addressToDisplay.kind)}
               </p>
             )}
             <p className="truncate w-11/12 leading-10 font-semibold">
-              {formatStreetAddressToDisplay(address)}
+              {formatStreetAddressToDisplay(addressToDisplay)}
             </p>
             <p
               className={`truncate w-11/12 leading-10 font-semibold ${
-                address.primary ? "mb-4" : ""
+                addressToDisplay.primary ? "mb-4" : ""
               }`}
             >
-              {formatOtherAddressFieldsToDisplay(address)}
+              {formatOtherAddressFieldsToDisplay(addressToDisplay)}
             </p>
-            {address.primary ? (
+            {addressToDisplay.primary ? (
               <PrimaryBadge localizedLabel={formatMessage({ id: "primary" })} />
             ) : null}
           </>
@@ -85,13 +87,17 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
         )}
       </Box>
       <NeutralLink
-        href={address ? `/account/profile/addresses/${address.id}/edit/` : "#"}
+        href={
+          addressToDisplay
+            ? `/account/profile/addresses/${addressToDisplay.id}/edit/`
+            : "#"
+        }
       >
         <div className="btn btn-primary btn-neutral-link">
           {formatMessage({ id: "update" })}
         </div>
       </NeutralLink>
-      {address && !address.primary ? (
+      {addressToDisplay && !addressToDisplay.primary ? (
         <>
           <Button
             type="button"
@@ -115,43 +121,40 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
               setIsModalOpen={setIsMarkAsPrimaryModalOpen}
               onConfirmationPress={async () => {
                 await fetchJson(
-                  `/api/profile/addresses/${address?.id}/mark-as-primary/`,
+                  `/api/profile/addresses/${addressToDisplay?.id}/mark-as-primary/`,
                   "POST",
                   {},
-                )
-                  .then(async () => {
-                    const modifiedAddresses = [
-                      ...(addresses || ([] as Address[])),
-                    ];
-                    const oldMarkedAddress = modifiedAddresses.find(
-                      (address) => address.primary,
-                    );
+                ).then(() => {
+                  const modifiedAddresses = [
+                    ...(addresses || ([] as Address[])),
+                  ];
+                  const oldMarkedAddress = modifiedAddresses.find(
+                    (address) => address.primary,
+                  );
 
-                    modifiedAddresses.forEach(
-                      (address) => (address.primary = false),
-                    );
+                  modifiedAddresses.forEach(
+                    (address) => (address.primary = false),
+                  );
 
-                    const addressToMark = modifiedAddresses.find(
-                      (a) => a.id === address.id,
-                    );
-                    if (addressToMark && oldMarkedAddress) {
-                      addressToMark.primary = true;
-                      mutate("/api/profile/addresses/", modifiedAddresses);
-                      mutate(
-                        `/api/profile/addresses/${oldMarkedAddress.id}/`,
-                        oldMarkedAddress,
-                      );
-                      mutate(
-                        `/api/profile/addresses/${addressToMark.id}/`,
-                        oldMarkedAddress,
-                      );
-                    }
+                  const addressToMark = modifiedAddresses.find(
+                    ({ id }) => id === addressToDisplay.id,
+                  );
 
-                    router && router.push("/account/profile/");
-                  })
-                  .catch((error) => {
-                    throw error;
-                  });
+                  if (addressToMark && oldMarkedAddress) {
+                    addressToMark.primary = true;
+                    mutate("/api/profile/addresses/", modifiedAddresses);
+                    mutate(
+                      `/api/profile/addresses/${oldMarkedAddress.id}/`,
+                      oldMarkedAddress,
+                    );
+                    mutate(
+                      `/api/profile/addresses/${addressToMark.id}/`,
+                      oldMarkedAddress,
+                    );
+                  }
+
+                  return router && router.push("/account/profile/");
+                });
 
                 return;
               }}
@@ -180,27 +183,25 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
           setIsModalOpen={setIsDeletionModalOpen}
           onConfirmationPress={async () => {
             await fetchJson(
-              `/api/profile/addresses/${address?.id}/`,
+              `/api/profile/addresses/${addressToDisplay?.id}/`,
               "DELETE",
               {},
-            )
-              .then(async () => {
-                if (addresses && address) {
-                  const addressToDelete = addresses.find(
-                    (a) => a.id === address.id,
-                  );
-                  if (addressToDelete) {
-                    const index = addresses.indexOf(addressToDelete);
-                    const modifiedAddresses = [...addresses];
-                    modifiedAddresses.splice(index, 1);
-                    mutate("/api/profile/addresses/", modifiedAddresses);
-                  }
+            ).then(() => {
+              if (addresses && addressToDisplay) {
+                const addressToDelete = addresses.find(
+                  (address) => address.id === addressToDisplay.id,
+                );
+
+                if (addressToDelete) {
+                  const index = addresses.indexOf(addressToDelete);
+                  const modifiedAddresses = [...addresses];
+                  modifiedAddresses.splice(index, 1);
+                  mutate("/api/profile/addresses/", modifiedAddresses);
                 }
-                router && router.push("/account/profile/");
-              })
-              .catch((error) => {
-                throw error;
-              });
+              }
+
+              return router && router.push("/account/profile/");
+            });
 
             return;
           }}

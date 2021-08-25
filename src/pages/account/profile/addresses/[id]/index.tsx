@@ -16,7 +16,7 @@ const AddressOverviewPage: React.FC<{ addressId: string }> = ({
   addressId,
 }) => {
   const { formatMessage } = useIntl();
-  const { data: address, error } = useSWR<Address, SWRError>(
+  const { data: addressToDisplay, error } = useSWR<Address, SWRError>(
     `/api/profile/addresses/${addressId}/`,
   );
 
@@ -29,7 +29,7 @@ const AddressOverviewPage: React.FC<{ addressId: string }> = ({
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <AddressOverview address={address} />
+      <AddressOverview addressToDisplay={addressToDisplay} />
     </Layout>
   );
 };
