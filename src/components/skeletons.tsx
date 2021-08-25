@@ -1,40 +1,37 @@
-import styled from "styled-components";
+import React from "react";
 
-const SkeletonAnimation = styled.div`
-  &&::after {
-    display: block;
-    content: "";
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    transform: translateX(-100%);
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(222, 222, 222, 0.6),
-      transparent
-    );
-    animation: loading 1.5s infinite;
-  }
-`;
+import classes from "./skeleton.module.css";
 
-const SkeletonTextLine = styled(SkeletonAnimation)<{
-  fontSize: number;
-  width: number;
-}>`
-  position: relative;
-  height: ${({ fontSize }) => `${fontSize}rem`};
-  width: ${({ width }) => `${width}%`};
-  background-color: ${({ theme }) => theme.colors.box};
-  border-radius: ${({ theme }) => theme.radii[0]};
-  overflow: hidden;
+const SkeletonTextLine: React.FC<{
+  fontSize: 1.4 | 1.6;
+  width: 40 | 50 | 75;
+  responsive?: boolean;
+}> = ({ fontSize, width, responsive }) => {
+  let dynamicClassNames;
 
-  @keyframes loading {
-    100% {
-      transform: translateX(100%);
+  if (fontSize === 1.4) {
+    if (width === 40) {
+      dynamicClassNames = "h-6 w-2/5";
+    } else if (width === 50) {
+      dynamicClassNames = "h-6 w-1/2";
+    } else if (width === 75) {
+      dynamicClassNames = "h-6 w-3/4";
+    }
+  } else if (fontSize === 1.6) {
+    if (width === 40) {
+      dynamicClassNames = "h-7 w-2/5";
+    } else if (width === 50) {
+      dynamicClassNames = `h-7 ${responsive ? "w-3/4 lg:w-1/2" : "w-1/2"}`;
+    } else if (width === 75) {
+      dynamicClassNames = "h-7 w-3/4";
     }
   }
-`;
+
+  return (
+    <div
+      className={`relative bg-box rounded overflow-hidden ${dynamicClassNames} ${classes.skeletonAnimation}`}
+    />
+  );
+};
 
 export { SkeletonTextLine };
