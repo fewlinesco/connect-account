@@ -28,7 +28,7 @@ describe("Modals", () => {
   const localizedStrings = locales.en[path];
   const displayedIdentity = mockIdentities.nonPrimaryEmailIdentity;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     setRouterPathname(path);
     setRouterQuery({ id: displayedIdentity.id });
     mutate("/api/identities/", [displayedIdentity]);

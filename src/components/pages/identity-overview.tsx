@@ -119,7 +119,7 @@ const IdentityOverview: React.FC<{
                   {},
                 ).then(async () => {
                   if (identities) {
-                    await mutate(
+                    mutate(
                       "/api/identities/",
                       identities.map((identity) => {
                         if (identity.id === currentIdentity.id) {

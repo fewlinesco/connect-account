@@ -119,16 +119,18 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                   "POST",
                   {},
                 )
-                  .then(() => {
+                  .then(async () => {
                     const modifiedAddresses = [
                       ...(addresses || ([] as Address[])),
                     ];
                     const oldMarkedAddress = modifiedAddresses.find(
                       (address) => address.primary,
                     );
+
                     modifiedAddresses.forEach(
                       (address) => (address.primary = false),
                     );
+
                     const addressToMark = modifiedAddresses.find(
                       (a) => a.id === address.id,
                     );
@@ -191,7 +193,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
                     const index = addresses.indexOf(addressToDelete);
                     const modifiedAddresses = [...addresses];
                     modifiedAddresses.splice(index, 1);
-                    await mutate("/api/profile/addresses/", modifiedAddresses);
+                    mutate("/api/profile/addresses/", modifiedAddresses);
                   }
                 }
                 router && router.push("/account/profile/");
