@@ -17,6 +17,7 @@ module.exports = {
         DEFAULT: "hsl(0, 0%, 90%)",
         light: "hsl(220, 11%, 95%)",
         dark: "hsl(0, 0%, 60%)",
+        darker: "hsl(190, 4%, 33%)",
       },
       transparent: "transparent",
     },

@@ -3,13 +3,13 @@ import React from "react";
 const DefaultProfilePictureIcon: React.FC = () => {
   return (
     <svg
-      width="64"
-      height="64"
+      width="70"
+      height="70"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <rect width="64" height="64" rx="32" fill="url(#a)" />
+      <rect width="70" height="70" rx="35" fill="url(#a)" />
       <defs>
         <pattern
           id="a"

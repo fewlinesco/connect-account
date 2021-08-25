@@ -1,7 +1,6 @@
 import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import React from "react";
 import { useIntl } from "react-intl";
-import styled from "styled-components";
 
 import { RightChevron } from "../../icons/right-chevron";
 import { Separator } from "../../separator";
@@ -24,9 +23,9 @@ const EmailSection: React.FC<{
   );
 
   return !primaryIdentity ? (
-    <NoIdentitiesParagraph>
+    <p className="flex items-center h-28 mr-2 px-8">
       {formatMessage({ id: "emailNoIdentityMessage" })}
-    </NoIdentitiesParagraph>
+    </p>
   ) : (
     <>
       <BoxedLink
@@ -35,12 +34,15 @@ const EmailSection: React.FC<{
           primaryIdentity.id
         }/`}
       >
-        <IdentityValue
-          primary={primaryIdentity.primary}
-          status={primaryIdentity.status}
+        <p
+          className={`truncate w-11/12 leading-10 ${
+            primaryIdentity.primary ? "font-semibold" : ""
+          } ${
+            primaryIdentity.status === "unvalidated" ? "text-gray-dark" : ""
+          }`}
         >
           {primaryIdentity.value}
-        </IdentityValue>
+        </p>
         <RightChevron />
       </BoxedLink>
       {!hideEmailList && secondaryIdentities.length > 0 ? (
@@ -53,9 +55,13 @@ const EmailSection: React.FC<{
                   disableClick={false}
                   href={`/account/logins/${type.toLowerCase()}/${id}/`}
                 >
-                  <IdentityValue primary={primary} status={status}>
+                  <p
+                    className={`truncate w-11/12 leading-10 ${
+                      primary ? "font-semibold" : ""
+                    } ${status === "unvalidated" ? "text-gray-dark" : ""}`}
+                  >
                     {value}
-                  </IdentityValue>
+                  </p>
                   <RightChevron />
                 </BoxedLink>
               </React.Fragment>
@@ -79,9 +85,9 @@ const PhoneSection: React.FC<{
   );
 
   return !primaryIdentity ? (
-    <NoIdentitiesParagraph>
+    <p className="flex items-center h-28 mr-2 px-8">
       {formatMessage({ id: "phoneNoIdentityMessage" })}
-    </NoIdentitiesParagraph>
+    </p>
   ) : (
     <>
       <BoxedLink
@@ -90,12 +96,15 @@ const PhoneSection: React.FC<{
           primaryIdentity.id
         }/`}
       >
-        <IdentityValue
-          primary={primaryIdentity.primary}
-          status={primaryIdentity.status}
+        <p
+          className={`truncate w-11/12 leading-10 ${
+            primaryIdentity.primary ? "font-semibold" : ""
+          } ${
+            primaryIdentity.status === "unvalidated" ? "text-gray-dark" : ""
+          }`}
         >
           {primaryIdentity.value}
-        </IdentityValue>
+        </p>
         <RightChevron />
       </BoxedLink>
       {!hideEmailList && secondaryIdentities.length > 0 ? (
@@ -108,9 +117,13 @@ const PhoneSection: React.FC<{
                   disableClick={false}
                   href={`/account/logins/${type.toLowerCase()}/${id}/`}
                 >
-                  <IdentityValue primary={primary} status={status}>
+                  <p
+                    className={`truncate w-11/12 leading-10 ${
+                      primary ? "font-semibold" : ""
+                    } ${status === "unvalidated" ? "text-gray-dark" : ""}`}
+                  >
                     {value}
-                  </IdentityValue>
+                  </p>
                   <RightChevron />
                 </BoxedLink>
               </React.Fragment>
@@ -130,22 +143,22 @@ const SocialSection: React.FC<{
   return (
     <>
       {identityList.length === 0 ? (
-        <NoIdentitiesParagraph>
+        <p className="flex items-center h-28 mr-2 px-8">
           {formatMessage({ id: "socialNoIdentityMessage" })}
-        </NoIdentitiesParagraph>
+        </p>
       ) : (
         identityList.map(({ type }, index) => (
           <React.Fragment key={type + index}>
             <BoxedLink disableClick={true} href="#">
-              <SocialIdentityBox>
+              <div className="flex items-center">
                 {getSocialIdentityIcon(type)}
-                <p>
+                <p className="ml-4">
                   {type === IdentityTypes.KAKAO_TALK ||
                   type === IdentityTypes.VKONTAKTE
                     ? formatSpecialSocialIdentities(type)
                     : capitalizeFirstLetter(type)}
                 </p>
-              </SocialIdentityBox>
+              </div>
             </BoxedLink>
             {index < identityList.length - 1 && <Separator />}
           </React.Fragment>
@@ -154,36 +167,5 @@ const SocialSection: React.FC<{
     </>
   );
 };
-
-const IdentityValue = styled.p<Pick<Identity, "primary" | "status">>`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 90%;
-  line-height: ${({ theme }) => theme.lineHeights.copy};
-
-  ${({ primary, theme }) =>
-    primary && `font-weight: ${theme.fontWeights.semibold};`}
-
-  ${({ status, theme }) =>
-    status === "unvalidated" && `color: ${theme.colors.lightGrey};`};
-`;
-
-const NoIdentitiesParagraph = styled.p`
-  display: flex;
-  align-items: center;
-  height: 7.2rem;
-  margin-right: 0.5rem;
-  padding: 0 2rem;
-`;
-
-const SocialIdentityBox = styled.div`
-  display: flex;
-  align-items: center;
-
-  p {
-    margin: 0 0 0 ${({ theme }) => theme.spaces.xxs};
-  }
-`;
 
 export { EmailSection, PhoneSection, SocialSection };

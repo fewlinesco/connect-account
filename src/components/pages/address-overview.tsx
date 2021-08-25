@@ -2,7 +2,6 @@ import { HttpStatus } from "@fwl/web";
 import { useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
-import styled from "styled-components";
 import useSWR, { mutate } from "swr";
 
 import { Modal, ModalVariant } from "../modals";
@@ -60,21 +59,29 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
         {address ? (
           <>
             {address.kind && (
-              <CategoryName>{capitalizeFirstLetter(address.kind)}</CategoryName>
+              <p className="text-gray-darker text-m font-medium tracking-widest mb-3">
+                {capitalizeFirstLetter(address.kind)}
+              </p>
             )}
-            <AddressValue>{formatStreetAddressToDisplay(address)}</AddressValue>
-            <AddressValue isPrimary={address.primary}>
+            <p className="truncate w-11/12 leading-10 font-semibold">
+              {formatStreetAddressToDisplay(address)}
+            </p>
+            <p
+              className={`truncate w-11/12 leading-10 font-semibold ${
+                address.primary ? "mb-4" : ""
+              }`}
+            >
               {formatOtherAddressFieldsToDisplay(address)}
-            </AddressValue>
+            </p>
             {address.primary ? (
               <PrimaryBadge localizedLabel={formatMessage({ id: "primary" })} />
             ) : null}
           </>
         ) : (
-          <Flex>
+          <div className="flex flex-col justify-around h-24">
             <SkeletonTextLine fontSize={1.4} width={40} />
             <SkeletonTextLine fontSize={1.6} width={70} />
-          </Flex>
+          </div>
         )}
       </Box>
       <NeutralLink
@@ -201,29 +208,4 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
   );
 };
 
-const Flex = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  height: 6rem;
-`;
-
-const CategoryName = styled.p`
-  color: ${({ theme }) => theme.colors.breadcrumbs};
-  font-size: ${({ theme }) => theme.fontSizes.s};
-  font-weight: ${({ theme }) => theme.fontWeights.medium};
-  letter-spacing: 0.2rem;
-  margin-bottom: 0.7rem;
-`;
-
-const AddressValue = styled.p<{ isPrimary?: boolean }>`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 90%;
-  line-height: ${({ theme }) => theme.lineHeights.copy};
-  font-weight: ${({ theme }) => theme.fontWeights.semibold};
-
-  margin-bottom: ${({ isPrimary, theme }) => isPrimary && theme.spaces.xxs};
-`;
 export { AddressOverview };
