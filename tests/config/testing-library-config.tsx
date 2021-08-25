@@ -63,6 +63,11 @@ function setRouterPathname(pathname: string): NextRouter {
   return mockedNextRouter;
 }
 
+function setRouterQuery(query: Record<string, string>): NextRouter {
+  mockedNextRouter.query = query;
+  return mockedNextRouter;
+}
+
 const AllTheProviders: React.ComponentType = ({ children }) => {
   return (
     <RouterContext.Provider value={{ ...mockedNextRouter }}>
@@ -77,4 +82,4 @@ const customRender = (
 ): RenderResult => render(ui, { wrapper: AllTheProviders, ...options });
 
 export * from "@testing-library/react";
-export { customRender as render, setRouterPathname };
+export { customRender as render, setRouterPathname, setRouterQuery };

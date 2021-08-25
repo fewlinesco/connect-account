@@ -5,6 +5,7 @@ import {
   render,
   screen,
   setRouterPathname,
+  setRouterQuery,
   waitFor,
 } from "../../config/testing-library-config";
 import * as mockIdentities from "../../mocks/identities";
@@ -33,19 +34,18 @@ describe("IdentityOverviewPage", () => {
     it("should display the relevant delete & mark as primary buttons but not validate identity one for a non primary validated email address", async () => {
       expect.assertions(4);
 
-      const identity = mockIdentities.nonPrimaryEmailIdentity;
-      mutate(`/api/identities/${identity.id}/`, identity);
+      const displayedIdentity = mockIdentities.nonPrimaryEmailIdentity;
+      mutate("/api/identities/", [displayedIdentity]);
+      setRouterQuery({ id: displayedIdentity.id });
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => mockIdentities.nonPrimaryEmailIdentity,
+            fetcher: async () => Promise.resolve([displayedIdentity]),
           }}
         >
-          <IdentityOverviewPage
-            identityId={mockIdentities.nonPrimaryEmailIdentity.id}
-          />
+          <IdentityOverviewPage identityId={displayedIdentity.id} />
         </SWRConfig>,
       );
 
@@ -70,19 +70,18 @@ describe("IdentityOverviewPage", () => {
     it("shouldn't display primary badge nor the awaiting validation one for a non primary validated email", async () => {
       expect.assertions(2);
 
-      const identity = mockIdentities.nonPrimaryEmailIdentity;
-      mutate(`/api/identities/${identity.id}/`, identity);
+      const displayedIdentity = mockIdentities.nonPrimaryEmailIdentity;
+      mutate("/api/identities/", [displayedIdentity]);
+      setRouterQuery({ id: displayedIdentity.id });
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => mockIdentities.nonPrimaryEmailIdentity,
+            fetcher: async () => Promise.resolve([displayedIdentity]),
           }}
         >
-          <IdentityOverviewPage
-            identityId={mockIdentities.nonPrimaryEmailIdentity.id}
-          />
+          <IdentityOverviewPage identityId={displayedIdentity.id} />
         </SWRConfig>,
       );
 
@@ -99,19 +98,18 @@ describe("IdentityOverviewPage", () => {
     it("shouldn't display the delete, mark as primary & validate identity buttons for a primary email address", async () => {
       expect.assertions(3);
 
-      const identity = mockIdentities.primaryEmailIdentity;
-      mutate(`/api/identities/${identity.id}/`, identity);
+      const displayedIdentity = mockIdentities.primaryEmailIdentity;
+      mutate("/api/identities/", [displayedIdentity]);
+      setRouterQuery({ id: displayedIdentity.id });
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => mockIdentities.primaryEmailIdentity,
+            fetcher: async () => Promise.resolve([displayedIdentity]),
           }}
         >
-          <IdentityOverviewPage
-            identityId={mockIdentities.primaryEmailIdentity.id}
-          />
+          <IdentityOverviewPage identityId={displayedIdentity.id} />
         </SWRConfig>,
       );
 
@@ -133,19 +131,18 @@ describe("IdentityOverviewPage", () => {
     it("should display primary badge and not the awaiting validation one for a primary email", async () => {
       expect.assertions(2);
 
-      const identity = mockIdentities.primaryPhoneIdentity;
-      mutate(`/api/identities/${identity.id}/`, identity);
+      const displayedIdentity = mockIdentities.primaryEmailIdentity;
+      mutate("/api/identities/", [displayedIdentity]);
+      setRouterQuery({ id: displayedIdentity.id });
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => mockIdentities.primaryEmailIdentity,
+            fetcher: async () => Promise.resolve([displayedIdentity]),
           }}
         >
-          <IdentityOverviewPage
-            identityId={mockIdentities.primaryEmailIdentity.id}
-          />
+          <IdentityOverviewPage identityId={displayedIdentity.id} />
         </SWRConfig>,
       );
 
@@ -160,19 +157,18 @@ describe("IdentityOverviewPage", () => {
     it("should display the delete & validate identity buttons but not mark as primary one for an unvalidated email address", async () => {
       expect.assertions(3);
 
-      const identity = mockIdentities.unvalidatedEmailIdentity;
-      mutate(`/api/identities/${identity.id}/`, identity);
+      const displayedIdentity = mockIdentities.unvalidatedEmailIdentity;
+      mutate("/api/identities/", [displayedIdentity]);
+      setRouterQuery({ id: displayedIdentity.id });
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => mockIdentities.unvalidatedEmailIdentity,
+            fetcher: async () => Promise.resolve([displayedIdentity]),
           }}
         >
-          <IdentityOverviewPage
-            identityId={mockIdentities.unvalidatedEmailIdentity.id}
-          />
+          <IdentityOverviewPage identityId={displayedIdentity.id} />
         </SWRConfig>,
       );
 
@@ -194,19 +190,18 @@ describe("IdentityOverviewPage", () => {
     it("should display the awaiting validation badge and not primary one for an unvalidated email", async () => {
       expect.assertions(2);
 
-      const identity = mockIdentities.unvalidatedEmailIdentity;
-      mutate(`/api/identities/${identity.id}/`, identity);
+      const displayedIdentity = mockIdentities.unvalidatedEmailIdentity;
+      mutate("/api/identities/", [displayedIdentity]);
+      setRouterQuery({ id: displayedIdentity.id });
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => mockIdentities.unvalidatedEmailIdentity,
+            fetcher: async () => Promise.resolve([displayedIdentity]),
           }}
         >
-          <IdentityOverviewPage
-            identityId={mockIdentities.unvalidatedEmailIdentity.id}
-          />
+          <IdentityOverviewPage identityId={displayedIdentity.id} />
         </SWRConfig>,
       );
 
@@ -223,19 +218,18 @@ describe("IdentityOverviewPage", () => {
     it("should display the relevant delete & mark as primary buttons but not validate identity one for a non primary validated phone number", async () => {
       expect.assertions(4);
 
-      const identity = mockIdentities.nonPrimaryPhoneIdentity;
-      mutate(`/api/identities/${identity.id}/`, identity);
+      const displayedIdentity = mockIdentities.nonPrimaryPhoneIdentity;
+      mutate("/api/identities/", [displayedIdentity]);
+      setRouterQuery({ id: displayedIdentity.id });
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => mockIdentities.nonPrimaryPhoneIdentity,
+            fetcher: async () => Promise.resolve([displayedIdentity]),
           }}
         >
-          <IdentityOverviewPage
-            identityId={mockIdentities.nonPrimaryPhoneIdentity.id}
-          />
+          <IdentityOverviewPage identityId={displayedIdentity.id} />
         </SWRConfig>,
       );
 
@@ -260,19 +254,18 @@ describe("IdentityOverviewPage", () => {
     it("shouldn't display primary badge nor the awaiting validation one for a non primary validated phone number", async () => {
       expect.assertions(2);
 
-      const identity = mockIdentities.nonPrimaryPhoneIdentity;
-      mutate(`/api/identities/${identity.id}/`, identity);
+      const displayedIdentity = mockIdentities.nonPrimaryPhoneIdentity;
+      mutate("/api/identities/", [displayedIdentity]);
+      setRouterQuery({ id: displayedIdentity.id });
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => mockIdentities.nonPrimaryPhoneIdentity,
+            fetcher: async () => Promise.resolve([displayedIdentity]),
           }}
         >
-          <IdentityOverviewPage
-            identityId={mockIdentities.nonPrimaryPhoneIdentity.id}
-          />
+          <IdentityOverviewPage identityId={displayedIdentity.id} />
         </SWRConfig>,
       );
 
@@ -289,19 +282,18 @@ describe("IdentityOverviewPage", () => {
     it("shouldn't display the delete, mark as primary & validate identity buttons for a primary phone number", async () => {
       expect.assertions(3);
 
-      const identity = mockIdentities.primaryPhoneIdentity;
-      mutate(`/api/identities/${identity.id}/`, identity);
+      const displayedIdentity = mockIdentities.primaryPhoneIdentity;
+      mutate("/api/identities/", [displayedIdentity]);
+      setRouterQuery({ id: displayedIdentity.id });
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => mockIdentities.primaryPhoneIdentity,
+            fetcher: async () => Promise.resolve([displayedIdentity]),
           }}
         >
-          <IdentityOverviewPage
-            identityId={mockIdentities.primaryPhoneIdentity.id}
-          />
+          <IdentityOverviewPage identityId={displayedIdentity.id} />
         </SWRConfig>,
       );
 
@@ -327,19 +319,18 @@ describe("IdentityOverviewPage", () => {
     it("should display primary badge and not the awaiting validation one for a primary phone number", async () => {
       expect.assertions(2);
 
-      const identity = mockIdentities.primaryPhoneIdentity;
-      mutate(`/api/identities/${identity.id}/`, identity);
+      const displayedIdentity = mockIdentities.primaryPhoneIdentity;
+      mutate("/api/identities/", [displayedIdentity]);
+      setRouterQuery({ id: displayedIdentity.id });
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => mockIdentities.primaryPhoneIdentity,
+            fetcher: async () => Promise.resolve([displayedIdentity]),
           }}
         >
-          <IdentityOverviewPage
-            identityId={mockIdentities.primaryPhoneIdentity.id}
-          />
+          <IdentityOverviewPage identityId={displayedIdentity.id} />
         </SWRConfig>,
       );
 
@@ -352,19 +343,18 @@ describe("IdentityOverviewPage", () => {
     it("should display the delete & validate identity buttons but not mark as primary one for an unvalidated phone number", async () => {
       expect.assertions(3);
 
-      const identity = mockIdentities.unvalidatedPhoneIdentity;
-      mutate(`/api/identities/${identity.id}/`, identity);
+      const displayedIdentity = mockIdentities.unvalidatedPhoneIdentity;
+      mutate("/api/identities/", [displayedIdentity]);
+      setRouterQuery({ id: displayedIdentity.id });
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => mockIdentities.unvalidatedPhoneIdentity,
+            fetcher: async () => Promise.resolve([displayedIdentity]),
           }}
         >
-          <IdentityOverviewPage
-            identityId={mockIdentities.unvalidatedPhoneIdentity.id}
-          />
+          <IdentityOverviewPage identityId={displayedIdentity.id} />
         </SWRConfig>,
       );
 
@@ -386,19 +376,18 @@ describe("IdentityOverviewPage", () => {
     it("should display the awaiting validation badge and not primary one for an unvalidated phone number", async () => {
       expect.assertions(2);
 
-      const identity = mockIdentities.unvalidatedPhoneIdentity;
-      mutate(`/api/identities/${identity.id}/`, identity);
+      const displayedIdentity = mockIdentities.unvalidatedPhoneIdentity;
+      mutate("/api/identities/", [displayedIdentity]);
+      setRouterQuery({ id: displayedIdentity.id });
 
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => mockIdentities.unvalidatedPhoneIdentity,
+            fetcher: async () => Promise.resolve([displayedIdentity]),
           }}
         >
-          <IdentityOverviewPage
-            identityId={mockIdentities.unvalidatedPhoneIdentity.id}
-          />
+          <IdentityOverviewPage identityId={displayedIdentity.id} />
         </SWRConfig>,
       );
 
