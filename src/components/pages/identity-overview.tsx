@@ -191,6 +191,8 @@ const IdentityOverview: React.FC<{
 
                   return router && router.push("/account/logins/");
                 });
+
+                return;
               }}
             />
           ) : null}

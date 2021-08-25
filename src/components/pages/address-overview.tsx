@@ -125,32 +125,40 @@ const AddressOverview: React.FC<{ addressToDisplay?: Address }> = ({
                   "POST",
                   {},
                 ).then(() => {
-                  const modifiedAddresses = [
-                    ...(addresses || ([] as Address[])),
-                  ];
-                  const oldMarkedAddress = modifiedAddresses.find(
-                    (address) => address.primary,
-                  );
-
-                  modifiedAddresses.forEach(
-                    (address) => (address.primary = false),
-                  );
-
-                  const addressToMark = modifiedAddresses.find(
-                    ({ id }) => id === addressToDisplay.id,
-                  );
-
-                  if (addressToMark && oldMarkedAddress) {
-                    addressToMark.primary = true;
-                    mutate("/api/profile/addresses/", modifiedAddresses);
-                    mutate(
-                      `/api/profile/addresses/${oldMarkedAddress.id}/`,
-                      oldMarkedAddress,
+                  if (addresses) {
+                    const oldMarkedAddress = addresses.find(
+                      (address) => address.primary,
                     );
+
                     mutate(
-                      `/api/profile/addresses/${addressToMark.id}/`,
-                      addressToMark,
+                      "/api/profile/addresses/",
+                      addresses.map((address) => {
+                        if (address.id === addressToDisplay.id) {
+                          return { ...address, primary: true };
+                        }
+
+                        if (
+                          oldMarkedAddress &&
+                          address.id === oldMarkedAddress.id
+                        ) {
+                          return { ...address, primary: false };
+                        }
+
+                        return address;
+                      }),
                     );
+
+                    if (oldMarkedAddress) {
+                      mutate(`/api/profile/addresses/${oldMarkedAddress.id}/`, {
+                        ...oldMarkedAddress,
+                        primary: false,
+                      });
+                    }
+
+                    mutate(`/api/profile/addresses/${addressToDisplay.id}/`, {
+                      ...addressToDisplay,
+                      primary: true,
+                    });
                   }
 
                   return router && router.push("/account/profile/");
