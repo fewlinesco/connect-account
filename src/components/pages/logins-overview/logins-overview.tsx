@@ -13,7 +13,7 @@ import {
 } from "./logins-overview-sections";
 import { BoxedLink } from "@src/components/boxed-link";
 import { SectionBox } from "@src/components/boxes";
-import { SkeletonTextLine } from "@src/components/skeletons";
+import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 import { sortIdentities } from "@src/utils/sort-identities";
 
 const LoginsOverview: React.FC = () => {
@@ -38,7 +38,7 @@ const LoginsOverview: React.FC = () => {
       <SectionBox>
         {!identities ? (
           <BoxedLink disableClick={true} href="#">
-            <SkeletonTextLine fontSize={1.6} width={50} />
+            <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
           </BoxedLink>
         ) : (
           <EmailSection
@@ -66,7 +66,7 @@ const LoginsOverview: React.FC = () => {
       <SectionBox>
         {!identities ? (
           <BoxedLink disableClick={true} href="#">
-            <SkeletonTextLine fontSize={1.6} width={50} />
+            <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
           </BoxedLink>
         ) : (
           <PhoneSection
@@ -94,7 +94,7 @@ const LoginsOverview: React.FC = () => {
       <SectionBox>
         {!identities ? (
           <BoxedLink disableClick={true} href="#">
-            <SkeletonTextLine fontSize={1.6} width={50} />
+            <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
           </BoxedLink>
         ) : (
           <SocialSection identityList={sortedIdentities.socialIdentities} />

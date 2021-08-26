@@ -8,7 +8,7 @@ import { Box } from "@src/components/boxes";
 import { Button } from "@src/components/buttons";
 import { Modal, ModalVariant } from "@src/components/modals";
 import { NeutralLink } from "@src/components/neutral-link";
-import { SkeletonTextLine } from "@src/components/skeletons";
+import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 import { fetchJson } from "@src/utils/fetch-json";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
@@ -28,7 +28,7 @@ const IdentityOverview: React.FC<{
       <Box>
         {!identity ? (
           <div className="text-bold my-8 break-all">
-            <SkeletonTextLine fontSize={1.6} width={50} />
+            <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
           </div>
         ) : (
           <>
