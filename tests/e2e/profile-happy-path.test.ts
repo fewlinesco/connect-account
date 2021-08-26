@@ -126,6 +126,7 @@ describe("Profile happy path", () => {
 
       await waitFor(2000);
       await click(text(localizedStrings.profileOverview.addAddress));
+      await waitFor(2000);
 
       expect(
         await text(localizedStrings.newAddress.breadcrumb).exists(),

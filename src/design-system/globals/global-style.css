@@ -1,90 +1,97 @@
 @tailwind base;
 @layer base {
-    html {
-		/* This font size means that '1rem' is exactly equal to '10px', which makes setting REM values very simple. */
-		font-size: 62.5%;
-    }
+  html {
+    /* This font size means that '1rem' is exactly equal to '10px', which makes setting REM values very simple. */
+    font-size: 62.5%;
+  }
 
-    * {
-		scroll-behavior: smooth;
-    	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu,Cantarell, 'Helvetica Neue', sans-serif;
-    }
+  * {
+    scroll-behavior: smooth;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  }
 
-    body {
-		background-color: hsl(0, 0%, 100%);
-		line-height: 1;
-		color: hsl(235, 90%, 12%);
-		font-size: 1.6rem;
-    }
+  body {
+    background-color: hsl(0, 0%, 100%);
+    line-height: 1;
+    color: hsl(235, 90%, 12%);
+    font-size: 1.6rem;
+  }
 
-	h1 {
-		font-size: 2.2rem;
-    	font-weight: bold;
-	}
+  h1 {
+    font-size: 2.2rem;
+    font-weight: bold;
+  }
 
-	h2 {
-		font-size: 1.4rem;
-		color: hsl(190, 4%, 33%);
-    	margin: 0 0 4rem 0;
-	}
+  h2 {
+    font-size: 1.4rem;
+    color: hsl(190, 4%, 33%);
+    margin: 0 0 4rem 0;
+  }
 
-	h3 {
-		font-size: 1.8rem;
-    	margin: 0 0 2rem 0;
-    	font-weight: bold;
-	}
+  h3 {
+    font-size: 1.8rem;
+    margin: 0 0 2rem 0;
+    font-weight: bold;
+  }
 
-	h3:not(:first-of-type) {
-    	margin: 4rem 0 2rem 0;
-	}
+  h3:not(:first-of-type) {
+    margin: 4rem 0 2rem 0;
+  }
 
-	p {
-		font-size: 1.6rem;
-	}
+  p {
+    font-size: 1.6rem;
+  }
 
-	input  {
-		/* To avoid having Safari(webkit) resizing the text font size inside inputs */
-		font-size: max(1.6rem);
-	}
+  input {
+    /* To avoid having Safari(webkit) resizing the text font size inside inputs */
+    font-size: max(1.6rem);
+  }
 
-	.btn {
-		@apply h-16 mb-4 rounded text-m cursor-pointer w-full break-all;
-	}
+  .btn {
+    @apply h-16 mb-4 rounded text-m cursor-pointer w-full break-all;
+  }
 
-	.btn-primary {
-		@apply bg-primary text-background;
-	}
+  .btn-primary {
+    @apply bg-primary text-background;
+  }
 
-	.btn-secondary {
-		@apply bg-background text-primary border border-primary border-solid;
-	}
+  .btn-secondary {
+    @apply bg-background text-primary border border-primary border-solid;
+  }
 
-	.btn-light-grey {
-		@apply mb-0 lg:mb-4 py-12 px-16 lg:p-0 text-black bg-background lg:bg-gray-light text-base border border-solid border-gray-light lg:border-none;
-	}
+  .btn-light-grey {
+    @apply mb-0 lg:mb-4 py-12 px-16 lg:p-0 text-black bg-background lg:bg-gray-light text-base border border-solid border-gray-light lg:border-none;
+  }
 
-	.btn-danger {
-		@apply bg-red text-background;
-	}
+  .btn-danger {
+    @apply bg-red text-background;
+  }
 
-	.btn-ghost {
-		@apply bg-background text-red;
-	}
+  .btn-ghost {
+    @apply bg-background text-red;
+  }
 
-	.btn-cookie-primary {
-		@apply h-20 mb-0 bg-primary text-background rounded-t-none rounded-br-lg rounded-bl-none;
-	}
+  .btn-cookie-primary {
+    @apply h-20 mb-0 bg-primary text-background rounded-t-none rounded-br-lg rounded-bl-none;
+  }
 
-	.btn-cookie-ghost {
-		@apply h-20 mb-0 text-primary bg-background rounded-t-none rounded-br-none rounded-bl-lg border-t border-solid border-separator;
-	}
+  .btn-cookie-ghost {
+    @apply h-20 mb-0 text-primary bg-background rounded-t-none rounded-br-none rounded-bl-lg border-t border-solid border-separator;
+  }
 
-	.btn-neutral-link {
-		@apply flex items-center justify-center;
-	}
+  .btn-neutral-link {
+    @apply flex items-center justify-center;
+  }
+
+  .link-boxed {
+    @apply p-8 flex items-center justify-between;
+  }
+
+  .link-boxed-disabled {
+    @apply p-8 flex items-center justify-between cursor-default;
+  }
 }
 
 @tailwind components;
 @tailwind utilities;
-
-

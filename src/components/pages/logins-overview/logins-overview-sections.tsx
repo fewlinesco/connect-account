@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 
 import { RightChevron } from "../../icons/right-chevron";
 import { Separator } from "../../separator";
-import { BoxedLink } from "@src/components/boxed-link";
+import { NeutralLink } from "@src/components/neutral-link";
 import {
   capitalizeFirstLetter,
   formatSpecialSocialIdentities,
@@ -28,8 +28,8 @@ const EmailSection: React.FC<{
     </p>
   ) : (
     <>
-      <BoxedLink
-        disableClick={false}
+      <NeutralLink
+        className="link-boxed h-28"
         href={`/account/logins/${primaryIdentity.type.toLowerCase()}/${
           primaryIdentity.id
         }/`}
@@ -44,15 +44,15 @@ const EmailSection: React.FC<{
           {primaryIdentity.value}
         </p>
         <RightChevron />
-      </BoxedLink>
+      </NeutralLink>
       {!hideEmailList && secondaryIdentities.length > 0 ? (
         <>
           {secondaryIdentities.map(({ value, type, id, primary, status }) => {
             return (
               <React.Fragment key={value}>
                 <Separator />
-                <BoxedLink
-                  disableClick={false}
+                <NeutralLink
+                  className="link-boxed"
                   href={`/account/logins/${type.toLowerCase()}/${id}/`}
                 >
                   <p
@@ -63,7 +63,7 @@ const EmailSection: React.FC<{
                     {value}
                   </p>
                   <RightChevron />
-                </BoxedLink>
+                </NeutralLink>
               </React.Fragment>
             );
           })}
@@ -90,8 +90,8 @@ const PhoneSection: React.FC<{
     </p>
   ) : (
     <>
-      <BoxedLink
-        disableClick={false}
+      <NeutralLink
+        className="link-boxed h-28"
         href={`/account/logins/${primaryIdentity.type.toLowerCase()}/${
           primaryIdentity.id
         }/`}
@@ -106,15 +106,15 @@ const PhoneSection: React.FC<{
           {primaryIdentity.value}
         </p>
         <RightChevron />
-      </BoxedLink>
+      </NeutralLink>
       {!hideEmailList && secondaryIdentities.length > 0 ? (
         <>
           {secondaryIdentities.map(({ value, type, id, primary, status }) => {
             return (
               <React.Fragment key={value}>
                 <Separator />
-                <BoxedLink
-                  disableClick={false}
+                <NeutralLink
+                  className="link-boxed h-28"
                   href={`/account/logins/${type.toLowerCase()}/${id}/`}
                 >
                   <p
@@ -125,7 +125,7 @@ const PhoneSection: React.FC<{
                     {value}
                   </p>
                   <RightChevron />
-                </BoxedLink>
+                </NeutralLink>
               </React.Fragment>
             );
           })}
@@ -149,7 +149,7 @@ const SocialSection: React.FC<{
       ) : (
         identityList.map(({ type }, index) => (
           <React.Fragment key={type + index}>
-            <BoxedLink disableClick={true} href="#">
+            <NeutralLink className="link-boxed-disabled h-28" href="#">
               <div className="flex items-center">
                 {getSocialIdentityIcon(type)}
                 <p className="ml-4">
@@ -159,7 +159,7 @@ const SocialSection: React.FC<{
                     : capitalizeFirstLetter(type)}
                 </p>
               </div>
-            </BoxedLink>
+            </NeutralLink>
             {index < identityList.length - 1 && <Separator />}
           </React.Fragment>
         ))
