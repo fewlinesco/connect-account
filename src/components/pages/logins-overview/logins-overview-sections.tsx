@@ -29,7 +29,7 @@ const EmailSection: React.FC<{
   ) : (
     <>
       <NeutralLink
-        className="link-boxed"
+        className="link-boxed h-28"
         href={`/account/logins/${primaryIdentity.type.toLowerCase()}/${
           primaryIdentity.id
         }/`}
@@ -91,7 +91,7 @@ const PhoneSection: React.FC<{
   ) : (
     <>
       <NeutralLink
-        className="link-boxed"
+        className="link-boxed h-28"
         href={`/account/logins/${primaryIdentity.type.toLowerCase()}/${
           primaryIdentity.id
         }/`}
@@ -114,7 +114,7 @@ const PhoneSection: React.FC<{
               <React.Fragment key={value}>
                 <Separator />
                 <NeutralLink
-                  className="link-boxed"
+                  className="link-boxed h-28"
                   href={`/account/logins/${type.toLowerCase()}/${id}/`}
                 >
                   <p
@@ -149,7 +149,7 @@ const SocialSection: React.FC<{
       ) : (
         identityList.map(({ type }, index) => (
           <React.Fragment key={type + index}>
-            <NeutralLink className="link-boxed-disabled" href="#">
+            <NeutralLink className="link-boxed-disabled h-28" href="#">
               <div className="flex items-center">
                 {getSocialIdentityIcon(type)}
                 <p className="ml-4">

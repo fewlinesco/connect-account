@@ -24,7 +24,7 @@ const Security: React.FC = () => {
       <h3>{formatMessage({ id: "sectionTitle" })}</h3>
       <SectionBox>
         <NeutralLink
-          className="link-boxed"
+          className="link-boxed h-28"
           href={!data ? "#" : "/account/security/update/"}
         >
           {!data ? (

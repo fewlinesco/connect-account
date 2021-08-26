@@ -157,7 +157,7 @@ const UserInfoSection: React.FC<{
 }> = ({ categoryName, href, children }) => {
   return (
     <>
-      <NeutralLink className="link-boxed" href={href}>
+      <NeutralLink className="link-boxed h-28" href={href}>
         <div className="w-full flex flex-col">
           <p className="text-gray-darker text-m font-medium tracking-widest mb-3">
             {categoryName}

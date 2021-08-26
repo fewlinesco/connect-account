@@ -85,11 +85,11 @@
   }
 
   .link-boxed {
-    @apply p-8 flex items-center justify-between h-28;
+    @apply p-8 flex items-center justify-between;
   }
 
   .link-boxed-disabled {
-    @apply p-8 flex items-center justify-between h-28 cursor-default;
+    @apply p-8 flex items-center justify-between cursor-default;
   }
 }
 

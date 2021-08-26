@@ -38,7 +38,7 @@ const LoginsOverview: React.FC = () => {
         <h3 className="ml-1">{formatMessage({ id: "emailTitle" })}</h3>
         <SectionBox>
           {!identities ? (
-            <NeutralLink className="link-boxed-disabled" href="#">
+            <NeutralLink className="link-boxed-disabled h-28" href="#">
               <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
             </NeutralLink>
           ) : (
@@ -68,7 +68,7 @@ const LoginsOverview: React.FC = () => {
         <h3 className="ml-1">{formatMessage({ id: "phoneTitle" })}</h3>
         <SectionBox>
           {!identities ? (
-            <NeutralLink className="link-boxed-disabled" href="#">
+            <NeutralLink className="link-boxed-disabled h-28" href="#">
               <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
             </NeutralLink>
           ) : (
@@ -98,7 +98,7 @@ const LoginsOverview: React.FC = () => {
         <h3 className="ml-1">{formatMessage({ id: "socialTitle" })}</h3>
         <SectionBox>
           {!identities ? (
-            <NeutralLink className="link-boxed-disabled" href="#">
+            <NeutralLink className="link-boxed-disabled h-28" href="#">
               <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
             </NeutralLink>
           ) : (
