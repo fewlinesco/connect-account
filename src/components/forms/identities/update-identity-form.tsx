@@ -1,4 +1,3 @@
-import "react-phone-number-input/style.css";
 import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
@@ -6,7 +5,7 @@ import { useIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../../input/form-error-message";
-import { StyledPhoneInput } from "../../input/styled-phone-input";
+import { StyledPhoneInput } from "../../input/styled-phone-input/styled-phone-input";
 import { Form } from "../form";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Box } from "@src/components/boxes";
