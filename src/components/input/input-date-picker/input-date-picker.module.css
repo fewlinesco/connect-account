@@ -1,0 +1,36 @@
+.inputDatePicker :global(.react-datepicker) {
+    font-size: theme("fontSize.s");
+}
+
+.inputDatePicker input {
+    width: 100%;
+    background: theme("colors.background");
+    border: 0.1rem solid theme("colors.gray.dark");
+    border-radius: theme("rounded.DEFAULT");
+    height: 4rem;
+    padding-left: 1.6rem;
+    margin-top: 1rem;
+    z-index: 1;
+    position: relative;
+}
+
+.inputDatePicker :global(.react-datepicker__day-name),
+.inputDatePicker :global(.react-datepicker__day) {
+    width: 2.5rem;
+    line-height: 2.5rem;
+}
+
+.inputDatePicker :global(.react-datepicker__current-month) {
+    font-size: theme("fontSize.s");
+}
+
+.inputDatePicker :global(.react-datepicker__header__dropdown--scroll) {
+    padding-top: 0.8rem;
+    font-size: theme("fontSize.s");
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.inputDatePicker :global(.react-datepicker__triangle) {
+    left: -12px !important;
+}
