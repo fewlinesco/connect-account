@@ -34,8 +34,7 @@ const getHandler: Handler = (request, response): Promise<void> => {
     if (!userCookie) {
       response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
       response.setHeader("location", "/");
-      response.end();
-      return;
+      return response.end();
     }
 
     const identities = await getIdentities(
@@ -55,25 +54,27 @@ const getHandler: Handler = (request, response): Promise<void> => {
       })
       .catch((error) => {
         span.setDisclosedAttribute("identities found", false);
+
         if (error instanceof GraphqlErrors) {
           throw webErrorFactory({
             ...webErrors.identityNotFound,
             parentError: error,
           });
         }
+
         if (error instanceof ConnectUnreachableError) {
           throw webErrorFactory({
             ...webErrors.connectUnreachable,
             parentError: error,
           });
         }
+
         throw error;
       });
 
     span.setDisclosedAttribute("identities found", true);
     response.statusCode = HttpStatus.OK;
-    response.json(identities);
-    return;
+    return response.end(JSON.stringify(identities));
   });
 };
 

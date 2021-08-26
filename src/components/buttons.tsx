@@ -2,12 +2,10 @@ import { useButton } from "@react-aria/button";
 import { AriaButtonProps } from "@react-types/button";
 import React from "react";
 import { useIntl } from "react-intl";
-import styled from "styled-components";
 
 import { CookieIcon } from "./icons/cookie-icon";
 import { CrossIcon } from "./icons/cross-icon";
 import { Triangle } from "./icons/triangle";
-import { deviceBreakpoints } from "@src/design-system/theme";
 
 interface ButtonProps extends AriaButtonProps {
   type: "button" | "submit" | "reset";
@@ -84,31 +82,14 @@ const CookieButton: React.FC<{ onPress: () => void; isOpen: boolean }> = (
   );
 
   return (
-    <CookieButtonStyle {...buttonProps} ref={cookieButtonRef}>
+    <div
+      className="hidden w-16 h-16 rounded-full lg:flex justify-center items-center text-primary cursor-pointer shadow-box transition transform hover:scale-110"
+      {...buttonProps}
+      ref={cookieButtonRef}
+    >
       {props.isOpen ? <CrossIcon /> : <CookieIcon />}
-    </CookieButtonStyle>
+    </div>
   );
 };
-
-const CookieButtonStyle = styled.div`
-  width: 4rem;
-  height: 4rem;
-  border-radius: ${({ theme }) => theme.radii[3]};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: ${({ theme }) => theme.shadows.box};
-  color: ${({ theme }) => theme.colors.primary};
-  cursor: pointer;
-  transition: all 0.1s ease-in-out;
-
-  :hover {
-    transform: scale(1.1);
-  }
-
-  @media ${deviceBreakpoints.m} {
-    display: none;
-  }
-`;
 
 export { Button, ShowMoreButton, CloseModalCrossButton, CookieButton };
