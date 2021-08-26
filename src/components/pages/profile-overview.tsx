@@ -2,7 +2,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { Address, Profile } from "@src/@types/profile";
-import { BoxedLink } from "@src/components/boxed-link";
 import { SectionBox } from "@src/components/boxes";
 import { ShowMoreButton } from "@src/components/buttons";
 import { DefaultProfilePictureIcon } from "@src/components/icons/default-profile-picture";
@@ -27,7 +26,7 @@ const ProfileOverview: React.FC<{
     <>
       <h3>{formatMessage({ id: "profileSection" })}</h3>
       <SectionBox>
-        <BoxedLink disableClick={false} href="#">
+        <NeutralLink className="link-boxed" href="#">
           <div className="flex items-center justify-center">
             {!userProfile || !userProfile.picture ? (
               <div className="mr-6">
@@ -44,7 +43,7 @@ const ProfileOverview: React.FC<{
               {formatMessage({ id: "profilePicture" })}
             </p>
           </div>
-        </BoxedLink>
+        </NeutralLink>
         <Separator />
         <UserInfoSection categoryName={formatMessage({ id: "name" })} href="#">
           {!userProfile ? (
@@ -122,9 +121,9 @@ const ProfileOverview: React.FC<{
       <h3>{formatMessage({ id: "addressesSection" })}</h3>
       <SectionBox>
         {!userAddresses ? (
-          <BoxedLink disableClick={true} href="#">
+          <NeutralLink className="link-boxed-disabled" href="#">
             <SkeletonTextLine fontSize={1.6} width={50} />
-          </BoxedLink>
+          </NeutralLink>
         ) : (
           <UserAddresses
             hideAddressList={hideAddressList}
@@ -158,14 +157,14 @@ const UserInfoSection: React.FC<{
 }> = ({ categoryName, href, children }) => {
   return (
     <>
-      <BoxedLink disableClick={false} href={href}>
+      <NeutralLink className="link-boxed" href={href}>
         <div className="w-full flex flex-col">
           <p className="text-gray-darker text-m font-medium tracking-widest mb-3">
             {categoryName}
           </p>
           {children}
         </div>
-      </BoxedLink>
+      </NeutralLink>
       <Separator />
     </>
   );
@@ -187,8 +186,8 @@ const UserAddresses: React.FC<{
     </p>
   ) : (
     <>
-      <BoxedLink
-        disableClick={false}
+      <NeutralLink
+        className="link-boxed"
         href={`/account/profile/addresses/${primaryAddress.id}/`}
       >
         <div className="w-full flex flex-col">
@@ -213,15 +212,15 @@ const UserAddresses: React.FC<{
           </p>
         </div>
         <RightChevron />
-      </BoxedLink>
+      </NeutralLink>
       {!hideAddressList && addressList.length > 0 ? (
         <>
           {secondaryAddresses.map((address) => {
             return (
               <React.Fragment key={address.id + address.sub}>
                 <Separator />
-                <BoxedLink
-                  disableClick={false}
+                <NeutralLink
+                  className="link-boxed"
                   href={`/account/profile/addresses/${address.id}/`}
                 >
                   <div className="w-full flex flex-col">
@@ -244,7 +243,7 @@ const UserAddresses: React.FC<{
                     </p>
                   </div>
                   <RightChevron />
-                </BoxedLink>
+                </NeutralLink>
               </React.Fragment>
             );
           })}

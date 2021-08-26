@@ -11,7 +11,6 @@ import {
   PhoneSection,
   SocialSection,
 } from "./logins-overview-sections";
-import { BoxedLink } from "@src/components/boxed-link";
 import { SectionBox } from "@src/components/boxes";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 import { SWRError } from "@src/errors/errors";
@@ -38,9 +37,9 @@ const LoginsOverview: React.FC = () => {
       <h3>{formatMessage({ id: "emailTitle" })}</h3>
       <SectionBox>
         {!identities ? (
-          <BoxedLink disableClick={true} href="#">
+          <NeutralLink className="link-boxed-disabled" href="#">
             <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
-          </BoxedLink>
+          </NeutralLink>
         ) : (
           <EmailSection
             identityList={sortedIdentities.emailIdentities}
@@ -66,9 +65,9 @@ const LoginsOverview: React.FC = () => {
       <h3>{formatMessage({ id: "phoneTitle" })}</h3>
       <SectionBox>
         {!identities ? (
-          <BoxedLink disableClick={true} href="#">
+          <NeutralLink className="link-boxed-disabled" href="#">
             <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
-          </BoxedLink>
+          </NeutralLink>
         ) : (
           <PhoneSection
             identityList={sortedIdentities.phoneIdentities}
@@ -94,9 +93,9 @@ const LoginsOverview: React.FC = () => {
       <h3>{formatMessage({ id: "socialTitle" })}</h3>
       <SectionBox>
         {!identities ? (
-          <BoxedLink disableClick={true} href="#">
+          <NeutralLink className="link-boxed-disabled" href="#">
             <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
-          </BoxedLink>
+          </NeutralLink>
         ) : (
           <SocialSection identityList={sortedIdentities.socialIdentities} />
         )}
