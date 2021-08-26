@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../../input/form-error-message";
-import { StyledPhoneInput } from "../../input/styled-phone-input";
+import { StyledPhoneInput } from "../../input/styled-phone-input/styled-phone-input";
 import { SkeletonTextLine } from "../../skeletons";
 import { Form } from "../form";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";

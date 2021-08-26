@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../../input/form-error-message";
 import { InputCheckbox } from "../../input/input-checkbox";
-import { StyledPhoneInput } from "../../input/styled-phone-input";
+import { StyledPhoneInput } from "../../input/styled-phone-input/styled-phone-input";
 import { Form } from "../form";
 import { InMemoryTemporaryIdentity } from "@src/@types/temporary-identity";
 import { Button } from "@src/components/buttons";
