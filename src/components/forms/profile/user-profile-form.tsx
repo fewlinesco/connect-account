@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 import { mutate } from "swr";
 import { v4 as uuidv4 } from "uuid";
 
-import { InputDatePicker } from "../../input/input-date-picker";
+import { InputDatePicker } from "../../input/input-date-picker/input-date-picker";
 import { Form } from "../form";
 import { Profile } from "@src/@types/profile";
 import { Button } from "@src/components/buttons";
