@@ -1,4 +1,3 @@
-import "react-phone-number-input/style.css";
 import { IdentityTypes } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";

@@ -1,6 +1,7 @@
 import React from "react";
 import PhoneInput, { PhoneInputProps } from "react-phone-number-input";
 
+import "react-phone-number-input/style.css";
 import classes from "./styled-phone-input.module.css";
 
 const StyledPhoneInput: React.FC<PhoneInputProps> = (props) => {
