@@ -44,8 +44,7 @@ const get: Handler = async (request, response) => {
     if (!userCookie) {
       response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
       response.setHeader("location", "/");
-      response.end();
-      return;
+      return response.end();
     }
 
     const { id: identityId } = request.query;
@@ -116,8 +115,7 @@ const destroy: Handler = (request, response): Promise<void> => {
     if (!userCookie) {
       response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
       response.setHeader("location", "/");
-      response.end();
-      return;
+      return response.end();
     }
     const data = {
       userId: userCookie.sub,
@@ -141,8 +139,7 @@ const destroy: Handler = (request, response): Promise<void> => {
 
         response.statusCode = HttpStatus.ACCEPTED;
         response.setHeader("Content-Type", "application/json");
-        response.end();
-        return;
+        return response.end();
       })
       .catch((error) => {
         span.setDisclosedAttribute("is Identity removed", false);

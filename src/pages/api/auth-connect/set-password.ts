@@ -38,8 +38,7 @@ const handler: Handler = async (request, response) => {
     if (!userCookie) {
       response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
       response.setHeader("location", "/");
-      response.end();
-      return;
+      return response.end();
     }
 
     return createOrUpdatePassword(CONFIG_VARIABLES.managementCredentials, {

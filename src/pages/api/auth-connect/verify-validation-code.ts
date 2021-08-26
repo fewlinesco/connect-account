@@ -61,8 +61,7 @@ const handler: Handler = async (request, response) => {
     if (!userCookie) {
       response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
       response.setHeader("location", "/");
-      response.end();
-      return;
+      return response.end();
     }
 
     const user = await getDBUserFromSub(userCookie.sub).catch((error) => {
@@ -161,8 +160,8 @@ const handler: Handler = async (request, response) => {
           response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
             Location: "/account/logins",
           });
-          response.end();
-          return;
+
+          return response.end();
         })
         .catch((error) => {
           span.setDisclosedAttribute("is Identity updated", false);
@@ -273,9 +272,7 @@ const handler: Handler = async (request, response) => {
     response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
       Location: "/account/logins",
     });
-
-    response.end();
-    return;
+    return response.end();
   });
 };
 
