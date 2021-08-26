@@ -34,73 +34,79 @@ const LoginsOverview: React.FC = () => {
 
   return (
     <>
-      <Timeline />
-      <h3>{formatMessage({ id: "emailTitle" })}</h3>
-      <SectionBox>
-        {!identities ? (
-          <BoxedLink disableClick={true} href="#">
-            <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
-          </BoxedLink>
-        ) : (
-          <EmailSection
-            identityList={sortedIdentities.emailIdentities}
-            hideEmailList={hideEmailList}
-          />
-        )}
-      </SectionBox>
-      {identities && sortedIdentities.emailIdentities.length > 1 ? (
-        <div className="flex justify-center">
-          <ShowMoreButton
-            hideList={hideEmailList}
-            quantity={sortedIdentities.emailIdentities.length - 1}
-            onPress={() => setHideEmailList(!hideEmailList)}
-          />
-        </div>
-      ) : null}
-      <NeutralLink href={`/account/logins/email/new/`}>
-        <div className="btn btn-secondary btn-neutral-link">
-          {`+ ${formatMessage({ id: "emailAddNewIdentityMessage" })}`}
-        </div>
-      </NeutralLink>
-      <Timeline />
-      <h3>{formatMessage({ id: "phoneTitle" })}</h3>
-      <SectionBox>
-        {!identities ? (
-          <BoxedLink disableClick={true} href="#">
-            <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
-          </BoxedLink>
-        ) : (
-          <PhoneSection
-            identityList={sortedIdentities.phoneIdentities}
-            hideEmailList={hidePhoneList}
-          />
-        )}
-      </SectionBox>
-      {identities && sortedIdentities.phoneIdentities.length > 1 ? (
-        <div className="flex justify-center">
-          <ShowMoreButton
-            hideList={hidePhoneList}
-            quantity={sortedIdentities.phoneIdentities.length - 1}
-            onPress={() => setHidePhoneList(!hidePhoneList)}
-          />
-        </div>
-      ) : null}
-      <NeutralLink href={`/account/logins/phone/new/`}>
-        <div className="btn btn-secondary btn-neutral-link">
-          {`+ ${formatMessage({ id: "phoneAddNewIdentityMessage" })}`}
-        </div>
-      </NeutralLink>
-      <TimelineEnd />
-      <h3>{formatMessage({ id: "socialTitle" })}</h3>
-      <SectionBox>
-        {!identities ? (
-          <BoxedLink disableClick={true} href="#">
-            <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
-          </BoxedLink>
-        ) : (
-          <SocialSection identityList={sortedIdentities.socialIdentities} />
-        )}
-      </SectionBox>
+      <div className="relative md:static">
+        <Timeline />
+        <h3 className="ml-1">{formatMessage({ id: "emailTitle" })}</h3>
+        <SectionBox>
+          {!identities ? (
+            <BoxedLink disableClick={true} href="#">
+              <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
+            </BoxedLink>
+          ) : (
+            <EmailSection
+              identityList={sortedIdentities.emailIdentities}
+              hideEmailList={hideEmailList}
+            />
+          )}
+        </SectionBox>
+        {identities && sortedIdentities.emailIdentities.length > 1 ? (
+          <div className="flex justify-center">
+            <ShowMoreButton
+              hideList={hideEmailList}
+              quantity={sortedIdentities.emailIdentities.length - 1}
+              onPress={() => setHideEmailList(!hideEmailList)}
+            />
+          </div>
+        ) : null}
+        <NeutralLink href={`/account/logins/email/new/`}>
+          <div className="btn btn-secondary btn-neutral-link">
+            {`+ ${formatMessage({ id: "emailAddNewIdentityMessage" })}`}
+          </div>
+        </NeutralLink>
+      </div>
+      <div className="relative md:static">
+        <Timeline />
+        <h3 className="ml-1">{formatMessage({ id: "phoneTitle" })}</h3>
+        <SectionBox>
+          {!identities ? (
+            <BoxedLink disableClick={true} href="#">
+              <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
+            </BoxedLink>
+          ) : (
+            <PhoneSection
+              identityList={sortedIdentities.phoneIdentities}
+              hideEmailList={hidePhoneList}
+            />
+          )}
+        </SectionBox>
+        {identities && sortedIdentities.phoneIdentities.length > 1 ? (
+          <div className="flex justify-center">
+            <ShowMoreButton
+              hideList={hidePhoneList}
+              quantity={sortedIdentities.phoneIdentities.length - 1}
+              onPress={() => setHidePhoneList(!hidePhoneList)}
+            />
+          </div>
+        ) : null}
+        <NeutralLink href={`/account/logins/phone/new/`}>
+          <div className="btn btn-secondary btn-neutral-link">
+            {`+ ${formatMessage({ id: "phoneAddNewIdentityMessage" })}`}
+          </div>
+        </NeutralLink>
+      </div>
+      <div className="relative md:static">
+        <TimelineEnd />
+        <h3 className="ml-1">{formatMessage({ id: "socialTitle" })}</h3>
+        <SectionBox>
+          {!identities ? (
+            <BoxedLink disableClick={true} href="#">
+              <SkeletonTextLine fontSize={1.6} width={50} responsive={true} />
+            </BoxedLink>
+          ) : (
+            <SocialSection identityList={sortedIdentities.socialIdentities} />
+          )}
+        </SectionBox>
+      </div>
     </>
   );
 };
