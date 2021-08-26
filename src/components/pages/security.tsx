@@ -1,6 +1,5 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import styled from "styled-components";
 import useSWR from "swr";
 
 import { SectionBox } from "@src/components/boxes";
@@ -24,7 +23,10 @@ const Security: React.FC = () => {
     <>
       <h3>{formatMessage({ id: "sectionTitle" })}</h3>
       <SectionBox>
-        <SecurityLink href={!data ? "#" : "/account/security/update/"}>
+        <NeutralLink
+          className="link-boxed"
+          href={!data ? "#" : "/account/security/update/"}
+        >
           {!data ? (
             <SkeletonTextLine fontSize={1.4} width={50} />
           ) : (
@@ -35,20 +37,10 @@ const Security: React.FC = () => {
             </p>
           )}
           <RightChevron />
-        </SecurityLink>
+        </NeutralLink>
       </SectionBox>
     </>
   );
 };
-
-const SecurityLink = styled(NeutralLink)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 ${({ theme }) => theme.spaces.xs};
-  cursor: pointer;
-  height: 7.2rem;
-  font-size: ${({ theme }) => theme.fontSizes.s};
-`;
 
 export { Security };

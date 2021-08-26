@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import React from "react";
-import styled from "styled-components";
 
 import { NeutralLink } from "./neutral-link";
 import { formatErrorMessage } from "@src/configs/intl";
@@ -21,9 +20,9 @@ const ErrorFallbackComponent: React.FC<{
           <h1>{formatErrorMessage(locale || "en", "404Title")}</h1>
           <p>
             {formatErrorMessage(locale || "en", "404Content")}{" "}
-            <HomepageLink href="/account/">
+            <NeutralLink className="text-primary" href="/account/">
               {formatErrorMessage(locale || "en", "homepage")}
-            </HomepageLink>
+            </NeutralLink>
             .
           </p>
         </>
@@ -35,9 +34,5 @@ const ErrorFallbackComponent: React.FC<{
     </div>
   );
 };
-
-const HomepageLink = styled(NeutralLink)`
-  color: ${({ theme }) => theme.colors.primary};
-`;
 
 export { ErrorFallbackComponent };
