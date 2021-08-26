@@ -124,6 +124,7 @@ describe("Profile happy path", () => {
 
       printStep("Address create");
 
+      await waitFor(2000);
       await click(text(localizedStrings.profileOverview.addAddress));
 
       expect(
