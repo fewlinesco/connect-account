@@ -1,21 +1,15 @@
-import PhoneInput from "react-phone-number-input";
-import styled from "styled-components";
+import React from "react";
+import PhoneInput, { PhoneInputProps } from "react-phone-number-input";
 
-const StyledPhoneInput = styled(PhoneInput)`
-  margin: ${({ theme }) => theme.spaces.xs} 0;
+import classes from "./styled-phone-input.module.css";
 
-  .PhoneInputInput {
-    width: 100%;
-    height: 4rem;
-    padding-left: 1.6rem;
-    border: 0.1rem solid ${({ theme }) => theme.colors.blacks[2]};
-    border-radius: ${({ theme }) => theme.radii[0]};
-
-    ::placeholder {
-      color: ${({ theme }) => theme.colors.lightGrey};
-      font-size: ${({ theme }) => theme.fontSizes.s};
-    }
-  }
-`;
+const StyledPhoneInput: React.FC<PhoneInputProps> = (props) => {
+  return (
+    <PhoneInput
+      className={`my-8 placeholder-gray-dark ${classes.styledPhoneInput}`}
+      {...props}
+    />
+  );
+};
 
 export { StyledPhoneInput };
