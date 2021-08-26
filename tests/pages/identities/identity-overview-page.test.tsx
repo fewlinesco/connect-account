@@ -42,7 +42,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: async () => Promise.resolve([displayedIdentity]),
+            fetcher: () => Promise.resolve([displayedIdentity]),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -78,7 +78,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: async () => Promise.resolve([displayedIdentity]),
+            fetcher: () => Promise.resolve([displayedIdentity]),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -106,7 +106,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: async () => Promise.resolve([displayedIdentity]),
+            fetcher: () => Promise.resolve([displayedIdentity]),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -139,7 +139,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: async () => Promise.resolve([displayedIdentity]),
+            fetcher: () => Promise.resolve([displayedIdentity]),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -165,7 +165,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: async () => Promise.resolve([displayedIdentity]),
+            fetcher: () => Promise.resolve([displayedIdentity]),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -198,7 +198,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: async () => Promise.resolve([displayedIdentity]),
+            fetcher: () => Promise.resolve([displayedIdentity]),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -226,7 +226,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: async () => Promise.resolve([displayedIdentity]),
+            fetcher: () => Promise.resolve([displayedIdentity]),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -262,7 +262,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: async () => Promise.resolve([displayedIdentity]),
+            fetcher: () => Promise.resolve([displayedIdentity]),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -290,7 +290,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: async () => Promise.resolve([displayedIdentity]),
+            fetcher: () => Promise.resolve([displayedIdentity]),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -327,7 +327,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: async () => Promise.resolve([displayedIdentity]),
+            fetcher: () => Promise.resolve([displayedIdentity]),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -351,7 +351,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: async () => Promise.resolve([displayedIdentity]),
+            fetcher: () => Promise.resolve([displayedIdentity]),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -384,7 +384,7 @@ describe("IdentityOverviewPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: async () => Promise.resolve([displayedIdentity]),
+            fetcher: () => Promise.resolve([displayedIdentity]),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />

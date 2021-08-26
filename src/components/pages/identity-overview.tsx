@@ -117,7 +117,7 @@ const IdentityOverview: React.FC<{
                   `/api/identities/${currentIdentity.id}/mark-as-primary/`,
                   "POST",
                   {},
-                ).then(async () => {
+                ).then(() => {
                   if (identities) {
                     mutate(
                       "/api/identities/",

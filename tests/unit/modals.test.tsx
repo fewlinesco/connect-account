@@ -41,7 +41,7 @@ describe("Modals", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: async () => Promise.resolve([displayedIdentity]),
+          fetcher: () => Promise.resolve([displayedIdentity]),
         }}
       >
         <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -65,7 +65,7 @@ describe("Modals", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: async () => Promise.resolve([displayedIdentity]),
+          fetcher: () => Promise.resolve([displayedIdentity]),
         }}
       >
         <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -109,7 +109,7 @@ describe("Modals", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: async () => Promise.resolve([displayedIdentity]),
+          fetcher: () => Promise.resolve([displayedIdentity]),
         }}
       >
         <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -153,7 +153,7 @@ describe("Modals", () => {
   //       <SWRConfig
   //         value={{
   //           dedupingInterval: 0,
-  //           fetcher: async () =>
+  //           fetcher: () =>
   //             Promise.resolve(mockIdentities.nonPrimaryEmailIdentity),
   //         }}
   //       >
