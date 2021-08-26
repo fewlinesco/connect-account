@@ -113,8 +113,7 @@ const handler: Handler = (request, response): Promise<void> => {
     response.writeHead(HttpStatus.TEMPORARY_REDIRECT, {
       Location: locale === "en" ? "/account/" : `/${locale}/account/`,
     });
-    response.end();
-    return;
+    return response.end();
   });
 };
 

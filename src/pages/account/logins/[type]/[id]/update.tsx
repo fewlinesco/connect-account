@@ -9,6 +9,7 @@ import { UpdateIdentityForm } from "@src/components/forms/identities/update-iden
 import { Layout } from "@src/components/page-layout";
 import { logger } from "@src/configs/logger";
 import getTracer from "@src/configs/tracer";
+import { SWRError } from "@src/errors/errors";
 import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 import { getIdentityType } from "@src/utils/get-identity-type";
 
@@ -16,7 +17,7 @@ const UpdateIdentityPage: React.FC<{ identityId: string }> = ({
   identityId,
 }) => {
   const { formatMessage } = useIntl();
-  const { data: identity, error } = useSWR<Identity, Error>(
+  const { data: identity, error } = useSWR<Identity, SWRError>(
     `/api/identities/${identityId}/`,
   );
 

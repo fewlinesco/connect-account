@@ -18,23 +18,24 @@ const IdentityOverviewPage: React.FC<{
 }> = ({ identityId }) => {
   const { formatMessage } = useIntl();
 
-  const { data: identity, error } = useSWR<Identity, SWRError>(
-    `/api/identities/${identityId}/`,
+  const { data: identities, error } = useSWR<Identity[], SWRError>(
+    "/api/identities/",
   );
 
   if (error) {
     throw error;
   }
 
-  const breadcrumbs = identity
-    ? getIdentityType(identity.type) === IdentityTypes.EMAIL
+  const currentIdentity = identities?.find(({ id }) => identityId === id);
+  const breadcrumbs = currentIdentity
+    ? getIdentityType(currentIdentity.type) === IdentityTypes.EMAIL
       ? formatMessage({ id: "emailBreadcrumb" })
       : formatMessage({ id: "phoneBreadcrumb" })
     : "";
 
   return (
     <Layout breadcrumbs={breadcrumbs} title={formatMessage({ id: "title" })}>
-      <IdentityOverview identity={identity} />
+      <IdentityOverview identities={identities} />
     </Layout>
   );
 };
