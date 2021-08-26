@@ -45,8 +45,7 @@ const handler: Handler = (request, response): Promise<void> => {
     if (!userCookie) {
       response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
       response.setHeader("location", "/");
-      response.end();
-      return;
+      return response.end();
     }
 
     const { sub } = userCookie;
@@ -153,8 +152,7 @@ const handler: Handler = (request, response): Promise<void> => {
 
     response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
     response.setHeader("location", `${request.query.next}`);
-    response.end();
-    return;
+    return response.end();
   });
 };
 

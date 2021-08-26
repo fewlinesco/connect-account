@@ -61,9 +61,7 @@ describe("Identity flows", () => {
       await waitFor(1000);
 
       const initialLoginsCount = await (async () => {
-        const showMore = await text(
-          localizedStrings.identitiesOverview.showMore,
-        );
+        const showMore = text(localizedStrings.identitiesOverview.showMore);
         const showMoreExists = await showMore.exists(0, 0);
         return showMoreExists
           ? +(await showMore.text()).replace(/[^\d]/g, "")

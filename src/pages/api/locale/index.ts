@@ -82,8 +82,7 @@ const patchHandler: Handler = (request, response): Promise<void> => {
     span.setDisclosedAttribute("user locale set", true);
     response.statusCode = HttpStatus.OK;
     response.setHeader("Content-Type", "application/json");
-    response.end();
-    return;
+    return response.end();
   });
 };
 

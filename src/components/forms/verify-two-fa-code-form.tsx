@@ -35,6 +35,7 @@ const VerifyTwoFACodeForm: React.FC<{
           { verificationCode },
         ).then(async (response) => {
           const parsedResponse = await response.json();
+
           if (response.status >= 400) {
             if ("code" in parsedResponse) {
               if (
