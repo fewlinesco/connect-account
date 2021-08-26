@@ -76,7 +76,7 @@
 	}
 
 	.btn-cookie-ghost {
-		@apply mb-0 text-primary bg-background rounded-t-none rounded-br-none rounded-bl-lg border-t border-solid border-separator;
+		@apply h-20 mb-0 text-primary bg-background rounded-t-none rounded-br-none rounded-bl-lg border-t border-solid border-separator;
 	}
 
 	.btn-neutral-link {

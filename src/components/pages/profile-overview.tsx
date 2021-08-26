@@ -9,7 +9,7 @@ import { DefaultProfilePictureIcon } from "@src/components/icons/default-profile
 import { RightChevron } from "@src/components/icons/right-chevron";
 import { NeutralLink } from "@src/components/neutral-link";
 import { Separator } from "@src/components/separator";
-import { SkeletonTextLine } from "@src/components/skeletons";
+import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 import {
   capitalizeFirstLetter,
   formatOtherAddressFieldsToDisplay,

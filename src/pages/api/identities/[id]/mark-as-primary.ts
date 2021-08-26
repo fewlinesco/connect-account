@@ -45,8 +45,7 @@ const markAsPrimary: Handler = async (request, response) => {
     if (!userCookie) {
       response.statusCode = HttpStatus.TEMPORARY_REDIRECT;
       response.setHeader("location", "/");
-      response.end();
-      return;
+      return response.end();
     }
 
     const isAuthorized = await isMarkingIdentityAsPrimaryAuthorized(
@@ -102,8 +101,7 @@ const markAsPrimary: Handler = async (request, response) => {
 
         response.statusCode = HttpStatus.OK;
         response.setHeader("Content-type", "application/json");
-        response.end();
-        return;
+        return response.end();
       })
       .catch((error) => {
         span.setDisclosedAttribute("is Identity marked as primary", false);

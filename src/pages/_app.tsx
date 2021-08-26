@@ -58,6 +58,7 @@ const AccountApp: React.FC = ({ children }) => {
           <AlertMessages />
           <SWRConfig
             value={{
+              revalidateOnFocus: false,
               fetcher: async (url) =>
                 fetch(url).then(async (response) => {
                   if (!response.ok) {
