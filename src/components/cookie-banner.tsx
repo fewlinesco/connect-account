@@ -27,14 +27,14 @@ const CookieBanner: React.FC = () => {
   }, [consentCookie]);
 
   return (
-    <div className="fixed w-full bottom-0 left-0 lg:left-8 lg:bottom-8 z-20">
+    <div className="fixed w-full lg:w-px bottom-0 left-0 lg:left-8 lg:bottom-8 z-20">
       <CookieButton
         onPress={() => setIsModalOpen(!isModalOpen)}
         isOpen={isModalOpen}
       />
       {isModalOpen ? (
         <>
-          <div className="w-full lg:max-w-2xl absolute bottom-0 left-0 lg:bottom-20 lg:left-8 bg-background shadow-box rounded z-20">
+          <div className="w-full lg:w-max lg:max-w-2xl absolute bottom-0 left-0 lg:bottom-20 lg:left-8 bg-background shadow-box rounded z-20">
             <div className="pt-8 px-8 mb-5">
               <h2 className="text-xxl text-black mb-5 font-normal ">Cookies</h2>
               <p className="leading-tight mb-6">
