@@ -10,7 +10,7 @@ import { PrimaryBadge } from "@src/components/badges";
 import { Box } from "@src/components/boxes";
 import { Button } from "@src/components/buttons";
 import { NeutralLink } from "@src/components/neutral-link";
-import { SkeletonTextLine } from "@src/components/skeletons";
+import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 import { SWRError } from "@src/errors/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 import {
@@ -80,7 +80,7 @@ const AddressOverview: React.FC<{ address?: Address }> = ({ address }) => {
         ) : (
           <div className="flex flex-col justify-around h-24">
             <SkeletonTextLine fontSize={1.4} width={40} />
-            <SkeletonTextLine fontSize={1.6} width={70} />
+            <SkeletonTextLine fontSize={1.6} width={75} />
           </div>
         )}
       </Box>
