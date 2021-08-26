@@ -2,7 +2,7 @@ import React from "react";
 
 import classes from "./input-radio-button.module.css";
 import { Separator } from "@src/components/separator";
-import { SkeletonTextLine } from "@src/components/skeletons";
+import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
 
 const InputsRadio: React.FC<{
   groupName: string;
