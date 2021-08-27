@@ -5,8 +5,6 @@
 import { WebError } from "@fwl/web/dist/errors";
 import * as Sentry from "@sentry/nextjs";
 
-console.log(document.cookie);
-
 const sentryUserConsent = document.cookie
   ? document.cookie
       .split("; ")
@@ -36,7 +34,4 @@ if (parsedSentryUserConsent) {
       return event;
     },
   });
-  console.log("Sentry initiliazed");
-} else {
-  console.log("Sentry not initiliazed");
 }
