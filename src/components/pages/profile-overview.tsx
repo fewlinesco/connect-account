@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -33,10 +34,10 @@ const ProfileOverview: React.FC<{
                 <DefaultProfilePictureIcon />
               </div>
             ) : (
-              <img
-                className="w-28 h-28 rounded-full mr-6"
+              <Image
                 src={userProfile.picture}
-                alt="user"
+                className="w-28 h-28 rounded-full mr-6"
+                alt="User"
               />
             )}
             <p className="text-gray-darker text-m font-medium tracking-widest">
