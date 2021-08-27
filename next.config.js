@@ -3,12 +3,10 @@ const { withSentryConfig } = require("@sentry/nextjs");
 
 const moduleExports = {
   trailingSlash: true,
+  productionBrowserSourceMaps: true,
   i18n: {
     locales: ["en", "fr"],
     defaultLocale: "en",
-  },
-  future: {
-    webpack5: true,
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
@@ -32,7 +30,6 @@ const moduleExports = {
 
     return config;
   },
-  productionBrowserSourceMaps: true,
 };
 
 const SentryWebpackPluginOptions = {
