@@ -1,6 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { Button } from "../buttons";
 import { SectionBox } from "@src/components/boxes";
 import { RightChevron } from "@src/components/icons/right-chevron";
 import { getSectionListContent } from "@src/components/navigation-bars/navigation-sections";
@@ -31,6 +32,15 @@ const AccountOverview: React.FC = () => {
           </SectionBox>
         );
       })}
+      <Button
+        type="button"
+        className="btn btn-primary"
+        onPress={() => {
+          throw new Error("Checking Sentry init");
+        }}
+      >
+        Press me{" "}
+      </Button>
     </>
   );
 };
