@@ -325,7 +325,7 @@ Favicons for various OS.
 
 - *@types/*: Type declaration used in multiple places.
 - *commands/*: Write (e.g. `POST`) database actions.
-- *components/*: React functional components used to render, with their respective stories.
+- *components/*: React functional components used to render.
 - *configs/*: 
   * *config-variables.ts*: Entry point used to verify env vars sourcing, and prevent the app to run if forgotten.
   * *db-client.ts*: Singleton of the DynamoDB client.
@@ -336,8 +336,7 @@ Favicons for various OS.
   * *rate-limiting-config.ts*: Config used for the rate limiting middleware provided by `@fwl/web`.
   * *tracer.ts*: Singleton of the tracer client provided by `@fwl/web`.
 - *design-system/*:
-  * *globals/*: Global style components.
-  * *theme/*: `styled-components` related theme files.
+  * *global-style.css*: Global style CSS rules and `tailwindcss` built-in rules.
 - *errors/*:
   * *errors.ts*: List of exceptions related to Connect.Account.
   * *web-errors.ts*: List of exceptions related to `@fwl/web` WebErrors.
@@ -459,71 +458,9 @@ We have also added a test to ensure that the component is not being rendered in 
 
 === Global style
 
-The `globalStyle` object, found in `/src/design-system/globals/globalStyle.tsx`, is used to remove undesired style and behavior found in HTML. 
+The `global-style` CSS sheet, found in `/src/design-system/global-style.css`, is used to import built-in `tailwincss` rules and remove undesired style and behavior found in HTML. 
 
 > Note that we chose to set the global font size to *62.5%*. This font size means that '1rem' is exactly equal to '10px', which makes setting REM values very simple.
-
-The `globalStyle` is scoped in the `_app` page component.
-
-=== Theme
-
-You should prioritize theme values over arbitrary CSS values.
-
-The theme structure is defined inside the `src/@types/styled-component.d.ts` definition type file.
-
-The theme values are set inside `src/design-system/theme/lightTheme.ts` file. Each field are set individually, then assigned to the `lightTheme` variable.
-
-The theme access is scoped in the `_app` page component.
-
-You can access the theme properties and values inside a `styled` component by calling the `theme` props:
-
-[source, typescript]
-----
-import styled from "styled-components";
-
-// Note that styled component are PascalCased.
-const StyledComponent = styled.div`
-  css-property: ${({ theme }) => theme.themeKey};
-`;
-----
-
-You can access the theme properties and values from everywhere else with the custom `useTheme` hook:
-
-[source, typescript]
-----
-import { useTheme } from "relative/path/to/the/design-system/theme/useTheme";
-
-const theme = useTheme();
-----
-
-To access our breakpoint definitions, you can import the `breakpointDevices` object from the theme file and apply the wanted breakpoint with the `@media` keyword:
-
-[source, typescript]
-----
-import { deviceBreakpoints } from "relative/path/to/the/theme";
-
-const StyledComponent = styled.div {
-  @media ${deviceBreakpoints.xs} {}
-
-  @media ${deviceBreakpoints.s} {}
-
-  @media ${deviceBreakpoints.m} {}
-
-  @media ${deviceBreakpoints.l} {}
-};
-----
-
-Our chosen viewport breakpoints are : `576px` | `768px` | `992px` | `1200px`.
-
-Sometimes, you want to pass custom props to your styled component. Here is the way to do it:
-
-[source, typescript]
-----
-const StyledComponent = styled.button<{ isActive: boolean }>`
-  ${({ isActive, theme }) =>
-    `color: ${isActive ? theme.colors.primary : theme.colors.secondary}`};
-`;
-----
 
 === SVG
 
@@ -550,7 +487,6 @@ This way, the SVG will be rendered with the color inherited from its parent.
 [source, jsx]
 ----
 import React from 'react';
-import styled from "styled-components";
 
 const CrossIcon: React.FC = () => {
   return (
@@ -560,22 +496,6 @@ const CrossIcon: React.FC = () => {
     </svg>
   )
 };
-
-const Modal: React.FC = () => {
-  return (
-    <div>
-      // ...
-      <IconContainer>
-        <CrossIcon/>
-      </IconContainer>
-      // ...
-    </div>
-  )
-};
-
-const IconContainer = styled.div`
-  color: #000;
-`;
 ----
 
 When you use Figma to export SVG, be sure to export the upper component (i.e. *name 40x40*).

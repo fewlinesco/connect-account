@@ -1,11 +1,9 @@
-import type { AppProps } from "next/app";
 import type {
-  AppType,
+  DocumentContext,
   DocumentInitialProps,
 } from "next/dist/next-server/lib/utils";
 import Document, { Html, Main, Head, NextScript } from "next/document";
 import React from "react";
-import { ServerStyleSheet } from "styled-components";
 
 import { generateCSP } from "@src/utils/generate-csp";
 import { generateNonce } from "@src/utils/generate-nonce";
@@ -15,12 +13,10 @@ interface ExtendedDocumentProps extends DocumentInitialProps {
 }
 
 export default class MyDocument extends Document<ExtendedDocumentProps> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-  static async getInitialProps(ctx: any): Promise<ExtendedDocumentProps> {
-    const sheet = new ServerStyleSheet();
-
-    const originalRenderPage = ctx.renderPage;
-
+  static async getInitialProps(
+    ctx: DocumentContext,
+  ): Promise<ExtendedDocumentProps> {
+    const initialProps = await Document.getInitialProps(ctx);
     const nonce = generateNonce();
 
     let res;
@@ -29,28 +25,10 @@ export default class MyDocument extends Document<ExtendedDocumentProps> {
       res.setHeader("Content-Security-Policy", generateCSP(nonce));
     }
 
-    try {
-      ctx.renderPage = () =>
-        originalRenderPage({
-          enhanceApp: (App: AppType) => (props: AppProps) =>
-            sheet.collectStyles(<App {...props} />),
-        });
-
-      const initialProps = await Document.getInitialProps(ctx);
-
-      return {
-        ...initialProps,
-        nonce,
-        styles: (
-          <>
-            {initialProps.styles}
-            {sheet.getStyleElement()}
-          </>
-        ),
-      };
-    } finally {
-      sheet.seal();
-    }
+    return {
+      ...initialProps,
+      nonce,
+    };
   }
 
   render(): JSX.Element {
