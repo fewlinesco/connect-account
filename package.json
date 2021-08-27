@@ -135,6 +135,7 @@
       }
     ],
     "rules": {
+      "@next/next/no-img-element": "off",
       "@typescript-eslint/camelcase": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
