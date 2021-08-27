@@ -38,7 +38,7 @@
     "@fewlines/connect-management": "0.8.0",
     "@formatjs/intl": "1.14.1",
     "@fwl/logging": "0.1.2",
-    "@fwl/tracing": "0.10.3",
+    "@fwl/tracing": "0.10.4",
     "@fwl/web": "0.13.0",
     "@hapi/iron": "6.0.0",
     "@react-aria/button": "3.3.3",
