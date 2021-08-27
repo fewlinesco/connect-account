@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "next dev -p $CONNECT_ACCOUNT_PORT",
     "build": "next build",
-    "lint": "eslint **/*.json \"{src,pages,bin,doc,tests}/**/*.{js,ts,jsx,tsx}\"",
+    "lint": "eslint \"{src,pages,bin,doc,tests}/**/*.{js,ts,jsx,tsx}\"",
     "start": "next start -p $PORT",
     "test": "jest --testPathIgnorePatterns=e2e --runInBand",
     "test:e2e": "jest --testPathPattern=e2e --runInBand",
@@ -90,7 +90,6 @@
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.24.2",
-    "eslint-plugin-json": "3.1.0",
     "eslint-plugin-prettier": "3.4.1",
     "eslint-plugin-react": "7.24.0",
     "file-loader": "6.2.0",
@@ -123,9 +122,7 @@
       "@fewlines/eslint-config/node",
       "@fewlines/eslint-config/react",
       "@fewlines/eslint-config/typescript",
-      "@fewlines/eslint-config/react-typescript",
-      "plugin:json/recommended",
-      "plugin:@next/next/recommended"
+      "@fewlines/eslint-config/react-typescript"
     ],
     "overrides": [
       {
