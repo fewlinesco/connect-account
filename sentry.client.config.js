@@ -37,5 +37,5 @@ try {
     });
   }
 } catch (error) {
-  return;
+  // eslint-disable-next-line no-empty
 }
