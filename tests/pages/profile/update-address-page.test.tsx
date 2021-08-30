@@ -37,9 +37,9 @@ describe("EditAddressPage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => {
-            return { address: mockAddresses.primaryAddress };
-          },
+          fetcher: () =>
+            Promise.resolve({ address: mockAddresses.primaryAddress }),
+          provider: () => new Map(),
         }}
       >
         <EditAddressPage addressId={mockAddresses.primaryAddress.id} />
