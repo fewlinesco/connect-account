@@ -41,6 +41,7 @@ describe("Modals", () => {
         value={{
           dedupingInterval: 0,
           fetcher: () => Promise.resolve([displayedIdentity]),
+          provider: () => new Map(),
         }}
       >
         <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -65,6 +66,7 @@ describe("Modals", () => {
         value={{
           dedupingInterval: 0,
           fetcher: () => Promise.resolve([displayedIdentity]),
+          provider: () => new Map(),
         }}
       >
         <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -109,6 +111,7 @@ describe("Modals", () => {
         value={{
           dedupingInterval: 0,
           fetcher: () => Promise.resolve([displayedIdentity]),
+          provider: () => new Map(),
         }}
       >
         <IdentityOverviewPage identityId={displayedIdentity.id} />
