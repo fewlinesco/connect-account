@@ -34,9 +34,8 @@ describe("SecurityPage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => {
-            return { isPasswordSet: false };
-          },
+          fetcher: () => Promise.resolve({ isPasswordSet: false }),
+          provider: () => new Map(),
         }}
       >
         <SecurityPage />
@@ -68,9 +67,8 @@ describe("SecurityPage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => {
-            return { isPasswordSet: false };
-          },
+          fetcher: () => Promise.resolve({ isPasswordSet: false }),
+          provider: () => new Map(),
         }}
       >
         <SecurityPage />
@@ -87,9 +85,8 @@ describe("SecurityPage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => {
-            return { isPasswordSet: true };
-          },
+          fetcher: () => Promise.resolve({ isPasswordSet: true }),
+          provider: () => new Map(),
         }}
       >
         <SecurityPage />
