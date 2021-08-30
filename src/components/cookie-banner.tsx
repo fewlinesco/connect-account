@@ -9,6 +9,14 @@ import { formatCookieBannerMessage } from "@src/configs/intl";
 import { SWRError } from "@src/errors/errors";
 import { fetchJson } from "@src/utils/fetch-json";
 
+async function setUserConsentCookie(
+  cookieValue: Record<string, boolean>,
+): Promise<void> {
+  return fetchJson(`/api/consent-cookie`, "PATCH", cookieValue).then(() => {
+    document.location.reload();
+  });
+}
+
 const CookieBanner: React.FC = () => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
@@ -67,11 +75,7 @@ const CookieBanner: React.FC = () => {
                 type="button"
                 className="btn btn-cookie-ghost"
                 onPress={async () => {
-                  await fetchJson("/api/consent-cookie/", "PATCH", {
-                    sentry: false,
-                  }).then(() => {
-                    setIsModalOpen(false);
-                  });
+                  await setUserConsentCookie({ sentry: false });
                 }}
               >
                 {formatCookieBannerMessage(router.locale || "en", "refuse")}
@@ -80,11 +84,7 @@ const CookieBanner: React.FC = () => {
                 type="button"
                 className="btn btn-cookie-primary"
                 onPress={async () => {
-                  await fetchJson("/api/consent-cookie/", "PATCH", {
-                    sentry: true,
-                  }).then(() => {
-                    setIsModalOpen(false);
-                  });
+                  await setUserConsentCookie({ sentry: true });
                 }}
               >
                 {formatCookieBannerMessage(router.locale || "en", "accept")}
