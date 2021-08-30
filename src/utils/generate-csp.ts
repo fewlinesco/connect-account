@@ -6,7 +6,7 @@ function generateCSP(nonce: string): string {
     "script-src": `'self' ajax.cloudflare.com static.cloudflareinsights.com 'nonce-${nonce}'`,
     "connect-src": `'self' *.sentry.io`,
     "img-src": `'self' data: https:`,
-    "style-src": `'self' 'unsafe-inline'`,
+    "style-src": `'self'`,
     "base-uri": `'self'`,
     "form-action": `'self'`,
     "object-src": `'none'`,
