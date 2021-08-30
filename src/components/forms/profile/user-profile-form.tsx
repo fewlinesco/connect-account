@@ -1,5 +1,4 @@
 import { HttpStatus } from "@fwl/web";
-import { ProfileData } from "connect-profile-client";
 import { NextRouter, useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -13,6 +12,7 @@ import { Button } from "@src/components/buttons";
 import { InputText } from "@src/components/input/input-text/input-text";
 import { NeutralLink } from "@src/components/neutral-link";
 import { fetchJson } from "@src/utils/fetch-json";
+import { ProfileData } from "connect-profile-client";
 
 import "react-datepicker/dist/react-datepicker.css";
 
