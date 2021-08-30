@@ -1,6 +1,6 @@
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { mutate, SWRConfig } from "swr";
+import { SWRConfig } from "swr";
 
 import {
   render,
@@ -31,7 +31,6 @@ describe("Modals", () => {
   beforeAll(() => {
     setRouterPathname(path);
     setRouterQuery({ id: displayedIdentity.id });
-    mutate("/api/identities/", [displayedIdentity]);
   });
 
   it("shouldn't display any confirmation box on first render", async () => {

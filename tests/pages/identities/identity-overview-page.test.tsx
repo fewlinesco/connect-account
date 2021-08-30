@@ -1,5 +1,5 @@
 import React from "react";
-import { mutate, SWRConfig } from "swr";
+import { SWRConfig } from "swr";
 
 import {
   render,
@@ -35,7 +35,6 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(4);
 
       const displayedIdentity = mockIdentities.nonPrimaryEmailIdentity;
-      mutate("/api/identities/", [displayedIdentity]);
       setRouterQuery({ id: displayedIdentity.id });
 
       render(
@@ -43,6 +42,7 @@ describe("IdentityOverviewPage", () => {
           value={{
             dedupingInterval: 0,
             fetcher: () => Promise.resolve([displayedIdentity]),
+            provider: () => new Map(),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -71,7 +71,6 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(2);
 
       const displayedIdentity = mockIdentities.nonPrimaryEmailIdentity;
-      mutate("/api/identities/", [displayedIdentity]);
       setRouterQuery({ id: displayedIdentity.id });
 
       render(
@@ -79,6 +78,7 @@ describe("IdentityOverviewPage", () => {
           value={{
             dedupingInterval: 0,
             fetcher: () => Promise.resolve([displayedIdentity]),
+            provider: () => new Map(),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -99,7 +99,6 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(3);
 
       const displayedIdentity = mockIdentities.primaryEmailIdentity;
-      mutate("/api/identities/", [displayedIdentity]);
       setRouterQuery({ id: displayedIdentity.id });
 
       render(
@@ -107,32 +106,30 @@ describe("IdentityOverviewPage", () => {
           value={{
             dedupingInterval: 0,
             fetcher: () => Promise.resolve([displayedIdentity]),
+            provider: () => new Map(),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
         </SWRConfig>,
       );
 
-      await waitFor(() => {
-        expect(
-          screen.queryByRole("button", {
-            name: localizedStrings.markEmail,
-          }),
-        ).not.toBeInTheDocument();
-        expect(
-          screen.queryByRole("button", { name: localizedStrings.deleteEmail }),
-        ).not.toBeInTheDocument();
-        expect(
-          screen.queryByRole("link", { name: localizedStrings.proceed }),
-        ).not.toBeInTheDocument();
-      });
+      expect(
+        screen.queryByRole("button", {
+          name: localizedStrings.markEmail,
+        }),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("button", { name: localizedStrings.deleteEmail }),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("link", { name: localizedStrings.proceed }),
+      ).not.toBeInTheDocument();
     });
 
     it("should display primary badge and not the awaiting validation one for a primary email", async () => {
       expect.assertions(2);
 
       const displayedIdentity = mockIdentities.primaryEmailIdentity;
-      mutate("/api/identities/", [displayedIdentity]);
       setRouterQuery({ id: displayedIdentity.id });
 
       render(
@@ -140,6 +137,7 @@ describe("IdentityOverviewPage", () => {
           value={{
             dedupingInterval: 0,
             fetcher: () => Promise.resolve([displayedIdentity]),
+            provider: () => new Map(),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -158,7 +156,6 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(3);
 
       const displayedIdentity = mockIdentities.unvalidatedEmailIdentity;
-      mutate("/api/identities/", [displayedIdentity]);
       setRouterQuery({ id: displayedIdentity.id });
 
       render(
@@ -166,6 +163,7 @@ describe("IdentityOverviewPage", () => {
           value={{
             dedupingInterval: 0,
             fetcher: () => Promise.resolve([displayedIdentity]),
+            provider: () => new Map(),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -191,7 +189,6 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(2);
 
       const displayedIdentity = mockIdentities.unvalidatedEmailIdentity;
-      mutate("/api/identities/", [displayedIdentity]);
       setRouterQuery({ id: displayedIdentity.id });
 
       render(
@@ -199,6 +196,7 @@ describe("IdentityOverviewPage", () => {
           value={{
             dedupingInterval: 0,
             fetcher: () => Promise.resolve([displayedIdentity]),
+            provider: () => new Map(),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -219,7 +217,6 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(4);
 
       const displayedIdentity = mockIdentities.nonPrimaryPhoneIdentity;
-      mutate("/api/identities/", [displayedIdentity]);
       setRouterQuery({ id: displayedIdentity.id });
 
       render(
@@ -227,6 +224,7 @@ describe("IdentityOverviewPage", () => {
           value={{
             dedupingInterval: 0,
             fetcher: () => Promise.resolve([displayedIdentity]),
+            provider: () => new Map(),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -255,7 +253,6 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(2);
 
       const displayedIdentity = mockIdentities.nonPrimaryPhoneIdentity;
-      mutate("/api/identities/", [displayedIdentity]);
       setRouterQuery({ id: displayedIdentity.id });
 
       render(
@@ -263,6 +260,7 @@ describe("IdentityOverviewPage", () => {
           value={{
             dedupingInterval: 0,
             fetcher: () => Promise.resolve([displayedIdentity]),
+            provider: () => new Map(),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -283,7 +281,6 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(3);
 
       const displayedIdentity = mockIdentities.primaryPhoneIdentity;
-      mutate("/api/identities/", [displayedIdentity]);
       setRouterQuery({ id: displayedIdentity.id });
 
       render(
@@ -291,6 +288,7 @@ describe("IdentityOverviewPage", () => {
           value={{
             dedupingInterval: 0,
             fetcher: () => Promise.resolve([displayedIdentity]),
+            provider: () => new Map(),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -320,7 +318,6 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(2);
 
       const displayedIdentity = mockIdentities.primaryPhoneIdentity;
-      mutate("/api/identities/", [displayedIdentity]);
       setRouterQuery({ id: displayedIdentity.id });
 
       render(
@@ -328,6 +325,7 @@ describe("IdentityOverviewPage", () => {
           value={{
             dedupingInterval: 0,
             fetcher: () => Promise.resolve([displayedIdentity]),
+            provider: () => new Map(),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -344,7 +342,6 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(3);
 
       const displayedIdentity = mockIdentities.unvalidatedPhoneIdentity;
-      mutate("/api/identities/", [displayedIdentity]);
       setRouterQuery({ id: displayedIdentity.id });
 
       render(
@@ -352,6 +349,7 @@ describe("IdentityOverviewPage", () => {
           value={{
             dedupingInterval: 0,
             fetcher: () => Promise.resolve([displayedIdentity]),
+            provider: () => new Map(),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -377,7 +375,6 @@ describe("IdentityOverviewPage", () => {
       expect.assertions(2);
 
       const displayedIdentity = mockIdentities.unvalidatedPhoneIdentity;
-      mutate("/api/identities/", [displayedIdentity]);
       setRouterQuery({ id: displayedIdentity.id });
 
       render(
@@ -385,6 +382,7 @@ describe("IdentityOverviewPage", () => {
           value={{
             dedupingInterval: 0,
             fetcher: () => Promise.resolve([displayedIdentity]),
+            provider: () => new Map(),
           }}
         >
           <IdentityOverviewPage identityId={displayedIdentity.id} />
