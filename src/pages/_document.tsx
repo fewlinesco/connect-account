@@ -1,8 +1,11 @@
-import type {
-  DocumentContext,
+import Document, {
+  Html,
+  Main,
+  Head,
+  NextScript,
   DocumentInitialProps,
-} from "next/dist/next-server/lib/utils";
-import Document, { Html, Main, Head, NextScript } from "next/document";
+  DocumentContext,
+} from "next/document";
 import React from "react";
 
 import { generateCSP } from "@src/utils/generate-csp";

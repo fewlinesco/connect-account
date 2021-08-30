@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "next dev -p $CONNECT_ACCOUNT_PORT",
     "build": "next build",
-    "lint": "eslint **/*.json \"{src,pages,bin,doc,tests}/**/*.{js,ts,jsx,tsx}\"",
+    "lint": "eslint \"{src,pages,bin,doc,tests}/**/*.{js,ts,jsx,tsx}\"",
     "start": "next start -p $PORT",
     "test": "jest --testPathIgnorePatterns=e2e --runInBand",
     "test:e2e": "jest --testPathPattern=e2e --runInBand",
@@ -32,8 +32,8 @@
     "heroku:promote-staging-to-prod": "ts-node bin/run-promote.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.27.0",
-    "@aws-sdk/util-dynamodb": "3.27.0",
+    "@aws-sdk/client-dynamodb": "3.28.0",
+    "@aws-sdk/util-dynamodb": "3.28.0",
     "@fewlines/connect-client": "0.5.1",
     "@fewlines/connect-management": "0.8.0",
     "@formatjs/intl": "1.14.1",
@@ -55,7 +55,7 @@
     "graphql-tag": "2.12.5",
     "js-cookie": "3.0.0",
     "memjs": "1.3.0",
-    "next": "10.2.3",
+    "next": "11.1.0",
     "react": "17.0.2",
     "react-datepicker": "4.2.1",
     "react-dom": "17.0.2",
@@ -74,31 +74,31 @@
     "@types/jest": "27.0.1",
     "@types/js-cookie": "2.2.7",
     "@types/memjs": "1.2.3",
-    "@types/node": "16.7.2",
+    "@types/node": "16.7.6",
     "@types/node-fetch": "2.5.12",
     "@types/react": "17.0.19",
-    "@types/react-datepicker": "4.1.4",
+    "@types/react-datepicker": "4.1.5",
     "@types/react-dom": "17.0.9",
     "@types/react-phone-number-input": "3.0.11",
     "@types/uuid": "8.3.1",
     "@typescript-eslint/eslint-plugin": "4.29.3",
     "@typescript-eslint/parser": "4.29.3",
     "autoprefixer": "10.3.3",
-    "babel-jest": "27.0.6",
+    "babel-jest": "27.1.0",
     "babel-loader": "8.2.2",
     "eslint": "7.32.0",
+    "eslint-config-next": "11.1.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.24.2",
-    "eslint-plugin-json": "3.1.0",
     "eslint-plugin-prettier": "3.4.1",
-    "eslint-plugin-react": "7.24.0",
+    "eslint-plugin-react": "7.25.1",
     "file-loader": "6.2.0",
-    "jest": "27.0.6",
+    "jest": "27.1.0",
     "jest-fetch-mock": "3.0.3",
     "postcss": "8.3.6",
     "prettier": "2.3.2",
     "taiko": "1.2.7",
-    "tailwindcss": "2.2.7",
+    "tailwindcss": "2.2.8",
     "ts-jest": "27.0.5",
     "ts-node": "10.2.1",
     "tsconfig-paths-webpack-plugin": "3.5.1",
@@ -119,11 +119,9 @@
   ],
   "eslintConfig": {
     "extends": [
-      "@fewlines/eslint-config/node",
-      "@fewlines/eslint-config/react",
       "@fewlines/eslint-config/typescript",
       "@fewlines/eslint-config/react-typescript",
-      "plugin:json/recommended"
+      "next"
     ],
     "overrides": [
       {
@@ -137,6 +135,7 @@
       }
     ],
     "rules": {
+      "@next/next/no-img-element": "off",
       "@typescript-eslint/camelcase": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
