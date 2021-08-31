@@ -24,6 +24,7 @@ describe("Profile happy path", () => {
 
   const localizedStrings = {
     newAddress: locales.en["/account/profile/addresses/new"],
+    errors: locales.en["errors"],
   };
 
   beforeAll(async () => {
@@ -49,9 +50,9 @@ describe("Profile happy path", () => {
   });
 
   test("it should display errors coming from Profile when required is disabled in address form", async () => {
-    try {
-      if (isStagingEnv) {
-        printStep("Address create with wrong input values", true);
+    printStep("Address create with wrong input values", true);
+    if (isStagingEnv) {
+      try {
         await authenticateToConnect();
         expect.assertions(1);
 
@@ -59,7 +60,11 @@ describe("Profile happy path", () => {
         await goto((await currentURL()) + "/profile/addresses/new/");
 
         printStep("Remove required attribute on inputs");
-        for await (const label of ["Postal Code", "Locality", "Country"]) {
+        for await (const label of [
+          localizedStrings.newAddress.localityLabel,
+          localizedStrings.newAddress.postalCodeLabel,
+          localizedStrings.newAddress.countryLabel,
+        ]) {
           await evaluate($("input", below(label)), (element) => {
             element.removeAttribute("required");
           });
@@ -70,14 +75,18 @@ describe("Profile happy path", () => {
 
         printStep("Expecting errors displayed");
         expect(
-          await text("Please fill in the above field.").elements(),
+          await text(
+            localizedStrings.errors.invalidUserAddressPayload,
+          ).elements(),
         ).toHaveLength(3);
+      } catch (error) {
+        await screenshot({
+          path: "./tests/e2e/screenshots/fill-incorrect-address-input-values.png",
+        });
+        throw error;
       }
-    } catch (error) {
-      await screenshot({
-        path: "./tests/e2e/screenshots/fill-incorrect-address-input-values.png",
-      });
-      throw error;
+    } else {
+      printStep("Test auto success because the env is not staging.");
     }
   });
 });
