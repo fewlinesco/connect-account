@@ -36,7 +36,7 @@ describe("Profile happy path", () => {
           "--start-maximized",
           "--disable-dev-shm",
         ],
-        headless: false,
+        headless: true,
         observe: true,
         observeTime: 1000,
       });
