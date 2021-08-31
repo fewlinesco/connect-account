@@ -36,7 +36,8 @@ describe("AddressOverviewPage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => mockAddresses.primaryAddress,
+          fetcher: () => Promise.resolve(mockAddresses.primaryAddress),
+          provider: () => new Map(),
         }}
       >
         <AddressOverviewPage addressId={mockAddresses.primaryAddress.id} />,
@@ -55,7 +56,8 @@ describe("AddressOverviewPage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => mockAddresses.primaryAddress,
+          fetcher: () => Promise.resolve(mockAddresses.primaryAddress),
+          provider: () => new Map(),
         }}
       >
         <AddressOverviewPage addressId={mockAddresses.primaryAddress.id} />,
@@ -76,7 +78,8 @@ describe("AddressOverviewPage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => mockAddresses.primaryAddress,
+          fetcher: () => Promise.resolve(mockAddresses.primaryAddress),
+          provider: () => new Map(),
         }}
       >
         <AddressOverviewPage addressId={mockAddresses.primaryAddress.id} />
@@ -97,7 +100,8 @@ describe("AddressOverviewPage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => mockAddresses.primaryAddress,
+          fetcher: () => Promise.resolve(mockAddresses.primaryAddress),
+          provider: () => new Map(),
         }}
       >
         <AddressOverviewPage addressId={mockAddresses.primaryAddress.id} />
@@ -118,7 +122,8 @@ describe("AddressOverviewPage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => mockAddresses.nonPrimaryAddress,
+          fetcher: () => Promise.resolve(mockAddresses.nonPrimaryAddress),
+          provider: () => new Map(),
         }}
       >
         <AddressOverviewPage addressId={mockAddresses.nonPrimaryAddress.id} />
@@ -139,7 +144,8 @@ describe("AddressOverviewPage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => mockAddresses.primaryAddress,
+          fetcher: () => Promise.resolve(mockAddresses.primaryAddress),
+          provider: () => new Map(),
         }}
       >
         <AddressOverviewPage addressId={mockAddresses.primaryAddress.id} />
@@ -160,7 +166,8 @@ describe("AddressOverviewPage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => mockAddresses.primaryAddress,
+          fetcher: () => Promise.resolve(mockAddresses.primaryAddress),
+          provider: () => new Map(),
         }}
       >
         <AddressOverviewPage addressId={mockAddresses.primaryAddress.id} />
@@ -177,7 +184,8 @@ describe("AddressOverviewPage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => mockAddresses.nonPrimaryAddress,
+          fetcher: () => Promise.resolve(mockAddresses.nonPrimaryAddress),
+          provider: () => new Map(),
         }}
       >
         <AddressOverviewPage addressId={mockAddresses.nonPrimaryAddress.id} />

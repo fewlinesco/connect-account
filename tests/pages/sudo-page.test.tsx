@@ -2,7 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import userEvent from "@testing-library/user-event";
 import { enableFetchMocks } from "jest-fetch-mock";
 import React from "react";
-import { mutate, SWRConfig } from "swr";
+import { SWRConfig } from "swr";
 
 import {
   render,
@@ -57,7 +57,8 @@ describe("SudoPage", () => {
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => primaryIdentities,
+            fetcher: () => Promise.resolve(primaryIdentities),
+            provider: () => new Map(),
           }}
         >
           <SudoPage />
@@ -118,13 +119,12 @@ describe("SudoPage", () => {
 
       const primaryIdentities = [mockIdentities.primaryPhoneIdentity];
 
-      mutate("/api/identity?primary=true/", primaryIdentities);
-
       render(
         <SWRConfig
           value={{
             dedupingInterval: 0,
-            fetcher: () => primaryIdentities,
+            fetcher: () => Promise.resolve(primaryIdentities),
+            provider: () => new Map(),
           }}
         >
           <SudoPage />

@@ -37,9 +37,9 @@ describe("UpdateUserProfilePage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => {
-            return { address: mockUserProfile.userProfile };
-          },
+          fetcher: () =>
+            Promise.resolve({ address: mockUserProfile.userProfile }),
+          provider: () => new Map(),
         }}
       >
         <UserProfileForm userProfileData={userProfile} />
