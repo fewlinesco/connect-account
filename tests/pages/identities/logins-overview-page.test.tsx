@@ -1,7 +1,7 @@
 import { Identity } from "@fewlines/connect-management";
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { mutate, SWRConfig } from "swr";
+import { SWRConfig } from "swr";
 
 import {
   render,
@@ -113,8 +113,6 @@ describe("LoginsOverviewPage", () => {
 
       const identities = [mockIdentities.primaryEmailIdentity];
 
-      mutate("/api/identities/", identities);
-
       render(
         <SWRConfig
           value={{
@@ -156,8 +154,6 @@ describe("LoginsOverviewPage", () => {
       expect.assertions(3);
 
       const identities: Identity[] = [];
-
-      mutate("/api/identities/", identities);
 
       render(
         <SWRConfig
@@ -266,8 +262,6 @@ describe("LoginsOverviewPage", () => {
 
       const identities = [mockIdentities.primaryPhoneIdentity];
 
-      mutate("/api/identities/", identities);
-
       render(
         <SWRConfig
           value={{
@@ -308,8 +302,6 @@ describe("LoginsOverviewPage", () => {
       expect.assertions(3);
 
       const identities: Identity[] = [];
-
-      mutate("/api/identities/", identities);
 
       render(
         <SWRConfig

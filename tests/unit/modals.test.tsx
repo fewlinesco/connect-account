@@ -1,6 +1,6 @@
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { mutate, SWRConfig } from "swr";
+import { SWRConfig } from "swr";
 
 import {
   render,
@@ -31,7 +31,6 @@ describe("Modals", () => {
   beforeAll(() => {
     setRouterPathname(path);
     setRouterQuery({ id: displayedIdentity.id });
-    mutate("/api/identities/", [displayedIdentity]);
   });
 
   it("shouldn't display any confirmation box on first render", async () => {
@@ -42,6 +41,7 @@ describe("Modals", () => {
         value={{
           dedupingInterval: 0,
           fetcher: () => Promise.resolve([displayedIdentity]),
+          provider: () => new Map(),
         }}
       >
         <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -66,6 +66,7 @@ describe("Modals", () => {
         value={{
           dedupingInterval: 0,
           fetcher: () => Promise.resolve([displayedIdentity]),
+          provider: () => new Map(),
         }}
       >
         <IdentityOverviewPage identityId={displayedIdentity.id} />
@@ -110,6 +111,7 @@ describe("Modals", () => {
         value={{
           dedupingInterval: 0,
           fetcher: () => Promise.resolve([displayedIdentity]),
+          provider: () => new Map(),
         }}
       >
         <IdentityOverviewPage identityId={displayedIdentity.id} />

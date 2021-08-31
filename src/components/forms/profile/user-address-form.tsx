@@ -2,7 +2,8 @@ import { HttpStatus } from "@fwl/web";
 import { NextRouter, useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
-import useSWR, { mutate } from "swr";
+import useSWR, { useSWRConfig } from "swr";
+import { ScopedMutator } from "swr/dist/types";
 import { v4 as uuidv4 } from "uuid";
 
 import { FormErrorMessage } from "../../input/form-error-message";
@@ -29,6 +30,7 @@ type AddressPayload = Omit<
 
 async function updateOrCreateAddress(
   router: NextRouter,
+  mutate: ScopedMutator,
   setErrorDispatcher: React.Dispatch<React.SetStateAction<AddressInputErrors>>,
   addressPayload: AddressPayload,
   addresses: Address[],
@@ -93,6 +95,8 @@ const UserAddressForm: React.FC<{
 }> = ({ userAddress, isCreation }) => {
   const router = useRouter();
   const { formatMessage } = useIntl();
+  const { mutate } = useSWRConfig();
+
   const [formID, setFormID] = React.useState<string>(uuidv4());
   const [errors, setErrors] = React.useState<AddressInputErrors>({});
   const [address, setAddress] = React.useState<Address>({
@@ -110,6 +114,7 @@ const UserAddressForm: React.FC<{
     primary: false,
   });
   const [addresses, setAddresses] = React.useState<Address[]>([]);
+
   useSWR<Address[], SWRError>(`/api/profile/addresses/`, async (url) => {
     return await fetch(url).then(async (response) => {
       if (!response.ok) {
@@ -157,6 +162,7 @@ const UserAddressForm: React.FC<{
 
           await updateOrCreateAddress(
             router,
+            mutate,
             setErrors,
             addressPayload,
             addresses,

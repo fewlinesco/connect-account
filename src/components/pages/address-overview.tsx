@@ -2,7 +2,7 @@ import { HttpStatus } from "@fwl/web";
 import { useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
-import useSWR, { mutate } from "swr";
+import useSWR, { useSWRConfig } from "swr";
 
 import { Modal, ModalVariant } from "../modals";
 import { Address } from "@src/@types/profile";
@@ -24,6 +24,7 @@ const AddressOverview: React.FC<{ addressToDisplay?: Address }> = ({
 }) => {
   const { formatMessage } = useIntl();
   const router = useRouter();
+  const { mutate } = useSWRConfig();
 
   const [isMarkAsPrimaryModalOpen, setIsMarkAsPrimaryModalOpen] =
     React.useState<boolean>(false);
