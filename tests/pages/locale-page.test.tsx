@@ -32,9 +32,8 @@ describe("LocalePage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => {
-            return { locale: "en" };
-          },
+          fetcher: () => Promise.resolve("en"),
+          provider: () => new Map(),
         }}
       >
         <LocalePage />
@@ -64,9 +63,8 @@ describe("LocalePage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => {
-            return "fr";
-          },
+          fetcher: () => Promise.resolve("fr"),
+          provider: () => new Map(),
         }}
       >
         <LocalePage />

@@ -2,7 +2,8 @@ import { HttpStatus } from "@fwl/web";
 import { NextRouter, useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
-import { mutate } from "swr";
+import { useSWRConfig } from "swr";
+import { ScopedMutator } from "swr/dist/types";
 import { v4 as uuidv4 } from "uuid";
 
 import { InputDatePicker } from "../../input/input-date-picker/input-date-picker";
@@ -20,6 +21,7 @@ type ProfilePayload = Omit<Profile, "id" | "sub" | "updated_at">;
 
 async function updateOrCreateProfile(
   router: NextRouter,
+  mutate: ScopedMutator,
   profilePayload: ProfilePayload,
   isCreation?: boolean,
 ): Promise<void> {
@@ -47,6 +49,8 @@ const UserProfileForm: React.FC<{
   isCreation?: boolean;
 }> = ({ userProfileData, isCreation }) => {
   const { formatMessage } = useIntl();
+  const { mutate } = useSWRConfig();
+
   const [formID] = React.useState<string>(uuidv4());
   const [userProfile, setUserProfile] = React.useState<ProfileData>({
     name: "",
@@ -79,6 +83,7 @@ const UserProfileForm: React.FC<{
         onSubmit={async () => {
           await updateOrCreateProfile(
             router,
+            mutate,
             userProfile as ProfilePayload,
             isCreation,
           );

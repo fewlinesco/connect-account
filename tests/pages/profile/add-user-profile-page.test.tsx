@@ -43,9 +43,8 @@ describe("NewUserProfilePage", () => {
       <SWRConfig
         value={{
           dedupingInterval: 0,
-          fetcher: () => {
-            return;
-          },
+          fetcher: () => Promise.resolve(),
+          provider: () => new Map(),
         }}
       >
         <NewUserProfilePage />

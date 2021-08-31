@@ -2,7 +2,7 @@ import { Identity, IdentityTypes } from "@fewlines/connect-management";
 import { useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
-import { mutate } from "swr";
+import { useSWRConfig } from "swr";
 
 import { AwaitingValidationBadge, PrimaryBadge } from "@src/components/badges";
 import { Box } from "@src/components/boxes";
@@ -18,6 +18,7 @@ const IdentityOverview: React.FC<{
 }> = ({ identities }) => {
   const { formatMessage } = useIntl();
   const router = useRouter();
+  const { mutate } = useSWRConfig();
 
   const [isMarkAsPrimaryModalOpen, setIsMarkAsPrimaryModalOpen] =
     React.useState<boolean>(false);
