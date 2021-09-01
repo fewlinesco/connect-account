@@ -168,8 +168,6 @@ const UserAddressForm: React.FC<{
             userAddress?.id,
           );
 
-          console.log(errors);
-
           setFormID(uuidv4());
         }}
       >
@@ -211,7 +209,7 @@ const UserAddressForm: React.FC<{
             });
           }}
           label={formatMessage({ id: "localityLabel" })}
-          // required
+          required
           hasError={errors.locality ? true : false}
           errorMessage={errors.locality}
         />
@@ -227,7 +225,7 @@ const UserAddressForm: React.FC<{
             });
           }}
           label={formatMessage({ id: "postalCodeLabel" })}
-          // required
+          required
           hasError={errors.postal_code ? true : false}
           errorMessage={errors.postal_code}
         />
@@ -256,7 +254,7 @@ const UserAddressForm: React.FC<{
             });
           }}
           label={formatMessage({ id: "countryLabel" })}
-          // required
+          required
           hasError={errors.country ? true : false}
           errorMessage={errors.country}
         />
