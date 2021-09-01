@@ -26,6 +26,10 @@ const CookieBanner: React.FC = () => {
     { refreshInterval: 0 },
   );
 
+  const multipleServices = Object.values(servicesToConsentByCategory).some(
+    (servicesArray) => servicesArray.length > 0,
+  );
+
   React.useEffect(() => {
     if (consentCookie && !consentCookie.isSet) {
       setIsModalOpen(true);
@@ -93,7 +97,10 @@ const CookieBanner: React.FC = () => {
                   await setUserConsentCookie({ sentry: false });
                 }}
               >
-                {formatCookieBannerMessage(router.locale || "en", "refuse")}
+                {formatCookieBannerMessage(
+                  router.locale || "en",
+                  multipleServices ? "refuseAll" : "refuse",
+                )}
               </Button>
               <Button
                 type="button"
@@ -102,7 +109,10 @@ const CookieBanner: React.FC = () => {
                   await setUserConsentCookie({ sentry: true });
                 }}
               >
-                {formatCookieBannerMessage(router.locale || "en", "accept")}
+                {formatCookieBannerMessage(
+                  router.locale || "en",
+                  multipleServices ? "acceptAll" : "accept",
+                )}
               </Button>
             </div>
           </div>
