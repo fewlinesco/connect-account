@@ -82,11 +82,6 @@ const SetPasswordForm: React.FC<{
       {passwordRestrictionError ? (
         <PasswordRulesErrorList rules={passwordRestrictionError} />
       ) : null}
-      {passwordsNotMatching ? (
-        <FormErrorMessage>
-          {formatErrorMessage(router.locale || "en", "passwordMatch")}
-        </FormErrorMessage>
-      ) : null}
       {errorMessage ? (
         <FormErrorMessage>{errorMessage}</FormErrorMessage>
       ) : null}
@@ -97,9 +92,7 @@ const SetPasswordForm: React.FC<{
         value={passwordInput}
         onChange={(value) => setPasswordInput(value)}
         label={formatMessage({ id: "newPasswordLabel" })}
-        hasError={
-          passwordsNotMatching || passwordRestrictionError ? true : false
-        }
+        hasError={errorMessage || passwordRestrictionError ? true : false}
       />
       <InputText
         type="password"
@@ -108,6 +101,12 @@ const SetPasswordForm: React.FC<{
         value={passwordConfirmationInput}
         onChange={(value) => setPasswordConfirmationInput(value)}
         label={formatMessage({ id: "confirmNewPasswordLabel" })}
+        hasError={errorMessage || passwordsNotMatching ? true : false}
+        errorMessage={
+          passwordsNotMatching
+            ? formatErrorMessage(router.locale || "en", "passwordMatch")
+            : undefined
+        }
       />
       <Button className="btn btn-primary" type="submit">
         {submitButtonLabel}
