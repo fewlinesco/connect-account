@@ -10,6 +10,7 @@ import { InputDatePicker } from "../../input/input-date-picker/input-date-picker
 import { Form } from "../form";
 import { Profile } from "@src/@types/profile";
 import { Button } from "@src/components/buttons";
+import { DatePicker } from "@src/components/input/input-date-picker/date-picker";
 import { InputText } from "@src/components/input/input-text/input-text";
 import { NeutralLink } from "@src/components/neutral-link";
 import { fetchJson } from "@src/utils/fetch-json";
@@ -139,6 +140,7 @@ const UserProfileForm: React.FC<{
             });
           }}
         />
+        <DatePicker />
         <InputText
           type="text"
           name="profile"
