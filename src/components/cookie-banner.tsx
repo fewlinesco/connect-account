@@ -3,8 +3,8 @@ import React from "react";
 import useSWR from "swr";
 
 import { CookieButton, Button } from "./buttons";
-import { SentryIcon } from "./icons/sentry-icon";
 import { ModalOverlay } from "./modal-overlay";
+import { servicesToConsentByCategory } from "@content/services-to-consent";
 import { formatCookieBannerMessage } from "@src/configs/intl";
 import { SWRError } from "@src/errors/errors";
 import { fetchJson } from "@src/utils/fetch-json";
@@ -51,24 +51,39 @@ const CookieBanner: React.FC = () => {
                   "generalDescription",
                 )}
               </p>
-              <h3 className="font-medium mb-5">
-                {formatCookieBannerMessage(
-                  router.locale || "en",
-                  "monitoringCategory",
-                )}
-              </h3>
-              <div className="w-full py-5 px-6 bg-background shadow-box flex justify-around items-center">
-                <SentryIcon />
-                <div className="flex flex-col ml-8">
-                  <h4 className="font-medium text-m">Sentry</h4>
-                  <p className="text-s mt-2 text-gray-darker">
-                    {formatCookieBannerMessage(
-                      router.locale || "en",
-                      "sentryDescription",
-                    )}
-                  </p>
-                </div>
-              </div>
+              {Object.entries(servicesToConsentByCategory).map(
+                ([categoryName, services], index) => {
+                  return (
+                    <React.Fragment key={categoryName + index}>
+                      <h3 className="font-medium mb-5">
+                        {formatCookieBannerMessage(
+                          router.locale || "en",
+                          categoryName,
+                        )}
+                      </h3>
+                      {services.map(({ name, descriptionId, icon }, index) => {
+                        return (
+                          <div
+                            key={name + index}
+                            className="w-full py-5 px-6 bg-background shadow-box flex justify-around items-center"
+                          >
+                            {icon}
+                            <div className="flex flex-col ml-8">
+                              <h4 className="font-medium text-m">{name}</h4>
+                              <p className="text-s mt-2 text-gray-darker">
+                                {formatCookieBannerMessage(
+                                  router.locale || "en",
+                                  descriptionId,
+                                )}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </React.Fragment>
+                  );
+                },
+              )}
             </div>
             <div className="flex">
               <Button

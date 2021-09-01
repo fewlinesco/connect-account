@@ -283,7 +283,7 @@ const fr = {
   cookieBanner: {
     generalDescription:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam bibendum arcu vel neque sagittis, eu laoreet diam dapibus. Ut id lectus nec ante maximus mollis nec id nulla.",
-    monitoringCategory: "Monitoring",
+    monitoring: "Monitoring",
     toggle: "Tout sélectionner",
     sentryDescription:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam bibendum arcu vel neque sagittis",
