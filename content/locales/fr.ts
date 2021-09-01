@@ -292,6 +292,17 @@ const fr = {
     refuseAll: "Tout refuser",
     refuse: "Refuser",
   },
+  date: {
+    weekdaysShort: "Lu Ma Me Je Vr Sa Di",
+    weekdaysLong: "Lundi Mardi Mercredi Jeudi Vendredi Samedi Dimanche",
+    months:
+      "Janvier Février Mars Avril Mai Juin Juillet Août Septembre Octobre Novembre Décembre",
+    datePickerLabels: {
+      previousMonth: "Moi précédent",
+      nextMonth: "Mois prochain",
+    },
+    format: "dd/MM/yyyy",
+  },
 };
 
 export { fr };

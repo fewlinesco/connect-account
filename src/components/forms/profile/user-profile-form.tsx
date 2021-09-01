@@ -6,11 +6,10 @@ import { useSWRConfig } from "swr";
 import { ScopedMutator } from "swr/dist/types";
 import { v4 as uuidv4 } from "uuid";
 
-import { InputDatePicker } from "../../input/input-date-picker/input-date-picker";
 import { Form } from "../form";
 import { Profile } from "@src/@types/profile";
 import { Button } from "@src/components/buttons";
-import { DatePicker } from "@src/components/input/input-date-picker/date-picker";
+import { DatePicker } from "@src/components/input/input-date-picker/day-picker";
 import { InputText } from "@src/components/input/input-text/input-text";
 import { NeutralLink } from "@src/components/neutral-link";
 import { fetchJson } from "@src/utils/fetch-json";
@@ -117,30 +116,21 @@ const UserProfileForm: React.FC<{
           }}
           label={formatMessage({ id: "usernameLabel" })}
         />
-        <InputDatePicker
-          label={formatMessage({ id: "birthDateLabel" })}
-          selected={
-            userProfile.birthdate !== "" ? userProfile.birthdate : undefined
-          }
-          onChange={(date) => {
-            if (date !== null) {
-              const fullISODate = date.toISOString();
-              const formattedISODate = fullISODate.slice(
-                0,
-                fullISODate.indexOf("T"),
-              );
-              setUserProfile({ ...userProfile, birthdate: formattedISODate });
-            }
+        <>
+          <DatePicker
+            locale={router.locale || "en"}
+            date={new Date(userProfile.birthdate || Date.now())}
+            onDayChange={(date) => {
+              const ISODate = date.toISOString();
+              const formattedISODate = ISODate.slice(0, ISODate.indexOf("T"));
 
-            setUserProfile((prevState) => {
-              return {
+              setUserProfile({
                 ...userProfile,
-                birthdate: prevState.birthdate,
-              };
-            });
-          }}
-        />
-        <DatePicker />
+                birthdate: formattedISODate,
+              });
+            }}
+          />
+        </>
         <InputText
           type="text"
           name="profile"

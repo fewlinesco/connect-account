@@ -286,6 +286,17 @@ const en = {
     refuseAll: "Refuse all",
     refuse: "Refuse",
   },
+  date: {
+    weekdaysShort: "Mo Tu We Th Fr Sa Su",
+    weekdaysLong: "Monday Tuesday Wednesday Thursday Friday Saturday Sunday",
+    months:
+      "January February March April May June July August September October November December",
+    datePickerLabels: {
+      previousMonth: "Previous month",
+      nextMonth: "Next month",
+    },
+    format: "MM/dd/yyyy",
+  },
 };
 
 export { en };

@@ -1,0 +1,31 @@
+.day-picker :global(.DayPickerInput) {
+  width: 100%;
+}
+
+.day-picker input {
+  position: relative;
+  width: 100%;
+  height: 4rem;
+  padding-left: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  background-color: theme("colors.background");
+  border-width: 1px;
+  border-radius: 0.25rem;
+  border-color: theme("colors.gray.dark");
+}
+
+.day-picker input::placeholder {
+  color: theme("colors.gray.dark");
+}
+
+.day-picker :global(.DayPicker) {
+  font-size: theme("fontSize.base");
+}
+
+.day-picker :global(.DayPickerInput-Overlay) {
+  border-radius: theme("rounded.DEFAULT");
+  border-color: theme("colors.gray.light");
+  border-width: 1px;
+  background-color: theme("colors.box");
+}
