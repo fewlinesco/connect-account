@@ -2,13 +2,9 @@ import { LocaleUtils } from "react-day-picker";
 
 import { formatDateMessage } from "@src/configs/intl";
 
-// function formatDate(
-//   date: Date,
-//   format?: string | string[],
-//   locale?: string,
-// ): string {
-//   return "";
-// }
+function formatDate(date: Date, locale?: string): string {
+  return Intl.DateTimeFormat(locale || "en").format(date);
+}
 
 function formatDay(date: Date, locale = "en"): string {
   const months = formatDateMessage(locale, "months").split("");
@@ -77,30 +73,24 @@ function getMonths(
   );
 }
 
-// function parseDate(str: string, format?: string, locale?: string): Date {
-//   return new Date();
-// }
-
 const localeUtils = {
   ...LocaleUtils,
-  // formatDate,
+  formatDate,
   formatDay,
   formatMonthTitle,
   formatWeekdayShort,
   formatWeekdayLong,
   getFirstDayOfWeek,
   getMonths,
-  // parseDate,
 };
 
 export {
-  // formatDate,
+  formatDate,
   formatDay,
   formatMonthTitle,
   formatWeekdayShort,
   formatWeekdayLong,
   getFirstDayOfWeek,
   getMonths,
-  // parseDate,
 };
 export default localeUtils;

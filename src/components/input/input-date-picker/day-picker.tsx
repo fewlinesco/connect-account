@@ -4,7 +4,7 @@ import DayPickerInput from "react-day-picker/DayPickerInput";
 
 import classNames from "./day-picker.module.css";
 import { formatDateMessage } from "@src/configs/intl";
-import localeUtils from "@src/utils/day-picker-localization";
+import localeUtils, { formatDate } from "@src/utils/day-picker-localization";
 
 import "react-day-picker/lib/style.css";
 
@@ -34,11 +34,7 @@ const DatePicker: React.FC<{
           onDayChange(date);
         }}
         format={formatDateMessage(locale || "en", "format")}
-        placeholder={
-          isValidating
-            ? ""
-            : date.toISOString().slice(0, date.toISOString().indexOf("T"))
-        }
+        placeholder={isValidating ? "" : formatDate(date, locale)}
         dayPickerProps={{
           localeUtils,
           locale,
