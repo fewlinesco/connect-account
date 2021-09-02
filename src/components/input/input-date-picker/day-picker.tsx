@@ -62,7 +62,8 @@ const DatePicker: React.FC<{
   locale: string;
   date: Date;
   onDayChange: (date: Date) => void;
-}> = ({ locale, date, onDayChange }) => {
+  label: string;
+}> = ({ locale, date, onDayChange, label }) => {
   const [yearMonth, setYearMonth] = React.useState<{
     month: Date;
     year?: Date;
@@ -75,6 +76,7 @@ const DatePicker: React.FC<{
     <label
       className={`flex flex-col cursor-pointer ${classNames["day-picker"]}`}
     >
+      {label}
       <DayPickerInput
         onDayChange={onDayChange}
         format={format}
@@ -86,7 +88,6 @@ const DatePicker: React.FC<{
           month: date,
           toMonth: new Date(),
           disabledDays: [{ after: new Date() }],
-          // labels: formatDateMessage(locale || "en", "datePickerLabels"),
           captionElement: ({ date, localeUtils }) => (
             <YearMonthSelectors
               date={date}

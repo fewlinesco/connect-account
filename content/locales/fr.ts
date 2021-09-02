@@ -297,10 +297,6 @@ const fr = {
     weekdaysLong: "Lundi Mardi Mercredi Jeudi Vendredi Samedi Dimanche",
     months:
       "Janvier Février Mars Avril Mai Juin Juillet Août Septembre Octobre Novembre Décembre",
-    datePickerLabels: {
-      previousMonth: "Moi précédent",
-      nextMonth: "Mois prochain",
-    },
     format: "dd/MM/yyyy",
   },
 };

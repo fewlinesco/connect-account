@@ -118,12 +118,12 @@ const UserProfileForm: React.FC<{
         />
         <>
           <DatePicker
+            label={formatMessage({ id: "birthDateLabel" })}
             locale={router.locale || "en"}
             date={new Date(userProfile.birthdate || Date.now())}
             onDayChange={(date) => {
               const ISODate = date.toISOString();
               const formattedISODate = ISODate.slice(0, ISODate.indexOf("T"));
-
               setUserProfile({
                 ...userProfile,
                 birthdate: formattedISODate,
