@@ -10,7 +10,7 @@ import { RightChevron } from "@src/components/icons/right-chevron";
 import { NeutralLink } from "@src/components/neutral-link";
 import { Separator } from "@src/components/separator";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
-import { formatDate } from "@src/utils/day-picker-localization";
+import { formatDate } from "@src/utils/dates";
 import {
   capitalizeFirstLetter,
   formatOtherAddressFieldsToDisplay,

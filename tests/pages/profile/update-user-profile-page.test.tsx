@@ -42,7 +42,7 @@ describe("UpdateUserProfilePage", () => {
           provider: () => new Map(),
         }}
       >
-        <UserProfileForm userProfileData={userProfile} />
+        <UserProfileForm userProfileData={userProfile} isValidating={false} />
       </SWRConfig>,
     );
 

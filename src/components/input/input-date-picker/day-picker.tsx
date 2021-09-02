@@ -4,24 +4,18 @@ import DayPickerInput from "react-day-picker/DayPickerInput";
 
 import classNames from "./day-picker.module.css";
 import { formatDateMessage } from "@src/configs/intl";
-import localeUtils, { formatDate } from "@src/utils/day-picker-localization";
+import localeUtils, { formatDate } from "@src/utils/dates";
 
 import "react-day-picker/lib/style.css";
 
-const DatePicker: React.FC<{
+const DayPicker: React.FC<{
   isValidating: boolean;
   date: Date;
   onDayChange: (date: Date) => void;
   label: string;
   locale?: string;
 }> = ({ locale, date, onDayChange, label, isValidating }) => {
-  const [yearMonth, setYearMonth] = React.useState<{
-    month: number;
-    year: number;
-  }>({
-    month: date.getMonth(),
-    year: date.getFullYear(),
-  });
+  const [selectedDate, setSelectedMonth] = React.useState<Date>(date);
 
   return (
     <label
@@ -30,7 +24,6 @@ const DatePicker: React.FC<{
       {label}
       <DayPickerInput
         onDayChange={(date) => {
-          console.log("FLAG", date);
           onDayChange(date);
         }}
         format={formatDateMessage(locale || "en", "format")}
@@ -41,11 +34,12 @@ const DatePicker: React.FC<{
           month: date,
           fixedWeeks: true,
           disabledDays: [{ after: new Date() }],
-          captionElement: ({ date, localeUtils, locale }) => (
+          captionElement: ({ localeUtils, locale }) => (
             <YearMonthSelectors
-              date={date}
               localeUtils={localeUtils}
               locale={locale}
+              selectedDate={selectedDate}
+              setSelectedMonth={setSelectedMonth}
             />
           ),
         }}
@@ -55,20 +49,11 @@ const DatePicker: React.FC<{
 };
 
 const YearMonthSelectors: React.FC<{
-  date: Date;
   localeUtils: LocaleUtils;
   locale: string;
-  yearMonth?: React.SetStateAction<{
-    month: Date;
-    year?: Date;
-  }>;
-  setYearMonth?: React.Dispatch<
-    React.SetStateAction<{
-      month: Date;
-      year?: Date;
-    }>
-  >;
-}> = ({ date, localeUtils, locale, setYearMonth }) => {
+  selectedDate: Date;
+  setSelectedMonth: React.Dispatch<React.SetStateAction<Date>>;
+}> = ({ localeUtils, locale, selectedDate, setSelectedMonth }) => {
   const currentYear = new Date().getFullYear();
   const fromMonth = new Date(currentYear - 130, 0);
   const toMonth = new Date();
@@ -88,10 +73,11 @@ const YearMonthSelectors: React.FC<{
       <select
         name="month"
         onChange={(event) => {
-          const selectedMonth = months[parseInt(event.target.value)];
-          console.log(selectedMonth);
+          return setSelectedMonth(
+            new Date(selectedDate.setMonth(parseInt(event.target.value))),
+          );
         }}
-        value={date.getMonth()}
+        value={selectedDate.getMonth()}
       >
         {months.map((month, index) => (
           <option key={month} value={index}>
@@ -102,9 +88,11 @@ const YearMonthSelectors: React.FC<{
       <select
         name="year"
         onChange={(event) => {
-          console.log(event.target.value);
+          return setSelectedMonth(
+            new Date(selectedDate.setFullYear(parseInt(event.target.value))),
+          );
         }}
-        value={date.getFullYear()}
+        value={selectedDate.getFullYear()}
       >
         {years.map((year) => (
           <option key={year} value={year}>
@@ -116,4 +104,4 @@ const YearMonthSelectors: React.FC<{
   );
 };
 
-export { DatePicker };
+export { DayPicker };

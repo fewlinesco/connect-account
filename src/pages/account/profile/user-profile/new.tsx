@@ -17,10 +17,10 @@ import { newProfileSWRFetcher } from "@src/queries/new-profile-swr-fetcher";
 const NewUserProfilePage: React.FC = () => {
   const router = useRouter();
   const { formatMessage } = useIntl();
-  const { error: userProfileError } = useSWR<Profile | undefined, SWRError>(
-    [`/api/profile/user-profile/`, router],
-    newProfileSWRFetcher,
-  );
+  const { error: userProfileError, isValidating } = useSWR<
+    Profile | undefined,
+    SWRError
+  >([`/api/profile/user-profile/`, router], newProfileSWRFetcher);
 
   if (userProfileError) {
     throw userProfileError;
@@ -32,7 +32,7 @@ const NewUserProfilePage: React.FC = () => {
       title={formatMessage({ id: "title" })}
     >
       <p className="font-semibold mb-8">{formatMessage({ id: "info" })}</p>
-      <UserProfileForm isCreation={true} />
+      <UserProfileForm isCreation={true} isValidating={isValidating} />
     </Layout>
   );
 };
