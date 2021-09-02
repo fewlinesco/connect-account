@@ -3,6 +3,7 @@ import React from "react";
 import useSWR from "swr";
 
 import { CookieButton, Button } from "./buttons";
+import { InputSwitch } from "./input/input-switch/input-switch";
 import { ModalOverlay } from "./modal-overlay";
 import { servicesToConsentByCategory } from "@content/services-to-consent";
 import { formatCookieBannerMessage } from "@src/configs/intl";
@@ -20,6 +21,8 @@ async function setUserConsentCookie(
 const CookieBanner: React.FC = () => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+  const [isAllServicesAuthorized, setIsAllServicesAuthorized] =
+    React.useState<boolean>(true);
 
   const { data: consentCookie } = useSWR<Record<string, string>, SWRError>(
     `/api/consent-cookie/`,
@@ -27,7 +30,8 @@ const CookieBanner: React.FC = () => {
   );
 
   const multipleServices = Object.values(servicesToConsentByCategory).some(
-    (servicesArray) => servicesArray.length > 0,
+    (servicesArray, _index, originalArray) =>
+      servicesArray.length > 1 || originalArray.length > 1,
   );
 
   React.useEffect(() => {
@@ -46,25 +50,45 @@ const CookieBanner: React.FC = () => {
       />
       {isModalOpen ? (
         <>
-          <div className="w-full lg:w-max lg:max-w-2xl absolute bottom-0 left-0 lg:bottom-20 lg:left-8 bg-background shadow-box rounded z-20">
-            <div className="pt-8 px-8 mb-5">
-              <h2 className="text-xxl text-black mb-5 font-normal ">Cookies</h2>
+          <div className="w-full lg:w-max lg:max-w-2xl absolute bottom-0 left-0 lg:bottom-20 lg:left-8 bg-background shadow-box rounded z-20 overflow-y-auto">
+            <div className="pt-8 pb-6 px-8 max-h-192 overflow-y-auto">
+              <h2 className="text-xxl text-black mb-5 font-normal">Cookies</h2>
               <p className="leading-tight mb-6">
                 {formatCookieBannerMessage(
                   router.locale || "en",
                   "generalDescription",
                 )}
               </p>
+              {multipleServices ? (
+                <div className="pb-6">
+                  <InputSwitch
+                    groupName="overallPref"
+                    labelText={formatCookieBannerMessage(
+                      router.locale || "en",
+                      "toggle",
+                    )}
+                    isSelected={isAllServicesAuthorized}
+                    onChange={(_event) => {
+                      setIsAllServicesAuthorized(!isAllServicesAuthorized);
+                    }}
+                  />
+                </div>
+              ) : null}
+
               {Object.entries(servicesToConsentByCategory).map(
                 ([categoryName, services], index) => {
                   return (
                     <React.Fragment key={categoryName + index}>
-                      <h3 className="font-medium mb-5">
+                      <h4
+                        className={`font-medium mb-6 ${
+                          index === 0 ? "mt-0" : "mt-5"
+                        }`}
+                      >
                         {formatCookieBannerMessage(
                           router.locale || "en",
                           categoryName,
                         )}
-                      </h3>
+                      </h4>
                       {services.map(({ name, descriptionId, icon }, index) => {
                         return (
                           <div
@@ -73,7 +97,7 @@ const CookieBanner: React.FC = () => {
                           >
                             {icon}
                             <div className="flex flex-col ml-8">
-                              <h4 className="font-medium text-m">{name}</h4>
+                              <h5 className="font-medium text-m">{name}</h5>
                               <p className="text-s mt-2 text-gray-darker">
                                 {formatCookieBannerMessage(
                                   router.locale || "en",

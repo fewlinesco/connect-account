@@ -25,6 +25,23 @@ const servicesToConsentByCategory: Record<string, ServiceToConsent[]> = {
       descriptionId: "sentryDescription",
       icon: <SentryIcon />,
     },
+    {
+      name: "Sentry",
+      descriptionId: "sentryDescription",
+      icon: <SentryIcon />,
+    },
+    {
+      name: "Sentry",
+      descriptionId: "sentryDescription",
+      icon: <SentryIcon />,
+    },
+  ],
+  commerce: [
+    {
+      name: "Sentry",
+      descriptionId: "sentryDescription",
+      icon: <SentryIcon />,
+    },
   ],
 };
 

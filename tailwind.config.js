@@ -44,7 +44,11 @@ module.exports = {
     fontFamily: {
       mono: ["monospace"],
     },
-    extend: {},
+    extend: {
+      maxHeight: {
+        192: "48rem",
+      },
+    },
   },
   variants: {
     extend: {},
