@@ -7,13 +7,16 @@ const InputSwitch: React.FC<{
   labelText: string;
   isSelected: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}> = ({ groupName, labelText, isSelected, onChange }) => {
+  className?: string;
+}> = ({ groupName, labelText, isSelected, onChange, className }) => {
   return (
     <label
-      className={`relative flex items-center justify-between w-full cursor-pointer ${classes.inputSwitch}`}
+      className={`relative flex items-center justify-between w-full cursor-pointer ${
+        className ? className : ""
+      } ${classes.inputSwitch}`}
       htmlFor={labelText}
     >
-      <p>{labelText}</p>
+      {labelText}
       <input
         className="sr-only"
         type="checkbox"
