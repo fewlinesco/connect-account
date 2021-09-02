@@ -10,13 +10,14 @@ import "react-day-picker/lib/style.css";
 
 const InputDayPicker: React.FC<{
   isValidating: boolean;
-  date: Date;
   onDayChange: (date: Date) => void;
   label: string;
+  date: Date;
   locale?: string;
 }> = ({ locale, date, onDayChange, label, isValidating }) => {
   const [selectedDate, setSelectedMonth] = React.useState<Date>(date);
-
+  console.log({ date });
+  console.log({ selectedDate });
   return (
     <label
       className={`flex flex-col cursor-pointer ${classNames["day-picker"]}`}
@@ -29,6 +30,7 @@ const InputDayPicker: React.FC<{
         }}
         format={formatDateMessage(locale || "en", "format")}
         placeholder={isValidating ? "" : formatDate(date, locale)}
+        value={selectedDate}
         dayPickerProps={{
           localeUtils,
           locale,
