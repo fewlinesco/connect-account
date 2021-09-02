@@ -3,7 +3,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 
-import { FormErrorMessage } from "../input/form-error-message";
 import { InputText } from "../input/input-text/input-text";
 import { Form } from "./form";
 import { Button } from "@src/components/buttons";
@@ -17,7 +16,9 @@ const VerifyTwoFACodeForm: React.FC<{
 }> = ({ setIsCodeSent }) => {
   const [formID, setFormID] = React.useState<string>(uuidv4());
   const [verificationCode, setVerificationCode] = React.useState<string>("");
-  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
+    undefined,
+  );
 
   const router = useRouter();
   const { formatMessage } = useIntl();
@@ -73,9 +74,6 @@ const VerifyTwoFACodeForm: React.FC<{
         });
       }}
     >
-      {errorMessage ? (
-        <FormErrorMessage>{errorMessage}</FormErrorMessage>
-      ) : null}
       <InputText
         type="text"
         name="verificationCode"
@@ -84,14 +82,39 @@ const VerifyTwoFACodeForm: React.FC<{
         label={formatMessage({ id: "twoFALabel" })}
         maxLength={6}
         autoFocus={true}
+        errorMessage={errorMessage}
       >
         <div className="flex justify-between w-96 lg:w-4/6 absolute top-0 my-8">
-          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
-          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
-          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
-          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
-          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
-          <span className="bg-background border border-gray-dark rounded h-16 w-14 lg:w-16" />
+          <span
+            className={`bg-background border ${
+              errorMessage ? "border-red" : "border-gray-dark"
+            } rounded h-16 w-14 lg:w-16`}
+          />
+          <span
+            className={`bg-background border ${
+              errorMessage ? "border-red" : "border-gray-dark"
+            } rounded h-16 w-14 lg:w-16`}
+          />
+          <span
+            className={`bg-background border ${
+              errorMessage ? "border-red" : "border-gray-dark"
+            } rounded h-16 w-14 lg:w-16`}
+          />
+          <span
+            className={`bg-background border ${
+              errorMessage ? "border-red" : "border-gray-dark"
+            } rounded h-16 w-14 lg:w-16`}
+          />
+          <span
+            className={`bg-background border ${
+              errorMessage ? "border-red" : "border-gray-dark"
+            } rounded h-16 w-14 lg:w-16`}
+          />
+          <span
+            className={`bg-background border ${
+              errorMessage ? "border-red" : "border-gray-dark"
+            } rounded h-16 w-14 lg:w-16`}
+          />
         </div>
       </InputText>
       <Button className="btn btn-primary mb-0" type="submit">

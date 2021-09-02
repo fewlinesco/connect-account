@@ -26,7 +26,7 @@ const ProfileOverview: React.FC<{
     <>
       <h3>{formatMessage({ id: "profileSection" })}</h3>
       <SectionBox>
-        <NeutralLink className="link-boxed" href="#">
+        <div className="link-boxed">
           <div className="flex items-center justify-center">
             {!userProfile || !userProfile.picture ? (
               <div className="mr-6">
@@ -43,69 +43,51 @@ const ProfileOverview: React.FC<{
               {formatMessage({ id: "profilePicture" })}
             </p>
           </div>
-        </NeutralLink>
+        </div>
         <Separator />
-        <UserInfoSection categoryName={formatMessage({ id: "name" })} href="#">
+        <UserInfoSection categoryName={formatMessage({ id: "name" })}>
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             userProfile.name
           )}
         </UserInfoSection>
-        <UserInfoSection
-          categoryName={formatMessage({ id: "preferredName" })}
-          href="#"
-        >
+        <UserInfoSection categoryName={formatMessage({ id: "preferredName" })}>
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             userProfile.preferred_username
           )}
         </UserInfoSection>
-        <UserInfoSection
-          categoryName={formatMessage({ id: "birthDate" })}
-          href="#"
-        >
+        <UserInfoSection categoryName={formatMessage({ id: "birthDate" })}>
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             userProfile.birthdate
           )}
         </UserInfoSection>
-        <UserInfoSection
-          categoryName={formatMessage({ id: "timeZone" })}
-          href="#"
-        >
+        <UserInfoSection categoryName={formatMessage({ id: "timeZone" })}>
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             userProfile.zoneinfo
           )}
         </UserInfoSection>
-        <UserInfoSection
-          categoryName={formatMessage({ id: "locale" })}
-          href="#"
-        >
+        <UserInfoSection categoryName={formatMessage({ id: "locale" })}>
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             userProfile.locale
           )}
         </UserInfoSection>
-        <UserInfoSection
-          categoryName={formatMessage({ id: "website" })}
-          href="#"
-        >
+        <UserInfoSection categoryName={formatMessage({ id: "website" })}>
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
             userProfile.website
           )}
         </UserInfoSection>
-        <UserInfoSection
-          categoryName={formatMessage({ id: "profile" })}
-          href="#"
-        >
+        <UserInfoSection categoryName={formatMessage({ id: "profile" })}>
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
@@ -153,18 +135,17 @@ const ProfileOverview: React.FC<{
 
 const UserInfoSection: React.FC<{
   categoryName: string;
-  href: string;
-}> = ({ categoryName, href, children }) => {
+}> = ({ categoryName, children }) => {
   return (
     <>
-      <NeutralLink className="link-boxed h-28" href={href}>
+      <div className="link-boxed h-28">
         <div className="w-full flex flex-col">
           <p className="text-gray-darker text-m font-medium tracking-widest mb-3">
             {categoryName}
           </p>
           {children}
         </div>
-      </NeutralLink>
+      </div>
       <Separator />
     </>
   );

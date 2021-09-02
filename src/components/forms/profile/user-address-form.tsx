@@ -6,7 +6,6 @@ import useSWR, { useSWRConfig } from "swr";
 import { ScopedMutator } from "swr/dist/types";
 import { v4 as uuidv4 } from "uuid";
 
-import { FormErrorMessage } from "../../input/form-error-message";
 import { Form } from "../form";
 import { Address } from "@src/@types/profile";
 import { Button } from "@src/components/buttons";
@@ -212,10 +211,8 @@ const UserAddressForm: React.FC<{
           label={formatMessage({ id: "localityLabel" })}
           required
           hasError={errors.locality ? true : false}
+          errorMessage={errors.locality}
         />
-        {errors.locality && (
-          <FormErrorMessage>{errors.locality}</FormErrorMessage>
-        )}
         <InputText
           type="text"
           name="postal-code"
@@ -230,10 +227,8 @@ const UserAddressForm: React.FC<{
           label={formatMessage({ id: "postalCodeLabel" })}
           required
           hasError={errors.postal_code ? true : false}
+          errorMessage={errors.postal_code}
         />
-        {errors.postal_code && (
-          <FormErrorMessage>{errors.postal_code}</FormErrorMessage>
-        )}
         <InputText
           type="text"
           name="region"
@@ -261,10 +256,8 @@ const UserAddressForm: React.FC<{
           label={formatMessage({ id: "countryLabel" })}
           required
           hasError={errors.country ? true : false}
+          errorMessage={errors.country}
         />
-        {errors.country && (
-          <FormErrorMessage>{errors.country}</FormErrorMessage>
-        )}
         <InputText
           type="text"
           name="kind"

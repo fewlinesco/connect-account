@@ -6,7 +6,7 @@ function generateCSP(nonce: string): string {
     "script-src": `'self' ajax.cloudflare.com static.cloudflareinsights.com 'nonce-${nonce}'`,
     "connect-src": `'self' *.sentry.io`,
     "img-src": `'self' data: https:`,
-    "style-src": `'self' 'unsafe-inline'`,
+    "style-src": `'self'`,
     "base-uri": `'self'`,
     "form-action": `'self'`,
     "object-src": `'none'`,
@@ -15,6 +15,7 @@ function generateCSP(nonce: string): string {
   // Override directives outside production because Nextjs dev env uses eval() and inline script injection for fast refresh
   if (process.env.NODE_ENV !== "production") {
     csp["script-src"] = `'self' 'unsafe-eval' 'unsafe-inline'`;
+    csp["style-src"] = `'self' 'unsafe-inline'`;
   }
 
   return Object.entries(csp).reduce(
