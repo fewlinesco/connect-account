@@ -22,6 +22,6 @@
   }
 
   .inputSwitch input:checked + span:after {
-    left: 2rem;
+    left: 1.9rem;
   }
 }

@@ -23,7 +23,7 @@ const InputSwitch: React.FC<{
         value={labelText}
         checked={isSelected}
       />
-      <span className="relative w-14 h-8 lg:h-7 bg-background rounded-full" />
+      <span className="relative w-14 h-8 lg:h-7 bg-gray-light rounded-full" />
     </label>
   );
 };
