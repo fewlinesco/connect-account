@@ -37,7 +37,7 @@ async function cleaningProfileStaging(): Promise<void> {
       process.env.CONNECT_TEST_ACCOUNT_SUB,
     );
     console.log("✅ Test user profile deleted");
-  } catch (error) {
+  } catch (error: any) {
     if (error.response.status === HttpStatus.UNAUTHORIZED) {
       throw new Error("💥 Unauthorized admin access");
     }

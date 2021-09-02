@@ -104,7 +104,7 @@ describe("Mock Server", () => {
 
       try {
         await noAuthToken.getProfile();
-      } catch (error) {
+      } catch (error: any) {
         expect(error.response.status).toBe(401);
         expect(error.response.data.error).toBe(
           "Without a valid bearer token you are not allowed to access this endpoint",
