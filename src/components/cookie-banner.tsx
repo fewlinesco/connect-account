@@ -24,6 +24,14 @@ const CookieBanner: React.FC = () => {
   const [isAllServicesAuthorized, setIsAllServicesAuthorized] =
     React.useState<boolean>(true);
 
+  const initialServicesStatus = Object.values(servicesToConsentByCategory)
+    .flat()
+    .reduce((acc, key) => ({ ...acc, [key.name.toLowerCase()]: true }), {});
+
+  const [servicesStatus, setServicesStatus] = React.useState<
+    Record<string, boolean>
+  >(initialServicesStatus);
+
   const { data: consentCookie } = useSWR<Record<string, string>, SWRError>(
     `/api/consent-cookie/`,
     { refreshInterval: 0 },
@@ -35,10 +43,25 @@ const CookieBanner: React.FC = () => {
   );
 
   React.useEffect(() => {
-    if (consentCookie && !consentCookie.isSet) {
-      setIsModalOpen(true);
-    } else {
-      setIsModalOpen(false);
+    if (consentCookie) {
+      if (!consentCookie.isSet) {
+        setIsModalOpen(true);
+      } else {
+        setIsModalOpen(false);
+
+        const servicesConsent: Record<string, boolean> = JSON.parse(
+          consentCookie.content,
+        );
+
+        for (const [key, value] of Object.entries(servicesConsent)) {
+          setServicesStatus((servicesStatus) => {
+            return {
+              ...servicesStatus,
+              [key]: value,
+            };
+          });
+        }
+      }
     }
   }, [consentCookie]);
 
@@ -90,6 +113,7 @@ const CookieBanner: React.FC = () => {
                         )}
                       </h4>
                       {services.map(({ name, descriptionId, icon }, index) => {
+                        console.log(servicesStatus[name.toLocaleLowerCase()]);
                         return (
                           <div
                             key={name + index}
@@ -97,7 +121,28 @@ const CookieBanner: React.FC = () => {
                           >
                             {icon}
                             <div className="flex flex-col ml-8">
-                              <h5 className="font-medium text-m">{name}</h5>
+                              {multipleServices ? (
+                                <InputSwitch
+                                  groupName="services"
+                                  labelText={name}
+                                  isSelected={
+                                    servicesStatus[name.toLocaleLowerCase()]
+                                      ? true
+                                      : false
+                                  }
+                                  onChange={(_event) => {
+                                    setServicesStatus({
+                                      ...servicesStatus,
+                                      [name.toLowerCase()]:
+                                        !servicesStatus[name.toLowerCase()],
+                                    });
+                                  }}
+                                  className="font-medium text-m"
+                                />
+                              ) : (
+                                <h5 className="font-medium text-m">{name}</h5>
+                              )}
+
                               <p className="text-s mt-2 text-gray-darker">
                                 {formatCookieBannerMessage(
                                   router.locale || "en",
