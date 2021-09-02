@@ -15,8 +15,6 @@ import { NeutralLink } from "@src/components/neutral-link";
 import { fetchJson } from "@src/utils/fetch-json";
 import { ProfileData } from "connect-profile-client";
 
-import "react-datepicker/dist/react-datepicker.css";
-
 type ProfilePayload = Omit<Profile, "id" | "sub" | "updated_at">;
 
 async function updateOrCreateProfile(

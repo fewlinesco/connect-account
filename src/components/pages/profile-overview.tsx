@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -9,6 +10,7 @@ import { RightChevron } from "@src/components/icons/right-chevron";
 import { NeutralLink } from "@src/components/neutral-link";
 import { Separator } from "@src/components/separator";
 import { SkeletonTextLine } from "@src/components/skeletons/skeletons";
+import { formatDate } from "@src/utils/day-picker-localization";
 import {
   capitalizeFirstLetter,
   formatOtherAddressFieldsToDisplay,
@@ -19,6 +21,7 @@ const ProfileOverview: React.FC<{
   userProfile?: Profile;
   userAddresses?: Address[];
 }> = ({ userProfile, userAddresses }) => {
+  const { locale } = useRouter();
   const [hideAddressList, setHideAddressList] = React.useState<boolean>(true);
   const { formatMessage } = useIntl();
 
@@ -69,7 +72,10 @@ const ProfileOverview: React.FC<{
           {!userProfile ? (
             <SkeletonTextLine fontSize={1.6} width={50} />
           ) : (
-            userProfile.birthdate
+            formatDate(
+              new Date(Date.parse(userProfile?.birthdate || "")),
+              locale,
+            )
           )}
         </UserInfoSection>
         <UserInfoSection
