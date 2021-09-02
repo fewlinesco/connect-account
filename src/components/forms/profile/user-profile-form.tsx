@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Form } from "../form";
 import { Profile } from "@src/@types/profile";
 import { Button } from "@src/components/buttons";
-import { DayPicker } from "@src/components/input/input-date-picker/day-picker";
+import { InputDayPicker } from "@src/components/input/input-date-picker/day-picker";
 import { InputText } from "@src/components/input/input-text/input-text";
 import { NeutralLink } from "@src/components/neutral-link";
 import { fetchJson } from "@src/utils/fetch-json";
@@ -115,7 +115,7 @@ const UserProfileForm: React.FC<{
           }}
           label={formatMessage({ id: "usernameLabel" })}
         />
-        <DayPicker
+        <InputDayPicker
           isValidating={isValidating}
           label={formatMessage({ id: "birthDateLabel" })}
           locale={router.locale}

@@ -8,7 +8,7 @@ import localeUtils, { formatDate } from "@src/utils/dates";
 
 import "react-day-picker/lib/style.css";
 
-const DayPicker: React.FC<{
+const InputDayPicker: React.FC<{
   isValidating: boolean;
   date: Date;
   onDayChange: (date: Date) => void;
@@ -104,4 +104,4 @@ const YearMonthSelectors: React.FC<{
   );
 };
 
-export { DayPicker };
+export { InputDayPicker };
