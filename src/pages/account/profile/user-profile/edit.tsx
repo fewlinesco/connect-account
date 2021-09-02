@@ -14,10 +14,11 @@ import { basicMiddlewares } from "@src/middlewares/basic-middlewares";
 
 const UpdateUserProfilePage: React.FC = () => {
   const { formatMessage } = useIntl();
-  const { data: userProfile, error: userProfileError } = useSWR<
-    Profile,
-    SWRError
-  >(`/api/profile/user-profile/`);
+  const {
+    data: userProfile,
+    error: userProfileError,
+    isValidating,
+  } = useSWR<Profile, SWRError>(`/api/profile/user-profile/`);
 
   if (userProfileError) {
     throw userProfileError;
@@ -28,7 +29,10 @@ const UpdateUserProfilePage: React.FC = () => {
       breadcrumbs={formatMessage({ id: "breadcrumb" })}
       title={formatMessage({ id: "title" })}
     >
-      <UserProfileForm userProfileData={userProfile} />
+      <UserProfileForm
+        userProfileData={userProfile}
+        isValidating={isValidating}
+      />
     </Layout>
   );
 };

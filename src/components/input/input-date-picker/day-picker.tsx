@@ -9,11 +9,12 @@ import localeUtils from "@src/utils/day-picker-localization";
 import "react-day-picker/lib/style.css";
 
 const DatePicker: React.FC<{
-  locale?: string;
+  isValidating: boolean;
   date: Date;
   onDayChange: (date: Date) => void;
   label: string;
-}> = ({ locale, date, onDayChange, label }) => {
+  locale?: string;
+}> = ({ locale, date, onDayChange, label, isValidating }) => {
   const [yearMonth, setYearMonth] = React.useState<{
     month: number;
     year: number;
@@ -33,9 +34,11 @@ const DatePicker: React.FC<{
           onDayChange(date);
         }}
         format={formatDateMessage(locale || "en", "format")}
-        placeholder={date
-          .toISOString()
-          .slice(0, date.toISOString().indexOf("T"))}
+        placeholder={
+          isValidating
+            ? ""
+            : date.toISOString().slice(0, date.toISOString().indexOf("T"))
+        }
         dayPickerProps={{
           localeUtils,
           locale,
@@ -74,7 +77,7 @@ const YearMonthSelectors: React.FC<{
   const fromMonth = new Date(currentYear - 130, 0);
   const toMonth = new Date();
   const months = localeUtils.getMonths(locale);
-  console.log(months);
+
   const years: number[] = [];
   for (
     let index = fromMonth.getFullYear();

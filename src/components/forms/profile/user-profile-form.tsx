@@ -45,9 +45,10 @@ async function updateOrCreateProfile(
 }
 
 const UserProfileForm: React.FC<{
+  isValidating: boolean;
   userProfileData?: Profile;
   isCreation?: boolean;
-}> = ({ userProfileData, isCreation }) => {
+}> = ({ userProfileData, isCreation, isValidating }) => {
   const { formatMessage } = useIntl();
   const { mutate } = useSWRConfig();
 
@@ -117,6 +118,7 @@ const UserProfileForm: React.FC<{
           label={formatMessage({ id: "usernameLabel" })}
         />
         <DatePicker
+          isValidating={isValidating}
           label={formatMessage({ id: "birthDateLabel" })}
           locale={router.locale}
           date={new Date(userProfile.birthdate || Date.now())}
