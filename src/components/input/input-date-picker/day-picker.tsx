@@ -24,15 +24,17 @@ const InputDayPicker: React.FC<{
       {label}
       <DayPickerInput
         onDayChange={(date) => {
-          onDayChange(date);
+          selectedDate.setDate(date.getDate());
+          onDayChange(selectedDate);
         }}
         format={formatDateMessage(locale || "en", "format")}
         placeholder={isValidating ? "" : formatDate(date, locale)}
         dayPickerProps={{
           localeUtils,
           locale,
-          month: date,
+          month: selectedDate,
           fixedWeeks: true,
+          canChangeMonth: false,
           disabledDays: [{ after: new Date() }],
           captionElement: ({ localeUtils, locale }) => (
             <YearMonthSelectors
@@ -71,6 +73,7 @@ const YearMonthSelectors: React.FC<{
   return (
     <div className="DayPicker-Caption">
       <select
+        className="ml-4 mr-10"
         name="month"
         onChange={(event) => {
           return setSelectedMonth(
