@@ -49,7 +49,7 @@
     "@types/axios": "0.14.0",
     "apollo-link-context": "1.0.20",
     "apollo-link-http": "1.5.17",
-    "axios": "0.21.1",
+    "axios": "0.22.0",
     "cross-fetch": "3.1.4",
     "graphql": "15.5.2",
     "graphql-tag": "2.12.5",
