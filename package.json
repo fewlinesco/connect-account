@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.28.0",
-    "@aws-sdk/util-dynamodb": "3.28.0",
+    "@aws-sdk/util-dynamodb": "3.38.0",
     "@fewlines/connect-client": "0.5.1",
     "@fewlines/connect-management": "0.8.0",
     "@formatjs/intl": "1.14.1",
